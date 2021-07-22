@@ -63,7 +63,45 @@ public class CaptchalogueCard : MonoBehaviour
 
 	private Transform[] holeCaps = new Transform[48];
 
-	private Item item;
+	private Item _item;
+	public Item item
+	{
+		get => _item;
+		set
+		{
+			if (item && value)
+				item = null;
+
+			if (value)
+			{
+				_item = value;
+				item.transform.SetParent(transform);
+				item.gameObject.SetActive(false);
+				itemHash = item.itemType.captchaHash;
+			}
+			else if (item)
+			{
+				item.transform.SetParent(null);
+				item.transform.position = transform.position + Vector3.up;
+				item.GetComponent<Rigidbody>().velocity = Vector3.up * 6 + GetComponent<Rigidbody>().velocity;
+				item.gameObject.SetActive(true);
+				_item = null;
+				itemHash = 0;
+			}
+		}
+	}
+
+	private long _itemHash;
+	public long itemHash
+	{
+		get => _itemHash;
+		set
+		{
+			_itemHash = value;
+			for (int i = 0; i < 48; i++)
+				holeCaps[i].gameObject.SetActive((itemHash & (1L << i)) == 0);
+		}
+	}
 
 	private void Awake()
 	{
@@ -136,29 +174,17 @@ public class CaptchalogueCard : MonoBehaviour
 
 	private void OnCollisionEnter(Collision collision)
 	{
+		if (!gameObject.activeInHierarchy)
+			return;
+
 		Item collisionItem = collision.gameObject.GetComponent<Item>();
-		if (!item && collisionItem)
-		{
+		if (itemHash == 0 && !item && collisionItem)
 			item = collisionItem;
-			item.transform.SetParent(transform);
-			item.gameObject.SetActive(false);
-			for (int i = 0; i < 48; i++)
-				if ((item.captchaHash & (1L << i)) != 0)
-					holeCaps[i].gameObject.SetActive(false);
-		}
 	}
 
-	private void OnMouseDown()
+	private void OnMouseDrag()
 	{
-		if (item)
-		{
-			item.transform.SetParent(null);
-			item.transform.position = transform.position + Vector3.up;
-			item.GetComponent<Rigidbody>().velocity = Vector3.up * 6;
-			item.gameObject.SetActive(true);
+		if (Input.GetMouseButtonDown(1) && item)
 			item = null;
-			foreach (Transform cap in holeCaps)
-				cap.gameObject.SetActive(true);
-		}
 	}
 }
