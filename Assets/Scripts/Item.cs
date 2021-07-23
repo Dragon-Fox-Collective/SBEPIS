@@ -4,8 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Item : MonoBehaviour
 {
-	public ItemType itemType;
-
+	public ItemType itemType; // FIXME: Double mobius referencial
 	private new Rigidbody rigidbody;
 
 	private void Awake()
@@ -13,14 +12,10 @@ public class Item : MonoBehaviour
 		rigidbody = GetComponent<Rigidbody>();
 	}
 
-	private void Start()
-	{
-
-	}
-
 	private void Update()
 	{
-
+		if (transform.position.y < -10)
+			Destroy(gameObject);
 	}
 
 	private void OnMouseDrag()

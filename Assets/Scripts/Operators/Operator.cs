@@ -13,7 +13,11 @@ public abstract class Operator : MonoBehaviour
 		{
 			if (card1)
 			{
-				Operate(card1, collisionCard);
+				CaptchalogueCard newCard = Operate(card1, collisionCard);
+				ItemType.itemTypes.TryGetValue(newCard.itemHash, out ItemType itemType);
+				if (itemType)
+					newCard.item = Instantiate(itemType.prefab);
+
 				card1 = null;
 			}
 

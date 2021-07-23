@@ -162,16 +162,6 @@ public class CaptchalogueCard : MonoBehaviour
 		holeCaps[47] = cap7_5;
 	}
 
-	private void Start()
-	{
-
-	}
-
-	private void Update()
-	{
-
-	}
-
 	private void OnCollisionEnter(Collision collision)
 	{
 		if (!gameObject.activeInHierarchy)
