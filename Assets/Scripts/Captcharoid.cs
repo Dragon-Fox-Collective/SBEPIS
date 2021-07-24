@@ -27,12 +27,14 @@ public class Captcharoid : MonoBehaviour
 		item.transform.rotation = code.transform.rotation;
 		if (!wasActive) item.gameObject.SetActive(true);
 
+		item.preCaptcha.Invoke();
 		Texture2D rtn = Captcha();
+		item.postCaptcha.Invoke();
 
 		item.transform.position = oldPosition;
 		item.transform.rotation = oldRotation;
 		if (!wasActive) item.gameObject.SetActive(false);
-		
+
 		return rtn;
 	}
 

@@ -8,7 +8,9 @@ public class CaptchalogueCard : MonoBehaviour
 	public Renderer[] renderers;
 	public SkinnedMeshRenderer holeCaps;
 
-	private bool flipped;
+	private Quaternion forceFlip;
+	private Quaternion upRot = Quaternion.Euler(90, 0, 0);
+	private Quaternion downRot = Quaternion.Euler(-90, 180, 0);
 	private Item cardItem;
 
 	public Item heldItem { get; private set; }
@@ -42,12 +44,23 @@ public class CaptchalogueCard : MonoBehaviour
 		if (cardItem)
 		{
 			if (Input.GetMouseButtonDown(2))
-				flipped = !flipped;
+				if (forceFlip == Quaternion.identity)
+					forceFlip = Quaternion.Angle(transform.rotation, upRot) > 90 ? upRot : downRot;
+				else
+					forceFlip = forceFlip == downRot ? upRot : downRot;
 
 			Quaternion deriv = QuaternionUtil.AngVelToDeriv(transform.rotation, cardItem.rigidbody.angularVelocity);
-			transform.rotation = QuaternionUtil.SmoothDamp(transform.rotation, flipped ? Quaternion.Euler(-90, 0, 180) : Quaternion.Euler(90, 0, 0), ref deriv, 0.2f);
+			if (forceFlip == Quaternion.identity)
+				transform.rotation = QuaternionUtil.SmoothDamp(transform.rotation, Quaternion.Angle(transform.rotation, upRot) < 90 ? upRot : downRot, ref deriv, 0.2f);
+			else
+				transform.rotation = QuaternionUtil.SmoothDamp(transform.rotation, forceFlip, ref deriv, 0.2f);
 			cardItem.rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(transform.rotation, deriv);
 		}
+	}
+
+	private void OnMouseUp()
+	{
+		forceFlip = Quaternion.identity;
 	}
 
 	public void Captchalogue(Item item)

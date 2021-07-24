@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Item : MonoBehaviour
 {
 	public ItemType itemType; // FIXME: Double mobius referencial
+	public CaptchaEvent preCaptcha, postCaptcha;
 
 	public new Rigidbody rigidbody { get; private set; }
 
@@ -27,4 +29,10 @@ public class Item : MonoBehaviour
 		transform.position = Vector3.SmoothDamp(transform.position, new Vector3(newScreenPosition.x, 2, newScreenPosition.z), ref velocity, 0.3f);
 		rigidbody.velocity = velocity;
 	}
+}
+
+[Serializable]
+public class CaptchaEvent : UnityEvent
+{
+
 }
