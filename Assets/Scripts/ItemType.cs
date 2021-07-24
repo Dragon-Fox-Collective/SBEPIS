@@ -6,12 +6,14 @@ using UnityEngine;
 public class ItemType : ScriptableObject
 {
 	public static readonly Dictionary<long, ItemType> itemTypes = new Dictionary<long, ItemType>();
+	private static readonly Dictionary<long, Texture2D> captchaTextures = new Dictionary<long, Texture2D>();
 
 	public string itemName;
 	public string captchaCode;
 	public Item prefab;
 
 	public long captchaHash { get; private set; }
+	public Texture2D captchaTex { get; set; }
 
 	private void OnEnable()
 	{
@@ -53,7 +55,26 @@ public class ItemType : ScriptableObject
 
 		string code = "";
 		for (int i = 0; i < 8; i++)
-			code += hashCharacters[(captchaHash >> 6 * i) & ((1L << 6) - 1)];
+			code += hashCharacters[unhashCaptchaIndex(captchaHash, i)];
 		return code;
+	}
+
+	public static long unhashCaptchaIndex(long captchaHash, int i)
+	{
+		return (captchaHash >> 6 * i) & ((1L << 6) - 1);
+	}
+
+	public static Texture2D GetCaptchaTexture(long captchaHash)
+	{
+		if (!captchaTextures.ContainsKey(captchaHash))
+			captchaTextures.Add(captchaHash, FindObjectOfType<Captcharoid>().Captcha(captchaHash));
+
+		captchaTextures.TryGetValue(captchaHash, out Texture2D texture);
+		return texture;
+	}
+
+	public static void AddCaptchaTexture(long captchaHash, Texture2D texture)
+	{
+		captchaTextures.Add(captchaHash, texture);
 	}
 }
