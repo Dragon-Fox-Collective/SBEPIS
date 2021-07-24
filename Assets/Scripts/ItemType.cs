@@ -13,7 +13,15 @@ public class ItemType : ScriptableObject
 	public Item prefab;
 
 	public long captchaHash { get; private set; }
-	public Texture2D captchaTex { get; set; }
+	private Texture2D _icon;
+	public Texture2D icon {
+		get
+		{
+			if (!_icon)
+				_icon = FindObjectOfType<Captcharoid>().Captcha(this);
+			return _icon;
+		}
+	}
 
 	private void OnEnable()
 	{
@@ -55,13 +63,8 @@ public class ItemType : ScriptableObject
 
 		string code = "";
 		for (int i = 0; i < 8; i++)
-			code += hashCharacters[unhashCaptchaIndex(captchaHash, i)];
+			code += hashCharacters[(captchaHash >> 6 * i) & ((1L << 6) - 1)];
 		return code;
-	}
-
-	public static long unhashCaptchaIndex(long captchaHash, int i)
-	{
-		return (captchaHash >> 6 * i) & ((1L << 6) - 1);
 	}
 
 	public static Texture2D GetCaptchaTexture(long captchaHash)
@@ -71,10 +74,5 @@ public class ItemType : ScriptableObject
 
 		captchaTextures.TryGetValue(captchaHash, out Texture2D texture);
 		return texture;
-	}
-
-	public static void AddCaptchaTexture(long captchaHash, Texture2D texture)
-	{
-		captchaTextures.Add(captchaHash, texture);
 	}
 }

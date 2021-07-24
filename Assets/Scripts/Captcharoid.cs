@@ -17,13 +17,28 @@ public class Captcharoid : MonoBehaviour
 		camera = GetComponent<Camera>();
 	}
 
+	public Texture2D Captcha(ItemType itemType)
+	{
+		Item instance = Instantiate(itemType.prefab, code.transform.position, code.transform.rotation * Quaternion.Euler(-45, -45, 0));
+		Texture2D rtn = Captcha();
+		Destroy(instance.gameObject);
+		return rtn;
+	}
+
 	public Texture2D Captcha(long captchaHash)
 	{
-		Rect texRect = new Rect(0, 0, 256, 256);
-		Texture2D captchaTexture = new Texture2D((int) texRect.width, (int) texRect.height, TextureFormat.RGBA32, false);
-		RenderTexture renderTexture = new RenderTexture((int) texRect.width, (int) texRect.height, 32);
-
+		code.gameObject.SetActive(true);
 		code.text = ItemType.unhashCaptcha(captchaHash);
+		Texture2D rtn = Captcha();
+		code.gameObject.SetActive(false);
+		return rtn;
+	}
+
+	private Texture2D Captcha()
+	{
+		Rect texRect = new Rect(0, 0, 256, 256);
+		Texture2D captchaTexture = new Texture2D((int)texRect.width, (int)texRect.height, TextureFormat.RGBA32, false);
+		RenderTexture renderTexture = new RenderTexture((int)texRect.width, (int)texRect.height, 32);
 
 		camera.targetTexture = renderTexture;
 		camera.Render();

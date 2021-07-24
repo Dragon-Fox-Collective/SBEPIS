@@ -5,7 +5,8 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
 	public ItemType itemType; // FIXME: Double mobius referencial
-	private new Rigidbody rigidbody;
+
+	public new Rigidbody rigidbody { get; private set; }
 
 	private void Awake()
 	{

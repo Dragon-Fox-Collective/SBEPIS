@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Operator : MonoBehaviour
+public abstract class Operator2 : MonoBehaviour
 {
 	public CaptchalogueCard cardPrefab;
 
@@ -14,9 +14,8 @@ public abstract class Operator : MonoBehaviour
 			if (card1)
 			{
 				CaptchalogueCard newCard = Operate(card1, collisionCard);
-				ItemType.itemTypes.TryGetValue(newCard.itemHash, out ItemType itemType);
-				if (itemType)
-					newCard.item = Instantiate(itemType.prefab);
+				if (newCard)
+					newCard.transform.Rotate(90, 0, 0);
 
 				card1 = null;
 			}
