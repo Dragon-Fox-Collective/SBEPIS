@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CaptchalogueCard : MonoBehaviour
@@ -10,6 +8,7 @@ public class CaptchalogueCard : MonoBehaviour
 	public Renderer[] renderers;
 	public SkinnedMeshRenderer holeCaps;
 
+	private bool flipped;
 	private Item cardItem;
 
 	public Item heldItem { get; private set; }
@@ -39,6 +38,16 @@ public class CaptchalogueCard : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown(1) && heldItem)
 			Eject();
+
+		if (cardItem)
+		{
+			if (Input.GetMouseButtonDown(2))
+				flipped = !flipped;
+
+			Quaternion deriv = QuaternionUtil.AngVelToDeriv(transform.rotation, cardItem.rigidbody.angularVelocity);
+			transform.rotation = QuaternionUtil.SmoothDamp(transform.rotation, flipped ? Quaternion.Euler(-90, 0, 180) : Quaternion.Euler(90, 0, 0), ref deriv, 0.2f);
+			cardItem.rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(transform.rotation, deriv);
+		}
 	}
 
 	public void Captchalogue(Item item)
@@ -50,7 +59,7 @@ public class CaptchalogueCard : MonoBehaviour
 		item.transform.SetParent(transform);
 		item.gameObject.SetActive(false);
 
-		UpdateMaterials(item.itemType.captchaHash, item.itemType.icon);
+		UpdateMaterials(item.itemType.captchaHash, FindObjectOfType<Captcharoid>().Captcha(item));
 	}
 
 	public void Eject()
@@ -60,7 +69,9 @@ public class CaptchalogueCard : MonoBehaviour
 
 		heldItem.transform.SetParent(null);
 		heldItem.transform.position = transform.position + Vector3.up;
+		heldItem.transform.rotation = heldItem.GetComponent<CaptchalogueCard>() ? Quaternion.Euler(90, 0, 0) : Quaternion.identity;
 		heldItem.rigidbody.velocity = Vector3.up * 6 + (cardItem ? cardItem.rigidbody.velocity : Vector3.zero);
+		heldItem.rigidbody.angularVelocity = Vector3.zero;
 		heldItem.gameObject.SetActive(true);
 		heldItem = null;
 
@@ -78,6 +89,8 @@ public class CaptchalogueCard : MonoBehaviour
 			foreach (Material material in renderer.materials)
 				if (material.shader == iconShader)
 				{
+					if (!icon)
+						Destroy(material.GetTexture("Icon"));
 					material.SetTexture("Icon", icon);
 				}
 				else if (material.shader == captchaShader)

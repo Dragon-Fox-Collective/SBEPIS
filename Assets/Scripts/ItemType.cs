@@ -13,7 +13,7 @@ public class ItemType : ScriptableObject
 	public Item prefab;
 
 	public long captchaHash { get; private set; }
-	private Texture2D _icon;
+	/*private Texture2D _icon;
 	public Texture2D icon {
 		get
 		{
@@ -21,7 +21,7 @@ public class ItemType : ScriptableObject
 				_icon = FindObjectOfType<Captcharoid>().Captcha(this);
 			return _icon;
 		}
-	}
+	}*/
 
 	private void OnEnable()
 	{

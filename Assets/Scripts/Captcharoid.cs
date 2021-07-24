@@ -17,10 +17,30 @@ public class Captcharoid : MonoBehaviour
 		camera = GetComponent<Camera>();
 	}
 
+	public Texture2D Captcha(Item item)
+	{
+		Vector3 oldPosition = item.transform.position;
+		Quaternion oldRotation = item.transform.rotation;
+		bool wasActive = item.gameObject.activeSelf;
+
+		item.transform.position = code.transform.position;
+		item.transform.rotation = code.transform.rotation;
+		if (!wasActive) item.gameObject.SetActive(true);
+
+		Texture2D rtn = Captcha();
+
+		item.transform.position = oldPosition;
+		item.transform.rotation = oldRotation;
+		if (!wasActive) item.gameObject.SetActive(false);
+		
+		return rtn;
+	}
+
 	public Texture2D Captcha(ItemType itemType)
 	{
 		Item instance = Instantiate(itemType.prefab, code.transform.position, code.transform.rotation * Quaternion.Euler(-45, -45, 0));
 		Texture2D rtn = Captcha();
+		instance.gameObject.SetActive(false);
 		Destroy(instance.gameObject);
 		return rtn;
 	}
