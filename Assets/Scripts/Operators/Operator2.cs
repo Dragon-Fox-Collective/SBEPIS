@@ -15,7 +15,7 @@ public abstract class Operator2 : MonoBehaviour
 			{
 				CaptchalogueCard newCard = Operate(card1, collisionCard);
 				if (newCard)
-					newCard.transform.Rotate(90, 0, 0);
+					newCard.transform.Translate(Vector3.up);
 
 				card1 = null;
 			}

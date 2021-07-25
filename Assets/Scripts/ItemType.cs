@@ -70,7 +70,7 @@ public class ItemType : ScriptableObject
 	public static Texture2D GetCaptchaTexture(long captchaHash)
 	{
 		if (!captchaTextures.ContainsKey(captchaHash))
-			captchaTextures.Add(captchaHash, FindObjectOfType<Captcharoid>().Captcha(captchaHash));
+			captchaTextures.Add(captchaHash, GameManager.instance.captcharoid.Captcha(captchaHash));
 
 		captchaTextures.TryGetValue(captchaHash, out Texture2D texture);
 		return texture;

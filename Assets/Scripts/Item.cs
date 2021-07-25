@@ -6,13 +6,18 @@ using UnityEngine.Events;
 public class Item : MonoBehaviour
 {
 	public ItemType itemType; // FIXME: Double mobius referencial
+	public Quaternion captchaRotation = Quaternion.identity;
+	public float captchaScale = 1f;
 	public CaptchaEvent preCaptcha, postCaptcha;
 
+	public bool isMouseDown { get; set; }
+	public float holdDistance { get; set; }
 	public new Rigidbody rigidbody { get; private set; }
 
 	private void Awake()
 	{
 		rigidbody = GetComponent<Rigidbody>();
+		holdDistance = 2;
 	}
 
 	private void Update()
@@ -21,18 +26,36 @@ public class Item : MonoBehaviour
 			Destroy(gameObject);
 	}
 
-	private void OnMouseDrag()
+	public virtual void OnMouseDown()
 	{
-		float distanceToScreen = Camera.main.WorldToScreenPoint(transform.position).z;
-		Vector3 newScreenPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distanceToScreen));
+		isMouseDown = true;
+
+		SetLayerRecursively(gameObject, LayerMask.NameToLayer("HeldItem"));
+		rigidbody.useGravity = false;
+	}
+
+	public virtual void OnMouseDrag()
+	{
 		Vector3 velocity = rigidbody.velocity;
-		transform.position = Vector3.SmoothDamp(transform.position, new Vector3(newScreenPosition.x, 2, newScreenPosition.z), ref velocity, 0.3f);
+		transform.position = Vector3.SmoothDamp(transform.position, GameManager.instance.player.camera.transform.position + GameManager.instance.player.camera.transform.forward * holdDistance, ref velocity, 0.1f);
 		rigidbody.velocity = velocity;
+	}
+
+	public virtual void OnMouseUp()
+	{
+		isMouseDown = false;
+
+		SetLayerRecursively(gameObject, LayerMask.NameToLayer("Default"));
+		rigidbody.useGravity = true;
+	}
+
+	public static void SetLayerRecursively(GameObject gameObject, int layer)
+	{
+		gameObject.layer = layer;
+		foreach (Transform child in gameObject.transform)
+			SetLayerRecursively(child.gameObject, layer);
 	}
 }
 
 [Serializable]
-public class CaptchaEvent : UnityEvent
-{
-
-}
+public class CaptchaEvent : UnityEvent { }

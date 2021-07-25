@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Camera))]
 public class Captcharoid : MonoBehaviour
@@ -19,20 +15,26 @@ public class Captcharoid : MonoBehaviour
 
 	public Texture2D Captcha(Item item)
 	{
-		Vector3 oldPosition = item.transform.position;
-		Quaternion oldRotation = item.transform.rotation;
+		Transform oldParent = item.transform.parent;
+		Vector3 oldPosition = item.transform.localPosition;
+		Quaternion oldRotation = item.transform.localRotation;
+		Vector3 oldScale = item.transform.localScale;
 		bool wasActive = item.gameObject.activeSelf;
 
-		item.transform.position = code.transform.position;
-		item.transform.rotation = code.transform.rotation;
+		item.transform.parent = code.transform.parent;
+		item.transform.localPosition = Vector3.zero;
+		item.transform.localRotation = Quaternion.Euler(0, 180, 0) * item.captchaRotation;
+		item.transform.localScale = Vector3.one * item.captchaScale;
 		if (!wasActive) item.gameObject.SetActive(true);
 
 		item.preCaptcha.Invoke();
 		Texture2D rtn = Captcha();
 		item.postCaptcha.Invoke();
 
-		item.transform.position = oldPosition;
-		item.transform.rotation = oldRotation;
+		item.transform.parent = oldParent;
+		item.transform.localPosition = oldPosition;
+		item.transform.localRotation = oldRotation;
+		item.transform.localScale = oldScale;
 		if (!wasActive) item.gameObject.SetActive(false);
 
 		return rtn;

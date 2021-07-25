@@ -56,16 +56,17 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4036453496177169790}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0, y: -0.1, z: 0}
-  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0.05}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children:
   - {fileID: 4589917370411204939}
   - {fileID: 7056984316472685755}
   - {fileID: 7879155056499358774}
+  - {fileID: 1873910686087601144}
   m_Father: {fileID: 8785831225670543454}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8524707697023176223
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -130,7 +131,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.04, y: 0.05, z: 0.002}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0.001}
 --- !u!1 &6216654573262145003
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,7 +257,6 @@ GameObject:
   - component: {fileID: 8785831225670543454}
   - component: {fileID: 150181126797631594}
   - component: {fileID: -8202497417499739295}
-  - component: {fileID: 6619551279093106401}
   m_Layer: 0
   m_Name: Captchalogue Card
   m_TagString: Untagged
@@ -276,7 +276,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2300314712373474076}
-  - {fileID: 1873910686087601144}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -308,25 +307,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa3eaff5132f864bbd3906b994e955f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconShader: {fileID: -6465566751694194690, guid: 42cc8140d0d4ad84eb2400a518d1fbe3, type: 3}
-  captchaShader: {fileID: -6465566751694194690, guid: f28946f8b0a285b48adbfd46e476b40a, type: 3}
-  renderers:
-  - {fileID: 8024085927559044353}
-  - {fileID: 7847186893869286365}
-  holeCaps: {fileID: 7847186893869286365}
---- !u!114 &6619551279093106401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8261389934084027108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   itemType: {fileID: 11400000, guid: bc896218d4581fd44bb97c62bcc57b6a, type: 2}
+  captchaRotation: {x: 0, y: 0, z: 0, w: 1}
+  captchaScale: 5
   preCaptcha:
     m_PersistentCalls:
       m_Calls:
@@ -357,6 +340,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  iconMaterial: {fileID: 2100000, guid: 366e79c2ad9251e40b7bcf77ef1d7749, type: 2}
+  captchaMaterial: {fileID: 2100000, guid: f1a726a08ce8cd643896224bdd1373e3, type: 2}
+  renderers:
+  - {fileID: 8024085927559044353}
+  - {fileID: 7847186893869286365}
+  holeCaps: {fileID: 7847186893869286365}
 --- !u!1 &8868036622067975570
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +363,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1873910686087601144
 Transform:
   m_ObjectHideFlags: 0
@@ -382,12 +371,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8868036622067975570}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2067, y: -0.1201, z: -0.05}
-  m_LocalScale: {x: 1.0236614, y: 1.5390506, z: 1}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 0.0041339993, y: -0.00036000088, z: 0.001}
+  m_LocalScale: {x: 0.020473227, y: 0.030781008, z: 0.02}
   m_Children: []
-  m_Father: {fileID: 8785831225670543454}
-  m_RootOrder: 1
+  m_Father: {fileID: 2300314712373474076}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5092311704319619857
 MeshFilter:

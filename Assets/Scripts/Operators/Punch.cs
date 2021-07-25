@@ -14,7 +14,7 @@ public class Punch : Operator1
 		{
 			ItemType.itemTypes.TryGetValue(card.punchedHash, out ItemType itemType);
 			if (itemType)
-				Instantiate(itemType.prefab, Vector3.up, itemType.prefab.GetComponent<CaptchalogueCard>() ? Quaternion.Euler(90, 0, 0) : Quaternion.identity);
+				Instantiate(itemType.prefab, Vector3.up * 2, Quaternion.identity);
 			return null;
 		}
 	}

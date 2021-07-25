@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6050137803787613375}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.569, z: -0.305}
+  m_LocalPosition: {x: 0, y: 0.569, z: 0.305}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 6050137805261540588}
@@ -319,3 +319,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: {fileID: 11400000, guid: 233ac2e32ff51c84db9cca7e41550d8c, type: 2}
+  captchaRotation: {x: 0, y: -0.38268346, z: 0, w: 0.9238795}
+  captchaScale: 2.5
+  preCaptcha:
+    m_PersistentCalls:
+      m_Calls: []
+  postCaptcha:
+    m_PersistentCalls:
+      m_Calls: []
