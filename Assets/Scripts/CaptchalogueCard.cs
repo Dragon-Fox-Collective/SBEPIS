@@ -8,10 +8,6 @@ public class CaptchalogueCard : Item
 	public Renderer[] renderers;
 	public SkinnedMeshRenderer holeCaps;
 
-	private Quaternion forceFlip = Quaternion.identity;
-	private Quaternion upRot;
-	private Quaternion downRot;
-
 	public Item heldItem { get; private set; }
 	public long punchedHash { get; private set; }
 
@@ -28,48 +24,23 @@ public class CaptchalogueCard : Item
 		Item collisionItem = collision.gameObject.GetComponent<Item>();
 		if (punchedHash == 0 && !heldItem && collisionItem)
 		{
-			if (collisionItem.isMouseDown)
-				collisionItem.OnMouseUp();
+			if (collisionItem.holdingPlayer)
+				collisionItem.holdingPlayer.DropItem();
 			Captchalogue(collisionItem);
 		}
 	}
 
-	public override void OnMouseDrag()
+	public override void OnHeld(Player player)
 	{
-		if (Input.GetAxis("Mouse ScrollWheel") < 0)
-			holdDistance = 1;
-		else if (Input.GetAxis("Mouse ScrollWheel") > 0)
-			holdDistance = 2;
+		base.OnHeld(player);
 
-		base.OnMouseDrag();
+		if (Input.GetAxis("Mouse ScrollWheel") < 0)
+			player.holdDistance = 1;
+		else if (Input.GetAxis("Mouse ScrollWheel") > 0)
+			player.holdDistance = 2;
 
 		if (Input.GetMouseButtonDown(1) && heldItem)
 			Eject();
-
-		Quaternion lookRot = Quaternion.LookRotation(GameManager.instance.player.camera.transform.position - transform.position, GameManager.instance.player.camera.transform.up);
-		upRot = lookRot * Quaternion.Euler(0, 180, 0);
-		downRot = lookRot;
-
-		if (Input.GetMouseButtonDown(2))
-			if (forceFlip == Quaternion.identity)
-				forceFlip = Quaternion.Angle(transform.rotation, upRot) > 90 ? upRot : downRot;
-			else
-				forceFlip = forceFlip == downRot ? upRot : downRot;
-		if (forceFlip != Quaternion.identity && Quaternion.Angle(transform.rotation, forceFlip) < 90)
-			forceFlip = Quaternion.identity;
-
-		Quaternion deriv = QuaternionUtil.AngVelToDeriv(transform.rotation, rigidbody.angularVelocity);
-		if (forceFlip == Quaternion.identity)
-			transform.rotation = QuaternionUtil.SmoothDamp(transform.rotation, Quaternion.Angle(transform.rotation, upRot) < 90 ? upRot : downRot, ref deriv, 0.2f);
-		else
-			transform.rotation = QuaternionUtil.SmoothDamp(transform.rotation, forceFlip, ref deriv, 0.2f);
-		rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(transform.rotation, deriv);
-	}
-
-	public override void OnMouseUp()
-	{
-		base.OnMouseUp();
-		forceFlip = Quaternion.identity;
 	}
 
 	public void Captchalogue(Item item)

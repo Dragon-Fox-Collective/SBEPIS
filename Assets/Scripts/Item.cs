@@ -10,14 +10,12 @@ public class Item : MonoBehaviour
 	public float captchaScale = 1f;
 	public CaptchaEvent preCaptcha, postCaptcha;
 
-	public bool isMouseDown { get; set; }
-	public float holdDistance { get; set; }
+	public Player holdingPlayer { get; private set; }
 	public new Rigidbody rigidbody { get; private set; }
 
 	private void Awake()
 	{
 		rigidbody = GetComponent<Rigidbody>();
-		holdDistance = 2;
 	}
 
 	private void Update()
@@ -26,24 +24,22 @@ public class Item : MonoBehaviour
 			Destroy(gameObject);
 	}
 
-	public virtual void OnMouseDown()
+	public virtual void OnPickedUp(Player player)
 	{
-		isMouseDown = true;
+		holdingPlayer = player;
 
-		SetLayerRecursively(gameObject, LayerMask.NameToLayer("HeldItem"));
+		SetLayerRecursively(gameObject, LayerMask.NameToLayer("Held Item"));
 		rigidbody.useGravity = false;
 	}
 
-	public virtual void OnMouseDrag()
+	public virtual void OnHeld(Player player)
 	{
-		Vector3 velocity = rigidbody.velocity;
-		transform.position = Vector3.SmoothDamp(transform.position, GameManager.instance.player.camera.transform.position + GameManager.instance.player.camera.transform.forward * holdDistance, ref velocity, 0.1f);
-		rigidbody.velocity = velocity;
+		
 	}
 
-	public virtual void OnMouseUp()
+	public virtual void OnDropped(Player player)
 	{
-		isMouseDown = false;
+		holdingPlayer = null;
 
 		SetLayerRecursively(gameObject, LayerMask.NameToLayer("Default"));
 		rigidbody.useGravity = true;

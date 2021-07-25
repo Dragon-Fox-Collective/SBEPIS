@@ -1823,7 +1823,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f6082ca8097134daae3353220b23b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2002559275}
   captcharoid: {fileID: 915339334}
 --- !u!4 &1107434262
 Transform:
@@ -3040,6 +3039,9 @@ MonoBehaviour:
   groundCheck: {fileID: 1916816718}
   groundCheckDistance: 0.3
   groundCheckMask:
+    serializedVersion: 2
+    m_Bits: 1
+  raycastMask:
     serializedVersion: 2
     m_Bits: 1
 --- !u!1 &2043374452
