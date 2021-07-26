@@ -11,11 +11,13 @@ public class Item : MonoBehaviour
 	public CaptchaEvent preCaptcha, postCaptcha;
 
 	public Player holdingPlayer { get; private set; }
+	public bool canPickUp { get; set; }
 	public new Rigidbody rigidbody { get; private set; }
 
 	private void Awake()
 	{
 		rigidbody = GetComponent<Rigidbody>();
+		canPickUp = true;
 	}
 
 	private void Update()

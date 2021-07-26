@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
 		if (Input.GetMouseButtonDown(0) && Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, 10f, raycastMask) && hit.rigidbody)
 		{
 			Item hitItem = hit.rigidbody.GetComponent<Item>();
-			if (hitItem)
+			if (hitItem && hitItem.canPickUp)
 			{
 				heldItem = hitItem;
 				heldItem.OnPickedUp(this);
@@ -94,9 +94,10 @@ public class Player : MonoBehaviour
 			return;
 		
 		heldItem.OnHeld(this);
-		if (Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit placementHit, 10f, LayerMask.NameToLayer("Placement Helper")))
+
+		if (RaycastPlacementHelper(out PlacementHelper placement, heldItem.itemType))
 		{
-			UpdateItemSnapToPlacementHelper(placementHit.collider.GetComponent<PlacementHelper>());
+			UpdateItemSnapToPlacementHelper(placement);
 		}
 		else
 		{
@@ -108,14 +109,16 @@ public class Player : MonoBehaviour
 	private void CheckDrop()
 	{
 		if (heldItem && Input.GetMouseButtonUp(0))
+		{
+			Item droppedItem = heldItem;
 			DropItem();
+			if (RaycastPlacementHelper(out PlacementHelper placement, droppedItem.itemType))
+				placement.Adopt(droppedItem);
+		}
 	}
 
 	public void DropItem()
 	{
-		if (!heldItem)
-			return;
-
 		heldItem.OnDropped(this);
 		heldItem = null;
 		forceFlip = Quaternion.identity;
@@ -123,9 +126,6 @@ public class Player : MonoBehaviour
 
 	private void UpdateItemMove()
 	{
-		if (!heldItem)
-			return;
-
 		Vector3 velocity = heldItem.rigidbody.velocity;
 		heldItem.transform.position = Vector3.SmoothDamp(heldItem.transform.position, camera.transform.position + camera.transform.forward * holdDistance, ref velocity, 0.1f);
 		heldItem.rigidbody.velocity = velocity;
@@ -133,9 +133,6 @@ public class Player : MonoBehaviour
 
 	private void UpdateItemRotate()
 	{
-		if (!heldItem)
-			return;
-
 		if (heldItem.GetComponent<CaptchalogueCard>())
 		{
 			Quaternion lookRot = Quaternion.LookRotation(camera.transform.position - heldItem.transform.position, camera.transform.up);
@@ -152,7 +149,7 @@ public class Player : MonoBehaviour
 
 			Quaternion deriv = QuaternionUtil.AngVelToDeriv(heldItem.transform.rotation, heldItem.rigidbody.angularVelocity);
 			if (forceFlip == Quaternion.identity)
-				heldItem.transform.rotation = QuaternionUtil.SmoothDamp(heldItem.transform.rotation, Quaternion.Angle(heldItem.transform.rotation, upRot) < 90 ? upRot : downRot, ref deriv, 0.2f);
+				heldItem.transform.rotation = QuaternionUtil.SmoothDamp(heldItem.transform.rotation, Quaternion.Angle(heldItem.transform.rotation, upRot) < 90 ? upRot : downRot, ref deriv, 0.1f);
 			else
 				heldItem.transform.rotation = QuaternionUtil.SmoothDamp(heldItem.transform.rotation, forceFlip, ref deriv, 0.2f);
 			heldItem.rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(heldItem.transform.rotation, deriv);
@@ -161,6 +158,18 @@ public class Player : MonoBehaviour
 
 	private void UpdateItemSnapToPlacementHelper(PlacementHelper placement)
 	{
+		Vector3 velocity = heldItem.rigidbody.velocity;
+		heldItem.transform.position = Vector3.SmoothDamp(heldItem.transform.position, placement.transform.position, ref velocity, 0.3f);
+		heldItem.rigidbody.velocity = velocity;
 
+		Quaternion deriv = QuaternionUtil.AngVelToDeriv(heldItem.transform.rotation, heldItem.rigidbody.angularVelocity);
+		heldItem.transform.rotation = QuaternionUtil.SmoothDamp(heldItem.transform.rotation, placement.transform.rotation, ref deriv, 0.2f);
+		heldItem.rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(heldItem.transform.rotation, deriv);
+	}
+
+	private bool RaycastPlacementHelper(out PlacementHelper placement, ItemType itemType)
+	{
+		placement = null;
+		return Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit placementHit, 10f, LayerMask.GetMask("Placement Helper")) && (placement = placementHit.collider.GetComponent<PlacementHelper>()).itemType == itemType;
 	}
 }
