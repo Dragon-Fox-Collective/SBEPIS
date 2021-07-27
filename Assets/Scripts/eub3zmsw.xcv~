@@ -25,9 +25,11 @@ public class TotemLathe : MonoBehaviour // TODO: Screens
 			for (int i = 0; i < 8; i++)
 			{
 				long charIndex = (dowel.captchaHash >> 6 * i) & ((1L << 6) - 1);
+				if (i == 0)
+					print(charIndex / 63f + " " + dowel.renderer.GetBlendShapeWeight(i));
 				float sliceChiselPercent = charIndex / 63f;
 				float startLatheProgress = 1f - sliceChiselPercent + initialBlendShapeWeights[i];
-				dowel.renderer.SetBlendShapeWeight(i, Math.Max(latheProgress - startLatheProgress, initialBlendShapeWeights[i]) * 100);
+				dowel.renderer.SetBlendShapeWeight(i, (latheProgress - startLatheProgress) * 100);
 			}
 			if (latheProgress == 1)
 				isLathing = false;
@@ -48,16 +50,6 @@ public class TotemLathe : MonoBehaviour // TODO: Screens
 	{
 		animator.SetBool("Adopted", true);
 		dowel = dowelPlacement.item.GetComponent<Dowel>();
-	}
-
-	public void StopLathing()
-	{
-		animator.SetBool("Adopted", false);
-		dowel = null;
-	}
-
-	public void Lathe()
-	{
 		if (card2Placement.item)
 		{
 			card2Placement.DisallowOrphan();
@@ -71,31 +63,12 @@ public class TotemLathe : MonoBehaviour // TODO: Screens
 		{
 			card1Placement.isAdopting = false;
 		}
-
-		SetCaptchaHash();
-		string captchaCode = ItemType.unhashCaptcha(captchaHash);
-		for (int i = 0; i < 8; i++)
-		{
-			int charIndex = Array.IndexOf(ItemType.hashCharacters, captchaCode[i]);
-			chisel.SetBlendShapeWeight(i, (1f - charIndex / 63f) * 100);
-		}
-		isLathing = true;
-
-		long greaterCaptchaHash = 0;
-		for (int i = 0; i < 8; i++)
-		{
-			initialBlendShapeWeights[i] = dowel.renderer.GetBlendShapeWeight(i) / 100f;
-
-			long initialCharIndex = (dowel.captchaHash >> 6 * i) & ((1L << 6) - 1);
-			long chiselCharIndex = (captchaHash >> 6 * i) & ((1L << 6) - 1);
-			greaterCaptchaHash |= (1L << i * 6) * Math.Max(initialCharIndex, chiselCharIndex);
-		}
-		dowel.captchaHash = greaterCaptchaHash;
 	}
 
-	public void Unlathe()
+	public void StopLathing()
 	{
-		dowelPlacement.AllowOrphan();
+		animator.SetBool("Adopted", false);
+		dowel = null;
 		if (card2Placement.item)
 		{
 			card2Placement.AllowOrphan();
@@ -109,6 +82,29 @@ public class TotemLathe : MonoBehaviour // TODO: Screens
 		{
 			card1Placement.isAdopting = true;
 		}
+	}
+
+	public void Lathe()
+	{
+		SetCaptchaHash();
+		string captchaCode = ItemType.unhashCaptcha(captchaHash);
+		for (int i = 0; i < 8; i++)
+		{
+			int charIndex = Array.IndexOf(ItemType.hashCharacters, captchaCode[i]);
+			chisel.SetBlendShapeWeight(i, (1f - charIndex / 63f) * 100);
+		}
+		isLathing = true;
+
+		long greaterCaptchaHash = 0;
+		for (int i = 0; i < 8; i++)
+		{
+			initialBlendShapeWeights[i] = dowel.renderer.GetBlendShapeWeight(i);
+
+			long initialCharIndex = (dowel.captchaHash >> 6 * i) & ((1L << 6) - 1);
+			long chiselCharIndex = (captchaHash >> 6 * i) & ((1L << 6) - 1);
+			greaterCaptchaHash |= (1L << i * 6) * Math.Max(initialCharIndex, chiselCharIndex);
+		}
+		dowel.captchaHash = greaterCaptchaHash;
 	}
 
 	public void CardGoingInFirst()
@@ -151,6 +147,11 @@ public class TotemLathe : MonoBehaviour // TODO: Screens
 		animator.SetInteger("Cards", 1);
 		captchaPanel.material.SetTexture("Captcha_2", null);
 		captchaPanel.material.SetTexture("Captcha_Result", null);
+	}
+
+	public void AllowOrphan()
+	{
+		dowelPlacement.AllowOrphan();
 	}
 
 	public void HandOffTotem()
