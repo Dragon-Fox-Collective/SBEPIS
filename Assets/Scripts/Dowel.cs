@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
 
-public class Dowel : MonoBehaviour
+namespace WrightWay.SBEPIS
 {
-	public new SkinnedMeshRenderer renderer;
+	public class Dowel : MonoBehaviour
+	{
+		public new SkinnedMeshRenderer renderer;
 
-	public long captchaHash { get; set; }
+		public long captchaHash { get; set; }
+	}
 }

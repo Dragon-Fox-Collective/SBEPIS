@@ -1,9 +1,12 @@
-public class Or : Operator2
+namespace WrightWay.SBEPIS.Operators
 {
-	protected override CaptchalogueCard Operate(CaptchalogueCard card1, CaptchalogueCard card2)
+	public class Or : Operator2
 	{
-		CaptchalogueCard newCard = Instantiate(cardPrefab);
-		newCard.Punch(card1.punchedHash | card2.punchedHash);
-		return newCard;
+		protected override CaptchalogueCard Operate(CaptchalogueCard card1, CaptchalogueCard card2)
+		{
+			CaptchalogueCard newCard = Instantiate(cardPrefab);
+			newCard.Punch(card1.punchedHash | card2.punchedHash);
+			return newCard;
+		}
 	}
 }

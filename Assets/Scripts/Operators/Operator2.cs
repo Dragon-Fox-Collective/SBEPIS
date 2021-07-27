@@ -1,35 +1,38 @@
 using UnityEngine;
 
-public abstract class Operator2 : MonoBehaviour
+namespace WrightWay.SBEPIS.Operators
 {
-	public CaptchalogueCard cardPrefab;
-
-	private CaptchalogueCard card1;
-
-	private void OnCollisionEnter(Collision collision)
+	public abstract class Operator2 : MonoBehaviour
 	{
-		CaptchalogueCard collisionCard = collision.gameObject.GetComponent<CaptchalogueCard>();
-		if (collisionCard)
+		public CaptchalogueCard cardPrefab;
+
+		private CaptchalogueCard card1;
+
+		private void OnCollisionEnter(Collision collision)
 		{
-			if (card1)
+			CaptchalogueCard collisionCard = collision.gameObject.GetComponent<CaptchalogueCard>();
+			if (collisionCard)
 			{
-				CaptchalogueCard newCard = Operate(card1, collisionCard);
-				if (newCard)
-					newCard.transform.Translate(Vector3.up);
+				if (card1)
+				{
+					CaptchalogueCard newCard = Operate(card1, collisionCard);
+					if (newCard)
+						newCard.transform.Translate(Vector3.up);
 
-				card1 = null;
+					card1 = null;
+				}
+
+				else
+					card1 = collisionCard;
 			}
-
-			else
-				card1 = collisionCard;
 		}
-	}
 
-	private void OnCollisionExit(Collision collision)
-	{
-		if (collision.gameObject.GetComponent<CaptchalogueCard>() == card1)
-			card1 = null;
-	}
+		private void OnCollisionExit(Collision collision)
+		{
+			if (collision.gameObject.GetComponent<CaptchalogueCard>() == card1)
+				card1 = null;
+		}
 
-	protected abstract CaptchalogueCard Operate(CaptchalogueCard card1, CaptchalogueCard card2);
+		protected abstract CaptchalogueCard Operate(CaptchalogueCard card1, CaptchalogueCard card2);
+	}
 }

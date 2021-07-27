@@ -1,21 +1,24 @@
 using UnityEngine;
 
-public class Punch : Operator1
+namespace WrightWay.SBEPIS.Operators
 {
-	protected override CaptchalogueCard Operate(CaptchalogueCard card)
+	public class Punch : Operator1
 	{
-		if (card.heldItem)
+		protected override CaptchalogueCard Operate(CaptchalogueCard card)
 		{
-			CaptchalogueCard newCard = Instantiate(cardPrefab);
-			newCard.Punch(card.heldItem ? card.heldItem.itemType.captchaHash : 0);
-			return newCard;
-		}
-		else
-		{
-			ItemType.itemTypes.TryGetValue(card.punchedHash, out ItemType itemType);
-			if (itemType)
-				Instantiate(itemType.prefab, Vector3.up * 2, Quaternion.identity);
-			return null;
+			if (card.heldItem)
+			{
+				CaptchalogueCard newCard = Instantiate(cardPrefab);
+				newCard.Punch(card.heldItem ? card.heldItem.itemType.captchaHash : 0);
+				return newCard;
+			}
+			else
+			{
+				ItemType.itemTypes.TryGetValue(card.punchedHash, out ItemType itemType);
+				if (itemType)
+					Instantiate(itemType.prefab, Vector3.up * 2, Quaternion.identity);
+				return null;
+			}
 		}
 	}
 }

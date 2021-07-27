@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace WrightWay.SBEPIS
 {
-	public static GameManager instance { get; private set; }
-
-	public Captcharoid captcharoid;
-
-	private void Awake()
+	public class GameManager : MonoBehaviour
 	{
-		instance = this;
+		public static GameManager instance { get; private set; }
+
+		public Captcharoid captcharoid;
+
+		private void Awake()
+		{
+			instance = this;
+		}
 	}
 }

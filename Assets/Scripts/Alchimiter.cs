@@ -2,27 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Alchimiter : MonoBehaviour
+namespace WrightWay.SBEPIS
 {
-	public PlacementHelper dowelPlacement;
-	public Transform spawnPoint;
-	public Animator animator;
-
-	public void StartAlchemizing()
+	public class Alchimiter : MonoBehaviour
 	{
-		animator.SetBool("Adopted", true);
-	}
+		public PlacementHelper dowelPlacement;
+		public Transform spawnPoint;
+		public Animator animator;
 
-	public void Alchemize()
-	{
-		ItemType.itemTypes.TryGetValue(dowelPlacement.item.GetComponent<Dowel>().captchaHash, out ItemType itemType);
-		if (!itemType)
-			ItemType.itemTypes.TryGetValue(0, out itemType);
-		Instantiate(itemType.prefab, spawnPoint.position, spawnPoint.rotation);
-	}
+		public void StartAlchemizing()
+		{
+			animator.SetBool("Adopted", true);
+		}
 
-	public void AllowOrphan()
-	{
-		dowelPlacement.AllowOrphan();
+		public void Alchemize()
+		{
+			ItemType.itemTypes.TryGetValue(dowelPlacement.item.GetComponent<Dowel>().captchaHash, out ItemType itemType);
+			if (!itemType)
+				ItemType.itemTypes.TryGetValue(0, out itemType);
+			Instantiate(itemType.prefab, spawnPoint.position, spawnPoint.rotation);
+		}
+
+		public void AllowOrphan()
+		{
+			dowelPlacement.AllowOrphan();
+		}
 	}
 }

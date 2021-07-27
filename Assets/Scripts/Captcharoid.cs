@@ -1,81 +1,87 @@
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
-public class Captcharoid : MonoBehaviour
+namespace WrightWay.SBEPIS
 {
-	public TextMeshProUGUI code;
-
-	private new Camera camera;
-
-	private void Awake()
+	/// <summary>
+	/// The camera that takes pictures of items and captcha codes to paste on captchalogue cards.
+	/// </summary>
+	[RequireComponent(typeof(Camera))]
+	public class Captcharoid : MonoBehaviour
 	{
-		camera = GetComponent<Camera>();
-	}
+		public TextMeshProUGUI code;
 
-	public Texture2D Captcha(Item item)
-	{
-		Transform oldParent = item.transform.parent;
-		Vector3 oldPosition = item.transform.localPosition;
-		Quaternion oldRotation = item.transform.localRotation;
-		Vector3 oldScale = item.transform.localScale;
-		bool wasActive = item.gameObject.activeSelf;
+		private new Camera camera;
 
-		item.transform.parent = code.transform.parent;
-		item.transform.localPosition = Vector3.zero;
-		item.transform.localRotation = Quaternion.Euler(0, 180, 0) * item.captchaRotation;
-		item.transform.localScale = Vector3.one * item.captchaScale;
-		if (!wasActive) item.gameObject.SetActive(true);
+		private void Awake()
+		{
+			camera = GetComponent<Camera>();
+		}
 
-		item.preCaptcha.Invoke();
-		Texture2D rtn = Captcha();
-		item.postCaptcha.Invoke();
+		public Texture2D Captcha(Item item)
+		{
+			Transform oldParent = item.transform.parent;
+			Vector3 oldPosition = item.transform.localPosition;
+			Quaternion oldRotation = item.transform.localRotation;
+			Vector3 oldScale = item.transform.localScale;
+			bool wasActive = item.gameObject.activeSelf;
 
-		item.transform.parent = oldParent;
-		item.transform.localPosition = oldPosition;
-		item.transform.localRotation = oldRotation;
-		item.transform.localScale = oldScale;
-		if (!wasActive) item.gameObject.SetActive(false);
+			item.transform.parent = code.transform.parent;
+			item.transform.localPosition = Vector3.zero;
+			item.transform.localRotation = Quaternion.Euler(0, 180, 0) * item.captchaRotation;
+			item.transform.localScale = Vector3.one * item.captchaScale;
+			if (!wasActive) item.gameObject.SetActive(true);
 
-		return rtn;
-	}
+			item.preCaptcha.Invoke();
+			Texture2D rtn = Captcha();
+			item.postCaptcha.Invoke();
 
-	public Texture2D Captcha(ItemType itemType)
-	{
-		Item instance = Instantiate(itemType.prefab, code.transform.position, code.transform.rotation * Quaternion.Euler(-45, -45, 0));
-		Texture2D rtn = Captcha();
-		instance.gameObject.SetActive(false);
-		Destroy(instance.gameObject);
-		return rtn;
-	}
+			item.transform.parent = oldParent;
+			item.transform.localPosition = oldPosition;
+			item.transform.localRotation = oldRotation;
+			item.transform.localScale = oldScale;
+			if (!wasActive) item.gameObject.SetActive(false);
 
-	public Texture2D Captcha(long captchaHash)
-	{
-		code.gameObject.SetActive(true);
-		code.text = ItemType.unhashCaptcha(captchaHash);
-		Texture2D rtn = Captcha();
-		code.gameObject.SetActive(false);
-		return rtn;
-	}
+			return rtn;
+		}
 
-	private Texture2D Captcha()
-	{
-		Rect texRect = new Rect(0, 0, 256, 256);
-		Texture2D captchaTexture = new Texture2D((int)texRect.width, (int)texRect.height, TextureFormat.RGBA32, false);
-		RenderTexture renderTexture = new RenderTexture((int)texRect.width, (int)texRect.height, 32);
+		public Texture2D Captcha(ItemType itemType)
+		{
+			Item instance = Instantiate(itemType.prefab, code.transform.position, code.transform.rotation * Quaternion.Euler(-45, -45, 0));
+			Texture2D rtn = Captcha();
+			instance.gameObject.SetActive(false);
+			Destroy(instance.gameObject);
+			return rtn;
+		}
 
-		camera.targetTexture = renderTexture;
-		camera.Render();
-		camera.targetTexture = null;
+		public Texture2D Captcha(long captchaHash)
+		{
+			code.gameObject.SetActive(true);
+			code.text = ItemType.unhashCaptcha(captchaHash);
+			Texture2D rtn = Captcha();
+			code.gameObject.SetActive(false);
+			return rtn;
+		}
 
-		RenderTexture.active = renderTexture;
-		captchaTexture.ReadPixels(texRect, 0, 0);
-		captchaTexture.Apply();
-		captchaTexture.wrapMode = TextureWrapMode.Clamp;
-		RenderTexture.active = null;
+		private Texture2D Captcha()
+		{
+			Rect texRect = new Rect(0, 0, 256, 256);
+			Texture2D captchaTexture = new Texture2D((int)texRect.width, (int)texRect.height, TextureFormat.RGBA32, false);
+			RenderTexture renderTexture = new RenderTexture((int)texRect.width, (int)texRect.height, 32);
 
-		Destroy(renderTexture);
+			camera.targetTexture = renderTexture;
+			camera.Render();
+			camera.targetTexture = null;
 
-		return captchaTexture;
+			RenderTexture.active = renderTexture;
+			captchaTexture.ReadPixels(texRect, 0, 0);
+			captchaTexture.Apply();
+			captchaTexture.wrapMode = TextureWrapMode.Clamp;
+			RenderTexture.active = null;
+
+			Destroy(renderTexture);
+
+			return captchaTexture;
+		}
 	}
 }
