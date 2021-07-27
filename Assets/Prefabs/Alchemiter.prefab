@@ -47133,7 +47133,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 04b158a1c1cdbf44ba8d3bbb82af99bf, type: 2}
-  - {fileID: -2211455136728285475, guid: 974f158d2db94a94488676d96c10da6a, type: 3}
+  - {fileID: 2100000, guid: b369a5d8c2e225244b9fc64c886a10a4, type: 2}
   - {fileID: 8556262120643298411, guid: 974f158d2db94a94488676d96c10da6a, type: 3}
   - {fileID: 1788269377728665300, guid: 974f158d2db94a94488676d96c10da6a, type: 3}
   - {fileID: -7149696522962976270, guid: 974f158d2db94a94488676d96c10da6a, type: 3}
@@ -57126,8 +57126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78a530da9678505478c02067905f3139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placement: {fileID: 7060190212553623142}
+  dowelPlacement: {fileID: 7060190212553623142}
   spawnPoint: {fileID: 7989778218585664140}
+  animator: {fileID: 7762543837767356595}
 --- !u!1 &6339043164345720780
 GameObject:
   m_ObjectHideFlags: 0
@@ -57560,4 +57561,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: {fileID: 11400000, guid: a96e3a1cc479ad3469505cc48b74af40, type: 2}
   itemParent: {fileID: 7314657903122976338}
-  animator: {fileID: 7762543837767356595}
+  isAdopting: 1
+  onPlace:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5645125616456428315}
+        m_TargetAssemblyTypeName: Alchimiter, Assembly-CSharp
+        m_MethodName: StartAlchemizing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onRemove:
+    m_PersistentCalls:
+      m_Calls: []

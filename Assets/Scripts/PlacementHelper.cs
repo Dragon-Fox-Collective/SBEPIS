@@ -1,14 +1,18 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider))]
 public class PlacementHelper : MonoBehaviour
 {
 	public ItemType itemType;
 	public Transform itemParent;
-	public Animator animator;
+	public bool isAdopting = true;
+	public PlacementEvent onPlace;
+	public PlacementEvent onRemove;
 
 	public new Collider collider { get; private set; }
-	public new Item item { get; private set; }
+	public Item item { get; private set; }
 
 	private void Awake()
 	{
@@ -18,12 +22,40 @@ public class PlacementHelper : MonoBehaviour
 	public void Adopt(Item item)
 	{
 		this.item = item;
-		item.canPickUp = false;
 		item.transform.SetParent(itemParent);
 		item.transform.localPosition = Vector3.zero;
 		item.transform.localRotation = Quaternion.identity;
 		item.rigidbody.isKinematic = true;
+		isAdopting = false;
+		collider.enabled = false;
+		DisallowOrphan();
+		onPlace.Invoke();
+	}
+
+	public void DisallowOrphan()
+	{
+		item.onPickUp.RemoveListener(Orphan);
 		item.rigidbody.detectCollisions = false;
-		animator.SetBool("Adopted", true);
+		item.canPickUp = false;
+	}
+
+	public void AllowOrphan()
+	{
+		item.onPickUp.AddListener(Orphan);
+		item.rigidbody.detectCollisions = true;
+		item.canPickUp = true;
+	}
+
+	public void Orphan()
+	{
+		item.onPickUp.RemoveListener(Orphan);
+		item.rigidbody.isKinematic = false;
+		item = null;
+		isAdopting = true;
+		collider.enabled = true;
+		onRemove.Invoke();
 	}
 }
+
+[Serializable]
+public class PlacementEvent : UnityEvent { }

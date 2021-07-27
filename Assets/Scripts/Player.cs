@@ -154,22 +154,28 @@ public class Player : MonoBehaviour
 				heldItem.transform.rotation = QuaternionUtil.SmoothDamp(heldItem.transform.rotation, forceFlip, ref deriv, 0.2f);
 			heldItem.rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(heldItem.transform.rotation, deriv);
 		}
+		else
+		{
+			Quaternion deriv = QuaternionUtil.AngVelToDeriv(heldItem.transform.rotation, heldItem.rigidbody.angularVelocity);
+			heldItem.transform.rotation = QuaternionUtil.SmoothDamp(heldItem.transform.rotation, Quaternion.identity, ref deriv, 0.2f);
+			heldItem.rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(heldItem.transform.rotation, deriv);
+		}
 	}
 
 	private void UpdateItemSnapToPlacementHelper(PlacementHelper placement)
 	{
 		Vector3 velocity = heldItem.rigidbody.velocity;
-		heldItem.transform.position = Vector3.SmoothDamp(heldItem.transform.position, placement.transform.position, ref velocity, 0.3f);
+		heldItem.transform.position = Vector3.SmoothDamp(heldItem.transform.position, placement.itemParent.position, ref velocity, 0.3f);
 		heldItem.rigidbody.velocity = velocity;
 
 		Quaternion deriv = QuaternionUtil.AngVelToDeriv(heldItem.transform.rotation, heldItem.rigidbody.angularVelocity);
-		heldItem.transform.rotation = QuaternionUtil.SmoothDamp(heldItem.transform.rotation, placement.transform.rotation, ref deriv, 0.2f);
+		heldItem.transform.rotation = QuaternionUtil.SmoothDamp(heldItem.transform.rotation, placement.itemParent.rotation, ref deriv, 0.2f);
 		heldItem.rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(heldItem.transform.rotation, deriv);
 	}
 
 	private bool RaycastPlacementHelper(out PlacementHelper placement, ItemType itemType)
 	{
 		placement = null;
-		return Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit placementHit, 10f, LayerMask.GetMask("Placement Helper")) && (placement = placementHit.collider.GetComponent<PlacementHelper>()).itemType == itemType;
+		return Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit placementHit, 10f, LayerMask.GetMask("Placement Helper")) && (placement = placementHit.collider.GetComponent<PlacementHelper>()).itemType == itemType && placement.isAdopting;
 	}
 }

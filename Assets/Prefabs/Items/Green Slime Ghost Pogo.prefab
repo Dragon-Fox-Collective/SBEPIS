@@ -155,7 +155,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5b8ff255fe28a0d4780ec48cb66256fc, type: 2}
+  - {fileID: 2100000, guid: b369a5d8c2e225244b9fc64c886a10a4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -304,7 +304,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &6050137805261540585
 MonoBehaviour:
@@ -321,6 +321,12 @@ MonoBehaviour:
   itemType: {fileID: 11400000, guid: 233ac2e32ff51c84db9cca7e41550d8c, type: 2}
   captchaRotation: {x: 0, y: -0.38268346, z: 0, w: 0.9238795}
   captchaScale: 2.5
+  onPickUp:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
   preCaptcha:
     m_PersistentCalls:
       m_Calls: []

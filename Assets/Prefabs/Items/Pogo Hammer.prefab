@@ -144,7 +144,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &1770917994978766149
 MonoBehaviour:
@@ -161,6 +161,12 @@ MonoBehaviour:
   itemType: {fileID: 11400000, guid: d1233f702fa648d4cac96d9c7117421b, type: 2}
   captchaRotation: {x: 0.18301272, y: 0.68301266, z: -0.18301272, w: 0.68301266}
   captchaScale: 1.8
+  onPickUp:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
   preCaptcha:
     m_PersistentCalls:
       m_Calls: []

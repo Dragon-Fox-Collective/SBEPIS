@@ -144,7 +144,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &8632012672265556489
 MonoBehaviour:
@@ -161,6 +161,12 @@ MonoBehaviour:
   itemType: {fileID: 11400000, guid: 267b1758c30eca2499bc1a700142edab, type: 2}
   captchaRotation: {x: 0.1830127, y: 0.68301266, z: -0.1830127, w: 0.68301266}
   captchaScale: 2.5
+  onPickUp:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
   preCaptcha:
     m_PersistentCalls:
       m_Calls: []
@@ -227,7 +233,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5b8ff255fe28a0d4780ec48cb66256fc, type: 2}
+  - {fileID: 2100000, guid: b369a5d8c2e225244b9fc64c886a10a4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

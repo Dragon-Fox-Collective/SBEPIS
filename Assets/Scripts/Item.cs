@@ -8,6 +8,7 @@ public class Item : MonoBehaviour
 	public ItemType itemType; // FIXME: Double mobius referencial
 	public Quaternion captchaRotation = Quaternion.identity;
 	public float captchaScale = 1f;
+	public ItemEvent onPickUp, onDrop;
 	public CaptchaEvent preCaptcha, postCaptcha;
 
 	public Player holdingPlayer { get; private set; }
@@ -32,6 +33,8 @@ public class Item : MonoBehaviour
 
 		SetLayerRecursively(gameObject, LayerMask.NameToLayer("Held Item"));
 		rigidbody.useGravity = false;
+
+		onPickUp.Invoke();
 	}
 
 	public virtual void OnHeld(Player player)
@@ -45,6 +48,8 @@ public class Item : MonoBehaviour
 
 		SetLayerRecursively(gameObject, LayerMask.NameToLayer("Default"));
 		rigidbody.useGravity = true;
+
+		onDrop.Invoke();
 	}
 
 	public static void SetLayerRecursively(GameObject gameObject, int layer)
@@ -54,6 +59,9 @@ public class Item : MonoBehaviour
 			SetLayerRecursively(child.gameObject, layer);
 	}
 }
+
+[Serializable]
+public class ItemEvent : UnityEvent { }
 
 [Serializable]
 public class CaptchaEvent : UnityEvent { }

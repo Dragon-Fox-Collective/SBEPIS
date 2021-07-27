@@ -22,7 +22,7 @@ public class CaptchalogueCard : Item
 			return;
 
 		Item collisionItem = collision.gameObject.GetComponent<Item>();
-		if (punchedHash == 0 && !heldItem && collisionItem)
+		if (punchedHash == 0 && !heldItem && collisionItem && !rigidbody.isKinematic && !collisionItem.rigidbody.isKinematic)
 		{
 			if (collisionItem.holdingPlayer)
 				collisionItem.holdingPlayer.DropItem();
