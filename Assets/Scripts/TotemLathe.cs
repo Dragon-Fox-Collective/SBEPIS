@@ -5,8 +5,16 @@ using UnityEngine;
 
 namespace WrightWay.SBEPIS
 {
-	public class TotemLathe : MonoBehaviour // TODO: Screens
+	public class TotemLathe : MonoBehaviour
 	{
+		// TODO: Screens
+		/* Screen 1 - Dowel placement alert
+		 * Screen 2 - Power gauge
+		 * Screen 3 - 
+		 * Screen 4 - Card placement alert
+		 * Screen 5 - Card captcha combob
+		 */
+
 		public PlacementHelper card1Placement, card2Placement, dowelPlacement;
 		public Transform dowelReciever;
 		public SkinnedMeshRenderer chisel;
