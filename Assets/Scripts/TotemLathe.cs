@@ -44,6 +44,9 @@ namespace WrightWay.SBEPIS
 			}
 		}
 
+		/// <summary>
+		/// The mathy bits
+		/// </summary>
 		public void SetCaptchaHash()
 		{
 			if (!card1Placement.item)
@@ -54,18 +57,27 @@ namespace WrightWay.SBEPIS
 				captchaHash = card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash & card2Placement.item.GetComponent<CaptchalogueCard>().punchedHash;
 		}
 
+		/// <summary>
+		/// Called when a dowel is inserted, starts the animation
+		/// </summary>
 		public void StartLathing()
 		{
 			animator.SetBool("Adopted", true);
 			dowel = dowelPlacement.item.GetComponent<Dowel>();
 		}
 
+		/// <summary>
+		/// Called when the dowel is removed, resets the animation
+		/// </summary>
 		public void StopLathing()
 		{
 			animator.SetBool("Adopted", false);
 			dowel = null;
 		}
 
+		/// <summary>
+		/// Called during the animation, sets up all the final mathy bits to start lathing
+		/// </summary>
 		public void Lathe()
 		{
 			if (card2Placement.item)
@@ -103,6 +115,9 @@ namespace WrightWay.SBEPIS
 			dowel.captchaHash = greaterCaptchaHash;
 		}
 
+		/// <summary>
+		/// Called during the animation, lets you pick up/deposit cards after lathing. Couldn't think of a better name lol
+		/// </summary>
 		public void Unlathe()
 		{
 			dowelPlacement.AllowOrphan();
@@ -121,11 +136,17 @@ namespace WrightWay.SBEPIS
 			}
 		}
 
+		/// <summary>
+		/// Starts the first card animation
+		/// </summary>
 		public void CardGoingInFirst()
 		{
 			animator.SetInteger("Cards", 1);
 		}
 
+		/// <summary>
+		/// Enables the second card
+		/// </summary>
 		public void CardInFirst()
 		{
 			card1Placement.AllowOrphan();
@@ -133,6 +154,9 @@ namespace WrightWay.SBEPIS
 			captchaPanel.material.SetTexture("Captcha_1", ItemType.GetCaptchaTexture(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash));
 		}
 
+		/// <summary>
+		/// Resets the first card animation
+		/// </summary>
 		public void CardOutFirst()
 		{
 			card2Placement.collider.enabled = false;
@@ -140,11 +164,17 @@ namespace WrightWay.SBEPIS
 			captchaPanel.material.SetTexture("Captcha_1", null);
 		}
 
+		/// <summary>
+		/// Starts the second card animation
+		/// </summary>
 		public void CardGoingInSecond()
 		{
 			animator.SetInteger("Cards", 2);
 		}
 
+		/// <summary>
+		/// Does mathy bits ig
+		/// </summary>
 		public void CardInSecond()
 		{
 			card1Placement.DisallowOrphan();
@@ -155,6 +185,9 @@ namespace WrightWay.SBEPIS
 			captchaPanel.material.SetTexture("Captcha_Result", ItemType.GetCaptchaTexture(captchaHash));
 		}
 
+		/// <summary>
+		/// Resets the second card animation
+		/// </summary>
 		public void CardOutSecond()
 		{
 			card1Placement.AllowOrphan();
@@ -163,11 +196,17 @@ namespace WrightWay.SBEPIS
 			captchaPanel.material.SetTexture("Captcha_Result", null);
 		}
 
+		/// <summary>
+		/// Transfers the dowel from the desk to the grabber
+		/// </summary>
 		public void HandOffTotem()
 		{
 			dowel.transform.SetParent(dowelReciever);
 		}
 
+		/// <summary>
+		/// Transfers the dowel from the grabber to the desk
+		/// </summary>
 		public void TakeBackTotem()
 		{
 			dowel.transform.SetParent(dowelPlacement.itemParent);

@@ -7,8 +7,14 @@ namespace WrightWay.SBEPIS
 	[RequireComponent(typeof(Rigidbody))]
 	public class Item : MonoBehaviour
 	{
-		public ItemType itemType; // FIXME: Double mobius referencial
+		public ItemType itemType;
+		/// <summary>
+		/// Rotation to use when taking a picture of this item
+		/// </summary>
 		public Quaternion captchaRotation = Quaternion.identity;
+		/// <summary>
+		/// Scale to use when taking a picture of this item
+		/// </summary>
 		public float captchaScale = 1f;
 		public ItemEvent onPickUp, onDrop;
 		public CaptchaEvent preCaptcha, postCaptcha;
@@ -21,12 +27,6 @@ namespace WrightWay.SBEPIS
 		{
 			rigidbody = GetComponent<Rigidbody>();
 			canPickUp = true;
-		}
-
-		private void Update()
-		{
-			if (transform.position.y < -10)
-				Destroy(gameObject);
 		}
 
 		public virtual void OnPickedUp(Player player)

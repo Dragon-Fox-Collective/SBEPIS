@@ -14,16 +14,11 @@ namespace WrightWay.SBEPIS
 		public string captchaCode;
 		public Item prefab;
 
+		/// <summary>
+		/// You might be seeing this everywhere lol
+		/// Captchalogue cards have 48 bits. This is enough bits to be stored as a number in a long. So that's how we're storing them. As storage efficient as you can get
+		/// </summary>
 		public long captchaHash { get; private set; }
-		/*private Texture2D _icon;
-		public Texture2D icon {
-			get
-			{
-				if (!_icon)
-					_icon = FindObjectOfType<Captcharoid>().Captcha(this);
-				return _icon;
-			}
-		}*/
 
 		private void OnEnable()
 		{
@@ -34,14 +29,20 @@ namespace WrightWay.SBEPIS
 			}
 		}
 
+		/// <summary>
+		/// The canonical order that the characters go in, with 0 is no punches and ! is all 6 punches
+		/// </summary>
 		public static readonly char[] hashCharacters =
 		{
-		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-		'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-		'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-		'?', '!'
-	};
+			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+			'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+			'?', '!'
+		};
 
+		/// <summary>
+		/// Turns a captcha code into its hashed number version
+		/// </summary>
 		public static long hashCaptcha(string captchaCode)
 		{
 			if (captchaCode.Length != 8)
@@ -58,6 +59,9 @@ namespace WrightWay.SBEPIS
 			return hash;
 		}
 
+		/// <summary>
+		/// Turns a hashed captcha code into its unhashed string version
+		/// </summary>
 		public static string unhashCaptcha(long captchaHash)
 		{
 			if ((captchaHash & ~((1L << 48) - 1L)) != 0)
@@ -69,6 +73,9 @@ namespace WrightWay.SBEPIS
 			return code;
 		}
 
+		/// <summary>
+		/// Looks up or generates a Texture2D of a captcha code string
+		/// </summary>
 		public static Texture2D GetCaptchaTexture(long captchaHash)
 		{
 			if (!captchaTextures.ContainsKey(captchaHash))

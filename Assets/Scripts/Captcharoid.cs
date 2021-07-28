@@ -45,6 +45,9 @@ namespace WrightWay.SBEPIS
 			return rtn;
 		}
 
+		/// <summary>
+		/// Deprecated or something
+		/// </summary>
 		public Texture2D Captcha(ItemType itemType)
 		{
 			Item instance = Instantiate(itemType.prefab, code.transform.position, code.transform.rotation * Quaternion.Euler(-45, -45, 0));
@@ -63,6 +66,10 @@ namespace WrightWay.SBEPIS
 			return rtn;
 		}
 
+		/// <summary>
+		/// Takes a picture of a thing
+		/// </summary>
+		/// <returns>A Texture2D of the thing</returns>
 		private Texture2D Captcha()
 		{
 			Rect texRect = new Rect(0, 0, 256, 256);

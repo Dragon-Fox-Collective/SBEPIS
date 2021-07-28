@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace WrightWay.SBEPIS.Operators
 {
+	/// <summary>
+	/// When a captcha card collides with this, does an operation with it
+	/// </summary>
 	public abstract class Operator1 : MonoBehaviour
 	{
 		public CaptchalogueCard cardPrefab;

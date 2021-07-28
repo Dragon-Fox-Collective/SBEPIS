@@ -21,9 +21,12 @@ namespace WrightWay.SBEPIS
 		public Item heldItem { get; private set; }
 		public float holdDistance { get; set; }
 		private CharacterController controller;
-		private float camRot;
+		private float camXRot;
 		private float yVelocity;
 		private bool isGrounded;
+		/// <summary>
+		/// Used as a target by captchalogue cards to flip them around
+		/// </summary>
 		private Quaternion forceFlip = Quaternion.identity;
 
 		private void Awake()
@@ -50,8 +53,8 @@ namespace WrightWay.SBEPIS
 
 			transform.Rotate(Vector3.up * look.x);
 
-			camRot = Mathf.Clamp(camRot - look.y, -90, 90);
-			camera.transform.localRotation = Quaternion.Euler(camRot, 0, 0);
+			camXRot = Mathf.Clamp(camXRot - look.y, -90, 90);
+			camera.transform.localRotation = Quaternion.Euler(camXRot, 0, 0);
 		}
 
 		private void UpdateMove()
@@ -136,11 +139,11 @@ namespace WrightWay.SBEPIS
 
 		private void UpdateItemRotate()
 		{
-			if (heldItem.GetComponent<CaptchalogueCard>())
+			if (heldItem.GetComponent<CaptchalogueCard>()) // Make these face either forward or backward to the player
 			{
 				Quaternion lookRot = Quaternion.LookRotation(camera.transform.position - heldItem.transform.position, camera.transform.up);
-				Quaternion upRot = lookRot * Quaternion.Euler(0, 180, 0);
-				Quaternion downRot = lookRot;
+				Quaternion upRot = lookRot * Quaternion.Euler(0, 180, 0); // Front facing player
+				Quaternion downRot = lookRot; // Back facing player
 
 				if (Input.GetMouseButtonDown(2))
 					if (forceFlip == Quaternion.identity)
@@ -157,7 +160,7 @@ namespace WrightWay.SBEPIS
 					heldItem.transform.rotation = QuaternionUtil.SmoothDamp(heldItem.transform.rotation, forceFlip, ref deriv, 0.2f);
 				heldItem.rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(heldItem.transform.rotation, deriv);
 			}
-			else
+			else // Make these just go to 0
 			{
 				Quaternion deriv = QuaternionUtil.AngVelToDeriv(heldItem.transform.rotation, heldItem.rigidbody.angularVelocity);
 				heldItem.transform.rotation = QuaternionUtil.SmoothDamp(heldItem.transform.rotation, Quaternion.identity, ref deriv, 0.2f);
