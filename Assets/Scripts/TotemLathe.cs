@@ -116,9 +116,9 @@ namespace WrightWay.SBEPIS
 		}
 
 		/// <summary>
-		/// Called during the animation, lets you pick up/deposit cards after lathing. Couldn't think of a better name lol
+		/// Called during the animation, lets you pick up/deposit cards after lathin
 		/// </summary>
-		public void Unlathe()
+		public void PostLathe()
 		{
 			dowelPlacement.AllowOrphan();
 			if (card2Placement.item)

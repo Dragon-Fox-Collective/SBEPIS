@@ -37,7 +37,7 @@ namespace WrightWay.SBEPIS
 			base.OnHeld(player);
 
 			if (Input.GetAxis("Mouse ScrollWheel") < 0)
-				player.holdDistance = 1;
+				player.holdDistance = 0.7f;
 			else if (Input.GetAxis("Mouse ScrollWheel") > 0)
 				player.holdDistance = 2;
 

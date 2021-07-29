@@ -21,6 +21,12 @@ namespace WrightWay.SBEPIS
 			captchaHash = dowelPlacement.item.GetComponent<Dowel>().captchaHash;
 		}
 
+		public void StopAlchemizing()
+		{
+			animator.SetBool("Adopted", false);
+			dowelPlacement.collider.enabled = true;
+		}
+
 		public void Alchemize()
 		{
 			ItemType.itemTypes.TryGetValue(captchaHash, out ItemType itemType);
@@ -32,9 +38,10 @@ namespace WrightWay.SBEPIS
 		/// <summary>
 		/// Called during the animation, lets you pick the dowel back up again
 		/// </summary>
-		public void AllowOrphan()
+		public void PostAlchemize()
 		{
 			dowelPlacement.AllowOrphan();
+			dowelPlacement.collider.enabled = false;
 		}
 	}
 }
