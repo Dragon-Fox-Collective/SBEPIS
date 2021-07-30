@@ -1,20 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace WrightWay.SBEPIS
 {
 	public class PunchDesignix : MonoBehaviour
 	{
-		// TODO: Screens
-		/* Screen 1 - 
-		 * Screen 2 - Green/red indicator lights
-		 * Screen 3 - Keypad
-		 */
-
 		public PlacementHelper punchPlacement, keyboardPlacement;
 		public Animator animator;
+
+		public TextMeshProUGUI punchPanel;
 
 		/// <summary>
 		/// Called when a card is inserted, starts the animation
@@ -37,7 +34,7 @@ namespace WrightWay.SBEPIS
 		/// </summary>
 		public void Punch()
 		{
-			if (keyboardPlacement.item)
+			if (keyboardPlacement.item && keyboardPlacement.item.GetComponent<CaptchalogueCard>().heldItem)
 				punchPlacement.item.GetComponent<CaptchalogueCard>().Punch(punchPlacement.item.GetComponent<CaptchalogueCard>().punchedHash | keyboardPlacement.item.GetComponent<CaptchalogueCard>().heldItem.itemType.captchaHash);
 		}
 
@@ -49,6 +46,17 @@ namespace WrightWay.SBEPIS
 		public void KeyboardCardIn()
 		{
 			keyboardPlacement.AllowOrphan();
+			if (keyboardPlacement.item.GetComponent<CaptchalogueCard>().heldItem)
+				punchPanel.text = ItemType.unhashCaptcha(keyboardPlacement.item.GetComponent<CaptchalogueCard>().heldItem.itemType.captchaHash);
+			else
+				punchPanel.text = "00000000";
+			animator.SetBool("Code Entered", true);
+		}
+
+		public void KeyboardCardOut()
+		{
+			punchPanel.text = "";
+			animator.SetBool("Code Entered", false);
 		}
 	}
 }

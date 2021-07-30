@@ -59,7 +59,7 @@ namespace WrightWay.SBEPIS
 
 		public void Eject()
 		{
-			if (!heldItem)
+			if (!heldItem || punchedHash != 0)
 				return;
 
 			heldItem.transform.SetParent(null);

@@ -64,6 +64,9 @@ namespace WrightWay.SBEPIS
 		/// </summary>
 		public static string unhashCaptcha(long captchaHash)
 		{
+			if (captchaHash == -1)
+				return null;
+
 			if ((captchaHash & ~((1L << 48) - 1L)) != 0)
 				throw new ArgumentException("Captcha hash is too big of a value");
 

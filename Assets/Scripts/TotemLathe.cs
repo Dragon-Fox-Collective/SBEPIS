@@ -1,32 +1,34 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace WrightWay.SBEPIS
 {
 	public class TotemLathe : MonoBehaviour
 	{
-		// TODO: Screens
-		/* Screen 1 - Dowel placement alert
-		 * Screen 2 - Power gauge
-		 * Screen 3 - 
-		 * Screen 4 - Card placement alert
-		 * Screen 5 - Card captcha combob
-		 */
-
 		public PlacementHelper card1Placement, card2Placement, dowelPlacement;
 		public Transform dowelReciever;
 		public SkinnedMeshRenderer chisel;
 		public Animator animator;
 		public float latheProgress;
 
-		public Renderer captchaPanel;
+		public TextMeshProUGUI dowelPanel;
+		public TextMeshProUGUI progressPanel;
+		public TextMeshProUGUI unusedPanel;
+		public TextMeshProUGUI cardPanel;
+		public TextMeshProUGUI captchaPanel;
 
 		private bool isLathing;
 		private long captchaHash;
 		private Dowel dowel;
 		private float[] initialBlendShapeWeights = new float[8];
+
+		private void Start()
+		{
+			CardOutFirst();
+		}
 
 		private void Update()
 		{
@@ -39,6 +41,7 @@ namespace WrightWay.SBEPIS
 					float startLatheProgress = 1f - sliceChiselPercent + initialBlendShapeWeights[i];
 					dowel.renderer.SetBlendShapeWeight(i, Math.Max(latheProgress - startLatheProgress, initialBlendShapeWeights[i]) * 100);
 				}
+				progressPanel.text = (latheProgress * 100).ToString("000.") + "%";
 				if (latheProgress == 1)
 					isLathing = false;
 			}
@@ -64,6 +67,8 @@ namespace WrightWay.SBEPIS
 		{
 			animator.SetBool("Adopted", true);
 			dowel = dowelPlacement.item.GetComponent<Dowel>();
+			dowelPanel.text = "Please wait";
+			cardPanel.text = "Please wait";
 		}
 
 		/// <summary>
@@ -134,6 +139,9 @@ namespace WrightWay.SBEPIS
 			{
 				card1Placement.isAdopting = true;
 			}
+			progressPanel.text = "000%";
+			dowelPanel.text = "Insert dowel";
+			UpdateCardPanel();
 		}
 
 		/// <summary>
@@ -151,7 +159,8 @@ namespace WrightWay.SBEPIS
 		{
 			card1Placement.AllowOrphan();
 			card2Placement.collider.enabled = true;
-			captchaPanel.material.SetTexture("Captcha_1", ItemType.GetCaptchaTexture(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash));
+			SetCaptchaPanelText(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash, -1, -1);
+			UpdateCardPanel();
 		}
 
 		/// <summary>
@@ -161,7 +170,8 @@ namespace WrightWay.SBEPIS
 		{
 			card2Placement.collider.enabled = false;
 			animator.SetInteger("Cards", 0);
-			captchaPanel.material.SetTexture("Captcha_1", null);
+			SetCaptchaPanelText(-1, -1, -1);
+			UpdateCardPanel();
 		}
 
 		/// <summary>
@@ -180,9 +190,9 @@ namespace WrightWay.SBEPIS
 			card1Placement.DisallowOrphan();
 			card2Placement.AllowOrphan();
 			animator.SetInteger("Cards", 2);
-			captchaPanel.material.SetTexture("Captcha_2", ItemType.GetCaptchaTexture(card2Placement.item.GetComponent<CaptchalogueCard>().punchedHash));
 			SetCaptchaHash();
-			captchaPanel.material.SetTexture("Captcha_Result", ItemType.GetCaptchaTexture(captchaHash));
+			SetCaptchaPanelText(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash, card2Placement.item.GetComponent<CaptchalogueCard>().punchedHash, captchaHash);
+			UpdateCardPanel();
 		}
 
 		/// <summary>
@@ -192,8 +202,8 @@ namespace WrightWay.SBEPIS
 		{
 			card1Placement.AllowOrphan();
 			animator.SetInteger("Cards", 1);
-			captchaPanel.material.SetTexture("Captcha_2", null);
-			captchaPanel.material.SetTexture("Captcha_Result", null);
+			SetCaptchaPanelText(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash, -1, -1);
+			UpdateCardPanel();
 		}
 
 		/// <summary>
@@ -210,6 +220,30 @@ namespace WrightWay.SBEPIS
 		public void TakeBackTotem()
 		{
 			dowel.transform.SetParent(dowelPlacement.itemParent);
+		}
+
+		private void SetCaptchaPanelText(long hash1, long hash2, long hashRes)
+		{
+			string code1 = ItemType.unhashCaptcha(hash1);
+			string code2 = ItemType.unhashCaptcha(hash2);
+			string codeRes = ItemType.unhashCaptcha(hashRes);
+			captchaPanel.text = $"{code1 ?? "00000000"}\n&\n{code2 ?? "00000000"}\n=\n{codeRes ?? code1 ?? "00000000"}";
+		}
+
+		private void UpdateCardPanel()
+		{
+			switch (animator.GetInteger("Cards"))
+			{
+				case 0:
+					cardPanel.text = "Insert punched card";
+					break;
+				case 1:
+					cardPanel.text = "Lathe dowel\n||\nInsert another card";
+					break;
+				case 2:
+					cardPanel.text = "Lathe dowel";
+					break;
+			}
 		}
 	}
 }
