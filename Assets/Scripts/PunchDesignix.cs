@@ -10,8 +10,11 @@ namespace WrightWay.SBEPIS
 	{
 		public PlacementHelper punchPlacement, keyboardPlacement;
 		public Animator animator;
+		public Transform cameraParent;
 
-		public TextMeshProUGUI punchPanel;
+		public TMP_InputField punchPanel;
+
+		private Player editingPlayer;
 
 		/// <summary>
 		/// Called when a card is inserted, starts the animation
@@ -34,8 +37,11 @@ namespace WrightWay.SBEPIS
 		/// </summary>
 		public void Punch()
 		{
-			if (keyboardPlacement.item && keyboardPlacement.item.GetComponent<CaptchalogueCard>().heldItem)
-				punchPlacement.item.GetComponent<CaptchalogueCard>().Punch(punchPlacement.item.GetComponent<CaptchalogueCard>().punchedHash | keyboardPlacement.item.GetComponent<CaptchalogueCard>().heldItem.itemType.captchaHash);
+			if (animator.GetBool("Code Entered"))
+			{
+				punchPlacement.item.GetComponent<CaptchalogueCard>().Punch(punchPlacement.item.GetComponent<CaptchalogueCard>().punchedHash | ItemType.hashCaptcha(punchPanel.text));
+				punchPanel.text = "";
+			}
 		}
 
 		public void PostPunch()
@@ -46,17 +52,30 @@ namespace WrightWay.SBEPIS
 		public void KeyboardCardIn()
 		{
 			keyboardPlacement.AllowOrphan();
-			if (keyboardPlacement.item.GetComponent<CaptchalogueCard>().heldItem)
-				punchPanel.text = ItemType.unhashCaptcha(keyboardPlacement.item.GetComponent<CaptchalogueCard>().heldItem.itemType.captchaHash);
-			else
-				punchPanel.text = "00000000";
-			animator.SetBool("Code Entered", true);
 		}
 
-		public void KeyboardCardOut()
+		public void TakeCamera(Player player)
 		{
-			punchPanel.text = "";
-			animator.SetBool("Code Entered", false);
+			editingPlayer = player;
+			player.SetPlayerMode(Player.PlayerMode.Keyboard, cameraParent);
+			punchPanel.Select();
+		}
+
+		public void GiveCamera()
+		{
+			if (editingPlayer)
+			{
+				editingPlayer.SetPlayerMode(Player.PlayerMode.Normal);
+				editingPlayer = null;
+			}
+		}
+		
+		public void SetPunchText(string text)
+		{
+			animator.SetBool("Code Entered", text.Length == 8);
+
+			//while (punchPanel.textComponent.text.Length < 8)
+			//	punchPanel.textComponent.text += " ";
 		}
 	}
 }

@@ -9,6 +9,7 @@ namespace WrightWay.SBEPIS
 	public class Player : MonoBehaviour
 	{
 		public new Camera camera;
+		public Transform cameraParent;
 		public float sensitivity = 1000f;
 		public float speed = 12f;
 		public float jumpHeight = 3f;
@@ -28,6 +29,9 @@ namespace WrightWay.SBEPIS
 		/// Used as a target by captchalogue cards to flip them around
 		/// </summary>
 		private Quaternion forceFlip = Quaternion.identity;
+		private Vector3 cameraVel;
+		private Quaternion cameraDeriv;
+		private PlayerMode mode;
 
 		private void Awake()
 		{
@@ -42,9 +46,13 @@ namespace WrightWay.SBEPIS
 
 		private void Update()
 		{
-			UpdateLook();
-			UpdateMove();
+			if (mode == PlayerMode.Normal)
+			{
+				UpdateLook();
+				UpdateMove();
+			}
 			UpdateHeldItem();
+			UpdateCameraDamping();
 		}
 
 		private void UpdateLook()
@@ -54,7 +62,7 @@ namespace WrightWay.SBEPIS
 			transform.Rotate(Vector3.up * look.x);
 
 			camXRot = Mathf.Clamp(camXRot - look.y, -90, 90);
-			camera.transform.localRotation = Quaternion.Euler(camXRot, 0, 0);
+			cameraParent.transform.localRotation = Quaternion.Euler(camXRot, 0, 0);
 		}
 
 		private void UpdateMove()
@@ -73,23 +81,40 @@ namespace WrightWay.SBEPIS
 
 		private void UpdateHeldItem()
 		{
-			CheckPickUp();
-			CheckDrop();
+			if (mode == PlayerMode.Normal)
+			{
+				CheckPickUp();
+				CheckDrop();
+			}
 			CheckHold();
 		}
 
+		/// <summary>
+		/// Handles both picking up items and pressing buttons
+		/// </summary>
 		private void CheckPickUp()
 		{
 			if (heldItem)
 				return;
 
-			if (Input.GetMouseButtonDown(0) && Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, 10f, raycastMask) && hit.rigidbody)
+			if (Input.GetMouseButtonDown(0) && Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, 10f, raycastMask))
 			{
-				Item hitItem = hit.rigidbody.GetComponent<Item>();
-				if (hitItem && hitItem.canPickUp)
+				if (hit.rigidbody)
 				{
-					heldItem = hitItem;
-					heldItem.OnPickedUp(this);
+					Item hitItem = hit.rigidbody.GetComponent<Item>();
+					if (hitItem && hitItem.canPickUp)
+					{
+						heldItem = hitItem;
+						heldItem.OnPickedUp(this);
+					}
+				}
+				else
+				{
+					Button button = hit.collider.GetComponent<Button>();
+					if (button)
+					{
+						button.onPressed.Invoke(this);
+					}
 				}
 			}
 		}
@@ -184,5 +209,28 @@ namespace WrightWay.SBEPIS
 			placement = null;
 			return Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit placementHit, 10f, LayerMask.GetMask("Placement Helper")) && (placement = placementHit.collider.GetComponent<PlacementHelper>()).itemType == itemType && placement.isAdopting;
 		}
+
+		public void SetPlayerMode(PlayerMode mode, Transform newParent)
+		{
+			this.mode = mode;
+			camera.transform.SetParent(newParent);
+		}
+
+		public void SetPlayerMode(PlayerMode mode) => SetPlayerMode(mode, cameraParent);
+
+		private void UpdateCameraDamping()
+		{
+			if (camera.transform.localPosition.sqrMagnitude > 0.001)
+				camera.transform.localPosition = Vector3.SmoothDamp(camera.transform.localPosition, Vector3.zero, ref cameraVel, 0.3f);
+			else
+				camera.transform.localPosition = Vector3.zero;
+
+			if (Quaternion.Angle(camera.transform.localRotation, Quaternion.identity) > 0.001)
+				camera.transform.localRotation = QuaternionUtil.SmoothDamp(camera.transform.localRotation, Quaternion.identity, ref cameraDeriv, 0.2f);
+			else
+				camera.transform.localRotation = Quaternion.identity;
+		}
+
+		public enum PlayerMode { Normal, Keyboard }
 	}
 }
