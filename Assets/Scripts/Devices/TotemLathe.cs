@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace WrightWay.SBEPIS
+namespace WrightWay.SBEPIS.Devices
 {
 	public class TotemLathe : MonoBehaviour
 	{
@@ -100,10 +100,10 @@ namespace WrightWay.SBEPIS
 			}
 
 			SetCaptchaHash();
-			string captchaCode = ItemType.unhashCaptcha(captchaHash);
+			string captchaCode = Itemkind.unhashCaptcha(captchaHash);
 			for (int i = 0; i < 8; i++)
 			{
-				int charIndex = Array.IndexOf(ItemType.hashCharacters, captchaCode[i]);
+				int charIndex = Array.IndexOf(Itemkind.hashCharacters, captchaCode[i]);
 				chisel.SetBlendShapeWeight(i, (1f - charIndex / 63f) * 100);
 			}
 			isLathing = true;
@@ -224,10 +224,10 @@ namespace WrightWay.SBEPIS
 
 		private void SetCaptchaPanelText(long hash1, long hash2, long hashRes)
 		{
-			string code1 = ItemType.unhashCaptcha(hash1);
-			string code2 = ItemType.unhashCaptcha(hash2);
-			string codeRes = ItemType.unhashCaptcha(hashRes);
-			captchaPanel.text = $"{code1 ?? "00000000"}\n&\n{code2 ?? "00000000"}\n=\n{codeRes ?? code1 ?? "00000000"}";
+			string code1 = Itemkind.unhashCaptcha(hash1);
+			string code2 = Itemkind.unhashCaptcha(hash2);
+			string codeRes = Itemkind.unhashCaptcha(hashRes);
+			captchaPanel.text = $"{code1 ?? "00000000"}\n&\n{code2 ?? "!!!!!!!!"}\n=\n{codeRes ?? code1 ?? "00000000"}";
 		}
 
 		private void UpdateCardPanel()

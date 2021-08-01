@@ -256,6 +256,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8785831225670543454}
   - component: {fileID: 150181126797631594}
+  - component: {fileID: 8921524599207216834}
   - component: {fileID: -8202497417499739295}
   m_Layer: 0
   m_Name: Captchalogue Card
@@ -295,7 +296,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-8202497417499739295
+--- !u!114 &8921524599207216834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -304,7 +305,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8261389934084027108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5aa3eaff5132f864bbd3906b994e955f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: {fileID: 11400000, guid: bc896218d4581fd44bb97c62bcc57b6a, type: 2}
@@ -313,6 +314,21 @@ MonoBehaviour:
   onPickUp:
     m_PersistentCalls:
       m_Calls: []
+  onHold:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8202497417499739295}
+        m_TargetAssemblyTypeName: WrightWay.SBEPIS.CaptchalogueCard, Assembly-CSharp
+        m_MethodName: OnHeld
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onDrop:
     m_PersistentCalls:
       m_Calls: []
@@ -346,6 +362,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &-8202497417499739295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8261389934084027108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa3eaff5132f864bbd3906b994e955f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   iconMaterial: {fileID: 2100000, guid: 366e79c2ad9251e40b7bcf77ef1d7749, type: 2}
   captchaMaterial: {fileID: 2100000, guid: f1a726a08ce8cd643896224bdd1373e3, type: 2}
   renderers:

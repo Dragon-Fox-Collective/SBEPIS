@@ -1,13 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using WrightWay.SBEPIS.Player;
 
 namespace WrightWay.SBEPIS
 {
 	[RequireComponent(typeof(Collider))]
 	public class PlacementHelper : MonoBehaviour
 	{
-		public ItemType itemType;
+		public Itemkind itemkind;
 		public Transform itemParent;
 		public bool isAdopting = true;
 		public PlacementEvent onPlace;
@@ -48,7 +49,7 @@ namespace WrightWay.SBEPIS
 			item.canPickUp = true;
 		}
 
-		public void Orphan()
+		public void Orphan(ItemHolder holder)
 		{
 			item.onPickUp.RemoveListener(Orphan);
 			item.rigidbody.isKinematic = false;

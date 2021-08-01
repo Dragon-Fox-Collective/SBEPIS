@@ -48,7 +48,7 @@ namespace WrightWay.SBEPIS
 		/// <summary>
 		/// Deprecated or something
 		/// </summary>
-		public Texture2D Captcha(ItemType itemType)
+		public Texture2D Captcha(Itemkind itemType)
 		{
 			Item instance = Instantiate(itemType.prefab, code.transform.position, code.transform.rotation * Quaternion.Euler(-45, -45, 0));
 			Texture2D rtn = Captcha();
@@ -60,7 +60,7 @@ namespace WrightWay.SBEPIS
 		public Texture2D Captcha(long captchaHash)
 		{
 			code.gameObject.SetActive(true);
-			code.text = ItemType.unhashCaptcha(captchaHash);
+			code.text = Itemkind.unhashCaptcha(captchaHash);
 			Texture2D rtn = Captcha();
 			code.gameObject.SetActive(false);
 			return rtn;

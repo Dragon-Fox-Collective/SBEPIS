@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace WrightWay.SBEPIS
+namespace WrightWay.SBEPIS.Devices
 {
 	public class Alchimiter : MonoBehaviour
 	{
@@ -29,9 +29,9 @@ namespace WrightWay.SBEPIS
 
 		public void Alchemize()
 		{
-			ItemType.itemTypes.TryGetValue(captchaHash, out ItemType itemType);
+			Itemkind.itemkind.TryGetValue(captchaHash, out Itemkind itemType);
 			if (!itemType)
-				ItemType.itemTypes.TryGetValue(0, out itemType);
+				Itemkind.itemkind.TryGetValue(0, out itemType);
 			Instantiate(itemType.prefab, spawnPoint.position, spawnPoint.rotation);
 		}
 

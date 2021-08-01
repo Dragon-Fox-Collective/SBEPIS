@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using WrightWay.SBEPIS.Player;
 
 namespace WrightWay.SBEPIS
 {
@@ -13,5 +14,5 @@ namespace WrightWay.SBEPIS
 	}
 
 	[Serializable]
-	public class ButtonEvent : UnityEvent<Player> { }
+	public class ButtonEvent : UnityEvent<ItemHolder> { }
 }

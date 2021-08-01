@@ -1,13 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using WrightWay.SBEPIS.Player;
 
 namespace WrightWay.SBEPIS
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class Item : MonoBehaviour
 	{
-		public ItemType itemType;
+		public Itemkind itemkind;
 		/// <summary>
 		/// Rotation to use when taking a picture of this item
 		/// </summary>
@@ -16,10 +17,10 @@ namespace WrightWay.SBEPIS
 		/// Scale to use when taking a picture of this item
 		/// </summary>
 		public float captchaScale = 1f;
-		public ItemEvent onPickUp, onDrop;
+		public ItemEvent onPickUp, onHold, onDrop;
 		public CaptchaEvent preCaptcha, postCaptcha;
 
-		public Player holdingPlayer { get; private set; }
+		public ItemHolder holdingHolder { get; private set; }
 		public bool canPickUp { get; set; }
 		public new Rigidbody rigidbody { get; private set; }
 
@@ -29,29 +30,29 @@ namespace WrightWay.SBEPIS
 			canPickUp = true;
 		}
 
-		public virtual void OnPickedUp(Player player)
+		public void OnPickedUp(ItemHolder player)
 		{
-			holdingPlayer = player;
+			holdingHolder = player;
 
 			SetLayerRecursively(gameObject, LayerMask.NameToLayer("Held Item"));
 			rigidbody.useGravity = false;
 
-			onPickUp.Invoke();
+			onPickUp.Invoke(player);
 		}
 
-		public virtual void OnHeld(Player player)
+		public void OnHeld(ItemHolder player)
 		{
-
+			onHold.Invoke(player);
 		}
 
-		public virtual void OnDropped(Player player)
+		public void OnDropped(ItemHolder player)
 		{
-			holdingPlayer = null;
+			holdingHolder = null;
 
 			SetLayerRecursively(gameObject, LayerMask.NameToLayer("Default"));
 			rigidbody.useGravity = true;
 
-			onDrop.Invoke();
+			onDrop.Invoke(player);
 		}
 
 		public static void SetLayerRecursively(GameObject gameObject, int layer)
@@ -63,7 +64,7 @@ namespace WrightWay.SBEPIS
 	}
 
 	[Serializable]
-	public class ItemEvent : UnityEvent { }
+	public class ItemEvent : UnityEvent<ItemHolder> { }
 
 	[Serializable]
 	public class CaptchaEvent : UnityEvent { }

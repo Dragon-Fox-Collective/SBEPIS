@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using WrightWay.SBEPIS.Player;
 
-namespace WrightWay.SBEPIS
+namespace WrightWay.SBEPIS.Devices
 {
 	public class PunchDesignix : MonoBehaviour
 	{
@@ -14,7 +15,7 @@ namespace WrightWay.SBEPIS
 
 		public TMP_InputField punchPanel;
 
-		private Player editingPlayer;
+		private PlayerModeSwapper editingPlayer;
 
 		/// <summary>
 		/// Called when a card is inserted, starts the animation
@@ -39,7 +40,7 @@ namespace WrightWay.SBEPIS
 		{
 			if (animator.GetBool("Code Entered"))
 			{
-				punchPlacement.item.GetComponent<CaptchalogueCard>().Punch(punchPlacement.item.GetComponent<CaptchalogueCard>().punchedHash | ItemType.hashCaptcha(punchPanel.text));
+				punchPlacement.item.GetComponent<CaptchalogueCard>().Punch(punchPlacement.item.GetComponent<CaptchalogueCard>().punchedHash | Itemkind.hashCaptcha(punchPanel.text));
 				punchPanel.text = "";
 			}
 		}
@@ -54,10 +55,10 @@ namespace WrightWay.SBEPIS
 			keyboardPlacement.AllowOrphan();
 		}
 
-		public void TakeCamera(Player player)
+		public void TakeCamera(ItemHolder playerItemHolder)
 		{
-			editingPlayer = player;
-			player.SetPlayerMode(Player.PlayerMode.Keyboard, cameraParent);
+			editingPlayer = playerItemHolder.GetComponent<PlayerModeSwapper>();
+			editingPlayer.SetPlayerMode(PlayerModeSwapper.PlayerMode.Keyboard, cameraParent);
 			punchPanel.Select();
 		}
 
@@ -65,7 +66,7 @@ namespace WrightWay.SBEPIS
 		{
 			if (editingPlayer)
 			{
-				editingPlayer.SetPlayerMode(Player.PlayerMode.Normal);
+				editingPlayer.SetPlayerMode(PlayerModeSwapper.PlayerMode.Normal);
 				editingPlayer = null;
 			}
 		}

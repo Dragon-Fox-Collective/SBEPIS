@@ -5,9 +5,9 @@ using UnityEngine;
 namespace WrightWay.SBEPIS
 {
 	[CreateAssetMenu]
-	public class ItemType : ScriptableObject
+	public class Itemkind : ScriptableObject
 	{
-		public static readonly Dictionary<long, ItemType> itemTypes = new Dictionary<long, ItemType>();
+		public static readonly Dictionary<long, Itemkind> itemkind = new Dictionary<long, Itemkind>();
 		private static readonly Dictionary<long, Texture2D> captchaTextures = new Dictionary<long, Texture2D>();
 
 		public string itemName;
@@ -25,7 +25,7 @@ namespace WrightWay.SBEPIS
 			if (captchaCode != null)
 			{
 				captchaHash = hashCaptcha(captchaCode);
-				itemTypes.Add(captchaHash, this);
+				itemkind.Add(captchaHash, this);
 			}
 		}
 
