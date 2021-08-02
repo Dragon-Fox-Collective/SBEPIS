@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: {fileID: 11400000, guid: bc896218d4581fd44bb97c62bcc57b6a, type: 2}
+  itemkind: {fileID: 11400000, guid: bc896218d4581fd44bb97c62bcc57b6a, type: 2}
   captchaRotation: {x: 0, y: 0, z: 0, w: 1}
   captchaScale: 8
   onPickUp:
@@ -316,19 +316,7 @@ MonoBehaviour:
       m_Calls: []
   onHold:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -8202497417499739295}
-        m_TargetAssemblyTypeName: WrightWay.SBEPIS.CaptchalogueCard, Assembly-CSharp
-        m_MethodName: OnHeld
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onDrop:
     m_PersistentCalls:
       m_Calls: []

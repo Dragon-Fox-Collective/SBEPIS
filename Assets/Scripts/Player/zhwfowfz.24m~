@@ -24,16 +24,16 @@ namespace WrightWay.SBEPIS.Player
 				_isViewing = value;
 				if (_isViewing)
 				{
-					playerInput.actions.FindAction("Pick Up").Disable();
+					playerInput.actions.FindAction("Use").Disable();
 					playerInput.actions.FindAction("Captchalogue Mode").Enable();
 					sylladexParentRotTarget = Quaternion.identity;
 					sylladexParentScaleTarget = Vector3.one;
 				}
 				else
 				{
-					playerInput.actions.FindAction("Pick Up").Enable();
+					playerInput.actions.FindAction("Use").Enable();
 					playerInput.actions.FindAction("Captchalogue Mode").Disable();
-					sylladexParentRotTarget = Quaternion.Euler(0, -90, 0);
+					sylladexParentRotTarget = Quaternion.AngleAxis(-90, Vector3.up);
 					sylladexParentScaleTarget = Vector3.zero;
 				}
 			}
@@ -48,21 +48,14 @@ namespace WrightWay.SBEPIS.Player
 				if (_canCaptchalogue)
 				{
 					playerInput.actions.FindAction("Captchalogue").Enable();
-					playerInput.actions.FindAction("Captchalogue Use").Enable();
-					sylladexPosTarget = new Vector3(0, -0.25f, 1);
-					sylladexRotTarget = Quaternion.Euler(-90, 180, 0);
+					sylladexRotTarget = Quaternion.AngleAxis(-90);
 				}
 				else
 				{
 					playerInput.actions.FindAction("Captchalogue").Disable();
-					playerInput.actions.FindAction("Captchalogue Use").Disable();
-					sylladexPosTarget = new Vector3(0, 0, 1);
-					sylladexRotTarget = Quaternion.Euler(0, 180, 0);
 				}
 			}
 		}
-		private Vector3 sylladexPosTarget;
-		private Vector3 sylladexPosTargetVel;
 		private Quaternion sylladexRotTarget;
 		private Quaternion sylladexRotDeriv;
 		private Quaternion sylladexParentRotTarget;
@@ -78,26 +71,12 @@ namespace WrightWay.SBEPIS.Player
 
 		private void Update()
 		{
-			sylladex.transform.localPosition = Vector3.SmoothDamp(sylladex.transform.localPosition, sylladexPosTarget, ref sylladexPosTargetVel, 0.1f);
-			sylladex.transform.localRotation = QuaternionUtil.SmoothDamp(sylladex.transform.localRotation, sylladexRotTarget, ref sylladexRotDeriv, 0.1f);
 			sylladexParent.localRotation = QuaternionUtil.SmoothDamp(sylladexParent.localRotation, sylladexParentRotTarget, ref sylladexParentRotDeriv, 0.2f);
 			sylladexParent.localScale = Vector3.SmoothDamp(sylladexParent.localScale, sylladexParentScaleTarget, ref sylladexParentScaleVel, 0.1f);
 
 			if (retrievingItem)
 				itemHolder.UpdateItem(retrievingItem);
-		}
 
-		private void OnViewSylladex()
-		{
-			if (sylladex.isWorking)
-				return;
-
-			IsViewing = !IsViewing;
-		}
-
-		private void OnCaptchalogueMode(InputValue value)
-		{
-			CanCaptchalogue = value.isPressed;
 		}
 
 		private void OnCaptchalogue()
@@ -113,38 +92,33 @@ namespace WrightWay.SBEPIS.Player
 			{
 				retrievingItem.gameObject.SetActive(true);
 				retrievingItem.transform.SetParent(null);
+				retrievingItem.onPickUp.AddListener(Retrieve);
 			}
 			else if (retrievingItem)
 			{
+				retrievingItem.onPickUp.RemoveListener(Retrieve);
 				retrievingItem.gameObject.SetActive(false);
 				retrievingItem.transform.SetParent(sylladex.transform, this);
 				retrievingItem = null;
 			}
 		}
 
-		private void OnCaptchalogueUse()
+		private void Retrieve(ItemHolder holder)
 		{
-			if (retrievingItem)
-			{
-				sylladex.Retrieve(this);
-				retrievingItem = null;
-				return;
-			}
-
-			if (sylladex.isWorking)
-				return;
-
-			CaptchalogueCard hitCard;
-			if (Physics.Raycast(itemHolder.camera.position, itemHolder.camera.forward, out RaycastHit captchaHit, itemHolder.maxDistance) && captchaHit.rigidbody && (hitCard = captchaHit.rigidbody.GetComponent<CaptchalogueCard>()) && hitCard.punchedHash == 0)
-				sylladex.InsertCard(hitCard);
+			sylladex.Retrieve();
+			retrievingItem.transform.SetParent(null);
+			retrievingItem.onPickUp.RemoveListener(Retrieve);
+			retrievingItem = null;
 		}
 
-		private void OnCaptchaloguePrint()
+		private void OnViewSylladex()
 		{
-			if (sylladex.isWorking)
-				return;
+			IsViewing = !IsViewing;
+		}
 
-			sylladex.RetrieveCard();
+		private void OnCaptchalogueMode(InputValue value)
+		{
+			CanCaptchalogue = value.isPressed;
 		}
 	}
 }

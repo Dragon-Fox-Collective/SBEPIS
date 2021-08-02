@@ -10,6 +10,7 @@ namespace WrightWay.SBEPIS.Player
 	{
 		public new Transform camera;
 		public LayerMask raycastMask;
+		public float maxDistance = 10f;
 
 		public Item heldItem { get; private set; }
 		private Quaternion cardForcedRotTarget = Quaternion.identity;
@@ -84,9 +85,9 @@ namespace WrightWay.SBEPIS.Player
 		/// <summary>
 		/// Handles both picking up items and pressing buttons
 		/// </summary>
-		private void OnUse(InputValue value)
+		private void OnPickUp(InputValue value)
 		{
-			if (value.isPressed && !heldItem && Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, 10f, raycastMask))
+			if (value.isPressed && !heldItem && Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, maxDistance, raycastMask))
 			{
 				if (hit.rigidbody)
 				{
@@ -132,7 +133,7 @@ namespace WrightWay.SBEPIS.Player
 		private bool RaycastPlacementHelper(out PlacementHelper placement, Itemkind itemkind)
 		{
 			placement = null;
-			return Physics.Raycast(camera.position, camera.forward, out RaycastHit placementHit, 10f, LayerMask.GetMask("Placement Helper")) && (placement = placementHit.collider.GetComponent<PlacementHelper>()).itemkind == itemkind && placement.isAdopting;
+			return Physics.Raycast(camera.position, camera.forward, out RaycastHit placementHit, maxDistance, LayerMask.GetMask("Placement Helper")) && (placement = placementHit.collider.GetComponent<PlacementHelper>()).itemkind == itemkind && placement.isAdopting;
 		}
 	}
 }

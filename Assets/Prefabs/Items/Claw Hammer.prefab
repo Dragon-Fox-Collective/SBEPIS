@@ -158,10 +158,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: {fileID: 11400000, guid: 267b1758c30eca2499bc1a700142edab, type: 2}
+  itemkind: {fileID: 11400000, guid: 267b1758c30eca2499bc1a700142edab, type: 2}
   captchaRotation: {x: 0.1830127, y: 0.68301266, z: -0.1830127, w: 0.68301266}
   captchaScale: 2.5
   onPickUp:
+    m_PersistentCalls:
+      m_Calls: []
+  onHold:
     m_PersistentCalls:
       m_Calls: []
   onDrop:

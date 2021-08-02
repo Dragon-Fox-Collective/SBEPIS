@@ -21,18 +21,18 @@ namespace WrightWay.SBEPIS
 		public void Captchalogue(Item item, SylladexOwner owner)
 		{
 			Eject(modus.Insert(item), owner);
-
 			foreach (Transform oldDisplay in insertParent)
 			{
 				oldDisplay.gameObject.SetActive(false);
 				oldDisplay.SetParent(transform);
 			}
-
 			CaptchalogueCard newDisplay = modus.Display();
-			newDisplay.gameObject.SetActive(true);
-			newDisplay.transform.SetParent(insertParent);
-			newDisplay.transform.localPosition = Vector3.zero;
-			newDisplay.transform.localRotation = Quaternion.identity;
+			{
+				newDisplay.gameObject.SetActive(true);
+				newDisplay.transform.SetParent(insertParent);
+				newDisplay.transform.localPosition = Vector3.zero;
+				newDisplay.transform.localRotation = Quaternion.identity;
+			}
 		}
 
 		public Item Display()
@@ -64,7 +64,7 @@ namespace WrightWay.SBEPIS
 		
 		public void InsertCard(CaptchalogueCard card)
 		{
-			if (modus.cards.Count != 0 && modus.Display().heldItem && card.heldItem && modus.flippedInsert)
+			if (modus.cards.Count != 0 && modus.Display().heldItem && !(card.heldItem && modus.flippedInsert))
 			{
 				card.transform.SetParent(retrieveParent);
 				animator.SetInteger("RetrieveState", 1);

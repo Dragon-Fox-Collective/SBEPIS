@@ -125,9 +125,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: {fileID: 11400000, guid: 1a032a23062eb46489275c9504c6e084, type: 2}
+  itemkind: {fileID: 11400000, guid: 1a032a23062eb46489275c9504c6e084, type: 2}
   captchaRotation: {x: -0.3535534, y: 0.14644663, z: 0.3535534, w: 0.85355335}
   captchaScale: 2
+  onPickUp:
+    m_PersistentCalls:
+      m_Calls: []
+  onHold:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
   preCaptcha:
     m_PersistentCalls:
       m_Calls: []

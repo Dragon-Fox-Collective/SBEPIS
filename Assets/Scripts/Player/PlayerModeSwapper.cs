@@ -35,6 +35,6 @@ namespace WrightWay.SBEPIS.Player
 
 		public void SetPlayerMode(PlayerMode mode) => SetPlayerMode(mode, cameraParent);
 
-		public enum PlayerMode { Normal, Keyboard }
+		public enum PlayerMode { Normal, Keyboard, Sylladex }
 	}
 }

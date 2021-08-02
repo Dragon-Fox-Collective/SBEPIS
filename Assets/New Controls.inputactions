@@ -30,7 +30,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Use",
+                    "name": "Pick Up",
                     "type": "Value",
                     "id": "827923db-6895-4ebb-8f4c-c57bcefb03ac",
                     "expectedControlType": "Axis",
@@ -54,14 +54,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Captchalogue",
-                    "type": "Button",
-                    "id": "6d9f3ecf-2207-42c8-be1b-076d490acee2",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Retrieve",
                     "type": "Value",
                     "id": "dc7cf242-0c2b-4f77-95ab-7679a89a56de",
@@ -71,9 +63,41 @@
                 },
                 {
                     "name": "View Sylladex",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "376f1b53-0f3b-47d0-8db7-f8b972766b84",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Captchalogue Mode",
+                    "type": "Value",
+                    "id": "83ffb369-434b-49e0-9213-e9ac0b3490d8",
                     "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Captchalogue",
+                    "type": "Button",
+                    "id": "6d9f3ecf-2207-42c8-be1b-076d490acee2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Captchalogue Use",
+                    "type": "Button",
+                    "id": "16150b48-9206-41e8-9b21-143a05ba69d4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Captchalogue Print",
+                    "type": "Button",
+                    "id": "5045c525-0eb7-4cc7-841f-9e96c81b27fb",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -174,7 +198,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Use",
+                    "action": "Pick Up",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -186,17 +210,6 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Zoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0c045a84-2c3b-4a37-adf3-32f44f223f30",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Captchalogue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -219,6 +232,50 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "View Sylladex",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "101362be-457c-4cc5-ace2-14ebef34fa25",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Captchalogue Mode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0c045a84-2c3b-4a37-adf3-32f44f223f30",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Captchalogue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5ba0a0f-151c-4483-ae3f-ff9f02e04a1a",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Captchalogue Use",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dc31b843-1a93-4539-b5ea-31bb24d1bd09",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Captchalogue Print",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

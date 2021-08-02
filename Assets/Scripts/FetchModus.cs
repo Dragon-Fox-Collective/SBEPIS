@@ -6,99 +6,106 @@ namespace WrightWay.SBEPIS.Modus
 {
 	public abstract class FetchModus
 	{
-		protected abstract int DepositIndex(List<Item> cards);
+		public FetchModus(FetchModus oldModus)
+		{
+			if (oldModus != null)
+				foreach (CaptchalogueCard card in oldModus.cards)
+					if (card)
+						InsertCard(card);
+		}
 
-		protected abstract int EjectIndex(List<Item> cards);
-
-		protected abstract int RetrieveIndex(List<Item> cards);
+		public abstract ICollection<CaptchalogueCard> cards { get; }
+		public virtual bool flippedInsert => false;
+		public virtual bool flippedRetrieve => false;
 
 		/// <returns>An item to eject</returns>
-		public virtual Item Deposit(Item item, List<Item> cards)
+		public virtual Item Insert(Item item)
 		{
-			int ejectIndex = EjectIndex(cards);
-			Item rtn = cards[ejectIndex];
-			cards.RemoveAt(ejectIndex);
-
-			cards.Insert(DepositIndex(cards), item);
-
+			CaptchalogueCard card = EjectCard();
+			Item rtn = card.heldItem;
+			card.Eject();
+			card.Captchalogue(item);
+			InsertCard(card);
 			return rtn;
 		}
 
-		public virtual Item Display(List<Item> cards)
+		public abstract void InsertCard(CaptchalogueCard card);
+
+		public abstract CaptchalogueCard Display();
+
+		public virtual Item Retrieve()
 		{
-			return cards[RetrieveIndex(cards)];
-		}
-
-		public virtual Item Retrieve(List<Item> cards, bool asCard)
-		{
-			int retrieveIndex = RetrieveIndex(cards);
-			Item rtn = cards[retrieveIndex];
-			cards.RemoveAt(retrieveIndex);
-
-			if (!asCard)
-				cards.Insert(EjectIndex(cards), null);
-
+			CaptchalogueCard card = RetrieveCard();
+			Item rtn = card.heldItem;
+			card.Eject();
+			InsertCard(card);
 			return rtn;
 		}
 
-		public virtual void Clean(List<Item> cards, bool asCard) { }
+		public virtual CaptchalogueCard RetrieveCard()
+		{
+			CaptchalogueCard rtn = Display();
+			cards.Remove(rtn);
+			return rtn;
+		}
+
+		protected abstract CaptchalogueCard EjectCard();
 	}
 
 	public class StackModus : FetchModus
 	{
-		protected override int DepositIndex(List<Item> cards)
+		public StackModus(FetchModus oldModus) : base(oldModus) { }
+
+		private List<CaptchalogueCard> _cards = new List<CaptchalogueCard>();
+		public override ICollection<CaptchalogueCard> cards => _cards;
+		public override bool flippedRetrieve => true;
+
+		public override void InsertCard(CaptchalogueCard card)
 		{
-			return 0;
+			if (card.heldItem)
+				_cards.Insert(0, card);
+			else
+				_cards.Add(card);
 		}
 
-		protected override int EjectIndex(List<Item> cards)
+		public override CaptchalogueCard Display()
 		{
-			return cards.Count - 1;
+			return _cards.Count == 0 ? null : _cards[0];
 		}
 
-		protected override int RetrieveIndex(List<Item> cards)
+		protected override CaptchalogueCard EjectCard()
 		{
-			return 0;
-		}
-
-		public override void Clean(List<Item> cards, bool asCard)
-		{
-			int insertIndex = 0;
-			for (int i = 0; i < cards.Count; i++)
-				if (cards[i])
-				{
-					cards.Insert(insertIndex++, cards[i]);
-					cards.RemoveAt(i + 1);
-				}
+			CaptchalogueCard card = _cards[_cards.Count - 1];
+			_cards.RemoveAt(_cards.Count - 1);
+			return card;
 		}
 	}
 
 	public class QueueModus : FetchModus
 	{
-		protected override int DepositIndex(List<Item> cards)
+		public QueueModus(FetchModus oldModus) : base(oldModus) { }
+
+		private List<CaptchalogueCard> _cards = new List<CaptchalogueCard>();
+		public override ICollection<CaptchalogueCard> cards => _cards;
+
+		public override void InsertCard(CaptchalogueCard card)
 		{
-			return cards.Count - 1;
+			if (card.heldItem)
+				_cards.Add(card);
+			else
+				_cards.Insert(0, null);
 		}
 
-		protected override int EjectIndex(List<Item> cards)
+		public override CaptchalogueCard Display()
 		{
-			return 0;
+			return _cards.Count == 0 ? null : _cards[Mathf.Max(_cards.FindIndex(card => card.heldItem != null), 0)];
 		}
 
-		protected override int RetrieveIndex(List<Item> cards)
+		protected override CaptchalogueCard EjectCard()
 		{
-			return cards.FindIndex(item => item != null);
-		}
-
-		public override void Clean(List<Item> cards, bool asCard)
-		{
-			int insertIndex = cards.Count - 1;
-			for (int i = cards.Count - 1; i >= 0; i--)
-				if (cards[i])
-				{
-					cards.Insert(insertIndex--, cards[i]);
-					cards.RemoveAt(i);
-				}
+			CaptchalogueCard card = _cards[_cards.Count - 1];
+			_cards.RemoveAt(_cards.Count - 1);
+			return card;
 		}
 	}
 }

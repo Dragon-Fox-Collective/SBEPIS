@@ -23,12 +23,21 @@ namespace WrightWay.SBEPIS
 
 		private void Start()
 		{
-			UpdateMaterials(0, null);
+			Eject();
 		}
 
 		public void Captchalogue(Item item)
 		{
+			heldItem = item;
+			item.gameObject.SetActive(false);
+			item.transform.SetParent(transform);
 			UpdateMaterials(item.itemkind.captchaHash, GameManager.instance.captcharoid.Captcha(item));
+		}
+
+		public void Eject()
+		{
+			heldItem = null;
+			UpdateMaterials(0, null);
 		}
 
 		private void UpdateMaterials(long captchaHash, Texture2D icon)
@@ -62,6 +71,18 @@ namespace WrightWay.SBEPIS
 
 			for (int i = 0; i < 48; i++)
 				holeCaps.SetBlendShapeWeight(i, Math.Min(punchedHash & (1L << i), 1) * 100);
+		}
+
+		public void OnInserted()
+		{
+			rigidbody.isKinematic = true;
+			rigidbody.detectCollisions = false;
+		}
+
+		public void OnRetrieved()
+		{
+			rigidbody.isKinematic = false;
+			rigidbody.detectCollisions = true;
 		}
 	}
 }
