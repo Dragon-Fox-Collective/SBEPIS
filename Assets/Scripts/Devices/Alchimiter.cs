@@ -38,6 +38,10 @@ namespace WrightWay.SBEPIS.Devices
 				{
 					isAlchemizing = false;
 					alchemizingTimer = 0;
+					thingsToAlchemize = 1;
+					UpdateAlchemizedText();
+					animator.SetBool("Alchemizing", false);
+					dowelPlacement.isAdopting = true;
 				}
 			}
 		}
@@ -56,12 +60,6 @@ namespace WrightWay.SBEPIS.Devices
 			animator.SetTrigger("Alc Button");
 			dowelPlacement.DisallowOrphan();
 			captchaHash = dowelPlacement.item.GetComponent<Dowel>().captchaHash;
-		}
-
-		public void StopAlchemizing()
-		{
-			animator.SetBool("Alchemizing", false);
-			dowelPlacement.isAdopting = true;
 		}
 
 		public void Alchemize()

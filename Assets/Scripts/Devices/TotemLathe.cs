@@ -66,11 +66,13 @@ namespace WrightWay.SBEPIS.Devices
 		{
 			dowel = dowelPlacement.item.GetComponent<Dowel>();
 			dowelPlacement.AllowOrphan();
+			UpdateDowelPanel();
 		}
 
 		public void RemoveDowel()
 		{
 			dowel = null;
+			UpdateDowelPanel();
 		}
 
 		public void HitLever1()
@@ -79,6 +81,7 @@ namespace WrightWay.SBEPIS.Devices
 				return;
 
 			isWorking = true;
+			dowelPanel.text = "Please wait";
 			animator.SetBool("Lever 1 Pulled", !animator.GetBool("Lever 1 Pulled"));
 			if (animator.GetBool("Lever 1 Pulled"))
 				if (dowel)
@@ -101,6 +104,7 @@ namespace WrightWay.SBEPIS.Devices
 				return;
 
 			isWorking = true;
+			dowelPanel.text = "Please wait";
 			animator.SetBool("Lever 2 Pulled", !animator.GetBool("Lever 2 Pulled"));
 			if (!animator.GetBool("Lever 1 Pulled"))
 				dowelPlacement.isAdopting = false;
@@ -125,13 +129,13 @@ namespace WrightWay.SBEPIS.Devices
 				card1Placement.isAdopting = true;
 			}
 			progressPanel.text = "000%";
-			dowelPanel.text = "Insert dowel";
 			UpdateCardPanel();
 		}
 
 		public void ResetLevers()
 		{
 			isWorking = false;
+			UpdateDowelPanel();
 		}
 
 		/// <summary>
@@ -192,8 +196,7 @@ namespace WrightWay.SBEPIS.Devices
 		{
 			card1Placement.AllowOrphan();
 			card2Placement.collider.enabled = true;
-			SetCaptchaPanelText(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash, -1, -1);
-			UpdateCardPanel();
+			UpdatePanels();
 		}
 
 		/// <summary>
@@ -203,8 +206,7 @@ namespace WrightWay.SBEPIS.Devices
 		{
 			card2Placement.collider.enabled = false;
 			animator.SetInteger("Cards", 0);
-			SetCaptchaPanelText(-1, -1, -1);
-			UpdateCardPanel();
+			UpdatePanels();
 		}
 
 		/// <summary>
@@ -223,9 +225,7 @@ namespace WrightWay.SBEPIS.Devices
 			card1Placement.DisallowOrphan();
 			card2Placement.AllowOrphan();
 			animator.SetInteger("Cards", 2);
-			SetCaptchaHash();
-			SetCaptchaPanelText(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash, card2Placement.item.GetComponent<CaptchalogueCard>().punchedHash, captchaHash);
-			UpdateCardPanel();
+			UpdatePanels();
 		}
 
 		/// <summary>
@@ -235,8 +235,7 @@ namespace WrightWay.SBEPIS.Devices
 		{
 			card1Placement.AllowOrphan();
 			animator.SetInteger("Cards", 1);
-			SetCaptchaPanelText(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash, -1, -1);
-			UpdateCardPanel();
+			UpdatePanels();
 		}
 
 		public void HandOffTotem()
@@ -251,12 +250,20 @@ namespace WrightWay.SBEPIS.Devices
 				dowel.transform.SetParent(dowelPlacement.itemParent);
 		}
 
-		private void SetCaptchaPanelText(long hash1, long hash2, long hashRes)
+		private void UpdatePanels()
 		{
-			string code1 = Itemkind.unhashCaptcha(hash1);
-			string code2 = Itemkind.unhashCaptcha(hash2);
-			string codeRes = Itemkind.unhashCaptcha(hashRes);
-			captchaPanel.text = $"{code1 ?? "00000000"}\n&\n{code2 ?? "!!!!!!!!"}\n=\n{codeRes ?? code1 ?? "00000000"}";
+			SetCaptchaHash();
+			UpdateCaptchaPanel();
+			UpdateCardPanel();
+			UpdateDowelPanel();
+		}
+
+		private void UpdateCaptchaPanel()
+		{
+			string code1 = card1Placement.item ? Itemkind.unhashCaptcha(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash) : "00000000";
+			string code2 = card2Placement.item ? Itemkind.unhashCaptcha(card2Placement.item.GetComponent<CaptchalogueCard>().punchedHash) : "!!!!!!!!";
+			string codeRes = Itemkind.unhashCaptcha(captchaHash);
+			captchaPanel.text = $"{code1}\n&\n{code2}\n=\n{codeRes}";
 		}
 
 		private void UpdateCardPanel()
@@ -273,6 +280,28 @@ namespace WrightWay.SBEPIS.Devices
 					cardPanel.text = "Lathe dowel";
 					break;
 			}
+		}
+
+		private void UpdateDowelPanel()
+		{
+			bool lowerPulled = animator.GetBool("Lever 1 Pulled"), upperPulled = animator.GetBool("Lever 2 Pulled");
+			if (!dowel && !lowerPulled && !upperPulled)
+				dowelPanel.text = "Insert dowel";
+			else if (( dowel && dowel.captchaHash == 0 && !lowerPulled && !upperPulled) ||
+					 ( dowel && dowel.captchaHash != 0 &&  lowerPulled && !upperPulled) ||
+					 (!dowel &&							   lowerPulled && !upperPulled))
+				dowelPanel.text = "Pull lower lever";
+			else if (( dowel && dowel.captchaHash == 0 &&  lowerPulled && !upperPulled && captchaHash != 0) ||
+					 ( dowel &&							   lowerPulled &&  upperPulled) ||
+					 (!dowel &&											   upperPulled))
+				dowelPanel.text = "Pull upper lever";
+			else if (  dowel && dowel.captchaHash == 0 &&  lowerPulled && !upperPulled && captchaHash == 0)
+				dowelPanel.text = "Invalid punch code";
+			else if (( dowel && dowel.captchaHash != 0 && !lowerPulled && !upperPulled) ||
+					 (!dowel &&							  !lowerPulled && !upperPulled))
+				dowelPanel.text = "Remove dowel";
+			else
+				dowelPanel.text = "Error";
 		}
 	}
 }
