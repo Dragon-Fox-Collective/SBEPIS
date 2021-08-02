@@ -21,7 +21,11 @@ namespace WrightWay.SBEPIS
 		public void Captchalogue(Item item, SylladexOwner owner)
 		{
 			Eject(modus.Insert(item), owner);
+			UpdateDisplay();
+		}
 
+		private void UpdateDisplay()
+		{
 			foreach (Transform oldDisplay in insertParent)
 			{
 				oldDisplay.gameObject.SetActive(false);
@@ -43,9 +47,10 @@ namespace WrightWay.SBEPIS
 			return null;
 		}
 
-		public void Retrieve(SylladexOwner owner)
+		public void Retrieve()
 		{
-			Eject(modus.Retrieve(), owner);
+			modus.Retrieve();
+			UpdateDisplay();
 		}
 
 		private void Eject(Item item, SylladexOwner owner)

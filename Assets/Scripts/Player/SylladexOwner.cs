@@ -49,6 +49,7 @@ namespace WrightWay.SBEPIS.Player
 				{
 					playerInput.actions.FindAction("Captchalogue").Enable();
 					playerInput.actions.FindAction("Captchalogue Use").Enable();
+					playerInput.actions.FindAction("Retrieve").Enable();
 					sylladexPosTarget = new Vector3(0, -0.25f, 1);
 					sylladexRotTarget = Quaternion.Euler(-90, 180, 0);
 				}
@@ -56,6 +57,7 @@ namespace WrightWay.SBEPIS.Player
 				{
 					playerInput.actions.FindAction("Captchalogue").Disable();
 					playerInput.actions.FindAction("Captchalogue Use").Disable();
+					playerInput.actions.FindAction("Retrieve").Disable();
 					sylladexPosTarget = new Vector3(0, 0, 1);
 					sylladexRotTarget = Quaternion.Euler(0, 180, 0);
 				}
@@ -112,27 +114,29 @@ namespace WrightWay.SBEPIS.Player
 			if (value.isPressed && (retrievingItem = sylladex.Display()))
 			{
 				retrievingItem.gameObject.SetActive(true);
+				retrievingItem.transform.localPosition = Vector3.up;
+				retrievingItem.transform.rotation = Quaternion.identity;
 				retrievingItem.transform.SetParent(null);
 			}
-			else if (retrievingItem)
+			else if (!value.isPressed && retrievingItem)
 			{
 				retrievingItem.gameObject.SetActive(false);
-				retrievingItem.transform.SetParent(sylladex.transform, this);
+				retrievingItem.transform.SetParent(sylladex.transform);
 				retrievingItem = null;
 			}
 		}
 
 		private void OnCaptchalogueUse()
 		{
+			if (sylladex.isWorking)
+				return;
+
 			if (retrievingItem)
 			{
-				sylladex.Retrieve(this);
+				sylladex.Retrieve();
 				retrievingItem = null;
 				return;
 			}
-
-			if (sylladex.isWorking)
-				return;
 
 			CaptchalogueCard hitCard;
 			if (Physics.Raycast(itemHolder.camera.position, itemHolder.camera.forward, out RaycastHit captchaHit, itemHolder.maxDistance) && captchaHit.rigidbody && (hitCard = captchaHit.rigidbody.GetComponent<CaptchalogueCard>()) && hitCard.punchedHash == 0)
