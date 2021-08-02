@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace WrightWay.SBEPIS.Player
@@ -9,6 +11,7 @@ namespace WrightWay.SBEPIS.Player
 	public class PlayerModeSwapper : MonoBehaviour
 	{
 		public new Transform camera;
+		public PlayerModeEvent onSetPlayerMode;
 
 		private Transform cameraParent;
 		private PlayerInput playerInput;
@@ -31,10 +34,14 @@ namespace WrightWay.SBEPIS.Player
 					break;
 			}
 			camera.SetParent(newParent);
+			onSetPlayerMode.Invoke(mode);
 		}
 
 		public void SetPlayerMode(PlayerMode mode) => SetPlayerMode(mode, cameraParent);
-
-		public enum PlayerMode { Normal, Keyboard, Sylladex }
 	}
+
+	public enum PlayerMode { Normal, Keyboard, Sylladex }
+
+	[Serializable]
+	public class PlayerModeEvent : UnityEvent<PlayerMode> { }
 }

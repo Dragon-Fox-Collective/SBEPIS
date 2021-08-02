@@ -6,15 +6,18 @@ namespace WrightWay.SBEPIS
 	[RequireComponent(typeof(Rigidbody))]
 	public class CaptchalogueCard : MonoBehaviour
 	{
-		public Material iconMaterial;
-		public Material captchaMaterial;
-		public Renderer[] renderers;
-		public SkinnedMeshRenderer holeCaps;
+		[SerializeField]
+		private Material iconMaterial;
+		[SerializeField]
+		private Material captchaMaterial;
+		[SerializeField]
+		private Renderer[] renderers;
+		[SerializeField]
+		private SkinnedMeshRenderer holeCaps;
 
 		public Item heldItem { get; private set; }
 		public long punchedHash { get; private set; }
-
-		private new Rigidbody rigidbody;
+		public new Rigidbody rigidbody { get; private set; }
 
 		private void Awake()
 		{
@@ -42,6 +45,11 @@ namespace WrightWay.SBEPIS
 
 		private void UpdateMaterials(long captchaHash, Texture2D icon)
 		{
+			UpdateMaterials(captchaHash, icon, renderers, iconMaterial, captchaMaterial);
+		}
+
+		public static void UpdateMaterials(long captchaHash, Texture2D icon, Renderer[] renderers, Material iconMaterial, Material captchaMaterial)
+		{
 			float seed = 0;
 			if (captchaHash != 0)
 				for (int i = 0; i < 8; i++)
@@ -51,13 +59,13 @@ namespace WrightWay.SBEPIS
 				for (int i = 0; i < renderer.materials.Length; i++)
 				{
 					string materialName = renderer.materials[i].name.Replace(" (Instance)", "");
-					if (materialName == iconMaterial.name)
+					if (iconMaterial && materialName == iconMaterial.name)
 					{
 						if (!icon)
 							Destroy(renderer.materials[i].mainTexture);
 						renderer.materials[i].mainTexture = icon;
 					}
-					else if (materialName == captchaMaterial.name)
+					else if (captchaMaterial && materialName == captchaMaterial.name)
 					{
 						renderer.materials[i].SetFloat("Seed", seed);
 						renderer.materials[i].SetTexture("CaptchaCode", Itemkind.GetCaptchaTexture(captchaHash));
@@ -71,18 +79,6 @@ namespace WrightWay.SBEPIS
 
 			for (int i = 0; i < 48; i++)
 				holeCaps.SetBlendShapeWeight(i, Math.Min(punchedHash & (1L << i), 1) * 100);
-		}
-
-		public void OnInserted()
-		{
-			rigidbody.isKinematic = true;
-			rigidbody.detectCollisions = false;
-		}
-
-		public void OnRetrieved()
-		{
-			rigidbody.isKinematic = false;
-			rigidbody.detectCollisions = true;
 		}
 	}
 }

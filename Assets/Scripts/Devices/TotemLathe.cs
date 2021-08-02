@@ -20,6 +20,7 @@ namespace WrightWay.SBEPIS.Devices
 		public TextMeshProUGUI cardPanel;
 		public TextMeshProUGUI captchaPanel;
 
+		private bool isWorking;
 		private bool isLathing;
 		private long captchaHash;
 		private Dowel dowel;
@@ -34,13 +35,14 @@ namespace WrightWay.SBEPIS.Devices
 		{
 			if (isLathing)
 			{
-				for (int i = 0; i < 8; i++)
-				{
-					long charIndex = (dowel.captchaHash >> 6 * i) & ((1L << 6) - 1);
-					float sliceChiselPercent = charIndex / 63f;
-					float startLatheProgress = 1f - sliceChiselPercent + initialBlendShapeWeights[i];
-					dowel.renderer.SetBlendShapeWeight(i, Math.Max(latheProgress - startLatheProgress, initialBlendShapeWeights[i]) * 100);
-				}
+				if (dowel)
+					for (int i = 0; i < 8; i++)
+					{
+						long charIndex = (dowel.captchaHash >> 6 * i) & ((1L << 6) - 1);
+						float sliceChiselPercent = charIndex / 63f;
+						float startLatheProgress = 1f - sliceChiselPercent + initialBlendShapeWeights[i];
+						dowel.renderer.SetBlendShapeWeight(i, Math.Max(latheProgress - startLatheProgress, initialBlendShapeWeights[i]) * 100);
+					}
 				progressPanel.text = (latheProgress * 100).ToString("000.") + "%";
 				if (latheProgress == 1)
 					isLathing = false;
@@ -60,24 +62,76 @@ namespace WrightWay.SBEPIS.Devices
 				captchaHash = card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash & card2Placement.item.GetComponent<CaptchalogueCard>().punchedHash;
 		}
 
-		/// <summary>
-		/// Called when a dowel is inserted, starts the animation
-		/// </summary>
-		public void StartLathing()
+		public void PlaceDowel()
 		{
-			animator.SetBool("Adopted", true);
 			dowel = dowelPlacement.item.GetComponent<Dowel>();
-			dowelPanel.text = "Please wait";
-			cardPanel.text = "Please wait";
+			dowelPlacement.AllowOrphan();
 		}
 
-		/// <summary>
-		/// Called when the dowel is removed, resets the animation
-		/// </summary>
-		public void StopLathing()
+		public void RemoveDowel()
 		{
-			animator.SetBool("Adopted", false);
 			dowel = null;
+		}
+
+		public void HitLever1()
+		{
+			if (isWorking)
+				return;
+
+			isWorking = true;
+			animator.SetBool("Lever 1 Pulled", !animator.GetBool("Lever 1 Pulled"));
+			if (animator.GetBool("Lever 1 Pulled"))
+				if (dowel)
+					dowelPlacement.DisallowOrphan();
+				else
+					dowelPlacement.isAdopting = false;
+		}
+
+		public void PostLever1()
+		{
+			if (dowel)
+				dowelPlacement.AllowOrphan();
+			else
+				dowelPlacement.isAdopting = true;
+		}
+
+		public void HitLever2()
+		{
+			if (isWorking || (dowel && !animator.GetBool("Lever 1 Pulled")))
+				return;
+
+			isWorking = true;
+			animator.SetBool("Lever 2 Pulled", !animator.GetBool("Lever 2 Pulled"));
+			if (!animator.GetBool("Lever 1 Pulled"))
+				dowelPlacement.isAdopting = false;
+		}
+
+		public void PostLever2()
+		{
+			if (!animator.GetBool("Lever 1 Pulled"))
+				dowelPlacement.isAdopting = true;
+
+			if (card2Placement.item)
+			{
+				card2Placement.AllowOrphan();
+			}
+			else if (card1Placement.item)
+			{
+				card1Placement.AllowOrphan();
+				card2Placement.isAdopting = true;
+			}
+			else
+			{
+				card1Placement.isAdopting = true;
+			}
+			progressPanel.text = "000%";
+			dowelPanel.text = "Insert dowel";
+			UpdateCardPanel();
+		}
+
+		public void ResetLevers()
+		{
+			isWorking = false;
 		}
 
 		/// <summary>
@@ -108,40 +162,19 @@ namespace WrightWay.SBEPIS.Devices
 			}
 			isLathing = true;
 
-			long greaterCaptchaHash = 0;
-			for (int i = 0; i < 8; i++)
+			if (dowel)
 			{
-				initialBlendShapeWeights[i] = dowel.renderer.GetBlendShapeWeight(i) / 100f;
+				long greaterCaptchaHash = 0;
+				for (int i = 0; i < 8; i++)
+				{
+					initialBlendShapeWeights[i] = dowel.renderer.GetBlendShapeWeight(i) / 100f;
 
-				long initialCharIndex = (dowel.captchaHash >> 6 * i) & ((1L << 6) - 1);
-				long chiselCharIndex = (captchaHash >> 6 * i) & ((1L << 6) - 1);
-				greaterCaptchaHash |= (1L << i * 6) * Math.Max(initialCharIndex, chiselCharIndex);
+					long initialCharIndex = (dowel.captchaHash >> 6 * i) & ((1L << 6) - 1);
+					long chiselCharIndex = (captchaHash >> 6 * i) & ((1L << 6) - 1);
+					greaterCaptchaHash |= (1L << i * 6) * Math.Max(initialCharIndex, chiselCharIndex);
+				}
+				dowel.captchaHash = greaterCaptchaHash;
 			}
-			dowel.captchaHash = greaterCaptchaHash;
-		}
-
-		/// <summary>
-		/// Called during the animation, lets you pick up/deposit cards after lathin
-		/// </summary>
-		public void PostLathe()
-		{
-			dowelPlacement.AllowOrphan();
-			if (card2Placement.item)
-			{
-				card2Placement.AllowOrphan();
-			}
-			else if (card1Placement.item)
-			{
-				card1Placement.AllowOrphan();
-				card2Placement.isAdopting = true;
-			}
-			else
-			{
-				card1Placement.isAdopting = true;
-			}
-			progressPanel.text = "000%";
-			dowelPanel.text = "Insert dowel";
-			UpdateCardPanel();
 		}
 
 		/// <summary>
@@ -206,20 +239,16 @@ namespace WrightWay.SBEPIS.Devices
 			UpdateCardPanel();
 		}
 
-		/// <summary>
-		/// Transfers the dowel from the desk to the grabber
-		/// </summary>
 		public void HandOffTotem()
 		{
-			dowel.transform.SetParent(dowelReciever);
+			if (dowel)
+				dowel.transform.SetParent(dowelReciever);
 		}
 
-		/// <summary>
-		/// Transfers the dowel from the grabber to the desk
-		/// </summary>
 		public void TakeBackTotem()
 		{
-			dowel.transform.SetParent(dowelPlacement.itemParent);
+			if (dowel)
+				dowel.transform.SetParent(dowelPlacement.itemParent);
 		}
 
 		private void SetCaptchaPanelText(long hash1, long hash2, long hashRes)

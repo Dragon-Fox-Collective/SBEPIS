@@ -17,13 +17,13 @@ namespace WrightWay.SBEPIS.Devices
 		/// </summary>
 		public void StartAlchemizing()
 		{
-			animator.SetBool("Adopted", true);
+			animator.SetBool("Totem Inserted", true);
 			captchaHash = dowelPlacement.item.GetComponent<Dowel>().captchaHash;
 		}
 
 		public void StopAlchemizing()
 		{
-			animator.SetBool("Adopted", false);
+			animator.SetBool("Totem Inserted", false);
 			dowelPlacement.collider.enabled = true;
 		}
 

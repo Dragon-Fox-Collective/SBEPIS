@@ -53,6 +53,7 @@ namespace WrightWay.SBEPIS
 		{
 			item.onPickUp.RemoveListener(Orphan);
 			item.rigidbody.isKinematic = false;
+			item.transform.SetParent(null);
 			item = null;
 			isAdopting = true;
 			collider.enabled = true;

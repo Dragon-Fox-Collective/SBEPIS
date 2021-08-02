@@ -22,7 +22,7 @@ namespace WrightWay.SBEPIS.Devices
 		/// </summary>
 		public void StartPunching()
 		{
-			animator.SetBool("Adopted", true);
+			animator.SetBool("Card Inserted", true);
 		}
 
 		/// <summary>
@@ -30,7 +30,7 @@ namespace WrightWay.SBEPIS.Devices
 		/// </summary>
 		public void StopPunching()
 		{
-			animator.SetBool("Adopted", false);
+			animator.SetBool("Card Inserted", false);
 		}
 
 		/// <summary>
@@ -58,7 +58,7 @@ namespace WrightWay.SBEPIS.Devices
 		public void TakeCamera(ItemHolder playerItemHolder)
 		{
 			editingPlayer = playerItemHolder.GetComponent<PlayerModeSwapper>();
-			editingPlayer.SetPlayerMode(PlayerModeSwapper.PlayerMode.Keyboard, cameraParent);
+			editingPlayer.SetPlayerMode(PlayerMode.Keyboard, cameraParent);
 			punchPanel.Select();
 		}
 
@@ -66,7 +66,7 @@ namespace WrightWay.SBEPIS.Devices
 		{
 			if (editingPlayer)
 			{
-				editingPlayer.SetPlayerMode(PlayerModeSwapper.PlayerMode.Normal);
+				editingPlayer.SetPlayerMode(PlayerMode.Normal);
 				editingPlayer = null;
 			}
 		}

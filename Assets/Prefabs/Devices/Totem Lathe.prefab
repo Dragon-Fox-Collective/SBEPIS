@@ -102,6 +102,8 @@ Transform:
   - {fileID: 5609392029030152487}
   - {fileID: 2310081865358028768}
   - {fileID: 7425023920297704176}
+  - {fileID: 5104516187368476041}
+  - {fileID: 1499152125447720847}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -257,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 316ed1dedae64d84395ba4d83380a16e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: {fileID: 11400000, guid: bc896218d4581fd44bb97c62bcc57b6a, type: 2}
+  itemkind: {fileID: 11400000, guid: bc896218d4581fd44bb97c62bcc57b6a, type: 2}
   itemParent: {fileID: 7549265628875068897}
   isAdopting: 1
   onPlace:
@@ -1558,6 +1560,78 @@ Transform:
   m_Father: {fileID: 8938061811612917930}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5061615662629534844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5104516187368476041}
+  - component: {fileID: 1169571101965132327}
+  - component: {fileID: 1286269825087095125}
+  m_Layer: 0
+  m_Name: Top Lever Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5104516187368476041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5061615662629534844}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.002, y: 3.359, z: 0.99}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 674682886542851169}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1169571101965132327
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5061615662629534844}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1286269825087095125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5061615662629534844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e00c9db8b84e6f9489e92af3a6f97ab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2314156198808227131}
+        m_TargetAssemblyTypeName: WrightWay.SBEPIS.Devices.TotemLathe, Assembly-CSharp
+        m_MethodName: HitLever2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5102307778070679779
 GameObject:
   m_ObjectHideFlags: 0
@@ -1708,15 +1782,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 316ed1dedae64d84395ba4d83380a16e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: {fileID: 11400000, guid: a96e3a1cc479ad3469505cc48b74af40, type: 2}
+  itemkind: {fileID: 11400000, guid: a96e3a1cc479ad3469505cc48b74af40, type: 2}
   itemParent: {fileID: 1637797954741769541}
   isAdopting: 1
   onPlace:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2314156198808227131}
-        m_TargetAssemblyTypeName: TotemLathe, Assembly-CSharp
-        m_MethodName: StartLathing
+        m_TargetAssemblyTypeName: WrightWay.SBEPIS.Devices.TotemLathe, Assembly-CSharp
+        m_MethodName: PlaceDowel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1730,8 +1804,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2314156198808227131}
-        m_TargetAssemblyTypeName: TotemLathe, Assembly-CSharp
-        m_MethodName: StopLathing
+        m_TargetAssemblyTypeName: WrightWay.SBEPIS.Devices.TotemLathe, Assembly-CSharp
+        m_MethodName: RemoveDowel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2467,7 +2541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 316ed1dedae64d84395ba4d83380a16e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: {fileID: 11400000, guid: bc896218d4581fd44bb97c62bcc57b6a, type: 2}
+  itemkind: {fileID: 11400000, guid: bc896218d4581fd44bb97c62bcc57b6a, type: 2}
   itemParent: {fileID: 8831425034180173412}
   isAdopting: 1
   onPlace:
@@ -2491,6 +2565,78 @@ MonoBehaviour:
       - m_Target: {fileID: 2314156198808227131}
         m_TargetAssemblyTypeName: TotemLathe, Assembly-CSharp
         m_MethodName: CardOutFirst
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &6933462357475916157
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1499152125447720847}
+  - component: {fileID: 7625447225856566415}
+  - component: {fileID: 6554660429538787592}
+  m_Layer: 0
+  m_Name: Bottom Lever Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1499152125447720847
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933462357475916157}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.002, y: 1.044, z: 2.809}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 674682886542851169}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7625447225856566415
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933462357475916157}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6554660429538787592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933462357475916157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e00c9db8b84e6f9489e92af3a6f97ab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2314156198808227131}
+        m_TargetAssemblyTypeName: WrightWay.SBEPIS.Devices.TotemLathe, Assembly-CSharp
+        m_MethodName: HitLever1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

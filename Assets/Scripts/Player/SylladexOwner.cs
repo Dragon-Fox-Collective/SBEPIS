@@ -74,8 +74,7 @@ namespace WrightWay.SBEPIS.Player
 
 		private void Start()
 		{
-			IsViewing = false;
-			CanCaptchalogue = false;
+			ResetSylladexControls();
 		}
 
 		private void Update()
@@ -87,6 +86,18 @@ namespace WrightWay.SBEPIS.Player
 
 			if (retrievingItem)
 				itemHolder.UpdateItem(retrievingItem);
+		}
+
+		public void OnSetPlayerMode(PlayerMode mode)
+		{
+			if (mode == PlayerMode.Normal)
+				ResetSylladexControls();
+		}
+
+		private void ResetSylladexControls()
+		{
+			IsViewing = false;
+			CanCaptchalogue = false;
 		}
 
 		private void OnViewSylladex()
@@ -117,11 +128,15 @@ namespace WrightWay.SBEPIS.Player
 				retrievingItem.transform.localPosition = Vector3.up;
 				retrievingItem.transform.rotation = Quaternion.identity;
 				retrievingItem.transform.SetParent(null);
+				retrievingItem.rigidbody.isKinematic = true;
+				retrievingItem.rigidbody.detectCollisions = false;
 			}
 			else if (!value.isPressed && retrievingItem)
 			{
 				retrievingItem.gameObject.SetActive(false);
 				retrievingItem.transform.SetParent(sylladex.transform);
+				retrievingItem.rigidbody.isKinematic = false;
+				retrievingItem.rigidbody.detectCollisions = true;
 				retrievingItem = null;
 			}
 		}
@@ -134,6 +149,8 @@ namespace WrightWay.SBEPIS.Player
 			if (retrievingItem)
 			{
 				sylladex.Retrieve();
+				retrievingItem.rigidbody.isKinematic = false;
+				retrievingItem.rigidbody.detectCollisions = true;
 				retrievingItem = null;
 				return;
 			}
