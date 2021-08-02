@@ -85,7 +85,7 @@ namespace WrightWay.SBEPIS.Player
 			sylladexParent.localScale = Vector3.SmoothDamp(sylladexParent.localScale, sylladexParentScaleTarget, ref sylladexParentScaleVel, 0.1f);
 
 			if (retrievingItem)
-				itemHolder.UpdateItem(retrievingItem);
+				itemHolder.UpdateItem(retrievingItem, false);
 		}
 
 		public void OnSetPlayerMode(PlayerMode mode)

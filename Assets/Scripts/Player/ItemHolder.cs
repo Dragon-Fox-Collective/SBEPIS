@@ -16,7 +16,7 @@ namespace WrightWay.SBEPIS.Player
 		private Quaternion cardForcedRotTarget = Quaternion.identity;
 		private float holdDistance = 2;
 
-		private void Update()
+		private void FixedUpdate()
 		{
 			if (!heldItem)
 				return;
@@ -26,13 +26,15 @@ namespace WrightWay.SBEPIS.Player
 			if (RaycastPlacementHelper(out PlacementHelper placement, heldItem.itemkind))
 				UpdateItemSnapToPlacementHelper(placement);
 			else
-				UpdateItem(heldItem);
+				UpdateItem(heldItem, true);
 		}
 
-		public void UpdateItem(Item item)
+		public void UpdateItem(Item item, bool physicsWillApply)
 		{
 			Vector3 velocity = item.rigidbody.velocity;
-			item.transform.position = Vector3.SmoothDamp(item.transform.position, camera.position + camera.forward * holdDistance, ref velocity, 0.1f);
+			Vector3 newPos = Vector3.SmoothDamp(item.transform.position, camera.position + camera.forward * holdDistance, ref velocity, 0.1f);
+			if (!physicsWillApply)
+				item.transform.position = newPos;
 			item.rigidbody.velocity = velocity;
 
 			if (item.GetComponent<CaptchalogueCard>()) // Make these face either forward or backward to the player
@@ -45,16 +47,21 @@ namespace WrightWay.SBEPIS.Player
 					cardForcedRotTarget = Quaternion.identity;
 
 				Quaternion deriv = QuaternionUtil.AngVelToDeriv(item.transform.rotation, item.rigidbody.angularVelocity);
+				Quaternion newRot;
 				if (cardForcedRotTarget == Quaternion.identity)
-					item.transform.rotation = QuaternionUtil.SmoothDamp(item.transform.rotation, Quaternion.Angle(item.transform.rotation, upRot) < 90 ? upRot : downRot, ref deriv, 0.1f);
+					newRot = QuaternionUtil.SmoothDamp(item.transform.rotation, Quaternion.Angle(item.transform.rotation, upRot) < 90 ? upRot : downRot, ref deriv, 0.1f);
 				else
-					item.transform.rotation = QuaternionUtil.SmoothDamp(item.transform.rotation, cardForcedRotTarget, ref deriv, 0.2f);
+					newRot = QuaternionUtil.SmoothDamp(item.transform.rotation, cardForcedRotTarget, ref deriv, 0.2f);
+				if (!physicsWillApply)
+					item.transform.rotation = newRot;
 				item.rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(item.transform.rotation, deriv);
 			}
 			else // Make these just go to 0
 			{
 				Quaternion deriv = QuaternionUtil.AngVelToDeriv(item.transform.rotation, item.rigidbody.angularVelocity);
-				item.transform.rotation = QuaternionUtil.SmoothDamp(item.transform.rotation, Quaternion.identity, ref deriv, 0.2f);
+				Quaternion newRot = QuaternionUtil.SmoothDamp(item.transform.rotation, Quaternion.identity, ref deriv, 0.2f);
+				if (!physicsWillApply)
+					item.transform.rotation = newRot;
 				item.rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(item.transform.rotation, deriv);
 			}
 		}
@@ -87,20 +94,14 @@ namespace WrightWay.SBEPIS.Player
 		/// </summary>
 		private void OnPickUp(InputValue value)
 		{
-			if (value.isPressed && !heldItem && Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, maxDistance, raycastMask))
+			if (value.isPressed && !heldItem && Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, maxDistance, LayerMask.GetMask("Button")))
+				hit.collider.GetComponent<Button>().onPressed.Invoke(this);
+
+			if (value.isPressed && !heldItem && Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, maxDistance, raycastMask) && hit.rigidbody)
 			{
-				if (hit.rigidbody)
-				{
-					Item hitItem = hit.rigidbody.GetComponent<Item>();
-					if (hitItem && hitItem.canPickUp)
-						(heldItem = hitItem).OnPickedUp(this);
-				}
-				else
-				{
-					Button button = hit.collider.GetComponent<Button>();
-					if (button)
-						button.onPressed.Invoke(this);
-				}
+				Item hitItem = hit.rigidbody.GetComponent<Item>();
+				if (hitItem && hitItem.canPickUp)
+					(heldItem = hitItem).OnPickedUp(this);
 			}
 			else if (!value.isPressed && heldItem)
 			{
