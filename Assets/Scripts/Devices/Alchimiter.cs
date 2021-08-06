@@ -29,9 +29,9 @@ namespace WrightWay.SBEPIS.Devices
 					thingsToAlchemize--;
 					UpdateAlchemizedText();
 
-					Itemkind.itemkind.TryGetValue(captchaHash, out Itemkind itemType);
+					Itemkind.itemkinds.TryGetValue(captchaHash, out Itemkind itemType);
 					if (!itemType)
-						Itemkind.itemkind.TryGetValue(0, out itemType);
+						Itemkind.itemkinds.TryGetValue(0, out itemType);
 					Instantiate(itemType.prefab, spawnPoint.position, spawnPoint.rotation);
 				}
 				if (thingsToAlchemize == 0)

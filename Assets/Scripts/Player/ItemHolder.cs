@@ -26,13 +26,13 @@ namespace WrightWay.SBEPIS.Player
 			if (RaycastPlacementHelper(out PlacementHelper placement, heldItem.itemkind))
 				UpdateItemSnapToPlacementHelper(placement);
 			else
-				UpdateItem(heldItem, true);
+				UpdateItem(heldItem, true, 0.05f, 0.05f);
 		}
 
-		public void UpdateItem(Item item, bool physicsWillApply)
+		public void UpdateItem(Item item, bool physicsWillApply, float posTime, float rotTime)
 		{
 			Vector3 velocity = item.rigidbody.velocity;
-			Vector3 newPos = Vector3.SmoothDamp(item.transform.position, camera.position + camera.forward * holdDistance, ref velocity, 0.1f);
+			Vector3 newPos = Vector3.SmoothDamp(item.transform.position, camera.position + camera.forward * holdDistance, ref velocity, posTime);
 			if (!physicsWillApply)
 				item.transform.position = newPos;
 			item.rigidbody.velocity = velocity;
@@ -49,9 +49,9 @@ namespace WrightWay.SBEPIS.Player
 				Quaternion deriv = QuaternionUtil.AngVelToDeriv(item.transform.rotation, item.rigidbody.angularVelocity);
 				Quaternion newRot;
 				if (cardForcedRotTarget == Quaternion.identity)
-					newRot = QuaternionUtil.SmoothDamp(item.transform.rotation, Quaternion.Angle(item.transform.rotation, upRot) < 90 ? upRot : downRot, ref deriv, 0.1f);
+					newRot = QuaternionUtil.SmoothDamp(item.transform.rotation, Quaternion.Angle(item.transform.rotation, upRot) < 90 ? upRot : downRot, ref deriv, rotTime);
 				else
-					newRot = QuaternionUtil.SmoothDamp(item.transform.rotation, cardForcedRotTarget, ref deriv, 0.2f);
+					newRot = QuaternionUtil.SmoothDamp(item.transform.rotation, cardForcedRotTarget, ref deriv, rotTime);
 				if (!physicsWillApply)
 					item.transform.rotation = newRot;
 				item.rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(item.transform.rotation, deriv);
@@ -59,7 +59,7 @@ namespace WrightWay.SBEPIS.Player
 			else // Make these just go to 0
 			{
 				Quaternion deriv = QuaternionUtil.AngVelToDeriv(item.transform.rotation, item.rigidbody.angularVelocity);
-				Quaternion newRot = QuaternionUtil.SmoothDamp(item.transform.rotation, Quaternion.identity, ref deriv, 0.2f);
+				Quaternion newRot = QuaternionUtil.SmoothDamp(item.transform.rotation, Quaternion.identity, ref deriv, rotTime);
 				if (!physicsWillApply)
 					item.transform.rotation = newRot;
 				item.rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(item.transform.rotation, deriv);

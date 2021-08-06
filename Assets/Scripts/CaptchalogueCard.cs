@@ -11,6 +11,8 @@ namespace WrightWay.SBEPIS
 		[SerializeField]
 		private Material captchaMaterial;
 		[SerializeField]
+		private Material colorMaterial;
+		[SerializeField]
 		private Renderer[] renderers;
 		[SerializeField]
 		private SkinnedMeshRenderer holeCaps;
@@ -18,6 +20,7 @@ namespace WrightWay.SBEPIS
 		public Item heldItem { get; private set; }
 		public long punchedHash { get; private set; }
 		public new Rigidbody rigidbody { get; private set; }
+		private Color modusColor = Color.red;
 
 		private void Awake()
 		{
@@ -43,12 +46,18 @@ namespace WrightWay.SBEPIS
 			UpdateMaterials(0, null);
 		}
 
-		private void UpdateMaterials(long captchaHash, Texture2D icon)
+		public void UpdateMaterials(Color modusColor)
 		{
-			UpdateMaterials(captchaHash, icon, renderers, iconMaterial, captchaMaterial);
+			this.modusColor = modusColor;
+			UpdateMaterials(0, null, modusColor, renderers, null, null, colorMaterial);
 		}
 
-		public static void UpdateMaterials(long captchaHash, Texture2D icon, Renderer[] renderers, Material iconMaterial, Material captchaMaterial)
+		private void UpdateMaterials(long captchaHash, Texture2D icon)
+		{
+			UpdateMaterials(captchaHash, icon, modusColor, renderers, captchaMaterial, iconMaterial, colorMaterial);
+		}
+
+		public static void UpdateMaterials(long captchaHash, Texture2D icon, Color color, Renderer[] renderers, Material captchaMaterial, Material iconMaterial, Material colorMaterial)
 		{
 			float seed = 0;
 			if (captchaHash != 0)
@@ -61,14 +70,30 @@ namespace WrightWay.SBEPIS
 					string materialName = renderer.materials[i].name.Replace(" (Instance)", "");
 					if (iconMaterial && materialName == iconMaterial.name)
 					{
-						if (!icon)
-							Destroy(renderer.materials[i].mainTexture);
-						renderer.materials[i].mainTexture = icon;
+						if (renderer.materials[i].HasProperty("Base_Map"))
+						{
+							if (!icon)
+								Destroy(renderer.materials[i].GetTexture("Base_Map"));
+							renderer.materials[i].SetTexture("Base_Map", icon);
+						}
+						else
+						{
+							if (!icon)
+								Destroy(renderer.materials[i].mainTexture);
+							renderer.materials[i].mainTexture = icon;
+						}
 					}
-					else if (captchaMaterial && materialName == captchaMaterial.name)
+					if (captchaMaterial && materialName == captchaMaterial.name)
 					{
 						renderer.materials[i].SetFloat("Seed", seed);
 						renderer.materials[i].SetTexture("CaptchaCode", Itemkind.GetCaptchaTexture(captchaHash));
+					}
+					if (colorMaterial && materialName == colorMaterial.name)
+					{
+						if (renderer.materials[i].HasProperty("Background_Color"))
+							renderer.materials[i].SetColor("Background_Color", color);
+						else
+							renderer.materials[i].color = color;
 					}
 				}
 		}

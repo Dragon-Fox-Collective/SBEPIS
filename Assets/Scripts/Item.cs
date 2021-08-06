@@ -61,6 +61,20 @@ namespace WrightWay.SBEPIS
 			foreach (Transform child in gameObject.transform)
 				SetLayerRecursively(child.gameObject, layer);
 		}
+
+		public static void DisableRigidbody(Rigidbody rigidbody)
+		{
+			rigidbody.isKinematic = true;
+			rigidbody.detectCollisions = false;
+			rigidbody.interpolation = RigidbodyInterpolation.None;
+		}
+
+		public static void EnableRigidbody(Rigidbody rigidbody)
+		{
+			rigidbody.isKinematic = false;
+			rigidbody.detectCollisions = true;
+			rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+		}
 	}
 
 	[Serializable]

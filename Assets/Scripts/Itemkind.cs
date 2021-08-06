@@ -7,7 +7,7 @@ namespace WrightWay.SBEPIS
 	[CreateAssetMenu]
 	public class Itemkind : ScriptableObject
 	{
-		public static readonly Dictionary<long, Itemkind> itemkind = new Dictionary<long, Itemkind>();
+		public static readonly Dictionary<long, Itemkind> itemkinds = new Dictionary<long, Itemkind>();
 		private static readonly Dictionary<long, Texture2D> captchaTextures = new Dictionary<long, Texture2D>();
 
 		public string itemName;
@@ -22,11 +22,11 @@ namespace WrightWay.SBEPIS
 
 		private void OnEnable()
 		{
-			if (captchaCode != null)
-			{
-				captchaHash = hashCaptcha(captchaCode);
-				itemkind.Add(captchaHash, this);
-			}
+			if (captchaCode == null || captchaCode.Length == 0)
+				for (int i = 0; i < 8; i++)
+					captchaCode += hashCharacters[UnityEngine.Random.Range(0, hashCharacters.Length - 1)];
+			captchaHash = hashCaptcha(captchaCode);
+			itemkinds.Add(captchaHash, this);
 		}
 
 		/// <summary>

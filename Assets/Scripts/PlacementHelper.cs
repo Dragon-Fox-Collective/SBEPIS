@@ -28,7 +28,7 @@ namespace WrightWay.SBEPIS
 			item.transform.SetParent(itemParent);
 			item.transform.localPosition = Vector3.zero;
 			item.transform.localRotation = Quaternion.identity;
-			item.rigidbody.isKinematic = true;
+			Item.DisableRigidbody(item.rigidbody);
 			isAdopting = false;
 			collider.enabled = false;
 			DisallowOrphan();
@@ -52,7 +52,7 @@ namespace WrightWay.SBEPIS
 		public void Orphan(ItemHolder holder)
 		{
 			item.onPickUp.RemoveListener(Orphan);
-			item.rigidbody.isKinematic = false;
+			Item.EnableRigidbody(item.rigidbody);
 			item.transform.SetParent(null);
 			item = null;
 			isAdopting = true;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,12 @@ namespace WrightWay.SBEPIS.Modus
 {
 	public abstract class FetchModus
 	{
+		public static Dictionary<FetchModusType, Type> fetchModi = new Dictionary<FetchModusType, Type>()
+		{
+			{FetchModusType.Stack, typeof(StackModus)},
+			{FetchModusType.Queue, typeof(QueueModus)},
+		};
+
 		public FetchModus(FetchModus oldModus)
 		{
 			if (oldModus != null)
@@ -21,6 +28,8 @@ namespace WrightWay.SBEPIS.Modus
 		/// <returns>An item to eject</returns>
 		public virtual Item Insert(Item item)
 		{
+			if (cards.Count == 0)
+				return null;
 			CaptchalogueCard card = EjectCard();
 			Item rtn = card.heldItem;
 			card.Eject();
@@ -52,9 +61,21 @@ namespace WrightWay.SBEPIS.Modus
 		protected abstract CaptchalogueCard EjectCard();
 	}
 
+	public enum FetchModusType
+	{
+		Stack,
+		Queue,
+	}
+
 	public class StackModus : FetchModus
 	{
-		public StackModus(FetchModus oldModus) : base(oldModus) { }
+		public StackModus(FetchModus oldModus) : base(oldModus)
+		{
+			List<CaptchalogueCard> oldCards = new List<CaptchalogueCard>(_cards);
+			_cards.Clear();
+			foreach (CaptchalogueCard card in oldCards)
+				InsertCard(card);
+		}
 
 		private List<CaptchalogueCard> _cards = new List<CaptchalogueCard>();
 		public override ICollection<CaptchalogueCard> cards => _cards;
@@ -87,13 +108,15 @@ namespace WrightWay.SBEPIS.Modus
 
 		private List<CaptchalogueCard> _cards = new List<CaptchalogueCard>();
 		public override ICollection<CaptchalogueCard> cards => _cards;
+		public override bool flippedRetrieve => true;
+		public override bool flippedInsert => true;
 
 		public override void InsertCard(CaptchalogueCard card)
 		{
 			if (card.heldItem)
 				_cards.Add(card);
 			else
-				_cards.Insert(0, null);
+				_cards.Insert(0, card);
 		}
 
 		public override CaptchalogueCard Display()
@@ -103,8 +126,8 @@ namespace WrightWay.SBEPIS.Modus
 
 		protected override CaptchalogueCard EjectCard()
 		{
-			CaptchalogueCard card = _cards[_cards.Count - 1];
-			_cards.RemoveAt(_cards.Count - 1);
+			CaptchalogueCard card = _cards[0];
+			_cards.RemoveAt(0);
 			return card;
 		}
 	}

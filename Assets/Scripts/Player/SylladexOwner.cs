@@ -8,13 +8,17 @@ namespace WrightWay.SBEPIS.Player
 {
 	public class SylladexOwner : MonoBehaviour
 	{
-		public Sylladex sylladex;
-		public Transform sylladexParent;
-		public ItemHolder itemHolder;
-		public PlayerModeSwapper modeSwapper;
-		public PlayerInput playerInput;
+		[SerializeField]
+		private Sylladex sylladex;
+		[SerializeField]
+		private Transform sylladexParent;
+		[SerializeField]
+		private ItemHolder itemHolder;
+		[SerializeField]
+		private PlayerModeSwapper modeSwapper;
+		[SerializeField]
+		private PlayerInput playerInput;
 
-		private Item retrievingItem;
 		private bool _isViewing;
 		private bool IsViewing
 		{
@@ -51,7 +55,7 @@ namespace WrightWay.SBEPIS.Player
 					playerInput.actions.FindAction("Captchalogue Use").Enable();
 					playerInput.actions.FindAction("Retrieve").Enable();
 					sylladexPosTarget = new Vector3(0, -0.25f, 1);
-					sylladexRotTarget = Quaternion.Euler(-90, 180, 0);
+					sylladexRotTarget = Quaternion.Euler(-75, 180, 0);
 				}
 				else
 				{
@@ -83,9 +87,6 @@ namespace WrightWay.SBEPIS.Player
 			sylladex.transform.localRotation = QuaternionUtil.SmoothDamp(sylladex.transform.localRotation, sylladexRotTarget, ref sylladexRotDeriv, 0.1f);
 			sylladexParent.localRotation = QuaternionUtil.SmoothDamp(sylladexParent.localRotation, sylladexParentRotTarget, ref sylladexParentRotDeriv, 0.2f);
 			sylladexParent.localScale = Vector3.SmoothDamp(sylladexParent.localScale, sylladexParentScaleTarget, ref sylladexParentScaleVel, 0.1f);
-
-			if (retrievingItem)
-				itemHolder.UpdateItem(retrievingItem, false);
 		}
 
 		public void OnSetPlayerMode(PlayerMode mode)
@@ -115,29 +116,30 @@ namespace WrightWay.SBEPIS.Player
 
 		private void OnCaptchalogue()
 		{
+			sylladex.StartCaptchaloguing();
+		}
+
+		public void Captchalogue()
+		{
 			Item hitItem;
 			if (Physics.Raycast(itemHolder.camera.position, itemHolder.camera.forward, out RaycastHit captchaHit, itemHolder.maxDistance) && captchaHit.rigidbody && (hitItem = captchaHit.rigidbody.GetComponent<Item>()))
-				sylladex.Captchalogue(hitItem, this);
+				sylladex.Captchalogue(hitItem);
 		}
 
 		private void OnRetrieve(InputValue value)
 		{
-			if (value.isPressed && (retrievingItem = sylladex.Display()))
+			sylladex.StartRetrieving();
+		}
+
+		public void Retrieve()
+		{
+			Item retrievingItem = sylladex.Retrieve();
+			if (retrievingItem)
 			{
 				retrievingItem.gameObject.SetActive(true);
 				retrievingItem.transform.localPosition = Vector3.up;
 				retrievingItem.transform.rotation = Quaternion.identity;
 				retrievingItem.transform.SetParent(null);
-				retrievingItem.rigidbody.isKinematic = true;
-				retrievingItem.rigidbody.detectCollisions = false;
-			}
-			else if (!value.isPressed && retrievingItem)
-			{
-				retrievingItem.gameObject.SetActive(false);
-				retrievingItem.transform.SetParent(sylladex.transform);
-				retrievingItem.rigidbody.isKinematic = false;
-				retrievingItem.rigidbody.detectCollisions = true;
-				retrievingItem = null;
 			}
 		}
 
@@ -146,18 +148,22 @@ namespace WrightWay.SBEPIS.Player
 			if (sylladex.isWorking)
 				return;
 
-			if (retrievingItem)
+			if (Physics.Raycast(itemHolder.camera.position, itemHolder.camera.forward, out RaycastHit captchaHit, itemHolder.maxDistance) && captchaHit.rigidbody)
 			{
-				sylladex.Retrieve();
-				retrievingItem.rigidbody.isKinematic = false;
-				retrievingItem.rigidbody.detectCollisions = true;
-				retrievingItem = null;
-				return;
-			}
+				CaptchalogueCard hitCard = captchaHit.rigidbody.GetComponent<CaptchalogueCard>();
+				if (hitCard && hitCard.punchedHash == 0)
+				{
+					sylladex.InsertCard(hitCard);
+					return;
+				}
 
-			CaptchalogueCard hitCard;
-			if (Physics.Raycast(itemHolder.camera.position, itemHolder.camera.forward, out RaycastHit captchaHit, itemHolder.maxDistance) && captchaHit.rigidbody && (hitCard = captchaHit.rigidbody.GetComponent<CaptchalogueCard>()) && hitCard.punchedHash == 0)
-				sylladex.InsertCard(hitCard);
+				Cartridge hitCart = captchaHit.rigidbody.GetComponent<Cartridge>();
+				if (hitCart)
+				{
+					sylladex.StartSyncingCartridge(hitCart);
+					return;
+				}
+			}
 		}
 
 		private void OnCaptchaloguePrint()
@@ -166,6 +172,17 @@ namespace WrightWay.SBEPIS.Player
 				return;
 
 			sylladex.RetrieveCard();
+		}
+
+		private void OnFlipCard()
+		{
+			if (!IsViewing || CanCaptchalogue)
+				return;
+
+			if (sylladexRotTarget == Quaternion.identity)
+				sylladexRotTarget = Quaternion.Euler(0, 180, 0);
+			else
+				sylladexRotTarget = Quaternion.identity;
 		}
 	}
 }

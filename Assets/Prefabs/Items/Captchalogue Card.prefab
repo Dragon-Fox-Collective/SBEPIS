@@ -290,10 +290,10 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &8921524599207216834
@@ -364,6 +364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconMaterial: {fileID: 2100000, guid: 366e79c2ad9251e40b7bcf77ef1d7749, type: 2}
   captchaMaterial: {fileID: 2100000, guid: f1a726a08ce8cd643896224bdd1373e3, type: 2}
+  colorMaterial: {fileID: 2100000, guid: 844d7a0c4630e8d4ba7369119cc22223, type: 2}
   renderers:
   - {fileID: 8024085927559044353}
   - {fileID: 7847186893869286365}
