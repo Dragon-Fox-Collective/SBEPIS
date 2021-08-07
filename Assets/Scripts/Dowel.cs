@@ -32,7 +32,7 @@ namespace WrightWay.SBEPIS
 
 		public float GetWidth(int i)
 		{
-			return renderer.GetBlendShapeWeight(i);
+			return renderer.GetBlendShapeWeight(i) / 100f;
 		}
 	}
 }
