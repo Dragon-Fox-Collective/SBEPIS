@@ -30,6 +30,7 @@ namespace WrightWay.SBEPIS.Player
 				{
 					playerInput.actions.FindAction("Pick Up").Disable();
 					playerInput.actions.FindAction("Captchalogue Mode").Enable();
+					playerInput.actions.FindAction("Toggle Sylladex Panel").Enable();
 					sylladexParentRotTarget = Quaternion.identity;
 					sylladexParentScaleTarget = Vector3.one;
 				}
@@ -37,6 +38,7 @@ namespace WrightWay.SBEPIS.Player
 				{
 					playerInput.actions.FindAction("Pick Up").Enable();
 					playerInput.actions.FindAction("Captchalogue Mode").Disable();
+					playerInput.actions.FindAction("Toggle Sylladex Panel").Disable();
 					sylladexParentRotTarget = Quaternion.Euler(0, -90, 0);
 					sylladexParentScaleTarget = Vector3.zero;
 				}
@@ -183,6 +185,11 @@ namespace WrightWay.SBEPIS.Player
 				sylladexRotTarget = Quaternion.Euler(0, 180, 0);
 			else
 				sylladexRotTarget = Quaternion.identity;
+		}
+
+		private void OnToggleSylladexPanel()
+		{
+			sylladex.StartTogglingPanel();
 		}
 	}
 }

@@ -100,6 +100,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Toggle Sylladex Panel",
+                    "type": "Button",
+                    "id": "d8750275-5417-4b8c-87d0-2fe6e949a667",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -276,6 +284,17 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Captchalogue Print",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a10213af-aa3d-428e-8671-a0748ac7c524",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Toggle Sylladex Panel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

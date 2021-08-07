@@ -7,9 +7,9 @@ using WrightWay.SBEPIS.Modus;
 namespace WrightWay.SBEPIS
 {
 	[RequireComponent(typeof(Rigidbody))]
+	[RequireComponent(typeof(Item))]
 	public class Cartridge : MonoBehaviour
 	{
-		public FetchModusType modus;
 		[SerializeField]
 		private TextMeshProUGUI modusText;
 		[SerializeField]
@@ -18,23 +18,22 @@ namespace WrightWay.SBEPIS
 		private Renderer[] renderers;
 		[SerializeField]
 		private Material colorMaterial;
-		public Color color;
-		[SerializeField]
-		private Texture2D icon;
 
-		public new Rigidbody rigidbody { get; set; }
+		public new Rigidbody rigidbody { get; private set; }
+		public Moduskind modus { get; private set; }
 
 		private void Awake()
 		{
 			rigidbody = GetComponent<Rigidbody>();
+			modus = (Moduskind) GetComponent<Item>().itemkind;
 		}
 
 		private void Start()
 		{
-			modusText.color = color;
-			modusName.color = color;
-			modusName.text = modus.ToString().ToLower();
-			CaptchalogueCard.UpdateMaterials(0, icon, color, renderers, null, colorMaterial, colorMaterial);
+			modusText.color = modus.mainColor;
+			modusName.color = modus.mainColor;
+			modusName.text = modus.itemName.ToLower();
+			CaptchalogueCard.UpdateMaterials(0, modus.icon, modus.mainColor, renderers, null, colorMaterial, colorMaterial);
 		}
 	}
 }

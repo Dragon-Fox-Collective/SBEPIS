@@ -41,7 +41,7 @@ namespace WrightWay.SBEPIS.Devices
 						long charIndex = (dowel.captchaHash >> 6 * i) & ((1L << 6) - 1);
 						float sliceChiselPercent = charIndex / 63f;
 						float startLatheProgress = 1f - sliceChiselPercent + initialBlendShapeWeights[i];
-						dowel.renderer.SetBlendShapeWeight(i, Math.Max(latheProgress - startLatheProgress, initialBlendShapeWeights[i]) * 100);
+						dowel.SetWidth(i, Math.Max(latheProgress - startLatheProgress, initialBlendShapeWeights[i]));
 					}
 				progressPanel.text = (latheProgress * 100).ToString("000.") + "%";
 				if (latheProgress == 1)
@@ -171,7 +171,7 @@ namespace WrightWay.SBEPIS.Devices
 				long greaterCaptchaHash = 0;
 				for (int i = 0; i < 8; i++)
 				{
-					initialBlendShapeWeights[i] = dowel.renderer.GetBlendShapeWeight(i) / 100f;
+					initialBlendShapeWeights[i] = dowel.GetWidth(i);
 
 					long initialCharIndex = (dowel.captchaHash >> 6 * i) & ((1L << 6) - 1);
 					long chiselCharIndex = (captchaHash >> 6 * i) & ((1L << 6) - 1);

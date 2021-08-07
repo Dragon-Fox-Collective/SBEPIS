@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 namespace WrightWay.SBEPIS
@@ -16,11 +17,15 @@ namespace WrightWay.SBEPIS
 		private Renderer[] renderers;
 		[SerializeField]
 		private SkinnedMeshRenderer holeCaps;
+		[SerializeField]
+		private TextMeshProUGUI[] texts;
+		[SerializeField]
+		private Moduskind defaultModus;
 
 		public Item heldItem { get; private set; }
 		public long punchedHash { get; private set; }
 		public new Rigidbody rigidbody { get; private set; }
-		private Color modusColor = Color.red;
+		private Moduskind modus;
 
 		private void Awake()
 		{
@@ -29,6 +34,7 @@ namespace WrightWay.SBEPIS
 
 		private void Start()
 		{
+			UpdateMaterials(defaultModus);
 			Eject();
 		}
 
@@ -46,15 +52,17 @@ namespace WrightWay.SBEPIS
 			UpdateMaterials(0, null);
 		}
 
-		public void UpdateMaterials(Color modusColor)
+		public void UpdateMaterials(Moduskind modus)
 		{
-			this.modusColor = modusColor;
-			UpdateMaterials(0, null, modusColor, renderers, null, null, colorMaterial);
+			this.modus = modus;
+			UpdateMaterials(0, null, modus.mainColor, renderers, null, null, colorMaterial);
+			foreach (TextMeshProUGUI text in texts)
+				text.color = modus.textColor;
 		}
 
 		private void UpdateMaterials(long captchaHash, Texture2D icon)
 		{
-			UpdateMaterials(captchaHash, icon, modusColor, renderers, captchaMaterial, iconMaterial, colorMaterial);
+			UpdateMaterials(captchaHash, icon, modus.mainColor, renderers, captchaMaterial, iconMaterial, colorMaterial);
 		}
 
 		public static void UpdateMaterials(long captchaHash, Texture2D icon, Color color, Renderer[] renderers, Material captchaMaterial, Material iconMaterial, Material colorMaterial)

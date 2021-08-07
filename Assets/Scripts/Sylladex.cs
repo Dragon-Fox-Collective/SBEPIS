@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using WrightWay.SBEPIS.Modus;
 using WrightWay.SBEPIS.Player;
 
@@ -16,6 +18,8 @@ namespace WrightWay.SBEPIS
 		[SerializeField]
 		private float ejectionSpeed = 6f;
 		[SerializeField]
+		private int maxCards = 16;
+		[SerializeField]
 		private Transform insertParent, retrieveParent, modusParent;
 		[SerializeField]
 		private Renderer[] renderers;
@@ -23,16 +27,33 @@ namespace WrightWay.SBEPIS
 		private Material captchaMaterial;
 		[SerializeField]
 		private Material colorMaterial;
+		[SerializeField]
+		private Material panelMaterial;
+		[SerializeField]
+		private Material glassMaterial;
+		[SerializeField]
+		private int[] panelMaterialIndecies;
+		[SerializeField]
+		private Transform cardIconParent;
+		[SerializeField]
+		private RawImage cardIconPrefab;
+		[SerializeField]
+		private RawImage darkBar;
+		[SerializeField]
+		private TextMeshProUGUI title;
+		[SerializeField]
+		private Moduskind defaultModus;
 
 		public bool isWorking => animator.GetInteger("Insert State") != 0 || animator.GetInteger("Retrieve State") != 0 || animator.GetBool("Syncing Cartridge") || animator.GetInteger("Captchalogue State") != 0;
 		private FetchModus modus;
+		private Moduskind moduskind;
 		private Cartridge syncingCart;
 		private Color color;
 
 		private void Start()
 		{
-			modus = new StackModus(null);
-			CaptchalogueCard.UpdateMaterials(0, null, color = new Color(255f/255f, 6f/255f, 125f/255f), renderers, captchaMaterial, null, colorMaterial);
+			SetModus(defaultModus);
+			SetPanelMaterial(0);
 		}
 
 		public void StartCaptchaloguing()
@@ -84,12 +105,40 @@ namespace WrightWay.SBEPIS
 			newDisplay.transform.localRotation = Quaternion.identity;
 
 			UpdateCaptcha();
+			UpdateCardsDisplay();
 		}
 
 		private void UpdateCaptcha()
 		{
-			CaptchalogueCard card = modus.Display();
-			CaptchalogueCard.UpdateMaterials(card && card.heldItem ? card.heldItem.itemkind.captchaHash : 0, null, Color.black, renderers, captchaMaterial, null, null);
+			CaptchalogueCard displayCard = modus.Display();
+			CaptchalogueCard.UpdateMaterials(displayCard && displayCard.heldItem ? displayCard.heldItem.itemkind.captchaHash : 0, null, Color.black, renderers, captchaMaterial, null, null);
+		}
+
+		private void UpdateCardsDisplay()
+		{
+			foreach (Transform child in cardIconParent.transform)
+			{
+				foreach (Transform child2 in child)
+					Destroy(child2.GetComponent<RawImage>().texture);
+				Destroy(child.gameObject);
+			}
+
+			int i = 0;
+			foreach (CaptchalogueCard card in modus.cards)
+			{
+				RawImage cardIcon = Instantiate(cardIconPrefab, cardIconParent.transform);
+				cardIcon.transform.localPosition = Vector3.left * 0.1f + Vector3.right * 0.07f * (i % 4) + Vector3.up * 0.11f + Vector3.down * 0.09f * (i / 4);
+				foreach (Transform child in cardIcon.transform)
+				{
+					RawImage childImage = child.GetComponent<RawImage>();
+					if (card.heldItem)
+					{
+						childImage.texture = GameManager.instance.captcharoid.Captcha(card.heldItem);
+						childImage.color = Color.white;
+					}
+				}
+				i++;
+			}
 		}
 
 		public Item Display()
@@ -123,6 +172,9 @@ namespace WrightWay.SBEPIS
 		
 		public void InsertCard(CaptchalogueCard card)
 		{
+			if (modus.cards.Count >= maxCards)
+				return;
+
 			if (InsertInBack(card))
 			{
 				card.transform.SetParent(retrieveParent);
@@ -132,7 +184,7 @@ namespace WrightWay.SBEPIS
 			{
 				foreach (Transform oldDisplay in insertParent)
 				{
-					oldDisplay.GetComponent<CaptchalogueCard>().UpdateMaterials(color);
+					oldDisplay.GetComponent<CaptchalogueCard>().UpdateMaterials(moduskind);
 					oldDisplay.SetParent(retrieveParent);
 					oldDisplay.localPosition = Vector3.zero;
 					oldDisplay.localRotation = Quaternion.identity;
@@ -156,7 +208,7 @@ namespace WrightWay.SBEPIS
 				return null;
 
 			CaptchalogueCard card = modus.RetrieveCard();
-			card.UpdateMaterials(color);
+			card.UpdateMaterials(moduskind);
 
 			if (modus.flippedRetrieve)
 			{
@@ -169,7 +221,7 @@ namespace WrightWay.SBEPIS
 				CaptchalogueCard newDisplay = modus.Display();
 				if (newDisplay)
 				{
-					newDisplay.UpdateMaterials(color);
+					newDisplay.UpdateMaterials(moduskind);
 					newDisplay.gameObject.SetActive(true);
 					newDisplay.transform.SetParent(retrieveParent);
 					newDisplay.transform.localPosition = Vector3.zero;
@@ -199,7 +251,7 @@ namespace WrightWay.SBEPIS
 				child.gameObject.SetActive(false);
 				child.SetParent(transform);
 			}
-			UpdateCaptcha();
+			UpdateDisplay();
 		}
 
 		public void StopInsertWithdrawing()
@@ -214,7 +266,7 @@ namespace WrightWay.SBEPIS
 			{
 				child.SetParent(insertParent, false);
 			}
-			UpdateCaptcha();
+			UpdateDisplay();
 		}
 
 		public void StopRetrieveDepositing()
@@ -249,9 +301,24 @@ namespace WrightWay.SBEPIS
 
 		public void SyncCartridge()
 		{
-			FetchModus.fetchModi.TryGetValue(syncingCart.modus, out Type modusType);
-			modus = (FetchModus) Activator.CreateInstance(modusType, modus);
-			CaptchalogueCard.UpdateMaterials(0, null, color = syncingCart.color, renderers, null, null, colorMaterial);
+			SetModus(syncingCart.modus);
+		}
+
+		private void SetModus(Moduskind modus)
+		{
+			this.moduskind = modus;
+			FetchModus.fetchModi.TryGetValue(modus.modusType, out Type modusType);
+			this.modus = (FetchModus) Activator.CreateInstance(modusType, this.modus);
+			UpdateMaterials();
+			UpdateDisplay();
+		}
+
+		private void UpdateMaterials()
+		{
+			CaptchalogueCard.UpdateMaterials(0, null, color = moduskind.mainColor, renderers, null, null, colorMaterial);
+			CaptchalogueCard.UpdateMaterials(0, null, color, renderers, null, null, panelMaterial);
+			darkBar.color = moduskind.darkColor;
+			title.color = moduskind.textColor;
 		}
 
 		public void StopSyncingCartridge()
@@ -260,6 +327,23 @@ namespace WrightWay.SBEPIS
 			Item.EnableRigidbody(syncingCart.rigidbody);
 			syncingCart = null;
 			animator.SetBool("Syncing Cartridge", false);
+		}
+
+		public void StartTogglingPanel()
+		{
+			animator.SetBool("Litty", !animator.GetBool("Litty"));
+		}
+
+		public void SetPanelMaterial(int litty)
+		{
+			foreach (int mati in panelMaterialIndecies)
+			{
+				Material[] materials = renderers[0].materials;
+				materials[mati] = litty > 0 ? panelMaterial : glassMaterial;
+				renderers[0].materials = materials;
+			}
+			if (litty > 0)
+				CaptchalogueCard.UpdateMaterials(0, null, color, renderers, null, null, panelMaterial);
 		}
 	}
 }
