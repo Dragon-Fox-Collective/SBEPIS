@@ -55,7 +55,7 @@ namespace WrightWay.SBEPIS.Player
 
 		private void OnLook(InputValue value)
 		{
-			Vector2 look = value.Get<Vector2>() * sensitivity * Time.deltaTime;
+			Vector2 look = value.Get<Vector2>() * sensitivity;
 
 			transform.Rotate(Vector3.up * look.x);
 

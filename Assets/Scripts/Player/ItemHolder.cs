@@ -94,16 +94,17 @@ namespace WrightWay.SBEPIS.Player
 		/// </summary>
 		private void OnPickUp(InputValue value)
 		{
-			if (value.isPressed && !heldItem && Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, maxDistance, LayerMask.GetMask("Button")))
+			bool isPressed = value.isPressed;
+			if (isPressed && !heldItem && Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, maxDistance, LayerMask.GetMask("Button")))
 				hit.collider.GetComponent<Button>().onPressed.Invoke(this);
 
-			if (value.isPressed && !heldItem && Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, maxDistance, raycastMask) && hit.rigidbody)
+			if (isPressed && !heldItem && Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, maxDistance, raycastMask) && hit.rigidbody)
 			{
 				Item hitItem = hit.rigidbody.GetComponent<Item>();
 				if (hitItem && hitItem.canPickUp)
 					(heldItem = hitItem).OnPickedUp(this);
 			}
-			else if (!value.isPressed && heldItem)
+			else if (!isPressed && heldItem)
 			{
 				Item droppedItem = DropItem();
 				if (RaycastPlacementHelper(out PlacementHelper placement, droppedItem.itemkind))

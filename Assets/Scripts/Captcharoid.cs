@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using WrightWay.SBEPIS.Util;
 
 namespace WrightWay.SBEPIS
 {
@@ -60,7 +61,7 @@ namespace WrightWay.SBEPIS
 		public Texture2D Captcha(long captchaHash)
 		{
 			code.gameObject.SetActive(true);
-			code.text = Itemkind.unhashCaptcha(captchaHash);
+			code.text = CaptchaUtil.UnhashCaptcha(captchaHash);
 			Texture2D rtn = Captcha();
 			code.gameObject.SetActive(false);
 			return rtn;

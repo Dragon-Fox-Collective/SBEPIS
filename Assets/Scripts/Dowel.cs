@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using WrightWay.SBEPIS.Util;
 
 namespace WrightWay.SBEPIS
 {
@@ -18,21 +19,39 @@ namespace WrightWay.SBEPIS
 			{
 				captchaHash = defaultItem.captchaHash;
 				for (int i = 0; i < 8; i++)
-				{
-					long charIndex = (captchaHash >> 6 * i) & ((1L << 6) - 1);
-					SetWidth(i, charIndex / 63f);
-				}
+					SetWidth(i, CaptchaUtil.GetCaptchaPercent(captchaHash, i));
 			}
 		}
 
 		public void SetWidth(int i, float fraction)
 		{
-			renderer.SetBlendShapeWeight(i, fraction * 100f);
+			renderer.SetBlendShapeWeight(renderer.sharedMesh.GetBlendShapeIndex("Carve " + (i + 1)), fraction * 100f);
 		}
 
 		public float GetWidth(int i)
 		{
-			return renderer.GetBlendShapeWeight(i) / 100f;
+			return renderer.GetBlendShapeWeight(renderer.sharedMesh.GetBlendShapeIndex("Carve " + (i + 1))) / 100f;
+		}
+
+		public void SetEdge(int i, bool rightEdge, float fraction)
+		{
+			renderer.SetBlendShapeWeight(renderer.sharedMesh.GetBlendShapeIndex("Edge " + (rightEdge ? i + 1 : i)), (rightEdge ? fraction : 1 - fraction) * 100f);
+		}
+
+		public float GetEdge(int i, bool rightEdge)
+		{
+			float weight = renderer.GetBlendShapeWeight(renderer.sharedMesh.GetBlendShapeIndex("Edge " + (rightEdge ? i + 1 : i))) / 100f;
+			return rightEdge ? weight : 1 - weight;
+		}
+
+		public void SetFace(int i, float fraction)
+		{
+			renderer.SetBlendShapeWeight(renderer.sharedMesh.GetBlendShapeIndex("Face " + (i + 1)), fraction * 100f);
+		}
+
+		public float GetFace(int i)
+		{
+			return renderer.GetBlendShapeWeight(renderer.sharedMesh.GetBlendShapeIndex("Face " + (i + 1))) / 100f;
 		}
 	}
 }

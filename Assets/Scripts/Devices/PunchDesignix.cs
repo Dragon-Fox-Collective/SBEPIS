@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using WrightWay.SBEPIS.Player;
+using WrightWay.SBEPIS.Util;
 
 namespace WrightWay.SBEPIS.Devices
 {
@@ -40,7 +41,7 @@ namespace WrightWay.SBEPIS.Devices
 		{
 			if (animator.GetBool("Code Entered"))
 			{
-				punchPlacement.item.GetComponent<CaptchalogueCard>().Punch(punchPlacement.item.GetComponent<CaptchalogueCard>().punchedHash | Itemkind.hashCaptcha(punchPanel.text));
+				punchPlacement.item.GetComponent<CaptchalogueCard>().Punch(punchPlacement.item.GetComponent<CaptchalogueCard>().punchedHash | CaptchaUtil.HashCaptcha(punchPanel.text));
 				punchPanel.text = "";
 			}
 		}

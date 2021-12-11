@@ -235,7 +235,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -0.000198277, y: 0.016060255, z: -0.009796688}
+        value: {x: 0, y: -0.03955824, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -244,7 +244,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1
-        value: {x: -0.000198277, y: 0.016060255, z: -0.009796688}
+        value: {x: 0, y: -0.03955824, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -253,23 +253,23 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 4
-        value: {x: -0.000198277, y: 0.01606, z: -0.00349}
-        inSlope: {x: 0, y: 0, z: 0.0021022295}
-        outSlope: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: -0.033770353, z: 0}
+        inSlope: {x: 0, y: 0.004318009, z: -0}
+        outSlope: {x: 0, y: 0.004318009, z: 0}
         tangentMode: 0
         weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        inWeight: {x: 0.33333334, y: 0.08591501, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Left Piston
+    path: Armature/Root/Front Wheel/Left Piston
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -0.000198277, y: 0.01606026, z: 0.01795361}
+        value: {x: 0, y: -0.011807959, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -278,7 +278,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1
-        value: {x: -0.000198277, y: 0.01606026, z: 0.01795361}
+        value: {x: 0, y: -0.011807959, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -287,17 +287,17 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 4
-        value: {x: -0.000198277, y: 0.01606, z: 0.01058}
-        inSlope: {x: 0, y: 0, z: -0.0024578702}
-        outSlope: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: -0.01918157, z: 0}
+        inSlope: {x: 0, y: -0.0035395627, z: -0}
+        outSlope: {x: 0, y: -0.0035395627, z: 0}
         tangentMode: 0
         weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        inWeight: {x: 0.33333334, y: 0.090871654, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Right Piston
+    path: Armature/Root/Front Wheel/Right Piston
   m_ScaleCurves: []
   m_FloatCurves:
   - curve:
@@ -353,14 +353,14 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 863531381
+      path: 1619817852
       attribute: 1
       script: {fileID: 0}
       typeID: 4
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2999949654
+      path: 3410023926
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -647,7 +647,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.000198277
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -656,7 +656,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: -0.000198277
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -665,7 +665,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 4
-        value: -0.000198277
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -676,7 +676,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Armature/Root/Left Piston
+    path: Armature/Root/Front Wheel/Left Piston
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -684,7 +684,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.016060255
+        value: -0.03955824
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -693,7 +693,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0.016060255
+        value: -0.03955824
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -702,18 +702,18 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 4
-        value: 0.01606
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        value: -0.033770353
+        inSlope: 0.004318009
+        outSlope: 0.004318009
+        tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0.08591501
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Armature/Root/Left Piston
+    path: Armature/Root/Front Wheel/Left Piston
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -721,7 +721,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.009796688
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -730,7 +730,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: -0.009796688
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -739,8 +739,8 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 4
-        value: -0.00349
-        inSlope: 0.0021022295
+        value: 0
+        inSlope: -0
         outSlope: 0
         tangentMode: 5
         weightedMode: 0
@@ -750,7 +750,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Armature/Root/Left Piston
+    path: Armature/Root/Front Wheel/Left Piston
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -869,7 +869,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.000198277
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -878,7 +878,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: -0.000198277
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -887,7 +887,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 4
-        value: -0.000198277
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -898,7 +898,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Armature/Root/Right Piston
+    path: Armature/Root/Front Wheel/Right Piston
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -906,7 +906,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.01606026
+        value: -0.011807959
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -915,7 +915,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0.01606026
+        value: -0.011807959
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -924,18 +924,18 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 4
-        value: 0.01606
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        value: -0.01918157
+        inSlope: -0.0035395627
+        outSlope: -0.0035395627
+        tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0.090871654
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Armature/Root/Right Piston
+    path: Armature/Root/Front Wheel/Right Piston
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -943,7 +943,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.01795361
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -952,7 +952,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0.01795361
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -961,8 +961,8 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 4
-        value: 0.01058
-        inSlope: -0.0024578702
+        value: 0
+        inSlope: -0
         outSlope: 0
         tangentMode: 5
         weightedMode: 0
@@ -972,7 +972,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Armature/Root/Right Piston
+    path: Armature/Root/Front Wheel/Right Piston
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1380,7 +1380,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Front Wheel
+    path: Armature/Root/Right Wheel
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1390,7 +1390,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Front Wheel
+    path: Armature/Root/Right Wheel
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1400,7 +1400,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Front Wheel
+    path: Armature/Root/Right Wheel
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1440,7 +1440,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Right Wheel
+    path: Armature/Root/Top Lever
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1450,17 +1450,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Right Wheel
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Right Wheel
+    path: Armature/Root/Top Lever
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1479,8 +1469,18 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: Armature/Root/Front Wheel
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Top Lever
+    path: Armature/Root/Front Wheel
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1490,7 +1490,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Top Lever
+    path: Armature/Root/Front Wheel
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0

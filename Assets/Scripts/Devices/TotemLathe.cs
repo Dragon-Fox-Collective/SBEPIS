@@ -1,8 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using WrightWay.SBEPIS.Util;
 
 namespace WrightWay.SBEPIS.Devices
 {
@@ -10,9 +8,11 @@ namespace WrightWay.SBEPIS.Devices
 	{
 		public PlacementHelper card1Placement, card2Placement, dowelPlacement;
 		public Transform dowelReciever;
+		public Transform dowelSpinner;
 		public SkinnedMeshRenderer chisel;
 		public Animator animator;
 		public float latheProgress;
+		public float correctionProgress;
 
 		public TextMeshProUGUI dowelPanel;
 		public TextMeshProUGUI progressPanel;
@@ -24,7 +24,10 @@ namespace WrightWay.SBEPIS.Devices
 		private bool isLathing;
 		private long captchaHash;
 		private Dowel dowel;
-		private float[] initialWidths = new float[8];
+		private float[] initialDepths = new float[8];
+		private float[,] initialEdges = new float[8, 2];
+		private float[] initialFaces = new float[8];
+		private Vector3 initialIncorrection, correctionTarget;
 
 		private void Start()
 		{
@@ -33,16 +36,78 @@ namespace WrightWay.SBEPIS.Devices
 
 		private void Update()
 		{
+			if (correctionProgress > 0 && dowel)
+				dowel.transform.localPosition = Vector3.Lerp(initialIncorrection, correctionTarget, correctionProgress);
+
 			if (isLathing)
 			{
 				if (dowel)
+				{
 					for (int i = 0; i < 8; i++)
 					{
-						long charIndex = (dowel.captchaHash >> 6 * i) & ((1L << 6) - 1);
-						float sliceChiselPercent = charIndex / 63f;
-						float startLatheProgress = 1f - sliceChiselPercent + initialWidths[i];
-						dowel.SetWidth(i, Math.Max(latheProgress - startLatheProgress, initialWidths[i]));
+						float thisChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i);
+						float thisChiselAbsDepth = latheProgress - 1f + thisChiselHeight;
+						float thisChiselThisDepth = thisChiselAbsDepth - initialDepths[i];
+						float thisCarveDepth = Mathf.Max(thisChiselAbsDepth, initialDepths[i]);
+
+						dowel.SetWidth(i, thisCarveDepth);
+
+						if (i > 0)
+						{
+							float prevChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i - 1);
+							float prevChiselAbsDepth = latheProgress - 1f + prevChiselHeight;
+							float prevCarveDepth = Mathf.Max(prevChiselAbsDepth, initialDepths[i - 1]);
+
+							float prevChiselHeightDifference = (thisChiselHeight - prevChiselHeight);
+							float prevInitialDepthDifference = (initialDepths[i] - initialDepths[i - 1]);
+							float prevEventualHeightDifference = prevChiselHeightDifference + prevInitialDepthDifference;
+							if (prevEventualHeightDifference > 0)
+							{
+								float prevEdgeProgress = (latheProgress - initialDepths[i]) / prevEventualHeightDifference;
+								dowel.SetEdge(i, false, Mathf.Max(prevEdgeProgress, initialEdges[i, 0]));
+								if (prevEventualHeightDifference > 1)
+									dowel.SetFace(i - 1, Mathf.Max(prevCarveDepth, initialFaces[i - 1]));
+							}
+						}
+
+						if (i < 7)
+						{
+							float nextChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i - 1);
+							float prevChiselAbsDepth = latheProgress - 1f + prevChiselHeight;
+							float prevCarveDepth = Mathf.Max(prevChiselAbsDepth, initialDepths[i - 1]);
+
+							float prevChiselHeightDifference = (thisChiselHeight - prevChiselHeight);
+							float prevInitialDepthDifference = (initialDepths[i] - initialDepths[i - 1]);
+							float prevEventualHeightDifference = prevChiselHeightDifference + prevInitialDepthDifference;
+							if (prevEventualHeightDifference > 0)
+							{
+								float prevEdgeProgress = (latheProgress - initialDepths[i]) / prevEventualHeightDifference;
+								dowel.SetEdge(i, false, Mathf.Max(prevEdgeProgress, initialEdges[i, 0]));
+								if (prevEventualHeightDifference > 1)
+									dowel.SetFace(i - 1, Mathf.Max(prevCarveDepth, initialFaces[i - 1]));
+							}
+						}
+
+						/*if (i < 7)
+						{
+							float nextChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i + 1);
+							float nextChiselAbsDepth = latheProgress - 1f + nextChiselHeight;
+							float nextCarveDepth = Mathf.Max(nextChiselAbsDepth, initialDepths[i + 1]);
+
+							if (thisChiselHeight > nextChiselHeight)
+							{
+								float nextHeightDifference = thisChiselHeight - nextChiselHeight;
+								float nextEdgeProgress = Mathf.Clamp(thisCarveDepth / nextHeightDifference, 0, 1);
+								dowel.SetEdge(i, true, nextEdgeProgress);
+							}
+							
+							if (thisChiselHeight < nextChiselHeight)
+							{
+								dowel.SetFace(i, thisCarveDepth);
+							}
+						}*/
 					}
+				}
 				progressPanel.text = (latheProgress * 100).ToString("000.") + "%";
 				if (latheProgress == 1)
 					isLathing = false;
@@ -55,7 +120,7 @@ namespace WrightWay.SBEPIS.Devices
 		public void SetCaptchaHash()
 		{
 			if (!card1Placement.item)
-				captchaHash = 0;
+				captchaHash = (1L << (6 * 8)) - 1;
 			else if (!card2Placement.item)
 				captchaHash = card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash;
 			else
@@ -158,12 +223,8 @@ namespace WrightWay.SBEPIS.Devices
 			}
 
 			SetCaptchaHash();
-			string captchaCode = Itemkind.unhashCaptcha(captchaHash);
 			for (int i = 0; i < 8; i++)
-			{
-				int charIndex = Array.IndexOf(Itemkind.hashCharacters, captchaCode[i]);
-				chisel.SetBlendShapeWeight(i, (1f - charIndex / 63f) * 100);
-			}
+				chisel.SetBlendShapeWeight(i, (1f - CaptchaUtil.GetCaptchaPercent(captchaHash, i)) * 100);
 			isLathing = true;
 
 			if (dowel)
@@ -171,11 +232,23 @@ namespace WrightWay.SBEPIS.Devices
 				long greaterCaptchaHash = 0;
 				for (int i = 0; i < 8; i++)
 				{
-					initialWidths[i] = dowel.GetWidth(i);
+					initialDepths[i] = dowel.GetWidth(i);
 
-					long initialCharIndex = (dowel.captchaHash >> 6 * i) & ((1L << 6) - 1);
-					long chiselCharIndex = (captchaHash >> 6 * i) & ((1L << 6) - 1);
-					greaterCaptchaHash |= (1L << i * 6) * Math.Max(initialCharIndex, chiselCharIndex);
+					if (i > 0)
+						initialEdges[i, 0] = dowel.GetEdge(i, false);
+					else
+						initialEdges[i, 0] = 0;
+					if (i < 7)
+						initialEdges[i, 1] = dowel.GetEdge(i, true);
+					else
+						initialEdges[i, 1] = 0;
+
+					if (i < 7)
+						initialFaces[i] = dowel.GetFace(i);
+					else
+						initialFaces[i] = 0;
+
+					greaterCaptchaHash |= (1L << i * 6) * Mathf.Max(CaptchaUtil.GetCaptchaDigit(dowel.captchaHash, i), CaptchaUtil.GetCaptchaDigit(captchaHash, i));
 				}
 				dowel.captchaHash = greaterCaptchaHash;
 			}
@@ -250,6 +323,16 @@ namespace WrightWay.SBEPIS.Devices
 				dowel.transform.SetParent(dowelPlacement.itemParent);
 		}
 
+		public void GiveTotem()
+		{
+			if (dowel)
+			{
+				dowel.transform.SetParent(dowelSpinner);
+				initialIncorrection = dowel.transform.localPosition;
+				correctionTarget = Vector3.up * dowel.transform.localPosition.y;
+			}
+		}
+
 		private void UpdatePanels()
 		{
 			SetCaptchaHash();
@@ -260,9 +343,9 @@ namespace WrightWay.SBEPIS.Devices
 
 		private void UpdateCaptchaPanel()
 		{
-			string code1 = card1Placement.item ? Itemkind.unhashCaptcha(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash) : "00000000";
-			string code2 = card2Placement.item ? Itemkind.unhashCaptcha(card2Placement.item.GetComponent<CaptchalogueCard>().punchedHash) : "!!!!!!!!";
-			string codeRes = Itemkind.unhashCaptcha(captchaHash);
+			string code1 = card1Placement.item ? CaptchaUtil.UnhashCaptcha(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash) : "!!!!!!!!";
+			string code2 = card2Placement.item ? CaptchaUtil.UnhashCaptcha(card2Placement.item.GetComponent<CaptchalogueCard>().punchedHash) : "!!!!!!!!";
+			string codeRes = CaptchaUtil.UnhashCaptcha(captchaHash);
 			captchaPanel.text = $"{code1}\n&\n{code2}\n=\n{codeRes}";
 		}
 

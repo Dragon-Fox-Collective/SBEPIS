@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using WrightWay.SBEPIS.Util;
 
 namespace WrightWay.SBEPIS
 {
@@ -70,7 +71,7 @@ namespace WrightWay.SBEPIS
 			float seed = 0;
 			if (captchaHash != 0)
 				for (int i = 0; i < 8; i++)
-					seed += Mathf.Pow(10f, i - 4) * ((captchaHash >> 6 * i) & ((1L << 6) - 1));
+					seed += Mathf.Pow(10f, i - 4) * CaptchaUtil.GetCaptchaDigit(captchaHash, i);
 
 			foreach (Renderer renderer in renderers)
 				for (int i = 0; i < renderer.materials.Length; i++)
@@ -94,7 +95,7 @@ namespace WrightWay.SBEPIS
 					if (captchaMaterial && materialName == captchaMaterial.name)
 					{
 						renderer.materials[i].SetFloat("Seed", seed);
-						renderer.materials[i].SetTexture("CaptchaCode", Itemkind.GetCaptchaTexture(captchaHash));
+						renderer.materials[i].SetTexture("CaptchaCode", CaptchaUtil.GetCaptchaTexture(captchaHash));
 					}
 					if (colorMaterial && materialName == colorMaterial.name)
 					{
