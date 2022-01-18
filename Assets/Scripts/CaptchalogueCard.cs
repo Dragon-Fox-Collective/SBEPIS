@@ -22,6 +22,8 @@ namespace WrightWay.SBEPIS
 		private TextMeshProUGUI[] texts;
 		[SerializeField]
 		private Moduskind defaultModus;
+		[SerializeField]
+		private String defaultCaptcha;
 
 		public Item heldItem { get; private set; }
 		public long punchedHash { get; private set; }
@@ -37,6 +39,8 @@ namespace WrightWay.SBEPIS
 		{
 			UpdateMaterials(defaultModus);
 			Eject();
+			if (defaultCaptcha.Length > 0)
+				Punch(CaptchaUtil.HashCaptcha(defaultCaptcha));
 		}
 
 		public void Captchalogue(Item item)

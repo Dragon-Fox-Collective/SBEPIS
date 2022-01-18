@@ -26,7 +26,7 @@ namespace WrightWay.SBEPIS.Devices
 		private long captchaHash;
 		private Dowel dowel;
 		private float[] initialDepths = new float[8];
-		private float[,] initialEdges = new float[8, 2];
+		private HashSet<(int larger, int smaller)> largerEdges = new HashSet<(int larger, int smaller)>();
 		private Vector3 initialIncorrection, correctionTarget;
 
 		private void Start()
@@ -43,38 +43,38 @@ namespace WrightWay.SBEPIS.Devices
 			{
 				if (dowel)
 				{
-					List<(int larger, int smaller)> edges = new List<(int larger, int smaller)>;
-
 					for (int i = 0; i < 8; i++)
 					{
 						float chiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i); // 0: Chisel bit is flat against the top of the chisel; 1: bit goes all the way down
-						float chiselAbsDepth = latheProgress - 1f + chiselHeight; // -1: Chisel bit is currently one dowel radius above the dowel; 0: bit is currently touching the outside of a fresh dowel; 1: bit is all the way into the dowel
-						float carveDepth = Mathf.Max(chiselAbsDepth, initialDepths[i]);
+						float chiselDepth = latheProgress - 1f + chiselHeight; // -1: Chisel bit is currently one dowel radius above the dowel; 0: bit is currently touching the outside of a fresh dowel; 1: bit is all the way into the dowel
+						float carveDepth = Mathf.Max(chiselDepth, initialDepths[i]);
 
 						dowel.SetDepth(i, carveDepth);
-
-						if (i > 0 && chiselHeight > CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i - 1))
-							edges.Add((i, i - 1));
-						if (i < 7 && chiselHeight > CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i + 1))
-							edges.Add((i, i + 1));
 					}
 
-					foreach ((int larger, int smaller) in edges)
+					foreach ((int larger, int smaller) in largerEdges)
 					{
 						float largerChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, larger);
-						float largerChiselAbsDepth = latheProgress - 1f + largerChiselHeight;
-						float largerCarveDepth = Mathf.Max(largerChiselAbsDepth, initialDepths[larger]);
+						float largerChiselDepth = latheProgress - 1f + largerChiselHeight;
+						float largerCarveDepth = Mathf.Max(largerChiselDepth, initialDepths[larger]);
 
 						float smallerChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, smaller);
-						float smallerChiselAbsDepth = latheProgress - 1f + smallerChiselHeight;
-						float smallerCarveDepth = Mathf.Max(smallerChiselAbsDepth, initialDepths[smaller]);
+						float smallerChiselDepth = latheProgress - 1f + smallerChiselHeight;
+						float smallerCarveDepth = Mathf.Max(smallerChiselDepth, initialDepths[smaller]);
 
 						float chiselHeightDifference = (largerChiselHeight - smallerChiselHeight);
 
-						float edgeProgress = (largerCarveDepth - initialDepths[larger]) / chiselHeightDifference;
-						edgeProgress = Mathf.Clamp(edgeProgress, 0, 1);
-						dowel.SetEdgeDistance(larger, smaller > larger, edgeProgress);
-						dowel.SetEdgeDepth(larger, smaller > larger, Mathf.Lerp(edgeProgress, largerCarveDepth, smallerCarveDepth));
+						if (largerChiselHeight - initialDepths[larger] > smallerChiselHeight - initialDepths[smaller])
+						{
+							float edgeProgress = Mathf.Clamp((largerCarveDepth - initialDepths[larger]) / chiselHeightDifference, 0, 1);
+							dowel.SetEdgeDistance(larger, smaller > larger, edgeProgress);
+							dowel.SetEdgeDepth(larger, smaller > larger, Mathf.Lerp(edgeProgress, largerChiselDepth, smallerChiselDepth));
+						}
+						else
+						{
+							dowel.SetEdgeDistance(larger, smaller > larger, 1);
+							dowel.SetEdgeDepth(larger, smaller > larger, smallerCarveDepth);
+						}
 					}
 				}
 				progressPanel.text = (latheProgress * 100).ToString("000.") + "%";
@@ -204,18 +204,30 @@ namespace WrightWay.SBEPIS.Devices
 				{
 					initialDepths[i] = dowel.GetDepth(i);
 
-					if (i > 0)
-						initialEdges[i, 0] = dowel.GetEdgeDistance(i, false);
-					else
-						initialEdges[i, 0] = 0;
-					if (i < 7)
-						initialEdges[i, 1] = dowel.GetEdgeDistance(i, true);
-					else
-						initialEdges[i, 1] = 0;
-
 					greaterCaptchaHash |= (1L << i * 6) * Mathf.Max(CaptchaUtil.GetCaptchaDigit(dowel.captchaHash, i), CaptchaUtil.GetCaptchaDigit(captchaHash, i));
 				}
 				dowel.captchaHash = greaterCaptchaHash;
+
+				largerEdges.Clear();
+				for (int i = 0; i < 8; i++)
+				{
+					float chiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i);
+					if (i > 0)
+					{
+						float prevChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i - 1);
+						if (chiselHeight > prevChiselHeight || (chiselHeight == prevChiselHeight && initialDepths[i] < initialDepths[i - 1]))
+							largerEdges.Add((i, i - 1));
+					}
+					if (i < 7)
+					{
+						float nextChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i + 1);
+						if (chiselHeight > nextChiselHeight || (chiselHeight == nextChiselHeight && initialDepths[i] < initialDepths[i + 1]))
+							largerEdges.Add((i, i + 1));
+					}
+				}
+				Debug.Log(largerEdges.Count);
+				foreach ((float larger, float smaller) in largerEdges)
+					Debug.Log($"{larger} {smaller}");
 			}
 		}
 

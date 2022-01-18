@@ -36,6 +36,7 @@ namespace WrightWay.SBEPIS
 		public void SetEdgeDistance(int i, bool rightEdge, float fraction)
 		{
 			fraction = fraction.Map(0, 1, -1, 1);
+			Debug.Log($"{i} {rightEdge} {fraction}");
 			renderer.SetBlendShapeWeight(renderer.sharedMesh.GetBlendShapeIndex("Edge " + (rightEdge ? i + 1 : i)), (rightEdge ? fraction : 1 - fraction) * 100f);
 		}
 
