@@ -35,13 +35,14 @@ namespace WrightWay.SBEPIS
 
 		public void SetEdge(int i, bool rightEdge, float fraction)
 		{
+			fraction = fraction.Map(0, 1, -1, 1);
 			renderer.SetBlendShapeWeight(renderer.sharedMesh.GetBlendShapeIndex("Edge " + (rightEdge ? i + 1 : i)), (rightEdge ? fraction : 1 - fraction) * 100f);
 		}
 
 		public float GetEdge(int i, bool rightEdge)
 		{
 			float weight = renderer.GetBlendShapeWeight(renderer.sharedMesh.GetBlendShapeIndex("Edge " + (rightEdge ? i + 1 : i))) / 100f;
-			return rightEdge ? weight : 1 - weight;
+			return (rightEdge ? weight : 1 - weight).Map(-1, 1, 0, 1);
 		}
 
 		public void SetFace(int i, float fraction)
