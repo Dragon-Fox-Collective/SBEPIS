@@ -68,7 +68,7 @@ namespace WrightWay.SBEPIS.Devices
 						{
 							float edgeProgress = Mathf.Clamp((largerCarveDepth - initialDepths[larger]) / chiselHeightDifference, 0, 1);
 							dowel.SetEdgeDistance(larger, smaller > larger, edgeProgress);
-							dowel.SetEdgeDepth(larger, smaller > larger, Mathf.Lerp(edgeProgress, largerChiselDepth, smallerChiselDepth));
+							dowel.SetEdgeDepth(larger, smaller > larger, Mathf.Lerp(largerCarveDepth, smallerChiselDepth, edgeProgress));
 						}
 						else
 						{
