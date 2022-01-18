@@ -45,14 +45,17 @@ namespace WrightWay.SBEPIS.Devices
 				{
 					for (int i = 0; i < 8; i++)
 					{
-						float thisChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i);
-						float thisChiselAbsDepth = latheProgress - 1f + thisChiselHeight;
-						float thisChiselThisDepth = thisChiselAbsDepth - initialDepths[i];
+						float thisChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i); // 0: Chisel bit is flat against the top of the chisel; 1: bit goes all the way down
+						float thisChiselAbsDepth = latheProgress - 1f + thisChiselHeight; // -1: Chisel bit is currently one dowel radius above the dowel; 0: bit is currently touching the outside of a fresh dowel; 1: bit is all the way into the dowel
 						float thisCarveDepth = Mathf.Max(thisChiselAbsDepth, initialDepths[i]);
 
 						dowel.SetWidth(i, thisCarveDepth);
 
-						if (i > 0)
+						if (i == 0)
+						{
+
+						}
+						else
 						{
 							float prevChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i - 1);
 							float prevChiselAbsDepth = latheProgress - 1f + prevChiselHeight;
@@ -72,7 +75,7 @@ namespace WrightWay.SBEPIS.Devices
 							}
 						}
 
-						if (i < 7)
+						/*if (i < 7)
 						{
 							float nextChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i + 1);
 							float nextChiselAbsDepth = latheProgress - 1f + nextChiselHeight;
@@ -90,7 +93,7 @@ namespace WrightWay.SBEPIS.Devices
 								else if (nextEdgeProgress >= 1)
 									dowel.SetFace(i, Mathf.Max(nextCarveDepth, initialFaces[i]));
 							}
-						}
+						}*/
 					}
 				}
 				progressPanel.text = (latheProgress * 100).ToString("000.") + "%";
