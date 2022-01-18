@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Captchaback
+  m_Name: Captchaback Bright
   m_Shader: {fileID: -6465566751694194690, guid: f28946f8b0a285b48adbfd46e476b40a, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -36,11 +36,19 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - Lines:
+        m_Texture: {fileID: 2800000, guid: 5f3f1f3618349124ab7ceb8dc5480893, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texts:
+        m_Texture: {fileID: 2800000, guid: 0a6a0a67a88d8464eb8a5bc25bddd7ae, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2DArray_956b2d250661487d9007ddeb38e43218:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - Lines:
+    - Texture2D_6eb42293c7d74ee992aaa8f9c8301e86:
         m_Texture: {fileID: 2800000, guid: 5f3f1f3618349124ab7ceb8dc5480893, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -48,7 +56,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - Texts:
+    - Texture2D_d40ae079c69b4e7db07b73f69eacf7b7:
         m_Texture: {fileID: 2800000, guid: 0a6a0a67a88d8464eb8a5bc25bddd7ae, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -141,6 +149,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Brightness: 1
     - Seed: 5
     - Vector1_b84c9a0a4947431d9a9b6d5109fc32d9: 0
     - _AlphaClip: 0
