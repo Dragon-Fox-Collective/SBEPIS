@@ -114,7 +114,6 @@ namespace WrightWay.SBEPIS.Devices
 			if (isWorking || animator.GetBool("Lever 2 Pulled"))
 				return;
 
-			Debug.Log("Lever hit");
 			isWorking = true;
 			dowelPanel.text = "Please wait";
 			animator.SetBool("Lever 1 Pulled", !animator.GetBool("Lever 1 Pulled"));
@@ -215,7 +214,7 @@ namespace WrightWay.SBEPIS.Devices
 					if (i > 0)
 					{
 						float prevChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i - 1);
-						if (chiselHeight > prevChiselHeight || (chiselHeight == prevChiselHeight && initialDepths[i] < initialDepths[i - 1]))
+						if (chiselHeight > prevChiselHeight || (chiselHeight == prevChiselHeight && initialDepths[i] <= initialDepths[i - 1]))
 							largerEdges.Add((i, i - 1));
 					}
 					if (i < 7)
@@ -225,9 +224,6 @@ namespace WrightWay.SBEPIS.Devices
 							largerEdges.Add((i, i + 1));
 					}
 				}
-				Debug.Log(largerEdges.Count);
-				foreach ((float larger, float smaller) in largerEdges)
-					Debug.Log($"{larger} {smaller}");
 			}
 		}
 
