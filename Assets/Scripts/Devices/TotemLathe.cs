@@ -64,48 +64,33 @@ namespace WrightWay.SBEPIS.Devices
 							if (prevEventualHeightDifference > 0)
 							{
 								float prevEdgeProgress = (latheProgress - initialDepths[i]) / prevEventualHeightDifference;
-								dowel.SetEdge(i, false, Mathf.Max(prevEdgeProgress, initialEdges[i, 0]));
-								if (prevEventualHeightDifference > 1)
+								dowel.SetEdge(i, false, Mathf.Max(prevEdgeProgress, initialDepths[i - 1] == initialDepths[i] ? 0 : initialEdges[i, 0]));
+								if (prevEdgeProgress > 0 && prevEdgeProgress < 1)
+									dowel.SetFace(i - 1, Mathf.Max(Mathf.Lerp(initialDepths[i - 1], initialDepths[i], prevEdgeProgress), initialFaces[i - 1]));
+								else if (prevEdgeProgress >= 1)
 									dowel.SetFace(i - 1, Mathf.Max(prevCarveDepth, initialFaces[i - 1]));
 							}
 						}
 
 						if (i < 7)
 						{
-							float nextChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i - 1);
-							float prevChiselAbsDepth = latheProgress - 1f + prevChiselHeight;
-							float prevCarveDepth = Mathf.Max(prevChiselAbsDepth, initialDepths[i - 1]);
-
-							float prevChiselHeightDifference = (thisChiselHeight - prevChiselHeight);
-							float prevInitialDepthDifference = (initialDepths[i] - initialDepths[i - 1]);
-							float prevEventualHeightDifference = prevChiselHeightDifference + prevInitialDepthDifference;
-							if (prevEventualHeightDifference > 0)
-							{
-								float prevEdgeProgress = (latheProgress - initialDepths[i]) / prevEventualHeightDifference;
-								dowel.SetEdge(i, false, Mathf.Max(prevEdgeProgress, initialEdges[i, 0]));
-								if (prevEventualHeightDifference > 1)
-									dowel.SetFace(i - 1, Mathf.Max(prevCarveDepth, initialFaces[i - 1]));
-							}
-						}
-
-						/*if (i < 7)
-						{
 							float nextChiselHeight = CaptchaUtil.GetCaptchaPercent(dowel.captchaHash, i + 1);
 							float nextChiselAbsDepth = latheProgress - 1f + nextChiselHeight;
 							float nextCarveDepth = Mathf.Max(nextChiselAbsDepth, initialDepths[i + 1]);
 
-							if (thisChiselHeight > nextChiselHeight)
+							float nextChiselHeightDifference = (thisChiselHeight - nextChiselHeight);
+							float nextInitialDepthDifference = (initialDepths[i] - initialDepths[i + 1]);
+							float nextEventualHeightDifference = nextChiselHeightDifference + nextInitialDepthDifference;
+							if (nextEventualHeightDifference > 0)
 							{
-								float nextHeightDifference = thisChiselHeight - nextChiselHeight;
-								float nextEdgeProgress = Mathf.Clamp(thisCarveDepth / nextHeightDifference, 0, 1);
-								dowel.SetEdge(i, true, nextEdgeProgress);
+								float nextEdgeProgress = (latheProgress - initialDepths[i]) / nextEventualHeightDifference;
+								dowel.SetEdge(i, true, Mathf.Max(nextEdgeProgress, initialDepths[i] == initialDepths[i + 1] ? 0 : initialEdges[i, 1]));
+								if (nextEdgeProgress > 0 && nextEdgeProgress < 1)
+									dowel.SetFace(i, Mathf.Max(Mathf.Lerp(initialDepths[i], initialDepths[i + 1], nextEdgeProgress), initialFaces[i]));
+								else if (nextEdgeProgress >= 1)
+									dowel.SetFace(i, Mathf.Max(nextCarveDepth, initialFaces[i]));
 							}
-							
-							if (thisChiselHeight < nextChiselHeight)
-							{
-								dowel.SetFace(i, thisCarveDepth);
-							}
-						}*/
+						}
 					}
 				}
 				progressPanel.text = (latheProgress * 100).ToString("000.") + "%";
@@ -142,9 +127,10 @@ namespace WrightWay.SBEPIS.Devices
 
 		public void HitLever1()
 		{
-			if (isWorking)
+			if (isWorking || animator.GetBool("Lever 2 Pulled"))
 				return;
 
+			Debug.Log("Lever hit");
 			isWorking = true;
 			dowelPanel.text = "Please wait";
 			animator.SetBool("Lever 1 Pulled", !animator.GetBool("Lever 1 Pulled"));

@@ -52,7 +52,7 @@ namespace WrightWay.SBEPIS.Util
 
 			string code = "";
 			for (int i = 0; i < 8; i++)
-				code += hashCharacters[(captchaHash >> 6 * i) & ((1L << 6) - 1)];
+				code += GetCaptchaChar(captchaHash, i);
 			return code;
 		}
 
