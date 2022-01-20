@@ -29,7 +29,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Arm/Arm Hinge
+    path: Lathe/Armature/Root/Arm/Arm Hinge
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -72,7 +72,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -88,7 +88,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -104,14 +104,14 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Bottom Lever
+    path: Lathe/Armature/Root/Bottom Lever
   m_PositionCurves:
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -0.005119712, y: 0.010982719, z: 0.005548719}
+        value: {x: -0.5119712, y: 1.098272, z: 0.5548719}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -121,7 +121,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Arm
+    path: Lathe/Armature/Root/Arm
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves: []
@@ -133,35 +133,35 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1486636057
+      path: 960610057
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 1310312958
+      path: 2677049783
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 3595138171
+      path: 1258609868
       attribute: 1
       script: {fileID: 0}
       typeID: 4
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2972368642
+      path: 3204173686
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 3097437720
+      path: 1391163522
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -194,7 +194,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.005119712
+        value: -0.5119712
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -205,7 +205,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Armature/Root/Arm
+    path: Lathe/Armature/Root/Arm
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -213,7 +213,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.010982719
+        value: 1.098272
         inSlope: 0
         outSlope: 0
         tangentMode: 1
@@ -224,7 +224,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Armature/Root/Arm
+    path: Lathe/Armature/Root/Arm
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -232,7 +232,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.005548719
+        value: 0.5548719
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -243,7 +243,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Armature/Root/Arm
+    path: Lathe/Armature/Root/Arm
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -262,7 +262,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Armature/Root/Arm/Arm Hinge
+    path: Lathe/Armature/Root/Arm/Arm Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -281,7 +281,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Armature/Root/Arm/Arm Hinge
+    path: Lathe/Armature/Root/Arm/Arm Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -300,7 +300,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Armature/Root/Arm/Arm Hinge
+    path: Lathe/Armature/Root/Arm/Arm Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -346,7 +346,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -392,7 +392,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -438,7 +438,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -457,7 +457,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -476,7 +476,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -495,7 +495,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -514,7 +514,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Armature/Root/Bottom Lever
+    path: Lathe/Armature/Root/Bottom Lever
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -533,7 +533,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Armature/Root/Bottom Lever
+    path: Lathe/Armature/Root/Bottom Lever
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -552,7 +552,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Armature/Root/Bottom Lever
+    path: Lathe/Armature/Root/Bottom Lever
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves:
@@ -562,8 +562,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Arm/Arm Hinge
+    attribute: m_LocalEulerAngles.z
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -573,37 +573,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Arm/Arm Hinge
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Arm/Arm Hinge
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Bottom Lever
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Bottom Lever
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -613,27 +583,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Bottom Lever
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -643,17 +593,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge/Holder
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -663,7 +603,17 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: Lathe/Armature/Root/Arm/Arm Hinge/Holder Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -673,7 +623,57 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Arm/Arm Hinge/Holder Hinge
+    path: Lathe/Armature/Root/Arm/Arm Hinge
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: Lathe/Armature/Root/Arm/Arm Hinge
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: Lathe/Armature/Root/Arm/Arm Hinge
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: Lathe/Armature/Root/Bottom Lever
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: Lathe/Armature/Root/Bottom Lever
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.z
+    path: Lathe/Armature/Root/Bottom Lever
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0

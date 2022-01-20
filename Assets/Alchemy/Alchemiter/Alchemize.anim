@@ -119,7 +119,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Arm 1
+    path: Alchemiter/Armature/Root/Arm 1
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -225,7 +225,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Arm 1/Arm 1 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -331,7 +331,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -437,7 +437,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -543,7 +543,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -649,7 +649,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -755,8 +756,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -862,8 +863,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1041,8 +1042,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge/Lazor
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge/Lazor
   m_PositionCurves:
   - curve:
       serializedVersion: 2
@@ -1161,6 +1162,62 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
+        time: 3.8333333
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 5.8333335
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 6.3333335
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 8.333333
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_IsActive
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge/Lazor
+    classID: 1
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
         time: 9.5
         value: 1
         inSlope: Infinity
@@ -1184,6 +1241,302 @@ AnimationClip:
     attribute: m_IsActive
     path: Quad
     classID: 1
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 9.75
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.r
+    path: Quad
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 9.75
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.g
+    path: Quad
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 9.75
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.b
+    path: Quad
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 9.75
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.a
+    path: Quad
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 0.75
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.r
+    path: Quad/Quad (1)
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 0.75
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.g
+    path: Quad/Quad (1)
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 0.75
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.b
+    path: Quad/Quad (1)
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.a
+    path: Quad/Quad (1)
+    classID: 23
     script: {fileID: 0}
   - curve:
       serializedVersion: 2
@@ -1237,7 +1590,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material.Vector1_27b133275ae84d9fae05fc9ff5fc898c
-    path: Top
+    path: Alchemiter/Top
     classID: 137
     script: {fileID: 0}
   - curve:
@@ -1283,304 +1636,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material.Vector1_b10811a93a9f42c8890978fdba7ecf37
-    path: Top
+    path: Alchemiter/Top
     classID: 137
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 9.75
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 0.5
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.r
-    path: Quad
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 9.75
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 0.5
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.g
-    path: Quad
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 9.75
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 0.5
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.b
-    path: Quad
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 9.75
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.a
-    path: Quad
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 0.75
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.r
-    path: Quad/Quad (1)
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 0.75
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.g
-    path: Quad/Quad (1)
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 0.75
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.b
-    path: Quad/Quad (1)
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.a
-    path: Quad/Quad (1)
-    classID: 23
     script: {fileID: 0}
   - curve:
       serializedVersion: 2
@@ -1656,62 +1713,6 @@ AnimationClip:
     path: Particles/Explod
     classID: 1
     script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 3.8333333
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 5.8333335
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 6.3333335
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 8.333333
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge/Lazor
-    classID: 1
-    script: {fileID: 0}
   m_PPtrCurves: []
   m_SampleRate: 60
   m_WrapMode: 0
@@ -1742,67 +1743,74 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 505476406
+      path: 3977335675
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 454425269
+      path: 4213112420
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2343765508
+      path: 1051031065
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 146243676
+      path: 4174005614
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 17794650
+      path: 3430034624
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 3936323795
+      path: 899344981
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 3719045951
+      path: 1203532520
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 3077927142
+      path: 1584719657
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 4187363835
+      path: 1686225616
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1686225616
+      attribute: 2086281974
+      script: {fileID: 0}
+      typeID: 1
+      customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
       path: 922149575
@@ -1812,59 +1820,59 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 647256362
+      path: 922149575
+      attribute: 1136458424
+      script: {fileID: 0}
+      typeID: 23
+      customType: 22
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 922149575
+      attribute: 1404893880
+      script: {fileID: 0}
+      typeID: 23
+      customType: 22
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 922149575
+      attribute: 1673329336
+      script: {fileID: 0}
+      typeID: 23
+      customType: 22
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 3923433484
+      attribute: 1136458424
+      script: {fileID: 0}
+      typeID: 23
+      customType: 22
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 3923433484
+      attribute: 1404893880
+      script: {fileID: 0}
+      typeID: 23
+      customType: 22
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 3923433484
+      attribute: 1673329336
+      script: {fileID: 0}
+      typeID: 23
+      customType: 22
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 2605789465
       attribute: 2241250778
       script: {fileID: 0}
       typeID: 137
       customType: 22
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 647256362
+      path: 2605789465
       attribute: 2249439095
       script: {fileID: 0}
       typeID: 137
-      customType: 22
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 922149575
-      attribute: 1136458424
-      script: {fileID: 0}
-      typeID: 23
-      customType: 22
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 922149575
-      attribute: 1404893880
-      script: {fileID: 0}
-      typeID: 23
-      customType: 22
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 922149575
-      attribute: 1673329336
-      script: {fileID: 0}
-      typeID: 23
-      customType: 22
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 3923433484
-      attribute: 1136458424
-      script: {fileID: 0}
-      typeID: 23
-      customType: 22
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 3923433484
-      attribute: 1404893880
-      script: {fileID: 0}
-      typeID: 23
-      customType: 22
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 3923433484
-      attribute: 1673329336
-      script: {fileID: 0}
-      typeID: 23
       customType: 22
       isPPtrCurve: 0
     - serializedVersion: 2
@@ -1876,13 +1884,6 @@ AnimationClip:
       isPPtrCurve: 0
     - serializedVersion: 2
       path: 14439763
-      attribute: 2086281974
-      script: {fileID: 0}
-      typeID: 1
-      customType: 0
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 4187363835
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -2030,7 +2031,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Armature/Root/Arm 1
+    path: Alchemiter/Armature/Root/Arm 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2139,7 +2140,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Armature/Root/Arm 1
+    path: Alchemiter/Armature/Root/Arm 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2248,7 +2249,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Armature/Root/Arm 1
+    path: Alchemiter/Armature/Root/Arm 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2357,7 +2358,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Armature/Root/Arm 1/Arm 1 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2466,7 +2467,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Armature/Root/Arm 1/Arm 1 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2575,7 +2576,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Armature/Root/Arm 1/Arm 1 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2684,7 +2685,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2793,7 +2794,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2902,7 +2903,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3011,7 +3012,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3120,7 +3121,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3229,7 +3230,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3338,7 +3339,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3447,7 +3448,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3556,7 +3557,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3665,7 +3666,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3774,7 +3776,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3883,7 +3886,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3992,8 +3996,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -4102,8 +4106,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -4212,8 +4216,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -4322,8 +4326,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -4432,8 +4436,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -4542,8 +4546,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -4724,8 +4728,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge/Lazor
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge/Lazor
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -4906,8 +4910,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge/Lazor
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge/Lazor
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -5088,9 +5092,65 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge/Lazor
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge/Lazor
     classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 3.8333333
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 5.8333335
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 6.3333335
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 8.333333
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_IsActive
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge/Lazor
+    classID: 1
     script: {fileID: 0}
   - curve:
       serializedVersion: 2
@@ -5245,6 +5305,154 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 9.75
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.r
+    path: Quad
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 9.75
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.g
+    path: Quad
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 9.75
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.b
+    path: Quad
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 9.75
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.a
+    path: Quad
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
         value: 0
         inSlope: 0
         outSlope: 0
@@ -5350,6 +5558,154 @@ AnimationClip:
     attribute: m_LocalPosition.z
     path: Quad/Quad (1)
     classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 0.75
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.r
+    path: Quad/Quad (1)
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 0.75
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.g
+    path: Quad/Quad (1)
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 0.75
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.b
+    path: Quad/Quad (1)
+    classID: 23
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10.25
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: material._BaseColor.a
+    path: Quad/Quad (1)
+    classID: 23
     script: {fileID: 0}
   - curve:
       serializedVersion: 2
@@ -5514,7 +5870,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material.Vector1_27b133275ae84d9fae05fc9ff5fc898c
-    path: Top
+    path: Alchemiter/Top
     classID: 137
     script: {fileID: 0}
   - curve:
@@ -5560,304 +5916,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material.Vector1_b10811a93a9f42c8890978fdba7ecf37
-    path: Top
+    path: Alchemiter/Top
     classID: 137
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 9.75
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 0.5
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.r
-    path: Quad
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 9.75
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 0.5
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.g
-    path: Quad
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 9.75
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 0.5
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.b
-    path: Quad
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 9.75
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.a
-    path: Quad
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 0.75
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.r
-    path: Quad/Quad (1)
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 0.75
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.g
-    path: Quad/Quad (1)
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 0.75
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.b
-    path: Quad/Quad (1)
-    classID: 23
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10.25
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: material._BaseColor.a
-    path: Quad/Quad (1)
-    classID: 23
     script: {fileID: 0}
   - curve:
       serializedVersion: 2
@@ -5933,62 +5993,6 @@ AnimationClip:
     path: Particles/Explod
     classID: 1
     script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 3.8333333
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 5.8333335
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 6.3333335
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 8.333333
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge/Lazor
-    classID: 1
-    script: {fileID: 0}
   m_EulerEditorCurves:
   - curve:
       serializedVersion: 2
@@ -5997,7 +6001,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6007,7 +6011,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6017,7 +6021,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6027,7 +6031,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
+    path: Alchemiter/Armature/Root/Arm 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6037,7 +6041,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
+    path: Alchemiter/Armature/Root/Arm 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6047,7 +6051,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
+    path: Alchemiter/Armature/Root/Arm 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6057,7 +6061,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6067,7 +6071,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6077,7 +6081,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6087,7 +6091,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6097,7 +6101,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6107,7 +6111,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6117,7 +6121,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Arm 1
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6127,7 +6132,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Arm 1
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6137,7 +6143,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Arm 1
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6147,7 +6154,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Arm 1/Arm 1 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6157,7 +6165,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Arm 1/Arm 1 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6167,7 +6176,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Arm 1/Arm 1 End
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6177,8 +6187,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6188,8 +6197,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6199,8 +6207,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6210,8 +6217,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6221,8 +6228,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6232,8 +6239,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6243,8 +6250,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge/Lazor
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge/Lazor
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6254,8 +6261,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge/Lazor
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge/Lazor
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6265,15 +6272,15 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm 3 Hinge/Arm
-      3/Lazor Hinge/Lazor
+    path: Alchemiter/Armature/Root/Arm 1/Arm 1 End/Arm 2 Hinge/Arm 2/Arm 2 End/Arm
+      3 Hinge/Arm 3/Lazor Hinge/Lazor
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 9.166667
-    functionName: PostAlchemize
+    functionName: OnFinishUsingTotem
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

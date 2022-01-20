@@ -45,12 +45,12 @@ namespace SBEPIS.Alchemy
 			}
 		}
 
-		public void TotemInserted()
+		public void OnTotemInserted()
 		{
 			dowelPlacement.AllowOrphan();
 		}
 
-		public void StartAlchemizing()
+		public void OnStartAlchemizing()
 		{
 			if (animator.GetBool("Alchemizing") || !dowelPlacement.item)
 				return;
@@ -66,13 +66,13 @@ namespace SBEPIS.Alchemy
 			isAlchemizing = true;
 		}
 
-		public void PostAlchemize()
+		public void OnFinishUsingTotem()
 		{
 			dowelPlacement.AllowOrphan();
 			dowelPlacement.isAdopting = false;
 		}
 
-		public void IncrementAlchemized()
+		public void OnIncrementAlchemized()
 		{
 			if (animator.GetBool("Alchemizing"))
 				return;
@@ -83,7 +83,7 @@ namespace SBEPIS.Alchemy
 			UpdateAlchemizedText();
 		}
 
-		public void DecrementAlchemized()
+		public void OnDecrementAlchemized()
 		{
 			if (animator.GetBool("Alchemizing"))
 				return;
