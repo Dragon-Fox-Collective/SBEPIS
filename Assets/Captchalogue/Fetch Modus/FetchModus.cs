@@ -42,7 +42,7 @@ namespace SBEPIS.Captchalogue
 
 		public abstract CaptchalogueCard Display();
 
-		public virtual Item Retrieve()
+		public virtual Item Fetch()
 		{
 			CaptchalogueCard card = RetrieveCard();
 			Item rtn = card.heldItem;

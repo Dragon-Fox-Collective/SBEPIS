@@ -7,7 +7,9 @@ namespace SBEPIS.Interaction
 	[RequireComponent(typeof(CharacterController))]
 	public class MovementController : MonoBehaviour
 	{
-		public Transform cameraParent;
+		public Transform pitchRotator;
+		public Transform yawRotator;
+		public Transform moveAimer;
 		public float sensitivity = 1000f;
 		public float groundSpeed = 8f;
 		public float groundAccelTime = 0.1f;
@@ -41,7 +43,7 @@ namespace SBEPIS.Interaction
 		{
 			isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckDistance, groundCheckMask);
 
-			Vector3 movementTarget3 = transform.right * controlsTarget.x + transform.forward * controlsTarget.y;
+			Vector3 movementTarget3 = moveAimer.right * controlsTarget.x + moveAimer.forward * controlsTarget.y;
 			Vector2 movementTarget = new Vector2(movementTarget3.x, movementTarget3.z);
 			movement = Vector2.SmoothDamp(movement, movementTarget * (isGrounded ? groundSpeed : airSpeed), ref movementAccel, isGrounded ? groundAccelTime : airAccelTime);
 
@@ -56,10 +58,10 @@ namespace SBEPIS.Interaction
 		{
 			Vector2 look = value.Get<Vector2>() * sensitivity;
 
-			transform.Rotate(Vector3.up * look.x);
+			yawRotator.Rotate(Vector3.up * look.x);
 
 			camXRot = Mathf.Clamp(camXRot - look.y, -90, 90);
-			cameraParent.transform.localRotation = Quaternion.Euler(camXRot, 0, 0);
+			pitchRotator.transform.localRotation = Quaternion.Euler(camXRot, 0, 0);
 		}
 
 		private void OnMove(InputValue value)

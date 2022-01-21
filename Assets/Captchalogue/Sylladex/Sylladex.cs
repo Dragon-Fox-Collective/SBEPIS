@@ -75,14 +75,14 @@ namespace SBEPIS.Captchalogue
 			animator.SetInteger("Captchalogue State", 0);
 		}
 
-		public void StartRetrieving()
+		public void StartFetching()
 		{
 			animator.SetInteger("Captchalogue State", -1);
 		}
 
-		public void Uncaptchalogue()
+		public void Fetch()
 		{
-			owner.Retrieve();
+			owner.Fetch();
 		}
 
 		private void UpdateDisplay()
@@ -149,7 +149,7 @@ namespace SBEPIS.Captchalogue
 
 		public Item Retrieve()
 		{
-			Item item = modus.Retrieve();
+			Item item = modus.Fetch();
 			UpdateDisplay();
 			return item;
 		}

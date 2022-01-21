@@ -56,7 +56,7 @@ namespace SBEPIS.Alchemy
 		public void TakeCamera(ItemHolder playerItemHolder)
 		{
 			editingPlayer = playerItemHolder.GetComponent<PlayerModeSwapper>();
-			editingPlayer.SetPlayerMode(PlayerMode.Keyboard, cameraParent);
+			editingPlayer.SetPlayerMode(PlayerMode.Typing, cameraParent);
 			punchPanel.Select();
 		}
 
@@ -64,7 +64,7 @@ namespace SBEPIS.Alchemy
 		{
 			if (editingPlayer)
 			{
-				editingPlayer.SetPlayerMode(PlayerMode.Normal);
+				editingPlayer.SetPlayerMode(PlayerMode.Gameplay);
 				editingPlayer = null;
 			}
 		}

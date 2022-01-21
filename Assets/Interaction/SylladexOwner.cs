@@ -54,7 +54,7 @@ namespace SBEPIS.Interaction
 				{
 					playerInput.actions.FindAction("Captchalogue").Enable();
 					playerInput.actions.FindAction("Captchalogue Use").Enable();
-					playerInput.actions.FindAction("Retrieve").Enable();
+					playerInput.actions.FindAction("Fetch").Enable();
 					sylladexPosTarget = new Vector3(0, -0.25f, 1);
 					sylladexRotTarget = Quaternion.Euler(-75, 180, 0);
 				}
@@ -62,7 +62,7 @@ namespace SBEPIS.Interaction
 				{
 					playerInput.actions.FindAction("Captchalogue").Disable();
 					playerInput.actions.FindAction("Captchalogue Use").Disable();
-					playerInput.actions.FindAction("Retrieve").Disable();
+					playerInput.actions.FindAction("Fetch").Disable();
 					sylladexPosTarget = new Vector3(0, 0, 1);
 					sylladexRotTarget = Quaternion.Euler(0, 180, 0);
 				}
@@ -92,7 +92,7 @@ namespace SBEPIS.Interaction
 
 		public void OnSetPlayerMode(PlayerMode mode)
 		{
-			if (mode == PlayerMode.Normal)
+			if (mode == PlayerMode.Gameplay)
 				ResetSylladexControls();
 		}
 
@@ -127,12 +127,12 @@ namespace SBEPIS.Interaction
 				sylladex.Captchalogue(hitItem);
 		}
 
-		private void OnRetrieve(InputValue value)
+		private void OnFetch(InputValue value)
 		{
-			sylladex.StartRetrieving();
+			sylladex.StartFetching();
 		}
 
-		public void Retrieve()
+		public void Fetch()
 		{
 			Item retrievingItem = sylladex.Retrieve();
 			if (retrievingItem)

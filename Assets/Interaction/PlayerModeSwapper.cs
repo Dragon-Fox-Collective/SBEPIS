@@ -26,11 +26,11 @@ namespace SBEPIS.Interaction
 		{
 			switch (mode)
 			{
-				case PlayerMode.Normal:
-					playerInput.SwitchCurrentActionMap("Normal");
+				case PlayerMode.Gameplay:
+					playerInput.SwitchCurrentActionMap("Gameplay");
 					break;
-				case PlayerMode.Keyboard:
-					playerInput.SwitchCurrentActionMap("Keyboard");
+				case PlayerMode.Typing:
+					playerInput.SwitchCurrentActionMap("Typing");
 					break;
 			}
 			camera.SetParent(newParent);
@@ -40,7 +40,7 @@ namespace SBEPIS.Interaction
 		public void SetPlayerMode(PlayerMode mode) => SetPlayerMode(mode, cameraParent);
 	}
 
-	public enum PlayerMode { Normal, Keyboard, Sylladex }
+	public enum PlayerMode { Gameplay, Typing }
 
 	[Serializable]
 	public class PlayerModeEvent : UnityEvent<PlayerMode> { }
