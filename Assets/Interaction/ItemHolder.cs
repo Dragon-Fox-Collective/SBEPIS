@@ -1,5 +1,6 @@
 using SBEPIS.Alchemy;
 using SBEPIS.Captchalogue;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
@@ -8,13 +9,16 @@ namespace SBEPIS.Interaction
 {
 	public class ItemHolder : MonoBehaviour
 	{
-		public new Transform camera;
+		public Transform cameraHolder;
+		public Transform handHolder;
 		public LayerMask raycastMask;
 		public float maxDistance = 10f;
 
 		public Item heldItem { get; private set; }
 		private Quaternion cardForcedRotTarget = Quaternion.identity;
 		private float holdDistance = 2;
+
+		private Transform activeHolder;
 
 		private void FixedUpdate()
 		{
@@ -32,14 +36,14 @@ namespace SBEPIS.Interaction
 		public void UpdateItem(Item item, bool physicsWillApply, float posTime, float rotTime)
 		{
 			Vector3 velocity = item.rigidbody.velocity;
-			Vector3 newPos = Vector3.SmoothDamp(item.transform.position, camera.position + camera.forward * holdDistance, ref velocity, posTime);
+			Vector3 newPos = Vector3.SmoothDamp(item.transform.position, activeHolder.position + activeHolder.forward * holdDistance, ref velocity, posTime);
 			if (!physicsWillApply)
 				item.transform.position = newPos;
 			item.rigidbody.velocity = velocity;
 
 			if (item.GetComponent<CaptchalogueCard>()) // Make these face either forward or backward to the player
 			{
-				Quaternion lookRot = Quaternion.LookRotation(camera.position - item.transform.position, camera.up);
+				Quaternion lookRot = Quaternion.LookRotation(activeHolder.position - item.transform.position, activeHolder.up);
 				Quaternion upRot = lookRot * Quaternion.Euler(0, 180, 0); // Front facing player
 				Quaternion downRot = lookRot; // Back facing player
 
@@ -71,7 +75,7 @@ namespace SBEPIS.Interaction
 			if (!context.performed || !heldItem)
 				return;
 
-			Quaternion lookRot = Quaternion.LookRotation(camera.position - heldItem.transform.position, camera.up);
+			Quaternion lookRot = Quaternion.LookRotation(activeHolder.position - heldItem.transform.position, activeHolder.up);
 			Quaternion upRot = lookRot * Quaternion.Euler(0, 180, 0); // Front facing player
 			Quaternion downRot = lookRot; // Back facing player
 
@@ -95,10 +99,10 @@ namespace SBEPIS.Interaction
 		public void OnPickUp(CallbackContext context)
 		{
 			bool isPressed = context.performed;
-			if (isPressed && !heldItem && Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, maxDistance, LayerMask.GetMask("Button")))
+			if (isPressed && !heldItem && Cast(out RaycastHit hit, LayerMask.GetMask("Button")))
 				hit.collider.GetComponent<Button>().onPressed.Invoke(this);
 
-			if (isPressed && !heldItem && Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, maxDistance, raycastMask) && hit.rigidbody)
+			if (isPressed && !heldItem && Cast(out hit))
 			{
 				Item hitItem = hit.rigidbody.GetComponent<Item>();
 				if (hitItem && hitItem.canPickUp)
@@ -135,7 +139,31 @@ namespace SBEPIS.Interaction
 		private bool RaycastPlacementHelper(out PlacementHelper placement, Itemkind itemkind)
 		{
 			placement = null;
-			return Physics.Raycast(camera.position, camera.forward, out RaycastHit placementHit, maxDistance, LayerMask.GetMask("Placement Helper")) && (placement = placementHit.collider.GetComponent<PlacementHelper>()).itemkind == itemkind && placement.isAdopting;
+			return Cast(out RaycastHit placementHit, LayerMask.GetMask("Placement Helper")) && (placement = placementHit.collider.GetComponent<PlacementHelper>()).itemkind == itemkind && placement.isAdopting;
+		}
+
+		public bool Cast(out RaycastHit hit, LayerMask mask)
+		{
+			return Physics.Raycast(activeHolder.transform.position, activeHolder.transform.forward, out hit, maxDistance, mask);
+		}
+
+		public bool Cast(out RaycastHit hit)
+		{
+			return Cast(out hit, raycastMask) && hit.rigidbody;
+		}
+
+		public void OnControlsChanged(PlayerInput input)
+		{
+			Debug.Log(input.currentControlScheme);
+			switch (input.currentControlScheme)
+			{
+				case "Keyboard":
+					activeHolder = cameraHolder;
+					break;
+				case "OpenXR":
+					activeHolder = handHolder;
+					break;
+			}
 		}
 	}
 }

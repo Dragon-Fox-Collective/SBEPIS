@@ -121,6 +121,14 @@ namespace SBEPIS.Interaction
 			IsViewing = !IsViewing;
 		}
 
+		public void OnHoldViewingSylladex(CallbackContext context)
+		{
+			if (sylladex.isWorking)
+				return;
+
+			IsViewing = context.performed;
+		}
+
 		public void OnCaptchalogueMode(CallbackContext context)
 		{
 			CanCaptchalogue = context.performed;
@@ -137,7 +145,7 @@ namespace SBEPIS.Interaction
 		public void CastCaptchalogue()
 		{
 			Item hitItem;
-			if (Physics.Raycast(itemHolder.camera.position, itemHolder.camera.forward, out RaycastHit captchaHit, itemHolder.maxDistance) && captchaHit.rigidbody && (hitItem = captchaHit.rigidbody.GetComponent<Item>()))
+			if (itemHolder.Cast(out RaycastHit captchaHit) && (hitItem = captchaHit.rigidbody.GetComponent<Item>()))
 				sylladex.Captchalogue(hitItem);
 		}
 
@@ -166,7 +174,7 @@ namespace SBEPIS.Interaction
 			if (!context.performed || sylladex.isWorking)
 				return;
 
-			if (Physics.Raycast(itemHolder.camera.position, itemHolder.camera.forward, out RaycastHit captchaHit, itemHolder.maxDistance) && captchaHit.rigidbody)
+			if (itemHolder.Cast(out RaycastHit captchaHit))
 			{
 				CaptchalogueCard hitCard = captchaHit.rigidbody.GetComponent<CaptchalogueCard>();
 				if (hitCard && hitCard.punchedHash == 0)
