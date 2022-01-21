@@ -2,6 +2,7 @@ using SBEPIS.Alchemy;
 using SBEPIS.Captchalogue;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Interaction
 {
@@ -16,9 +17,9 @@ namespace SBEPIS.Interaction
 		[SerializeField]
 		private PlayerModeSwapper modeSwapper;
 		[SerializeField]
-		private InputActionReference[] sylladexEnabledActions;
+		private InputActionReference[] viewingSylladexEnabledActions;
 		[SerializeField]
-		private InputActionReference[] sylladexDisabledActions;
+		private InputActionReference[] viewingSylladexDisabledActions;
 		[SerializeField]
 		private InputActionReference[] usingSylladexEnabledActions;
 		[SerializeField]
@@ -33,18 +34,18 @@ namespace SBEPIS.Interaction
 				_isViewing = value;
 				if (_isViewing)
 				{
-					foreach (InputActionReference action in sylladexEnabledActions)
+					foreach (InputActionReference action in viewingSylladexEnabledActions)
 						action.action.Enable();
-					foreach (InputActionReference action in sylladexDisabledActions)
+					foreach (InputActionReference action in viewingSylladexDisabledActions)
 						action.action.Disable();
 					sylladexParentRotTarget = Quaternion.identity;
 					sylladexParentScaleTarget = Vector3.one;
 				}
 				else
 				{
-					foreach (InputActionReference action in sylladexEnabledActions)
+					foreach (InputActionReference action in viewingSylladexEnabledActions)
 						action.action.Disable();
-					foreach (InputActionReference action in sylladexDisabledActions)
+					foreach (InputActionReference action in viewingSylladexDisabledActions)
 						action.action.Enable();
 					sylladexParentRotTarget = Quaternion.Euler(0, -90, 0);
 					sylladexParentScaleTarget = Vector3.zero;
@@ -112,51 +113,57 @@ namespace SBEPIS.Interaction
 			CanCaptchalogue = false;
 		}
 
-		private void OnViewSylladex()
+		public void OnToggleViewingSylladex(CallbackContext context)
 		{
-			if (sylladex.isWorking)
+			if (!context.performed || sylladex.isWorking)
 				return;
 
 			IsViewing = !IsViewing;
 		}
 
-		private void OnCaptchalogueMode(InputValue value)
+		public void OnCaptchalogueMode(CallbackContext context)
 		{
-			CanCaptchalogue = value.isPressed;
+			CanCaptchalogue = context.performed;
 		}
 
-		private void OnCaptchalogue()
+		public void OnCaptchalogue(CallbackContext context)
 		{
+			if (!context.performed)
+				return;
+
 			sylladex.StartCaptchaloguing();
 		}
 
-		public void Captchalogue()
+		public void CastCaptchalogue()
 		{
 			Item hitItem;
 			if (Physics.Raycast(itemHolder.camera.position, itemHolder.camera.forward, out RaycastHit captchaHit, itemHolder.maxDistance) && captchaHit.rigidbody && (hitItem = captchaHit.rigidbody.GetComponent<Item>()))
 				sylladex.Captchalogue(hitItem);
 		}
 
-		private void OnFetch(InputValue value)
+		public void OnFetch(CallbackContext context)
 		{
+			if (!context.performed)
+				return;
+
 			sylladex.StartFetching();
 		}
 
 		public void Fetch()
 		{
-			Item retrievingItem = sylladex.Retrieve();
-			if (retrievingItem)
+			Item fetchingItem = sylladex.Fetch();
+			if (fetchingItem)
 			{
-				retrievingItem.gameObject.SetActive(true);
-				retrievingItem.transform.localPosition = Vector3.up;
-				retrievingItem.transform.rotation = Quaternion.identity;
-				retrievingItem.transform.SetParent(null);
+				fetchingItem.gameObject.SetActive(true);
+				fetchingItem.transform.localPosition = Vector3.up;
+				fetchingItem.transform.rotation = Quaternion.identity;
+				fetchingItem.transform.SetParent(null);
 			}
 		}
 
-		private void OnCaptchalogueUse()
+		public void OnCaptchalogueUse(CallbackContext context)
 		{
-			if (sylladex.isWorking)
+			if (!context.performed || sylladex.isWorking)
 				return;
 
 			if (Physics.Raycast(itemHolder.camera.position, itemHolder.camera.forward, out RaycastHit captchaHit, itemHolder.maxDistance) && captchaHit.rigidbody)
@@ -177,17 +184,17 @@ namespace SBEPIS.Interaction
 			}
 		}
 
-		private void OnCaptchaloguePrint()
+		public void OnCaptchaloguePrint(CallbackContext context)
 		{
-			if (sylladex.isWorking)
+			if (!context.performed || sylladex.isWorking)
 				return;
 
 			sylladex.RetrieveCard();
 		}
 
-		private void OnFlipCard()
+		public void OnFlipSylladex(CallbackContext context)
 		{
-			if (!IsViewing || CanCaptchalogue)
+			if (!context.performed || !IsViewing || CanCaptchalogue)
 				return;
 
 			if (sylladexRotTarget == Quaternion.identity)
@@ -196,8 +203,11 @@ namespace SBEPIS.Interaction
 				sylladexRotTarget = Quaternion.identity;
 		}
 
-		private void OnToggleSylladexPanel()
+		public void OnToggleSylladexPanel(CallbackContext context)
 		{
+			if (!context.performed)
+				return;
+
 			sylladex.StartTogglingPanel();
 		}
 	}

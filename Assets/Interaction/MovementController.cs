@@ -57,15 +57,15 @@ namespace SBEPIS.Interaction
 
 		public void OnLookPitch(CallbackContext context)
 		{
-			Vector2 look = context.ReadValue<Vector3>() * sensitivity;
-			camXRot = Mathf.Clamp(camXRot - look.y, -90, 90);
+			float pitch = context.ReadValue<float>() * sensitivity;
+			camXRot = Mathf.Clamp(camXRot - pitch, -90, 90);
 			pitchRotator.transform.localRotation = Quaternion.Euler(camXRot, 0, 0);
 		}
 
 		public void OnLookYaw(CallbackContext context)
 		{
-			Vector2 look = context.ReadValue<Vector3>() * sensitivity;
-			yawRotator.Rotate(Vector3.up * look.x);
+			float yaw = context.ReadValue<float>() * sensitivity;
+			yawRotator.Rotate(Vector3.up * yaw);
 		}
 
 		public void OnMove(CallbackContext context)
@@ -75,9 +75,10 @@ namespace SBEPIS.Interaction
 
 		public void OnJump(CallbackContext context)
 		{
-			Debug.Log("onjump");
-			if (context.ReadValueAsButton() && isGrounded)
-				yVelocity = Mathf.Sqrt(jumpHeight * -2 * gravity);
+			if (!context.performed || !isGrounded)
+				return;
+
+			yVelocity = Mathf.Sqrt(jumpHeight * -2 * gravity);
 		}
 	}
 }

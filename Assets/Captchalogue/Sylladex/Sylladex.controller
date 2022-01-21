@@ -81,7 +81,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Retrieve Withdraw
+  m_Name: Withdraw Back Card
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -132,7 +132,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: Retrieve State
+    m_ConditionEvent: Back Card State
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4905980428137907280}
@@ -278,7 +278,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Retrieve Deposit
+  m_Name: Deposit Back Card
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -409,7 +409,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Insert Withdraw
+  m_Name: Withdraw Front Card
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -438,7 +438,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: Retrieve State
+    m_ConditionEvent: Back Card State
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2804693578330548661}
@@ -463,13 +463,13 @@ AnimatorController:
   m_Name: Sylladex
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Insert State
+  - m_Name: Front Card State
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: Retrieve State
+  - m_Name: Back Card State
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -767,7 +767,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: Insert State
+    m_ConditionEvent: Front Card State
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -656748040152130795}
@@ -790,7 +790,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Insert Deposit
+  m_Name: Deposit Front Card
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -850,7 +850,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: Insert State
+    m_ConditionEvent: Front Card State
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4837828775657075033}

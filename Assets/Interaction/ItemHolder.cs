@@ -2,6 +2,7 @@ using SBEPIS.Alchemy;
 using SBEPIS.Captchalogue;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Interaction
 {
@@ -65,9 +66,9 @@ namespace SBEPIS.Interaction
 			}
 		}
 
-		private void OnFlipCard()
+		public void OnFlipCard(CallbackContext context)
 		{
-			if (!heldItem)
+			if (!context.performed || !heldItem)
 				return;
 
 			Quaternion lookRot = Quaternion.LookRotation(camera.position - heldItem.transform.position, camera.up);
@@ -80,20 +81,20 @@ namespace SBEPIS.Interaction
 				cardForcedRotTarget = cardForcedRotTarget == downRot ? upRot : downRot;
 		}
 
-		private void OnZoom(InputValue value)
+		public void OnZoom(CallbackContext context)
 		{
-			if (value.Get<float>() < 0)
+			if (context.ReadValue<float>() < 0)
 				holdDistance = 0.7f;
-			else if (value.Get<float>() > 0)
+			else if (context.ReadValue<float>() > 0)
 				holdDistance = 2;
 		}
 
 		/// <summary>
 		/// Handles both picking up items and pressing buttons
 		/// </summary>
-		private void OnPickUp(InputValue value)
+		public void OnPickUp(CallbackContext context)
 		{
-			bool isPressed = value.isPressed;
+			bool isPressed = context.performed;
 			if (isPressed && !heldItem && Physics.Raycast(camera.transform.position, camera.transform.forward, out RaycastHit hit, maxDistance, LayerMask.GetMask("Button")))
 				hit.collider.GetComponent<Button>().onPressed.Invoke(this);
 

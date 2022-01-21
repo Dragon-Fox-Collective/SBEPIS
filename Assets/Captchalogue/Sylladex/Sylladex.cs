@@ -18,7 +18,7 @@ namespace SBEPIS.Captchalogue
 		[SerializeField]
 		private int maxCards = 16;
 		[SerializeField]
-		private Transform insertParent, retrieveParent, modusParent;
+		private Transform frontCardParent, backCardParent, modusParent;
 		[SerializeField]
 		private Renderer[] renderers;
 		[SerializeField]
@@ -42,7 +42,7 @@ namespace SBEPIS.Captchalogue
 		[SerializeField]
 		private Moduskind defaultModus;
 
-		public bool isWorking => animator.GetInteger("Insert State") != 0 || animator.GetInteger("Retrieve State") != 0 || animator.GetBool("Syncing Cartridge") || animator.GetInteger("Captchalogue State") != 0;
+		public bool isWorking => animator.GetInteger("Front Card State") != 0 || animator.GetInteger("Back Card State") != 0 || animator.GetBool("Syncing Cartridge") || animator.GetInteger("Captchalogue State") != 0;
 		private FetchModus modus;
 		private Moduskind moduskind;
 		private Cartridge syncingCart;
@@ -59,9 +59,9 @@ namespace SBEPIS.Captchalogue
 			animator.SetInteger("Captchalogue State", 1);
 		}
 
-		public void Captchalogue()
+		public void OnCaptchalogue()
 		{
-			owner.Captchalogue();
+			owner.CastCaptchalogue();
 		}
 
 		public void Captchalogue(Item item)
@@ -70,7 +70,7 @@ namespace SBEPIS.Captchalogue
 			UpdateDisplay();
 		}
 
-		public void StopCaptchaloguing()
+		public void OnFinishCaptchalogueingAndFetching()
 		{
 			animator.SetInteger("Captchalogue State", 0);
 		}
@@ -80,7 +80,7 @@ namespace SBEPIS.Captchalogue
 			animator.SetInteger("Captchalogue State", -1);
 		}
 
-		public void Fetch()
+		public void OnFetch()
 		{
 			owner.Fetch();
 		}
@@ -90,7 +90,7 @@ namespace SBEPIS.Captchalogue
 			if (modus.cards.Count == 0)
 				return;
 
-			foreach (Transform oldDisplay in insertParent)
+			foreach (Transform oldDisplay in frontCardParent)
 			{
 				oldDisplay.gameObject.SetActive(false);
 				oldDisplay.SetParent(transform);
@@ -98,7 +98,7 @@ namespace SBEPIS.Captchalogue
 
 			CaptchalogueCard newDisplay = modus.Display();
 			newDisplay.gameObject.SetActive(true);
-			newDisplay.transform.SetParent(insertParent);
+			newDisplay.transform.SetParent(frontCardParent);
 			newDisplay.transform.localPosition = Vector3.zero;
 			newDisplay.transform.localRotation = Quaternion.identity;
 
@@ -147,7 +147,7 @@ namespace SBEPIS.Captchalogue
 			return null;
 		}
 
-		public Item Retrieve()
+		public Item Fetch()
 		{
 			Item item = modus.Fetch();
 			UpdateDisplay();
@@ -175,21 +175,21 @@ namespace SBEPIS.Captchalogue
 
 			if (InsertInBack(card))
 			{
-				card.transform.SetParent(retrieveParent);
-				animator.SetInteger("Retrieve State", 1);
+				card.transform.SetParent(backCardParent);
+				animator.SetInteger("Back Card State", 1);
 			}
 			else
 			{
-				foreach (Transform oldDisplay in insertParent)
+				foreach (Transform oldDisplay in frontCardParent)
 				{
 					oldDisplay.GetComponent<CaptchalogueCard>().UpdateMaterials(moduskind);
-					oldDisplay.SetParent(retrieveParent);
+					oldDisplay.SetParent(backCardParent);
 					oldDisplay.localPosition = Vector3.zero;
 					oldDisplay.localRotation = Quaternion.identity;
 				}
 
-				card.transform.SetParent(insertParent);
-				animator.SetInteger("Insert State", 1);
+				card.transform.SetParent(frontCardParent);
+				animator.SetInteger("Front Card State", 1);
 			}
 
 			card.transform.localPosition = Vector3.zero;
@@ -210,7 +210,7 @@ namespace SBEPIS.Captchalogue
 
 			if (modus.flippedRetrieve)
 			{
-				foreach (Transform oldDisplay in insertParent) // Largely affects blank card order
+				foreach (Transform oldDisplay in frontCardParent) // Largely affects blank card order
 				{
 					oldDisplay.gameObject.SetActive(false);
 					oldDisplay.transform.SetParent(transform);
@@ -221,19 +221,19 @@ namespace SBEPIS.Captchalogue
 				{
 					newDisplay.UpdateMaterials(moduskind);
 					newDisplay.gameObject.SetActive(true);
-					newDisplay.transform.SetParent(retrieveParent);
+					newDisplay.transform.SetParent(backCardParent);
 					newDisplay.transform.localPosition = Vector3.zero;
 					newDisplay.transform.localRotation = Quaternion.identity;
 				}
 
 				card.gameObject.SetActive(true);
-				card.transform.SetParent(insertParent);
-				animator.SetInteger("Insert State", -1);
+				card.transform.SetParent(frontCardParent);
+				animator.SetInteger("Front Card State", -1);
 			}
 			else
 			{
-				card.transform.SetParent(retrieveParent);
-				animator.SetInteger("Retrieve State", -1);
+				card.transform.SetParent(backCardParent);
+				animator.SetInteger("Back Card State", -1);
 			}
 
 			card.transform.localPosition = Vector3.zero;
@@ -241,10 +241,10 @@ namespace SBEPIS.Captchalogue
 			return card;
 		}
 
-		public void StopInsertDepositing()
+		public void OnFinishDepositingFrontCard()
 		{
-			animator.SetInteger("Insert State", 0);
-			foreach (Transform child in retrieveParent)
+			animator.SetInteger("Front Card State", 0);
+			foreach (Transform child in backCardParent)
 			{
 				child.gameObject.SetActive(false);
 				child.SetParent(transform);
@@ -252,35 +252,35 @@ namespace SBEPIS.Captchalogue
 			UpdateDisplay();
 		}
 
-		public void StopInsertWithdrawing()
+		public void OnFinishWithdrawingFrontCard()
 		{
-			animator.SetInteger("Insert State", 0);
-			foreach (Transform child in insertParent)
+			animator.SetInteger("Front Card State", 0);
+			foreach (Transform child in frontCardParent)
 			{
 				child.SetParent(null);
 				Item.EnableRigidbody(child.GetComponent<CaptchalogueCard>().rigidbody);
 			}
-			foreach (Transform child in retrieveParent)
+			foreach (Transform child in backCardParent)
 			{
-				child.SetParent(insertParent, false);
+				child.SetParent(frontCardParent, false);
 			}
 			UpdateDisplay();
 		}
 
-		public void StopRetrieveDepositing()
+		public void OnFinishDepositingBackCard()
 		{
-			animator.SetInteger("Retrieve State", 0);
-			foreach (Transform child in retrieveParent)
+			animator.SetInteger("Back Card State", 0);
+			foreach (Transform child in backCardParent)
 			{
 				child.gameObject.SetActive(false);
 				child.SetParent(transform);
 			}
 		}
 
-		public void StopRetrieveWithdrawing()
+		public void OnFinishWithdrawingBackCard()
 		{
-			animator.SetInteger("Retrieve State", 0);
-			foreach (Transform child in retrieveParent)
+			animator.SetInteger("Back Card State", 0);
+			foreach (Transform child in backCardParent)
 			{
 				child.SetParent(null);
 				Item.EnableRigidbody(child.GetComponent<CaptchalogueCard>().rigidbody);
@@ -297,7 +297,7 @@ namespace SBEPIS.Captchalogue
 			animator.SetBool("Syncing Cartridge", true);
 		}
 
-		public void SyncCartridge()
+		public void OnSyncCartridge()
 		{
 			SetModus(syncingCart.modus);
 		}
@@ -319,7 +319,7 @@ namespace SBEPIS.Captchalogue
 			title.color = moduskind.textColor;
 		}
 
-		public void StopSyncingCartridge()
+		public void OnFinishSyncingCartridge()
 		{
 			syncingCart.transform.SetParent(null);
 			Item.EnableRigidbody(syncingCart.rigidbody);
