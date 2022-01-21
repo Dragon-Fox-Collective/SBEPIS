@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Interaction
 {
@@ -54,24 +55,28 @@ namespace SBEPIS.Interaction
 			controller.Move(new Vector3(movement.x, yVelocity, movement.y) * Time.deltaTime);
 		}
 
-		private void OnLook(InputValue value)
+		public void OnLookPitch(CallbackContext context)
 		{
-			Vector2 look = value.Get<Vector2>() * sensitivity;
-
-			yawRotator.Rotate(Vector3.up * look.x);
-
+			Vector2 look = context.ReadValue<Vector3>() * sensitivity;
 			camXRot = Mathf.Clamp(camXRot - look.y, -90, 90);
 			pitchRotator.transform.localRotation = Quaternion.Euler(camXRot, 0, 0);
 		}
 
-		private void OnMove(InputValue value)
+		public void OnLookYaw(CallbackContext context)
 		{
-			controlsTarget = value.Get<Vector2>();
+			Vector2 look = context.ReadValue<Vector3>() * sensitivity;
+			yawRotator.Rotate(Vector3.up * look.x);
 		}
 
-		private void OnJump()
+		public void OnMove(CallbackContext context)
 		{
-			if (isGrounded)
+			controlsTarget = context.ReadValue<Vector2>();
+		}
+
+		public void OnJump(CallbackContext context)
+		{
+			Debug.Log("onjump");
+			if (context.ReadValueAsButton() && isGrounded)
 				yVelocity = Mathf.Sqrt(jumpHeight * -2 * gravity);
 		}
 	}

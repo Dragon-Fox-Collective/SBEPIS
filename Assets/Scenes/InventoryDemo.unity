@@ -1939,7 +1939,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ccd278f9b16044a8fc4c08e992c909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraParent: {fileID: 1654442661}
+  pitchRotator: {fileID: 0}
+  yawRotator: {fileID: 0}
+  moveAimer: {fileID: 0}
   sensitivity: 0.5
   groundSpeed: 8
   groundAccelTime: 0.05
@@ -1965,7 +1967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -1978,14 +1980,114 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2002559275}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.MovementController, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6d0dc336-274b-4f72-a6b3-dfbbcec1770b
     m_ActionName: Normal/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2002559275}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.MovementController, Assembly-CSharp
+        m_MethodName: OnLookPitch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 17295940-bbe1-4a09-b063-4ccc6062d4f9
     m_ActionName: Normal/Look[/Mouse/delta/y,/Mouse/delta/y,/Mouse/delta/x,/Mouse/delta/x]
-  m_NeverAutoSwitchControlSchemes: 1
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2002559275}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.MovementController, Assembly-CSharp
+        m_MethodName: OnLookYaw
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d548a5aa-43dd-4995-b334-204ec967e505
+    m_ActionName: Gameplay/LookYaw[/Mouse/delta/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6c938f91-1063-4618-ab72-08c05509a025
+    m_ActionName: Gameplay/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 827923db-6895-4ebb-8f4c-c57bcefb03ac
+    m_ActionName: Gameplay/Pick Up Right[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 616e89b3-abff-4b35-a1fb-c5e1ab7d17b2
+    m_ActionName: Gameplay/Pick Up Left
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d824ce48-8528-4150-be15-f847fe467d62
+    m_ActionName: Gameplay/Flip Card[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fe9ce19e-3484-4843-976a-8fb9bec890da
+    m_ActionName: Gameplay/Zoom[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dc7cf242-0c2b-4f77-95ab-7679a89a56de
+    m_ActionName: Gameplay/Fetch[/Keyboard/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 376f1b53-0f3b-47d0-8db7-f8b972766b84
+    m_ActionName: Gameplay/View Sylladex[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 83ffb369-434b-49e0-9213-e9ac0b3490d8
+    m_ActionName: Gameplay/Captchalogue Mode[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6d9f3ecf-2207-42c8-be1b-076d490acee2
+    m_ActionName: Gameplay/Captchalogue[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 16150b48-9206-41e8-9b21-143a05ba69d4
+    m_ActionName: Gameplay/Captchalogue Use[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5045c525-0eb7-4cc7-841f-9e96c81b27fb
+    m_ActionName: Gameplay/Captchalogue Print[/Keyboard/z]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d8750275-5417-4b8c-87d0-2fe6e949a667
+    m_ActionName: Gameplay/Toggle Sylladex Panel[/Keyboard/v]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 037fca5d-0b8b-479b-900f-0bcddfe6a692
+    m_ActionName: Gameplay/Hand Pose
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 653246c8-efde-4c91-a054-d97e820e5086
+    m_ActionName: Gameplay/Head Position
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b51c47df-e9ee-4abb-a4e0-6f2d2ac6cf56
+    m_ActionName: Gameplay/Head Rotation
+  m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: OpenXR
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
@@ -2006,7 +2108,17 @@ MonoBehaviour:
   sylladexParent: {fileID: 506918815}
   itemHolder: {fileID: 2002559278}
   modeSwapper: {fileID: 2002559280}
-  playerInput: {fileID: 2002559276}
+  sylladexEnabledActions:
+  - {fileID: 3769132869637915080, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
+  - {fileID: -3335662014178872197, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
+  sylladexDisabledActions:
+  - {fileID: 6921043637722060116, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
+  - {fileID: 4744936522364000947, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
+  usingSylladexEnabledActions:
+  - {fileID: -5467261649673260746, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
+  - {fileID: 9167558619339909862, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
+  - {fileID: -3342264812866705978, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
+  usingSylladexDisabledActions: []
 --- !u!114 &2002559278
 MonoBehaviour:
   m_ObjectHideFlags: 0

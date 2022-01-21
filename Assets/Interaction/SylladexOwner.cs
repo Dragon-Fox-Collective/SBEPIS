@@ -16,7 +16,13 @@ namespace SBEPIS.Interaction
 		[SerializeField]
 		private PlayerModeSwapper modeSwapper;
 		[SerializeField]
-		private PlayerInput playerInput;
+		private InputActionReference[] sylladexEnabledActions;
+		[SerializeField]
+		private InputActionReference[] sylladexDisabledActions;
+		[SerializeField]
+		private InputActionReference[] usingSylladexEnabledActions;
+		[SerializeField]
+		private InputActionReference[] usingSylladexDisabledActions;
 
 		private bool _isViewing;
 		private bool IsViewing
@@ -27,17 +33,19 @@ namespace SBEPIS.Interaction
 				_isViewing = value;
 				if (_isViewing)
 				{
-					playerInput.actions.FindAction("Pick Up").Disable();
-					playerInput.actions.FindAction("Captchalogue Mode").Enable();
-					playerInput.actions.FindAction("Toggle Sylladex Panel").Enable();
+					foreach (InputActionReference action in sylladexEnabledActions)
+						action.action.Enable();
+					foreach (InputActionReference action in sylladexDisabledActions)
+						action.action.Disable();
 					sylladexParentRotTarget = Quaternion.identity;
 					sylladexParentScaleTarget = Vector3.one;
 				}
 				else
 				{
-					playerInput.actions.FindAction("Pick Up").Enable();
-					playerInput.actions.FindAction("Captchalogue Mode").Disable();
-					playerInput.actions.FindAction("Toggle Sylladex Panel").Disable();
+					foreach (InputActionReference action in sylladexEnabledActions)
+						action.action.Disable();
+					foreach (InputActionReference action in sylladexDisabledActions)
+						action.action.Enable();
 					sylladexParentRotTarget = Quaternion.Euler(0, -90, 0);
 					sylladexParentScaleTarget = Vector3.zero;
 				}
@@ -52,17 +60,19 @@ namespace SBEPIS.Interaction
 				_canCaptchalogue = value;
 				if (_canCaptchalogue)
 				{
-					playerInput.actions.FindAction("Captchalogue").Enable();
-					playerInput.actions.FindAction("Captchalogue Use").Enable();
-					playerInput.actions.FindAction("Fetch").Enable();
+					foreach (InputActionReference action in usingSylladexEnabledActions)
+						action.action.Enable();
+					foreach (InputActionReference action in usingSylladexDisabledActions)
+						action.action.Disable();
 					sylladexPosTarget = new Vector3(0, -0.25f, 1);
 					sylladexRotTarget = Quaternion.Euler(-75, 180, 0);
 				}
 				else
 				{
-					playerInput.actions.FindAction("Captchalogue").Disable();
-					playerInput.actions.FindAction("Captchalogue Use").Disable();
-					playerInput.actions.FindAction("Fetch").Disable();
+					foreach (InputActionReference action in usingSylladexEnabledActions)
+						action.action.Disable();
+					foreach (InputActionReference action in usingSylladexDisabledActions)
+						action.action.Enable();
 					sylladexPosTarget = new Vector3(0, 0, 1);
 					sylladexRotTarget = Quaternion.Euler(0, 180, 0);
 				}

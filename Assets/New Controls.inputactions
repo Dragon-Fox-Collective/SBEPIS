@@ -15,10 +15,19 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Look",
+                    "name": "LookPitch",
                     "type": "Value",
                     "id": "17295940-bbe1-4a09-b063-4ccc6062d4f9",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LookYaw",
+                    "type": "Value",
+                    "id": "d548a5aa-43dd-4995-b334-204ec967e505",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -33,9 +42,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pick Up",
+                    "name": "Pick Up Right",
                     "type": "Value",
                     "id": "827923db-6895-4ebb-8f4c-c57bcefb03ac",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Pick Up Left",
+                    "type": "Value",
+                    "id": "616e89b3-abff-4b35-a1fb-c5e1ab7d17b2",
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
@@ -286,55 +304,11 @@
                 {
                     "name": "",
                     "id": "10953cb6-cc8b-43ee-b1a8-2d44902d8139",
-                    "path": "<Mouse>/delta",
+                    "path": "<Mouse>/delta/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "29ba5a29-2573-46cd-989c-8da30220018b",
-                    "path": "<XRController>{RightHand}/joystick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9cff98cc-034a-4c4c-a38d-51dd3e73ea3a",
-                    "path": "<XRController>{RightHand}/touchpad",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "42a166ea-a70d-485a-b12b-51512bccb03f",
-                    "path": "<XRController>{RightHand}/thumbstick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6c6808a8-8c59-4b87-a955-78223dfe656d",
-                    "path": "<XRController>{RightHand}/trackpad",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Look",
+                    "action": "LookPitch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -345,7 +319,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Pick Up",
+                    "action": "Pick Up Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5cc810ad-b4d0-4ef5-aec8-0cefc31cec54",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Pick Up Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -411,17 +396,6 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Captchalogue Mode",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e9f7eb16-b88b-452e-802d-8f23d50e35d8",
-                    "path": "<XRController>{RightHand}/gripPressed",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
                     "action": "Captchalogue Mode",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -538,6 +512,17 @@
                 },
                 {
                     "name": "",
+                    "id": "f3d25fee-a0c7-405b-a9f8-5454dc17368d",
+                    "path": "<XRController>{LeftHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Toggle Sylladex Panel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "26c63839-7c0f-4890-9755-965b6ca9d217",
                     "path": "<XRController>{LeftHand}/devicePose",
                     "interactions": "",
@@ -566,6 +551,72 @@
                     "processors": "",
                     "groups": "OpenXR",
                     "action": "Head Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "efc51cdf-116c-4949-aa81-913964bfedf7",
+                    "path": "<Mouse>/delta/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "LookYaw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4d46030b-7509-4ad7-a39c-8a5153598f8b",
+                    "path": "<XRController>{RightHand}/trackpad/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "LookYaw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9439462a-f5a6-4acf-85a0-92a58ba67958",
+                    "path": "<XRController>{RightHand}/thumbstick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "LookYaw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "47da43e7-46be-483b-8bab-82a503d6465f",
+                    "path": "<XRController>{RightHand}/touchpad/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "LookYaw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c1926575-330c-4092-b052-d4f774dca584",
+                    "path": "<XRController>{RightHand}/joystick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "LookYaw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d5dbbe72-3c14-4a60-8b56-0a7a8433f228",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Pick Up Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
