@@ -733,8 +733,50 @@
         {
             "name": "Typing",
             "id": "15a91472-5740-487e-81de-d25ed80da327",
-            "actions": [],
-            "bindings": []
+            "actions": [
+                {
+                    "name": "Head Position",
+                    "type": "Value",
+                    "id": "ef40818d-c77b-4551-862a-d2050befabb7",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Head Rotation",
+                    "type": "Value",
+                    "id": "7dfd7ec6-ffc9-47b9-a9d4-ec13facb6331",
+                    "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "089aa1dc-59e2-4ebe-8dbd-2599a8b29707",
+                    "path": "<XRHMD>/centerEyePosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Head Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8a2e0769-7200-4331-a7d1-1c53c3d422cb",
+                    "path": "<XRHMD>/centerEyeRotation",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Head Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

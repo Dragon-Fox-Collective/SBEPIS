@@ -123,10 +123,7 @@ namespace SBEPIS.Interaction
 
 		public void OnHoldViewingSylladex(CallbackContext context)
 		{
-			if (sylladex.isWorking)
-				return;
-
-			IsViewing = context.performed;
+			IsViewing = context.performed && !sylladex.isWorking;
 		}
 
 		public void OnCaptchalogueMode(CallbackContext context)

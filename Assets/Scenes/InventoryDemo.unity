@@ -213,7 +213,7 @@ Transform:
   m_GameObject: {fileID: 4372685}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 761880531}
   m_RootOrder: 0
@@ -502,7 +502,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 506918815}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sylladex Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -524,6 +524,50 @@ Transform:
   m_Father: {fileID: 1654442661}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &578634017
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 578634018}
+  - component: {fileID: 578634019}
+  m_Layer: 8
+  m_Name: Mode Camera Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &578634018
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578634017}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1654442661}
+  m_Father: {fileID: 2002559273}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &578634019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578634017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b379155770496f94ca9fc8ecddb2e6fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,7 +677,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &761880531
 Transform:
   m_ObjectHideFlags: 0
@@ -1165,7 +1209,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -1565,7 +1609,7 @@ Transform:
   m_GameObject: {fileID: 1455125349}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.18239975}
-  m_LocalScale: {x: 0.030000001, y: 0.030000001, z: 0.3}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.3}
   m_Children: []
   m_Father: {fileID: 761880531}
   m_RootOrder: 1
@@ -1794,13 +1838,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654442660}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.957, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 963194228}
   - {fileID: 506918815}
-  m_Father: {fileID: 2002559273}
+  m_Father: {fileID: 578634018}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1654442662
@@ -2053,7 +2097,7 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 12.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1654442661}
+  - {fileID: 578634018}
   - {fileID: 1467089277}
   - {fileID: 1916816718}
   - {fileID: 761880531}
@@ -2446,7 +2490,39 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 93a51aeb-2c58-4c61-aa41-3570a5460a8d
     m_ActionName: Gameplay/View Sylladex Toggle1[/Keyboard/tab]
-  m_NeverAutoSwitchControlSchemes: 0
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1654442662}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.TrackedPoseDriverEvent, Assembly-CSharp
+        m_MethodName: OnPosition
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ef40818d-c77b-4551-862a-d2050befabb7
+    m_ActionName: Typing/Head Position
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1654442662}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.TrackedPoseDriverEvent, Assembly-CSharp
+        m_MethodName: OnRotation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7dfd7ec6-ffc9-47b9-a9d4-ec13facb6331
+    m_ActionName: Typing/Head Rotation
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: OpenXR
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
@@ -2470,6 +2546,7 @@ MonoBehaviour:
   viewingSylladexEnabledActions:
   - {fileID: 3769132869637915080, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
   - {fileID: -3335662014178872197, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
+  - {fileID: -3011241403475903885, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
   viewingSylladexDisabledActions:
   - {fileID: 6921043637722060116, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
   - {fileID: 4744936522364000947, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
@@ -2509,7 +2586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f00155c2a72ee468389946baaabda4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 963194228}
+  camera: {fileID: 578634018}
   onSetPlayerMode:
     m_PersistentCalls:
       m_Calls:

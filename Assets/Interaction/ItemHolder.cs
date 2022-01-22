@@ -158,9 +158,11 @@ namespace SBEPIS.Interaction
 			switch (input.currentControlScheme)
 			{
 				case "Keyboard":
+					handHolder.gameObject.SetActive(false);
 					activeHolder = cameraHolder;
 					break;
 				case "OpenXR":
+					handHolder.gameObject.SetActive(true);
 					activeHolder = handHolder;
 					break;
 			}

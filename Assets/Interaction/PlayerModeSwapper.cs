@@ -13,12 +13,12 @@ namespace SBEPIS.Interaction
 		public new Transform camera;
 		public PlayerModeEvent onSetPlayerMode;
 
-		private Transform cameraParent;
+		private Transform defaultCameraParent;
 		private PlayerInput playerInput;
 
 		private void Awake()
 		{
-			cameraParent = camera.parent;
+			defaultCameraParent = camera.parent;
 			playerInput = GetComponent<PlayerInput>();
 		}
 
@@ -37,7 +37,7 @@ namespace SBEPIS.Interaction
 			onSetPlayerMode.Invoke(mode);
 		}
 
-		public void SetPlayerMode(PlayerMode mode) => SetPlayerMode(mode, cameraParent);
+		public void SetPlayerMode(PlayerMode mode) => SetPlayerMode(mode, defaultCameraParent);
 	}
 
 	public enum PlayerMode { Gameplay, Typing }
