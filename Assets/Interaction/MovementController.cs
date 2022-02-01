@@ -23,7 +23,8 @@ namespace SBEPIS.Interaction
 		public LayerMask groundCheckMask;
 
 		private CharacterController controller;
-		private float camXRot;
+		private float camPitch;
+		private float camYaw;
 		private float yVelocity;
 		private Vector2 controlsTarget;
 		private Vector2 movement;
@@ -58,14 +59,15 @@ namespace SBEPIS.Interaction
 		public void OnLookPitch(CallbackContext context)
 		{
 			float pitch = context.ReadValue<float>() * sensitivity;
-			camXRot = Mathf.Clamp(camXRot - pitch, -90, 90);
-			pitchRotator.transform.localRotation = Quaternion.Euler(camXRot, 0, 0);
+			camPitch = Mathf.Clamp(camPitch - pitch, -90, 90);
+			pitchRotator.transform.localRotation = Quaternion.Euler(camPitch, camYaw, 0);
 		}
 
 		public void OnLookYaw(CallbackContext context)
 		{
 			float yaw = context.ReadValue<float>() * sensitivity;
-			yawRotator.Rotate(Vector3.up * yaw);
+			camYaw += yaw;
+			pitchRotator.transform.localRotation = Quaternion.Euler(camPitch, camYaw, 0);
 		}
 
 		public void OnMove(CallbackContext context)
