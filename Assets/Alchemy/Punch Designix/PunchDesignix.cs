@@ -12,6 +12,8 @@ namespace SBEPIS.Alchemy
 		public Transform cameraParent;
 
 		public TMP_InputField punchPanel;
+		public ToggleButton alphaButton;
+		public ToggleButton numericButton;
 
 		private PlayerModeSwapper editingPlayer;
 
@@ -69,12 +71,17 @@ namespace SBEPIS.Alchemy
 			}
 		}
 		
-		public void SetPunchText(string text)
+		public void OnSetPunchText(string text)
 		{
 			animator.SetBool("Code Entered", text.Length == 8);
+		}
 
-			//while (punchPanel.textComponent.text.Length < 8)
-			//	punchPanel.textComponent.text += " ";
+		public void PressKey(string key)
+		{
+			if (key == "")
+				punchPanel.text = punchPanel.text.Substring(0, punchPanel.text.Length - 1);
+			else
+				punchPanel.text += key;
 		}
 	}
 }
