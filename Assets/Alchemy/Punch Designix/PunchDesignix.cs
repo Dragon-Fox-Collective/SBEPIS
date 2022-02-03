@@ -15,13 +15,19 @@ namespace SBEPIS.Alchemy
 		public ToggleButton alphaButton;
 		public ToggleButton numericButton;
 
-		public MeshRenderer keyboardRenderer;
+		public Renderer keyboardRenderer;
 		public Material unlitMaterial;
 		public Material litMaterial;
 		public int alphaMaterialIndex;
 		public int numericMaterialIndex;
+		public AnimationClip keyClip;
 
 		private PlayerModeSwapper editingPlayer;
+
+		private void Start()
+		{
+			keyClip.SetCurve
+		}
 
 		/// <summary>
 		/// Called when a card is inserted, starts the animation

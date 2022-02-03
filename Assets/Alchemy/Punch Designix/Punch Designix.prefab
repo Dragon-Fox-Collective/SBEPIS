@@ -519,7 +519,7 @@ MonoBehaviour:
   punchPanel: {fileID: 3644565778918934258}
   alphaButton: {fileID: 522127567525028380}
   numericButton: {fileID: 9186110143446784538}
-  keyboardRenderer: {fileID: 3573995356545421474}
+  keyboardRenderer: {fileID: 1538865115915447070}
   unlitMaterial: {fileID: 2100000, guid: 38ceaada0b481364e93509de2e846301, type: 2}
   litMaterial: {fileID: 2100000, guid: 7ae6613c37fcb034b821cbcf7484d62c, type: 2}
   alphaMaterialIndex: 3
@@ -2005,7 +2005,7 @@ GameObject:
   - component: {fileID: 6865211518668601958}
   - component: {fileID: 2689761571658005144}
   m_Layer: 12
-  m_Name: 0
+  m_Name: Backspace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3833,11 +3833,39 @@ PrefabInstance:
       propertyPath: m_Name
       value: Punch Designix
       objectReference: {fileID: 0}
+    - target: {fileID: 5556318841207322030, guid: 14351107d2a4a9b478414f31bb6158e7, type: 3}
+      propertyPath: m_DirtyAABB
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5556318841207322030, guid: 14351107d2a4a9b478414f31bb6158e7, type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: -1.1111916
+      objectReference: {fileID: 0}
+    - target: {fileID: 5556318841207322030, guid: 14351107d2a4a9b478414f31bb6158e7, type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: -0.6529694
+      objectReference: {fileID: 0}
+    - target: {fileID: 5556318841207322030, guid: 14351107d2a4a9b478414f31bb6158e7, type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: 2.851915
+      objectReference: {fileID: 0}
+    - target: {fileID: 5556318841207322030, guid: 14351107d2a4a9b478414f31bb6158e7, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.53133154
+      objectReference: {fileID: 0}
+    - target: {fileID: 5556318841207322030, guid: 14351107d2a4a9b478414f31bb6158e7, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.34508526
+      objectReference: {fileID: 0}
+    - target: {fileID: 5556318841207322030, guid: 14351107d2a4a9b478414f31bb6158e7, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.12866056
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14351107d2a4a9b478414f31bb6158e7, type: 3}
---- !u!23 &3573995356545421474 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -1594759221229875694, guid: 14351107d2a4a9b478414f31bb6158e7, type: 3}
+--- !u!137 &1538865115915447070 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5556318841207322030, guid: 14351107d2a4a9b478414f31bb6158e7, type: 3}
   m_PrefabInstance: {fileID: 6361096048409681584}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6903347914104699227 stripped
