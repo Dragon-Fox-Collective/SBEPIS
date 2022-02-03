@@ -1,0 +1,124 @@
+digraph Bits {
+	node [style=filled];
+	node [fillcolor="#000000"];
+	UNKNOWN;
+	handUNKNOWN;
+
+	// Strife bits
+	node [fillcolor="#00E56E"];
+	blunt;
+	pointed;
+	edged;
+	explosive;
+	launched;
+	thrown;
+
+	// Equipement bits
+	node [fillcolor="#07B5FE"];
+	head;
+	face;
+	torso;
+	back;
+	legs;
+	shoes;
+
+	node [fillcolor="#FF067D"];
+	mechanized;
+	instrumental;
+	enflamed;
+	frozen;
+	cooking;
+	aerated;
+
+	node [fillcolor="#FF6000"];
+	sportly;
+	woodly;
+	bit_cc;
+	bit_cd;
+	bit_ce;
+	bit_cf;
+
+	node [fillcolor="#96FF00"];
+	bit_ea;
+	bit_eb;
+	bit_ec;
+	bit_ed;
+	bit_ee;
+	bit_ef;
+
+	node [fillcolor="#FFF100"];
+	bit_fa;
+	bit_fb;
+	bit_fc;
+	bit_fd;
+	bit_fe;
+	bit_ff;
+
+	node [fillcolor="#B74AFE"];
+	bit_ga;
+	bit_gb;
+	bit_gc;
+	bit_gd;
+	bit_ge;
+	bit_gf;
+
+	node [fillcolor="#895422"];
+	bit_ha;
+	bit_hb;
+	bit_hc;
+	bit_hd;
+	bit_he;
+	bit_hf;
+
+	
+	node [fillcolor=""];
+	node [color="#00E56E"];
+	{blunt, thrown} -> ballkind;
+	{blunt} -> batkind;
+	{edged} -> bladekind;
+	{explosive, thrown} -> bombkind;
+	{explosive, launched} -> cannonkind;
+	{pointed, launched} -> bowkind;
+	{pointed} -> canekind;
+	{blunt, edged} -> chiselkind;
+	{edged, thrown} -> knifekind;
+	{UNKNOWN} -> cordkind;
+	{pointed, thrown} -> dartkind;
+	{blunt, pointed} -> pickkind;
+	{blunt, launched} -> riflekind;
+	{launched} -> LAUNCHkind;
+
+	node [color="#008C43"];
+	{cordkind, mechanized, woodly} -> chainsawkind;
+	{canekind, enflamed} -> candlstkkind;
+	{chiselkind, UNKNOWN} -> crowbarkind;
+	{cannonkind, enflamed} -> fireworkkind;
+	{UNKNOWN, handUNKNOWN} -> glovekind;
+	{cordkind, UNKNOWN} -> chainkind;
+	{cordkind, UNKNOWN} -> barbwirekind;
+	{batkind, UNKNOWN} -> bowlgpinkind;
+	{batkind, UNKNOWN} -> golfclubkind;
+	{batkind, UNKNOWN} -> hammerkind;
+	{chiselkind, sportly} -> hckystckkind;
+	{knifekind, cooking} -> cleaverkind;
+	{canekind, cooking} -> forkkind;
+	{knifekind, woodly} -> hatchetkind;
+	{cordkind, UNKNOWN} -> hosekind;
+	{pickkind, frozen} -> icepickkind;
+	{bladekind, frozen, shoes} -> iceskatekind;
+	{ballkind, UNKNOWN} -> ironkind;
+	{ironkind, UNKNOWN} -> curlironkind;
+	{ballkind, UNKNOWN} -> bookkind;
+	{batkind, woodly} -> branchkind;
+	{LAUNCHkind, instrumental} -> brasskind;
+	{LAUNCHkind, aerated} -> fireextkind;
+
+	node [color="#00FFFF"];
+	aerosolkind;
+	broomkind;
+	bustkind;
+	dumbbellkind;
+	fankink;
+	fncysntakind;
+	hairdryrkind;
+}
