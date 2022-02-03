@@ -30,7 +30,7 @@ namespace SBEPIS.Alchemy
 		private void OnPressed(ItemHolder itemHolder)
 		{
 			char key = punch.numericButton.isToggled ? numericChar : alphaChar;
-			if (key == 0)
+			if (key == 0 || key == '-')
 				return;
 
 			if (punch.alphaButton.isToggled && char.IsLetter(key))

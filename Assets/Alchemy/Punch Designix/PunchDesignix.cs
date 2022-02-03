@@ -78,9 +78,21 @@ namespace SBEPIS.Alchemy
 
 		public void SendKey(char key)
 		{
-			Event keyEvent = Event.KeyboardEvent(key == '_' ? "backspace" : char.IsLetter(key) && char.IsUpper(key) ? "#" + char.IsLower(key).ToString() : key.ToString());
-			punchPanel.ProcessEvent(keyEvent);
-			punchPanel.ForceLabelUpdate();
+			if (key == '_')
+			{
+				punchPanel.ProcessEvent(Event.KeyboardEvent("backspace"));
+				punchPanel.ForceLabelUpdate();
+			}
+			else
+			{
+				Event keyEvent = Event.KeyboardEvent(key.ToString());
+				keyEvent.character = key;
+				if (char.IsLetter(key) && char.IsUpper(key))
+					keyEvent.modifiers |= EventModifiers.Shift;
+				Debug.Log(keyEvent);
+				punchPanel.ProcessEvent(keyEvent);
+				punchPanel.ForceLabelUpdate();
+			}
 		}
 	}
 }
