@@ -519,6 +519,11 @@ MonoBehaviour:
   punchPanel: {fileID: 3644565778918934258}
   alphaButton: {fileID: 522127567525028380}
   numericButton: {fileID: 9186110143446784538}
+  keyboardRenderer: {fileID: 3573995356545421474}
+  unlitMaterial: {fileID: 2100000, guid: 38ceaada0b481364e93509de2e846301, type: 2}
+  litMaterial: {fileID: 2100000, guid: 7ae6613c37fcb034b821cbcf7484d62c, type: 2}
+  alphaMaterialIndex: 3
+  numericMaterialIndex: 6
 --- !u!1 &1657840605798347933
 GameObject:
   m_ObjectHideFlags: 0
@@ -1454,10 +1459,34 @@ MonoBehaviour:
       m_Calls: []
   onActivated:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5650104862679464181}
+        m_TargetAssemblyTypeName: SBEPIS.Alchemy.PunchDesignix, Assembly-CSharp
+        m_MethodName: LightNumericKeys
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onDeactivated:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5650104862679464181}
+        m_TargetAssemblyTypeName: SBEPIS.Alchemy.PunchDesignix, Assembly-CSharp
+        m_MethodName: UnlightNumericKeys
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   isToggled: 0
 --- !u!1 &3210467771665958921
 GameObject:
@@ -3806,6 +3835,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14351107d2a4a9b478414f31bb6158e7, type: 3}
+--- !u!23 &3573995356545421474 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1594759221229875694, guid: 14351107d2a4a9b478414f31bb6158e7, type: 3}
+  m_PrefabInstance: {fileID: 6361096048409681584}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6903347914104699227 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 14351107d2a4a9b478414f31bb6158e7, type: 3}

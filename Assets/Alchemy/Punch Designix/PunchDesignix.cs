@@ -15,6 +15,12 @@ namespace SBEPIS.Alchemy
 		public ToggleButton alphaButton;
 		public ToggleButton numericButton;
 
+		public MeshRenderer keyboardRenderer;
+		public Material unlitMaterial;
+		public Material litMaterial;
+		public int alphaMaterialIndex;
+		public int numericMaterialIndex;
+
 		private PlayerModeSwapper editingPlayer;
 
 		/// <summary>
@@ -89,10 +95,25 @@ namespace SBEPIS.Alchemy
 				keyEvent.character = key;
 				if (char.IsLetter(key) && char.IsUpper(key))
 					keyEvent.modifiers |= EventModifiers.Shift;
-				Debug.Log(keyEvent);
 				punchPanel.ProcessEvent(keyEvent);
 				punchPanel.ForceLabelUpdate();
 			}
+		}
+
+		public void LightNumericKeys()
+		{
+			Material[] materials = keyboardRenderer.materials;
+			materials[alphaMaterialIndex] = unlitMaterial;
+			materials[numericMaterialIndex] = litMaterial;
+			keyboardRenderer.materials = materials;
+		}
+
+		public void UnlightNumericKeys()
+		{
+			Material[] materials = keyboardRenderer.materials;
+			materials[alphaMaterialIndex] = litMaterial;
+			materials[numericMaterialIndex] = unlitMaterial;
+			keyboardRenderer.materials = materials;
 		}
 	}
 }
