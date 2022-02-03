@@ -7,8 +7,8 @@ namespace SBEPIS.Alchemy
     public class KeyboardButton : MonoBehaviour
     {
 		public PunchDesignix punch;
-        public string alphaChar;
-        public string numericChar;
+        public char alphaChar;
+        public char numericChar;
 
         private Button button;
 
@@ -29,7 +29,14 @@ namespace SBEPIS.Alchemy
 
 		private void OnPressed(ItemHolder itemHolder)
 		{
-			punch.PressKey(alphaChar);
+			char key = punch.numericButton.isToggled ? numericChar : alphaChar;
+			if (key == 0)
+				return;
+
+			if (punch.alphaButton.isToggled && char.IsLetter(key))
+				key = char.ToUpper(key);
+
+			punch.SendKey(key);
 		}
 	}
 }

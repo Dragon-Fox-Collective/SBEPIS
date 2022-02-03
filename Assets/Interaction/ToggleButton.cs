@@ -9,7 +9,7 @@ namespace SBEPIS.Interaction
 		public UnityEvent onActivated;
 		public UnityEvent onDeactivated;
 
-		public bool activated;
+		public bool isToggled;
 
 		private void OnEnable()
 		{
@@ -23,14 +23,14 @@ namespace SBEPIS.Interaction
 
 		private void Start()
 		{
-			if (activated)
+			if (isToggled)
 				onActivated.Invoke();
 		}
 
 		private void Toggle(ItemHolder itemHolder)
 		{
-			activated = !activated;
-			if (activated)
+			isToggled = !isToggled;
+			if (isToggled)
 				onActivated.Invoke();
 			else
 				onDeactivated.Invoke();

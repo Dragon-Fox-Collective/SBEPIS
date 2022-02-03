@@ -76,12 +76,11 @@ namespace SBEPIS.Alchemy
 			animator.SetBool("Code Entered", text.Length == 8);
 		}
 
-		public void PressKey(string key)
+		public void SendKey(char key)
 		{
-			if (key == "")
-				punchPanel.text = punchPanel.text.Substring(0, punchPanel.text.Length - 1);
-			else
-				punchPanel.text += key;
+			Event keyEvent = Event.KeyboardEvent(key == '_' ? "backspace" : char.IsLetter(key) && char.IsUpper(key) ? "#" + char.IsLower(key).ToString() : key.ToString());
+			punchPanel.ProcessEvent(keyEvent);
+			punchPanel.ForceLabelUpdate();
 		}
 	}
 }
