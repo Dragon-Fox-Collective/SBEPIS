@@ -13,7 +13,7 @@ digraph Bits {
 	launched;
 	thrown;
 
-	// Equipement bits
+	// Equipment bits
 	node [fillcolor="#07B5FE"];
 	head;
 	face;
@@ -72,7 +72,7 @@ digraph Bits {
 
 	
 	node [fillcolor=""];
-	node [color="#00E56E"];
+	node [color="#008C43"];
 	{blunt, thrown} -> ballkind;
 	{blunt} -> batkind;
 	{edged} -> bladekind;
@@ -96,13 +96,13 @@ digraph Bits {
 	{UNKNOWN, handUNKNOWN} -> glovekind;
 	{cordkind, UNKNOWN} -> chainkind;
 	{cordkind, UNKNOWN} -> barbwirekind;
-	{batkind, UNKNOWN} -> bowlgpinkind;
-	{batkind, UNKNOWN} -> golfclubkind;
+	{batkind, sportly, UNKNOWN} -> bowlgpinkind;
+	{batkind, sportly, UNKNOWN} -> golfclubkind;
 	{batkind, UNKNOWN} -> hammerkind;
 	{chiselkind, sportly} -> hckystckkind;
 	{knifekind, cooking} -> cleaverkind;
 	{canekind, cooking} -> forkkind;
-	{knifekind, woodly} -> hatchetkind;
+	{cleaverkind, woodly} -> hatchetkind;
 	{cordkind, UNKNOWN} -> hosekind;
 	{pickkind, frozen} -> icepickkind;
 	{bladekind, frozen, shoes} -> iceskatekind;
@@ -118,7 +118,7 @@ digraph Bits {
 	broomkind;
 	bustkind;
 	dumbbellkind;
-	fankink;
+	fankind;
 	fncysntakind;
 	hairdryrkind;
 }
