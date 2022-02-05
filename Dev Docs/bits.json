@@ -54,12 +54,12 @@
 		},
 
 		{
-			"id": "ccc",
+			"id": "multiplicity",
 			"color": "#96FF00",
 			"nodes": [
-				{ "id": "bitca" },
-				{ "id": "bitcb" },
-				{ "id": "bitcc" },
+				{ "id": "bifurcated" },
+				{ "id": "doubled" },
+				{ "id": "halved" },
 				{ "id": "bitcd" },
 				{ "id": "bitce" },
 				{ "id": "bitcf" }
@@ -149,12 +149,12 @@
 						{ "id": "glovekind", "sources": ["UNKNOWN", "HAND"] },
 						{ "id": "chainkind", "sources": ["cordkind", "UNKNOWN"] },
 						{ "id": "barbwirekind", "sources": ["cordkind", "UNKNOWN"] },
-						{ "id": "bowlgpinkind", "sources": ["batkind", "sportly", "UNKNOWN"] },
-						{ "id": "golfclubkind", "sources": ["batkind", "sportly", "UNKNOWN"] },
+						{ "id": "bowlgpinkind", "sources": ["clubkind", "UNKNOWN"] },
+						{ "id": "golfclubkind", "sources": ["clubkind", "UNKNOWN"] },
 						{ "id": "hammerkind", "sources": ["batkind", "UNKNOWN"] },
 						{ "id": "hckystckkind", "sources": ["chiselkind", "sportly"] },
 						{ "id": "cleaverkind", "sources": ["knifekind", "cooking"] },
-						{ "id": "forkkind", "sources": ["canekind", "cooking"] },
+						{ "id": "forkkind", "sources": ["3dentkind", "cooking"] },
 						{ "id": "hatchetkind", "sources": ["cleaverkind", "woodly"] },
 						{ "id": "hosekind", "sources": ["cordkind", "UNKNOWN"] },
 						{ "id": "icepickkind", "sources": ["pickkind", "frozen"] },
@@ -164,7 +164,16 @@
 						{ "id": "bookkind", "sources": ["ballkind", "UNKNOWN"] },
 						{ "id": "branchkind", "sources": ["batkind", "woodly"] },
 						{ "id": "brasskind", "sources": ["LAUNCHkind", "instrumental"] },
-						{ "id": "fireextkind", "sources": ["LAUNCHkind", "aerated"] }
+						{ "id": "fireextkind", "sources": ["LAUNCHkind", "aerated"] },
+						{ "id": "jumpropekind", "sources": ["cordkind", "sportly"] },
+						{ "id": "ladlekind", "sources": ["spoonkind", "UNKNOWN"] },
+						{ "id": "spoonkind", "sources": ["spadekind", "cooking"] },
+						{ "id": "spadekind", "sources": ["chiselkind", "UNKNOWN"] },
+						{ "id": "3dentkind", "sources": ["dartkind", "bifurcated"] },
+						{ "id": "2x3dentkind", "sources": ["3dentkind", "doubled"] },
+						{ "id": "1/2bowkind", "sources": ["bowkind", "halved"] },
+						{ "id": "clubkind", "sources": ["batkind", "sportly"] },
+						{ "id": "", "sources": ["", ""] },
 					]
 				},
 				{
