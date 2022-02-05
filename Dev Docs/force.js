@@ -54,16 +54,16 @@ const graphWidth = 1000, graphHeight = 700, graphScale = 1;
 		.data(markers)
 		.enter()
 		.append('marker')
-		.attr('id', marker => 'arrow' + (marker.sourceParent ? '-sourceParent' : '') + (marker.targetParent ? '-targetParent' : ''))
-		.attr('viewBox', [0, 0, markerBoxSize, markerBoxSize])
-		.attr('refX', marker => markerBoxSize / 2 + (marker.targetParent ? 5 : 10))
-		.attr('refY', markerBoxSize / 2)
-		.attr('markerWidth', markerBoxSize)
-		.attr('markerHeight', markerBoxSize)
-		.attr('orient', 'auto-start-reverse')
+			.attr('id', marker => 'arrow' + (marker.sourceParent ? '-sourceParent' : '') + (marker.targetParent ? '-targetParent' : ''))
+			.attr('viewBox', [0, 0, markerBoxSize, markerBoxSize])
+			.attr('refX', marker => markerBoxSize / 2 + (marker.targetParent ? 5 : 10))
+			.attr('refY', markerBoxSize / 2)
+			.attr('markerWidth', markerBoxSize)
+			.attr('markerHeight', markerBoxSize)
+			.attr('orient', 'auto-start-reverse')
 		.append('path')
-		.attr('d', `M ${markerBoxSize / 2} ${markerBoxSize / 2} 0 ${markerBoxSize / 4} 0 ${markerBoxSize * 3 / 4} ${markerBoxSize / 2} ${markerBoxSize / 2}`)
-		.attr('fill', marker => marker.sourceParent ? '#00000010' : '#000000')
+			.attr('d', `M ${markerBoxSize / 2} ${markerBoxSize / 2} 0 ${markerBoxSize / 4} 0 ${markerBoxSize * 3 / 4} ${markerBoxSize / 2} ${markerBoxSize / 2}`)
+			.attr('fill', marker => marker.sourceParent ? '#00000010' : '#000000')
 
 	let link = svg.selectAll('.link')
 		.data(links)
@@ -96,7 +96,9 @@ const graphWidth = 1000, graphHeight = 700, graphScale = 1;
 			.attr('y2', link => link.target.y);
 
 		node
-			.attr('transform', node => `translate(${node.x}, ${node.y})`);
+			.attr('transform', node => `translate(${node.x}, ${node.y})`)
+			.select('circle')
+				.style('stroke', node => node.pinned ? '#000' : null);
 	}
 
 
@@ -121,9 +123,26 @@ const graphWidth = 1000, graphHeight = 700, graphScale = 1;
 			})
 			.on('end', (event, node) => {
 				if (!event.active) simulation.alphaTarget(0);
+				if (!node.pinned)
+				{
+					node.fx = null;
+					node.fy = null;
+				}
+			}))
+		.on('click', (event, node) => {
+			simulation.restart();
+			node.pinned = !node.pinned;
+			if (node.pinned)
+			{
+				node.fx = node.x;
+				node.fy = node.y;
+			}
+			else
+			{
 				node.fx = null;
 				node.fy = null;
-			}));
+			}
+		});
 	
 	
 	//  Final attribute and style calls (post forceLink)
