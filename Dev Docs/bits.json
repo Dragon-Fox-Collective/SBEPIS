@@ -1,0 +1,186 @@
+{
+	"id": "bits",
+	"nodes": [
+		{
+			"id": "strife",
+			"color": "#00E56E",
+			"nodes": [
+				{ "id": "blunt" },
+				{ "id": "pointed" },
+				{ "id": "edged" },
+				{ "id": "explosive" },
+				{ "id": "launched" },
+				{ "id": "thrown" }
+			]
+		},
+
+		{
+			"id": "equipment",
+			"color": "#07B5FE",
+			"nodes": [
+				{ "id": "head" },
+				{ "id": "face" },
+				{ "id": "torso" },
+				{ "id": "back" },
+				{ "id": "legs" },
+				{ "id": "shoes" }
+			]
+		},
+
+		{
+			"id": "aaa",
+			"color": "#FF067D",
+			"nodes": [
+				{ "id": "mechanized" },
+				{ "id": "instrumental" },
+				{ "id": "enflamed" },
+				{ "id": "frozen" },
+				{ "id": "cooking" },
+				{ "id": "aerated" }
+			]
+		},
+
+		{
+			"id": "bbb",
+			"color": "#FF6000",
+			"nodes": [
+				{ "id": "sportly" },
+				{ "id": "woodly" },
+				{ "id": "bitbc" },
+				{ "id": "bitbd" },
+				{ "id": "bitbe" },
+				{ "id": "bitbf" }
+			]
+		},
+
+		{
+			"id": "ccc",
+			"color": "#96FF00",
+			"nodes": [
+				{ "id": "bitca" },
+				{ "id": "bitcb" },
+				{ "id": "bitcc" },
+				{ "id": "bitcd" },
+				{ "id": "bitce" },
+				{ "id": "bitcf" }
+			]
+		},
+
+		{
+			"id": "ddd",
+			"color": "#FFF100",
+			"nodes": [
+				{ "id": "bitda" },
+				{ "id": "bitdb" },
+				{ "id": "bitdc" },
+				{ "id": "bitdd" },
+				{ "id": "bitde" },
+				{ "id": "bitdf" }
+			]
+		},
+
+		{
+			"id": "eee",
+			"color": "#B74AFE",
+			"nodes": [
+				{ "id": "bitea" },
+				{ "id": "biteb" },
+				{ "id": "bitec" },
+				{ "id": "bited" },
+				{ "id": "bitee" },
+				{ "id": "bitef" }
+			]
+		},
+
+		{
+			"id": "fff",
+			"color": "#895422",
+			"nodes": [
+				{ "id": "bitfa" },
+				{ "id": "bitfb" },
+				{ "id": "bitfc" },
+				{ "id": "bitfd" },
+				{ "id": "bitfe" },
+				{ "id": "bitff" }
+			]
+		},
+
+
+		{
+			"id": "unknowns",
+			"color":  "#000000",
+			"nodes": [
+				{ "id": "UNKNOWN" },
+				{ "id": "HAND" }
+			]
+		},
+
+
+		{
+			"id": "strifekinds",
+			"color": "#008C43",
+			"nodes": [
+				{
+					"id": "base strifekinds",
+					"nodes":  [
+						{ "id": "ballkind", "sources": ["blunt", "thrown"] },
+						{ "id": "batkind", "sources": ["blunt"] },
+						{ "id": "bladekind", "sources": ["edged"] },
+						{ "id": "bombkind", "sources": ["explosive", "thrown"] },
+						{ "id": "cannonkind", "sources": ["explosive", "launched"] },
+						{ "id": "bowkind", "sources": ["pointed", "launched"] },
+						{ "id": "canekind", "sources": ["pointed"] },
+						{ "id": "chiselkind", "sources": ["blunt", "edged"] },
+						{ "id": "knifekind", "sources": ["edged", "thrown"] },
+						{ "id": "cordkind", "sources": ["UNKNOWN"] },
+						{ "id": "dartkind", "sources": ["pointed", "thrown"] },
+						{ "id": "pickkind", "sources": ["blunt", "pointed"] },
+						{ "id": "riflekind", "sources": ["blunt", "launched"] },
+						{ "id": "LAUNCHkind", "sources": ["launched"] }
+					]
+				},
+				{
+					"id": "compound strifekinds",
+					"nodes": [
+						{ "id": "chainsawkind", "sources": ["cordkind", "mechanized", "woodly"] },
+						{ "id": "candlstkkind", "sources": ["canekind", "enflamed"] },
+						{ "id": "crowbarkind", "sources": ["chiselkind", "UNKNOWN"] },
+						{ "id": "fireworkkind", "sources": ["cannonkind", "enflamed"] },
+						{ "id": "glovekind", "sources": ["UNKNOWN", "HAND"] },
+						{ "id": "chainkind", "sources": ["cordkind", "UNKNOWN"] },
+						{ "id": "barbwirekind", "sources": ["cordkind", "UNKNOWN"] },
+						{ "id": "bowlgpinkind", "sources": ["batkind", "sportly", "UNKNOWN"] },
+						{ "id": "golfclubkind", "sources": ["batkind", "sportly", "UNKNOWN"] },
+						{ "id": "hammerkind", "sources": ["batkind", "UNKNOWN"] },
+						{ "id": "hckystckkind", "sources": ["chiselkind", "sportly"] },
+						{ "id": "cleaverkind", "sources": ["knifekind", "cooking"] },
+						{ "id": "forkkind", "sources": ["canekind", "cooking"] },
+						{ "id": "hatchetkind", "sources": ["cleaverkind", "woodly"] },
+						{ "id": "hosekind", "sources": ["cordkind", "UNKNOWN"] },
+						{ "id": "icepickkind", "sources": ["pickkind", "frozen"] },
+						{ "id": "iceskatekind", "sources": ["bladekind", "frozen", "shoes"] },
+						{ "id": "ironkind", "sources": ["ballkind", "UNKNOWN"] },
+						{ "id": "curlironkind", "sources": ["ironkind", "UNKNOWN"] },
+						{ "id": "bookkind", "sources": ["ballkind", "UNKNOWN"] },
+						{ "id": "branchkind", "sources": ["batkind", "woodly"] },
+						{ "id": "brasskind", "sources": ["LAUNCHkind", "instrumental"] },
+						{ "id": "fireextkind", "sources": ["LAUNCHkind", "aerated"] }
+					]
+				},
+				{
+					"id": "themed strifekinds",
+					"color": "#00FFFF",
+					"nodes": [
+						{ "id": "aerosolkind" },
+						{ "id": "broomkind" },
+						{ "id": "bustkind" },
+						{ "id": "dumbbellkind" },
+						{ "id": "fankind" },
+						{ "id": "fncysntakind" },
+						{ "id": "hairdryrkind" }
+					]
+				}
+			]
+		}
+	]
+}
