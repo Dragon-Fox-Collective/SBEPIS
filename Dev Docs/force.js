@@ -39,22 +39,31 @@ const graphWidth = 1000, graphHeight = 700, graphScale = 1;
 		.attr('viewBox', [0, 0, graphWidth * graphScale, graphHeight * graphScale])
 		.attr('width', graphWidth)
 		.attr('height', graphHeight);
+
+	let markers = [];
+	[true, false].forEach(sourceParent =>
+	[true, false].forEach(targetParent =>
+		markers.push({
+			sourceParent: sourceParent,
+			targetParent: targetParent,
+		})
+	));
 	
 	const markerBoxSize = 20;
 	svg.append('defs').selectAll('marker')
-		.data([false, true])
+		.data(markers)
 		.enter()
 		.append('marker')
-		.attr('id', parent => 'arrow' + (parent ? '-parent' : ''))
+		.attr('id', marker => 'arrow' + (marker.sourceParent ? '-sourceParent' : '') + (marker.targetParent ? '-targetParent' : ''))
 		.attr('viewBox', [0, 0, markerBoxSize, markerBoxSize])
-		.attr('refX', parent => markerBoxSize / 2 + (parent ? 5 : 10))
+		.attr('refX', marker => markerBoxSize / 2 + (marker.targetParent ? 5 : 10))
 		.attr('refY', markerBoxSize / 2)
 		.attr('markerWidth', markerBoxSize)
 		.attr('markerHeight', markerBoxSize)
 		.attr('orient', 'auto-start-reverse')
 		.append('path')
 		.attr('d', `M ${markerBoxSize / 2} ${markerBoxSize / 2} 0 ${markerBoxSize / 4} 0 ${markerBoxSize * 3 / 4} ${markerBoxSize / 2} ${markerBoxSize / 2}`)
-		.attr('fill', parent => parent ? '#00000010' : '#000000')
+		.attr('fill', marker => marker.sourceParent ? '#00000010' : '#000000')
 
 	let link = svg.selectAll('.link')
 		.data(links)
@@ -120,7 +129,7 @@ const graphWidth = 1000, graphHeight = 700, graphScale = 1;
 	//  Final attribute and style calls (post forceLink)
 	link
 		.classed('parent', link => link.source.isParent)
-		.attr('marker-end', link => `url(#arrow${link.source.isParent ? '-parent' : ''})`);
+		.attr('marker-end', link => 'url(#arrow' + (link.source.isParent ? '-sourceParent' : '') + (link.target.isParent ? '-targetParent' : '') + ')');
 
 	node
 		.classed('parent', node => node.isParent)
