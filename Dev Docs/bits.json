@@ -1,107 +1,112 @@
 {
-	"id": "bits",
+	"id": "base",
 	"nodes": [
 		{
-			"id": "strife",
-			"color": "#00E56E",
+			"id": "bits",
 			"nodes": [
-				{ "id": "blunt" },
-				{ "id": "pointed" },
-				{ "id": "edged" },
-				{ "id": "explosive" },
-				{ "id": "launched" },
-				{ "id": "thrown" }
-			]
-		},
+				{
+					"id": "strife",
+					"color": "#00E56E",
+					"nodes": [
+						{ "id": "blunt" },
+						{ "id": "pointed" },
+						{ "id": "edged" },
+						{ "id": "explosive" },
+						{ "id": "launched" },
+						{ "id": "thrown" }
+					]
+				},
 
-		{
-			"id": "equipment",
-			"color": "#07B5FE",
-			"nodes": [
-				{ "id": "head" },
-				{ "id": "face" },
-				{ "id": "torso" },
-				{ "id": "back" },
-				{ "id": "legs" },
-				{ "id": "shoes" }
-			]
-		},
+				{
+					"id": "equipment",
+					"color": "#07B5FE",
+					"nodes": [
+						{ "id": "head" },
+						{ "id": "face" },
+						{ "id": "torso" },
+						{ "id": "back" },
+						{ "id": "legs" },
+						{ "id": "shoes" }
+					]
+				},
 
-		{
-			"id": "aaa",
-			"color": "#FF067D",
-			"nodes": [
-				{ "id": "mechanized" },
-				{ "id": "instrumental" },
-				{ "id": "enflamed" },
-				{ "id": "frozen" },
-				{ "id": "cooking" },
-				{ "id": "aerated" }
-			]
-		},
+				{
+					"id": "aaa",
+					"color": "#FF067D",
+					"nodes": [
+						{ "id": "mechanized" },
+						{ "id": "instrumental" },
+						{ "id": "enflamed" },
+						{ "id": "frozen" },
+						{ "id": "cooking" },
+						{ "id": "aerated" }
+					]
+				},
 
-		{
-			"id": "bbb",
-			"color": "#FF6000",
-			"nodes": [
-				{ "id": "sportly" },
-				{ "id": "woodly" },
-				{ "id": "bitbc" },
-				{ "id": "bitbd" },
-				{ "id": "bitbe" },
-				{ "id": "bitbf" }
-			]
-		},
+				{
+					"id": "bbb",
+					"color": "#FF6000",
+					"nodes": [
+						{ "id": "sportly" },
+						{ "id": "woodly" },
+						{ "id": "handheld" },
+						{ "id": "magic" },
+						{ "id": "luminescent" },
+						{ "id": "wet" }
+					]
+				},
 
-		{
-			"id": "multiplicity",
-			"color": "#96FF00",
-			"nodes": [
-				{ "id": "bifurcated" },
-				{ "id": "doubled" },
-				{ "id": "halved" },
-				{ "id": "bitcd" },
-				{ "id": "bitce" },
-				{ "id": "bitcf" }
-			]
-		},
+				{
+					"id": "multiplicity",
+					"color": "#96FF00",
+					"nodes": [
+						{ "id": "bifurcated" },
+						{ "id": "doubled" },
+						{ "id": "halved" },
+						{ "id": "bitcd" },
+						{ "id": "bitce" },
+						{ "id": "bitcf" }
+					]
+				},
 
-		{
-			"id": "ddd",
-			"color": "#FFF100",
-			"nodes": [
-				{ "id": "bitda" },
-				{ "id": "bitdb" },
-				{ "id": "bitdc" },
-				{ "id": "bitdd" },
-				{ "id": "bitde" },
-				{ "id": "bitdf" }
-			]
-		},
+				{
+					"id": "ddd",
+					"color": "#FFF100",
+					"nodes": [
+						{ "id": "cleaning" },
+						{ "id": "bitdb" },
+						{ "id": "bitdc" },
+						{ "id": "bitdd" },
+						{ "id": "bitde" },
+						{ "id": "bitdf" }
+					]
+				},
 
-		{
-			"id": "eee",
-			"color": "#B74AFE",
-			"nodes": [
-				{ "id": "bitea" },
-				{ "id": "biteb" },
-				{ "id": "bitec" },
-				{ "id": "bited" },
-				{ "id": "bitee" },
-				{ "id": "bitef" }
-			]
-		},
+				{
+					"id": "eee",
+					"color": "#B74AFE",
+					"nodes": [
+						{ "id": "bitea" },
+						{ "id": "biteb" },
+						{ "id": "bitec" },
+						{ "id": "bited" },
+						{ "id": "bitee" },
+						{ "id": "bitef" }
+					]
+				},
 
-		{
-			"id": "fff",
-			"color": "#895422",
-			"nodes": [
-				{ "id": "bitfa" },
-				{ "id": "bitfb" },
-				{ "id": "bitfc" },
-				{ "id": "bitfd" },
-				{ "id": "bitfe" },
-				{ "id": "bitff" }
+				{
+					"id": "aspects",
+					"color": "#895422",
+					"nodes": [
+						{ "id": "luck" },
+						{ "id": "time" },
+						{ "id": "bitfc" },
+						{ "id": "bitfd" },
+						{ "id": "bitfe" },
+						{ "id": "bitff" }
+					]
+				}
 			]
 		},
 
@@ -110,8 +115,48 @@
 			"id": "unknowns",
 			"color":  "#000000",
 			"nodes": [
-				{ "id": "UNKNOWN" },
-				{ "id": "HAND" }
+				{ "id": "UNKNOWN" }
+			]
+		},
+
+
+		{
+			"id": "grists",
+			"color": "#FF00FF",
+			"nodes": [
+				{
+					"id": "metal grists",
+					"nodes": [
+						{ "id": "rust flakes" },
+						{ "id": "mercury drops" },
+						{ "id": "steel glass" }
+					]
+				},
+				{
+					"id": "valuable grists",
+					"nodes": [
+						{ "id": "gold nuggets" },
+						{ "id": "GOLD2" },
+						{ "id": "GOLD3" }
+					]
+				},
+				{
+					"id": "oil grists",
+					"nodes": [
+						{ "id": "sulfur powder" },
+						{ "id": "tar blobs" },
+						{ "id": "SULFUR3" }
+					]
+				},
+				{
+					"id": "stone grists",
+					"nodes": [
+						{ "id": "chalk blocks" },
+						{ "id": "marble slabs" },
+						{ "id": "CHALK3" }
+					]
+				},
+				{ "id": "zillium clusters" }
 			]
 		},
 
@@ -136,7 +181,9 @@
 						{ "id": "dartkind", "sources": ["pointed", "thrown"] },
 						{ "id": "pickkind", "sources": ["blunt", "pointed"] },
 						{ "id": "riflekind", "sources": ["blunt", "launched"] },
-						{ "id": "LAUNCHkind", "sources": ["launched"] }
+						{ "id": "LAUNCHkind", "sources": ["launched"] },
+						{ "id": "THROWkind", "sources": ["thrown"] },
+						{ "id": "whipkind", "sources": ["cordkind", "pointed"] }
 					]
 				},
 				{
@@ -146,7 +193,7 @@
 						{ "id": "candlstkkind", "sources": ["canekind", "enflamed"] },
 						{ "id": "crowbarkind", "sources": ["chiselkind", "UNKNOWN"] },
 						{ "id": "fireworkkind", "sources": ["cannonkind", "enflamed"] },
-						{ "id": "glovekind", "sources": ["UNKNOWN", "HAND"] },
+						{ "id": "glovekind", "sources": ["fistkind", "UNKNOWN"] },
 						{ "id": "chainkind", "sources": ["cordkind", "UNKNOWN"] },
 						{ "id": "barbwirekind", "sources": ["cordkind", "UNKNOWN"] },
 						{ "id": "bowlgpinkind", "sources": ["clubkind", "UNKNOWN"] },
@@ -154,7 +201,7 @@
 						{ "id": "hammerkind", "sources": ["batkind", "UNKNOWN"] },
 						{ "id": "hckystckkind", "sources": ["chiselkind", "sportly"] },
 						{ "id": "cleaverkind", "sources": ["knifekind", "cooking"] },
-						{ "id": "forkkind", "sources": ["3dentkind", "cooking"] },
+						{ "id": "forkkind", "sources": ["tridentkind", "cooking"] },
 						{ "id": "hatchetkind", "sources": ["cleaverkind", "woodly"] },
 						{ "id": "hosekind", "sources": ["cordkind", "UNKNOWN"] },
 						{ "id": "icepickkind", "sources": ["pickkind", "frozen"] },
@@ -164,29 +211,48 @@
 						{ "id": "bookkind", "sources": ["ballkind", "UNKNOWN"] },
 						{ "id": "branchkind", "sources": ["batkind", "woodly"] },
 						{ "id": "brasskind", "sources": ["LAUNCHkind", "instrumental"] },
-						{ "id": "fireextkind", "sources": ["LAUNCHkind", "aerated"] },
+						{ "id": "fireextkind", "sources": ["aerosolkind", "wet"] },
 						{ "id": "jumpropekind", "sources": ["cordkind", "sportly"] },
 						{ "id": "ladlekind", "sources": ["spoonkind", "UNKNOWN"] },
 						{ "id": "spoonkind", "sources": ["spadekind", "cooking"] },
 						{ "id": "spadekind", "sources": ["chiselkind", "UNKNOWN"] },
-						{ "id": "3dentkind", "sources": ["dartkind", "bifurcated"] },
-						{ "id": "2x3dentkind", "sources": ["3dentkind", "doubled"] },
+						{ "id": "tridentkind", "sources": ["dartkind", "bifurcated"] },
+						{ "id": "2x3dentkind", "sources": ["tridentkind", "doubled"] },
 						{ "id": "1/2bowkind", "sources": ["bowkind", "halved"] },
 						{ "id": "clubkind", "sources": ["batkind", "sportly"] },
+						{ "id": "lancekind", "sources": ["canekind", "sportly"] },
+						{ "id": "sicklekind", "sources": ["bladekind", "UNKNOWN"] },
+						{ "id": "clawkind", "sources": ["knifekind", "handheld"] },
+						{ "id": "makeupkind", "sources": ["UNKNOWN"] },
+						{ "id": "dicekind", "sources": ["THROWkind", "luck"] },
+						{ "id": "fistkind", "sources": ["ballkind", "handheld"] },
+						{ "id": "wandkind", "sources": ["needlekind", "magic"] },
+						{ "id": "needlekind", "sources": ["canekind", "handheld"] },
+						{ "id": "pistolkind", "sources": ["riflekind", "handheld"] },
+						{ "id": "2xpistolkind", "sources": ["pistolkind", "doubled"] },
+						{ "id": "sceptrekind", "sources": ["canekind", "UNKNOWN"] },
+						{ "id": "flshlghtkind", "sources": ["batkind", "luminescent"] },
+						{ "id": "shoekind", "sources": ["ballkind", "shoes"] },
+						{ "id": "cuebatkind", "sources": ["clubkind", "UNKNOWN"] },
+						{ "id": "lampkind", "sources": ["candlstkkind", "mechanized"] },
+						{ "id": "lcrsstckkind", "sources": ["clubkind", "UNKNOWN"] },
+						{ "id": "marblekind", "sources": ["ballkind", "UNKNOWN"] },
+						{ "id": "broomkind", "sources": ["batkind", "cleaning"] },
+						{ "id": "mopkind", "sources": ["broomkind", "wet"] },
+						{ "id": "nailgunkind", "sources": ["crossbowkind", "mechanized", "rust flakes"] },
+						{ "id": "crossbowkind", "sources": ["bowkind", "handheld"] },
+						{ "id": "dumbbellkind", "sources": ["ballkind", "UNKNOWN", "rust flakes"] },
+						{ "id": "aerosolkind", "sources": ["LAUNCHkind", "aerated"] },
+						{ "id": "bustkind", "sources": ["ballkind", "UNKNOWN", "chalk blocks"] },
+						{ "id": "fankind", "sources": ["UNKNOWN"] },
+						{ "id": "fncysntakind", "sources": ["UNKNOWN"] },
+						{ "id": "hairdryrkind", "sources": ["fankind", "UNKNOWN"] },
+						{ "id": "jokerkind", "sources": ["zillium clusters"] },
 						{ "id": "", "sources": ["", ""] },
-					]
-				},
-				{
-					"id": "themed strifekinds",
-					"color": "#00FFFF",
-					"nodes": [
-						{ "id": "aerosolkind" },
-						{ "id": "broomkind" },
-						{ "id": "bustkind" },
-						{ "id": "dumbbellkind" },
-						{ "id": "fankind" },
-						{ "id": "fncysntakind" },
-						{ "id": "hairdryrkind" }
+						{ "id": "", "sources": ["", ""] },
+						{ "id": "", "sources": ["", ""] },
+						{ "id": "", "sources": ["", ""] },
+						{ "id": "", "sources": ["", ""] }
 					]
 				}
 			]
