@@ -1,6 +1,6 @@
 "use strict";
 
-const graphWidth = 1000, graphHeight = 700, graphScale = 1;
+const graphWidth = 1000, graphHeight = 700, graphScale = 3;
 
 (async () => {
 	//  Graph data
@@ -105,9 +105,10 @@ const graphWidth = 1000, graphHeight = 700, graphScale = 1;
 	//  Simulation
 	var simulation = d3.forceSimulation(nodes)
 		.force('charge', d3.forceManyBody().strength(-50))
-		.force('centerX', d3.forceX(graphWidth * graphScale / 2))
-		.force('centerY', d3.forceY(graphHeight * graphScale / 2))
-		.force('link', d3.forceLink(links).id(node => node.id).distance(50))
+		//.force('centerX', d3.forceX(graphWidth * graphScale / 2))
+		//.force('centerY', d3.forceY(graphHeight * graphScale / 2))
+		.force('center', d3.forceCenter(graphWidth * graphScale / 2, graphHeight * graphScale / 2))
+		.force('link', d3.forceLink(links).id(node => node.id).distance(20))
 		.on('tick', tick);
 
 	node
@@ -155,5 +156,6 @@ const graphWidth = 1000, graphHeight = 700, graphScale = 1;
 		.each(node => node.weight = link.filter(link => link.source === node || link.target === node).size());
 
 	simulation.force('link')
-		.strength(link => (link.source.isParent ? 0.01 : 1) / Math.min(link.source.weight, link.target.weight))
+		.strength(link => (link.source.isParent ? 0.2 : 1) / Math.min(link.source.weight, link.target.weight))
+		.distance(link => link.source.isParent ? 50 : 20);
 })();
