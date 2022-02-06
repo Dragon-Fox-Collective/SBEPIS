@@ -77,7 +77,9 @@ const graphWidth = 1000, graphHeight = 700, graphScale = 3;
 	
 	node.append('circle')
 		.attr('r', node => node.isParent ? 5 : 10)
-		.style('fill', node => node.color);
+		.style('fill', node => node.color)
+		.append('title')
+			.text(node => node.id);
 	
 	node.append('text')
 		.text(node => node.id)
