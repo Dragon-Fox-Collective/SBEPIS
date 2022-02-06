@@ -128,15 +128,15 @@
 					"id": "metal grists",
 					"nodes": [
 						{ "id": "rust flakes" },
-						{ "id": "mercury drops" },
-						{ "id": "steel glass" }
+						{ "id": "copper bars" },
+						{ "id": "mercury drops" }
 					]
 				},
 				{
 					"id": "valuable grists",
 					"nodes": [
+						{ "id": "GOLD1" },
 						{ "id": "gold nuggets" },
-						{ "id": "GOLD2" },
 						{ "id": "GOLD3" }
 					]
 				},
@@ -191,7 +191,7 @@
 					"nodes": [
 						{ "id": "chainsawkind", "sources": ["cordkind", "mechanized", "woodly"] },
 						{ "id": "candlstkkind", "sources": ["canekind", "enflamed"] },
-						{ "id": "crowbarkind", "sources": ["chiselkind", "UNKNOWN"] },
+						{ "id": "crowbarkind", "sources": ["chiselkind", "UNKNOWN", "rust flakes"] },
 						{ "id": "fireworkkind", "sources": ["cannonkind", "enflamed"] },
 						{ "id": "glovekind", "sources": ["fistkind", "UNKNOWN"] },
 						{ "id": "chainkind", "sources": ["cordkind", "UNKNOWN"] },
@@ -199,7 +199,7 @@
 						{ "id": "bowlgpinkind", "sources": ["clubkind", "UNKNOWN"] },
 						{ "id": "golfclubkind", "sources": ["clubkind", "UNKNOWN"] },
 						{ "id": "hammerkind", "sources": ["batkind", "UNKNOWN"] },
-						{ "id": "hckystckkind", "sources": ["chiselkind", "sportly"] },
+						{ "id": "hckystckkind", "sources": ["paddlekind", "frozen"] },
 						{ "id": "cleaverkind", "sources": ["knifekind", "cooking"] },
 						{ "id": "forkkind", "sources": ["tridentkind", "cooking"] },
 						{ "id": "hatchetkind", "sources": ["cleaverkind", "woodly"] },
@@ -248,10 +248,15 @@
 						{ "id": "fncysntakind", "sources": ["UNKNOWN"] },
 						{ "id": "hairdryrkind", "sources": ["fankind", "UNKNOWN"] },
 						{ "id": "jokerkind", "sources": ["zillium clusters"] },
-						{ "id": "", "sources": ["", ""] },
-						{ "id": "", "sources": ["", ""] },
-						{ "id": "", "sources": ["", ""] },
-						{ "id": "", "sources": ["", ""] },
+						{ "id": "paddlekind", "sources": ["chiselkind", "sportly"] },
+						{ "id": "peprmillkind", "sources": ["UNKNOWN"] },
+						{ "id": "peprspraykind", "sources": ["aerosolkind", "cooking", "UNKNOWN"] },
+						{ "id": "pipekind", "sources": ["batkind", "UNKNOWN", "rust flakes"] },
+						{ "id": "pizzctrkind", "sources": ["edged", "UNKNOWN", "cooking"] },
+						{ "id": "plankkind", "sources": ["chiselkind", "woodly"] },
+						{ "id": "plierkind", "sources": ["chiselkind", "doubled", "rust flakes"] },
+						{ "id": "scissorkind", "sources": ["knifekind", "doubled", "rust flakes"] },
+						{ "id": "plungerkind", "sources": ["batkind", "UNKNOWN"] },
 						{ "id": "", "sources": ["", ""] }
 					]
 				}
