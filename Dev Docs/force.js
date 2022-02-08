@@ -172,3 +172,10 @@ const makeParents = parameters.has('makeparents');
 // Some grists are dropped out of the price depending on the item. Themes' grists are never dropped.
 // Calculate a "usefulness" rating that determines the tier of similar grists and their amounts
 // Bits are combob'd. Themes are appended.
+// Some themes overwrite other themes. Eg, felt overwrites red plush
+// Thematic items are applied with &&
+// You can make strife specibi for anything, even singular weapons and themes. you just have to find the right bits ;3
+// Themed furnature only costs build unless it's useful or has information
+// Size determines build grist cost, usefulness determines everything else
+// Looks like any mobile computing requires diamond
+// Johnny 5 is a very *unique* object :3
