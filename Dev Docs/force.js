@@ -179,3 +179,4 @@ const makeParents = parameters.has('makeparents');
 // Size determines build grist cost, usefulness determines everything else
 // Looks like any mobile computing requires diamond
 // Johnny 5 is a very *unique* object :3
+// WOAH punching a card with a thematic item and using it applies themes!!!
