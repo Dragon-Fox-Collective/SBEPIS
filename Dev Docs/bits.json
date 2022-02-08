@@ -63,7 +63,7 @@
 						{ "id": "bifurcated" },
 						{ "id": "doubled" },
 						{ "id": "halved" },
-						{ "id": "bitcd" },
+						{ "id": "mirrored" },
 						{ "id": "bitce" },
 						{ "id": "bitcf" }
 					]
@@ -74,7 +74,7 @@
 					"color": "#FFF100",
 					"nodes": [
 						{ "id": "cleaning" },
-						{ "id": "bitdb" },
+						{ "id": "furnature" },
 						{ "id": "bitdc" },
 						{ "id": "bitdd" },
 						{ "id": "bitde" },
@@ -124,39 +124,16 @@
 			"id": "grists",
 			"color": "#FF00FF",
 			"nodes": [
-				{
-					"id": "metal grists",
-					"nodes": [
-						{ "id": "rust flakes" },
-						{ "id": "copper bars" },
-						{ "id": "mercury drops" }
-					]
-				},
-				{
-					"id": "valuable grists",
-					"nodes": [
-						{ "id": "GOLD1" },
-						{ "id": "gold nuggets" },
-						{ "id": "GOLD3" }
-					]
-				},
-				{
-					"id": "oil grists",
-					"nodes": [
-						{ "id": "sulfur powder" },
-						{ "id": "tar blobs" },
-						{ "id": "SULFUR3" }
-					]
-				},
-				{
-					"id": "stone grists",
-					"nodes": [
-						{ "id": "chalk blocks" },
-						{ "id": "marble slabs" },
-						{ "id": "CHALK3" }
-					]
-				},
-				{ "id": "zillium clusters" }
+				{ "id": "rust flakes" },
+				{ "id": "copper bars" },
+				{ "id": "mercury drops", "purpose": "glass" },
+				{ "id": "gold nuggets" },
+				{ "id": "sulfur powder" },
+				{ "id": "chalk blocks" },
+				{ "id": "marble slabs" },
+				{ "id": "shale laminae", "purpose": "ghost" },
+				{ "id": "tar blobs", "purpose": "trickster" },
+				{ "id": "zillium clusters", "purpose": "zilly" }
 			]
 		},
 
@@ -320,9 +297,84 @@
 						{ "id": "staffkind" },
 						{ "id": "wirekind" },
 						{ "id": "wlkngstkkind" },
-						{ "id": "wtrngcankind" }
+						{ "id": "wtrngcankind" },
+						{ "id": "paperkind" },
+						{ "id": "handlekind" },
+						{ "id": "bunnykind" }
 					]
 				}
+			]
+		},
+
+
+		{
+			"id": "items",
+			"color": "#004182",
+			"nodes": [
+				{ "id": "perfectly generic object" },
+				{ "id": "cruxite artifact" },
+				{ "id": "captchalogue card" },
+				{ "id": "claw hammer", "sources": ["hammerkind"] },
+				{ "id": "green slime ghost pogo", "sources": ["furnature", "shale laminae"] },
+				{ "id": "pogo hammer", "sources": ["claw hammer", "green slime ghost pogo"], "combobType": "and" },
+				{ "id": "sassacre book", "sources": ["shale laminae", "tar blobs"] },
+				{ "id": "fedora", "sources": ["head"] },
+				{ "id": "rabbit plush" },
+				{ "id": "bunny sassacre fedora", "sources": ["sassacre book", "fedora", "rabbit plush"], "combobType": "multi" },
+				{ "id": "hammerhead pogo ride", "sources": ["green slime ghost pogo", "claw hammer"] },
+				{ "id": "suit", "sources": ["torso"] },
+				{ "id": "shirt", "sources": ["torso"] },
+				{ "id": "green slime ghost shirt", "sources": ["shirt", "shale laminae"] },
+				{ "id": "green slime ghost suit", "sources": ["suit", "green slime ghost shirt"], "combobType": "and" },
+				{ "id": "wise guy slime suit", "sources": ["green slime ghost suit", "wise guy book"] },
+				{ "id": "wise guy book", "sources": ["tar blobs"] },
+				{ "id": "glasses", "sources": ["face", "mercury drops"] },
+				{ "id": "pda", "sources": ["tar blobs"] },
+				{ "id": "serious business goggles", "sources": ["pda", "glasses"], "combobType": "and" },
+				{ "id": "telescope", "sources": ["mercury drops"] },
+				{ "id": "sledgehammer", "sources": ["hammerkind"] },
+				{ "id": "gushers", "sources": ["shale laminae"] },
+				{ "id": "ectoplasm", "sources": ["mercury drops"] },
+				{ "id": "hellacious blue phlegm aneurysm gushers", "sources": ["gushers", "ectoplasm"], "combobType": "and" },
+				{ "id": "remote ghost gauntlet", "sources": ["fake arms", "ectoplasm", "pda"], "combobType": "multi" },
+				{ "id": "fake arms" },
+				{ "id": "mirror", "sources": ["mirrored"] },
+				{ "id": "left handed remote ghost gauntlet", "sources": ["remote ghost gauntlet", "mirror"], "combobType": "and" },
+				{ "id": "barber's best friend", "sources": ["umbrella", "straight razor"] },
+				{ "id": "umbrella", "sources": ["umbrellakind"] },
+				{ "id": "straight razor", "sources": ["razorkind", "mercury drops", "shale laminae"], "combobType": "and" },
+				{ "id": "shaving cream" },
+				{ "id": "betty crocker barbasol bomb", "sources": ["gushers", "shaving cream"],  "combobType": "and" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" },
+				{ "id": "" }
 			]
 		}
 	]
