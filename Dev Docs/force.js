@@ -1,6 +1,9 @@
 "use strict";
 
+const parameters = new URLSearchParams(window.location.search);
 const graphWidth = 1000, graphHeight = 700, graphScale = 3;
+
+const makeParents = parameters.has('makeparents');
 
 (async () => {
 	//  Graph data
@@ -16,19 +19,19 @@ const graphWidth = 1000, graphHeight = 700, graphScale = 3;
 		if ('color' in node)
 			attrs.color = node.color;
 		
-		if ('id' in node)
+		if ('id' in node && (makeParents || !('nodes' in node)))
 		{
 			nodes.push(Object.assign({ 'id': node.id, 'isParent': 'nodes' in node }, attrs));
 
-			// if (parent !== null)
-			// 	links.push({ source: parent.id, target: node.id });
-			
-			['bits', 'grists', 'themes'].forEach(sourceType =>
-			{
-				if (sourceType in node)
-					node[sourceType].forEach(source => links.push({ source: source, target: node.id }));
-			});
+			if (parent !== null && makeParents)
+			 	links.push({ source: parent.id, target: node.id });
 		}
+
+		['bits', 'grists', 'themes'].forEach(sourceType =>
+		{
+			if (sourceType in node)
+				node[sourceType].forEach(source => links.push({ source: source, target: node.id }));
+		});
 
 		if ('nodes' in node)
 			node.nodes.forEach(child => iterateNode(child, attrs, 'id' in node ? node : parent));
