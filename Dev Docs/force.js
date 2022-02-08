@@ -167,3 +167,8 @@ const makeParents = parameters.has('makeparents');
 		.strength(link => (link.source.isParent ? 0.2 : 1) / Math.min(link.source.weight, link.target.weight))
 		.distance(link => link.source.isParent ? 50 : 20);
 })();
+
+// Extra notes:
+// Some grists are dropped out of the price depending on the item. Themes' grists are never dropped.
+// Calculate a "usefulness" rating that determines the tier of similar grists and their amounts
+// Bits are combob'd. Themes are appended.
