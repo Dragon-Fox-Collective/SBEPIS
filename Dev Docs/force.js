@@ -20,8 +20,8 @@ const graphWidth = 1000, graphHeight = 700, graphScale = 3;
 		{
 			nodes.push(Object.assign({ 'id': node.id, 'isParent': 'nodes' in node }, attrs));
 
-			if (parent !== null)
-				links.push({ source: parent.id, target: node.id });
+			// if (parent !== null)
+			// 	links.push({ source: parent.id, target: node.id });
 			
 			['bits', 'grists', 'themes'].forEach(sourceType =>
 			{
