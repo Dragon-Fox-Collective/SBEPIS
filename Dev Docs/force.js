@@ -23,8 +23,11 @@ const graphWidth = 1000, graphHeight = 700, graphScale = 3;
 			if (parent !== null)
 				links.push({ source: parent.id, target: node.id });
 			
-			if ('sources' in node)
-				node.sources.forEach(source => links.push({ source: source, target: node.id }));
+			['bits', 'grists', 'themes'].forEach(sourceType =>
+			{
+				if (sourceType in node)
+					node[sourceType].forEach(source => links.push({ source: source, target: node.id }));
+			});
 		}
 
 		if ('nodes' in node)
