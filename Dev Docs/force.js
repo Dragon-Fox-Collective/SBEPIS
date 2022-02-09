@@ -12,7 +12,12 @@ const makeParents = parameters.has('makeparents');
 	let nodes = [];
 	let links = [];
 
-	function iterateNode(node, attrs, parent)
+	function namespace(nodeId, nodeType)
+	{
+		return `${nodeType}::${nodeId}`;
+	}
+
+	function iterateNode(node, attrs, parentNode, graph, nodeType)
 	{
 		attrs = Object.assign({}, attrs);
 
@@ -21,23 +26,23 @@ const makeParents = parameters.has('makeparents');
 		
 		if ('id' in node && (makeParents || !('nodes' in node)))
 		{
-			nodes.push(Object.assign({ 'id': node.id, 'isParent': 'nodes' in node }, attrs));
+			nodes.push(Object.assign({ 'id':namespace(node.id, nodeType), 'name':node.id, 'isParent':'nodes' in node }, attrs));
 
-			if (parent !== null && makeParents)
-			 	links.push({ source: parent.id, target: node.id });
+			if (parentNode !== null && makeParents)
+			 	links.push({ source: parentNode.id, target: node.id });
 		}
 
 		['bits', 'grists', 'themes'].forEach(sourceType =>
 		{
 			if (sourceType in node)
-				node[sourceType].forEach(source => links.push({ source: source, target: node.id }));
+				node[sourceType].forEach(source => links.push({ source:namespace(source, sourceType), target:namespace(node.id, nodeType) }));
 		});
 
 		if ('nodes' in node)
-			node.nodes.forEach(child => iterateNode(child, attrs, 'id' in node ? node : parent));
+			node.nodes.forEach(child => iterateNode(child, attrs, 'id' in node ? node : parentNode, graph, nodeType === null ? child.id : nodeType));
 	}
 
-	iterateNode(graph, {}, null);
+	iterateNode(graph, {}, null, graph, null);
 
 	//  SVG elements
 	let svg = d3.select('#graph').append('svg')
@@ -85,10 +90,10 @@ const makeParents = parameters.has('makeparents');
 		.attr('r', node => node.isParent ? 5 : 10)
 		.style('fill', node => node.color)
 		.append('title')
-			.text(node => node.id);
+			.text(node => node.name);
 	
 	node.append('text')
-		.text(node => node.id)
+		.text(node => node.name)
 		.attr('dx', 0)
 		.attr('dy', node => node.isParent ? -5 : -10)
 		.attr('text-anchor', 'middle');
