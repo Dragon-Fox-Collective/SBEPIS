@@ -5,7 +5,7 @@
 			"id":"bits",
 			"nodes":[
 				{
-					"id":"strife",
+					"id":"strife bits",
 					"color":"#00E56E",
 					"nodes":[
 						{ "id":"blunt" },
@@ -18,7 +18,7 @@
 				},
 
 				{
-					"id":"equipment",
+					"id":"equipment bits",
 					"color":"#07B5FE",
 					"nodes":[
 						{ "id":"head" },
@@ -31,20 +31,20 @@
 				},
 
 				{
-					"id":"aaa",
+					"id":"elemental bits",
 					"color":"#FF067D",
 					"nodes":[
-						{ "id":"mechanized" },
-						{ "id":"instrumental" },
+						{ "id":"wet" },
+						{ "id":"electrical" },
 						{ "id":"enflamed" },
 						{ "id":"frozen" },
-						{ "id":"cooking" },
-						{ "id":"aerated" }
+						{ "id":"bitae" },
+						{ "id":"bitaf" }
 					]
 				},
 
 				{
-					"id":"bbb",
+					"id":"bbb bits",
 					"color":"#FF6000",
 					"nodes":[
 						{ "id":"sportly" },
@@ -52,12 +52,12 @@
 						{ "id":"handheld" },
 						{ "id":"magic" },
 						{ "id":"luminescent" },
-						{ "id":"wet" }
+						{ "id":"mechanized" }
 					]
 				},
 
 				{
-					"id":"multiplicity",
+					"id":"multiplicity bits",
 					"color":"#96FF00",
 					"nodes":[
 						{ "id":"bifurcated" },
@@ -70,7 +70,7 @@
 				},
 
 				{
-					"id":"ddd",
+					"id":"ddd bits",
 					"color":"#FFF100",
 					"nodes":[
 						{ "id":"cleaning" },
@@ -78,17 +78,17 @@
 						{ "id":"rocket" },
 						{ "id":"magnetic" },
 						{ "id":"aquatic" },
-						{ "id":"bitdf" }
+						{ "id":"instrumental" }
 					]
 				},
 
 				{
-					"id":"eee",
+					"id":"eee bits",
 					"color":"#B74AFE",
 					"nodes":[
-						{ "id":"bitea" },
-						{ "id":"biteb" },
-						{ "id":"bitec" },
+						{ "id":"cooking" },
+						{ "id":"aerated" },
+						{ "id":"paper" },
 						{ "id":"bited" },
 						{ "id":"bitee" },
 						{ "id":"bitef" }
@@ -96,7 +96,7 @@
 				},
 
 				{
-					"id":"aspects",
+					"id":"aspect bits",
 					"color":"#895422",
 					"nodes":[
 						{ "id":"luck" },
@@ -113,7 +113,7 @@
 
 		{
 			"id":"grists",
-			"color":"#FF00FF",
+			"color":"#FF6FF2",
 			"nodes":[
 				{ "id":"rust", "form":"flakes" },
 				{ "id":"copper", "form":"bars" },
@@ -200,6 +200,21 @@
 						{ "id":"prospit" }
 					]
 				},
+				{
+					"id":"animal themes",
+					"appendMode":"replace amalgamate",
+					"nodes":[
+						{ "id":"amalgamate" },
+						{ "id":"bunny" }
+					]
+				},
+				{
+					"id":"gamemode themes",
+					"nodes":[
+						{ "id":"grimdark" },
+						{ "id":"trickster" }
+					]
+				},
 				{ "id":"broken" },
 				{ "id":"gamebro" },
 				{ "id":"poker" },
@@ -216,7 +231,7 @@
 			"color":"#008C43",
 			"nodes":[
 				{ "id":"throwkind", "bits":["blunt", "thrown"] },
-				{ "id":"batkind", "bits":["blunt"] },
+				{ "id":"clubkind", "bits":["blunt"] },
 				{ "id":"bladekind", "bits":["edged"] },
 				{ "id":"bombkind", "bits":["explosive", "thrown"] },
 				{ "id":"cannonkind", "bits":["explosive", "launched"] },
@@ -227,9 +242,9 @@
 				{ "id":"cordkind" },
 				{ "id":"dartkind", "bits":["pointed", "thrown"] },
 				{ "id":"pickkind", "bits":["blunt", "pointed"] },
-				{ "id":"riflekind", "bits":["blunt", "launched"] },
-				{ "id":"LAUNCHkind", "bits":["launched"] },
-				{ "id":"fistkind" },
+				{ "id":"gunkind", "bits":["blunt", "launched"] },
+				{ "id":"launchkind", "bits":["launched"] },
+				{ "id":"handkind" },
 				{ "id":"whipkind", "bits":["cordkind", "pointed"] }
 			]
 		},
@@ -239,58 +254,6 @@
 			"id":"items",
 			"color":"#004182",
 			"nodes":[
-				
-				{ "id":"umbrellakind" },
-				{ "id":"vacuumkind" },
-				{ "id":"woodwindkind" },
-				{ "id":"wrenchkind" },
-				{ "id":"yoyokind" },
-				{ "id":"crlngirnkind" },
-				{ "id":"anvilkind" },
-				{ "id":"anyngdogkind" },
-				{ "id":"axekind" },
-				{ "id":"bassoonkind" },
-				{ "id":"bolaskind" },
-				{ "id":"bottlekind" },
-				{ "id":"bsbllbatkind" },
-				{ "id":"bwlngbllkind" },
-				{ "id":"cheesknfkind" },
-				{ "id":"coffeemgkind" },
-				{ "id":"crcktbatkind" },
-				{ "id":"flmthrwrkind" },
-				{ "id":"footkind" },
-				{ "id":"fthrdstrkind" },
-				{ "id":"gunkind" },
-				{ "id":"hntddollkind" },
-				{ "id":"hoekind" },
-				{ "id":"hrstrtnrkind" },
-				{ "id":"irnngbrdkind" },
-				{ "id":"knkldstrkind" },
-				{ "id":"lwnmowerkind" },
-				{ "id":"macekind" },
-				{ "id":"machetekind" },
-				{ "id":"nailclprkind" },
-				{ "id":"nwspaperkind" },
-				{ "id":"nunchuckkind" },
-				{ "id":"pepprmllkind" },
-				{ "id":"pinkind" },
-				{ "id":"pornmagkind" },
-				{ "id":"pwrdrillkind" },
-				{ "id":"rapierkind" },
-				{ "id":"saltshkrkind" },
-				{ "id":"shotputkind" },
-				{ "id":"shurikenkind" },
-				{ "id":"spearkind" },
-				{ "id":"staffkind" },
-				{ "id":"wirekind" },
-				{ "id":"wlkngstkkind" },
-				{ "id":"wtrngcankind" },
-				{ "id":"paperkind" },
-				{ "id":"handlekind" },
-				{ "id":"bunnykind" },
-				{ "id":"plushkind" },
-				{ "id":"harpoonkind", "bits":["crossbowkind", "aquatic"] },
-
 				{
 					"id":"basic items",
 					"nodes":[
@@ -307,13 +270,13 @@
 						{ "id":"mirror", "bits":["mirrored"] },
 						{ "id":"umbrella", "grists":["shale"] },
 						{ "id":"potted plant", "bits":["poster"], "code":"CuPA8LnQ" },
-						{ "id":"poster" },
+						{ "id":"poster", "bits":["paper"] },
 						{ "id":"figurine" },
 						{ "id":"painting", "bits":["poster"] },
 						{ "id":"box of chalk", "code":"r5jQS?v2" },
 						{ "id":"computer", "grists":["mercury"] },
 						{ "id":"razor", "bits":["knifekind"] },
-						{ "id":"vacuum", "bits":["vacuumkind"] },
+						{ "id":"vacuum" },
 						{ "id":"consort" },
 						{ "id":"plush" },
 						{ "id":"ink bottle", "grists":["tar"] },
@@ -324,9 +287,9 @@
 						{ "id":"book", "bits":["throwkind"] },
 						{ "id":"air conditioner", "bits":["furniture"], "grists":["cobalt"] },
 						{ "id":"sword", "bits":["bladekind"] },
-						{ "id":"photo" },
+						{ "id":"photo", "bits":["paper"] },
 						{ "id":"skateboard" },
-						{ "id":"magazine" },
+						{ "id":"magazine", "bits":["paper"] },
 						{ "id":"camera", "grists":["mercury"] },
 						{ "id":"shoes", "bits":["throwkind", "feet"] },
 						{ "id":"bedsheets" },
@@ -334,23 +297,23 @@
 						{ "id":"dvd" },
 						{ "id":"unicycle" },
 						{ "id":"wheelchair" },
-						{ "id":"glove" },
+						{ "id":"glove", "bits":["handkind"] },
 						{ "id":"brain" },
 						{ "id":"chainsaw", "bits":["cordkind", "mechanized", "woodly"] },
 						{ "id":"candlestick", "bits":["canekind", "enflamed"] },
 						{ "id":"crowbar", "bits":["chiselkind"] },
 						{ "id":"firework", "bits":["cannonkind", "enflamed"] },
 						{ "id":"chain", "bits":["cordkind"] },
-						{ "id":"club", "bits":["batkind", "sportly"] },
+						{ "id":"bat", "bits":["clubkind", "sportly"] },
 						{ "id":"barb wire", "bits":["cordkind"] },
-						{ "id":"hammer", "bits":["batkind"] },
+						{ "id":"hammer", "bits":["clubkind"] },
 						{ "id":"knife", "bits":["knifekind", "cooking"] },
 						{ "id":"fork", "bits":["trident", "cooking"] },
 						{ "id":"hose", "bits":["cordkind"] },
 						{ "id":"pickaxe", "bits":["pickkind"] },
 						{ "id":"iron", "bits":["throwkind"] },
-						{ "id":"branch", "bits":["batkind", "woodly"] },
-						{ "id":"fire extinguisher", "bits":["LAUNCHkind", "aerated", "wet"] },
+						{ "id":"branch", "bits":["clubkind", "woodly"] },
+						{ "id":"fire extinguisher", "bits":["launchkind", "aerated", "wet"] },
 						{ "id":"jump rope", "bits":["cordkind", "sportly"] },
 						{ "id":"spoon", "bits":["shovel", "cooking"] },
 						{ "id":"shovel", "bits":["chiselkind"] },
@@ -362,23 +325,23 @@
 						{ "id":"dice", "bits":["throwkind", "luck"] },
 						{ "id":"wands", "bits":["needles", "magic"] },
 						{ "id":"needles", "bits":["canekind", "handheld"] },
-						{ "id":"pistol" },
+						{ "id":"pistol", "bits":["gun"] },
 						{ "id":"sceptre", "bits":["canekind"] },
-						{ "id":"flashlight", "bits":["batkind", "luminescent"] },
+						{ "id":"flashlight", "bits":["clubkind", "luminescent"] },
 						{ "id":"lampkind", "bits":["candlestick", "mechanized"] },
 						{ "id":"ball", "bits":["throwkind"] },
-						{ "id":"broom", "bits":["batkind", "cleaning"] },
+						{ "id":"broom", "bits":["clubkind", "cleaning"] },
 						{ "id":"mop", "bits":["broom", "wet"] },
 						{ "id":"dumbbell", "bits":["throwkind"] },
 						{ "id":"bustkind", "bits":["throwkind"] },
 						{ "id":"fan" },
-						{ "id":"pipe", "bits":["batkind"] },
+						{ "id":"pipe", "bits":["clubkind"] },
 						{ "id":"plank", "bits":["chiselkind", "woodly"] },
 						{ "id":"pliers", "bits":["chiselkind", "doubled"] },
 						{ "id":"scissors", "bits":["knifekind", "doubled"] },
-						{ "id":"plunger", "bits":["batkind"] },
+						{ "id":"plunger", "bits":["clubkind"] },
 						{ "id":"rake", "bits":["spade", "bifurcated"] },
-						{ "id":"rolling pin", "bits":["batkind"] },
+						{ "id":"rolling pin", "bits":["clubkind"] },
 						{ "id":"rock" },
 						{ "id":"saw" },
 						{ "id":"screwdriver" },
@@ -387,18 +350,39 @@
 						{ "id":"stapler" },
 						{ "id":"tongs" },
 						{ "id":"trophy" },
-
-						{}
+						{ "id":"brass horn", "bits":["launchkind", "instrumental"] },
+						{ "id":"woodwind" },
+						{ "id":"wrench" },
+						{ "id":"yoyo" },
+						{ "id":"anvil" },
+						{ "id":"axe", "bits":["knifekind"] },
+						{ "id":"bottle" },
+						{ "id":"cup" },
+						{ "id":"gun", "bits":["gunkind"] },
+						{ "id":"doll" },
+						{ "id":"puppet" },
+						{ "id":"hoe" },
+						{ "id":"knuckle duster", "bits":["handkind"] },
+						{ "id":"lawn mower" },
+						{ "id":"mace" },
+						{ "id":"machete", "bits":["knife"] },
+						{ "id":"newspaper", "bits":["paper"] },
+						{ "id":"nunchecks" },
+						{ "id":"rapier", "bits":["canekind"] },
+						{ "id":"salt shaker" },
+						{ "id":"pepper mill" },
+						{ "id":"spear", "bits":["dartkind"] },
+						{ "id":"staff", "bits":["clubkind"] },
+						{ "id":"watering can", "bits":["wet"] }
 					]
 				},
 
 				{
 					"id":"specific items",
-					"color":"#416600",
+					"color":"#008282",
 					"nodes":[
 						{ "id":"claw hammer", "bits":["hammer"], "code":"nZ7Un6BI" },
 						{ "id":"fedora", "bits":["hat"] },
-						{ "id":"bunny plush", "bits":["plush", "bunnykind"] },
 						{ "id":"sledgehammer", "bits":["hammer"] },
 						{ "id":"gushers", "grists":["shale"] },
 						{ "id":"ectoplasm", "grists":["mercury"] },
@@ -432,7 +416,7 @@
 						{ "id":"crystal ball", "bits":["ball"], "grists":["diamond", "amethyst"] },
 						{ "id":"magic 8 ball", "bits":["ball"], "grists":["tar", "chalk"] },
 						{ "id":"magic cue ball", "bits":["magic 8 ball"], "themes":["cueball"] },
-						{ "id":"hunting rifle", "bits":["riflekind"] },
+						{ "id":"hunting rifle", "bits":["gun"] },
 						{ "id":"particle accelerator", "grists":["uranium"] },
 						{ "id":"proton cannon", "bits":["hunting rifle", "iron lass suit", "particle accelerator"], "combobMode":"multi", "grists":["genesis diamond"] },
 						{ "id":"mummy", "themes":["undeath"] },
@@ -448,35 +432,55 @@
 						{ "id":"array modus" },
 						{ "id":"cookbook", "bits":["book"], "themes":["crockercorp"] },
 						{ "id":"spade", "bits":["shovel", "woodly"] },
-						{ "id":"bowling pin", "bits":["club"] },
-						{ "id":"golf club", "bits":["club"] },
+						{ "id":"bowling pin", "bits":["bat"] },
+						{ "id":"golf club", "bits":["bat"] },
 						{ "id":"hockey stick", "bits":["paddle", "frozen"] },
 						{ "id":"cleaver", "bits":["knife", "cooking"] },
-						{ "id":"hatchet", "bits":["cleaver", "woodly"] },
+						{ "id":"hatchet", "bits":["axe", "woodly"] },
 						{ "id":"ice pick", "bits":["pickaxe", "frozen"] },
 						{ "id":"ice skate", "bits":["bladekind", "frozen", "feet"] },
 						{ "id":"curling iron", "bits":["iron"] },
-						{ "id":"french horn", "bits":["LAUNCHkind", "instrumental"] },
 						{ "id":"ladle", "bits":["spoon"] },
 						{ "id":"double trident", "bits":["trident", "doubled"] },
-						{ "id":"half bow", "bits":["bowkind", "halved"] },
-						{ "id":"cuebatkind", "bits":["club"] },
-						{ "id":"lacrosse stick", "bits":["club"] },
+						{ "id":"bow", "bits":["bowkind"] },
+						{ "id":"half bow", "bits":["bow", "halved"] },
+						{ "id":"cuebat", "bits":["bat"] },
+						{ "id":"lacrosse stick", "bits":["bat"] },
 						{ "id":"marble", "bits":["ball"] },
 						{ "id":"nailgun", "bits":["crossbow", "mechanized"] },
-						{ "id":"crossbowkind", "bits":["bow", "handheld"] },
+						{ "id":"crossbow", "bits":["bow", "handheld"] },
 						{ "id":"hair drier", "bits":["fan"] },
 						{ "id":"paddle", "bits":["chiselkind", "sportly"] },
-						{ "id":"pepper mill" },
-						{ "id":"pepper spray", "bits":["LAUNCHkind", "aerated", "cooking"] },
+						{ "id":"pepper spray", "bits":["launchkind", "aerated", "cooking"] },
 						{ "id":"pizza cutter", "bits":["bladekind", "cooking"] },
-						{ "id":"shotgun" },
-						{ "id":"stungun" },
-						{ "id":"table leg" },
-						{ "id":"throwing star" },
+						{ "id":"shotgun", "bits":["gun"] },
+						{ "id":"stungun", "bits":["gun", "electrical"] },
+						{ "id":"table leg", "bits":["clubkind"] },
+						{ "id":"throwing star", "bits":["knifekind"] },
 						{ "id":"furry trophy", "bits":["trophy"] },
-
-						{}
+						{ "id":"bassoon", "bits":["woodwind"] },
+						{ "id":"bolas", "bits":["yoyo"] },
+						{ "id":"baseball bat", "bits":["bat"] },
+						{ "id":"bowling ball", "bits":["ball"] },
+						{ "id":"cheese knife", "bits":["knife"] },
+						{ "id":"coffee mug", "bits":["cup"] },
+						{ "id":"cricket bat", "bits":["bat"] },
+						{ "id":"croquet mallet", "bits":["hammer", "sportly"] },
+						{ "id":"baseball", "bits":["ball", "sportly"] },
+						{ "id":"baseball mitt", "bits":["glove"] },
+						{ "id":"flamethrower", "bits":["launchkind", "aerated", "enflamed"] },
+						{ "id":"feather duster" },
+						{ "id":"hair straightener", "bits":["iron"] },
+						{ "id":"ironing board", "bits":["plank"] },
+						{ "id":"nail clippers", "bits":["scissors"] },
+						{ "id":"pwrdrillkind", "bits":["screwdriver", "mechanized"] },
+						{ "id":"shotput", "bits":["ball", "sportly"] },
+						{ "id":"shuriken", "bits":["throwing star"] },
+						{ "id":"throwing knife", "bits":["knife"] },
+						{ "id":"walking stick", "bits":["staff"] },
+						{ "id":"wire", "bits":["cordkind"] },
+						{ "id":"handle", "bits":["staff"] },
+						{ "id":"harpoonkind", "bits":["crossbow", "aquatic"] }
 					]
 				},
 
@@ -489,7 +493,7 @@
 						{ "id":"cruxite dog pinata", "code":"qG4e0H5C" },
 						{ "id":"green slime ghost pogo", "bits":["pogo ride"], "themes":["green slime ghost"], "code":"DQMmJLeK" },
 						{ "id":"pogo hammer", "bits":["claw hammer", "pogo ride"], "combobMode":"and", "code":"126GH48G" },
-						{ "id":"bunny sassacre fedora", "bits":["fedora", "bunny plush"], "themes":["sassacre"] },
+						{ "id":"bunny sassacre fedora", "bits":["fedora", "plush"], "themes":["bunny", "sassacre"] },
 						{ "id":"hammerhead pogo ride", "bits":["pogo ride", "claw hammer"], "code":"zxN?pNhM" },
 						{ "id":"green slime ghost suit", "bits":["suit"], "themes":["green slime ghost"], "combobMode":"and" },
 						{ "id":"wise guy slime suit", "bits":["suit"], "themes":["wise guy", "green slime ghost"] },
@@ -510,8 +514,8 @@
 						{ "id":"rose's journals", "code":"72KH?CNq" },
 						{ "id":"ahab's crosshairs", "grists":["flourite"], "code":"FFFFFFWW" },
 						{ "id":"flourite octet", "grists":["flourite"], "code":"82THE8TH" },
-						{ "id":"red sucker", "code":"uROBuROS" },
-						{ "id":"green sucker", "code":"UrobUros" },
+						{ "id":"red sucker", "themes":["trickster"], "code":"uROBuROS" },
+						{ "id":"green sucker", "themes":["trickster"], "code":"UrobUros" },
 						{ "id":"cosbytop computer", "bits":["computer"], "themes":["cosby"] },
 						{ "id":"fedora + candy corn", "bits":["fedora"], "themes":["problem sleuth"] },
 						{ "id":"wrinklefucker", "bits":["pogo hammer", "clothes iron"] },
@@ -525,13 +529,14 @@
 						{ "id":"silken wizardbeard yarn", "bits":["wizard statue", "ball of yarn"] },
 						{ "id":"needlewands", "bits":["wizard statue", "knitting needles"], "grists":["chalk", "gold", "diamond"] },
 						{ "id":"velvet squiddleknit dress", "bits":["knittings", "velvet pillow", "shirt"], "themes":["squiddle"] },
-						{ "id":"thorns of oglogoth", "bits":["needlewands", "grimoire book"], "combobMode":"and" },
+						{ "id":"thorns of oglogoth", "bits":["needlewands"], "themes":["grimdark"] },
 						{ "id":"ishades", "bits":["sunglasses", "iphone"], "combobMode":"multi" },
 						{ "id":"timetables", "bits":["time"], "grists":["garnet", "gold", "diamond"], "themes":["record"] },
 						{ "id":"turntop", "bits":["timetables", "computer"], "combobMode":"and" },
 						{ "id":"puppet tux", "bits":["suit"], "themes":["record"] },
 						{ "id":"plush puppet tux", "bits":["puppet tux", "plush"] },
 						{ "id":"caledfwlch", "bits":["cueball", "unbreakable katana"] },
+						{ "id":"caledscratch", "bits":["caledfwlch", "time"] },
 						{ "id":"broken caledfwlch", "themes":["broken"] },
 						{ "id":"scarlet ribbitar", "bits":["caledscratch", "ruby contraband"], "combobMode":"and" },
 						{ "id":"sord", "bits":["sword"], "themes":["sbahj"] },
@@ -582,9 +587,7 @@
 						{ "id":"brainfork", "bits":["psidon's entente", "brain"] },
 						{ "id":"royal double trident", "bits":["double trident"] },
 						{ "id":"recipe modus", "bits":["array modus", "cookbook"] },
-						{ "id":"fancy santa figurine" },
-
-						{}
+						{ "id":"fancy santa figurine" }
 					]
 				}
 			]

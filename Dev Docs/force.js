@@ -1,7 +1,7 @@
 "use strict";
 
 const parameters = new URLSearchParams(window.location.search);
-const graphWidth = 1000, graphHeight = 700, graphScale = 3;
+const graphWidth = 1920, graphHeight = 1080, graphScale = 3;
 
 const makeParents = parameters.has('makeparents');
 
