@@ -95,7 +95,18 @@
 					"appendMode":"replace amalgamate",
 					"nodes":[
 						{ "id":"amalgamate" },
-						{ "id":"bunny" }
+						{ "id":"bunny" },
+						{ "id":"salamander" },
+						{ "id":"turtle" },
+						{ "id":"iguana" },
+						{ "id":"crocodile" },
+						{ "id":"newt" },
+						{ "id":"snake" },
+						{ "id":"axolotl" },
+						{ "id":"dragon" },
+						{ "id":"tortoise" },
+						{ "id":"chameleon" },
+						{ "id":"aligator" }
 					]
 				},
 				{
@@ -223,7 +234,7 @@
 								{ "id":"edible" },
 								{ "id":"furniture" },
 								{ "id":"living" },
-								{ "id":"attractive" },
+								{ "id":"attractive", "effect":"if aerated, vacuum. otherwise, magnetic." },
 								{ "id":"instrumental" },
 								{ "id":"loaded", "effect":"requires pre-loading ammo. otherwise ammo is drawn and changed in-hand." }
 							]
@@ -437,7 +448,7 @@
 								{ "id":"eldritch plush", "bits":["plush"] },
 								{ "id":"headband", "bits":["head"] },
 								{ "id":"fridge magnet", "bits":["attractive"], "grists":["cobalt"] },
-								{ "id":"vodka", "grists":["diamond", "mercury"] },
+								{ "id":"vodka", "bits":["bottle", "edible", "enflamed"], "grists":["diamond", "mercury"] },
 								{ "id":"wizard statue", "bits":["statue", "magic"], "grists":["garnet", "cobalt"] },
 								{ "id":"knitting needles", "bits":["needles"] },
 								{ "id":"velvet pillow", "bits":["pillow"], "grists":["shale", "gold"] },
@@ -563,8 +574,8 @@
 								{ "id":"rose's journals", "bits":["book"], "code":"72KH?CNq" },
 								{ "id":"ahab's crosshairs", "bits":["harpoon"], "grists":["flourite"], "code":"FFFFFFWW" },
 								{ "id":"flourite octet", "bits":["dice"], "grists":["flourite"], "code":"82THE8TH" },
-								{ "id":"red sucker", "members":["trickster"], "code":"uROBuROS" },
-								{ "id":"green sucker", "members":["trickster"], "code":"UrobUros" },
+								{ "id":"red sucker", "bits":["edible"], "members":["trickster"], "code":"uROBuROS" },
+								{ "id":"green sucker", "bits":["edible"], "members":["trickster"], "code":"UrobUros" },
 								{ "id":"cosbytop computer", "bits":["computer"], "members":["cosby"] },
 								{ "id":"fedora + candy corn", "bits":["fedora"], "members":["problem sleuth"] },
 								{ "id":"wrinklefucker", "bits":["pogo hammer", "clothes iron"] },
@@ -574,7 +585,7 @@
 								{ "id":"huggable soft salamancer plush", "bits":["salamander", "eldritch plush"] },
 								{ "id":"bodacious black liquid sorrow gushers", "bits":["gushers", "ink bottle"], "combobMode":"and" },
 								{ "id":"hubtopband", "bits":["hubtop", "headband"], "grists":["marble", "diamond"] },
-								{ "id":"attractive vodka", "bits":["fridge magnet", "vodka"] },
+								{ "id":"magnetic vodka", "bits":["fridge magnet", "vodka"] },
 								{ "id":"silken wizardbeard yarn", "bits":["wizard statue", "ball of yarn"] },
 								{ "id":"needlewands", "bits":["wizard statue", "knitting needles"], "grists":["chalk", "gold", "diamond"] },
 								{ "id":"velvet squiddleknit dress", "bits":["knittings", "velvet pillow", "shirt"], "members":["squiddle"] },
