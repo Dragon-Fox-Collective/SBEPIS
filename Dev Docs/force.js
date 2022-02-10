@@ -29,7 +29,7 @@ const makeParents = parameters.has('makeparents');
 			nodes.push(Object.assign({ 'id':namespace(node.id, nodeType), 'name':node.id, 'isParent':'nodes' in node }, attrs));
 
 			if (parentNode !== null && makeParents)
-			 	links.push({ source: parentNode.id, target: node.id });
+			 	links.push({ source: namespace(parentNode.id, parentNode.id === 'base' ? null : nodeType), target: namespace(node.id, nodeType) });
 		}
 
 		['bits', 'grists', 'members'].forEach(sourceType =>
