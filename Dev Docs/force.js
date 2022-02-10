@@ -32,7 +32,7 @@ const makeParents = parameters.has('makeparents');
 			 	links.push({ source: parentNode.id, target: node.id });
 		}
 
-		['bits', 'grists', 'themes'].forEach(sourceType =>
+		['bits', 'grists', 'members'].forEach(sourceType =>
 		{
 			if (sourceType in node)
 				node[sourceType].forEach(source => links.push({ source:namespace(source, sourceType), target:namespace(node.id, nodeType) }));

@@ -48,7 +48,7 @@
 			"color":"#A10000",
 			"nodes":[
 				{
-					"id":"human members",
+					"id":"human",
 					"nodes":[
 						{ "id":"cosby", "grists":["shale"] },
 						{ "id":"mr t", "grists":["bauxite"] },
@@ -59,18 +59,18 @@
 					]
 				},
 				{
-					"id":"group members",
+					"id":"group",
 					"nodes":[
 						{ "id":"problem sleuth" },
 						{ "id":"midnight crew", "grists":["tar"], "members":["poker"] },
 						{ "id":"sbahj", "grists":["artifact"] },
 						{ "id":"wise guy", "grists":["tar"] },
 						{ "id":"sassacre", "grists":["tar", "shale"] },
-						{ "id":"felt", "grists":["uranium"] }
+						{ "id":"felt", "grists":["uranium"], "members":["pool"] }
 					]
 				},
 				{
-					"id":"brand members",
+					"id":"brand",
 					"nodes":[
 						{ "id":"green slime ghost", "grists":["shale"] },
 						{ "id":"squiddle", "grists":["tar"] },
@@ -79,11 +79,12 @@
 						{ "id":"scalemate" },
 						{ "id":"fiduspawn" },
 						{ "id":"smuppet" },
-						{ "id":"crockercorp" }
+						{ "id":"crockercorp" },
+						{ "id":"gamebro" }
 					]
 				},
 				{
-					"id":"place members",
+					"id":"place",
 					"nodes":[
 						{ "id":"green sun", "grists":["uranium"] },
 						{ "id":"derse" },
@@ -91,7 +92,7 @@
 					]
 				},
 				{
-					"id":"animal members",
+					"id":"animal",
 					"appendMode":"replace amalgamate",
 					"nodes":[
 						{ "id":"amalgamate" },
@@ -99,19 +100,33 @@
 					]
 				},
 				{
-					"id":"gamemode members",
+					"id":"modifier",
 					"nodes":[
 						{ "id":"grimdark" },
-						{ "id":"trickster" }
+						{ "id":"trickster" },
+						{ "id":"cueball", "grists":["quartz", "chalk"] },
+						{ "id":"rocket" }
+					]
+				},
+				{
+					"id":"sport",
+					"nodes":[
+						{ "id":"poker" },
+						{ "id":"baseball" },
+						{ "id":"pool" },
+						{ "id":"croquet" },
+						{ "id":"cricket" },
+						{ "id":"stickball" },
+						{ "id":"lacrosse" },
+						{ "id":"bowling" },
+						{ "id":"shot put" },
+						{ "id":"hockey" },
+						{ "id":"golf" }
 					]
 				},
 				{ "id":"broken" },
-				{ "id":"gamebro" },
-				{ "id":"poker" },
 				{ "id":"player" },
-				{ "id":"undeath", "grists":["obsidian", "blood"] },
-				{ "id":"cueball", "grists":["quartz", "chalk"] },
-				{ "id":"rocket" }
+				{ "id":"undeath", "grists":["obsidian", "blood"] }
 			]
 		},
 
@@ -125,13 +140,14 @@
 						{
 							"id":"strife bits",
 							"color":"#00E56E",
+							"effect":"each of these effects are greater the less strife bits you have.",
 							"nodes":[
-								{ "id":"blunt" },
-								{ "id":"pointed" },
-								{ "id":"edged" },
-								{ "id":"explosive" },
-								{ "id":"launched" },
-								{ "id":"thrown" }
+								{ "id":"blunt", "effect":"damage scales with velocity. lower attack speed." },
+								{ "id":"pointed", "effect":"armor piercing attacks. has a low chance to miss." },
+								{ "id":"edged", "effect":"sweeping attacks. damage per-enemy is reduced the more enemies you hit." },
+								{ "id":"explosive", "effect":"aoe attacks. can damage player. sure hope you have launched or thrown lmao." },
+								{ "id":"launched", "effect":"ranged. needs ammo." },
+								{ "id":"thrown", "effect":"ranged. is ammo." }
 							]
 						},
 						{
@@ -154,20 +170,20 @@
 								{ "id":"electrical" },
 								{ "id":"enflamed" },
 								{ "id":"frozen" },
-								{ "id":"bitae" },
-								{ "id":"bitaf" }
+								{ "id":"magic" },
+								{ "id":"" }
 							]
 						},
 						{
-							"id":"bbb bits",
+							"id":"environment bits",
 							"color":"#FF6000",
 							"nodes":[
-								{ "id":"sportly" },
-								{ "id":"woodly" },
-								{ "id":"handheld" },
-								{ "id":"magic" },
-								{ "id":"luminescent" },
-								{ "id":"mechanized" }
+								{ "id":"aquatic" },
+								{ "id":"naturesque" },
+								{ "id":"" },
+								{ "id":"" },
+								{ "id":"" },
+								{ "id":"" }
 							]
 						},
 						{
@@ -178,32 +194,32 @@
 								{ "id":"doubled" },
 								{ "id":"halved" },
 								{ "id":"mirrored" },
-								{ "id":"bitce" },
-								{ "id":"bitcf" }
+								{ "id":"" },
+								{ "id":"" }
 							]
 						},
 						{
 							"id":"ddd bits",
 							"color":"#FFF100",
 							"nodes":[
-								{ "id":"cleaning" },
+								{ "id":"" },
 								{ "id":"furniture" },
-								{ "id":"rocket" },
+								{ "id":"" },
 								{ "id":"magnetic" },
-								{ "id":"aquatic" },
-								{ "id":"instrumental" }
+								{ "id":"instrumental" },
+								{ "id":"handheld" }
 							]
 						},
 						{
 							"id":"eee bits",
 							"color":"#B74AFE",
 							"nodes":[
-								{ "id":"cooking" },
+								{ "id":"" },
 								{ "id":"aerated" },
-								{ "id":"paper" },
-								{ "id":"bited" },
-								{ "id":"bitee" },
-								{ "id":"bitef" }
+								{ "id":"paper", "effect":"weak. incredibly susepticble to being wet." },
+								{ "id":"luminescent" },
+								{ "id":"mechanized" },
+								{ "id":"" }
 							]
 						},
 						{
@@ -212,10 +228,10 @@
 							"nodes":[
 								{ "id":"luck" },
 								{ "id":"time" },
-								{ "id":"bitfc" },
-								{ "id":"bitfd" },
-								{ "id":"bitfe" },
-								{ "id":"bitff" }
+								{ "id":"" },
+								{ "id":"" },
+								{ "id":"" },
+								{ "id":"" }
 							]
 						}
 					]
@@ -226,21 +242,30 @@
 					"id":"strifekinds",
 					"color":"#008C43",
 					"nodes":[
-						{ "id":"throwkind", "bits":["blunt", "thrown"] },
-						{ "id":"clubkind", "bits":["blunt"] },
-						{ "id":"bladekind", "bits":["edged"] },
-						{ "id":"bombkind", "bits":["explosive", "thrown"] },
-						{ "id":"cannonkind", "bits":["explosive", "launched"] },
-						{ "id":"bowkind", "bits":["pointed", "launched"] },
-						{ "id":"canekind", "bits":["pointed"] },
-						{ "id":"chiselkind", "bits":["blunt", "edged"] },
-						{ "id":"knifekind", "bits":["edged", "thrown"] },
-						{ "id":"cordkind" },
-						{ "id":"dartkind", "bits":["pointed", "thrown"] },
-						{ "id":"pickkind", "bits":["blunt", "pointed"] },
-						{ "id":"gunkind", "bits":["blunt", "launched"] },
-						{ "id":"launchkind", "bits":["launched"] },
 						{ "id":"handkind" },
+						{ "id":"clubkind", "bits":["blunt"] },
+						{ "id":"pickkind", "bits":["blunt", "pointed"] },
+						{ "id":"chiselkind", "bits":["blunt", "edged"] },
+						{ "id":"", "bits":["blunt", "explosive"] },
+						{ "id":"gunkind", "bits":["blunt", "launched"] },
+						{ "id":"brickkind", "bits":["blunt", "thrown"] },
+						{ "id":"canekind", "bits":["pointed"] },
+						{ "id":"", "bits":["pointed", "edged"] },
+						{ "id":"", "bits":["pointed", "explosive"] },
+						{ "id":"bowkind", "bits":["pointed", "launched"] },
+						{ "id":"dartkind", "bits":["pointed", "thrown"] },
+						{ "id":"bladekind", "bits":["edged"] },
+						{ "id":"", "bits":["edged", "explosive"] },
+						{ "id":"", "bits":["edged", "launched"] },
+						{ "id":"knifekind", "bits":["edged", "thrown"] },
+						{ "id":"", "bits":["explosive"] },
+						{ "id":"missilekind", "bits":["explosive", "launched"] },
+						{ "id":"bombkind", "bits":["explosive", "thrown"] },
+						{ "id":"launchkind", "bits":["launched"] },
+						{ "id":"", "bits":["launched",  "thrown"] },
+						{ "id":"", "bits":["thrown"] },
+
+						{ "id":"cordkind" },
 						{ "id":"whipkind", "bits":["cordkind", "pointed"] }
 					]
 				},
@@ -280,14 +305,14 @@
 								{ "id":"ball of yarn", "bits":["ball"], "grists":["shale"] },
 								{ "id":"pillow" },
 								{ "id":"knittings" },
-								{ "id":"book", "bits":["throwkind"] },
+								{ "id":"book", "bits":["brickkind"] },
 								{ "id":"air conditioner", "bits":["furniture"], "grists":["cobalt"] },
 								{ "id":"sword", "bits":["bladekind"] },
 								{ "id":"photo", "bits":["paper"] },
 								{ "id":"skateboard" },
 								{ "id":"magazine", "bits":["paper"] },
 								{ "id":"camera", "grists":["mercury"] },
-								{ "id":"shoes", "bits":["throwkind", "feet"] },
+								{ "id":"shoes", "bits":["brickkind", "feet"] },
 								{ "id":"bedsheets" },
 								{ "id":"mecha" },
 								{ "id":"dvd" },
@@ -295,44 +320,43 @@
 								{ "id":"wheelchair" },
 								{ "id":"glove", "bits":["handkind"] },
 								{ "id":"brain" },
-								{ "id":"chainsaw", "bits":["cordkind", "mechanized", "woodly"] },
-								{ "id":"candlestick", "bits":["canekind", "enflamed"] },
+								{ "id":"chainsaw", "bits":["cordkind", "mechanized", "naturesque"] },
+								{ "id":"candlestick", "bits":["canekind", "enflamed", "furniture"] },
 								{ "id":"crowbar", "bits":["chiselkind"] },
-								{ "id":"firework", "bits":["cannonkind", "enflamed"] },
+								{ "id":"firework", "bits":["missilekind", "enflamed"] },
 								{ "id":"chain", "bits":["cordkind"] },
-								{ "id":"bat", "bits":["clubkind", "sportly"] },
+								{ "id":"bat", "bits":["clubkind"] },
 								{ "id":"barb wire", "bits":["cordkind"] },
 								{ "id":"hammer", "bits":["clubkind"] },
-								{ "id":"knife", "bits":["knifekind", "cooking"] },
-								{ "id":"fork", "bits":["trident", "cooking"] },
+								{ "id":"knife", "bits":["knifekind"] },
+								{ "id":"fork", "bits":["trident"] },
 								{ "id":"hose", "bits":["cordkind"] },
 								{ "id":"pickaxe", "bits":["pickkind"] },
-								{ "id":"iron", "bits":["throwkind"] },
-								{ "id":"branch", "bits":["clubkind", "woodly"] },
+								{ "id":"iron", "bits":["brickkind"] },
+								{ "id":"branch", "bits":["clubkind", "naturesque"] },
 								{ "id":"fire extinguisher", "bits":["launchkind", "aerated", "wet"] },
-								{ "id":"jump rope", "bits":["cordkind", "sportly"] },
-								{ "id":"spoon", "bits":["shovel", "cooking"] },
+								{ "id":"jump rope", "bits":["cordkind"] },
+								{ "id":"spoon", "bits":["shovel"] },
 								{ "id":"shovel", "bits":["chiselkind"] },
 								{ "id":"trident", "bits":["dartkind", "bifurcated"] },
-								{ "id":"lance", "bits":["canekind", "sportly"] },
+								{ "id":"lance", "bits":["canekind"] },
 								{ "id":"sickle", "bits":["bladekind"] },
 								{ "id":"claws", "bits":["knifekind", "handheld", "bifurcated"] },
 								{ "id":"makeup" },
-								{ "id":"dice", "bits":["throwkind", "luck"] },
+								{ "id":"dice", "bits":["brickkind", "luck"] },
 								{ "id":"wands", "bits":["needles", "magic"] },
 								{ "id":"needles", "bits":["canekind", "handheld"] },
-								{ "id":"pistol", "bits":["gun"] },
 								{ "id":"sceptre", "bits":["canekind"] },
 								{ "id":"flashlight", "bits":["clubkind", "luminescent"] },
-								{ "id":"lampkind", "bits":["candlestick", "mechanized"] },
-								{ "id":"ball", "bits":["throwkind"] },
-								{ "id":"broom", "bits":["clubkind", "cleaning"] },
+								{ "id":"lampkind", "bits":["candlestick", "electrical"] },
+								{ "id":"ball", "bits":["brickkind"] },
+								{ "id":"broom", "bits":["clubkind", ""] },
 								{ "id":"mop", "bits":["broom", "wet"] },
-								{ "id":"dumbbell", "bits":["throwkind"] },
-								{ "id":"bustkind", "bits":["throwkind"] },
+								{ "id":"dumbbell", "bits":["brickkind"] },
+								{ "id":"bustkind", "bits":["brickkind"] },
 								{ "id":"fan" },
 								{ "id":"pipe", "bits":["clubkind"] },
-								{ "id":"plank", "bits":["chiselkind", "woodly"] },
+								{ "id":"plank", "bits":["chiselkind", "naturesque"] },
 								{ "id":"pliers", "bits":["chiselkind", "doubled"] },
 								{ "id":"scissors", "bits":["knifekind", "doubled"] },
 								{ "id":"plunger", "bits":["clubkind"] },
@@ -347,7 +371,7 @@
 								{ "id":"tongs" },
 								{ "id":"trophy" },
 								{ "id":"brass horn", "bits":["launchkind", "instrumental"] },
-								{ "id":"woodwind" },
+								{ "id":"woodwind", "bits":["launchkind", "instrumental"] },
 								{ "id":"wrench" },
 								{ "id":"yoyo" },
 								{ "id":"anvil" },
@@ -369,7 +393,8 @@
 								{ "id":"pepper mill" },
 								{ "id":"spear", "bits":["dartkind"] },
 								{ "id":"staff", "bits":["clubkind"] },
-								{ "id":"watering can", "bits":["wet"] }
+								{ "id":"watering can", "bits":["wet"] },
+								{ "id":"cannon", "bits":["gun"] }
 							]
 						},
 		
@@ -410,7 +435,8 @@
 								{ "id":"johnny 5", "bits":["mecha", "green sun streetsweeper", "iron lass suit"], "grists":["steel"] },
 								{ "id":"iron man suit", "grists":["ruby", "amber"] },
 								{ "id":"crystal ball", "bits":["ball"], "grists":["diamond", "amethyst"] },
-								{ "id":"magic 8 ball", "bits":["ball"], "grists":["tar", "chalk"] },
+								{ "id":"8 ball", "bits":["ball"], "grists":["tar"], "members":["pool"] },
+								{ "id":"magic 8 ball", "bits":["8 ball", "luck"], "grists":["chalk"] },
 								{ "id":"magic cue ball", "bits":["magic 8 ball"], "members":["cueball"] },
 								{ "id":"hunting rifle", "bits":["gun"] },
 								{ "id":"particle accelerator", "grists":["uranium"] },
@@ -427,56 +453,62 @@
 								{ "id":"claw gloves", "bits":["claws"] },
 								{ "id":"array modus" },
 								{ "id":"cookbook", "bits":["book"], "members":["crockercorp"] },
-								{ "id":"spade", "bits":["shovel", "woodly"] },
-								{ "id":"bowling pin", "bits":["bat"] },
-								{ "id":"golf club", "bits":["bat"] },
-								{ "id":"hockey stick", "bits":["paddle", "frozen"] },
-								{ "id":"cleaver", "bits":["knife", "cooking"] },
-								{ "id":"hatchet", "bits":["axe", "woodly"] },
+								{ "id":"spade", "bits":["shovel", "naturesque"] },
+								{ "id":"bowling pin", "bits":["bat"], "members":["bowling"] },
+								{ "id":"golf club", "bits":["bat"], "members":["golf"] },
+								{ "id":"hockey stick", "bits":["paddle"], "members":["hockey"] },
+								{ "id":"ice hockey stick", "bits":["hockey stick", "frozen"] },
+								{ "id":"cleaver", "bits":["knife"] },
+								{ "id":"butter knife", "bits":["knife"] },
+								{ "id":"hatchet", "bits":["axe", "naturesque"] },
 								{ "id":"ice pick", "bits":["pickaxe", "frozen"] },
-								{ "id":"ice skate", "bits":["bladekind", "frozen", "feet"] },
+								{ "id":"roller blades", "bits":["bladekind", "feet"] },
+								{ "id":"ice skate", "bits":["roller blades", "frozen"] },
 								{ "id":"curling iron", "bits":["iron"] },
 								{ "id":"ladle", "bits":["spoon"] },
 								{ "id":"double trident", "bits":["trident", "doubled"] },
 								{ "id":"bow", "bits":["bowkind"] },
 								{ "id":"half bow", "bits":["bow", "halved"] },
-								{ "id":"cuebat", "bits":["bat"] },
-								{ "id":"lacrosse stick", "bits":["bat"] },
+								{ "id":"cuebat", "bits":["bat"], "members":["stickball"] },
+								{ "id":"lacrosse stick", "bits":["bat"], "members":["lacrosse"] },
 								{ "id":"marble", "bits":["ball"] },
 								{ "id":"nailgun", "bits":["crossbow", "mechanized"] },
 								{ "id":"crossbow", "bits":["bow", "handheld"] },
 								{ "id":"hair drier", "bits":["fan"] },
-								{ "id":"paddle", "bits":["chiselkind", "sportly"] },
-								{ "id":"pepper spray", "bits":["launchkind", "aerated", "cooking"] },
-								{ "id":"pizza cutter", "bits":["bladekind", "cooking"] },
+								{ "id":"paddle", "bits":["chiselkind"] },
+								{ "id":"pepper spray", "bits":["launchkind", "aerated"] },
+								{ "id":"pizza cutter", "bits":["bladekind"] },
 								{ "id":"shotgun", "bits":["gun"] },
-								{ "id":"stungun", "bits":["gun", "electrical"] },
+								{ "id":"stungun", "bits":["nailgun", "electrical"] },
 								{ "id":"table leg", "bits":["clubkind"] },
 								{ "id":"throwing star", "bits":["knifekind"] },
 								{ "id":"furry trophy", "bits":["trophy"] },
 								{ "id":"bassoon", "bits":["woodwind"] },
 								{ "id":"bolas", "bits":["yoyo"] },
-								{ "id":"baseball bat", "bits":["bat"] },
-								{ "id":"bowling ball", "bits":["ball"] },
+								{ "id":"baseball bat", "bits":["bat"], "members":["baseball"] },
+								{ "id":"bowling ball", "bits":["ball"], "members":["bowling"] },
+								{ "id":"golf ball", "bits":["ball"], "members":["golf"] },
 								{ "id":"cheese knife", "bits":["knife"] },
 								{ "id":"coffee mug", "bits":["cup"] },
-								{ "id":"cricket bat", "bits":["bat"] },
-								{ "id":"croquet mallet", "bits":["hammer", "sportly"] },
-								{ "id":"baseball", "bits":["ball", "sportly"] },
-								{ "id":"baseball mitt", "bits":["glove"] },
+								{ "id":"cricket bat", "bits":["bat"], "members":["cricket"] },
+								{ "id":"croquet mallet", "bits":["hammer"], "members":["croquet"] },
+								{ "id":"baseball", "bits":["ball"], "members":["baseball"] },
+								{ "id":"baseball mitt", "bits":["glove"], "members":["baseball"] },
 								{ "id":"flamethrower", "bits":["launchkind", "aerated", "enflamed"] },
 								{ "id":"feather duster" },
 								{ "id":"hair straightener", "bits":["iron"] },
 								{ "id":"ironing board", "bits":["plank"] },
 								{ "id":"nail clippers", "bits":["scissors"] },
-								{ "id":"pwrdrillkind", "bits":["screwdriver", "mechanized"] },
-								{ "id":"shotput", "bits":["ball", "sportly"] },
+								{ "id":"power drill", "bits":["screwdriver", "mechanized"] },
+								{ "id":"shot put", "bits":["ball"], "members":["shot put"] },
 								{ "id":"shuriken", "bits":["throwing star"] },
 								{ "id":"throwing knife", "bits":["knife"] },
 								{ "id":"walking stick", "bits":["staff"] },
 								{ "id":"wire", "bits":["cordkind"] },
 								{ "id":"handle", "bits":["staff"] },
-								{ "id":"harpoonkind", "bits":["crossbow", "aquatic"] }
+								{ "id":"harpoon", "bits":["crossbow", "aquatic"] },
+								{ "id":"pool cue", "bits":["staff"], "members":["pool"] },
+								{ "id":"pistol", "bits":["gun"] }
 							]
 						},
 		
@@ -506,10 +538,10 @@
 								{ "id":"rocket board", "bits":["rocket pack"] },
 								{ "id":"unireal air", "bits":["rocket pack", "unicycle"] },
 								{ "id":"rocket car", "bits":["rocket pack", "wheelchair"] },
-								{ "id":"fear no anvil", "grists":["garnet", "diamond", "quartz"], "code":"WIin189Q" },
-								{ "id":"rose's journals", "code":"72KH?CNq" },
-								{ "id":"ahab's crosshairs", "grists":["flourite"], "code":"FFFFFFWW" },
-								{ "id":"flourite octet", "grists":["flourite"], "code":"82THE8TH" },
+								{ "id":"fear no anvil", "bits":["hammer"], "grists":["garnet", "diamond", "quartz"], "code":"WIin189Q" },
+								{ "id":"rose's journals", "bits":["book"], "code":"72KH?CNq" },
+								{ "id":"ahab's crosshairs", "bits":["harpoon"], "grists":["flourite"], "code":"FFFFFFWW" },
+								{ "id":"flourite octet", "bits":["dice"], "grists":["flourite"], "code":"82THE8TH" },
 								{ "id":"red sucker", "members":["trickster"], "code":"uROBuROS" },
 								{ "id":"green sucker", "members":["trickster"], "code":"UrobUros" },
 								{ "id":"cosbytop computer", "bits":["computer"], "members":["cosby"] },
@@ -577,7 +609,7 @@
 								{ "id":"dragon cane", "bits":["walking cane"], "members":["scalemate"] },
 								{ "id":"fiduspear", "bits":["jousting lance"], "members":["fiduspawn"] },
 								{ "id":"demonbane ragripper", "bits":["chainsaw", "troll horn"] },
-								{ "id":"music box time machine", "bits":["music box"], "members":["time"] },
+								{ "id":"music box time machine", "bits":["music box", "time"] },
 								{ "id":"action claws", "bits":["claw gloves"] },
 								{ "id":"psidon's entente", "bits":["double trident"] },
 								{ "id":"brainfork", "bits":["psidon's entente", "brain"] },
