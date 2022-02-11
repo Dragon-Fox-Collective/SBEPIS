@@ -29,7 +29,7 @@
 				{ "id":"obsidian" },
 				{ "id":"blood" },
 				{ "id":"steel" },
-				{ "id":"flourite" },
+				{ "id":"flourite", "effect":"magic lol" },
 				{ "id":"peridot" },
 				{ "id":"coal", "form":"lumps" },
 				{ "id":"carbon" },
@@ -131,7 +131,7 @@
 					"nodes":[
 						{ "id":"grimdark" },
 						{ "id":"trickster" },
-						{ "id":"cueball", "grists":["quartz", "chalk"] },
+						{ "id":"juju", "grists":["quartz", "chalk"] },
 						{ "id":"rocket" },
 						{ "id":"entry artifact" }
 					]
@@ -141,10 +141,10 @@
 					"nodes":[
 						{ "id":"poker" },
 						{ "id":"baseball" },
-						{ "id":"pool" },
+						{ "id":"table stickball" },
 						{ "id":"croquet" },
 						{ "id":"cricket" },
-						{ "id":"stickball" },
+						{ "id":"arena stickball" },
 						{ "id":"lacrosse" },
 						{ "id":"bowling" },
 						{ "id":"shot put" },
@@ -216,7 +216,7 @@
 								{ "id":"enflamed", "effect":"weak to wet. strong to frozen." },
 								{ "id":"frozen", "effect":"weak to enflamed. strong to wet" },
 								{ "id":"electrical", "effect":"stuns targets. aoe according to nearby conductors." },
-								{ "id":"magic" },
+								{ "id":"magic", "effect":"beam attacks." },
 								{ "id":"conductive", "effect":"makes enflamed, frozen, and electrical effects more extreme" }
 							]
 						},
@@ -384,13 +384,13 @@
 								{ "id":"trident", "bits":["dartkind", "bifurcated"] },
 								{ "id":"lance", "bits":["canekind"] },
 								{ "id":"sickle", "bits":["bladekind"] },
-								{ "id":"claws", "bits":["knifekind", "hands", "bifurcated"] },
+								{ "id":"claws", "bits":["knifekind", "hands", "bifurcated", "doubled"] },
 								{ "id":"makeup" },
 								{ "id":"dice", "bits":["brickkind", "luck"] },
 								{ "id":"wands", "bits":["needles", "magic"] },
 								{ "id":"needles", "bits":["canekind", "doubled"] },
 								{ "id":"sceptre", "bits":["canekind"] },
-								{ "id":"flashlight", "bits":["clubkind", "luminescent"] },
+								{ "id":"flashlight", "bits":["clubkind", "luminescent", "electrical"] },
 								{ "id":"lamp", "bits":["candlestick", "electrical"] },
 								{ "id":"ball", "bits":["brickkind"] },
 								{ "id":"broom", "bits":["clubkind", ""] },
@@ -431,7 +431,7 @@
 								{ "id":"mace", "bits":["pickkind"] },
 								{ "id":"machete", "bits":["knife"] },
 								{ "id":"newspaper", "bits":["paper"] },
-								{ "id":"nunchecks" },
+								{ "id":"nunchucks", "bits":["yoyo", "doubled"] },
 								{ "id":"rapier", "bits":["canekind"] },
 								{ "id":"salt shaker" },
 								{ "id":"pepper mill" },
@@ -484,7 +484,7 @@
 								{ "id":"crystal ball", "bits":["ball"], "grists":["diamond", "amethyst"] },
 								{ "id":"8 ball", "bits":["ball"], "grists":["tar"], "members":["pool"] },
 								{ "id":"magic 8 ball", "bits":["8 ball", "luck"], "grists":["chalk"] },
-								{ "id":"magic cue ball", "bits":["magic 8 ball"], "members":["cueball"] },
+								{ "id":"magic cue ball", "bits":["magic 8 ball"], "members":["juju"] },
 								{ "id":"hunting rifle", "bits":["gun"] },
 								{ "id":"particle accelerator", "grists":["uranium"] },
 								{ "id":"proton cannon", "bits":["hunting rifle", "iron lass suit", "particle accelerator"], "combobMode":"multi", "grists":["genesis diamond"] },
@@ -516,7 +516,7 @@
 								{ "id":"double trident", "bits":["trident", "doubled"] },
 								{ "id":"bow", "bits":["bowkind"] },
 								{ "id":"half bow", "bits":["bow", "halved"] },
-								{ "id":"cuebat", "bits":["bat"], "members":["stickball"] },
+								{ "id":"cuebat", "bits":["bat"], "members":["arena stickball"] },
 								{ "id":"lacrosse stick", "bits":["bat"], "members":["lacrosse"] },
 								{ "id":"marble", "bits":["ball"] },
 								{ "id":"nailgun", "bits":["crossbow", "mechanized"] },
@@ -557,7 +557,8 @@
 								{ "id":"pool cue", "bits":["staff"], "members":["pool"] },
 								{ "id":"pistol", "bits":["gun"] },
 								{ "id":"turntables", "bits":["furniture", "instrumental"] },
-								{ "id":"ink bottle", "bits":["bottle"], "grists":["tar"] }
+								{ "id":"ink bottle", "bits":["bottle"], "grists":["tar"] },
+								{ "id":"royal deringer", "bits":["sword"] }
 							]
 						},
 		
@@ -612,7 +613,7 @@
 								{ "id":"turntop", "bits":["timetables", "computer"], "combobMode":"and" },
 								{ "id":"puppet tux", "bits":["suit"], "members":["record"] },
 								{ "id":"plush puppet tux", "bits":["puppet tux", "plush"] },
-								{ "id":"caledfwlch", "bits":["unbreakable katana"], "members":["cueball"] },
+								{ "id":"caledfwlch", "bits":["royal deringer"], "members":["juju"] },
 								{ "id":"caledscratch", "bits":["caledfwlch", "timetables"] },
 								{ "id":"broken caledfwlch", "bits":["caledfwlch"], "members":["broken"] },
 								{ "id":"scarlet ribbitar", "bits":["caledscratch", "ruby contraband"], "combobMode":"and" },
@@ -664,7 +665,8 @@
 								{ "id":"brainfork", "bits":["psidon's entente", "brain"] },
 								{ "id":"royal double trident", "bits":["double trident"] },
 								{ "id":"recipe modus", "bits":["array modus", "cookbook"] },
-								{ "id":"fancy santa figurine" }
+								{ "id":"fancy santa figurine", "bits":["figurine"] },
+								{ "id":"golden cuestaff", "bits":["staff"], "members":["juju"] }
 							]
 						}
 					]
