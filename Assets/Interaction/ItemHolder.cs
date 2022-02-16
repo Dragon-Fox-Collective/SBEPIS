@@ -1,6 +1,5 @@
 using SBEPIS.Alchemy;
 using SBEPIS.Captchalogue;
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
