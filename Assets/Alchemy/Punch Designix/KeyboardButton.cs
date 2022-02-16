@@ -1,19 +1,25 @@
 using SBEPIS.Interaction;
 using UnityEngine;
+using UnityEditor;
 
 namespace SBEPIS.Alchemy
 {
-    [RequireComponent(typeof(Button))]
+	[RequireComponent(typeof(Animation))]
+	[RequireComponent(typeof(Button))]
     public class KeyboardButton : MonoBehaviour
     {
 		public PunchDesignix punch;
         public char alphaChar;
         public char numericChar;
+		public float pressAmount;
+		public float boxPositionFactor;
 
+		private new Animation animation;
         private Button button;
 
 		private void Awake()
 		{
+			animation = GetComponent<Animation>();
             button = GetComponent<Button>();
 		}
 
@@ -37,6 +43,17 @@ namespace SBEPIS.Alchemy
 				key = char.ToUpper(key);
 
 			punch.SendKey(key);
+
+			animation.Play();
+		}
+
+		private void Update()
+		{
+			Vector3 position = transform.localPosition;
+			position.y = pressAmount * boxPositionFactor;
+			transform.localPosition = position;
+
+			punch.keyboardRenderer.SetBlendShapeWeight(punch.keyboardRenderer.sharedMesh.GetBlendShapeIndex(gameObject.name), pressAmount * 100);
 		}
 	}
 }

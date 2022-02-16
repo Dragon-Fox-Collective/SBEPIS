@@ -154,7 +154,7 @@ namespace SBEPIS.Interaction
 
 		public void OnControlsChanged(PlayerInput input)
 		{
-			Debug.Log(input.currentControlScheme);
+			print($"Changed to {input.currentControlScheme} input");
 			switch (input.currentControlScheme)
 			{
 				case "Keyboard":
