@@ -4,7 +4,6 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Interaction
 {
-	[RequireComponent(typeof(Collider))]
 	public class Button : MonoBehaviour
 	{
 		public ButtonEvent onPressed;

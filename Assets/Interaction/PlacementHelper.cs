@@ -28,7 +28,7 @@ namespace SBEPIS.Interaction
 			item.transform.SetParent(itemParent);
 			item.transform.localPosition = Vector3.zero;
 			item.transform.localRotation = Quaternion.identity;
-			Item.DisableRigidbody(item.rigidbody);
+			item.rigidbody.Enable();
 			isAdopting = false;
 			collider.enabled = false;
 			DisallowOrphan();
@@ -52,7 +52,7 @@ namespace SBEPIS.Interaction
 		public void Orphan(ItemHolder holder)
 		{
 			item.onPickUp.RemoveListener(Orphan);
-			Item.EnableRigidbody(item.rigidbody);
+			item.rigidbody.Enable();
 			item.transform.SetParent(null);
 			item = null;
 			isAdopting = true;

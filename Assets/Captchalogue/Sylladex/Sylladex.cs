@@ -194,7 +194,7 @@ namespace SBEPIS.Captchalogue
 
 			card.transform.localPosition = Vector3.zero;
 			card.transform.localRotation = Quaternion.identity;
-			Item.DisableRigidbody(card.rigidbody);
+			card.rigidbody.Disable();
 			modus.InsertCard(card);
 		}
 
@@ -258,7 +258,7 @@ namespace SBEPIS.Captchalogue
 			foreach (Transform child in frontCardParent)
 			{
 				child.SetParent(null);
-				Item.EnableRigidbody(child.GetComponent<CaptchalogueCard>().rigidbody);
+				child.GetComponent<CaptchalogueCard>().rigidbody.Enable();
 			}
 			foreach (Transform child in backCardParent)
 			{
@@ -283,7 +283,7 @@ namespace SBEPIS.Captchalogue
 			foreach (Transform child in backCardParent)
 			{
 				child.SetParent(null);
-				Item.EnableRigidbody(child.GetComponent<CaptchalogueCard>().rigidbody);
+				child.GetComponent<CaptchalogueCard>().rigidbody.Enable();
 			}
 		}
 
@@ -293,7 +293,7 @@ namespace SBEPIS.Captchalogue
 			syncingCart.transform.SetParent(modusParent);
 			syncingCart.transform.localPosition = Vector3.zero;
 			syncingCart.transform.localRotation = Quaternion.identity;
-			Item.DisableRigidbody(syncingCart.rigidbody);
+			syncingCart.rigidbody.Disable();
 			animator.SetBool("Syncing Cartridge", true);
 		}
 
@@ -322,7 +322,7 @@ namespace SBEPIS.Captchalogue
 		public void OnFinishSyncingCartridge()
 		{
 			syncingCart.transform.SetParent(null);
-			Item.EnableRigidbody(syncingCart.rigidbody);
+			syncingCart.rigidbody.Enable();
 			syncingCart = null;
 			animator.SetBool("Syncing Cartridge", false);
 		}

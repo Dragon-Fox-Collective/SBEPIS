@@ -12,8 +12,8 @@ namespace SBEPIS.Alchemy
 		public Transform cameraParent;
 
 		public TMP_InputField punchPanel;
-		public ToggleButton alphaButton;
-		public ToggleButton numericButton;
+		public ToggleButtonFlatscreen alphaButton;
+		public ToggleButtonFlatscreen numericButton;
 
 		public SkinnedMeshRenderer keyboardRenderer;
 		public Material unlitMaterial;

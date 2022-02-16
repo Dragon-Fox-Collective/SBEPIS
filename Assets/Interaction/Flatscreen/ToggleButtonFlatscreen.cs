@@ -1,10 +1,11 @@
+using SBEPIS.Interaction.Flatscreen;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace SBEPIS.Interaction
 {
 	[RequireComponent(typeof(Collider))]
-	public class ToggleButton : Button
+	public class ToggleButtonFlatscreen : ButtonFlatscreen
 	{
 		public UnityEvent onActivated;
 		public UnityEvent onDeactivated;

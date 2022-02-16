@@ -150,8 +150,8 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4372685}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -464,6 +464,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1654442661}
+  - {fileID: 761880531}
   m_Father: {fileID: 578634018}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -733,6 +734,8 @@ GameObject:
   m_Component:
   - component: {fileID: 761880531}
   - component: {fileID: 761880532}
+  - component: {fileID: 761880533}
+  - component: {fileID: 761880534}
   m_Layer: 8
   m_Name: Hand
   m_TagString: Untagged
@@ -747,14 +750,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 761880530}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4372690}
   - {fileID: 1455125350}
-  m_Father: {fileID: 2002559273}
-  m_RootOrder: 3
+  m_Father: {fileID: 364365953}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &761880532
 MonoBehaviour:
@@ -768,6 +771,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f212143e43e4cb49ad6b9faf9466618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &761880533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761880530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 487ac52c62529ae4987ed71bbfd5527e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &761880534
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761880530}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &869033937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1837,7 +1868,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455125349}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -2315,7 +2346,6 @@ Transform:
   - {fileID: 413030745}
   - {fileID: 1467089277}
   - {fileID: 1916816718}
-  - {fileID: 761880531}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
@@ -2389,7 +2419,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2002559278}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.ItemHolder, Assembly-CSharp
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.Flatscreen.ItemHolderFlatscreen,
+          Assembly-CSharp
+        m_MethodName: OnControlsChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 761880533}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.VR.ItemHolderVR, Assembly-CSharp
         m_MethodName: OnControlsChanged
         m_Mode: 0
         m_Arguments:
@@ -2468,7 +2511,20 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2002559278}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.ItemHolder, Assembly-CSharp
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.Flatscreen.ItemHolderFlatscreen,
+          Assembly-CSharp
+        m_MethodName: OnPickUp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 761880533}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.VR.ItemHolderVR, Assembly-CSharp
         m_MethodName: OnPickUp
         m_Mode: 0
         m_Arguments:
@@ -2500,7 +2556,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 2002559278}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.ItemHolder, Assembly-CSharp
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.Flatscreen.ItemHolderFlatscreen,
+          Assembly-CSharp
         m_MethodName: OnFlipCard
         m_Mode: 0
         m_Arguments:
@@ -2516,7 +2573,8 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2002559278}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.ItemHolder, Assembly-CSharp
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.Flatscreen.ItemHolderFlatscreen,
+          Assembly-CSharp
         m_MethodName: OnZoom
         m_Mode: 0
         m_Arguments:
@@ -2780,7 +2838,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2002559272}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb22b935cd1f2644daa0969149caaadf, type: 3}
+  m_Script: {fileID: 11500000, guid: 965ba90368ef7b94ea45a2578f0437a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cameraHolder: {fileID: 963194228}

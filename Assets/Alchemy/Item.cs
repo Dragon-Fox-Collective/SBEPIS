@@ -34,7 +34,7 @@ namespace SBEPIS.Alchemy
 		{
 			holdingHolder = player;
 
-			SetLayerRecursively(gameObject, LayerMask.NameToLayer("Held Item"));
+			gameObject.SetLayerRecursively(LayerMask.NameToLayer("Held Item"));
 			rigidbody.useGravity = false;
 
 			onPickUp.Invoke(player);
@@ -49,31 +49,10 @@ namespace SBEPIS.Alchemy
 		{
 			holdingHolder = null;
 
-			SetLayerRecursively(gameObject, LayerMask.NameToLayer("Default"));
+			gameObject.SetLayerRecursively(LayerMask.NameToLayer("Default"));
 			rigidbody.useGravity = true;
 
 			onDrop.Invoke(player);
-		}
-
-		public static void SetLayerRecursively(GameObject gameObject, int layer)
-		{
-			gameObject.layer = layer;
-			foreach (Transform child in gameObject.transform)
-				SetLayerRecursively(child.gameObject, layer);
-		}
-
-		public static void DisableRigidbody(Rigidbody rigidbody)
-		{
-			rigidbody.isKinematic = true;
-			rigidbody.detectCollisions = false;
-			rigidbody.interpolation = RigidbodyInterpolation.None;
-		}
-
-		public static void EnableRigidbody(Rigidbody rigidbody)
-		{
-			rigidbody.isKinematic = false;
-			rigidbody.detectCollisions = true;
-			rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
 		}
 	}
 

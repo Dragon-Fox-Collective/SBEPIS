@@ -13,7 +13,7 @@ namespace SBEPIS.Interaction
 		[SerializeField]
 		private Transform sylladexParent;
 		[SerializeField]
-		private ItemHolder itemHolder;
+		private Flatscreen.ItemHolderFlatscreen itemHolder;
 		[SerializeField]
 		private PlayerModeSwapper modeSwapper;
 		[SerializeField]

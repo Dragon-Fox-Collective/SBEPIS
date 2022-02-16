@@ -1,11 +1,12 @@
 using SBEPIS.Interaction;
+using SBEPIS.Interaction.Flatscreen;
 using UnityEngine;
 using UnityEditor;
 
 namespace SBEPIS.Alchemy
 {
 	[RequireComponent(typeof(Animation))]
-	[RequireComponent(typeof(Button))]
+	[RequireComponent(typeof(ButtonFlatscreen))]
     public class KeyboardButton : MonoBehaviour
     {
 		public PunchDesignix punch;
@@ -15,12 +16,12 @@ namespace SBEPIS.Alchemy
 		public float boxPositionFactor;
 
 		private new Animation animation;
-        private Button button;
+        private ButtonFlatscreen button;
 
 		private void Awake()
 		{
 			animation = GetComponent<Animation>();
-            button = GetComponent<Button>();
+            button = GetComponent<ButtonFlatscreen>();
 		}
 
 		private void OnEnable()
