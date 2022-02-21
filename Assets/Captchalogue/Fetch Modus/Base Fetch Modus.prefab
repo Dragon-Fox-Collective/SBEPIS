@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 8734130851469327109}
   - component: {fileID: 7032748449605047345}
   - component: {fileID: -8978584420486830149}
+  - component: {fileID: 6154556739071452106}
   m_Layer: 0
   m_Name: Base Fetch Modus
   m_TagString: Untagged
@@ -283,7 +284,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &7032748449605047345
@@ -333,6 +334,19 @@ MonoBehaviour:
   renderers:
   - {fileID: 325073964595463273}
   colorMaterial: {fileID: 2100000, guid: 844d7a0c4630e8d4ba7369119cc22223, type: 2}
+--- !u!65 &6154556739071452106
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5036208994679955490}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4, y: 0.44, z: 0.08}
+  m_Center: {x: 0.014, y: 0.0045, z: -0.0175}
 --- !u!1 &5501876255571213756
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,6 @@ namespace SBEPIS.Interaction.Flatscreen
 	public class ItemHolderFlatscreen : ItemHolder
 	{
 		public Transform cameraHolder;
-		public Transform handHolder;
 		public LayerMask raycastMask;
 		public float maxDistance = 10f;
 

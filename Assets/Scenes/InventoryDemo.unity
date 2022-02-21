@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 4372689}
   - component: {fileID: 4372688}
   - component: {fileID: 4372687}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
-  m_Father: {fileID: 761880531}
+  m_Father: {fileID: 662576284}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &49007615
@@ -465,6 +465,7 @@ Transform:
   m_Children:
   - {fileID: 1654442661}
   - {fileID: 761880531}
+  - {fileID: 662576284}
   m_Father: {fileID: 578634018}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -631,6 +632,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b379155770496f94ca9fc8ecddb2e6fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &662576283
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 662576284}
+  - component: {fileID: 662576286}
+  - component: {fileID: 662576285}
+  m_Layer: 0
+  m_Name: Hand Model
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &662576284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662576283}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4372690}
+  - {fileID: 1455125350}
+  m_Father: {fileID: 364365953}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &662576285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662576283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f30f14504d9f21549b14a828f89ad4b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectionPoint: {fileID: 761880531}
+  velocityFactor: 20
+  angularVelocityFactor: 1
+--- !u!54 &662576286
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662576283}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,10 +800,10 @@ GameObject:
   m_Component:
   - component: {fileID: 761880531}
   - component: {fileID: 761880532}
-  - component: {fileID: 761880533}
   - component: {fileID: 761880534}
+  - component: {fileID: 761880533}
   m_Layer: 8
-  m_Name: Hand
+  m_Name: Hand Tracker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -753,9 +819,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4372690}
-  - {fileID: 1455125350}
+  m_Children: []
   m_Father: {fileID: 364365953}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -783,6 +847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 487ac52c62529ae4987ed71bbfd5527e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  model: {fileID: 662576284}
 --- !u!54 &761880534
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -794,7 +859,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -1839,7 +1904,7 @@ GameObject:
   - component: {fileID: 1455125353}
   - component: {fileID: 1455125352}
   - component: {fileID: 1455125351}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1854,10 +1919,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455125349}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.18239975}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.3}
   m_Children: []
-  m_Father: {fileID: 761880531}
+  m_Father: {fileID: 662576284}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1455125351
@@ -1868,7 +1933,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455125349}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -1939,7 +2004,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1467089277
 Transform:
   m_ObjectHideFlags: 0
@@ -2320,6 +2385,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2002559273}
   - component: {fileID: 2002559276}
+  - component: {fileID: 2002559279}
   - component: {fileID: 2002559274}
   - component: {fileID: 2002559275}
   - component: {fileID: 2002559280}
@@ -2361,7 +2427,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.75
-  m_Radius: 0.4
+  m_Radius: 0.1
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -2401,7 +2467,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2002559272}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -2795,7 +2861,7 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 7dfd7ec6-ffc9-47b9-a9d4-ec13facb6331
     m_ActionName: Typing/Head Rotation
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: OpenXR
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
@@ -2842,11 +2908,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraHolder: {fileID: 963194228}
-  handHolder: {fileID: 761880531}
   raycastMask:
     serializedVersion: 2
     m_Bits: 1
   maxDistance: 10
+--- !u!114 &2002559279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002559272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc7ce29b0e9382046b76d3a1648cb2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ticks: 10
 --- !u!114 &2002559280
 MonoBehaviour:
   m_ObjectHideFlags: 0

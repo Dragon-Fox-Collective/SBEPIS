@@ -10,6 +10,8 @@ namespace SBEPIS.Interaction.VR
 	[RequireComponent(typeof(Rigidbody))]
 	public class ItemHolderVR : ItemHolder
 	{
+		public Transform model;
+
 		public Item heldItem { get; private set; }
 		private new Rigidbody rigidbody;
 
@@ -19,6 +21,12 @@ namespace SBEPIS.Interaction.VR
 		private void Awake()
 		{
 			rigidbody = GetComponent<Rigidbody>();
+		}
+
+		private void Start()
+		{
+			//FixedJoint joint = model.gameObject.AddComponent<FixedJoint>();
+			//joint.connectedBody = rigidbody;
 		}
 
 		private void FixedUpdate()
@@ -70,6 +78,7 @@ namespace SBEPIS.Interaction.VR
 				heldItem = null;
 
 				Destroy(droppedItem.GetComponent<FixedJoint>());
+				droppedItem.rigidbody.WakeUp();
 
 				droppedItem.OnDropped(this);
 
@@ -123,10 +132,14 @@ namespace SBEPIS.Interaction.VR
 			{
 				case "Keyboard":
 					gameObject.SetActive(false);
+					model.gameObject.SetActive(false);
 					break;
 				case "OpenXR":
 					print($"Activating {input.currentControlScheme} input");
 					gameObject.SetActive(true);
+					model.gameObject.SetActive(true);
+					model.position = transform.position;
+					model.rotation = transform.rotation;
 					break;
 			}
 		}
