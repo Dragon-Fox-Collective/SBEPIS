@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Interaction
 {
+	[RequireComponent(typeof(Rigidbody))]
 	public class PhysicsButton : MonoBehaviour
 	{
 		public ButtonAxis axis;
@@ -14,6 +15,13 @@ namespace SBEPIS.Interaction
 
 		[NonSerialized]
 		public bool isPressed;
+
+		public new Rigidbody rigidbody { get; private set; }
+
+		private void Awake()
+		{
+			rigidbody = GetComponent<Rigidbody>();
+		}
 
 		private void Update()
 		{
@@ -57,6 +65,15 @@ namespace SBEPIS.Interaction
 				isPressed = false;
 				onUnpressed.Invoke();
 			}
+		}
+
+		public void ForcePress()
+		{
+			rigidbody.AddRelativeForce(new Vector3(
+				axis == ButtonAxis.XPosition ? 1 : 0,
+				axis == ButtonAxis.YPosition ? 1 : 0,
+				axis == ButtonAxis.ZPosition ? 1 : 0
+			) * (direction == ButtonDirection.LessThan ? -1 : 1) * 100);
 		}
 
 		public void Yeah()

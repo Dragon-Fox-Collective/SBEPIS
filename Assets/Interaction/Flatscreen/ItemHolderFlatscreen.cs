@@ -101,7 +101,7 @@ namespace SBEPIS.Interaction.Flatscreen
 
 			bool isPressed = context.performed;
 			if (isPressed && !heldItem && Cast(out RaycastHit hit, LayerMask.GetMask("Button")))
-				hit.collider.GetComponent<ButtonFlatscreen>().onPressed.Invoke(this);
+				hit.collider.GetComponent<PhysicsButton>().ForcePress();
 
 			if (isPressed && !heldItem && Cast(out hit))
 			{
