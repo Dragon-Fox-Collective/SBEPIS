@@ -4,12 +4,12 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Interaction
 {
-	[RequireComponent(typeof(Rigidbody))]
+	[RequireComponent(typeof(Rigidbody), typeof(ConfigurableJoint))]
 	public class PhysicsButton : MonoBehaviour
 	{
 		public ButtonAxis axis;
 		public ButtonDirection direction;
-		public float threshold;
+		public float threshold = 0.75f;
 
 		public UnityEvent onPressed, onUnpressed;
 
@@ -17,53 +17,89 @@ namespace SBEPIS.Interaction
 		public bool isPressed;
 
 		public new Rigidbody rigidbody { get; private set; }
+		public ConfigurableJoint joint { get; private set; }
 
 		private void Awake()
 		{
 			rigidbody = GetComponent<Rigidbody>();
+			joint = GetComponent<ConfigurableJoint>();
 		}
 
 		private void Update()
 		{
-			switch (axis)
-			{
-				case ButtonAxis.XPosition:
-					Evaluate(transform.localPosition.x);
-					break;
-
-				case ButtonAxis.YPosition:
-					Evaluate(transform.localPosition.y);
-					break;
-
-				case ButtonAxis.ZPosition:
-					Evaluate(transform.localPosition.z);
-					break;
-
-				case ButtonAxis.XRotation:
-					Evaluate(transform.localRotation.eulerAngles.x);
-					break;
-
-				case ButtonAxis.YRotation:
-					Evaluate(transform.localRotation.eulerAngles.y);
-					break;
-
-				case ButtonAxis.ZRotation:
-					Evaluate(transform.localRotation.eulerAngles.z);
-					break;
-			}
+			Evaluate();
 		}
 
-		private void Evaluate(float value)
+		private void Evaluate()
 		{
-			if (!isPressed && (direction == ButtonDirection.LessThan ? value < threshold : value > threshold))
+			float progress = GetRelativeProgress();
+			if (!isPressed && (direction == ButtonDirection.LessThan ? progress < threshold : progress > threshold))
 			{
 				isPressed = true;
 				onPressed.Invoke();
 			}
-			else if (isPressed && (direction == ButtonDirection.LessThan ? value > threshold : value < threshold))
+			else if (isPressed && (direction == ButtonDirection.LessThan ? progress > threshold : progress < threshold))
 			{
 				isPressed = false;
 				onUnpressed.Invoke();
+			}
+		}
+
+		private float GetRelativeProgress()
+		{
+			switch (axis)
+			{
+				case ButtonAxis.XPosition:
+				case ButtonAxis.YPosition:
+				case ButtonAxis.ZPosition:
+					return GetLinearDirectionValue(transform.localPosition).Map(GetLinearDirectionValue(GetWorldLinearStartPoint()), GetLinearDirectionValue(GetWorldLinearEndPoint()), 0, 1);
+			}
+			return 0;
+		}
+
+		private Vector3 GetWorldLinearStartPoint()
+		{
+			return transform.TransformPoint(transform.InverseTransformPoint(joint.connectedAnchor) - joint.linearLimit.limit * GetLinearAxis());
+		}
+
+		private Vector3 GetWorldLinearEndPoint()
+		{
+			return transform.TransformPoint(transform.InverseTransformPoint(joint.connectedAnchor) + joint.linearLimit.limit * GetLinearAxis());
+		}
+
+		private Vector3 GetLinearAxis()
+		{
+			switch (axis)
+			{
+				case ButtonAxis.XPosition:
+					return Vector3.right;
+
+				case ButtonAxis.YPosition:
+					return Vector3.up;
+
+				case ButtonAxis.ZPosition:
+					return Vector3.forward;
+
+				default:
+					return Vector3.zero;
+			}
+		}
+
+		private float GetLinearDirectionValue(Vector3 vector)
+		{
+			switch (axis)
+			{
+				case ButtonAxis.XPosition:
+					return vector.x;
+
+				case ButtonAxis.YPosition:
+					return vector.y;
+
+				case ButtonAxis.ZPosition:
+					return vector.z;
+
+				default:
+					return 0;
 			}
 		}
 
@@ -78,7 +114,7 @@ namespace SBEPIS.Interaction
 
 		public void Yeah()
 		{
-			print(isPressed);
+			print(gameObject + " " + isPressed);
 		}
 
 		public enum ButtonAxis
