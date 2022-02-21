@@ -18,11 +18,11 @@ namespace SBEPIS.Interaction.VR
 
 		private void FixedUpdate()
 		{
-			rigidbody.velocity = (connectionPoint.position - rigidbody.position) * velocityFactor;
+			rigidbody.velocity = velocityFactor * (connectionPoint.position - rigidbody.position);
 
 			(connectionPoint.rotation * Quaternion.Inverse(rigidbody.rotation)).ToAngleAxis(out float angle, out Vector3 axis);
 			if (angle > 180) angle -= 360;
-			rigidbody.angularVelocity = angle * axis * angularVelocityFactor;
+			rigidbody.angularVelocity = angle == 0 ? Vector3.zero : angularVelocityFactor * angle * axis;
 		}
 	}
 }
