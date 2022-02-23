@@ -79,6 +79,14 @@ public static class CaptchaUtil
 	}
 
 	/// <summary>
+	/// Return a single bit of a captcha code
+	/// </summary>
+	public static bool GetCaptchaBit(long captchaHash, int i)
+	{
+		return (captchaHash & (1L << i)) != 0;
+	}
+
+	/// <summary>
 	/// Look up or generate a Texture2D of a captcha code string
 	/// </summary>
 	public static Texture2D GetCaptchaTexture(long captchaHash)

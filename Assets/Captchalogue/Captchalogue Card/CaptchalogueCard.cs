@@ -116,7 +116,16 @@ namespace SBEPIS.Captchalogue
 			this.punchedHash = captchaHash;
 
 			for (int i = 0; i < 48; i++)
-				holeCaps.SetBlendShapeWeight(i, Math.Min(punchedHash & (1L << i), 1) * 100);
+			{
+				holeCaps.SetBlendShapeWeight(holeCaps.sharedMesh.GetBlendShapeIndex($"Key {i + 1}"), CaptchaUtil.GetCaptchaBit(punchedHash, i) ? 100 : 0);
+
+				for (int j = 0; j < i; j++)
+				{
+					int sharedIndex = holeCaps.sharedMesh.GetBlendShapeIndex($"Key {j + 1} + {i + 1}");
+					if (sharedIndex >= 0)
+						holeCaps.SetBlendShapeWeight(sharedIndex, CaptchaUtil.GetCaptchaBit(punchedHash, i) || CaptchaUtil.GetCaptchaBit(punchedHash, j) ? 100 : 0);
+				}
+			}
 		}
 	}
 }
