@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1567465723137536217}
   - component: {fileID: 4597716503888204716}
   - component: {fileID: 4009400007959022432}
-  - component: {fileID: 216546284787042876}
+  - component: {fileID: 6408443924259538308}
   m_Layer: 0
   m_Name: Capturllection Card
   m_TagString: Untagged
@@ -94,7 +94,7 @@ MonoBehaviour:
   postCaptcha:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &216546284787042876
+--- !u!114 &6408443924259538308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,18 +103,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1275059195579274974}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5aa3eaff5132f864bbd3906b994e955f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6df7ab0d2c856cc4693bb479b4e1ec01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconMaterial: {fileID: 2100000, guid: 366e79c2ad9251e40b7bcf77ef1d7749, type: 2}
-  captchaMaterial: {fileID: 2100000, guid: f1a726a08ce8cd643896224bdd1373e3, type: 2}
-  colorMaterial: {fileID: 2100000, guid: 844d7a0c4630e8d4ba7369119cc22223, type: 2}
-  renderers:
-  - {fileID: 3513014274298477046}
-  holeCaps: {fileID: 3513014274298477046}
-  texts: []
-  defaultModus: {fileID: 11400000, guid: 8e9793e3c4f5425439783e67dbb153d2, type: 2}
-  defaultCaptcha: 
+  punchHoles: {fileID: 3513014274298477046}
+  defaultCode: 
 --- !u!1001 &8848810319768150500
 PrefabInstance:
   m_ObjectHideFlags: 0

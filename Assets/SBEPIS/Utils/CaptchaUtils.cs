@@ -1,12 +1,7 @@
-using SBEPIS;
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 
 public static class CaptchaUtil
 {
-	private static readonly Dictionary<long, Texture2D> captchaTextures = new Dictionary<long, Texture2D>();
-
 	/// <summary>
 	/// The canonical order that the characters go in, with 0 is no punches and ! is all 6 punches
 	/// </summary>
@@ -84,17 +79,5 @@ public static class CaptchaUtil
 	public static bool GetCaptchaBit(long captchaHash, int i)
 	{
 		return (captchaHash & (1L << i)) != 0;
-	}
-
-	/// <summary>
-	/// Look up or generate a Texture2D of a captcha code string
-	/// </summary>
-	public static Texture2D GetCaptchaTexture(long captchaHash)
-	{
-		if (!captchaTextures.ContainsKey(captchaHash))
-			captchaTextures.Add(captchaHash, GameManager.instance.captcharoid.Captcha(captchaHash));
-
-		captchaTextures.TryGetValue(captchaHash, out Texture2D texture);
-		return texture;
 	}
 }

@@ -14,12 +14,9 @@ namespace SBEPIS.Captchalogue
 		private Material captchaMaterial;
 		[SerializeField]
 		private Material colorMaterial;
-		[SerializeField]
-		private Renderer[] renderers;
-		[SerializeField]
-		private SkinnedMeshRenderer holeCaps;
-		[SerializeField]
-		private TextMeshProUGUI[] texts;
+		public Renderer[] renderers;
+		public SkinnedMeshRenderer holeCaps;
+		public TextMeshProUGUI[] texts;
 		[SerializeField]
 		private Moduskind defaultModus;
 		[SerializeField]
@@ -99,7 +96,7 @@ namespace SBEPIS.Captchalogue
 					if (captchaMaterial && materialName == captchaMaterial.name)
 					{
 						renderer.materials[i].SetFloat("Seed", seed);
-						renderer.materials[i].SetTexture("CaptchaCode", CaptchaUtil.GetCaptchaTexture(captchaHash));
+						renderer.materials[i].SetTexture("CaptchaCode", GameManager.GetCaptchaTexture(captchaHash));
 					}
 					if (colorMaterial && materialName == colorMaterial.name)
 					{
