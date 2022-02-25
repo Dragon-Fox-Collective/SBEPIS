@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace SBEPIS.Tests
+namespace SBEPIS.Tests.EditMode
 {
 	public class CaptureCodeTestSuite
 	{

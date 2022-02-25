@@ -7,10 +7,8 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 namespace SBEPIS.Interaction.VR
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class ItemGrabberVR : ItemGrabber
+	public class GrabberVR : Grabber
 	{
-		public Transform model;
-
 		public Grabbable heldGrabbable { get; private set; }
 		private FixedJoint heldGrabbableJoint;
 		private new Rigidbody rigidbody;
@@ -88,15 +86,12 @@ namespace SBEPIS.Interaction.VR
 			switch (input.currentControlScheme)
 			{
 				case "OpenXR":
+					print("Activating OpenXR input");
 					gameObject.SetActive(true);
-					model.gameObject.SetActive(true);
-					model.position = transform.position;
-					model.rotation = transform.rotation;
 					break;
 
 				default:
 					gameObject.SetActive(false);
-					model.gameObject.SetActive(false);
 					break;
 			}
 		}

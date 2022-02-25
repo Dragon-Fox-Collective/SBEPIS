@@ -2,7 +2,7 @@
 
 namespace SBEPIS.Interaction
 {
-	public class ItemGrabber : MonoBehaviour
+	public class Grabber : MonoBehaviour
 	{
 
 	}

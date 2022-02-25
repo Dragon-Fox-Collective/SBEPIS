@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace SBEPIS.Tests
+namespace SBEPIS.Tests.PlayMode
 {
 	public class ThaumaturgyScene : MonoBehaviour
 	{
-		public GameObject captureCard;
+		public GameObject captureCardPrefab;
 	}
 }

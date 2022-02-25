@@ -1,5 +1,6 @@
 using SBEPIS.Alchemy;
 using SBEPIS.Captchalogue;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
@@ -155,6 +156,25 @@ namespace SBEPIS.Interaction.Flatscreen
 
 		public void OnControlsChanged(PlayerInput input)
 		{
+			foreach (InputDevice device in input.devices)
+			{
+				print("");
+				print(device);
+				print(device.description);
+				print(device.displayName);
+				print(device.layout);
+				print(device.name);
+				print(device.parent);
+				print(device.path);
+				print(device.shortDisplayName);
+				foreach (var usage in device.usages)
+					print(usage);
+				print(device.valueType);
+				print(device.variants);
+				print(device.GetType());
+				print(Assembly.GetAssembly(device.GetType()));
+				print("");
+			}
 			switch (input.currentControlScheme)
 			{
 				case "Keyboard":

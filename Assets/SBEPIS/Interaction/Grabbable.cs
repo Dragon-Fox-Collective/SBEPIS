@@ -10,7 +10,7 @@ namespace SBEPIS.Interaction
 	{
 		public ItemEvent onGrab, onHoldUpdate, onDrop;
 
-		public ItemGrabber holdingHolder { get; private set; }
+		public Grabber holdingHolder { get; private set; }
 		public bool canGrab { get; set; }
 		public new Rigidbody rigidbody { get; private set; }
 
@@ -20,22 +20,22 @@ namespace SBEPIS.Interaction
 			canGrab = true;
 		}
 
-		public void Grab(ItemGrabber player)
+		public void Grab(Grabber player)
 		{
 			holdingHolder = player;
 
 			gameObject.SetLayerRecursively(LayerMask.NameToLayer("Held Item"));
 			rigidbody.useGravity = false;
 
-			onPickUp.Invoke(player);
+			onGrab.Invoke(player);
 		}
 
-		public void HoldUpdate(ItemGrabber player)
+		public void HoldUpdate(Grabber player)
 		{
 			onHoldUpdate.Invoke(player);
 		}
 
-		public void Drop(ItemGrabber player)
+		public void Drop(Grabber player)
 		{
 			holdingHolder = null;
 
@@ -47,5 +47,5 @@ namespace SBEPIS.Interaction
 	}
 
 	[Serializable]
-	public class ItemEvent : UnityEvent<ItemGrabber> { }
+	public class ItemEvent : UnityEvent<Grabber> { }
 }

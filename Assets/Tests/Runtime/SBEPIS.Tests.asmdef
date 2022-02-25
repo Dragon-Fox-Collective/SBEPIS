@@ -1,12 +1,15 @@
 {
-    "name": "PlayModeTests",
+    "name": "SBEPIS.Tests",
     "rootNamespace": "SBEPIS.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "SBEPIS.TestScenes",
         "SBEPIS.Thaumaturgy",
-        "SBEPIS.Utils"
+        "SBEPIS.Utils",
+        "SBEPIS.Interaction",
+        "Unity.InputSystem",
+        "Unity.InputSystem.TestFramework",
+        "Unity.XR.OpenXR"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

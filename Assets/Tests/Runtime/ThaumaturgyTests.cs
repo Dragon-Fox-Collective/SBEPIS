@@ -1,21 +1,20 @@
 using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using SBEPIS.Thaumaturgy;
-using UnityEditor;
+using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace SBEPIS.Tests
+namespace SBEPIS.Tests.PlayMode
 {
-	public class AlchemyTestSuite
+	public class ThaumaturgyTests
 	{
-		private AlchemyScene scene;
+		private ThaumaturgyScene scene;
 
 		[SetUp]
 		public void Setup()
 		{
-			scene = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/SBEPIS/TestScenes/AlchemyScene.prefab")).GetComponent<AlchemyScene>();
+			scene = TestUtils.GetTestingPrefab<ThaumaturgyScene>();
 		}
 
 		[TearDown]
@@ -27,7 +26,7 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator PunchingCaptureCardsMakesHoles()
 		{
-			Punchable card = Object.Instantiate(scene.captureCard).GetComponent<Punchable>();
+			Punchable card = Object.Instantiate(scene.captureCardPrefab).GetComponent<Punchable>();
 			card.Punch(CaptureCodeUtils.HashCaptureCode("10000000"));
 
 			for (int i = 0; i < card.punchHoles.sharedMesh.blendShapeCount; i++)
