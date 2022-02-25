@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SBEPIS.Tests.PlayMode
+namespace SBEPIS.Tests
 {
 	public class ThaumaturgyScene : MonoBehaviour
 	{

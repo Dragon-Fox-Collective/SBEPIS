@@ -4,19 +4,24 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Interaction.Flatscreen
 {
-	public class GrabberFlatscreen : Grabber
+	public class FlatscreenGrabber : Grabber
 	{
-		public Transform cameraHolder;
-		public LayerMask raycastMask;
-		public float maxGrabDistance = 10f;
+		public new Transform camera;
+		public LayerMask raycastMask = 1;
 
+		public float maxGrabDistance = 10;
 		public float farHoldDistance = 2;
 		public float nearHoldDistance = 0.7f;
 
 		public Grabbable heldGrabbable { get; private set; }
 		private float holdDistance = 2;
 
-		private Transform activeHolder;
+		private Transform activeRaycaster;
+
+		private void Awake()
+		{
+			activeRaycaster = camera;
+		}
 
 		private void Update()
 		{
@@ -33,7 +38,7 @@ namespace SBEPIS.Interaction.Flatscreen
 		public void UpdateGrabbable(Grabbable grabbable, float posTime, float rotTime)
 		{
 			Vector3 velocity = grabbable.rigidbody.velocity;
-			Vector3.SmoothDamp(grabbable.transform.position, activeHolder.position + activeHolder.forward * holdDistance, ref velocity, posTime);
+			Vector3.SmoothDamp(grabbable.transform.position, activeRaycaster.position + activeRaycaster.forward * holdDistance, ref velocity, posTime);
 			grabbable.rigidbody.velocity = velocity;
 
 			Quaternion deriv = QuaternionUtil.AngVelToDeriv(grabbable.transform.rotation, grabbable.rigidbody.angularVelocity);
@@ -51,7 +56,7 @@ namespace SBEPIS.Interaction.Flatscreen
 
 		public void OnGrab(CallbackContext context)
 		{
-			if (!activeHolder)
+			if (!activeRaycaster)
 				return;
 
 			bool isPressed = context.performed;
@@ -76,7 +81,7 @@ namespace SBEPIS.Interaction.Flatscreen
 
 		public bool Cast(out RaycastHit hit, LayerMask mask)
 		{
-			return Physics.Raycast(activeHolder.transform.position, activeHolder.transform.forward, out hit, maxGrabDistance, mask);
+			return Physics.Raycast(activeRaycaster.transform.position, activeRaycaster.transform.forward, out hit, maxGrabDistance, mask);
 		}
 
 		public bool CastForGrabbables(out RaycastHit hit)
@@ -90,11 +95,11 @@ namespace SBEPIS.Interaction.Flatscreen
 			{
 				case "Keyboard":
 					print("Activating Keyboard input");
-					activeHolder = cameraHolder;
+					activeRaycaster = camera;
 					break;
 
 				default:
-					activeHolder = null;
+					activeRaycaster = null;
 					break;
 			}
 		}

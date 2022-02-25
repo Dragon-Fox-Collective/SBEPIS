@@ -2,27 +2,26 @@ using NUnit.Framework;
 using SBEPIS.Utils;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.TestTools;
 using UnityEngine.InputSystem;
-using OculusTouchController = Unity.XR.Oculus.Input.OculusTouchController;
+using UnityEngine.TestTools;
 
 namespace SBEPIS.Tests
 {
-	public class InteractionVRTests : InputTestFixture, IInteractionTest
+	public class InteractionFlatscreenTests : InputTestFixture, IInteractionTest
 	{
-		private InteractionVRScene scene;
+		private InteractionFlatscreenScene scene;
 
-		private OculusTouchController controller;
+		private Mouse mouse;
 		private InputAction grabAction;
 
 		public override void Setup()
 		{
 			base.Setup();
 
-			scene = TestUtils.GetTestingPrefab<InteractionVRScene>();
+			scene = TestUtils.GetTestingPrefab<InteractionFlatscreenScene>();
 
-			controller = InputSystem.AddDevice<OculusTouchController>();
-			grabAction = new InputAction("Grab", InputActionType.Button, "<XRController>/gripPressed");
+			mouse = InputSystem.AddDevice<Mouse>();
+			grabAction = new InputAction("Grab", InputActionType.Button, "<Mouse>/leftButton");
 			grabAction.performed += scene.grabber.OnGrab;
 			grabAction.canceled += scene.grabber.OnGrab;
 			grabAction.Enable();
@@ -38,10 +37,7 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator GrabGrabsGrabbables()
 		{
-			scene.grabber.transform.position = scene.grabbable.transform.position;
-			yield return new WaitForFixedUpdate();
-
-			Press(controller.gripPressed);
+			Press(mouse.leftButton);
 			yield return null;
 
 			Assert.AreEqual(scene.grabbable, scene.grabber.heldGrabbable);
@@ -52,10 +48,7 @@ namespace SBEPIS.Tests
 		{
 			Vector3 oldPosition = scene.grabbable.transform.position;
 
-			scene.grabber.transform.position = oldPosition;
-			yield return new WaitForFixedUpdate();
-
-			Press(controller.gripPressed);
+			Press(mouse.leftButton);
 			yield return null;
 
 			scene.grabber.transform.position += Vector3.up;
@@ -68,10 +61,7 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator GrabbingSetsLayerToHeldItem()
 		{
-			scene.grabber.transform.position = scene.grabbable.transform.position;
-			yield return new WaitForFixedUpdate();
-
-			Press(controller.gripPressed);
+			Press(mouse.leftButton);
 			yield return null;
 
 			Assert.That(scene.grabbable.gameObject.IsOnLayer(LayerMask.GetMask("Held Item")));
@@ -80,13 +70,10 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator UngrabbingSetsLayerToDefault()
 		{
-			scene.grabber.transform.position = scene.grabbable.transform.position;
-			yield return new WaitForFixedUpdate();
-
-			Press(controller.gripPressed);
+			Press(mouse.leftButton);
 			yield return null;
 
-			Release(controller.gripPressed);
+			Release(mouse.leftButton);
 			yield return null;
 
 			Assert.That(scene.grabbable.gameObject.IsOnLayer(LayerMask.GetMask("Default")));

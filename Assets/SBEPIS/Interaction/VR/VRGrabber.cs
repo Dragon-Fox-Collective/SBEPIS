@@ -7,7 +7,7 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 namespace SBEPIS.Interaction.VR
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class GrabberVR : Grabber
+	public class VRGrabber : Grabber
 	{
 		public Grabbable heldGrabbable { get; private set; }
 		private FixedJoint heldGrabbableJoint;

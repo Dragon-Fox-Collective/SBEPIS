@@ -1,13 +1,12 @@
 using SBEPIS.Interaction;
+using SBEPIS.Interaction.VR;
 using UnityEngine;
 
-namespace SBEPIS.Tests.PlayMode
+namespace SBEPIS.Tests
 {
 	public class InteractionVRScene : MonoBehaviour
 	{
-		public Interaction.VR.GrabberVR grabberVR;
-		public Interaction.Flatscreen.GrabberFlatscreen grabberFlatscreen;
-
+		public VRGrabber grabber;
 		public Grabbable grabbable;
 	}
 }

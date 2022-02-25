@@ -5,7 +5,7 @@ using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace SBEPIS.Tests.PlayMode
+namespace SBEPIS.Tests
 {
 	public class ThaumaturgyTests
 	{
