@@ -1,14 +1,14 @@
 {
-    "name": "Tests",
+    "name": "EditMode",
     "rootNamespace": "SBEPIS.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "SBEPIS.TestScenes",
-        "SBEPIS.Thaumaturgy",
         "SBEPIS.Utils"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,

@@ -61,7 +61,7 @@ namespace SBEPIS.Captchalogue
 		public Texture2D Captcha(long captchaHash)
 		{
 			code.gameObject.SetActive(true);
-			code.text = CaptchaUtil.UnhashCaptcha(captchaHash);
+			code.text = CaptureCodeUtils.UnhashCaptcha(captchaHash);
 			Texture2D rtn = Captcha();
 			code.gameObject.SetActive(false);
 			return rtn;

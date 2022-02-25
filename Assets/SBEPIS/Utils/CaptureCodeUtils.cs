@@ -1,6 +1,6 @@
 using System;
 
-public static class CaptchaUtil
+public static class CaptureCodeUtils
 {
 	/// <summary>
 	/// The canonical order that the characters go in, with 0 is no punches and ! is all 6 punches
@@ -16,7 +16,7 @@ public static class CaptchaUtil
 	/// <summary>
 	/// Turn a captcha code into its hashed number version
 	/// </summary>
-	public static long HashCaptcha(string captchaCode)
+	public static long HashCaptureCode(string captchaCode)
 	{
 		if (captchaCode.Length != 8)
 			throw new ArgumentException("Captcha code must have 8 characters");

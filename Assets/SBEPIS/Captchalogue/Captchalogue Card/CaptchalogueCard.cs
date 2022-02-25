@@ -37,7 +37,7 @@ namespace SBEPIS.Captchalogue
 			UpdateMaterials(defaultModus);
 			Eject();
 			if (defaultCaptcha.Length > 0)
-				Punch(CaptchaUtil.HashCaptcha(defaultCaptcha));
+				Punch(CaptureCodeUtils.HashCaptureCode(defaultCaptcha));
 		}
 
 		public void Captchalogue(Item item)
@@ -72,7 +72,7 @@ namespace SBEPIS.Captchalogue
 			float seed = 0;
 			if (captchaHash != 0)
 				for (int i = 0; i < 8; i++)
-					seed += Mathf.Pow(10f, i - 4) * CaptchaUtil.GetCaptchaDigit(captchaHash, i);
+					seed += Mathf.Pow(10f, i - 4) * CaptureCodeUtils.GetCaptchaDigit(captchaHash, i);
 
 			foreach (Renderer renderer in renderers)
 				for (int i = 0; i < renderer.materials.Length; i++)
@@ -114,13 +114,13 @@ namespace SBEPIS.Captchalogue
 
 			for (int i = 0; i < 48; i++)
 			{
-				holeCaps.SetBlendShapeWeight(holeCaps.sharedMesh.GetBlendShapeIndex($"Key {i + 1}"), CaptchaUtil.GetCaptchaBit(punchedHash, i) ? 100 : 0);
+				holeCaps.SetBlendShapeWeight(holeCaps.sharedMesh.GetBlendShapeIndex($"Key {i + 1}"), CaptureCodeUtils.GetCaptchaBit(punchedHash, i) ? 100 : 0);
 
 				for (int j = 0; j < i; j++)
 				{
 					int sharedIndex = holeCaps.sharedMesh.GetBlendShapeIndex($"Key {j + 1} + {i + 1}");
 					if (sharedIndex >= 0)
-						holeCaps.SetBlendShapeWeight(sharedIndex, CaptchaUtil.GetCaptchaBit(punchedHash, i) || CaptchaUtil.GetCaptchaBit(punchedHash, j) ? 100 : 0);
+						holeCaps.SetBlendShapeWeight(sharedIndex, CaptureCodeUtils.GetCaptchaBit(punchedHash, i) || CaptureCodeUtils.GetCaptchaBit(punchedHash, j) ? 100 : 0);
 				}
 			}
 		}

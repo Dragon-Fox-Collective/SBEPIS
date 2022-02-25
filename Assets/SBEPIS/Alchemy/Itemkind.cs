@@ -22,8 +22,8 @@ namespace SBEPIS.Alchemy
 		{
 			if (captchaCode == null || captchaCode.Length == 0)
 				for (int i = 0; i < 8; i++)
-					captchaCode += CaptchaUtil.hashCharacters[Random.Range(0, CaptchaUtil.hashCharacters.Length)];
-			captchaHash = CaptchaUtil.HashCaptcha(captchaCode);
+					captchaCode += CaptureCodeUtils.hashCharacters[Random.Range(0, CaptureCodeUtils.hashCharacters.Length)];
+			captchaHash = CaptureCodeUtils.HashCaptureCode(captchaCode);
 			itemkinds.Add(captchaHash, this);
 		}
 	}

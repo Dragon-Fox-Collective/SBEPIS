@@ -46,7 +46,7 @@ namespace SBEPIS.Alchemy
 		{
 			if (animator.GetBool("Code Entered"))
 			{
-				punchPlacement.item.GetComponent<CaptchalogueCard>().Punch(punchPlacement.item.GetComponent<CaptchalogueCard>().punchedHash | CaptchaUtil.HashCaptcha(punchPanel.text));
+				punchPlacement.item.GetComponent<CaptchalogueCard>().Punch(punchPlacement.item.GetComponent<CaptchalogueCard>().punchedHash | CaptureCodeUtils.HashCaptureCode(punchPanel.text));
 				punchPanel.text = "";
 			}
 		}

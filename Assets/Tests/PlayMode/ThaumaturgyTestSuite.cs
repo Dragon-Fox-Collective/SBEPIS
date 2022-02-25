@@ -28,7 +28,7 @@ namespace SBEPIS.Tests
 		public IEnumerator PunchingCaptureCardsMakesHoles()
 		{
 			Punchable card = Object.Instantiate(scene.captureCard).GetComponent<Punchable>();
-			card.Punch(CaptchaUtil.HashCaptcha("10000000"));
+			card.Punch(CaptureCodeUtils.HashCaptureCode("10000000"));
 
 			for (int i = 0; i < card.punchHoles.sharedMesh.blendShapeCount; i++)
 			{
