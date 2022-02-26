@@ -101,10 +101,10 @@ namespace SBEPIS.Interaction.Flatscreen
 				return;
 
 			bool isPressed = context.performed;
-			if (isPressed && !heldItem && Cast(out RaycastHit hit, LayerMask.GetMask("Button")))
-				hit.rigidbody.GetComponent<PhysicsButton>().ForcePress();
+			//if (isPressed && !heldItem && Cast(out RaycastHit hit, LayerMask.GetMask("Button")))
+			//	hit.rigidbody.GetComponent<PhysicsButton>().ForcePress();
 
-			if (isPressed && !heldItem && Cast(out hit))
+			if (isPressed && !heldItem && Cast(out RaycastHit hit))
 			{
 				Item hitItem = hit.rigidbody.GetComponent<Item>();
 				if (hitItem && hitItem.canPickUp)

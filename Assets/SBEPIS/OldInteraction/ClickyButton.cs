@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Interaction
 {
-	public class Button : MonoBehaviour
+	public class ClickyButton : MonoBehaviour
 	{
 		public ButtonEvent onPressed;
 	}

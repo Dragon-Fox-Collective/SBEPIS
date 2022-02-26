@@ -1813,7 +1813,7 @@ PrefabInstance:
     - target: {fileID: 8647353984013908236, guid: 573c22e63a6f223469818a4f606d2331, type: 3}
       propertyPath: owner
       value: 
-      objectReference: {fileID: 2002559277}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 573c22e63a6f223469818a4f606d2331, type: 3}
 --- !u!4 &1244622141 stripped
@@ -1821,17 +1821,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3636434799064776874, guid: 573c22e63a6f223469818a4f606d2331, type: 3}
   m_PrefabInstance: {fileID: 1244622140}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1244622142 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8647353984013908236, guid: 573c22e63a6f223469818a4f606d2331, type: 3}
-  m_PrefabInstance: {fileID: 1244622140}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5a91631a34d0ae4ca2f2aaca2b27f32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1420275243
 GameObject:
   m_ObjectHideFlags: 0
@@ -2697,9 +2686,7 @@ GameObject:
   - component: {fileID: 2002559279}
   - component: {fileID: 2002559274}
   - component: {fileID: 2002559275}
-  - component: {fileID: 2002559280}
   - component: {fileID: 2002559278}
-  - component: {fileID: 2002559277}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -2793,19 +2780,6 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2002559278}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.Flatscreen.ItemHolderFlatscreen,
-          Assembly-CSharp
-        m_MethodName: OnControlsChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 761880533}
         m_TargetAssemblyTypeName: SBEPIS.Interaction.VR.ItemHolderVR, Assembly-CSharp
         m_MethodName: OnControlsChanged
@@ -2886,9 +2860,9 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2002559278}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.Flatscreen.ItemHolderFlatscreen,
-          Assembly-CSharp
-        m_MethodName: OnPickUp
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.Flatscreen.FlatscreenGrabber,
+          SBEPIS.Interaction
+        m_MethodName: OnGrab
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2917,39 +2891,14 @@ MonoBehaviour:
     m_ActionId: 616e89b3-abff-4b35-a1fb-c5e1ab7d17b2
     m_ActionName: Gameplay/Pick Up Left
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2002559277}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.SylladexOwner, Assembly-CSharp
-        m_MethodName: OnFlipSylladex
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2002559278}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.Flatscreen.ItemHolderFlatscreen,
-          Assembly-CSharp
-        m_MethodName: OnFlipCard
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: d824ce48-8528-4150-be15-f847fe467d62
     m_ActionName: Gameplay/Flip Card[/Mouse/middleButton]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2002559278}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.Flatscreen.ItemHolderFlatscreen,
-          Assembly-CSharp
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.Flatscreen.FlatscreenGrabber,
+          SBEPIS.Interaction
         m_MethodName: OnZoom
         m_Mode: 0
         m_Arguments:
@@ -2963,115 +2912,31 @@ MonoBehaviour:
     m_ActionId: fe9ce19e-3484-4843-976a-8fb9bec890da
     m_ActionName: Gameplay/Zoom[/Mouse/scroll/y]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2002559277}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.SylladexOwner, Assembly-CSharp
-        m_MethodName: OnFetch
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: dc7cf242-0c2b-4f77-95ab-7679a89a56de
     m_ActionName: Gameplay/Fetch[/Keyboard/x]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2002559277}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.SylladexOwner, Assembly-CSharp
-        m_MethodName: OnToggleViewingSylladex
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 376f1b53-0f3b-47d0-8db7-f8b972766b84
     m_ActionName: Gameplay/View Sylladex[/Keyboard/tab]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2002559277}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.SylladexOwner, Assembly-CSharp
-        m_MethodName: OnCaptchalogueMode
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 83ffb369-434b-49e0-9213-e9ac0b3490d8
     m_ActionName: Gameplay/Captchalogue Mode[/Mouse/rightButton]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2002559277}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.SylladexOwner, Assembly-CSharp
-        m_MethodName: OnCaptchalogue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 6d9f3ecf-2207-42c8-be1b-076d490acee2
     m_ActionName: Gameplay/Captchalogue[/Keyboard/c]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2002559277}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.SylladexOwner, Assembly-CSharp
-        m_MethodName: OnCaptchalogueUse
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 16150b48-9206-41e8-9b21-143a05ba69d4
     m_ActionName: Gameplay/Captchalogue Use[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2002559277}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.SylladexOwner, Assembly-CSharp
-        m_MethodName: OnCaptchaloguePrint
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 5045c525-0eb7-4cc7-841f-9e96c81b27fb
     m_ActionName: Gameplay/Captchalogue Print[/Keyboard/z]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2002559277}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.SylladexOwner, Assembly-CSharp
-        m_MethodName: OnToggleSylladexPanel
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: d8750275-5417-4b8c-87d0-2fe6e949a667
     m_ActionName: Gameplay/Toggle Sylladex Panel[/Keyboard/v]
   - m_PersistentCalls:
@@ -3123,19 +2988,7 @@ MonoBehaviour:
     m_ActionId: b51c47df-e9ee-4abb-a4e0-6f2d2ac6cf56
     m_ActionName: Gameplay/Head Rotation
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2002559277}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.SylladexOwner, Assembly-CSharp
-        m_MethodName: OnHoldViewingSylladex
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 93a51aeb-2c58-4c61-aa41-3570a5460a8d
     m_ActionName: Gameplay/View Sylladex Toggle1[/Keyboard/tab]
   - m_PersistentCalls:
@@ -3175,35 +3028,6 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &2002559277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002559272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8846efaa281b43c40ac1b6eddf246c61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sylladex: {fileID: 1244622142}
-  sylladexParent: {fileID: 506918815}
-  itemHolder: {fileID: 2002559278}
-  modeSwapper: {fileID: 2002559280}
-  viewingSylladexEnabledActions:
-  - {fileID: 3769132869637915080, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
-  - {fileID: -3335662014178872197, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
-  - {fileID: -3011241403475903885, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
-  viewingSylladexDisabledActions:
-  - {fileID: 6921043637722060116, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
-  - {fileID: 4744936522364000947, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
-  usingSylladexEnabledActions:
-  - {fileID: -5467261649673260746, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
-  - {fileID: 9167558619339909862, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
-  - {fileID: -3342264812866705978, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
-  usingSylladexDisabledActions:
-  - {fileID: 8118731276635492922, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
 --- !u!114 &2002559278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3213,14 +3037,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2002559272}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 965ba90368ef7b94ea45a2578f0437a1, type: 3}
+  m_Script: {fileID: 11500000, guid: c175866ae27ee2447a12644947a0464b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraHolder: {fileID: 963194228}
+  camera: {fileID: 963194228}
   raycastMask:
     serializedVersion: 2
     m_Bits: 1
-  maxDistance: 10
+  maxGrabDistance: 10
+  farHoldDistance: 2
+  nearHoldDistance: 0.7
 --- !u!114 &2002559279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3234,34 +3060,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ticks: 10
---- !u!114 &2002559280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002559272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31f00155c2a72ee468389946baaabda4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camera: {fileID: 578634018}
-  onSetPlayerMode:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2002559277}
-        m_TargetAssemblyTypeName: WrightWay.SBEPIS.Player.SylladexOwner, Assembly-CSharp
-        m_MethodName: OnSetPlayerMode
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1001 &673601117278188398
 PrefabInstance:
   m_ObjectHideFlags: 0
