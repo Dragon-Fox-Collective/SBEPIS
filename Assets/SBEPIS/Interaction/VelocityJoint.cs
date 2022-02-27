@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SBEPIS.Interaction.VR
+namespace SBEPIS.Interaction
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class VelocityJoint : MonoBehaviour
