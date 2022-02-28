@@ -26,7 +26,7 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator PunchingCaptureCardsMakesHoles()
 		{
-			Punchable card = Object.Instantiate(scene.captureCardPrefab).GetComponent<Punchable>();
+			Punchable card = Object.Instantiate(scene.captureCardPrefab, scene.transform).GetComponent<Punchable>();
 			card.Punch(CaptureCodeUtils.HashCaptureCode("10000000"));
 
 			for (int i = 0; i < card.punchHoles.sharedMesh.blendShapeCount; i++)

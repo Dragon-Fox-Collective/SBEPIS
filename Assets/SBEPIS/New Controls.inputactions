@@ -60,12 +60,21 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Flip Card",
+                    "name": "Capturllect",
                     "type": "Button",
-                    "id": "d824ce48-8528-4150-be15-f847fe467d62",
+                    "id": "4e524db6-ffa3-4e86-906d-d3d9257629b0",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Toggle Deque",
+                    "type": "Button",
+                    "id": "56a1f853-d0d7-48ce-b37c-2fa99356ce65",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
                     "initialStateCheck": false
                 },
                 {
@@ -76,15 +85,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Fetch",
-                    "type": "Button",
-                    "id": "dc7cf242-0c2b-4f77-95ab-7679a89a56de",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
                 {
                     "name": "Hand Pose",
@@ -172,28 +172,6 @@
                 },
                 {
                     "name": "",
-                    "id": "1637b427-c97a-4278-8b11-b1c701e284ce",
-                    "path": "<XRController>{LeftHand}/joystick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "721fba6c-90c1-4c72-afe6-470d9262833e",
-                    "path": "<XRController>{LeftHand}/touchpad",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "ab934c10-358e-4ace-a224-a025ce0dfbf0",
                     "path": "<XRController>{LeftHand}/thumbstick",
                     "interactions": "",
@@ -228,7 +206,7 @@
                 {
                     "name": "",
                     "id": "298b751e-30a7-4bff-9d36-fbbe7676a311",
-                    "path": "<XRController>{RightHand}/primaryButton",
+                    "path": "<XRController>{RightHand}/trackpadPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "OpenXR",
@@ -238,12 +216,12 @@
                 },
                 {
                     "name": "",
-                    "id": "34ac2f25-75cd-4532-82fb-a770b2596baa",
-                    "path": "<Mouse>/middleButton",
+                    "id": "ff413869-e293-4917-8085-a5dfa9bbbe0f",
+                    "path": "<XRController>{RightHand}/thumbstickClicked",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Flip Card",
+                    "groups": "",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -288,72 +266,6 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Zoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cb70dcc8-1cc4-4558-9c29-6d11d8c39e22",
-                    "path": "<XRController>{RightHand}/joystick/y",
-                    "interactions": "",
-                    "processors": "AxisDeadzone(min=0.5)",
-                    "groups": "OpenXR",
-                    "action": "Zoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b62019cf-4db3-4067-b0a1-9a69b861c956",
-                    "path": "<XRController>{RightHand}/touchpad/y",
-                    "interactions": "",
-                    "processors": "AxisDeadzone(min=0.5)",
-                    "groups": "OpenXR",
-                    "action": "Zoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1825179d-6504-4b64-8373-86e8c4bf43f3",
-                    "path": "<XRController>{RightHand}/thumbstick/y",
-                    "interactions": "",
-                    "processors": "AxisDeadzone(min=0.5)",
-                    "groups": "OpenXR",
-                    "action": "Zoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1e07148a-80e8-4fc6-b7f0-7617ae96778f",
-                    "path": "<XRController>{RightHand}/trackpad/y",
-                    "interactions": "",
-                    "processors": "AxisDeadzone(min=0.5)",
-                    "groups": "OpenXR",
-                    "action": "Zoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "069f19d5-f5ab-4e78-8439-0724aac60c2a",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Fetch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b1d44ada-bd5e-4a6b-8026-9062a816faea",
-                    "path": "<XRController>{LeftHand}/triggerPressed",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Fetch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -425,28 +337,6 @@
                 },
                 {
                     "name": "",
-                    "id": "47da43e7-46be-483b-8bab-82a503d6465f",
-                    "path": "<XRController>{RightHand}/touchpad/x",
-                    "interactions": "",
-                    "processors": "Scale(factor=3)",
-                    "groups": "OpenXR",
-                    "action": "LookYaw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c1926575-330c-4092-b052-d4f774dca584",
-                    "path": "<XRController>{RightHand}/joystick/x",
-                    "interactions": "",
-                    "processors": "Scale(factor=3)",
-                    "groups": "OpenXR",
-                    "action": "LookYaw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "d5dbbe72-3c14-4a60-8b56-0a7a8433f228",
                     "path": "<XRController>{LeftHand}/gripPressed",
                     "interactions": "",
@@ -458,45 +348,45 @@
                 },
                 {
                     "name": "",
-                    "id": "a2376953-1a2f-4a92-af1c-21325253b65f",
-                    "path": "<XRController>{RightHand}/trackpadPressed",
+                    "id": "5ac62cd1-48bd-4b60-bcf1-7aaf450c186a",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Flip Card",
+                    "groups": "",
+                    "action": "Capturllect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "28fff6c5-411f-4c58-91ef-5edf7ee83d09",
-                    "path": "<XRController>{RightHand}/thumbstickClicked",
+                    "id": "02c5d052-9201-4f8a-9707-8b7f7bad6fc2",
+                    "path": "<XRController>{RightHand}/primaryButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Flip Card",
+                    "groups": "",
+                    "action": "Capturllect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "156de5de-475f-483d-a110-b9f497efb266",
-                    "path": "<XRController>{RightHand}/touchpadClicked",
+                    "id": "6d4487e4-3ad5-4214-8284-ded751aa8e85",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Flip Card",
+                    "groups": "",
+                    "action": "Toggle Deque",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "4640e3b5-2fae-4c74-b546-e2a0241aa30e",
-                    "path": "<XRController>{RightHand}/joystickClicked",
+                    "id": "0aaf21e6-ba16-4328-ad48-bf860cda0623",
+                    "path": "<XRController>{RightHand}/primaryButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Flip Card",
+                    "groups": "",
+                    "action": "Toggle Deque",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4597716503888204716}
   - component: {fileID: 4009400007959022432}
   - component: {fileID: 6408443924259538308}
+  - component: {fileID: 5278794268727047552}
   m_Layer: 0
   m_Name: Capturllection Card
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1275059195579274974}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9027451602535581199}
@@ -99,6 +100,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   punchHoles: {fileID: 3513014274298477046}
   defaultCode: 
+--- !u!114 &5278794268727047552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275059195579274974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9252a1ce5bec80d479d06804db114d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8848810319768150500
 PrefabInstance:
   m_ObjectHideFlags: 0
