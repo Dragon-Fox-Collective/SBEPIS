@@ -151,5 +151,33 @@ namespace SBEPIS.Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator DequeDoesntAcceptEmptyCards()
+		{
+			// [] -> [empty] -> [empty]
+
+			Assert.AreEqual(0, scene.dequeHolder.deque.Count);
+
+			Assert.AreEqual(1, scene.dequeHolder.deque.Count);
+
+			Assert.AreEqual(1, scene.dequeHolder.deque.Count);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator DequeDoesntAcceptPunchedCards()
+		{
+			// [] -> [empty] -> [empty]
+
+			Assert.AreEqual(0, scene.dequeHolder.deque.Count);
+
+			Assert.AreEqual(1, scene.dequeHolder.deque.Count);
+
+			Assert.AreEqual(1, scene.dequeHolder.deque.Count);
+
+			yield return null;
+		}
 	}
 }
