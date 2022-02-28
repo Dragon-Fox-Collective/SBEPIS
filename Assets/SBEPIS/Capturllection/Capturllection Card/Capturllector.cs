@@ -9,5 +9,17 @@ namespace SBEPIS.Capturllection
 
 		[NonSerialized]
 		public Transform capturedItem;
+
+		private void Awake()
+		{
+			if (defaultCapturedItem)
+				Capturllect(defaultCapturedItem);
+		}
+
+		public void Capturllect(Transform item)
+		{
+			capturedItem = item;
+			item.gameObject.SetActive(false);
+		}
 	}
 }

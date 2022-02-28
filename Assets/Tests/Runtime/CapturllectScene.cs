@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SBEPIS.Tests
 {
-	public class CapturllectVRScene : MonoBehaviour
+	public class CapturllectScene : MonoBehaviour
 	{
 		public VRGrabber grabber;
 		public CaptureDequeHolder dequeHolder;

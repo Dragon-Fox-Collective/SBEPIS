@@ -1,11 +1,16 @@
 using UnityEngine;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
-namespace SBEPIS.Thaumaturgy
+namespace SBEPIS.Capturllection
 {
 	public class CaptureDequeHolder : MonoBehaviour
 	{
-		public Transform deque;
+		public CaptureDeque deque;
+
+		private void Start()
+		{
+			deque.gameObject.SetActive(false);
+		}
 
 		public void OnToggleDeque(CallbackContext context)
 		{

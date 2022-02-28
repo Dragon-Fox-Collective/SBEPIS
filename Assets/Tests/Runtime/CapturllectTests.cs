@@ -8,9 +8,9 @@ using OculusTouchController = Unity.XR.Oculus.Input.OculusTouchController;
 
 namespace SBEPIS.Tests
 {
-	public class CapturllectVRTests : InputTestFixture, ICapturllectTest
+	public class CapturllectTests : InputTestFixture
 	{
-		private CapturllectVRScene scene;
+		private CapturllectScene scene;
 
 		private OculusTouchController controller;
 		private InputAction grabAction;
@@ -21,7 +21,7 @@ namespace SBEPIS.Tests
 		{
 			base.Setup();
 
-			scene = TestUtils.GetTestingPrefab<CapturllectVRScene>();
+			scene = TestUtils.GetTestingPrefab<CapturllectScene>();
 
 			controller = InputSystem.AddDevice<OculusTouchController>();
 			grabAction = new InputAction("Grab", InputActionType.Button, "<XRController>/gripPressed");
@@ -46,21 +46,14 @@ namespace SBEPIS.Tests
 		}
 
 		[UnityTest]
-		public IEnumerator CapturllectSummonsDeque()
+		public IEnumerator CapturllectTogglesDeque()
 		{
 			Press(controller.primaryButton);
 			yield return new WaitForSeconds(0.5f);
 
 			Assert.IsTrue(scene.dequeHolder.deque.gameObject.activeInHierarchy);
-		}
 
-		[UnityTest]
-		public IEnumerator CapturllectDesummonsDeque()
-		{
-			Press(controller.primaryButton);
-			yield return new WaitForSeconds(0.5f);
-
-			Release(controller.gripPressed);
+			Release(controller.primaryButton);
 			yield return null;
 
 			Press(controller.primaryButton);
@@ -105,6 +98,58 @@ namespace SBEPIS.Tests
 
 			Assert.IsNull(scene.fullCard.capturedItem);
 			Assert.IsTrue(scene.item.gameObject.activeInHierarchy);
+		}
+
+		[UnityTest]
+		public IEnumerator CapturllectEjectsItem_WhenCardIsFull()
+		{
+			// [] -> [item] -> [other item]
+
+			Assert.AreEqual(0, scene.dequeHolder.deque.Count);
+
+			Assert.AreEqual(1, scene.dequeHolder.deque.Count);
+			Assert.IsNotNull(scene.dequeHolder.deque[0].capturedItem);
+			GameObject firstItem = scene.dequeHolder.deque[0].capturedItem.gameObject;
+
+			Assert.AreEqual(1, scene.dequeHolder.deque.Count);
+			Assert.IsNotNull(scene.dequeHolder.deque[0].capturedItem);
+			Assert.AreNotEqual(firstItem, scene.dequeHolder.deque[0].capturedItem);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator InsertingCardsFlushesEmptyCards()
+		{
+			// [] -> [empty] -> [empty card] -> [item, empty]
+
+			Assert.AreEqual(0, scene.dequeHolder.deque.Count);
+
+			Assert.AreEqual(1, scene.dequeHolder.deque.Count);
+			Assert.IsNull(scene.dequeHolder.deque[0].capturedItem);
+
+			Assert.AreEqual(2, scene.dequeHolder.deque.Count);
+			Assert.IsNotNull(scene.dequeHolder.deque[0].capturedItem);
+			Assert.IsNull(scene.dequeHolder.deque[1].capturedItem);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator InsertingCardsFlushesFullCards()
+		{
+			// [] -> [empty] -> [full card] -> [item, item]
+
+			Assert.AreEqual(0, scene.dequeHolder.deque.Count);
+
+			Assert.AreEqual(1, scene.dequeHolder.deque.Count);
+			Assert.IsNull(scene.dequeHolder.deque[0].capturedItem);
+
+			Assert.AreEqual(2, scene.dequeHolder.deque.Count);
+			Assert.IsNotNull(scene.dequeHolder.deque[0].capturedItem);
+			Assert.IsNotNull(scene.dequeHolder.deque[1].capturedItem);
+
+			yield return null;
 		}
 	}
 }
