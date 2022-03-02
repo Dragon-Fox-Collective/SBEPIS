@@ -20,9 +20,8 @@ namespace SBEPIS.Capturllection
 		private void Awake()
 		{
 			if (instance && instance != this)
-				Destroy(gameObject);
-			else
-				instance = this;
+				Destroy(instance);
+			instance = this;
 
 			camera = GetComponent<Camera>();
 		}

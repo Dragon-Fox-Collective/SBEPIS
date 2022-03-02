@@ -52,7 +52,7 @@ namespace SBEPIS.Tests
 			Press(controller.primaryButton);
 			yield return new WaitForSeconds(0.5f);
 
-			Assert.IsTrue(scene.dequeHolder.deque.gameObject.activeInHierarchy);
+			Assert.IsFalse(scene.dequeHolder.deque.gameObject.activeInHierarchy);
 
 			Release(controller.primaryButton);
 			yield return null;
@@ -60,12 +60,15 @@ namespace SBEPIS.Tests
 			Press(controller.primaryButton);
 			yield return new WaitForSeconds(0.5f);
 
-			Assert.IsFalse(scene.dequeHolder.deque.gameObject.activeInHierarchy);
+			Assert.IsTrue(scene.dequeHolder.deque.gameObject.activeInHierarchy);
 		}
 
 		[UnityTest]
 		public IEnumerator CapturllectCapturllectsItem_WhenHoldingItem()
 		{
+			Assert.IsNull(scene.emptyCard.capturedItem);
+			Assert.IsTrue(scene.camerable.gameObject.activeInHierarchy);
+
 			scene.grabber.transform.position = scene.camerable.transform.position;
 			yield return new WaitForFixedUpdate();
 
@@ -85,6 +88,10 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator CapturllectFetchesItem_WhenHoldingCard()
 		{
+			CaptureHashable capturedItem = scene.fullCard.capturedItem;
+			Assert.IsNotNull(capturedItem);
+			Assert.IsFalse(capturedItem.gameObject.activeInHierarchy);
+
 			scene.grabber.transform.position = scene.fullCard.transform.position;
 			yield return new WaitForFixedUpdate();
 
@@ -98,7 +105,7 @@ namespace SBEPIS.Tests
 			yield return null;
 
 			Assert.IsNull(scene.fullCard.capturedItem);
-			Assert.IsTrue(scene.camerable.gameObject.activeInHierarchy);
+			Assert.IsTrue(capturedItem.gameObject.activeInHierarchy);
 		}
 
 		[UnityTest]
