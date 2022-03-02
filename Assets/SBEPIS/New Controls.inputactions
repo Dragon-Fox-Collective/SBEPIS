@@ -87,9 +87,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Hand Pose",
+                    "name": "Right Hand Pose",
                     "type": "Value",
                     "id": "037fca5d-0b8b-479b-900f-0bcddfe6a692",
+                    "expectedControlType": "Pose",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Left Hand Pose",
+                    "type": "Value",
+                    "id": "e58b0af8-a511-439e-9819-5fae114d7ce6",
                     "expectedControlType": "Pose",
                     "processors": "",
                     "interactions": "",
@@ -276,7 +285,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "OpenXR",
-                    "action": "Hand Pose",
+                    "action": "Right Hand Pose",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -387,6 +396,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Toggle Deque",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7cc44af7-43ac-4f3a-a200-3147a0dbb898",
+                    "path": "<XRController>{LeftHand}/pointer",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Left Hand Pose",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

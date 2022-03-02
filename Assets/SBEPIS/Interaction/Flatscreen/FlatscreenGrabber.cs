@@ -6,21 +6,23 @@ namespace SBEPIS.Interaction.Flatscreen
 {
 	public class FlatscreenGrabber : Grabber
 	{
-		public new Transform camera;
+		public Transform connectionPoint;
 		public LayerMask raycastMask = 1;
 
 		public float maxGrabDistance = 10;
 		public float farHoldDistance = 2;
 		public float nearHoldDistance = 0.7f;
 
+		public float velocityFactor = 1;
+		public float angularVelocityFactor = 1;
+
 		public Grabbable heldGrabbable { get; private set; }
-		private float holdDistance = 2;
 
-		private Transform activeRaycaster;
+		private VelocityJoint heldGrabbableJoint;
 
-		private void Awake()
+		private void Start()
 		{
-			activeRaycaster = camera;
+			connectionPoint.position = transform.position + transform.forward * farHoldDistance;
 		}
 
 		private void Update()
@@ -29,34 +31,17 @@ namespace SBEPIS.Interaction.Flatscreen
 				heldGrabbable.HoldUpdate(this);
 		}
 
-		private void FixedUpdate()
-		{
-			if (heldGrabbable)
-				UpdateGrabbable(heldGrabbable, 0.05f, 0.05f);
-		}
-
-		public void UpdateGrabbable(Grabbable grabbable, float posTime, float rotTime)
-		{
-			Vector3 velocity = grabbable.rigidbody.velocity;
-			Vector3.SmoothDamp(grabbable.transform.position, activeRaycaster.position + activeRaycaster.forward * holdDistance, ref velocity, posTime);
-			grabbable.rigidbody.velocity = velocity;
-
-			Quaternion deriv = QuaternionUtil.AngVelToDeriv(grabbable.transform.rotation, grabbable.rigidbody.angularVelocity);
-			QuaternionUtil.SmoothDamp(grabbable.transform.rotation, Quaternion.identity, ref deriv, rotTime);
-			grabbable.rigidbody.angularVelocity = QuaternionUtil.DerivToAngVel(grabbable.transform.rotation, deriv);
-		}
-
 		public void OnZoom(CallbackContext context)
 		{
 			if (context.ReadValue<float>() < 0)
-				holdDistance = nearHoldDistance;
+				connectionPoint.position = transform.position + transform.forward * nearHoldDistance;
 			else if (context.ReadValue<float>() > 0)
-				holdDistance = farHoldDistance;
+				connectionPoint.position = transform.position + transform.forward * farHoldDistance;
 		}
 
 		public void OnGrab(CallbackContext context)
 		{
-			if (!activeRaycaster)
+			if (!gameObject.activeInHierarchy)
 				return;
 
 			bool isPressed = context.performed;
@@ -64,9 +49,16 @@ namespace SBEPIS.Interaction.Flatscreen
 			if (isPressed && !heldGrabbable && CastForGrabbables(out RaycastHit hit))
 			{
 				Grabbable hitGrabbable = hit.rigidbody.GetComponent<Grabbable>();
+				print($"Attempting to grab {hitGrabbable}");
 				if (hitGrabbable && hitGrabbable.canGrab)
 				{
 					heldGrabbable = hitGrabbable;
+
+					heldGrabbableJoint = hitGrabbable.gameObject.AddComponent<VelocityJoint>();
+					heldGrabbableJoint.connectionPoint = connectionPoint;
+					heldGrabbableJoint.velocityFactor = velocityFactor;
+					heldGrabbableJoint.angularVelocityFactor = angularVelocityFactor;
+
 					hitGrabbable.Grab(this);
 				}
 			}
@@ -75,13 +67,17 @@ namespace SBEPIS.Interaction.Flatscreen
 				Grabbable droppedGrabbable = heldGrabbable;
 				heldGrabbable = null;
 
+				Destroy(heldGrabbableJoint);
+				heldGrabbableJoint = null;
+				droppedGrabbable.rigidbody.WakeUp();
+
 				droppedGrabbable.Drop(this);
 			}
 		}
 
 		public bool Cast(out RaycastHit hit, LayerMask mask)
 		{
-			return Physics.Raycast(activeRaycaster.transform.position, activeRaycaster.transform.forward, out hit, maxGrabDistance, mask);
+			return Physics.Raycast(transform.position, transform.forward, out hit, maxGrabDistance, mask);
 		}
 
 		public bool CastForGrabbables(out RaycastHit hit)
@@ -95,11 +91,11 @@ namespace SBEPIS.Interaction.Flatscreen
 			{
 				case "Keyboard":
 					print("Activating Keyboard input");
-					activeRaycaster = camera;
+					gameObject.SetActive(true);
 					break;
 
 				default:
-					activeRaycaster = null;
+					gameObject.SetActive(false);
 					break;
 			}
 		}

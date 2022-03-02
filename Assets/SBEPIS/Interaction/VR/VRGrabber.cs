@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
@@ -10,6 +9,7 @@ namespace SBEPIS.Interaction.VR
 	public class VRGrabber : Grabber
 	{
 		public Grabbable heldGrabbable { get; private set; }
+
 		private FixedJoint heldGrabbableJoint;
 		private new Rigidbody rigidbody;
 
@@ -40,7 +40,6 @@ namespace SBEPIS.Interaction.VR
 					print($"Attempting to grab {collidingGrabbable}");
 					if (collidingGrabbable.canGrab)
 					{
-						print($"Grabbing {collidingGrabbable}");
 						heldGrabbable = collidingGrabbable;
 
 						heldGrabbableJoint = collidingGrabbable.gameObject.AddComponent<FixedJoint>();

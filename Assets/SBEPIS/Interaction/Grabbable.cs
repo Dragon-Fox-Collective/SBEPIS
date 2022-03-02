@@ -25,7 +25,6 @@ namespace SBEPIS.Interaction
 			holdingHolder = player;
 
 			gameObject.SetLayerRecursively(LayerMask.NameToLayer("Held Item"));
-			rigidbody.useGravity = false;
 
 			onGrab.Invoke(player);
 		}
