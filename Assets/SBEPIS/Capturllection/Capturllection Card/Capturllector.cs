@@ -5,10 +5,10 @@ namespace SBEPIS.Capturllection
 {
 	public class Capturllector : MonoBehaviour
 	{
-		public Transform defaultCapturedItem;
+		public CaptureHashable defaultCapturedItem;
 
 		[NonSerialized]
-		public Transform capturedItem;
+		public CaptureHashable capturedItem;
 
 		private void Awake()
 		{
@@ -16,7 +16,7 @@ namespace SBEPIS.Capturllection
 				Capturllect(defaultCapturedItem);
 		}
 
-		public void Capturllect(Transform item)
+		public void Capturllect(CaptureHashable item)
 		{
 			capturedItem = item;
 			item.gameObject.SetActive(false);

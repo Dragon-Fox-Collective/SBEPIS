@@ -131,7 +131,7 @@ namespace SBEPIS.Captchalogue
 					RawImage childImage = child.GetComponent<RawImage>();
 					if (card.heldItem)
 					{
-						childImage.texture = GameManager.instance.captcharoid.Captcha(card.heldItem);
+						//childImage.texture = GameManager.instance.captcharoid.Captcha(card.heldItem);
 						childImage.color = Color.white;
 					}
 				}

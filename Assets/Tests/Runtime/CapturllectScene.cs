@@ -9,7 +9,7 @@ namespace SBEPIS.Tests
 	{
 		public VRGrabber grabber;
 		public CaptureDequeHolder dequeHolder;
-		public Transform item;
+		public CaptureCamerable camerable;
 		public Capturllector emptyCard;
 		public Capturllector fullCard;
 	}

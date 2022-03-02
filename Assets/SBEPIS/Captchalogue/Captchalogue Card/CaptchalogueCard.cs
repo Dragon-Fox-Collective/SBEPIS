@@ -45,7 +45,7 @@ namespace SBEPIS.Captchalogue
 			heldItem = item;
 			item.gameObject.SetActive(false);
 			item.transform.SetParent(transform);
-			UpdateMaterials(item.itemkind.captchaHash, GameManager.instance.captcharoid.Captcha(item));
+			//UpdateMaterials(item.itemkind.captchaHash, .instance.captcharoid.Captcha(item));
 		}
 
 		public void Eject()
@@ -72,7 +72,7 @@ namespace SBEPIS.Captchalogue
 			float seed = 0;
 			if (captchaHash != 0)
 				for (int i = 0; i < 8; i++)
-					seed += Mathf.Pow(10f, i - 4) * CaptureCodeUtils.GetCaptchaDigit(captchaHash, i);
+					seed += Mathf.Pow(10f, i - 4) * CaptureCodeUtils.GetCaptureDigit(captchaHash, i);
 
 			foreach (Renderer renderer in renderers)
 				for (int i = 0; i < renderer.materials.Length; i++)
@@ -96,7 +96,7 @@ namespace SBEPIS.Captchalogue
 					if (captchaMaterial && materialName == captchaMaterial.name)
 					{
 						renderer.materials[i].SetFloat("Seed", seed);
-						renderer.materials[i].SetTexture("CaptchaCode", GameManager.GetCaptchaTexture(captchaHash));
+						//renderer.materials[i].SetTexture("CaptchaCode", GameManager.GetCaptchaTexture(captchaHash));
 					}
 					if (colorMaterial && materialName == colorMaterial.name)
 					{
@@ -114,13 +114,13 @@ namespace SBEPIS.Captchalogue
 
 			for (int i = 0; i < 48; i++)
 			{
-				holeCaps.SetBlendShapeWeight(holeCaps.sharedMesh.GetBlendShapeIndex($"Key {i + 1}"), CaptureCodeUtils.GetCaptchaBit(punchedHash, i) ? 100 : 0);
+				holeCaps.SetBlendShapeWeight(holeCaps.sharedMesh.GetBlendShapeIndex($"Key {i + 1}"), CaptureCodeUtils.GetCaptureBit(punchedHash, i) ? 100 : 0);
 
 				for (int j = 0; j < i; j++)
 				{
 					int sharedIndex = holeCaps.sharedMesh.GetBlendShapeIndex($"Key {j + 1} + {i + 1}");
 					if (sharedIndex >= 0)
-						holeCaps.SetBlendShapeWeight(sharedIndex, CaptureCodeUtils.GetCaptchaBit(punchedHash, i) || CaptureCodeUtils.GetCaptchaBit(punchedHash, j) ? 100 : 0);
+						holeCaps.SetBlendShapeWeight(sharedIndex, CaptureCodeUtils.GetCaptureBit(punchedHash, i) || CaptureCodeUtils.GetCaptureBit(punchedHash, j) ? 100 : 0);
 				}
 			}
 		}

@@ -17,12 +17,12 @@ namespace SBEPIS.Alchemy
 			{
 				captchaHash = defaultItem.captchaHash;
 				for (int i = 0; i < 8; i++)
-					SetDepth(i, CaptureCodeUtils.GetCaptchaPercent(captchaHash, i));
+					SetDepth(i, CaptureCodeUtils.GetCapturePercent(captchaHash, i));
 
 				for (int i = 0; i < 7; i++)
 				{
 					SetEdgeDistance(i, true, 1);
-					SetEdgeDepth(i, true, CaptureCodeUtils.GetCaptchaPercent(captchaHash, i + 1));
+					SetEdgeDepth(i, true, CaptureCodeUtils.GetCapturePercent(captchaHash, i + 1));
 				}
 			}
 		}

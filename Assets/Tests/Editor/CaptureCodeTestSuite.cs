@@ -13,31 +13,31 @@ namespace SBEPIS.Tests.EditMode
 		[Test]
 		public void CaptureHashUnhashes()
 		{
-			Assert.AreEqual("sSS!?sss", CaptureCodeUtils.UnhashCaptcha(0b110110110110110110111110111111011100011100110110));
+			Assert.AreEqual("sSS!?sss", CaptureCodeUtils.UnhashCaptureHash(0b110110110110110110111110111111011100011100110110));
 		}
 
 		[Test]
 		public void CaptureHashDigitizes()
 		{
-			Assert.AreEqual(63, CaptureCodeUtils.GetCaptchaDigit(0b110110110110110110111110111111011100011100110110, 3));
+			Assert.AreEqual(63, CaptureCodeUtils.GetCaptureDigit(0b110110110110110110111110111111011100011100110110, 3));
 		}
 
 		[Test]
 		public void CaptureHashPercentizes()
 		{
-			Assert.AreEqual(1, CaptureCodeUtils.GetCaptchaPercent(0b110110110110110110111110111111011100011100110110, 3));
+			Assert.AreEqual(1, CaptureCodeUtils.GetCapturePercent(0b110110110110110110111110111111011100011100110110, 3));
 		}
 
 		[Test]
 		public void CaptureHashCharacterizes()
 		{
-			Assert.AreEqual('!', CaptureCodeUtils.GetCaptchaChar(0b110110110110110110111110111111011100011100110110, 3));
+			Assert.AreEqual('!', CaptureCodeUtils.GetCaptureChar(0b110110110110110110111110111111011100011100110110, 3));
 		}
 
 		[Test]
 		public void CaptureHashBitizes()
 		{
-			Assert.AreEqual(false, CaptureCodeUtils.GetCaptchaBit(0b110110110110110110111110111111011100011100110110, 3));
+			Assert.AreEqual(false, CaptureCodeUtils.GetCaptureBit(0b110110110110110110111110111111011100011100110110, 3));
 		}
 	}
 }

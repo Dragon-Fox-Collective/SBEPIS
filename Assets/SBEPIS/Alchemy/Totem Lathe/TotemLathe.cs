@@ -46,7 +46,7 @@ namespace SBEPIS.Alchemy
 				{
 					for (int i = 0; i < 8; i++)
 					{
-						float chiselHeight = CaptureCodeUtils.GetCaptchaPercent(totem.captchaHash, i); // 0: Chisel bit is flat against the top of the chisel; 1: bit goes all the way down
+						float chiselHeight = CaptureCodeUtils.GetCapturePercent(totem.captchaHash, i); // 0: Chisel bit is flat against the top of the chisel; 1: bit goes all the way down
 						float chiselDepth = latheProgress - 1f + chiselHeight; // -1: Chisel bit is currently one dowel radius above the dowel; 0: bit is currently touching the outside of a fresh dowel; 1: bit is all the way into the dowel
 						float carveDepth = Mathf.Max(chiselDepth, initialDepths[i]);
 
@@ -55,11 +55,11 @@ namespace SBEPIS.Alchemy
 
 					foreach ((int larger, int smaller) in largerEdges)
 					{
-						float largerChiselHeight = CaptureCodeUtils.GetCaptchaPercent(totem.captchaHash, larger);
+						float largerChiselHeight = CaptureCodeUtils.GetCapturePercent(totem.captchaHash, larger);
 						float largerChiselDepth = latheProgress - 1f + largerChiselHeight;
 						float largerCarveDepth = Mathf.Max(largerChiselDepth, initialDepths[larger]);
 
-						float smallerChiselHeight = CaptureCodeUtils.GetCaptchaPercent(totem.captchaHash, smaller);
+						float smallerChiselHeight = CaptureCodeUtils.GetCapturePercent(totem.captchaHash, smaller);
 						float smallerChiselDepth = latheProgress - 1f + smallerChiselHeight;
 						float smallerCarveDepth = Mathf.Max(smallerChiselDepth, initialDepths[smaller]);
 
@@ -194,7 +194,7 @@ namespace SBEPIS.Alchemy
 
 			SetCaptchaHash();
 			for (int i = 0; i < 8; i++)
-				chisel.SetBlendShapeWeight(i, (1f - CaptureCodeUtils.GetCaptchaPercent(captchaHash, i)) * 100);
+				chisel.SetBlendShapeWeight(i, (1f - CaptureCodeUtils.GetCapturePercent(captchaHash, i)) * 100);
 			isLathing = true;
 
 			if (totem)
@@ -204,23 +204,23 @@ namespace SBEPIS.Alchemy
 				{
 					initialDepths[i] = totem.GetDepth(i);
 
-					greaterCaptchaHash |= (1L << i * 6) * Mathf.Max(CaptureCodeUtils.GetCaptchaDigit(totem.captchaHash, i), CaptureCodeUtils.GetCaptchaDigit(captchaHash, i));
+					greaterCaptchaHash |= (1L << i * 6) * Mathf.Max(CaptureCodeUtils.GetCaptureDigit(totem.captchaHash, i), CaptureCodeUtils.GetCaptureDigit(captchaHash, i));
 				}
 				totem.captchaHash = greaterCaptchaHash;
 
 				largerEdges.Clear();
 				for (int i = 0; i < 8; i++)
 				{
-					float chiselHeight = CaptureCodeUtils.GetCaptchaPercent(totem.captchaHash, i);
+					float chiselHeight = CaptureCodeUtils.GetCapturePercent(totem.captchaHash, i);
 					if (i > 0)
 					{
-						float prevChiselHeight = CaptureCodeUtils.GetCaptchaPercent(totem.captchaHash, i - 1);
+						float prevChiselHeight = CaptureCodeUtils.GetCapturePercent(totem.captchaHash, i - 1);
 						if (chiselHeight > prevChiselHeight || (chiselHeight == prevChiselHeight && initialDepths[i] <= initialDepths[i - 1]))
 							largerEdges.Add((i, i - 1));
 					}
 					if (i < 7)
 					{
-						float nextChiselHeight = CaptureCodeUtils.GetCaptchaPercent(totem.captchaHash, i + 1);
+						float nextChiselHeight = CaptureCodeUtils.GetCapturePercent(totem.captchaHash, i + 1);
 						if (chiselHeight > nextChiselHeight || (chiselHeight == nextChiselHeight && initialDepths[i] < initialDepths[i + 1]))
 							largerEdges.Add((i, i + 1));
 					}
@@ -317,9 +317,9 @@ namespace SBEPIS.Alchemy
 
 		private void UpdateCaptchaPanel()
 		{
-			string code1 = card1Placement.item ? CaptureCodeUtils.UnhashCaptcha(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash) : "!!!!!!!!";
-			string code2 = card2Placement.item ? CaptureCodeUtils.UnhashCaptcha(card2Placement.item.GetComponent<CaptchalogueCard>().punchedHash) : "!!!!!!!!";
-			string codeRes = CaptureCodeUtils.UnhashCaptcha(captchaHash);
+			string code1 = card1Placement.item ? CaptureCodeUtils.UnhashCaptureHash(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash) : "!!!!!!!!";
+			string code2 = card2Placement.item ? CaptureCodeUtils.UnhashCaptureHash(card2Placement.item.GetComponent<CaptchalogueCard>().punchedHash) : "!!!!!!!!";
+			string codeRes = CaptureCodeUtils.UnhashCaptureHash(captchaHash);
 			captchaPanel.text = $"{code1}\n&\n{code2}\n=\n{codeRes}";
 		}
 

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.InputSystem;
 using OculusTouchController = Unity.XR.Oculus.Input.OculusTouchController;
+using SBEPIS.Capturllection;
 
 namespace SBEPIS.Tests
 {
@@ -65,7 +66,7 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator CapturllectCapturllectsItem_WhenHoldingItem()
 		{
-			scene.grabber.transform.position = scene.item.transform.position;
+			scene.grabber.transform.position = scene.camerable.transform.position;
 			yield return new WaitForFixedUpdate();
 
 			Press(controller.gripPressed);
@@ -77,8 +78,8 @@ namespace SBEPIS.Tests
 			Release(controller.primaryButton);
 			yield return null;
 
-			Assert.AreEqual(scene.item, scene.emptyCard.capturedItem);
-			Assert.IsFalse(scene.item.gameObject.activeInHierarchy);
+			Assert.AreEqual(scene.camerable, scene.emptyCard.capturedItem);
+			Assert.IsFalse(scene.camerable.gameObject.activeInHierarchy);
 		}
 
 		[UnityTest]
@@ -97,7 +98,7 @@ namespace SBEPIS.Tests
 			yield return null;
 
 			Assert.IsNull(scene.fullCard.capturedItem);
-			Assert.IsTrue(scene.item.gameObject.activeInHierarchy);
+			Assert.IsTrue(scene.camerable.gameObject.activeInHierarchy);
 		}
 
 		[UnityTest]
@@ -176,6 +177,22 @@ namespace SBEPIS.Tests
 			Assert.AreEqual(1, scene.dequeHolder.deque.Count);
 
 			Assert.AreEqual(1, scene.dequeHolder.deque.Count);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator CaptureCameraTakesPicturesOfCodes()
+		{
+			Assert.IsNotNull(CaptureCamera.GetCaptureCodeTexture(CaptureCodeUtils.HashCaptureCode("ssSS+/sS")));
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator CaptureCameraTakesPicturesOfObjects()
+		{
+			Assert.IsNotNull(CaptureCamera.instance.TakePictureOfObject(scene.camerable));
 
 			yield return null;
 		}
