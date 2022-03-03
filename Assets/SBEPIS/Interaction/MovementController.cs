@@ -45,7 +45,7 @@ namespace SBEPIS.Interaction
 		{
 			isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckDistance, groundCheckMask);
 
-			Vector3 movementTarget3 = moveAimer.right * controlsTarget.x + moveAimer.forward * controlsTarget.y;
+			Vector3 movementTarget3 = moveAimer.right * controlsTarget.x + Vector3.Cross(moveAimer.right, Vector3.up) * controlsTarget.y;
 			Vector2 movementTarget = new Vector2(movementTarget3.x, movementTarget3.z);
 			movement = Vector2.SmoothDamp(movement, movementTarget * (isGrounded ? groundSpeed : airSpeed), ref movementAccel, isGrounded ? groundAccelTime : airAccelTime);
 
