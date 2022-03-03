@@ -39,7 +39,6 @@ namespace SBEPIS.Interaction
 			holdingHolder = null;
 
 			gameObject.SetLayerRecursively(LayerMask.NameToLayer("Default"));
-			rigidbody.useGravity = true;
 
 			onDrop.Invoke(player);
 		}

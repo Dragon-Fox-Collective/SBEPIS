@@ -2063,6 +2063,7 @@ GameObject:
   - component: {fileID: 5258952183561622469}
   - component: {fileID: 5258952183561622471}
   - component: {fileID: 5258952183561622472}
+  - component: {fileID: 5258952183561622473}
   m_Layer: 12
   m_Name: Physics LEv
   m_TagString: Untagged
@@ -2265,6 +2266,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderer: {fileID: 5258952183933916619}
   newMaterial: {fileID: 2100000, guid: 844d7a0c4630e8d4ba7369119cc22223, type: 2}
+--- !u!114 &5258952183561622473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5258952183561622468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoldUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &5258952183561622490
 Transform:
   m_ObjectHideFlags: 0
@@ -2574,10 +2596,6 @@ PrefabInstance:
     - target: {fileID: 6112518582163472336, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6172660129166496009, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
-      propertyPath: velocityFactor
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6172660129166496009, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: raycastMask.m_Bits
