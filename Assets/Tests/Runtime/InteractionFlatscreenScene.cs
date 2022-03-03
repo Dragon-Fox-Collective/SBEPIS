@@ -8,5 +8,7 @@ namespace SBEPIS.Tests
 	{
 		public FlatscreenGrabber grabber;
 		public Grabbable grabbable;
+		public SampleMaterialChanger buttonMaterialChanger;
+		public SampleMaterialChanger leverMaterialChanger;
 	}
 }

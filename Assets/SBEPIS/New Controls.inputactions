@@ -42,6 +42,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Press Button",
+                    "type": "Button",
+                    "id": "12e9e66f-048a-4dfa-ad48-f4d19c8f3144",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Pick Up Right",
                     "type": "Value",
                     "id": "827923db-6895-4ebb-8f4c-c57bcefb03ac",
@@ -407,6 +416,17 @@
                     "processors": "",
                     "groups": "OpenXR",
                     "action": "Left Hand Pose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2283989-b673-4029-8423-de62356adc53",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Press Button",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

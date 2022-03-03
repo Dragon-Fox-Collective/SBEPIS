@@ -78,5 +78,51 @@ namespace SBEPIS.Tests
 
 			Assert.That(scene.grabbable.gameObject.IsOnLayer(LayerMask.GetMask("Default")));
 		}
+
+		[UnityTest]
+		public IEnumerator ClickingActivatesPhysicsButton()
+		{
+			scene.grabber.transform.LookAt(scene.buttonMaterialChanger.transform, Vector3.up);
+
+			Press(mouse.leftButton);
+			yield return null;
+
+			Release(mouse.leftButton);
+			yield return new WaitForSeconds(0.1f);
+
+			Assert.That(scene.buttonMaterialChanger.renderer.material, Is.EqualTo(scene.buttonMaterialChanger.newMaterial));
+		}
+
+		[UnityTest]
+		public IEnumerator PhysicsActivatePhysicsButton()
+		{
+			scene.grabbable.transform.position = scene.buttonMaterialChanger.transform.position + Vector3.up;
+			yield return new WaitForSeconds(0.5f);
+
+			Assert.That(scene.buttonMaterialChanger.renderer.material, Is.EqualTo(scene.buttonMaterialChanger.newMaterial));
+		}
+
+		[UnityTest]
+		public IEnumerator ClickingActivatesPhysicsLever()
+		{
+			scene.grabber.transform.LookAt(scene.leverMaterialChanger.transform, Vector3.up);
+
+			Press(mouse.leftButton);
+			yield return null;
+
+			Release(mouse.leftButton);
+			yield return new WaitForSeconds(0.1f);
+
+			Assert.That(scene.leverMaterialChanger.renderer.material, Is.EqualTo(scene.leverMaterialChanger.newMaterial));
+		}
+
+		[UnityTest]
+		public IEnumerator PhysicsActivatePhysicsLever()
+		{
+			scene.grabbable.transform.position = scene.leverMaterialChanger.transform.position + Vector3.up;
+			yield return new WaitForSeconds(0.5f);
+
+			Assert.That(scene.leverMaterialChanger.renderer.material, Is.EqualTo(scene.leverMaterialChanger.newMaterial));
+		}
 	}
 }
