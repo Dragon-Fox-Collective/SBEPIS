@@ -6,7 +6,7 @@ namespace SBEPIS.Interaction.Flatscreen
 {
 	public class FlatscreenGrabber : Grabber
 	{
-		public Transform connectionPoint;
+		public Rigidbody connectionPoint;
 		public LayerMask raycastMask = 1;
 
 		public float maxGrabDistance = 10;
@@ -18,7 +18,7 @@ namespace SBEPIS.Interaction.Flatscreen
 
 		public Grabbable heldGrabbable { get; private set; }
 
-		private VelocityJoint heldGrabbableJoint;
+		private ConfigurableJoint heldGrabbableJoint;
 
 		private void Start()
 		{
@@ -54,10 +54,29 @@ namespace SBEPIS.Interaction.Flatscreen
 				{
 					heldGrabbable = hitGrabbable;
 
-					heldGrabbableJoint = hitGrabbable.gameObject.AddComponent<VelocityJoint>();
-					heldGrabbableJoint.connectionPoint = connectionPoint;
-					heldGrabbableJoint.velocityFactor = velocityFactor;
-					heldGrabbableJoint.angularVelocityFactor = angularVelocityFactor;
+					heldGrabbableJoint = hitGrabbable.gameObject.AddComponent<ConfigurableJoint>();
+					heldGrabbableJoint.connectedBody = connectionPoint;
+					heldGrabbableJoint.rotationDriveMode = RotationDriveMode.Slerp;
+
+					heldGrabbableJoint.anchor = hitGrabbable.transform.InverseTransformPoint(hit.point);
+
+					JointDrive xDrive = heldGrabbableJoint.xDrive;
+					xDrive.positionSpring = velocityFactor;
+					xDrive.positionDamper = 1;
+					heldGrabbableJoint.xDrive = xDrive;
+					JointDrive yDrive = heldGrabbableJoint.yDrive;
+					yDrive.positionSpring = velocityFactor;
+					yDrive.positionDamper = 1;
+					heldGrabbableJoint.yDrive = yDrive;
+					JointDrive zDrive = heldGrabbableJoint.zDrive;
+					zDrive.positionSpring = velocityFactor;
+					zDrive.positionDamper = 1;
+					heldGrabbableJoint.zDrive = zDrive;
+					JointDrive slerpDrive = heldGrabbableJoint.slerpDrive;
+					slerpDrive.positionSpring = angularVelocityFactor;
+					slerpDrive.positionDamper = 1;
+					heldGrabbableJoint.slerpDrive = slerpDrive;
+
 
 					hitGrabbable.Grab(this);
 				}

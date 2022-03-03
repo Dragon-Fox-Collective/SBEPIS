@@ -12,7 +12,8 @@ namespace Discord
 
 		private void Start()
 		{
-			InvokeRepeating(nameof(UpdatePresence), 0, 60);
+			//InvokeRepeating(nameof(UpdatePresence), 0, 60);
+			UpdatePresence();
 		}
 
 		private void Update()
@@ -20,7 +21,7 @@ namespace Discord
 			discord.RunCallbacks();
 		}
 
-		private void OnDestroy()
+		private void OnApplicationQuit()
 		{
 			discord.GetActivityManager().ClearActivity(result => print(result));
 		}
@@ -31,7 +32,7 @@ namespace Discord
 			discord.GetActivityManager().UpdateActivity(new Activity
 			{
 				Details = "Exploring " + SceneManager.GetActiveScene().name,
-				State = "https://discord.gg/qHREQu7Zxm",
+				State = "discord.gg/qHREQu7Zxm",
 				Timestamps =
 				{
 					Start = startEpoch
