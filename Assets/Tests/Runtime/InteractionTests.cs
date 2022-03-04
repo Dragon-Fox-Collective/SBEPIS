@@ -7,9 +7,9 @@ using UnityEngine.TestTools;
 
 namespace SBEPIS.Tests
 {
-	public class InteractionFlatscreenTests : InputTestFixture, IInteractionTest
+	public class InteractionTests : InputTestFixture
 	{
-		private InteractionFlatscreenScene scene;
+		private InteractionScene scene;
 
 		private Mouse mouse;
 		private InputAction grabAction;
@@ -18,7 +18,7 @@ namespace SBEPIS.Tests
 		{
 			base.Setup();
 
-			scene = TestUtils.GetTestingPrefab<InteractionFlatscreenScene>();
+			scene = TestUtils.GetTestingPrefab<InteractionScene>();
 
 			mouse = InputSystem.AddDevice<Mouse>();
 			grabAction = new InputAction("Grab", InputActionType.Button, "<Mouse>/leftButton");
@@ -37,6 +37,9 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator GrabGrabsGrabbables()
 		{
+			scene.grabber.transform.position = scene.grabbable.transform.position;
+			yield return new WaitForFixedUpdate();
+
 			Press(mouse.leftButton);
 			yield return null;
 
@@ -47,6 +50,9 @@ namespace SBEPIS.Tests
 		public IEnumerator GrabLiftsGrabbables()
 		{
 			Vector3 oldPosition = scene.grabbable.transform.position;
+
+			scene.grabber.transform.position = oldPosition;
+			yield return new WaitForFixedUpdate();
 
 			Press(mouse.leftButton);
 			yield return null;
@@ -61,6 +67,9 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator GrabbingSetsLayerToHeldItem()
 		{
+			scene.grabber.transform.position = scene.grabbable.transform.position;
+			yield return new WaitForFixedUpdate();
+
 			Press(mouse.leftButton);
 			yield return null;
 
@@ -70,6 +79,9 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator UngrabbingSetsLayerToDefault()
 		{
+			scene.grabber.transform.position = scene.grabbable.transform.position;
+			yield return new WaitForFixedUpdate();
+
 			Press(mouse.leftButton);
 			yield return null;
 

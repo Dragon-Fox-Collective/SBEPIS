@@ -300,7 +300,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
@@ -318,21 +318,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemkind: {fileID: 11400000, guid: 233ac2e32ff51c84db9cca7e41550d8c, type: 2}
-  captchaRotation: {x: 0, y: -0.38268346, z: 0, w: 0.9238795}
-  captchaScale: 2.5
-  onPickUp:
+  onGrab:
     m_PersistentCalls:
       m_Calls: []
-  onHold:
+  onHoldUpdate:
     m_PersistentCalls:
       m_Calls: []
   onDrop:
-    m_PersistentCalls:
-      m_Calls: []
-  preCaptcha:
-    m_PersistentCalls:
-      m_Calls: []
-  postCaptcha:
     m_PersistentCalls:
       m_Calls: []

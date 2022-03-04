@@ -1,13 +1,12 @@
 using SBEPIS.Capturllection;
-using SBEPIS.Interaction.VR;
-using SBEPIS.Thaumaturgy;
+using SBEPIS.Interaction;
 using UnityEngine;
 
 namespace SBEPIS.Tests
 {
 	public class CapturllectScene : MonoBehaviour
 	{
-		public VRGrabber grabber;
+		public Grabber grabber;
 		public CaptureDequeHolder dequeHolder;
 		public CaptureCamerable camerable;
 		public Capturllector emptyCard;

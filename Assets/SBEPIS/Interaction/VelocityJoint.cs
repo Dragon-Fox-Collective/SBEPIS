@@ -21,11 +21,11 @@ namespace SBEPIS.Interaction
 			rigidbody.velocity = Vector3.zero;
 			rigidbody.angularVelocity = Vector3.zero;
 
-			rigidbody.AddForce(velocityFactor * (connectionPoint.position - rigidbody.position));
+			rigidbody.AddForce(velocityFactor * (connectionPoint.position - rigidbody.position), ForceMode.Acceleration);
 
 			(connectionPoint.rotation * Quaternion.Inverse(rigidbody.rotation)).ToAngleAxis(out float angle, out Vector3 axis);
 			if (angle > 180) angle -= 360;
-			rigidbody.AddTorque(angle == 0 ? Vector3.zero : angularVelocityFactor * angle * axis);
+			rigidbody.AddTorque(angle == 0 ? Vector3.zero : angularVelocityFactor * angle * axis, ForceMode.Acceleration);
 		}
 	}
 }
