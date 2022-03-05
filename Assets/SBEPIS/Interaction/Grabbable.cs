@@ -10,7 +10,7 @@ namespace SBEPIS.Interaction
 	{
 		public ItemEvent onGrab, onHoldUpdate, onDrop;
 
-		public Grabber holdingHolder { get; private set; }
+		public Grabber grabbingGrabber { get; private set; }
 		public bool canGrab { get; set; }
 		public new Rigidbody rigidbody { get; private set; }
 
@@ -22,7 +22,7 @@ namespace SBEPIS.Interaction
 
 		public void Grab(Grabber player)
 		{
-			holdingHolder = player;
+			grabbingGrabber = player;
 
 			onGrab.Invoke(player);
 		}
@@ -34,7 +34,7 @@ namespace SBEPIS.Interaction
 
 		public void Drop(Grabber player)
 		{
-			holdingHolder = null;
+			grabbingGrabber = null;
 
 			onDrop.Invoke(player);
 		}
