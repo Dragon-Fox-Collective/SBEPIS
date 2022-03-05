@@ -5,7 +5,7 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Interaction
 {
-	[RequireComponent(typeof(Rigidbody), typeof(VelocityJoint))]
+	[RequireComponent(typeof(Rigidbody))]
 	public class Grabber : MonoBehaviour
 	{
 		public Scheme enabledScheme;
@@ -108,6 +108,7 @@ namespace SBEPIS.Interaction
 
 		public enum Scheme
 		{
+			NONE,
 			OpenXR,
 			Keyboard
 		}

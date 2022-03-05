@@ -65,33 +65,6 @@ namespace SBEPIS.Tests
 		}
 
 		[UnityTest]
-		public IEnumerator GrabbingSetsLayerToHeldItem()
-		{
-			scene.grabber.transform.position = scene.grabbable.transform.position;
-			yield return new WaitForFixedUpdate();
-
-			Press(mouse.leftButton);
-			yield return null;
-
-			Assert.That(scene.grabbable.gameObject.IsOnLayer(LayerMask.GetMask("Held Item")));
-		}
-
-		[UnityTest]
-		public IEnumerator UngrabbingSetsLayerToDefault()
-		{
-			scene.grabber.transform.position = scene.grabbable.transform.position;
-			yield return new WaitForFixedUpdate();
-
-			Press(mouse.leftButton);
-			yield return null;
-
-			Release(mouse.leftButton);
-			yield return null;
-
-			Assert.That(scene.grabbable.gameObject.IsOnLayer(LayerMask.GetMask("Default")));
-		}
-
-		[UnityTest]
 		public IEnumerator ClickingActivatesPhysicsButton()
 		{
 			scene.grabber.transform.LookAt(scene.buttonMaterialChanger.transform, Vector3.up);
