@@ -67,19 +67,25 @@ namespace SBEPIS.Interaction
 
 		private void OnTriggerEnter(Collider other)
 		{
-			Grabbable hitGrabbable = other.GetComponent<Grabbable>();
-			if (hitGrabbable && !collidingGrabbables.Contains(hitGrabbable))
+			if (other.attachedRigidbody)
 			{
-				print($"Colliding with {hitGrabbable}");
-				collidingGrabbables.Add(hitGrabbable);
+				Grabbable hitGrabbable = other.attachedRigidbody.GetComponent<Grabbable>();
+				if (hitGrabbable && !collidingGrabbables.Contains(hitGrabbable))
+				{
+					print($"Colliding with {hitGrabbable}");
+					collidingGrabbables.Add(hitGrabbable);
+				}
 			}
 		}
 
 		private void OnTriggerExit(Collider other)
 		{
-			Grabbable hitGrabbable = other.GetComponent<Grabbable>();
-			if (hitGrabbable)
-				collidingGrabbables.Remove(hitGrabbable);
+			if (other.attachedRigidbody)
+			{
+				Grabbable hitGrabbable = other.attachedRigidbody.GetComponent<Grabbable>();
+				if (hitGrabbable)
+					collidingGrabbables.Remove(hitGrabbable);
+			}
 		}
 
 		public void ClearCollisions()

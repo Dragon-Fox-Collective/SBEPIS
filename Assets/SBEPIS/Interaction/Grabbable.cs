@@ -24,8 +24,6 @@ namespace SBEPIS.Interaction
 		{
 			holdingHolder = player;
 
-			gameObject.SetLayerRecursively(LayerMask.NameToLayer("Held Item"));
-
 			onGrab.Invoke(player);
 		}
 
@@ -37,8 +35,6 @@ namespace SBEPIS.Interaction
 		public void Drop(Grabber player)
 		{
 			holdingHolder = null;
-
-			gameObject.SetLayerRecursively(LayerMask.NameToLayer("Default"));
 
 			onDrop.Invoke(player);
 		}
