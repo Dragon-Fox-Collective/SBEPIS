@@ -6,8 +6,7 @@ namespace SBEPIS.Interaction
 	public class VelocityJoint : MonoBehaviour
 	{
 		public Transform connectionPoint;
-		public float velocityFactor = 1;
-		public float angularVelocityFactor = 1;
+		public StrengthSettings strength;
 
 		private new Rigidbody rigidbody;
 
@@ -21,11 +20,15 @@ namespace SBEPIS.Interaction
 			rigidbody.velocity = Vector3.zero;
 			rigidbody.angularVelocity = Vector3.zero;
 
-			rigidbody.AddForce(velocityFactor * (connectionPoint.position - rigidbody.position), ForceMode.Acceleration);
+			Vector3 velocity = strength.velocityFactor * (connectionPoint.position - rigidbody.position);
+			if (strength.maxVelocity > 0) velocity = Vector3.ClampMagnitude(velocity, strength.maxVelocity);
+			rigidbody.AddForce(velocity, ForceMode.Acceleration);
 
 			(connectionPoint.rotation * Quaternion.Inverse(rigidbody.rotation)).ToAngleAxis(out float angle, out Vector3 axis);
 			if (angle > 180) angle -= 360;
-			rigidbody.AddTorque(angle == 0 ? Vector3.zero : angularVelocityFactor * angle * axis, ForceMode.Acceleration);
+			Vector3 angularVelocity = angle == 0 ? Vector3.zero : strength.angularVelocityFactor * angle * axis;
+			if (strength.maxAngularVelocity > 0) angularVelocity = Vector3.ClampMagnitude(angularVelocity, strength.maxAngularVelocity);
+			rigidbody.AddTorque(angularVelocity, ForceMode.Acceleration);
 		}
 	}
 }
