@@ -32,10 +32,16 @@ const makeParents = parameters.has('makeparents');
 			 	links.push({ source: namespace(parentNode.id, parentNode.id === 'base' ? null : nodeType), target: namespace(node.id, nodeType) });
 		}
 
-		['bits', 'grists', 'members'].forEach(sourceType =>
+		['bits', 'grists', 'members', 'items'].forEach(sourceType =>
 		{
 			if (sourceType in node)
 				node[sourceType].forEach(source => links.push({ source:namespace(source, sourceType), target:namespace(node.id, nodeType) }));
+		});
+
+		['class'].forEach(sourceType =>
+		{
+			if (sourceType in node)
+				links.push({ source:namespace(node[sourceType], sourceType), target:namespace(node.id, nodeType) });
 		});
 
 		if ('nodes' in node)
@@ -172,16 +178,3 @@ const makeParents = parameters.has('makeparents');
 		.strength(link => (link.source.isParent ? 0.2 : 1) / Math.min(link.source.weight, link.target.weight))
 		.distance(link => link.source.isParent ? 50 : 20);
 })();
-
-// Extra notes:
-// Some grists are dropped out of the price depending on the item. Themes' grists are never dropped.
-// Calculate a "usefulness" rating that determines the tier of similar grists and their amounts
-// Bits are combob'd. Themes are appended.
-// Some themes overwrite other themes. Eg, felt overwrites red plush
-// Thematic items are applied with &&
-// You can make strife specibi for anything, even singular weapons and themes. you just have to find the right bits ;3
-// Themed furnature only costs build unless it's useful or has information
-// Size determines build grist cost, usefulness determines everything else
-// Looks like any mobile computing requires diamond
-// Johnny 5 is a very *unique* object :3
-// WOAH punching a card with a thematic item and using it applies themes!!!
