@@ -24,8 +24,10 @@ const makeParents = parameters.has('makeparents');
 		if ('color' in node)
 			attrs.color = node.color;
 		
-		if ('id' in node && (makeParents || !('nodes' in node)))
+		if ('id' in node && (makeParents || !('nodes' in node)) && ["members", "bits", "class", "items"].includes(nodeType))
 		{
+			//if (nodeType == "items" && !("class" in node) && !("items" in node)) node.class = "handclass";
+
 			nodes.push(Object.assign({ 'id':namespace(node.id, nodeType), 'name':node.id, 'isParent':'nodes' in node }, attrs));
 
 			if (parentNode !== null && makeParents)
@@ -35,13 +37,21 @@ const makeParents = parameters.has('makeparents');
 		['bits', 'grists', 'members', 'items'].forEach(sourceType =>
 		{
 			if (sourceType in node)
+			{
+				if (typeof node[sourceType] !== "object")
+					throw namespace(node.id, nodeType) + " uses " + sourceType + " as a " + typeof node[sourceType] + " instead of a object";
 				node[sourceType].forEach(source => links.push({ source:namespace(source, sourceType), target:namespace(node.id, nodeType) }));
+			}
 		});
 
 		['class'].forEach(sourceType =>
 		{
 			if (sourceType in node)
+			{
+				if (typeof node[sourceType] !== "string")
+					throw namespace(node.id, nodeType) + " uses " + sourceType + " as a " + typeof node[sourceType] + " instead of a string";
 				links.push({ source:namespace(node[sourceType], sourceType), target:namespace(node.id, nodeType) });
+			}
 		});
 
 		if ('nodes' in node)
