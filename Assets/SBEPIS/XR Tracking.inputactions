@@ -1,0 +1,94 @@
+{
+    "name": "XR Tracking",
+    "maps": [
+        {
+            "name": "XR Tracking",
+            "id": "1d195e59-a175-4600-b8c9-713899141606",
+            "actions": [
+                {
+                    "name": "Right Hand Pose",
+                    "type": "Value",
+                    "id": "3058da7f-0492-45af-8c0e-45843091b115",
+                    "expectedControlType": "Pose",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Left Hand Pose",
+                    "type": "Value",
+                    "id": "59bcd4c2-6a5c-499a-9bd7-6c9aacf9eddf",
+                    "expectedControlType": "Pose",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Head Position",
+                    "type": "Value",
+                    "id": "e799797e-f8bf-48da-84e3-b0f981077b8f",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Head Rotation",
+                    "type": "Value",
+                    "id": "32c3e8e9-00c9-4a7e-8c39-a43555bce917",
+                    "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5ad56417-f36f-49e7-bc46-ce7983adb785",
+                    "path": "<XRController>{RightHand}/pointer",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Right Hand Pose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ada4986e-06f2-4a93-8caa-a975fe72d422",
+                    "path": "<XRHMD>/centerEyePosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Head Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9453acbe-e371-4392-ba99-c8eefe3d81ed",
+                    "path": "<XRHMD>/centerEyeRotation",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Head Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a39c68af-8064-4b7c-8a79-d764e13817c9",
+                    "path": "<XRController>{LeftHand}/pointer",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Left Hand Pose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

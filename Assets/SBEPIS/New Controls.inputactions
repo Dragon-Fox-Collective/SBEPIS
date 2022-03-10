@@ -42,15 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Press Button",
-                    "type": "Button",
-                    "id": "12e9e66f-048a-4dfa-ad48-f4d19c8f3144",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Pick Up Right",
                     "type": "Value",
                     "id": "827923db-6895-4ebb-8f4c-c57bcefb03ac",
@@ -96,40 +87,13 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Right Hand Pose",
-                    "type": "Value",
-                    "id": "037fca5d-0b8b-479b-900f-0bcddfe6a692",
-                    "expectedControlType": "Pose",
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "6eb5b6ca-498a-480e-b0a1-0a839c0ba152",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Left Hand Pose",
-                    "type": "Value",
-                    "id": "e58b0af8-a511-439e-9819-5fae114d7ce6",
-                    "expectedControlType": "Pose",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Head Position",
-                    "type": "Value",
-                    "id": "653246c8-efde-4c91-a054-d97e820e5086",
-                    "expectedControlType": "Vector3",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Head Rotation",
-                    "type": "Value",
-                    "id": "b51c47df-e9ee-4abb-a4e0-6f2d2ac6cf56",
-                    "expectedControlType": "Quaternion",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -289,39 +253,6 @@
                 },
                 {
                     "name": "",
-                    "id": "26c63839-7c0f-4890-9755-965b6ca9d217",
-                    "path": "<XRController>{RightHand}/pointer",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Right Hand Pose",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2edd66e4-93ac-420c-87da-d9ca0a4379cc",
-                    "path": "<XRHMD>/centerEyePosition",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Head Position",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "be9bdf71-7007-40cd-a8cc-13dc19608899",
-                    "path": "<XRHMD>/centerEyeRotation",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Head Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "efc51cdf-116c-4949-aa81-913964bfedf7",
                     "path": "<Mouse>/delta/x",
                     "interactions": "",
@@ -410,23 +341,34 @@
                 },
                 {
                     "name": "",
-                    "id": "7cc44af7-43ac-4f3a-a200-3147a0dbb898",
-                    "path": "<XRController>{LeftHand}/pointer",
+                    "id": "5bfcb3b7-b151-4c97-b327-f5e3428d140b",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Left Hand Pose",
+                    "groups": "Keyboard",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "b2283989-b673-4029-8423-de62356adc53",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "Tap",
+                    "id": "714e559c-3ed4-475f-9f02-8d4d333ce178",
+                    "path": "<XRController>{LeftHand}/secondaryButton",
+                    "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Press Button",
+                    "groups": "OpenXR",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "afc936ef-cca9-4524-8081-830a9a3cc48b",
+                    "path": "<XRController>{LeftHand}/menu",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -435,50 +377,8 @@
         {
             "name": "Typing",
             "id": "15a91472-5740-487e-81de-d25ed80da327",
-            "actions": [
-                {
-                    "name": "Head Position",
-                    "type": "Value",
-                    "id": "ef40818d-c77b-4551-862a-d2050befabb7",
-                    "expectedControlType": "Vector3",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Head Rotation",
-                    "type": "Value",
-                    "id": "7dfd7ec6-ffc9-47b9-a9d4-ec13facb6331",
-                    "expectedControlType": "Quaternion",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "089aa1dc-59e2-4ebe-8dbd-2599a8b29707",
-                    "path": "<XRHMD>/centerEyePosition",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Head Position",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8a2e0769-7200-4331-a7d1-1c53c3d422cb",
-                    "path": "<XRHMD>/centerEyeRotation",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Head Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": [

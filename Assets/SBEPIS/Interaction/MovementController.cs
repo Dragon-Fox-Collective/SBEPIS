@@ -4,7 +4,6 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Interaction
 {
-	[RequireComponent(typeof(PlayerInput))]
 	[RequireComponent(typeof(CharacterController))]
 	public class MovementController : MonoBehaviour
 	{
