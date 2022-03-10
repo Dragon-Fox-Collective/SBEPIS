@@ -470,6 +470,7 @@ GameObject:
   - component: {fileID: 476491088}
   - component: {fileID: 476491087}
   - component: {fileID: 476491086}
+  - component: {fileID: 476491093}
   m_Layer: 0
   m_Name: Quit Button
   m_TagString: Untagged
@@ -527,18 +528,6 @@ MonoBehaviour:
       - m_Target: {fileID: 476491086}
         m_TargetAssemblyTypeName: SampleMaterialChanger, SBEPIS.Utils
         m_MethodName: ResetMaterial
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 351072330}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.MenuActions, SBEPIS.Interaction
-        m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -640,6 +629,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &476491093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476491085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0af6a0c1f0fe26043b3590f5fdc71f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tapTime: 0.5
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 351072330}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.MenuActions, SBEPIS.Interaction
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1370690377
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +806,7 @@ GameObject:
   - component: {fileID: 1635409839}
   - component: {fileID: 1635409838}
   - component: {fileID: 1635409840}
+  - component: {fileID: 1635409841}
   m_Layer: 0
   m_Name: New Game Button
   m_TagString: Untagged
@@ -917,18 +935,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 351072330}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.MenuActions, SBEPIS.Interaction
-        m_MethodName: StartNewGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!54 &1635409839
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -959,6 +965,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderer: {fileID: 1635409835}
   newMaterial: {fileID: 2100000, guid: 844d7a0c4630e8d4ba7369119cc22223, type: 2}
+--- !u!114 &1635409841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635409833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0af6a0c1f0fe26043b3590f5fdc71f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tapTime: 0.5
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 351072330}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.MenuActions, SBEPIS.Interaction
+        m_MethodName: StartNewGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1675134092
 GameObject:
   m_ObjectHideFlags: 0
