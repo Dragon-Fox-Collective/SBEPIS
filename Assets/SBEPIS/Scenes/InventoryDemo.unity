@@ -1636,7 +1636,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af6a0c1f0fe26043b3590f5fdc71f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tapTime: 0.5
   onClick:
     m_PersistentCalls:
       m_Calls:
@@ -2301,7 +2300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af6a0c1f0fe26043b3590f5fdc71f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tapTime: 0.5
   onClick:
     m_PersistentCalls:
       m_Calls:
@@ -2579,6 +2577,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1295349901206734861, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1953997974963445433, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2622,6 +2624,10 @@ PrefabInstance:
     - target: {fileID: 3672301010895016456, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_ActionName
       value: XR Tracking/Head Rotation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4412509965308872182, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4440311859282689841, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -2670,10 +2676,6 @@ PrefabInstance:
     - target: {fileID: 6112518582163472336, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6172660129166496009, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
-      propertyPath: raycastMask.m_Bits
-      value: 4097
       objectReference: {fileID: 0}
     - target: {fileID: 6172660129166496009, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: angularVelocityFactor

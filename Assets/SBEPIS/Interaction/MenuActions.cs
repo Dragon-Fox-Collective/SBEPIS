@@ -1,12 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Interaction
 {
 	public class MenuActions : MonoBehaviour
 	{
+		public Transform player;
+		public Transform pauseButtons;
+
 		public void StartNewGame()
 		{
 			StartCoroutine(LoadNewGameScene());
@@ -19,6 +22,18 @@ namespace SBEPIS.Interaction
 				yield return null;
 		}
 
+		public void OpenMainMenu()
+		{
+			StartCoroutine(LoadMainMenuScene());
+		}
+
+		private IEnumerator LoadMainMenuScene()
+		{
+			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main Menu");
+			while (!asyncLoad.isDone)
+				yield return null;
+		}
+
 		public void QuitGame()
 		{
 #if UNITY_EDITOR
@@ -27,9 +42,18 @@ namespace SBEPIS.Interaction
 			Application.Quit();
 		}
 
-		public void Pause()
+		public void OnTogglePauseMenu(CallbackContext context)
 		{
-			Time.timeScale = 1 - Time.timeScale;
+			if (!context.performed)
+				return;
+
+			pauseButtons.gameObject.SetActive(!pauseButtons.gameObject.activeSelf);
+
+			if (pauseButtons.gameObject.activeSelf)
+			{
+				pauseButtons.position = player.position;
+				pauseButtons.rotation = Quaternion.Euler(0, player.rotation.eulerAngles.y, 0);
+			}
 		}
 	}
 }
