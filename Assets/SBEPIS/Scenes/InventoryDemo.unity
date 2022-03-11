@@ -1490,7 +1490,7 @@ GameObject:
   - component: {fileID: 3090586411226163953}
   - component: {fileID: 3090586411226163954}
   - component: {fileID: 3090586411226163955}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Physics Butt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1615,6 +1615,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
   onGrab:
     m_PersistentCalls:
       m_Calls: []
@@ -1622,6 +1625,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  onStopTouch:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &3090586411226163955
@@ -2065,7 +2071,7 @@ GameObject:
   - component: {fileID: 5258952183561622472}
   - component: {fileID: 5258952183561622473}
   - component: {fileID: 5258952183561622474}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Physics LEv
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2279,6 +2285,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
   onGrab:
     m_PersistentCalls:
       m_Calls: []
@@ -2286,6 +2295,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  onStopTouch:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &5258952183561622474
@@ -2343,7 +2355,7 @@ GameObject:
   - component: {fileID: 5258952183933916618}
   - component: {fileID: 5258952183933916619}
   - component: {fileID: 5258952183933916616}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2522,7 +2534,7 @@ GameObject:
   - component: {fileID: 5783818917347632796}
   - component: {fileID: 6335634723644928719}
   - component: {fileID: 821918977777387451}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

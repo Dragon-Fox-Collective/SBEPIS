@@ -215,7 +215,7 @@ namespace SBEPIS.Interaction
 				case ButtonAxis.XRotation:
 				case ButtonAxis.YRotation:
 				case ButtonAxis.ZRotation:
-					rigidbody.AddRelativeTorque(GetAxis() * (direction == ButtonDirection.LessThan ? -1 : 1) * 100);
+					rigidbody.AddRelativeTorque(GetAxis() * (direction == ButtonDirection.LessThan ? -1 : 1) * 150);
 					break;
 			}
 		}
