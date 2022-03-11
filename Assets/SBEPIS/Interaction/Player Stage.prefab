@@ -861,7 +861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7475380293285515536
 Transform:
   m_ObjectHideFlags: 0
@@ -1068,6 +1068,7 @@ GameObject:
   m_Component:
   - component: {fileID: 857888222169990178}
   - component: {fileID: 3672301010895016456}
+  - component: {fileID: 3360840046928478943}
   m_Layer: 0
   m_Name: XR Tracking System
   m_TagString: Untagged
@@ -1183,6 +1184,19 @@ MonoBehaviour:
   m_DefaultActionMap: XR Tracking
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &3360840046928478943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894537130919007913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49796df581411d54bbebbed501e0e7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bindTo: {fileID: 6098800601631693807}
 --- !u!1 &5040132003472840282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,7 +1207,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5159398627618986266}
   - component: {fileID: 6098800601631693807}
-  - component: {fileID: 409083802382024424}
   m_Layer: 0
   m_Name: Input System
   m_TagString: Untagged
@@ -1222,7 +1235,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5040132003472840282}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -1438,24 +1451,11 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 6eb5b6ca-498a-480e-b0a1-0a839c0ba152
     m_ActionName: Gameplay/Pause[/Keyboard/escape]
-  m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: OpenXR
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 6376568279122881047}
---- !u!114 &409083802382024424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5040132003472840282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc7ce29b0e9382046b76d3a1648cb2ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ticks: 10
 --- !u!1 &6376568278165176233
 GameObject:
   m_ObjectHideFlags: 0

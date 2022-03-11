@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public static class ExtensionMethods
 {
@@ -31,5 +32,15 @@ public static class ExtensionMethods
 		rigidbody.isKinematic = false;
 		rigidbody.detectCollisions = true;
 		rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+	}
+
+	public static string Join<T>(this string delimiter, IEnumerable<T> enumerable)
+	{
+		return string.Join(delimiter, enumerable);
+	}
+
+	public static string ToDelimString<T>(this IEnumerable<T> enumerable)
+	{
+		return "[ " + string.Join(", ", enumerable) +  " ]";
 	}
 }

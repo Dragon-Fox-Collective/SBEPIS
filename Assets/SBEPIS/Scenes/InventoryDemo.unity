@@ -2577,10 +2577,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1295349901206734861, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1953997974963445433, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2625,13 +2621,17 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[3].m_ActionName
       value: XR Tracking/Head Rotation
       objectReference: {fileID: 0}
-    - target: {fileID: 4412509965308872182, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4440311859282689841, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098800601631693807, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098800601631693807, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
+      propertyPath: m_NeverAutoSwitchControlSchemes
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6112518582163472336, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: m_RootOrder

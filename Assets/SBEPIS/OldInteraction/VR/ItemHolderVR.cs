@@ -5,7 +5,7 @@ using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
-namespace SBEPIS.Interaction.VR
+namespace SBEPIS.Interaction.XR
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class ItemHolderVR : ItemHolder
