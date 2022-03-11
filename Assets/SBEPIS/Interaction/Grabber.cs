@@ -73,6 +73,7 @@ namespace SBEPIS.Interaction
 				if (hitGrabbable && !collidingGrabbables.Contains(hitGrabbable))
 				{
 					print($"Colliding with {hitGrabbable}");
+					hitGrabbable.onTouch.Invoke(this);
 					collidingGrabbables.Add(hitGrabbable);
 				}
 			}
@@ -84,13 +85,18 @@ namespace SBEPIS.Interaction
 			{
 				Grabbable hitGrabbable = other.attachedRigidbody.GetComponent<Grabbable>();
 				if (hitGrabbable)
+				{
+					print($"No longer colliding with {hitGrabbable}");
 					collidingGrabbables.Remove(hitGrabbable);
+					hitGrabbable.onStopTouch.Invoke(this);
+				}
 			}
 		}
 
 		public void ClearCollisions()
 		{
-			collidingGrabbables.Clear();
+			while (collidingGrabbables.Count > 0)
+				OnTriggerExit(collidingGrabbables[0].GetComponentInChildren<Collider>());
 		}
 
 		public void OnControlsChanged(PlayerInput input)

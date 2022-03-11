@@ -7,18 +7,15 @@ public class SampleMaterialChanger : MonoBehaviour
 
 	private Material oldMaterial;
 
-	private void Awake()
-	{
-		oldMaterial = renderer.material;
-	}
-
 	public void SetMaterial()
 	{
+		oldMaterial = renderer.material;
 		renderer.material = newMaterial;
 	}
 
 	public void ResetMaterial()
 	{
 		renderer.material = oldMaterial;
+		oldMaterial = null;
 	}
 }

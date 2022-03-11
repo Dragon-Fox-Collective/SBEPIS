@@ -29,8 +29,8 @@ namespace SBEPIS.Interaction.Flatscreen
 				}
 				else
 				{
-					grabber.gameObject.SetActive(false);
 					grabber.ClearCollisions();
+					grabber.gameObject.SetActive(false);
 				}
 			}
 		}

@@ -8,7 +8,7 @@ namespace SBEPIS.Interaction
 	[RequireComponent(typeof(Rigidbody))]
 	public class Grabbable : MonoBehaviour
 	{
-		public ItemEvent onGrab, onHoldUpdate, onDrop;
+		public ItemEvent onTouch, onGrab, onHoldUpdate, onDrop, onStopTouch;
 
 		public Grabber grabbingGrabber { get; private set; }
 		public bool canGrab { get; set; }
