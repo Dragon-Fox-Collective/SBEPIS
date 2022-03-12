@@ -12,8 +12,16 @@ namespace Discord
 
 		private void Start()
 		{
-			//InvokeRepeating(nameof(UpdatePresence), 0, 60);
-			UpdatePresence();
+			if (discord == null)
+			{
+				print("No Discord! Destroying");
+				Destroy(this);
+			}
+			else
+			{
+				//InvokeRepeating(nameof(UpdatePresence), 0, 60);
+				UpdatePresence();
+			}
 		}
 
 		private void Update()
