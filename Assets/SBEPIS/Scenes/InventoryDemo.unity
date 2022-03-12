@@ -986,15 +986,27 @@ MonoBehaviour:
   axis: 1
   onProgressChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1886572430}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.PhysicsSlider, SBEPIS.Interaction
+        m_MethodName: Yeah
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   direction: 0
   threshold: 0.1
   onPressed:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1886572430}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.PhysicsButton, Assembly-CSharp
-        m_MethodName: Yeah
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.PhysicsButton, SBEPIS.Interaction
+        m_MethodName: Yeah2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1020,8 +1032,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1886572430}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.PhysicsButton, Assembly-CSharp
-        m_MethodName: Yeah
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.PhysicsButton, SBEPIS.Interaction
+        m_MethodName: Yeah2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1542,13 +1554,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3090586411226163947}
-  m_LocalRotation: {x: 0, y: 0.09098891, z: 0, w: 0.9958519}
+  m_LocalRotation: {x: -0.019410364, y: 0.088894464, z: 0.21244182, w: 0.9729283}
   m_LocalPosition: {x: -4.133, y: 2.02, z: 5.965}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 20
-  m_LocalEulerAnglesHint: {x: 0, y: 10.441, z: 0}
+  m_LocalEulerAnglesHint: {x: -4.332, y: 9.509, z: 24.274}
 --- !u!114 &3090586411226163953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2595,6 +2607,18 @@ PrefabInstance:
     - target: {fileID: 3672301010895016456, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_ActionName
       value: XR Tracking/Head Rotation
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782026480598102516, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.0000012123584
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782026480598102516, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.83500004
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782026480598102516, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 7.74
       objectReference: {fileID: 0}
     - target: {fileID: 4440311859282689841, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

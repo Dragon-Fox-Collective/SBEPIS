@@ -29,6 +29,7 @@ namespace SBEPIS.Interaction
 		private void Start()
 		{
 			initialLocalRotation = transform.localRotation.eulerAngles;
+			joint.autoConfigureConnectedAnchor = false;
 		}
 
 		private void Update()
@@ -38,10 +39,10 @@ namespace SBEPIS.Interaction
 
 		protected virtual void Evaluate()
 		{
+			lastProgress = progress;
 			progress = GetRelativeProgress();
 			if (lastProgress != progress)
 				onProgressChanged.Invoke(progress);
-			lastProgress = progress;
 		}
 
 		protected float GetRelativeProgress()
@@ -51,7 +52,7 @@ namespace SBEPIS.Interaction
 				case ButtonAxis.XPosition:
 				case ButtonAxis.YPosition:
 				case ButtonAxis.ZPosition:
-					return GetLinearDirectionValue(transform.localPosition).Map(GetLinearDirectionValue(GetWorldLinearStartPoint()), GetLinearDirectionValue(GetWorldLinearEndPoint()), 0, 1);
+					return GetLinearDirectionValue(transform.position).Map(GetLinearDirectionValue(GetWorldLinearStartPoint()), GetLinearDirectionValue(GetWorldLinearEndPoint()), 0, 1);
 
 				case ButtonAxis.XRotation:
 				case ButtonAxis.YRotation:
@@ -65,12 +66,12 @@ namespace SBEPIS.Interaction
 
 		protected Vector3 GetWorldLinearStartPoint()
 		{
-			return transform.TransformPoint(transform.InverseTransformPoint(joint.connectedAnchor) - joint.linearLimit.limit * GetAxis());
+			return joint.connectedAnchor - joint.linearLimit.limit * GetAxis(transform);
 		}
 
 		protected Vector3 GetWorldLinearEndPoint()
 		{
-			return transform.TransformPoint(transform.InverseTransformPoint(joint.connectedAnchor) + joint.linearLimit.limit * GetAxis());
+			return joint.connectedAnchor + joint.linearLimit.limit * GetAxis(transform);
 		}
 
 		protected Vector3 GetLocalRotationalStartPoint()
@@ -140,16 +141,19 @@ namespace SBEPIS.Interaction
 			}
 		}
 
-		protected Vector3 GetRotationalAxis(Transform transform)
+		protected Vector3 GetAxis(Transform transform)
 		{
 			switch (axis)
 			{
+				case ButtonAxis.XPosition:
 				case ButtonAxis.XRotation:
 					return transform.right;
 
+				case ButtonAxis.YPosition:
 				case ButtonAxis.YRotation:
 					return transform.up;
 
+				case ButtonAxis.ZPosition:
 				case ButtonAxis.ZRotation:
 					return transform.forward;
 

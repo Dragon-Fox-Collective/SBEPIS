@@ -54,9 +54,9 @@ GameObject:
   - component: {fileID: 708989314286123434}
   - component: {fileID: 708989314286123442}
   - component: {fileID: 900274325163649636}
-  - component: {fileID: 2033963293434604443}
+  - component: {fileID: 419007735310915986}
   m_Layer: 9
-  m_Name: Button
+  m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -266,23 +266,23 @@ ConfigurableJoint:
   m_GameObject: {fileID: 708989314286123441}
   m_ConnectedBody: {fileID: 0}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0.49999952, z: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 518, y: 336.49997, z: 0}
+  m_ConnectedAnchor: {x: 0, y: -40, z: 0}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
-  m_XMotion: 2
-  m_YMotion: 2
-  m_ZMotion: 2
-  m_AngularXMotion: 2
-  m_AngularYMotion: 2
-  m_AngularZMotion: 2
+  m_XMotion: 1
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 0
+  m_AngularYMotion: 0
+  m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
     damper: 0
   m_LinearLimit:
-    limit: 0
+    limit: 1
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
@@ -312,7 +312,7 @@ ConfigurableJoint:
   m_XDrive:
     serializedVersion: 3
     positionSpring: 0
-    positionDamper: 0
+    positionDamper: 20
     maximumForce: 3.4028233e+38
   m_YDrive:
     serializedVersion: 3
@@ -353,7 +353,7 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!114 &2033963293434604443
+--- !u!114 &419007735310915986
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -362,18 +362,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 708989314286123441}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c014f2f194ed48445b9a564b12c83253, type: 3}
+  m_Script: {fileID: 11500000, guid: 65a241a22925492498f6d468cb18eabc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   axis: 0
-  direction: 0
-  threshold: 0.75
-  onPressed:
-    m_PersistentCalls:
-      m_Calls: []
-  onUnpressed:
-    m_PersistentCalls:
-      m_Calls: []
   onProgressChanged:
     m_PersistentCalls:
       m_Calls: []

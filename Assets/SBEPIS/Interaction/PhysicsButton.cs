@@ -47,9 +47,9 @@ namespace SBEPIS.Interaction
 			}
 		}
 
-		public override void Yeah()
+		public virtual void Yeah2()
 		{
-			print(gameObject + " " + isPressed);
+			print(gameObject + " " + progress + " " + isPressed);
 		}
 
 		public enum ButtonDirection

@@ -8,19 +8,20 @@ namespace Discord
 	{
 		private static readonly int startEpoch = (int)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
 
-		private Discord discord = new Discord(948761142950514738, (UInt64)CreateFlags.NoRequireDiscord);
+		private Discord discord;
 
 		private void Start()
 		{
-			if (discord == null)
+			try
+			{
+				discord = new Discord(948761142950514738, (UInt64)CreateFlags.NoRequireDiscord);
+				//InvokeRepeating(nameof(UpdatePresence), 0, 60);
+				UpdatePresence();
+			}
+			catch
 			{
 				print("No Discord! Destroying");
 				Destroy(this);
-			}
-			else
-			{
-				//InvokeRepeating(nameof(UpdatePresence), 0, 60);
-				UpdatePresence();
 			}
 		}
 
