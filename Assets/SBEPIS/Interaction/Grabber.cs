@@ -71,11 +71,7 @@ namespace SBEPIS.Interaction
 			{
 				Grabbable hitGrabbable = other.attachedRigidbody.GetComponent<Grabbable>();
 				if (hitGrabbable && !collidingGrabbables.Contains(hitGrabbable))
-				{
-					print($"Colliding with {hitGrabbable}");
-					hitGrabbable.onTouch.Invoke(this);
-					collidingGrabbables.Add(hitGrabbable);
-				}
+					StartCollidingWith(hitGrabbable);
 			}
 		}
 
@@ -85,18 +81,28 @@ namespace SBEPIS.Interaction
 			{
 				Grabbable hitGrabbable = other.attachedRigidbody.GetComponent<Grabbable>();
 				if (hitGrabbable)
-				{
-					print($"No longer colliding with {hitGrabbable}");
-					collidingGrabbables.Remove(hitGrabbable);
-					hitGrabbable.onStopTouch.Invoke(this);
-				}
+					StopCollidingWith(hitGrabbable);
 			}
+		}
+
+		private void StartCollidingWith(Grabbable grabbable)
+		{
+			print($"Colliding with {grabbable}");
+			grabbable.onTouch.Invoke(this);
+			collidingGrabbables.Add(grabbable);
+		}
+
+		private void StopCollidingWith(Grabbable grabbable)
+		{
+			print($"No longer colliding with {grabbable}");
+			collidingGrabbables.Remove(grabbable);
+			grabbable.onStopTouch.Invoke(this);
 		}
 
 		public void ClearCollisions()
 		{
 			while (collidingGrabbables.Count > 0)
-				OnTriggerExit(collidingGrabbables[0].GetComponentInChildren<Collider>());
+				StopCollidingWith(collidingGrabbables[0]);
 		}
 
 		public void OnControlsChanged(PlayerInput input)

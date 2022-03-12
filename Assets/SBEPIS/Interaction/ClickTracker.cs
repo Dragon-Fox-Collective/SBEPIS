@@ -4,7 +4,6 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Interaction
 {
-	[RequireComponent(typeof(Grabbable))]
 	public class ClickTracker : MonoBehaviour
 	{
 		public UnityEvent onClick;
@@ -14,28 +13,10 @@ namespace SBEPIS.Interaction
 		/// </summary>
 		private const float TAP_TIME = 0.3f;
 
-		private Grabbable grabbable;
 		private bool isTracking;
 		private float startTime;
 
-		private void Awake()
-		{
-			grabbable = GetComponent<Grabbable>();
-		}
-
-		private void OnEnable()
-		{
-			grabbable.onGrab.AddListener(StartTracking);
-			grabbable.onDrop.AddListener(FinishTracking);
-		}
-
-		private void OnDisable()
-		{
-			grabbable.onGrab.RemoveListener(StartTracking);
-			grabbable.onDrop.RemoveListener(FinishTracking);
-		}
-
-		private void StartTracking(Grabber grabber)
+		public void StartTracking()
 		{
 			if (isTracking)
 				throw new InvalidOperationException($"Click tracker {gameObject} is already tracking");
@@ -43,7 +24,7 @@ namespace SBEPIS.Interaction
 			startTime = Time.unscaledTime;
 		}
 
-		private void FinishTracking(Grabber grabber)
+		public void FinishTracking()
 		{
 			if (!isTracking)
 				throw new InvalidOperationException($"Click tracker {gameObject} is not tracking yet");

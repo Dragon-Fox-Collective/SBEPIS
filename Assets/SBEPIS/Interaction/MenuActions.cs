@@ -45,6 +45,18 @@ namespace SBEPIS.Interaction
 			Application.Quit();
 		}
 
+		public void GoToMain()
+		{
+			main.gameObject.SetActive(true);
+			settings.gameObject.SetActive(false);
+		}
+
+		public void GoToSettings()
+		{
+			main.gameObject.SetActive(false);
+			settings.gameObject.SetActive(true);
+		}
+
 		public void OnTogglePauseMenu(CallbackContext context)
 		{
 			if (!context.performed)
@@ -56,8 +68,7 @@ namespace SBEPIS.Interaction
 			{
 				pauseButtons.position = playerPosition.position;
 				pauseButtons.rotation = Quaternion.Euler(0, yawRotation.rotation.eulerAngles.y, 0);
-				main.gameObject.SetActive(true);
-				settings.gameObject.SetActive(false);
+				GoToMain();
 			}
 		}
 	}
