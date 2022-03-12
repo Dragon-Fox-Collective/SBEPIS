@@ -28,7 +28,7 @@ namespace SBEPIS.Interaction.XR
 
 		public void AttemptBind(CallbackContext context)
 		{
-			if (!context.performed)
+			if (!context.performed || !bindTo.inputIsActive)
 				return;
 
 			foreach (ActionEvent e in bindFrom.actionEvents)

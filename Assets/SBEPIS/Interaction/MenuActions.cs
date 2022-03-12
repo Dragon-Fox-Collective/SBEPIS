@@ -10,6 +10,8 @@ namespace SBEPIS.Interaction
 		public Transform playerPosition;
 		public Transform yawRotation;
 		public Transform pauseButtons;
+		public Transform main;
+		public Transform settings;
 
 		public void StartNewGame()
 		{
@@ -54,6 +56,8 @@ namespace SBEPIS.Interaction
 			{
 				pauseButtons.position = playerPosition.position;
 				pauseButtons.rotation = Quaternion.Euler(0, yawRotation.rotation.eulerAngles.y, 0);
+				main.gameObject.SetActive(true);
+				settings.gameObject.SetActive(false);
 			}
 		}
 	}
