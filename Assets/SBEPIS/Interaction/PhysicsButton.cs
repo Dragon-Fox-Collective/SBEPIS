@@ -47,7 +47,7 @@ namespace SBEPIS.Interaction
 			}
 		}
 
-		public virtual void Yeah2()
+		public void Yeah2()
 		{
 			print(gameObject + " " + progress + " " + isPressed);
 		}

@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
@@ -12,6 +14,15 @@ namespace SBEPIS.Interaction
 		public Transform pauseButtons;
 		public Transform main;
 		public Transform settings;
+
+		public PhysicsSlider sensitivitySlider;
+
+		public PlayerInput input;
+
+		public MovementController controller;
+
+		public float mouseSensitivityMin = 0.1f;
+		public float mouseSensitivityMax = 1;
 
 		public void StartNewGame()
 		{
@@ -55,6 +66,7 @@ namespace SBEPIS.Interaction
 		{
 			main.gameObject.SetActive(false);
 			settings.gameObject.SetActive(true);
+			sensitivitySlider.ResetAnchor(controller.sensitivity.Map(mouseSensitivityMin, mouseSensitivityMax, 0, 1));
 		}
 
 		public void OnTogglePauseMenu(CallbackContext context)
@@ -70,6 +82,11 @@ namespace SBEPIS.Interaction
 				pauseButtons.rotation = Quaternion.Euler(0, yawRotation.rotation.eulerAngles.y, 0);
 				GoToMain();
 			}
+		}
+
+		public void ChangeMouseSensitivity(float percent)
+		{
+			controller.sensitivity = percent.Map(0, 1, mouseSensitivityMin, mouseSensitivityMax);
 		}
 	}
 }

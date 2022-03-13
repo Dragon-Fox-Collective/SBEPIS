@@ -810,6 +810,11 @@ MonoBehaviour:
   pauseButtons: {fileID: 7475380293285515536}
   main: {fileID: 7583878585626512701}
   settings: {fileID: 8800242104889866177}
+  sensitivitySlider: {fileID: 4454766888223375874}
+  input: {fileID: 6098800601631693807}
+  controller: {fileID: 6376568280094680655}
+  mouseSensitivityMin: 0.01
+  mouseSensitivityMax: 0.7
 --- !u!1 &4894537130919007913
 GameObject:
   m_ObjectHideFlags: 0
@@ -2830,34 +2835,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8800242104889866177}
     m_Modifications:
-    - target: {fileID: 419007735310915986, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
-      propertyPath: onProgressChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 419007735310915986, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
-      propertyPath: onProgressChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 419007735310915986, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
-      propertyPath: onProgressChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 4454766888223375874}
-    - target: {fileID: 419007735310915986, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
-      propertyPath: onProgressChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 419007735310915986, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
-      propertyPath: onProgressChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Yeah
-      objectReference: {fileID: 0}
-    - target: {fileID: 419007735310915986, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
-      propertyPath: onProgressChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SBEPIS.Interaction.PhysicsSlider, SBEPIS.Interaction
-      objectReference: {fileID: 0}
-    - target: {fileID: 419007735310915986, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
-      propertyPath: onProgressChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 708989312627685994, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
       propertyPath: m_Name
       value: Sensitivity
@@ -2946,6 +2923,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 708989314286123443, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 708989314286123443, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 708989314286123443, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3528311962703204842}
+    - target: {fileID: 708989314286123443, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 708989314286123443, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Invoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 708989314286123443, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SBEPIS.Interaction.PhysicsSliderProgressProxy, SBEPIS.Interaction
+      objectReference: {fileID: 0}
+    - target: {fileID: 708989314286123443, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 900274325163649636, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: 0
@@ -2956,7 +2961,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 900274325163649636, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
       propertyPath: m_ConnectedAnchor.z
-      value: 2.26
+      value: 0.26
       objectReference: {fileID: 0}
     - target: {fileID: 4757726689243451705, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2964,7 +2969,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6324310782765804926, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
       propertyPath: m_text
-      value: Mouse Sensitivity
+      value: Look Sensitivity
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
@@ -2973,17 +2978,49 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 708989312627685995, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
   m_PrefabInstance: {fileID: 4035823062705445776}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3590716591801721377 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 708989314286123441, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
+  m_PrefabInstance: {fileID: 4035823062705445776}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4454766888223375874 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 419007735310915986, guid: 582bc5eb31bff9242889548de297ebb8, type: 3}
   m_PrefabInstance: {fileID: 4035823062705445776}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 3590716591801721377}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65a241a22925492498f6d468cb18eabc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3528311962703204842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3590716591801721377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 719d1439473191a4b9b0522e1aee4352, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onInvokeProgress:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4806943500720040952}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.MenuActions, SBEPIS.Interaction
+        m_MethodName: ChangeMouseSensitivity
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &4623723501778767850
 PrefabInstance:
   m_ObjectHideFlags: 0
