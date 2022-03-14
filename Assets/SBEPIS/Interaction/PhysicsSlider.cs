@@ -42,27 +42,30 @@ namespace SBEPIS.Interaction
 		protected virtual void Evaluate()
 		{
 			lastProgress = progress;
-			progress = GetRelativeProgress();
+			progress = RelativeProgress;
 			if (lastProgress != progress)
 				onProgressChanged.Invoke(progress);
 		}
 
-		protected float GetRelativeProgress()
+		protected float RelativeProgress
 		{
-			switch (axis)
+			get
 			{
-				case ButtonAxis.XPosition:
-				case ButtonAxis.YPosition:
-				case ButtonAxis.ZPosition:
-					return GetDirectionValue(transform.position).Map(GetStartDirectionValue(), GetEndDirectionValue(), 0, 1);
+				switch (axis)
+				{
+					case ButtonAxis.XPosition:
+					case ButtonAxis.YPosition:
+					case ButtonAxis.ZPosition:
+						return GetDirectionValue(transform.position).Map(StartDirectionValue, EndDirectionValue, 0, 1);
 
-				case ButtonAxis.XRotation:
-				case ButtonAxis.YRotation:
-				case ButtonAxis.ZRotation:
-					return GetDirectionValue(transform.localRotation.eulerAngles - initialLocalRotation).Map(GetStartDirectionValue(), GetEndDirectionValue(), 0, 1);
+					case ButtonAxis.XRotation:
+					case ButtonAxis.YRotation:
+					case ButtonAxis.ZRotation:
+						return GetDirectionValue(transform.localRotation.eulerAngles - initialLocalRotation).Map(StartDirectionValue, EndDirectionValue, 0, 1);
 
-				default:
-					return 0;
+					default:
+						return 0;
+				}
 			}
 		}
 
@@ -74,7 +77,7 @@ namespace SBEPIS.Interaction
 				case ButtonAxis.YPosition:
 				case ButtonAxis.ZPosition:
 					Vector3 position = transform.position;
-					SetDirectionValue(ref position, progress.Map(0, 1, GetStartDirectionValue(), GetEndDirectionValue()));
+					SetDirectionValue(ref position, progress.Map(0, 1, StartDirectionValue, EndDirectionValue));
 					transform.position = position;
 					return;
 
@@ -82,7 +85,7 @@ namespace SBEPIS.Interaction
 				case ButtonAxis.YRotation:
 				case ButtonAxis.ZRotation:
 					Vector3 eulers = transform.localRotation.eulerAngles;
-					SetDirectionValue(ref eulers, progress.Map(0, 1, GetStartDirectionValue(), GetEndDirectionValue()));
+					SetDirectionValue(ref eulers, progress.Map(0, 1, StartDirectionValue, EndDirectionValue));
 					eulers += initialLocalRotation;
 					transform.localRotation = Quaternion.Euler(eulers);
 					return;
@@ -92,113 +95,119 @@ namespace SBEPIS.Interaction
 			}
 		}
 
-		protected float GetStartDirectionValue()
-		{
-			return GetDirectionValue(GetStartPoint());
-		}
+		protected float StartDirectionValue => GetDirectionValue(StartPoint);
 
-		protected float GetEndDirectionValue()
-		{
-			return GetDirectionValue(GetEndPoint());
-		}
+		protected float EndDirectionValue => GetDirectionValue(EndPoint);
 
-		protected Vector3 GetStartPoint()
+		protected Vector3 StartPoint
 		{
-			switch (axis)
+			get
 			{
-				case ButtonAxis.XPosition:
-				case ButtonAxis.YPosition:
-				case ButtonAxis.ZPosition:
-					return GetAnchor() - joint.linearLimit.limit * GetAxis(transform);
+				switch (axis)
+				{
+					case ButtonAxis.XPosition:
+					case ButtonAxis.YPosition:
+					case ButtonAxis.ZPosition:
+						return Anchor - joint.linearLimit.limit * GetAxis(transform);
 
-				case ButtonAxis.XRotation:
-				case ButtonAxis.YRotation:
-				case ButtonAxis.ZRotation:
-					return GetLowRotationalLimit() * GetAxis();
+					case ButtonAxis.XRotation:
+					case ButtonAxis.YRotation:
+					case ButtonAxis.ZRotation:
+						return LowRotationalLimit * Axis;
 
-				default:
-					return Vector3.zero;
+					default:
+						return Vector3.zero;
+				}
 			}
 		}
 
-		protected Vector3 GetEndPoint()
+		protected Vector3 EndPoint
 		{
-			switch (axis)
+			get
 			{
-				case ButtonAxis.XPosition:
-				case ButtonAxis.YPosition:
-				case ButtonAxis.ZPosition:
-					return GetAnchor() + joint.linearLimit.limit * GetAxis(transform);
+				switch (axis)
+				{
+					case ButtonAxis.XPosition:
+					case ButtonAxis.YPosition:
+					case ButtonAxis.ZPosition:
+						return Anchor + joint.linearLimit.limit * GetAxis(transform);
 
-				case ButtonAxis.XRotation:
-				case ButtonAxis.YRotation:
-				case ButtonAxis.ZRotation:
-					return GetHighRotationalLimit() * GetAxis();
+					case ButtonAxis.XRotation:
+					case ButtonAxis.YRotation:
+					case ButtonAxis.ZRotation:
+						return HighRotationalLimit * Axis;
 
-				default:
-					return Vector3.zero;
+					default:
+						return Vector3.zero;
+				}
 			}
 		}
 
-		protected Vector3 GetAnchor()
-		{
-			return joint.connectedBody ? joint.connectedBody.transform.TransformPoint(joint.connectedAnchor) : joint.connectedAnchor;
-		}
+		protected Vector3 Anchor => joint.connectedBody ? joint.connectedBody.transform.TransformPoint(joint.connectedAnchor) : joint.connectedAnchor;
 
-		protected float GetLowRotationalLimit()
+		protected float LowRotationalLimit
 		{
-			switch (axis)
+			get
 			{
-				case ButtonAxis.XRotation:
-					return joint.lowAngularXLimit.limit;
+				switch (axis)
+				{
+					case ButtonAxis.XRotation:
+						return joint.lowAngularXLimit.limit;
 
-				case ButtonAxis.YRotation:
-					return -joint.angularYLimit.limit;
+					case ButtonAxis.YRotation:
+						return -joint.angularYLimit.limit;
 
-				case ButtonAxis.ZRotation:
-					return -joint.angularZLimit.limit;
+					case ButtonAxis.ZRotation:
+						return -joint.angularZLimit.limit;
 
-				default:
-					return 0;
+					default:
+						return 0;
+				}
 			}
 		}
 
-		protected float GetHighRotationalLimit()
+		protected float HighRotationalLimit
 		{
-			switch (axis)
+			get
 			{
-				case ButtonAxis.XRotation:
-					return joint.highAngularXLimit.limit;
+				switch (axis)
+				{
+					case ButtonAxis.XRotation:
+						return joint.highAngularXLimit.limit;
 
-				case ButtonAxis.YRotation:
-					return joint.angularYLimit.limit;
+					case ButtonAxis.YRotation:
+						return joint.angularYLimit.limit;
 
-				case ButtonAxis.ZRotation:
-					return joint.angularZLimit.limit;
+					case ButtonAxis.ZRotation:
+						return joint.angularZLimit.limit;
 
-				default:
-					return 0;
+					default:
+						return 0;
+				}
 			}
 		}
 
-		protected Vector3 GetAxis()
+		protected Vector3 Axis
 		{
-			switch (axis)
+			get
 			{
-				case ButtonAxis.XPosition:
-				case ButtonAxis.XRotation:
-					return Vector3.right;
+				switch (axis)
+				{
+					case ButtonAxis.XPosition:
+					case ButtonAxis.XRotation:
+						return Vector3.right;
 
-				case ButtonAxis.YPosition:
-				case ButtonAxis.YRotation:
-					return Vector3.up;
+					case ButtonAxis.YPosition:
+					case ButtonAxis.YRotation:
+						return Vector3.up;
 
-				case ButtonAxis.ZPosition:
-				case ButtonAxis.ZRotation:
-					return Vector3.forward;
+					case ButtonAxis.ZPosition:
+					case ButtonAxis.ZRotation:
+						return Vector3.forward;
 
-				default:
-					return Vector3.zero;
+					default:
+						return Vector3.zero;
+				}
 			}
 		}
 
