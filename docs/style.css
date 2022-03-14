@@ -1,26 +1,8 @@
-svg {
-	display: block;
-	margin: 0 auto;
-	box-shadow: 0 0 5px black;
-}
+@font-face {
+	font-family: 'Cascadia Code';
+	src: url(CascadiaCode.ttf) format("truetype");
+  }
 
-.node {
-	cursor: move;
-}
-
-.node text {
-	pointer-events: none;
-	font: 10px sans-serif;
-}
-
-.node.parent text {
-	font: 5px sans-serif;
-}
-
-.link {
-	stroke: black;
-}
-
-.link.parent {
-	stroke: #00000010;
+body {
+	font-family: 'Cascadia Code';
 }
