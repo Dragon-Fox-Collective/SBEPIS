@@ -964,6 +964,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5159398627618986266}
   - component: {fileID: 6098800601631693807}
+  - component: {fileID: 5964811541422315624}
   m_Layer: 0
   m_Name: Input System
   m_TagString: Untagged
@@ -992,7 +993,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5040132003472840282}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -1213,6 +1214,19 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 6376568279122881047}
+--- !u!114 &5964811541422315624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5040132003472840282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de7a3c3ee0dd34a4c9a3902dc1fbccd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ticks: 1
 --- !u!1 &5747239524736332981
 GameObject:
   m_ObjectHideFlags: 0

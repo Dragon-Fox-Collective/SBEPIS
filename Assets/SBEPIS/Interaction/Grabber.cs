@@ -24,6 +24,7 @@ namespace SBEPIS.Interaction
 
 		private void Update()
 		{
+			ClearInvalidCollisions();
 			if (heldGrabbable)
 				heldGrabbable.HoldUpdate(this);
 		}
@@ -103,6 +104,13 @@ namespace SBEPIS.Interaction
 		{
 			while (collidingGrabbables.Count > 0)
 				StopCollidingWith(collidingGrabbables[0]);
+		}
+
+		public void ClearInvalidCollisions()
+		{
+			for (int i = 0; i < collidingGrabbables.Count; i++)
+				if (!collidingGrabbables[i].gameObject.activeInHierarchy)
+					StopCollidingWith(collidingGrabbables[i--]);
 		}
 
 		public void OnControlsChanged(PlayerInput input)
