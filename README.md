@@ -1,3 +1,3 @@
-# SBEPIS
+# SBEPIS (Sara's Building Extrusion and Player Ingress Simulator)
 
-A lil project I started to attempt a first-person recreation of Homestuck's SBURB, kinda like the Genesis Project.
+A combination house-building simulator and fantasy RPG that could end the world.
