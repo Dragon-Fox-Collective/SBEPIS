@@ -70,12 +70,19 @@ namespace SBEPIS.Interaction
 		{
 			main.gameObject.SetActive(true);
 			settings.gameObject.SetActive(false);
+
+			//foreach (PhysicsButton button in main.GetComponentsInChildren<PhysicsButton>())
+			//	button.ResetAnchor(0);
 		}
 
 		public void GoToSettings()
 		{
 			main.gameObject.SetActive(false);
 			settings.gameObject.SetActive(true);
+
+			//foreach (PhysicsButton button in settings.GetComponentsInChildren<PhysicsButton>())
+			//	button.ResetAnchor(0);
+
 			sensitivitySlider.ResetAnchor(controller.sensitivity.Map(mouseSensitivityMin, mouseSensitivityMax, 0, 1));
 		}
 

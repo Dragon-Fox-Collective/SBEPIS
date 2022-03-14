@@ -109,7 +109,7 @@ namespace SBEPIS.Interaction
 				case ButtonAxis.XPosition:
 				case ButtonAxis.YPosition:
 				case ButtonAxis.ZPosition:
-					return joint.connectedAnchor - joint.linearLimit.limit * GetAxis(transform);
+					return GetAnchor() - joint.linearLimit.limit * GetAxis(transform);
 
 				case ButtonAxis.XRotation:
 				case ButtonAxis.YRotation:
@@ -128,7 +128,7 @@ namespace SBEPIS.Interaction
 				case ButtonAxis.XPosition:
 				case ButtonAxis.YPosition:
 				case ButtonAxis.ZPosition:
-					return joint.connectedAnchor + joint.linearLimit.limit * GetAxis(transform);
+					return GetAnchor() + joint.linearLimit.limit * GetAxis(transform);
 
 				case ButtonAxis.XRotation:
 				case ButtonAxis.YRotation:
@@ -138,6 +138,11 @@ namespace SBEPIS.Interaction
 				default:
 					return Vector3.zero;
 			}
+		}
+
+		protected Vector3 GetAnchor()
+		{
+			return joint.connectedBody ? joint.connectedBody.transform.TransformPoint(joint.connectedAnchor) : joint.connectedAnchor;
 		}
 
 		protected float GetLowRotationalLimit()
