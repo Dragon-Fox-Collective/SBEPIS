@@ -1,3 +1,4 @@
+using SBEPIS.Utils;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -23,6 +24,15 @@ namespace SBEPIS.Interaction
 
 		public float mouseSensitivityMin = 0.1f;
 		public float mouseSensitivityMax = 1;
+
+		private PlayerSettingsSaveData settingsData;
+
+		private void Start()
+		{
+			settingsData = new PlayerSettingsSaveData { filename = "settings", sensitivity = controller.sensitivity };
+			DataSaver.LoadData(ref settingsData);
+			controller.sensitivity = settingsData.sensitivity;
+		}
 
 		public void StartNewGame()
 		{
@@ -87,6 +97,8 @@ namespace SBEPIS.Interaction
 		public void ChangeMouseSensitivity(float percent)
 		{
 			controller.sensitivity = percent.Map(0, 1, mouseSensitivityMin, mouseSensitivityMax);
+			settingsData.sensitivity = controller.sensitivity;
+			DataSaver.SaveData(settingsData);
 		}
 	}
 }

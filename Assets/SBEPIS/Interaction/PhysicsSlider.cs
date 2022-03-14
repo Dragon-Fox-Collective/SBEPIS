@@ -31,7 +31,7 @@ namespace SBEPIS.Interaction
 		{
 			initialLocalRotation = transform.localRotation.eulerAngles;
 			joint.autoConfigureConnectedAnchor = false;
-			initialRelativeConnectedAnchor = joint.connectedAnchor - transform.parent.position;
+			initialRelativeConnectedAnchor = joint.connectedAnchor - (transform.parent ? transform.parent.position : Vector3.zero);
 		}
 
 		private void Update()
@@ -265,7 +265,7 @@ namespace SBEPIS.Interaction
 
 		public void ResetAnchor(float progress)
 		{
-			joint.connectedAnchor = transform.parent.position + initialRelativeConnectedAnchor;
+			joint.connectedAnchor = initialRelativeConnectedAnchor + (transform.parent ? transform.parent.position : Vector3.zero);
 			SetRelativeProgress(progress);
 		}
 

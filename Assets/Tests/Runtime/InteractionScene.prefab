@@ -498,6 +498,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axis: 1
+  onProgressChanged:
+    m_PersistentCalls:
+      m_Calls: []
   direction: 0
   threshold: 0.1
   onPressed:
@@ -568,6 +571,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
   onGrab:
     m_PersistentCalls:
       m_Calls: []
@@ -575,6 +581,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  onStopTouch:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &5130172692411891631
@@ -917,6 +926,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axis: 5
+  onProgressChanged:
+    m_PersistentCalls:
+      m_Calls: []
   direction: 1
   threshold: 0.9
   onPressed:
@@ -987,6 +999,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
   onGrab:
     m_PersistentCalls:
       m_Calls: []
@@ -994,6 +1009,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  onStopTouch:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &7924616877177733538
@@ -1121,6 +1139,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
   onGrab:
     m_PersistentCalls:
       m_Calls: []
@@ -1128,5 +1149,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  onStopTouch:
     m_PersistentCalls:
       m_Calls: []
