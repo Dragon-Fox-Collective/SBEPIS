@@ -17,18 +17,23 @@ namespace SBEPIS.Interaction
 
 		private void FixedUpdate()
 		{
-			rigidbody.velocity = Vector3.zero;
-			rigidbody.angularVelocity = Vector3.zero;
+			Vector3 positionDelta = connectionPoint.position - rigidbody.position;
+			Vector3 maxVelocity = positionDelta / Time.fixedDeltaTime;
+			Vector3 intendedVelocity = positionDelta.normalized * strength.velocity;
+			Vector3 velocityTarget = maxVelocity.sqrMagnitude < intendedVelocity.sqrMagnitude ? maxVelocity : intendedVelocity;
+			float maxAcceleration = strength.maxAcceleration * transform.lossyScale.x;
+			rigidbody.velocity = maxAcceleration > 0 ? Vector3.MoveTowards(rigidbody.velocity, velocityTarget, maxAcceleration) : velocityTarget;
 
-			Vector3 velocity = strength.velocityFactor * (connectionPoint.position - rigidbody.position);
-			if (strength.maxVelocity > 0) velocity = Vector3.ClampMagnitude(velocity, strength.maxVelocity);
-			rigidbody.AddForce(velocity, ForceMode.Acceleration);
-
-			(connectionPoint.rotation * Quaternion.Inverse(rigidbody.rotation)).ToAngleAxis(out float angle, out Vector3 axis);
-			if (angle > 180) angle -= 360;
-			Vector3 angularVelocity = angle == 0 ? Vector3.zero : strength.angularVelocityFactor * angle * axis;
-			if (strength.maxAngularVelocity > 0) angularVelocity = Vector3.ClampMagnitude(angularVelocity, strength.maxAngularVelocity);
-			rigidbody.AddTorque(angularVelocity, ForceMode.Acceleration);
+			Vector3 angularDelta = (connectionPoint.rotation * Quaternion.Inverse(rigidbody.rotation)).eulerAngles;
+			if (angularDelta.x > 180) angularDelta.x -= 360;
+			if (angularDelta.y > 180) angularDelta.y -= 360;
+			if (angularDelta.z > 180) angularDelta.z -= 360;
+			angularDelta *= Mathf.Deg2Rad;
+			Vector3 maxAngularVelocity = angularDelta / Time.fixedDeltaTime;
+			Vector3 intendedAngularVelocity = angularDelta.normalized * strength.angularVelocity;
+			Vector3 angularVelocityTarget = maxAngularVelocity.sqrMagnitude < intendedAngularVelocity.sqrMagnitude ? maxAngularVelocity : intendedAngularVelocity;
+			float maxAngularAcceleration = strength.maxAngularAcceleration * transform.lossyScale.x;
+			rigidbody.angularVelocity = maxAngularAcceleration > 0 ? Vector3.MoveTowards(rigidbody.angularVelocity, angularVelocityTarget, maxAngularAcceleration) : angularVelocityTarget;
 		}
 	}
 }
