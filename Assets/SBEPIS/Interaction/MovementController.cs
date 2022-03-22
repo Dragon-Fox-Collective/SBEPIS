@@ -10,7 +10,7 @@ namespace SBEPIS.Interaction
 		public Transform pitchRotator;
 		public Transform yawRotator;
 		public Transform moveAimer;
-		public float sensitivity = 1000f;
+		public float sensitivity = 1;
 		public float groundSpeed = 8f;
 		public float groundAccelTime = 0.1f;
 		public float airSpeed = 60f;

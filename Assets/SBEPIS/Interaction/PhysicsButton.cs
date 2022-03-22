@@ -8,6 +8,7 @@ namespace SBEPIS.Interaction
 	{
 		public ButtonDirection direction;
 		public float threshold = 0.75f;
+		public float forcePressFactor = 100;
 
 		public UnityEvent onPressed, onUnpressed;
 
@@ -36,18 +37,18 @@ namespace SBEPIS.Interaction
 				case ButtonAxis.XPosition:
 				case ButtonAxis.YPosition:
 				case ButtonAxis.ZPosition:
-					rigidbody.AddRelativeForce(GetAxis() * (direction == ButtonDirection.LessThan ? -1 : 1) * 100);
+					rigidbody.AddRelativeForce(Axis * (direction == ButtonDirection.LessThan ? -1 : 1) * forcePressFactor);
 					break;
 
 				case ButtonAxis.XRotation:
 				case ButtonAxis.YRotation:
 				case ButtonAxis.ZRotation:
-					rigidbody.AddRelativeTorque(GetAxis() * (direction == ButtonDirection.LessThan ? -1 : 1) * 150);
+					rigidbody.AddRelativeTorque(Axis * (direction == ButtonDirection.LessThan ? -1 : 1) * forcePressFactor);
 					break;
 			}
 		}
 
-		public virtual void Yeah2()
+		public void Yeah2()
 		{
 			print(gameObject + " " + progress + " " + isPressed);
 		}

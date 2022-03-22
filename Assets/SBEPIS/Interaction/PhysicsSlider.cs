@@ -18,6 +18,7 @@ namespace SBEPIS.Interaction
 		public new Rigidbody rigidbody { get; private set; }
 		public ConfigurableJoint joint { get; private set; }
 
+		private Vector3 initialRelativeConnectedAnchor;
 		private Vector3 initialLocalRotation;
 
 		private void Awake()
@@ -30,6 +31,7 @@ namespace SBEPIS.Interaction
 		{
 			initialLocalRotation = transform.localRotation.eulerAngles;
 			joint.autoConfigureConnectedAnchor = false;
+			initialRelativeConnectedAnchor = joint.connectedAnchor - (transform.parent ? transform.parent.position : Vector3.zero);
 		}
 
 		private void Update()
@@ -40,104 +42,172 @@ namespace SBEPIS.Interaction
 		protected virtual void Evaluate()
 		{
 			lastProgress = progress;
-			progress = GetRelativeProgress();
+			progress = RelativeProgress;
 			if (lastProgress != progress)
 				onProgressChanged.Invoke(progress);
 		}
 
-		protected float GetRelativeProgress()
+		protected float RelativeProgress
+		{
+			get
+			{
+				switch (axis)
+				{
+					case ButtonAxis.XPosition:
+					case ButtonAxis.YPosition:
+					case ButtonAxis.ZPosition:
+						return GetDirectionValue(transform.position).Map(StartDirectionValue, EndDirectionValue, 0, 1);
+
+					case ButtonAxis.XRotation:
+					case ButtonAxis.YRotation:
+					case ButtonAxis.ZRotation:
+						return GetDirectionValue(transform.localRotation.eulerAngles - initialLocalRotation).Map(StartDirectionValue, EndDirectionValue, 0, 1);
+
+					default:
+						return 0;
+				}
+			}
+		}
+
+		protected void SetRelativeProgress(float progress)
 		{
 			switch (axis)
 			{
 				case ButtonAxis.XPosition:
 				case ButtonAxis.YPosition:
 				case ButtonAxis.ZPosition:
-					return GetLinearDirectionValue(transform.position).Map(GetLinearDirectionValue(GetWorldLinearStartPoint()), GetLinearDirectionValue(GetWorldLinearEndPoint()), 0, 1);
+					Vector3 position = transform.position;
+					SetDirectionValue(ref position, progress.Map(0, 1, StartDirectionValue, EndDirectionValue));
+					transform.position = position;
+					return;
 
 				case ButtonAxis.XRotation:
 				case ButtonAxis.YRotation:
 				case ButtonAxis.ZRotation:
-					return GetRotationalDirectionValue(transform.localRotation.eulerAngles - initialLocalRotation).Map(GetRotationalDirectionValue(GetLocalRotationalStartPoint()), GetRotationalDirectionValue(GetLocalRotationalEndPoint()), 0, 1);
+					Vector3 eulers = transform.localRotation.eulerAngles;
+					SetDirectionValue(ref eulers, progress.Map(0, 1, StartDirectionValue, EndDirectionValue));
+					eulers += initialLocalRotation;
+					transform.localRotation = Quaternion.Euler(eulers);
+					return;
 
 				default:
-					return 0;
+					return;
 			}
 		}
 
-		protected Vector3 GetWorldLinearStartPoint()
-		{
-			return joint.connectedAnchor - joint.linearLimit.limit * GetAxis(transform);
-		}
+		protected float StartDirectionValue => GetDirectionValue(StartPoint);
 
-		protected Vector3 GetWorldLinearEndPoint()
-		{
-			return joint.connectedAnchor + joint.linearLimit.limit * GetAxis(transform);
-		}
+		protected float EndDirectionValue => GetDirectionValue(EndPoint);
 
-		protected Vector3 GetLocalRotationalStartPoint()
+		protected Vector3 StartPoint
 		{
-			return GetLowRotationalLimit() * GetAxis();
-		}
-
-		protected Vector3 GetLocalRotationalEndPoint()
-		{
-			return GetHighRotationalLimit() * GetAxis();
-		}
-
-		protected float GetLowRotationalLimit()
-		{
-			switch (axis)
+			get
 			{
-				case ButtonAxis.XRotation:
-					return joint.lowAngularXLimit.limit;
+				switch (axis)
+				{
+					case ButtonAxis.XPosition:
+					case ButtonAxis.YPosition:
+					case ButtonAxis.ZPosition:
+						return Anchor - joint.linearLimit.limit * GetAxis(transform);
 
-				case ButtonAxis.YRotation:
-					return -joint.angularYLimit.limit;
+					case ButtonAxis.XRotation:
+					case ButtonAxis.YRotation:
+					case ButtonAxis.ZRotation:
+						return LowRotationalLimit * Axis;
 
-				case ButtonAxis.ZRotation:
-					return -joint.angularZLimit.limit;
-
-				default:
-					return 0;
+					default:
+						return Vector3.zero;
+				}
 			}
 		}
 
-		protected float GetHighRotationalLimit()
+		protected Vector3 EndPoint
 		{
-			switch (axis)
+			get
 			{
-				case ButtonAxis.XRotation:
-					return joint.highAngularXLimit.limit;
+				switch (axis)
+				{
+					case ButtonAxis.XPosition:
+					case ButtonAxis.YPosition:
+					case ButtonAxis.ZPosition:
+						return Anchor + joint.linearLimit.limit * GetAxis(transform);
 
-				case ButtonAxis.YRotation:
-					return joint.angularYLimit.limit;
+					case ButtonAxis.XRotation:
+					case ButtonAxis.YRotation:
+					case ButtonAxis.ZRotation:
+						return HighRotationalLimit * Axis;
 
-				case ButtonAxis.ZRotation:
-					return joint.angularZLimit.limit;
-
-				default:
-					return 0;
+					default:
+						return Vector3.zero;
+				}
 			}
 		}
 
-		protected Vector3 GetAxis()
+		protected Vector3 Anchor => joint.connectedBody ? joint.connectedBody.transform.TransformPoint(joint.connectedAnchor) : joint.connectedAnchor;
+
+		protected float LowRotationalLimit
 		{
-			switch (axis)
+			get
 			{
-				case ButtonAxis.XPosition:
-				case ButtonAxis.XRotation:
-					return Vector3.right;
+				switch (axis)
+				{
+					case ButtonAxis.XRotation:
+						return joint.lowAngularXLimit.limit;
 
-				case ButtonAxis.YPosition:
-				case ButtonAxis.YRotation:
-					return Vector3.up;
+					case ButtonAxis.YRotation:
+						return -joint.angularYLimit.limit;
 
-				case ButtonAxis.ZPosition:
-				case ButtonAxis.ZRotation:
-					return Vector3.forward;
+					case ButtonAxis.ZRotation:
+						return -joint.angularZLimit.limit;
 
-				default:
-					return Vector3.zero;
+					default:
+						return 0;
+				}
+			}
+		}
+
+		protected float HighRotationalLimit
+		{
+			get
+			{
+				switch (axis)
+				{
+					case ButtonAxis.XRotation:
+						return joint.highAngularXLimit.limit;
+
+					case ButtonAxis.YRotation:
+						return joint.angularYLimit.limit;
+
+					case ButtonAxis.ZRotation:
+						return joint.angularZLimit.limit;
+
+					default:
+						return 0;
+				}
+			}
+		}
+
+		protected Vector3 Axis
+		{
+			get
+			{
+				switch (axis)
+				{
+					case ButtonAxis.XPosition:
+					case ButtonAxis.XRotation:
+						return Vector3.right;
+
+					case ButtonAxis.YPosition:
+					case ButtonAxis.YRotation:
+						return Vector3.up;
+
+					case ButtonAxis.ZPosition:
+					case ButtonAxis.ZRotation:
+						return Vector3.forward;
+
+					default:
+						return Vector3.zero;
+				}
 			}
 		}
 
@@ -162,17 +232,20 @@ namespace SBEPIS.Interaction
 			}
 		}
 
-		protected float GetLinearDirectionValue(Vector3 vector)
+		protected float GetDirectionValue(Vector3 vector)
 		{
 			switch (axis)
 			{
 				case ButtonAxis.XPosition:
+				case ButtonAxis.XRotation:
 					return vector.x;
 
 				case ButtonAxis.YPosition:
+				case ButtonAxis.YRotation:
 					return vector.y;
 
 				case ButtonAxis.ZPosition:
+				case ButtonAxis.ZRotation:
 					return vector.z;
 
 				default:
@@ -180,25 +253,37 @@ namespace SBEPIS.Interaction
 			}
 		}
 
-		protected float GetRotationalDirectionValue(Vector3 eulers)
+		protected void SetDirectionValue(ref Vector3 vector, float value)
 		{
 			switch (axis)
 			{
+				case ButtonAxis.XPosition:
 				case ButtonAxis.XRotation:
-					return eulers.x;
+					vector.x = value;
+					return;
 
+				case ButtonAxis.YPosition:
 				case ButtonAxis.YRotation:
-					return eulers.y;
+					vector.y = value;
+					return;
 
+				case ButtonAxis.ZPosition:
 				case ButtonAxis.ZRotation:
-					return eulers.z;
+					vector.z = value;
+					return;
 
 				default:
-					return 0;
+					return;
 			}
 		}
 
-		public virtual void Yeah()
+		public void ResetAnchor(float progress)
+		{
+			joint.connectedAnchor = initialRelativeConnectedAnchor + (transform.parent ? transform.parent.position : Vector3.zero);
+			SetRelativeProgress(progress);
+		}
+
+		public void Yeah()
 		{
 			print(gameObject + " " + progress);
 		}
