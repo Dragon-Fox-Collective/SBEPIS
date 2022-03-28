@@ -1,3 +1,4 @@
+using SBEPIS.Bits;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace SBEPIS.Capturllection
 		private new Camera camera;
 
 		public static CaptureCamera instance;
-		private static readonly Dictionary<long, Texture2D> captureCodeTextures = new Dictionary<long, Texture2D>();
+		private static readonly Dictionary<BitSet, Texture2D> captureCodeTextures = new Dictionary<BitSet, Texture2D>();
 
 		private void Awake()
 		{
@@ -53,10 +54,10 @@ namespace SBEPIS.Capturllection
 			return rtn;
 		}
 
-		private Texture2D TakePictureOfCode(long captchaHash)
+		private Texture2D TakePictureOfCode(BitSet bits)
 		{
 			codeBox.gameObject.SetActive(true);
-			codeBox.text = CaptureCodeUtils.UnhashCaptureHash(captchaHash);
+			codeBox.text = (string)bits;
 			Texture2D rtn = TakePicture();
 			codeBox.gameObject.SetActive(false);
 			return rtn;
@@ -90,12 +91,12 @@ namespace SBEPIS.Capturllection
 		/// <summary>
 		/// Look up or generate a Texture2D of a captcha code string
 		/// </summary>
-		public static Texture2D GetCaptureCodeTexture(long captureHash)
+		public static Texture2D GetCaptureCodeTexture(BitSet bits)
 		{
-			if (!captureCodeTextures.ContainsKey(captureHash))
-				captureCodeTextures.Add(captureHash, instance.TakePictureOfCode(captureHash));
+			if (!captureCodeTextures.ContainsKey(bits))
+				captureCodeTextures.Add(bits, instance.TakePictureOfCode(bits));
 
-			captureCodeTextures.TryGetValue(captureHash, out Texture2D texture);
+			captureCodeTextures.TryGetValue(bits, out Texture2D texture);
 			return texture;
 		}
 	}

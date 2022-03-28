@@ -1,4 +1,5 @@
 using SBEPIS.Alchemy;
+using SBEPIS.Bits;
 using TMPro;
 using UnityEngine;
 
@@ -31,7 +32,7 @@ namespace SBEPIS.Captchalogue
 			modusText.color = modus.mainColor;
 			modusName.color = modus.mainColor;
 			modusName.text = modus.itemName.ToLower();
-			CaptchalogueCard.UpdateMaterials(0, modus.icon, modus.mainColor, renderers, null, colorMaterial, colorMaterial);
+			CaptchalogueCard.UpdateMaterials(BitSet.Nothing, modus.icon, modus.mainColor, renderers, null, colorMaterial, colorMaterial);
 		}
 	}
 }

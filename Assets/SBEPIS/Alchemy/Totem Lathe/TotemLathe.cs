@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using SBEPIS.Interaction;
 using SBEPIS.Captchalogue;
+using SBEPIS.Bits;
 
 namespace SBEPIS.Alchemy
 {
@@ -24,7 +25,7 @@ namespace SBEPIS.Alchemy
 
 		private bool isWorking;
 		private bool isLathing;
-		private long captchaHash;
+		private BitSet bits;
 		private Totem totem;
 		private float[] initialDepths = new float[8];
 		private HashSet<(int larger, int smaller)> largerEdges = new HashSet<(int larger, int smaller)>();
@@ -46,7 +47,7 @@ namespace SBEPIS.Alchemy
 				{
 					for (int i = 0; i < 8; i++)
 					{
-						float chiselHeight = CaptureCodeUtils.GetCapturePercent(totem.captchaHash, i); // 0: Chisel bit is flat against the top of the chisel; 1: bit goes all the way down
+						float chiselHeight = CaptureCodeUtils.GetCapturePercent(totem.bits, i); // 0: Chisel bit is flat against the top of the chisel; 1: bit goes all the way down
 						float chiselDepth = latheProgress - 1f + chiselHeight; // -1: Chisel bit is currently one dowel radius above the dowel; 0: bit is currently touching the outside of a fresh dowel; 1: bit is all the way into the dowel
 						float carveDepth = Mathf.Max(chiselDepth, initialDepths[i]);
 
@@ -55,11 +56,11 @@ namespace SBEPIS.Alchemy
 
 					foreach ((int larger, int smaller) in largerEdges)
 					{
-						float largerChiselHeight = CaptureCodeUtils.GetCapturePercent(totem.captchaHash, larger);
+						float largerChiselHeight = CaptureCodeUtils.GetCapturePercent(totem.bits, larger);
 						float largerChiselDepth = latheProgress - 1f + largerChiselHeight;
 						float largerCarveDepth = Mathf.Max(largerChiselDepth, initialDepths[larger]);
 
-						float smallerChiselHeight = CaptureCodeUtils.GetCapturePercent(totem.captchaHash, smaller);
+						float smallerChiselHeight = CaptureCodeUtils.GetCapturePercent(totem.bits, smaller);
 						float smallerChiselDepth = latheProgress - 1f + smallerChiselHeight;
 						float smallerCarveDepth = Mathf.Max(smallerChiselDepth, initialDepths[smaller]);
 
@@ -90,11 +91,11 @@ namespace SBEPIS.Alchemy
 		public void SetCaptchaHash()
 		{
 			if (!card1Placement.item)
-				captchaHash = (1L << (6 * 8)) - 1;
+				bits = (BitSet)((1L << (6 * 8)) - 1);
 			else if (!card2Placement.item)
-				captchaHash = card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash;
+				bits = card1Placement.item.GetComponent<CaptchalogueCard>().punchedBits;
 			else
-				captchaHash = card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash & card2Placement.item.GetComponent<CaptchalogueCard>().punchedHash;
+				bits = card1Placement.item.GetComponent<CaptchalogueCard>().punchedBits & card2Placement.item.GetComponent<CaptchalogueCard>().punchedBits;
 		}
 
 		public void OnPlaceTotem()
@@ -194,33 +195,33 @@ namespace SBEPIS.Alchemy
 
 			SetCaptchaHash();
 			for (int i = 0; i < 8; i++)
-				chisel.SetBlendShapeWeight(i, (1f - CaptureCodeUtils.GetCapturePercent(captchaHash, i)) * 100);
+				chisel.SetBlendShapeWeight(i, (1f - CaptureCodeUtils.GetCapturePercent(bits, i)) * 100);
 			isLathing = true;
 
 			if (totem)
 			{
-				long greaterCaptchaHash = 0;
+				BitSet greaterBits = BitSet.Nothing;
 				for (int i = 0; i < 8; i++)
 				{
 					initialDepths[i] = totem.GetDepth(i);
 
-					greaterCaptchaHash |= (1L << i * 6) * Mathf.Max(CaptureCodeUtils.GetCaptureDigit(totem.captchaHash, i), CaptureCodeUtils.GetCaptureDigit(captchaHash, i));
+					greaterBits |= (BitSet)((1L << i * 6) * Mathf.Max(CaptureCodeUtils.GetCaptureDigit(totem.bits, i), CaptureCodeUtils.GetCaptureDigit(bits, i)));
 				}
-				totem.captchaHash = greaterCaptchaHash;
+				totem.bits = greaterBits;
 
 				largerEdges.Clear();
 				for (int i = 0; i < 8; i++)
 				{
-					float chiselHeight = CaptureCodeUtils.GetCapturePercent(totem.captchaHash, i);
+					float chiselHeight = CaptureCodeUtils.GetCapturePercent(totem.bits, i);
 					if (i > 0)
 					{
-						float prevChiselHeight = CaptureCodeUtils.GetCapturePercent(totem.captchaHash, i - 1);
+						float prevChiselHeight = CaptureCodeUtils.GetCapturePercent(totem.bits, i - 1);
 						if (chiselHeight > prevChiselHeight || (chiselHeight == prevChiselHeight && initialDepths[i] <= initialDepths[i - 1]))
 							largerEdges.Add((i, i - 1));
 					}
 					if (i < 7)
 					{
-						float nextChiselHeight = CaptureCodeUtils.GetCapturePercent(totem.captchaHash, i + 1);
+						float nextChiselHeight = CaptureCodeUtils.GetCapturePercent(totem.bits, i + 1);
 						if (chiselHeight > nextChiselHeight || (chiselHeight == nextChiselHeight && initialDepths[i] < initialDepths[i + 1]))
 							largerEdges.Add((i, i + 1));
 					}
@@ -317,9 +318,9 @@ namespace SBEPIS.Alchemy
 
 		private void UpdateCaptchaPanel()
 		{
-			string code1 = card1Placement.item ? CaptureCodeUtils.UnhashCaptureHash(card1Placement.item.GetComponent<CaptchalogueCard>().punchedHash) : "!!!!!!!!";
-			string code2 = card2Placement.item ? CaptureCodeUtils.UnhashCaptureHash(card2Placement.item.GetComponent<CaptchalogueCard>().punchedHash) : "!!!!!!!!";
-			string codeRes = CaptureCodeUtils.UnhashCaptureHash(captchaHash);
+			string code1 = card1Placement.item ? (string)card1Placement.item.GetComponent<CaptchalogueCard>().punchedBits : (string)BitSet.Everything;
+			string code2 = card2Placement.item ? (string)card2Placement.item.GetComponent<CaptchalogueCard>().punchedBits : (string)BitSet.Everything;
+			string codeRes = (string)bits;
 			captchaPanel.text = $"{code1}\n&\n{code2}\n=\n{codeRes}";
 		}
 
@@ -344,18 +345,18 @@ namespace SBEPIS.Alchemy
 			bool lowerPulled = animator.GetBool("Lever 1 Pulled"), upperPulled = animator.GetBool("Lever 2 Pulled");
 			if (!totem && !lowerPulled && !upperPulled)
 				dowelPanel.text = "Insert dowel";
-			else if (( totem && totem.captchaHash == 0 && !lowerPulled && !upperPulled) ||
-					 ( totem && totem.captchaHash != 0 &&  lowerPulled && !upperPulled) ||
-					 (!totem &&							   lowerPulled && !upperPulled))
+			else if (( totem && totem.bits == BitSet.Nothing && !lowerPulled && !upperPulled) ||
+					 ( totem && totem.bits != BitSet.Nothing &&  lowerPulled && !upperPulled) ||
+					 (!totem &&									 lowerPulled && !upperPulled))
 				dowelPanel.text = "Pull lower lever";
-			else if (( totem && totem.captchaHash == 0 &&  lowerPulled && !upperPulled && captchaHash != 0) ||
-					 ( totem &&							   lowerPulled &&  upperPulled) ||
-					 (!totem &&											   upperPulled))
+			else if (( totem && totem.bits == BitSet.Nothing &&  lowerPulled && !upperPulled && bits != BitSet.Nothing) ||
+					 ( totem &&									 lowerPulled &&  upperPulled) ||
+					 (!totem &&													 upperPulled))
 				dowelPanel.text = "Pull upper lever";
-			else if (  totem && totem.captchaHash == 0 &&  lowerPulled && !upperPulled && captchaHash == 0)
+			else if (  totem && totem.bits == BitSet.Nothing &&  lowerPulled && !upperPulled && bits == BitSet.Nothing)
 				dowelPanel.text = "Invalid punch code";
-			else if (( totem && totem.captchaHash != 0 && !lowerPulled && !upperPulled) ||
-					 (!totem &&							  !lowerPulled && !upperPulled))
+			else if (( totem && totem.bits != BitSet.Nothing && !lowerPulled && !upperPulled) ||
+					 (!totem &&									!lowerPulled && !upperPulled))
 				dowelPanel.text = "Remove dowel";
 			else
 				dowelPanel.text = "Error";

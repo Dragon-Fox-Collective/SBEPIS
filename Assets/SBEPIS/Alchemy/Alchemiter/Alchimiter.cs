@@ -1,3 +1,4 @@
+using SBEPIS.Bits;
 using SBEPIS.Interaction;
 using TMPro;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace SBEPIS.Alchemy
 		public TextMeshProUGUI alchemizedCounter;
 		public float delayBetweenAlchemizings;
 
-		private long captchaHash;
+		private BitSet bits;
 		private int thingsToAlchemize = 1;
 		private bool isAlchemizing;
 		private float alchemizingTimer;
@@ -28,9 +29,9 @@ namespace SBEPIS.Alchemy
 					thingsToAlchemize--;
 					UpdateAlchemizedText();
 
-					Itemkind.itemkinds.TryGetValue(captchaHash, out Itemkind itemType);
+					Itemkind.itemkinds.TryGetValue(bits, out Itemkind itemType);
 					if (!itemType)
-						Itemkind.itemkinds.TryGetValue(0, out itemType);
+						Itemkind.itemkinds.TryGetValue(BitSet.Nothing, out itemType);
 					Instantiate(itemType.prefab, spawnPoint.position, spawnPoint.rotation);
 				}
 				if (thingsToAlchemize == 0)
@@ -58,7 +59,7 @@ namespace SBEPIS.Alchemy
 			animator.SetBool("Alchemizing", true);
 			animator.SetTrigger("Alc Button");
 			dowelPlacement.DisallowOrphan();
-			captchaHash = dowelPlacement.item.GetComponent<Totem>().captchaHash;
+			bits = dowelPlacement.item.GetComponent<Totem>().bits;
 		}
 
 		public void Alchemize()

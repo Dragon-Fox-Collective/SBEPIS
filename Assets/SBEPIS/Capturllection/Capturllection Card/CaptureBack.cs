@@ -1,3 +1,4 @@
+using SBEPIS.Bits;
 using System;
 using UnityEngine;
 
@@ -23,10 +24,10 @@ namespace SBEPIS.Capturllection
 
 		public void UpdateCaptureCode()
 		{
-			long captureHash = capture.capturedItem? capture.capturedItem.captureHash : 0;
+			BitSet bits = capture.capturedItem ? capture.capturedItem.bits : BitSet.Nothing;
 			PerformOnMaterial(renderers, captureMaterial, material => {
-				material.SetFloat("Seed", CaptureCodeUtils.GetCaptureSeed(captureHash));
-				material.SetTexture("CaptchaCode", CaptureCamera.GetCaptureCodeTexture(captureHash));
+				material.SetFloat("Seed", CaptureCodeUtils.GetCaptureSeed(bits));
+				material.SetTexture("CaptchaCode", CaptureCamera.GetCaptureCodeTexture(bits));
 			});
 		}
 

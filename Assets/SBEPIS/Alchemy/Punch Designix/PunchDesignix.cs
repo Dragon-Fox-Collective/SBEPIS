@@ -1,3 +1,4 @@
+using SBEPIS.Bits;
 using SBEPIS.Captchalogue;
 using SBEPIS.Interaction;
 using TMPro;
@@ -46,7 +47,7 @@ namespace SBEPIS.Alchemy
 		{
 			if (animator.GetBool("Code Entered"))
 			{
-				punchPlacement.item.GetComponent<CaptchalogueCard>().Punch(punchPlacement.item.GetComponent<CaptchalogueCard>().punchedHash | CaptureCodeUtils.HashCaptureCode(punchPanel.text));
+				punchPlacement.item.GetComponent<CaptchalogueCard>().Punch(punchPlacement.item.GetComponent<CaptchalogueCard>().punchedBits | (BitSet)punchPanel.text);
 				punchPanel.text = "";
 			}
 		}

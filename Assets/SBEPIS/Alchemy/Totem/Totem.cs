@@ -1,3 +1,4 @@
+using SBEPIS.Bits;
 using UnityEngine;
 
 namespace SBEPIS.Alchemy
@@ -9,20 +10,20 @@ namespace SBEPIS.Alchemy
 		[SerializeField]
 		private Itemkind defaultItem;
 
-		public long captchaHash { get; set; }
+		public BitSet bits { get; set; }
 
 		private void Start()
 		{
 			if (defaultItem)
 			{
-				captchaHash = defaultItem.captchaHash;
+				bits = defaultItem.bits;
 				for (int i = 0; i < 8; i++)
-					SetDepth(i, CaptureCodeUtils.GetCapturePercent(captchaHash, i));
+					SetDepth(i, CaptureCodeUtils.GetCapturePercent(bits, i));
 
 				for (int i = 0; i < 7; i++)
 				{
 					SetEdgeDistance(i, true, 1);
-					SetEdgeDepth(i, true, CaptureCodeUtils.GetCapturePercent(captchaHash, i + 1));
+					SetEdgeDepth(i, true, CaptureCodeUtils.GetCapturePercent(bits, i + 1));
 				}
 			}
 		}

@@ -1,3 +1,4 @@
+using SBEPIS.Bits;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection
@@ -6,11 +7,11 @@ namespace SBEPIS.Capturllection
 	{
 		public string captureCode;
 
-		public long captureHash { get; private set; }
+		public BitSet bits { get; private set; }
 
 		private void Awake()
 		{
-			captureHash = CaptureCodeUtils.HashCaptureCode(captureCode);
+			bits = (BitSet)captureCode;
 		}
 	}
 }

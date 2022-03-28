@@ -1,5 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
+using SBEPIS.Bits;
 using SBEPIS.Thaumaturgy;
 using SBEPIS.Utils;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace SBEPIS.Tests
 		public IEnumerator PunchingCaptureCardsMakesHoles()
 		{
 			Punchable card = Object.Instantiate(scene.captureCardPrefab, scene.transform).GetComponent<Punchable>();
-			card.Punch(CaptureCodeUtils.HashCaptureCode("BAAAAAAA"));
+			card.Punch((BitSet)"BAAAAAAA");
 
 			for (int i = 0; i < card.punchHoles.sharedMesh.blendShapeCount; i++)
 			{

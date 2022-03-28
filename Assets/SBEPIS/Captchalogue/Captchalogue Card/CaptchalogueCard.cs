@@ -1,4 +1,5 @@
 using SBEPIS.Alchemy;
+using SBEPIS.Bits;
 using System;
 using TMPro;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace SBEPIS.Captchalogue
 		private string defaultCaptcha;
 
 		public Item heldItem { get; private set; }
-		public long punchedHash { get; private set; }
+		public BitSet punchedBits { get; private set; }
 		public new Rigidbody rigidbody { get; private set; }
 		private Moduskind modus;
 
@@ -37,7 +38,7 @@ namespace SBEPIS.Captchalogue
 			UpdateMaterials(defaultModus);
 			Eject();
 			if (defaultCaptcha.Length > 0)
-				Punch(CaptureCodeUtils.HashCaptureCode(defaultCaptcha));
+				Punch((BitSet)defaultCaptcha);
 		}
 
 		public void Captchalogue(Item item)
@@ -51,28 +52,28 @@ namespace SBEPIS.Captchalogue
 		public void Eject()
 		{
 			heldItem = null;
-			UpdateMaterials(0, null);
+			UpdateMaterials(BitSet.Nothing, null);
 		}
 
 		public void UpdateMaterials(Moduskind modus)
 		{
 			this.modus = modus;
-			UpdateMaterials(0, null, modus.mainColor, renderers, null, null, colorMaterial);
+			UpdateMaterials(BitSet.Nothing, null, modus.mainColor, renderers, null, null, colorMaterial);
 			foreach (TextMeshProUGUI text in texts)
 				text.color = modus.textColor;
 		}
 
-		private void UpdateMaterials(long captchaHash, Texture2D icon)
+		private void UpdateMaterials(BitSet bits, Texture2D icon)
 		{
-			UpdateMaterials(captchaHash, icon, modus.mainColor, renderers, captchaMaterial, iconMaterial, colorMaterial);
+			UpdateMaterials(bits, icon, modus.mainColor, renderers, captchaMaterial, iconMaterial, colorMaterial);
 		}
 
-		public static void UpdateMaterials(long captchaHash, Texture2D icon, Color color, Renderer[] renderers, Material captchaMaterial, Material iconMaterial, Material colorMaterial)
+		public static void UpdateMaterials(BitSet bits, Texture2D icon, Color color, Renderer[] renderers, Material captchaMaterial, Material iconMaterial, Material colorMaterial)
 		{
 			float seed = 0;
-			if (captchaHash != 0)
+			if (bits != BitSet.Nothing)
 				for (int i = 0; i < 8; i++)
-					seed += Mathf.Pow(10f, i - 4) * CaptureCodeUtils.GetCaptureDigit(captchaHash, i);
+					seed += Mathf.Pow(10f, i - 4) * CaptureCodeUtils.GetCaptureDigit(bits, i);
 
 			foreach (Renderer renderer in renderers)
 				for (int i = 0; i < renderer.materials.Length; i++)
@@ -108,19 +109,19 @@ namespace SBEPIS.Captchalogue
 				}
 		}
 
-		public void Punch(long captchaHash)
+		public void Punch(BitSet bits)
 		{
-			this.punchedHash = captchaHash;
+			this.punchedBits = bits;
 
 			for (int i = 0; i < 48; i++)
 			{
-				holeCaps.SetBlendShapeWeight(holeCaps.sharedMesh.GetBlendShapeIndex($"Key {i + 1}"), CaptureCodeUtils.GetCaptureBit(punchedHash, i) ? 100 : 0);
+				holeCaps.SetBlendShapeWeight(holeCaps.sharedMesh.GetBlendShapeIndex($"Key {i + 1}"), CaptureCodeUtils.GetCaptureBit(punchedBits, i) ? 100 : 0);
 
 				for (int j = 0; j < i; j++)
 				{
 					int sharedIndex = holeCaps.sharedMesh.GetBlendShapeIndex($"Key {j + 1} + {i + 1}");
 					if (sharedIndex >= 0)
-						holeCaps.SetBlendShapeWeight(sharedIndex, CaptureCodeUtils.GetCaptureBit(punchedHash, i) || CaptureCodeUtils.GetCaptureBit(punchedHash, j) ? 100 : 0);
+						holeCaps.SetBlendShapeWeight(sharedIndex, CaptureCodeUtils.GetCaptureBit(punchedBits, i) || CaptureCodeUtils.GetCaptureBit(punchedBits, j) ? 100 : 0);
 				}
 			}
 		}

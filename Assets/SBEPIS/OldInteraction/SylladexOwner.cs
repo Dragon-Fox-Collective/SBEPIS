@@ -1,4 +1,5 @@
 using SBEPIS.Alchemy;
+using SBEPIS.Bits;
 using SBEPIS.Captchalogue;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -174,7 +175,7 @@ namespace SBEPIS.Interaction
 			if (itemHolder.Cast(out RaycastHit captchaHit))
 			{
 				CaptchalogueCard hitCard = captchaHit.rigidbody.GetComponent<CaptchalogueCard>();
-				if (hitCard && hitCard.punchedHash == 0)
+				if (hitCard && hitCard.punchedBits == BitSet.Nothing)
 				{
 					sylladex.InsertCard(hitCard);
 					return;

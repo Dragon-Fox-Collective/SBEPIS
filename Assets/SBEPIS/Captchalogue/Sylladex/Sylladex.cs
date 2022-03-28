@@ -1,4 +1,5 @@
 using SBEPIS.Alchemy;
+using SBEPIS.Bits;
 using SBEPIS.Interaction;
 using System;
 using TMPro;
@@ -109,7 +110,7 @@ namespace SBEPIS.Captchalogue
 		private void UpdateCaptcha()
 		{
 			CaptchalogueCard displayCard = modus.Display();
-			CaptchalogueCard.UpdateMaterials(displayCard && displayCard.heldItem ? displayCard.heldItem.itemkind.captchaHash : 0, null, Color.black, renderers, captchaMaterial, null, null);
+			CaptchalogueCard.UpdateMaterials(displayCard && displayCard.heldItem ? displayCard.heldItem.itemkind.bits : BitSet.Nothing, null, Color.black, renderers, captchaMaterial, null, null);
 		}
 
 		private void UpdateCardsDisplay()
@@ -313,8 +314,8 @@ namespace SBEPIS.Captchalogue
 
 		private void UpdateMaterials()
 		{
-			CaptchalogueCard.UpdateMaterials(0, null, color = moduskind.mainColor, renderers, null, null, colorMaterial);
-			CaptchalogueCard.UpdateMaterials(0, null, color, renderers, null, null, panelMaterial);
+			CaptchalogueCard.UpdateMaterials(BitSet.Nothing, null, color = moduskind.mainColor, renderers, null, null, colorMaterial);
+			CaptchalogueCard.UpdateMaterials(BitSet.Nothing, null, color, renderers, null, null, panelMaterial);
 			darkBar.color = moduskind.darkColor;
 			title.color = moduskind.textColor;
 		}
@@ -341,7 +342,7 @@ namespace SBEPIS.Captchalogue
 				renderers[0].materials = materials;
 			}
 			if (litty > 0)
-				CaptchalogueCard.UpdateMaterials(0, null, color, renderers, null, null, panelMaterial);
+				CaptchalogueCard.UpdateMaterials(BitSet.Nothing, null, color, renderers, null, null, panelMaterial);
 		}
 	}
 }
