@@ -103,7 +103,7 @@ namespace SBEPIS.Tests.EditMode
 		[Test]
 		public void BitsHaveUniqueness()
 		{
-			Assert.AreEqual(1, CaptureCodeUtils.GetUniquenessScore(bits, (BitSet)((long)bits | 1)));
+			Assert.AreEqual(1, CaptureCodeUtils.GetUniquenessScore(bits, (BitSet)0b111));
 		}
 	}
 }

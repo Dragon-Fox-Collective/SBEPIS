@@ -30,8 +30,10 @@ namespace SBEPIS.Bits
 		public static readonly BitSet Nothing = (BitSet)0;
 		public static readonly BitSet Everything = (BitSet)(-1);
 
-		private readonly LeastBits leastBits;
-		private readonly MostBits mostBits;
+		[SerializeField]
+		private LeastBits leastBits;
+		[SerializeField]
+		private MostBits mostBits;
 
 		private BitSet(LeastBits leastBits, MostBits mostBits)
 		{
@@ -52,22 +54,11 @@ namespace SBEPIS.Bits
 
 		public static explicit operator long(BitSet a)
 		{
-			Debug.Log("Converting bitset to long");
-			Debug.Log(Convert.ToString((int)a.mostBits, 2));
-			Debug.Log(Convert.ToString((long)(uint)a.mostBits, 2));
-			Debug.Log(Convert.ToString((int)a.leastBits, 2));
-			long rtn = ((long)a.leastBits) | (((long)(uint)a.mostBits) << 32);
-			Debug.Log(Convert.ToString(rtn, 2));
-			return rtn;
+			return ((uint)a.leastBits) | ((long)(uint)a.mostBits) << 32;
 		}
 		public static explicit operator BitSet(long a)
 		{
-			Debug.Log("Converting long to bitset");
-			Debug.Log(Convert.ToString(a, 2));
-			BitSet rtn = new BitSet((LeastBits)a, (MostBits)((ulong)a >> 32));
-			Debug.Log(Convert.ToString((int)rtn.mostBits, 2));
-			Debug.Log(Convert.ToString((int)rtn.leastBits, 2));
-			return rtn;
+			return new BitSet((LeastBits)a, (MostBits)((ulong)a >> 32));
 		}
 
 		public static explicit operator string(BitSet a)
@@ -164,13 +155,16 @@ namespace SBEPIS.Bits
 			// so  uniqueBits | commonBits == applied
 			// and uniqueBits & commonBits == 0
 
-			long uniqueBits = (long)((appliedBits ^ baseBits) & appliedBits);
-			long commonBits = (long)(appliedBits & baseBits);
+			long baseMask = (long)baseBits;
+			long appliedMask = (long)appliedBits;
+
+			long uniqueMask = (appliedMask ^ baseMask) & appliedMask;
+			long commonMask = appliedMask & baseMask;
 			int score = 0;
 			for (int i = 0; i < 64; i++)
-				if (((uniqueBits >> i) & 1) == 1)
+				if (((uniqueMask >> i) & 1) == 1)
 					score++;
-				else if (((commonBits >> i) & 1) == 1)
+				else if (((commonMask >> i) & 1) == 1)
 					score--;
 			return score;
 		}
