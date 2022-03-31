@@ -13,13 +13,12 @@ namespace SBEPIS.Interaction.Flatscreen
 		public float farHoldDistance = 2;
 		public float nearHoldDistance = 0.7f;
 
-		private void Start()
-		{
-			connectionPoint.position = transform.position + transform.forward * farHoldDistance;
-		}
+		private bool zoomed;
 
 		private void Update()
 		{
+			connectionPoint.position = transform.position + transform.forward * (zoomed ? nearHoldDistance : farHoldDistance);
+
 			if (!grabber.heldGrabbable)
 			{
 				if (CastForGrabbables(out RaycastHit hit))
@@ -38,9 +37,9 @@ namespace SBEPIS.Interaction.Flatscreen
 		public void OnZoom(CallbackContext context)
 		{
 			if (!grabber.heldGrabbable || context.ReadValue<float>() > 0)
-				connectionPoint.position = transform.position + transform.forward * farHoldDistance;
+				zoomed = false;
 			else if (context.ReadValue<float>() < 0)
-				connectionPoint.position = transform.position + transform.forward * nearHoldDistance;
+				zoomed = true;
 		}
 
 		public bool Cast(out RaycastHit hit, LayerMask mask)

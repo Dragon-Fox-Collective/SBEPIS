@@ -1,6 +1,5 @@
 using SBEPIS.Utils;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -20,7 +19,7 @@ namespace SBEPIS.Interaction
 
 		public PlayerInput input;
 
-		public MovementController controller;
+		public RigidbodyMovementController controller;
 
 		public float mouseSensitivityMin = 0.1f;
 		public float mouseSensitivityMax = 1;
@@ -70,18 +69,12 @@ namespace SBEPIS.Interaction
 		{
 			main.gameObject.SetActive(true);
 			settings.gameObject.SetActive(false);
-
-			//foreach (PhysicsButton button in main.GetComponentsInChildren<PhysicsButton>())
-			//	button.ResetAnchor(0);
 		}
 
 		public void GoToSettings()
 		{
 			main.gameObject.SetActive(false);
 			settings.gameObject.SetActive(true);
-
-			//foreach (PhysicsButton button in settings.GetComponentsInChildren<PhysicsButton>())
-			//	button.ResetAnchor(0);
 
 			sensitivitySlider.ResetAnchor(controller.sensitivity.Map(mouseSensitivityMin, mouseSensitivityMax, 0, 1));
 		}
