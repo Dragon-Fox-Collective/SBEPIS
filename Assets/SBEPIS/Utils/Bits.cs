@@ -5,7 +5,7 @@ namespace SBEPIS.Bits
 {
 	// Unity only supports 32-bit enums :/
 	[Flags]
-	public enum LeastBits
+	public enum LeastBits : uint
 	{
 		Nothing = 0,
 
@@ -16,7 +16,7 @@ namespace SBEPIS.Bits
 	}
 
 	[Flags]
-	public enum MostBits
+	public enum MostBits : uint
 	{
 		Nothing = 0,
 
@@ -27,8 +27,8 @@ namespace SBEPIS.Bits
 	[Serializable]
 	public struct BitSet
 	{
-		public static readonly BitSet Nothing = (BitSet)0;
-		public static readonly BitSet Everything = (BitSet)(-1);
+		public static readonly BitSet Nothing = (BitSet)0UL;
+		public static readonly BitSet Everything = (BitSet)~0UL;
 
 		[SerializeField]
 		private LeastBits leastBits;
@@ -45,20 +45,20 @@ namespace SBEPIS.Bits
 		public override int GetHashCode() => (leastBits, mostBits).GetHashCode();
 		public override bool Equals(object obj) => this == (BitSet)obj;
 
-		public static BitSet operator |(BitSet a, BitSet b) => (BitSet)((long)a | (long)b);
-		public static BitSet operator &(BitSet a, BitSet b) => (BitSet)((long)a & (long)b);
-		public static BitSet operator ^(BitSet a, BitSet b) => (BitSet)((long)a ^ (long)b);
-		public static BitSet operator ~(BitSet a) => (BitSet)~(long)a;
-		public static bool operator ==(BitSet a, BitSet b) => (long)a == (long)b;
-		public static bool operator !=(BitSet a, BitSet b) => (long)a != (long)b;
+		public static BitSet operator |(BitSet a, BitSet b) => (BitSet)((ulong)a | (ulong)b);
+		public static BitSet operator &(BitSet a, BitSet b) => (BitSet)((ulong)a & (ulong)b);
+		public static BitSet operator ^(BitSet a, BitSet b) => (BitSet)((ulong)a ^ (ulong)b);
+		public static BitSet operator ~(BitSet a) => (BitSet)~(ulong)a;
+		public static bool operator ==(BitSet a, BitSet b) => (ulong)a == (ulong)b;
+		public static bool operator !=(BitSet a, BitSet b) => (ulong)a != (ulong)b;
 
-		public static explicit operator long(BitSet a)
+		public static explicit operator ulong(BitSet a)
 		{
-			return ((uint)a.leastBits) | ((long)(uint)a.mostBits) << 32;
+			return ((ulong)a.leastBits) | ((ulong)a.mostBits) << 32;
 		}
-		public static explicit operator BitSet(long a)
+		public static explicit operator BitSet(ulong a)
 		{
-			return new BitSet((LeastBits)a, (MostBits)((ulong)a >> 32));
+			return new BitSet((LeastBits)a, (MostBits)(a >> 32));
 		}
 
 		public static explicit operator string(BitSet a)
@@ -73,25 +73,27 @@ namespace SBEPIS.Bits
 			if (a.Length != 8)
 				throw new ArgumentException("Captcha code must have 8 characters");
 
-			long bits = 0;
+			ulong bits = 0;
 			for (int i = 0; i < 8; i++)
 			{
 				if (Array.IndexOf(CaptureCodeUtils.hashCharacters, a[i]) == -1)
 					throw new ArgumentException("Captcha code contains illegal characters");
 
-				bits |= (1L << i * 6) * Array.IndexOf(CaptureCodeUtils.hashCharacters, a[i]);
+				bits |= (1UL << i * 6) * (ulong)Array.IndexOf(CaptureCodeUtils.hashCharacters, a[i]);
 			}
 			return (BitSet)bits;
 		}
 
 		public static implicit operator BitSet(LeastBits a) => new BitSet(a, 0);
 		public static implicit operator BitSet(MostBits a) => new BitSet(0, a);
+
+		public bool Has(BitSet other) => (this & other) == other;
 	}
 
 	public static class CaptureCodeUtils
 	{
-		public const long oneCharacterMask = (1L << 6) - 1;
-		public const long allBitsMask = (1L << 48) - 1;
+		public const ulong oneCharacterMask = (1L << 6) - 1;
+		public const ulong allBitsMask = (1L << 48) - 1;
 
 		/// <summary>
 		/// The canonical order that the characters go in, with A as no punches and / as all 6 punches
@@ -103,7 +105,7 @@ namespace SBEPIS.Bits
 		/// </summary>
 		public static int GetCaptureDigit(BitSet bits, int i)
 		{
-			return (int)(((long)bits >> 6 * i) & oneCharacterMask);
+			return (int)(((ulong)bits >> 6 * i) & oneCharacterMask);
 		}
 
 		/// <summary>
@@ -127,7 +129,7 @@ namespace SBEPIS.Bits
 		/// </summary>
 		public static bool GetCaptureBit(BitSet bits, int i)
 		{
-			return ((long)bits & (1L << i)) != 0;
+			return ((ulong)bits & (1UL << i)) != 0;
 		}
 
 		/// <summary>
@@ -136,7 +138,7 @@ namespace SBEPIS.Bits
 		public static float GetCaptureSeed(BitSet bits)
 		{
 			float seed = 0;
-			if ((long)bits != 0)
+			if ((ulong)bits != 0)
 				for (int i = 0; i < 8; i++)
 					seed += Mathf.Pow(10f, i - 4) * GetCaptureDigit(bits, i);
 			return seed;
@@ -155,11 +157,11 @@ namespace SBEPIS.Bits
 			// so  uniqueBits | commonBits == applied
 			// and uniqueBits & commonBits == 0
 
-			long baseMask = (long)baseBits;
-			long appliedMask = (long)appliedBits;
+			ulong baseMask = (ulong)baseBits;
+			ulong appliedMask = (ulong)appliedBits;
 
-			long uniqueMask = (appliedMask ^ baseMask) & appliedMask;
-			long commonMask = appliedMask & baseMask;
+			ulong uniqueMask = (appliedMask ^ baseMask) & appliedMask;
+			ulong commonMask = appliedMask & baseMask;
 			int score = 0;
 			for (int i = 0; i < 64; i++)
 				if (((uniqueMask >> i) & 1) == 1)

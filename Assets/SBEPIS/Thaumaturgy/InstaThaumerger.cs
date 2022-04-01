@@ -27,7 +27,7 @@ namespace SBEPIS.Thaumaturgy
 			ItemBase itemBase = null;
 			foreach (ItemBase newItemBase in itemBases)
 			{
-				if ((bits & newItemBase.bits) == newItemBase.bits)
+				if (bits.Has(newItemBase.bits))
 				{
 					itemBase = newItemBase;
 					break;
@@ -44,17 +44,20 @@ namespace SBEPIS.Thaumaturgy
 			{
 				foreach (Rule rule in rules)
 				{
-					if ((bits & rule.requiredBits) == rule.requiredBits)
+					if (rule.IsApplicable(bits))
 					{
 						ItemBase module = null;
 						int moduleScore = int.MinValue;
 						foreach (ItemBase newModule in itemBases)
 						{
-							int newModuleScore = CaptureCodeUtils.GetUniquenessScore(itemBase.bits, newModule.bits);
-							if (newModuleScore > moduleScore)
+							if (bits.Has(newModule.bits))
 							{
-								module = newModule;
-								moduleScore = newModuleScore;
+								int newModuleScore = CaptureCodeUtils.GetUniquenessScore(itemBase.bits, newModule.bits);
+								if (newModuleScore > moduleScore)
+								{
+									module = newModule;
+									moduleScore = newModuleScore;
+								}
 							}
 						}
 
@@ -65,7 +68,7 @@ namespace SBEPIS.Thaumaturgy
 
 						rule.Apply(itemBase, module);
 
-						usedBits |= rule.requiredBits;
+						usedBits |= module.bits;
 
 						if (usedBits == bits)
 							break;

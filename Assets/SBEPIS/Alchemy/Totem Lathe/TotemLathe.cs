@@ -205,7 +205,7 @@ namespace SBEPIS.Alchemy
 				{
 					initialDepths[i] = totem.GetDepth(i);
 
-					greaterBits |= (BitSet)((1L << i * 6) * Mathf.Max(CaptureCodeUtils.GetCaptureDigit(totem.bits, i), CaptureCodeUtils.GetCaptureDigit(bits, i)));
+					greaterBits |= (BitSet)((1UL << i * 6) * (ulong)Mathf.Max(CaptureCodeUtils.GetCaptureDigit(totem.bits, i), CaptureCodeUtils.GetCaptureDigit(bits, i)));
 				}
 				totem.bits = greaterBits;
 

@@ -7,7 +7,7 @@ namespace SBEPIS.Tests.EditMode
 	public class CaptureCodeTests
 	{
 		private const string code = "sSS/+sss";
-		private const long bitMask = 0b10110010_11001011_00111110_11111101_00100100_10101100;
+		private const ulong bitMask = 0b10110010_11001011_00111110_11111101_00100100_10101100;
 		private static readonly BitSet bits = (BitSet)bitMask;
 
 		[Test]
@@ -55,7 +55,7 @@ namespace SBEPIS.Tests.EditMode
 		[Test]
 		public void BitsCastToBitMask()
 		{
-			Assert.AreEqual(bitMask, (long)bits);
+			Assert.AreEqual(bitMask, (ulong)bits);
 		}
 
 		[Test]
@@ -85,7 +85,7 @@ namespace SBEPIS.Tests.EditMode
 		[Test]
 		public void BitsNegateLongWise()
 		{
-			Assert.AreEqual(Convert.ToString(~bitMask, 2), Convert.ToString((long)~bits, 2));
+			Assert.AreEqual(Convert.ToString(~(long)bitMask, 2), Convert.ToString((long)(ulong)~bits, 2));
 		}
 
 		[Test]

@@ -27,17 +27,13 @@ namespace SBEPIS.Items
 
 	public abstract class Rule
 	{
-		public BitSet requiredBits;
-
+		public abstract bool IsApplicable(BitSet totalBits);
 		public abstract void Apply(ItemBase itemBase, ItemBase module);
 	}
 
 	public class AeratedAttachRule : Rule
 	{
-		public AeratedAttachRule()
-		{
-			requiredBits = LeastBits.Aerated;
-		}
+		public override bool IsApplicable(BitSet totalBits) => totalBits.Has(LeastBits.Aerated);
 
 		public override void Apply(ItemBase itemBase, ItemBase module)
 		{
@@ -52,10 +48,7 @@ namespace SBEPIS.Items
 
 	public class DefaultReplaceRule : Rule
 	{
-		public DefaultReplaceRule()
-		{
-			requiredBits = BitSet.Nothing;
-		}
+		public override bool IsApplicable(BitSet totalBits) => true;
 
 		public override void Apply(ItemBase itemBase, ItemBase module)
 		{
@@ -65,7 +58,7 @@ namespace SBEPIS.Items
 			module.transform.localScale = Vector3.one;
 			module.transform.SetParent(itemBase.replaceObject.parent, true);
 
-			UnityEngine.Object.Destroy(itemBase.replaceObject.gameObject);
+			Object.Destroy(itemBase.replaceObject.gameObject);
 			itemBase.replaceObject = module.replaceObject;
 		}
 	}
