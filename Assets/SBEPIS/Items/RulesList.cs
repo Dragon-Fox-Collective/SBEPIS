@@ -52,11 +52,11 @@ namespace SBEPIS.Items
 
 		public override void Apply(ItemBase itemBase, ItemBase module)
 		{
-			module.transform.parent = itemBase.replaceObject;
-			module.transform.localPosition = Vector3.zero;
-			module.transform.localRotation = Quaternion.identity;
-			module.transform.localScale = Vector3.one;
-			module.transform.SetParent(itemBase.replaceObject.parent, true);
+			Transform transform = itemBase.replaceObject.transform;
+			module.transform.parent = transform.parent;
+			module.transform.localPosition = transform.localPosition;
+			module.transform.localRotation = transform.localRotation;
+			module.transform.localScale = transform.localScale;
 
 			Object.Destroy(itemBase.replaceObject.gameObject);
 			itemBase.replaceObject = module.replaceObject;
