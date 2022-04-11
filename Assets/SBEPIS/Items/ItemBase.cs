@@ -1,15 +1,17 @@
 using SBEPIS.Bits;
+using SBEPIS.Interaction;
 using System;
 using UnityEngine;
 
 namespace SBEPIS.Items
 {
+	[RequireComponent(typeof(CompoundRigidbody), typeof(Grabbable))]
 	public class ItemBase : MonoBehaviour
 	{
 		public BitSet bits;
 
 		public Rigidbody jointTarget;
-		public Rigidbody replaceObject;
+		public Transform replaceObject;
 		public Transform aeratedAttachmentPoint;
 
 		private void Awake()

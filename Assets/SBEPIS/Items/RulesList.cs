@@ -42,6 +42,9 @@ namespace SBEPIS.Items
 			module.transform.localRotation = Quaternion.identity;
 			module.transform.localScale = Vector3.one;
 
+			FixedJoint joint = module.jointTarget.gameObject.AddComponent<FixedJoint>();
+			joint.connectedBody = itemBase.jointTarget;
+
 			itemBase.aeratedAttachmentPoint = module.aeratedAttachmentPoint;
 		}
 	}
@@ -57,6 +60,9 @@ namespace SBEPIS.Items
 			module.transform.localPosition = transform.localPosition;
 			module.transform.localRotation = transform.localRotation;
 			module.transform.localScale = transform.localScale;
+
+			FixedJoint joint = module.jointTarget.gameObject.AddComponent<FixedJoint>();
+			joint.connectedBody = itemBase.jointTarget;
 
 			Object.Destroy(itemBase.replaceObject.gameObject);
 			itemBase.replaceObject = module.replaceObject;
