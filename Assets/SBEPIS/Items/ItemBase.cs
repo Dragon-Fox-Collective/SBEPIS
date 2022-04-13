@@ -8,16 +8,27 @@ namespace SBEPIS.Items
 	[RequireComponent(typeof(CompoundRigidbody), typeof(Grabbable))]
 	public class ItemBase : MonoBehaviour
 	{
+		public new CompoundRigidbody rigidbody { get; private set; }
+
 		public BitSet bits;
 
-		public Rigidbody jointTarget;
 		public Transform replaceObject;
 		public Transform aeratedAttachmentPoint;
 
 		private void Awake()
 		{
-			if (GetComponent<Rigidbody>())
-				throw new InvalidOperationException("The GameObject holding the ItemBase component should not have a rigidbody.");
+			rigidbody = GetComponent<CompoundRigidbody>();
+			if (transform.parent && transform.parent.GetComponentInParent<ItemBase>())
+				DestroyForCombining();
+		}
+
+		public void DestroyForCombining()
+		{
+			Destroy(this);
+			Destroy(GetComponent<Grabbable>());
+			Destroy(rigidbody);
+			Destroy(rigidbody.rigidbody);
+			rigidbody.rigidbody.Disable();
 		}
 	}
 }

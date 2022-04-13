@@ -65,6 +65,7 @@ namespace SBEPIS.Thaumaturgy
 							throw new InvalidOperationException($"No module for {bits} found");
 
 						module = Instantiate(module.gameObject).GetComponent<ItemBase>();
+						module.DestroyForCombining();
 
 						rule.Apply(itemBase, module);
 
@@ -78,6 +79,8 @@ namespace SBEPIS.Thaumaturgy
 
 			if (usedBits != bits)
 				throw new InvalidOperationException($"Leftover bits found for {itemBase}: {usedBits ^ bits}");
+
+			itemBase.rigidbody.Recalculate();
 		}
 	}
 }

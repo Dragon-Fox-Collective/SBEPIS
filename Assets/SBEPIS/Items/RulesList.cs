@@ -37,14 +37,7 @@ namespace SBEPIS.Items
 
 		public override void Apply(ItemBase itemBase, ItemBase module)
 		{
-			module.transform.parent = itemBase.aeratedAttachmentPoint;
-			module.transform.localPosition = Vector3.zero;
-			module.transform.localRotation = Quaternion.identity;
-			module.transform.localScale = Vector3.one;
-
-			FixedJoint joint = module.jointTarget.gameObject.AddComponent<FixedJoint>();
-			joint.connectedBody = itemBase.jointTarget;
-
+			module.transform.Replace(itemBase.aeratedAttachmentPoint);
 			itemBase.aeratedAttachmentPoint = module.aeratedAttachmentPoint;
 		}
 	}
@@ -55,16 +48,7 @@ namespace SBEPIS.Items
 
 		public override void Apply(ItemBase itemBase, ItemBase module)
 		{
-			Transform transform = itemBase.replaceObject.transform;
-			module.transform.parent = transform.parent;
-			module.transform.localPosition = transform.localPosition;
-			module.transform.localRotation = transform.localRotation;
-			module.transform.localScale = transform.localScale;
-
-			FixedJoint joint = module.jointTarget.gameObject.AddComponent<FixedJoint>();
-			joint.connectedBody = itemBase.jointTarget;
-
-			Object.Destroy(itemBase.replaceObject.gameObject);
+			module.transform.Replace(itemBase.replaceObject);
 			itemBase.replaceObject = module.replaceObject;
 		}
 	}

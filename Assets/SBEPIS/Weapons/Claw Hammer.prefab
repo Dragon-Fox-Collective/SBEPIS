@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8031286229138614098}
   - component: {fileID: 7555965788617175809}
   - component: {fileID: 3771929734731613813}
+  - component: {fileID: 3323172133875585470}
   m_Layer: 0
   m_Name: Cylinder (1)
   m_TagString: Untagged
@@ -96,6 +97,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &3323172133875585470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7628703547860158421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04e19e1e3e190434d9cecbc8afb1c8e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  referenceCollider: {fileID: 3771929734731613813}
+  mass: 1
 --- !u!1 &8632012672265556490
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,6 +122,8 @@ GameObject:
   - component: {fileID: 8632012672265556500}
   - component: {fileID: 8632012672265556488}
   - component: {fileID: 8632012672265556489}
+  - component: {fileID: 3403616098737451398}
+  - component: {fileID: 6153945020463396275}
   m_Layer: 0
   m_Name: Claw Hammer
   m_TagString: Untagged
@@ -158,6 +175,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
   onGrab:
     m_PersistentCalls:
       m_Calls: []
@@ -167,6 +187,38 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls: []
+  onStopTouch:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3403616098737451398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8632012672265556490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e4f2fdaaaa2f5f4a888de724f0bfa19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6153945020463396275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8632012672265556490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2302cb7652a6c5342a08c09565ce1fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bits:
+    leastBits: 0
+    mostBits: 0
+  replaceObject: {fileID: 0}
+  aeratedAttachmentPoint: {fileID: 0}
 --- !u!1 &8632012673201919224
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,6 +231,7 @@ GameObject:
   - component: {fileID: 8632012673201918980}
   - component: {fileID: 8632012673201918981}
   - component: {fileID: 8632012673201918982}
+  - component: {fileID: 2599666305895145938}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -263,3 +316,17 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &2599666305895145938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8632012673201919224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04e19e1e3e190434d9cecbc8afb1c8e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  referenceCollider: {fileID: 8632012673201918982}
+  mass: 1
