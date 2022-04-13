@@ -7,7 +7,9 @@ namespace SBEPIS.Bits
 	[Flags]
 	public enum LeastBits : uint
 	{
-		Nothing = 0,
+		None = 0,
+		Dummy = 1 << 30,
+		All = Aerated | Music | Pound | Handled,
 
 		Aerated = 1 << 0,
 		Music = 1 << 1,
@@ -18,10 +20,11 @@ namespace SBEPIS.Bits
 	[Flags]
 	public enum MostBits : uint
 	{
-		Nothing = 0,
+		None = 0,
+		Dummy = 1 << 30,
+		All = UniqueDummyProperty,
 
-		DummyBit = 1 << 0,
-		OtherDummyBit = 1 << 1,
+		UniqueDummyProperty = 1 << 0,
 	}
 
 	[Serializable]
