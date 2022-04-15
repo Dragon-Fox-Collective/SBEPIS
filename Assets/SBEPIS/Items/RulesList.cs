@@ -33,7 +33,7 @@ namespace SBEPIS.Items
 
 	public class AeratedAttachRule : Rule
 	{
-		public override bool IsApplicable(BitSet totalBits) => totalBits.Has(LeastBits.Aerated);
+		public override bool IsApplicable(BitSet totalBits) => totalBits.Has(WeaponTypeBits.Aerated);
 
 		public override void Apply(ItemBase itemBase, ItemBase module)
 		{

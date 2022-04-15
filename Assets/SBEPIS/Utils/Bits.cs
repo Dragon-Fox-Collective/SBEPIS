@@ -4,27 +4,126 @@ using UnityEngine;
 namespace SBEPIS.Bits
 {
 	// Unity only supports 32-bit enums :/
+	// Unity also only supports signed ints, so you gotta use the first 30 bits, plus one more to make sure selecting everything doesn't tip over to -1
+
 	[Flags]
-	public enum LeastBits : uint
+	public enum WeaponTypeBits : uint
 	{
 		None = 0,
-		Dummy = 1 << 30,
-		All = Aerated | Music | Pound | Handled,
+		DUMMY = 1 << 30,
+		All = 31,
 
-		Aerated = 1 << 0,
-		Music = 1 << 1,
-		Pound = 1 << 2,
-		Handled = 1 << 3,
+		Handled = 1 << 0,
+		Pointed = 1 << 1,
+		Edged = 1 << 2,
+		Explosive = 1 << 3,
+		Launched = 1 << 4,
+		Thrown = 1 << 5,
 	}
 
 	[Flags]
-	public enum MostBits : uint
+	public enum WeaponUseBits : uint
 	{
 		None = 0,
-		Dummy = 1 << 30,
-		All = UniqueDummyProperty,
+		DUMMY = 1 << 30,
+		All = 31,
 
-		UniqueDummyProperty = 1 << 0,
+		Aerated = 1 << 0,
+		Pound = 1 << 1,
+		Luck = 1 << 2,
+		Aquatic = 1 << 3,
+		Loaded = 1 << 4,
+		UNUSED = 1 << 5,
+	}
+
+	[Flags]
+	public enum EquipmentBits : uint
+	{
+		None = 0,
+		DUMMY = 1 << 30,
+		All = 31,
+
+		Head = 1 << 0,
+		Face = 1 << 1,
+		Torso = 1 << 2,
+		Back = 1 << 3,
+		Hands = 1 << 4,
+		Feet = 1 << 5,
+	}
+
+	[Flags]
+	public enum ElementalBits : uint
+	{
+		None = 0,
+		DUMMY = 1 << 30,
+		All = 31,
+
+		Wet = 1 << 0,
+		Enflamed = 1 << 1,
+		Frozen = 1 << 2,
+		Electrical = 1 << 3,
+		Magic = 1 << 4,
+		Luminescent = 1 << 5,
+	}
+
+	[Flags]
+	public enum MultiplicityBits : uint
+	{
+		None = 0,
+		DUMMY = 1 << 30,
+		All = 31,
+
+		Bifurcated = 1 << 0,
+		Doubled = 1 << 1,
+		Halved = 1 << 2,
+		Mirrored = 1 << 3,
+		Collection = 1 << 4,
+		Secondary = 1 << 5,
+	}
+
+	[Flags]
+	public enum StructureBits : uint
+	{
+		None = 0,
+		DUMMY = 1 << 30,
+		All = 31,
+
+		Corded = 1 << 0,
+		Platform = 1 << 1,
+		Hollow = 1 << 2,
+		Legged = 1 << 3,
+		Mechanized = 1 << 4,
+		Housing = 1 << 5,
+	}
+
+	[Flags]
+	public enum InteractionBits : uint
+	{
+		None = 0,
+		DUMMY = 1 << 30,
+		All = 31,
+
+		Viewing = 1 << 0,
+		Interactable = 1 << 1,
+		Informative = 1 << 2,
+		Living = 1 << 3,
+		Musical = 1 << 4,
+		Edible = 1 << 5,
+	}
+
+	[Flags]
+	public enum MaterialBits : uint
+	{
+		None = 0,
+		DUMMY = 1 << 30,
+		All = 31,
+
+		Paper = 1 << 0,
+		Attractive = 1 << 1,
+		Conductive = 1 << 2,
+		UNUSED1 = 1 << 3,
+		UNUSED2 = 1 << 4,
+		UNUSED3 = 1 << 5,
 	}
 
 	[Serializable]
@@ -34,11 +133,11 @@ namespace SBEPIS.Bits
 		public static readonly BitSet Everything = (BitSet)~0UL;
 
 		[SerializeField]
-		private LeastBits leastBits;
+		private WeaponTypeBits leastBits;
 		[SerializeField]
-		private MostBits mostBits;
+		private EquipmentBits mostBits;
 
-		private BitSet(LeastBits leastBits, MostBits mostBits)
+		private BitSet(WeaponTypeBits leastBits, EquipmentBits mostBits)
 		{
 			this.leastBits = leastBits;
 			this.mostBits = mostBits;
@@ -61,7 +160,7 @@ namespace SBEPIS.Bits
 		}
 		public static explicit operator BitSet(ulong a)
 		{
-			return new BitSet((LeastBits)a, (MostBits)(a >> 32));
+			return new BitSet((WeaponTypeBits)a, (EquipmentBits)(a >> 32));
 		}
 
 		public static explicit operator string(BitSet a)
@@ -87,8 +186,8 @@ namespace SBEPIS.Bits
 			return (BitSet)bits;
 		}
 
-		public static implicit operator BitSet(LeastBits a) => new BitSet(a, 0);
-		public static implicit operator BitSet(MostBits a) => new BitSet(0, a);
+		public static implicit operator BitSet(WeaponTypeBits a) => new BitSet(a, 0);
+		public static implicit operator BitSet(EquipmentBits a) => new BitSet(0, a);
 
 		public bool Has(BitSet other) => (this & other) == other;
 	}
