@@ -187,7 +187,7 @@
 			"id":"bits",
 			"nodes":[
 				{
-					"id":"skirmish bits",
+					"id":"weapon type bits",
 					"color":"#00E56E",
 					"effect":"each of these effects are greater the less strife bits you have.",
 					"nodes":[
@@ -197,6 +197,18 @@
 						{ "id":"explosive", "effect":"aoe attacks. can damage player. sure hope you have launched or thrown lmao." },
 						{ "id":"launched", "effect":"ranged. needs ammo." },
 						{ "id":"thrown", "effect":"ranged. is ammo." }
+					]
+				},
+				{
+					"id":"weapon use bits",
+					"color":"#895422",
+					"nodes":[
+						{ "id":"aerated" },
+						{ "id":"pound" },
+						{ "id":"luck" },
+						{ "id":"aquatic", "effect":"works worse when abovewater." },
+						{ "id":"loaded", "effect":"requires pre-loading ammo. otherwise ammo is drawn and changed in-hand." },
+						{ "id":"" }
 					]
 				},
 				{
@@ -220,20 +232,7 @@
 						{ "id":"frozen", "effect":"weak to enflamed. strong to wet" },
 						{ "id":"electrical", "effect":"stuns targets. aoe according to nearby conductors." },
 						{ "id":"magic", "effect":"beam attacks." },
-						{ "id":"conductive", "effect":"makes enflamed, frozen, and electrical effects more extreme" },
-						{ "id":"pound" }
-					]
-				},
-				{
-					"id":"asdf bits",
-					"color":"#FF6000",
-					"nodes":[
-						{ "id":"aquatic", "effect":"works worse when abovewater." },
-						{ "id":"" },
-						{ "id":"" },
-						{ "id":"hollow" },
-						{ "id":"interactable" },
-						{ "id":"legged" }
+						{ "id":"luminescent" }
 					]
 				},
 				{
@@ -245,42 +244,43 @@
 						{ "id":"halved" },
 						{ "id":"mirrored" },
 						{ "id":"collection" },
-						{ "id":"platform" }
+						{ "id":"secondary", "effect":"smaller, specific versions of things" }
 					]
 				},
 				{
-					"id":"ddd bits",
-					"color":"#FFF100",
-					"nodes":[
-						{ "id":"edible" },
-						{ "id":"" },
-						{ "id":"living" },
-						{ "id":"attractive", "effect":"if aerated, vacuum. otherwise, magnetic." },
-						{ "id":"instrumental" },
-						{ "id":"loaded", "effect":"requires pre-loading ammo. otherwise ammo is drawn and changed in-hand." }
-					]
-				},
-				{
-					"id":"eee bits",
-					"color":"#B74AFE",
+					"id":"structure bits",
+					"color":"#FF6000",
 					"nodes":[
 						{ "id":"corded" },
-						{ "id":"aerated" },
-						{ "id":"paper", "effect":"weak. incredibly susepticble to being wet." },
-						{ "id":"luminescent" },
-						{ "id":"mechanized", "effect":"has moving parts, probably runs on electricity idk" }
+						{ "id":"platform" },
+						{ "id":"hollow" },
+						{ "id":"legged" },
+						{ "id":"mechanized", "effect":"has moving parts, probably runs on electricity idk" },
+						{ "id":"housing", "effect":"cannot be used for skirmish. skirmish bits affect what is in the housing" }
 					]
 				},
 				{
-					"id":"fff bits",
-					"color":"#895422",
+					"id":"interaction bits",
+					"color":"#FFF100",
 					"nodes":[
-						{ "id":"luck" },
-						{ "id":"secondary", "effect":"smaller, specific versions of things" },
-						{ "id":"ineractable", "effect":"some other bits are only activated when pressed" },
-						{ "id":"informative" },
 						{ "id":"viewing" },
-						{ "id":"housing", "effect":"cannot be used for skirmish. skirmish bits affect what is in the housing" }
+						{ "id":"interactable", "effect":"some other bits are only activated when pressed" },
+						{ "id":"informative" },
+						{ "id":"living" },
+						{ "id":"musical" },
+						{ "id":"edible" }
+					]
+				},
+				{
+					"id":"material bits",
+					"color":"#B74AFE",
+					"nodes":[
+						{ "id":"paper", "effect":"weak. incredibly susepticble to being wet." },
+						{ "id":"attractive", "effect":"if aerated, vacuum. otherwise, magnetic." },
+						{ "id":"conductive", "effect":"makes enflamed, frozen, and electrical effects more extreme" },
+						{ "id":"" },
+						{ "id":"" },
+						{ "id":"" }
 					]
 				}
 			]
@@ -421,8 +421,8 @@
 						{ "id":"stapler", "class":"needleclass", "bits":["mechanized"] },
 						{ "id":"tongs", "class":"caneclass", "bits":["doubled"] },
 						{ "id":"trophy", "class":"brickclass" },
-						{ "id":"brass horn", "class":"cannonclass", "bits":["instrumental", "aerated", "attractive"] },
-						{ "id":"woodwind", "class":"cannonclass", "bits":["instrumental", "aerated"] },
+						{ "id":"brass horn", "class":"cannonclass", "bits":["musical", "aerated", "attractive"] },
+						{ "id":"woodwind", "class":"cannonclass", "bits":["musical", "aerated"] },
 						{ "id":"wrench", "class":"caneclass" },
 						{ "id":"yoyo", "class":"brickclass", "bits":["corded"] },
 						{ "id":"anvil" },
@@ -522,7 +522,7 @@
 						{ "id":"jousting lance", "items":["lance"] },
 						{ "id":"lipstick", "items":["makeup"] },
 						{ "id":"troll horn" },
-						{ "id":"music box", "bits":["instrumental"] },
+						{ "id":"music box", "bits":["musical"] },
 						{ "id":"cookbook", "items":["book"], "members":["crockercorp"] },
 						{ "id":"spade", "items":["shovel"], "members":["naturesque"] },
 						{ "id":"bowling pin", "class":"caneclass", "members":["bowling"] },
@@ -578,10 +578,10 @@
 						{ "id":"harpoon", "items":["crossbow"], "bits":["aquatic"] },
 						{ "id":"pool cue", "class":"caneclass", "members":["table stickball"] },
 						{ "id":"pistol", "items":["gun"], "bits":["secondary"] },
-						{ "id":"turntables", "bits":["instrumental", "platform"] },
+						{ "id":"turntables", "bits":["musical", "platform"] },
 						{ "id":"ink bottle", "items":["bottle"] },
 						{ "id":"royal deringer", "items":["sword"] },
-						{ "id":"drum", "bits":["instrumental", "pound"] },
+						{ "id":"drum", "bits":["musical", "pound"] },
 						{ "id":"boulder", "bits":["pound"] }
 					]
 				},
