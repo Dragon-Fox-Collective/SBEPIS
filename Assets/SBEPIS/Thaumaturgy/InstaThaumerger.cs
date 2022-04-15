@@ -8,7 +8,6 @@ namespace SBEPIS.Thaumaturgy
 	public class InstaThaumerger : MonoBehaviour
 	{
 		public ItemBaseManager itemBases;
-		public RulesList rules;
 		public BitSet bits;
 
 		private void Awake()
@@ -42,7 +41,7 @@ namespace SBEPIS.Thaumaturgy
 
 			if (usedBits != bits)
 			{
-				foreach (Rule rule in rules)
+				foreach (Rule rule in RulesList.instance)
 				{
 					if (rule.IsApplicable(bits))
 					{

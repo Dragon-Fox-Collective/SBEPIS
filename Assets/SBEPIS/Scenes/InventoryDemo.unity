@@ -183,25 +183,17 @@ PrefabInstance:
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.leastBits
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.size
+      propertyPath: bits.weaponUseBits
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 9073739b0ed8a26408e2ac7ab2276ac8, type: 2}
+      propertyPath: bits.weaponTypeBits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 98d442d2aacc03d498cd94b9be1c09a9, type: 2}
-    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: ae07ad2ea74c8174484f13e4abb12d63, type: 2}
+      propertyPath: bits.interactionBits
+      value: 16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
 --- !u!1001 &144850484
@@ -264,21 +256,13 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.leastBits
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.size
+      propertyPath: bits.weaponUseBits
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: d9a74221595cfec48b19c65bf088520f, type: 2}
-    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 98d442d2aacc03d498cd94b9be1c09a9, type: 2}
+      propertyPath: bits.interactionBits
+      value: 16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
 --- !u!1001 &173167503
@@ -463,21 +447,13 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.leastBits
-      value: 3
+      propertyPath: bits.weaponUseBits
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.size
-      value: 2
+      propertyPath: bits.interactionBits
+      value: 16
       objectReference: {fileID: 0}
-    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 98d442d2aacc03d498cd94b9be1c09a9, type: 2}
-    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: ae07ad2ea74c8174484f13e4abb12d63, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
 --- !u!1001 &455616474
@@ -690,25 +666,13 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.leastBits
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.size
+      propertyPath: bits.weaponUseBits
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: d9a74221595cfec48b19c65bf088520f, type: 2}
-    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: ae07ad2ea74c8174484f13e4abb12d63, type: 2}
-    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 98d442d2aacc03d498cd94b9be1c09a9, type: 2}
+      propertyPath: bits.interactionBits
+      value: 16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
 --- !u!1001 &869033937
@@ -1630,21 +1594,17 @@ PrefabInstance:
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.leastBits
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.size
+      propertyPath: bits.weaponUseBits
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 9073739b0ed8a26408e2ac7ab2276ac8, type: 2}
+      propertyPath: bits.weaponTypeBits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: ae07ad2ea74c8174484f13e4abb12d63, type: 2}
+      propertyPath: bits.interactionBits
+      value: 16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
 --- !u!1 &2136609905
@@ -3369,17 +3329,13 @@ PrefabInstance:
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.leastBits
-      value: 12
+      propertyPath: bits.weaponUseBits
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.size
+      propertyPath: bits.weaponTypeBits
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
-      propertyPath: bits.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 9073739b0ed8a26408e2ac7ab2276ac8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
 --- !u!1001 &8632012672954728583

@@ -6,9 +6,10 @@ using SBEPIS.Bits;
 
 namespace SBEPIS.Items
 {
-	[CreateAssetMenu(menuName = "Bits/Rules List")]
-	public class RulesList : ScriptableObject, IEnumerable<Rule>
+	public class RulesList : IEnumerable<Rule>
 	{
+		public static readonly RulesList instance = new RulesList(); // TODO: REMOVE THIS!!!
+
 		public Rule[] rules = {
 			new AeratedAttachRule(),
 			new DefaultReplaceRule(),
@@ -33,7 +34,7 @@ namespace SBEPIS.Items
 
 	public class AeratedAttachRule : Rule
 	{
-		public override bool IsApplicable(BitSet totalBits) => totalBits.Has(WeaponTypeBits.Aerated);
+		public override bool IsApplicable(BitSet totalBits) => totalBits.Has(WeaponUseBits.Aerated);
 
 		public override void Apply(ItemBase itemBase, ItemBase module)
 		{

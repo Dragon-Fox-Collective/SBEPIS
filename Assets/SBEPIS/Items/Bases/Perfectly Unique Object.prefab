@@ -80,8 +80,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bits:
-    leastBits: 15
-    mostBits: 1
+    weaponTypeBits: 63
+    weaponUseBits: 63
+    equipmentBits: 63
+    elementalBits: 63
+    multiplicityBits: 63
+    structureBits: 63
+    interactionBits: 63
+    materialBits: 63
   replaceObject: {fileID: 3438405788769717491}
   aeratedAttachmentPoint: {fileID: 2313032213000305134}
 --- !u!54 &3495010507458538555
