@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class ExtensionMethods
@@ -44,6 +45,16 @@ public static class ExtensionMethods
 		return "[ " + string.Join(", ", enumerable) +  " ]";
 	}
 
+	public static T Pop<T>(this List<T> list)
+	{
+		if (list.Count == 0)
+			throw new InvalidOperationException($"Tried to pop an empty list");
+
+		T obj = list[0];
+		list.RemoveAt(0);
+		return obj;
+	}
+
 	public static void Replace(this Transform transform, Transform other)
 	{
 		transform.transform.parent = other.parent;
@@ -52,7 +63,7 @@ public static class ExtensionMethods
 		transform.transform.localScale = other.localScale;
 		foreach (Transform child in other)
 			child.SetParent(transform, true);
-		Object.Destroy(other.gameObject);
+		UnityEngine.Object.Destroy(other.gameObject);
 	}
 
 	// From PhysX

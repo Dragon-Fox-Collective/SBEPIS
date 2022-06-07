@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace SBEPIS.Bits
 {
@@ -149,6 +151,9 @@ namespace SBEPIS.Bits
 		[SerializeField]
 		private MaterialBits materialBits;
 
+		[SerializeField]
+		private Member[] members;
+
 		private BitSet(WeaponTypeBits weaponTypeBits,
 			WeaponUseBits weaponUseBits,
 			EquipmentBits equipmentBits,
@@ -156,7 +161,8 @@ namespace SBEPIS.Bits
 			MultiplicityBits multiplicityBits,
 			StructureBits structureBits,
 			InteractionBits interactionBits,
-			MaterialBits materialBits)
+			MaterialBits materialBits,
+			Member[] members)
 		{
 			this.weaponTypeBits = weaponTypeBits;
 			this.weaponUseBits = weaponUseBits;
@@ -166,18 +172,41 @@ namespace SBEPIS.Bits
 			this.structureBits = structureBits;
 			this.interactionBits = interactionBits;
 			this.materialBits = materialBits;
+			this.members = members;
 		}
 
-		public override string ToString() => $"BitSet{{ {weaponTypeBits}; {weaponUseBits}; {equipmentBits}; {elementalBits}; {multiplicityBits}; {structureBits}; {interactionBits}; {materialBits} }}";
-		public override int GetHashCode() => (weaponTypeBits, weaponUseBits, equipmentBits, elementalBits, multiplicityBits, structureBits, interactionBits, materialBits).GetHashCode();
-		public override bool Equals(object obj) => this == (BitSet)obj;
+		private BitSet(WeaponTypeBits weaponTypeBits,
+			WeaponUseBits weaponUseBits,
+			EquipmentBits equipmentBits,
+			ElementalBits elementalBits,
+			MultiplicityBits multiplicityBits,
+			StructureBits structureBits,
+			InteractionBits interactionBits,
+			MaterialBits materialBits
+			) : this(
+				weaponTypeBits,
+				weaponUseBits,
+				equipmentBits,
+				elementalBits,
+				multiplicityBits,
+				structureBits,
+				interactionBits,
+				materialBits,
+				new Member[0]
+			)
+		{
+		}
 
-		public static BitSet operator |(BitSet a, BitSet b) => (BitSet)((ulong)a | (ulong)b);
-		public static BitSet operator &(BitSet a, BitSet b) => (BitSet)((ulong)a & (ulong)b);
-		public static BitSet operator ^(BitSet a, BitSet b) => (BitSet)((ulong)a ^ (ulong)b);
-		public static BitSet operator ~(BitSet a) => (BitSet)~(ulong)a;
-		public static bool operator ==(BitSet a, BitSet b) => (ulong)a == (ulong)b;
-		public static bool operator !=(BitSet a, BitSet b) => (ulong)a != (ulong)b;
+		public override string ToString() => $"BitSet{{ {weaponTypeBits}; {weaponUseBits}; {equipmentBits}; {elementalBits}; {multiplicityBits}; {structureBits}; {interactionBits}; {materialBits}; {members.ToDelimString()} }}";
+		public override int GetHashCode() => (weaponTypeBits, weaponUseBits, equipmentBits, elementalBits, multiplicityBits, structureBits, interactionBits, materialBits, members).GetHashCode();
+		public override bool Equals(object obj) => obj is BitSet set && this == set;
+
+		public static BitSet operator |(BitSet a, BitSet b) => ((BitSet)((ulong)a | (ulong)b)).With(a.members, b.members);
+		public static BitSet operator &(BitSet a, BitSet b) => ((BitSet)((ulong)a & (ulong)b)).With(a.members, b.members);
+		public static BitSet operator ^(BitSet a, BitSet b) => ((BitSet)((ulong)a ^ (ulong)b)).With(a.members, b.members);
+		public static BitSet operator ~(BitSet a) => ((BitSet)~(ulong)a).With(a.members);
+		public static bool operator ==(BitSet a, BitSet b) => (ulong)a == (ulong)b && MemberAppender.MembersEqual(a.members, b.members);
+		public static bool operator !=(BitSet a, BitSet b) => !(a == b);
 
 		public static explicit operator ulong(BitSet a)
 		{
@@ -227,16 +256,56 @@ namespace SBEPIS.Bits
 			return (BitSet)bits;
 		}
 
-		public static implicit operator BitSet(WeaponTypeBits a)	=> new BitSet(a, 0, 0, 0, 0, 0, 0, 0);
-		public static implicit operator BitSet(WeaponUseBits a)		=> new BitSet(0, a, 0, 0, 0, 0, 0, 0);
-		public static implicit operator BitSet(EquipmentBits a)		=> new BitSet(0, 0, a, 0, 0, 0, 0, 0);
-		public static implicit operator BitSet(ElementalBits a)		=> new BitSet(0, 0, 0, a, 0, 0, 0, 0);
-		public static implicit operator BitSet(MultiplicityBits a)	=> new BitSet(0, 0, 0, 0, a, 0, 0, 0);
-		public static implicit operator BitSet(StructureBits a)		=> new BitSet(0, 0, 0, 0, 0, a, 0, 0);
-		public static implicit operator BitSet(InteractionBits a)	=> new BitSet(0, 0, 0, 0, 0, 0, a, 0);
-		public static implicit operator BitSet(MaterialBits a)		=> new BitSet(0, 0, 0, 0, 0, 0, 0, a);
+		public static implicit operator BitSet(WeaponTypeBits a)	=> new(a, 0, 0, 0, 0, 0, 0, 0);
+		public static implicit operator BitSet(WeaponUseBits a)		=> new(0, a, 0, 0, 0, 0, 0, 0);
+		public static implicit operator BitSet(EquipmentBits a)		=> new(0, 0, a, 0, 0, 0, 0, 0);
+		public static implicit operator BitSet(ElementalBits a)		=> new(0, 0, 0, a, 0, 0, 0, 0);
+		public static implicit operator BitSet(MultiplicityBits a)	=> new(0, 0, 0, 0, a, 0, 0, 0);
+		public static implicit operator BitSet(StructureBits a)		=> new(0, 0, 0, 0, 0, a, 0, 0);
+		public static implicit operator BitSet(InteractionBits a)	=> new(0, 0, 0, 0, 0, 0, a, 0);
+		public static implicit operator BitSet(MaterialBits a)		=> new(0, 0, 0, 0, 0, 0, 0, a);
 
 		public bool Has(BitSet other) => (this & other) == other;
+
+		private BitSet With(Member[] members)
+		{
+			if (members?.Length == 0)
+				return this;
+			else
+			{
+				return new(
+					weaponTypeBits,
+					weaponUseBits,
+					equipmentBits,
+					elementalBits,
+					multiplicityBits,
+					structureBits,
+					interactionBits,
+					materialBits,
+					members
+				);
+			}
+		}
+
+		private BitSet With(Member[] a, Member[] b)
+		{
+			return With(MemberAppender.Append(a, b));
+		}
+	}
+
+	public struct Member : IComparable<Member>
+	{
+		private string key;
+
+		public Member(string key)
+		{
+			this.key = key;
+		}
+
+		public int CompareTo(Member other)
+		{
+			return key.CompareTo(other.key);
+		}
 	}
 
 	public static class CaptureCodeUtils
