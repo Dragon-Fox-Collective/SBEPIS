@@ -194,7 +194,7 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator CaptureCameraTakesPicturesOfCodes()
 		{
-			Assert.IsNotNull(CaptureCamera.GetCaptureCodeTexture((BitSet)"ssSS+/sS"));
+			Assert.IsNotNull(CaptureCamera.GetCaptureCodeTexture(CaptureCodeUtils.FromCode("ssSS+/sS")));
 
 			yield return null;
 		}

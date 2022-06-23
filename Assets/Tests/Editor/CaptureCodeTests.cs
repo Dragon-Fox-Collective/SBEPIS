@@ -6,38 +6,38 @@ namespace SBEPIS.Tests.EditMode
 {
 	public class CaptureCodeTests
 	{
-		private const string code = "sSS/+sss";
-		private const ulong bitMask = 0b10110010_11001011_00111110_11111101_00100100_10101100;
+		private const string code = "sk9+LB/A";
+		private const ulong bitMask = 0b_00000000_00111111_00000001_00001011_00111110_00111101_00100100_00101100;
 		private static readonly BitSet bits = (BitSet)bitMask;
 
 		[Test]
 		public void CodeBecomesBits()
 		{
-			Assert.AreEqual(bits, (BitSet)code);
+			Assert.AreEqual(bits, CaptureCodeUtils.FromCode(code));
 		}
 
 		[Test]
 		public void BitsBecomeCode()
 		{
-			Assert.AreEqual(code, (string)bits);
+			Assert.AreEqual(code, bits.ToCode());
 		}
 
 		[Test]
 		public void BitsBecomeADigit()
 		{
-			Assert.AreEqual(63, CaptureCodeUtils.GetCaptureDigit(bits, 3));
+			Assert.AreEqual(63, CaptureCodeUtils.GetCaptureDigit(bits, 6));
 		}
 
 		[Test]
 		public void BitsBecomeAPercent()
 		{
-			Assert.AreEqual(1, CaptureCodeUtils.GetCapturePercent(bits, 3));
+			Assert.AreEqual(1, CaptureCodeUtils.GetCapturePercent(bits, 6));
 		}
 
 		[Test]
 		public void BitsBecomeACharacter()
 		{
-			Assert.AreEqual('/', CaptureCodeUtils.GetCaptureChar(bits, 3));
+			Assert.AreEqual('/', CaptureCodeUtils.GetCaptureChar(bits, 6));
 		}
 
 		[Test]

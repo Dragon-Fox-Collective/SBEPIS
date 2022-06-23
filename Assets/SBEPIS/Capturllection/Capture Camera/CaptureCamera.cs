@@ -16,7 +16,7 @@ namespace SBEPIS.Capturllection
 		private new Camera camera;
 
 		public static CaptureCamera instance;
-		private static readonly Dictionary<BitSet, Texture2D> captureCodeTextures = new Dictionary<BitSet, Texture2D>();
+		private static readonly Dictionary<BitSet, Texture2D> captureCodeTextures = new();
 
 		private void Awake()
 		{
@@ -57,7 +57,7 @@ namespace SBEPIS.Capturllection
 		private Texture2D TakePictureOfCode(BitSet bits)
 		{
 			codeBox.gameObject.SetActive(true);
-			codeBox.text = (string)bits;
+			codeBox.text = bits.ToCode();
 			Texture2D rtn = TakePicture();
 			codeBox.gameObject.SetActive(false);
 			return rtn;
@@ -69,9 +69,9 @@ namespace SBEPIS.Capturllection
 		/// <returns>A Texture2D of the thing</returns>
 		private Texture2D TakePicture()
 		{
-			Rect texRect = new Rect(0, 0, 256, 256);
-			Texture2D captchaTexture = new Texture2D((int)texRect.width, (int)texRect.height, TextureFormat.RGBA32, false);
-			RenderTexture renderTexture = new RenderTexture((int)texRect.width, (int)texRect.height, 32);
+			Rect texRect = new(0, 0, 256, 256);
+			Texture2D captchaTexture = new((int)texRect.width, (int)texRect.height, TextureFormat.RGBA32, false);
+			RenderTexture renderTexture = new((int)texRect.width, (int)texRect.height, 32);
 
 			camera.targetTexture = renderTexture;
 			camera.Render();

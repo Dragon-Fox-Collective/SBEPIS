@@ -5,13 +5,6 @@ namespace SBEPIS.Capturllection
 {
 	public class CaptureHashable : MonoBehaviour
 	{
-		public string captureCode;
-
-		public BitSet bits { get; private set; }
-
-		private void Awake()
-		{
-			bits = (BitSet)captureCode;
-		}
+		public BitSet bits;
 	}
 }

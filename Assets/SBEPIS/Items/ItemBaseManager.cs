@@ -1,23 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+using SBEPIS.Utils;
+using System.Collections.ObjectModel;
 
 namespace SBEPIS.Items
 {
 	[CreateAssetMenu]
-	public class ItemBaseManager : ScriptableObject, IEnumerable<ItemBase>
+	public class ItemBaseManager : ScriptableSingleton<ItemBaseManager>
 	{
-		public ItemBase[] itemBases;
+		[SerializeField]
+		private Item _trueBase;
+		public Item trueBase => _trueBase;
 
-		public IEnumerator<ItemBase> GetEnumerator()
-		{
-			return itemBases.Cast<ItemBase>().GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+		[SerializeField]
+		private ItemBase[] _itemBases = new ItemBase[0];
+		private ReadOnlyCollection<ItemBase> readOnlyItemBases;
+		public ReadOnlyCollection<ItemBase> itemBases => readOnlyItemBases ??= new(_itemBases);
 	}
 }

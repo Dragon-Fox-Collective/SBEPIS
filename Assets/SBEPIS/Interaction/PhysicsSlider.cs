@@ -9,7 +9,7 @@ namespace SBEPIS.Interaction
 	{
 		public ButtonAxis axis;
 
-		public UnityEvent<float> onProgressChanged;
+		public UnityEvent<float> onProgressChanged = new();
 
 		[NonSerialized]
 		public float progress;

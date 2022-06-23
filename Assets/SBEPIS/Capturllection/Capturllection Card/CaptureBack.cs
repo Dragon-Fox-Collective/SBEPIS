@@ -24,7 +24,7 @@ namespace SBEPIS.Capturllection
 
 		public void UpdateCaptureCode()
 		{
-			BitSet bits = capture.capturedItem ? capture.capturedItem.bits : BitSet.Nothing;
+			BitSet bits = capture.capturedItem ? capture.capturedItem.bits : BitSet.NOTHING;
 			PerformOnMaterial(renderers, captureMaterial, material => {
 				material.SetFloat("Seed", CaptureCodeUtils.GetCaptureSeed(bits));
 				material.SetTexture("CaptchaCode", CaptureCamera.GetCaptureCodeTexture(bits));
@@ -37,7 +37,7 @@ namespace SBEPIS.Capturllection
 				for (int i = 0; i < renderer.materials.Length; i++)
 				{
 					string materialName = renderer.materials[i].name;
-					if (materialName.EndsWith(" (Instance)") && materialName.Substring(0, materialName.Length - 11) == material.name)
+					if (materialName.EndsWith(" (Instance)") && materialName[..^11] == material.name)
 						action.Invoke(renderer.materials[i]);
 				}
 		}

@@ -19,7 +19,7 @@ namespace SBEPIS.Bits
 				return a;
 			else
 			{
-				SortedSet<Member> aList = new(a), bList = new(b), result = new();
+				HashSet<Member> aList = new(a), bList = new(b), result = new();
 
 				foreach (MemberAppendRule rule in rules)
 					if (rule.IsApplicable(aList, bList))
@@ -34,31 +34,31 @@ namespace SBEPIS.Bits
 
 		public static bool MembersEqual(Member[] a, Member[] b)
 		{
-			if (a == null && b == null)
+			if (a is null && b is null)
 				return true;
-			else if (a == null || b == null)
+			else if (a is null || b is null)
 				return false;
 			else if (a.Length != b.Length)
 				return false;
 			else
-				return a.SequenceEqual(b);
+				return new HashSet<Member>(a).SetEquals(b);
 		}
 	}
 }
 
 namespace SBEPIS.Bits.MemberAppendRules
 {
-	public interface MemberAppendRule
+	public abstract class MemberAppendRule
 	{
-		public abstract bool IsApplicable(SortedSet<Member> a, SortedSet<Member> b);
-		public abstract void Apply(SortedSet<Member> a, SortedSet<Member> b, SortedSet<Member> result);
+		public abstract bool IsApplicable(HashSet<Member> a, HashSet<Member> b);
+		public abstract void Apply(HashSet<Member> a, HashSet<Member> b, HashSet<Member> result);
 	}
 
 	public class AppendMemberAppendRule : MemberAppendRule
 	{
-		public bool IsApplicable(SortedSet<Member> a, SortedSet<Member> b) => true;
+		public override bool IsApplicable(HashSet<Member> a, HashSet<Member> b) => true;
 
-		public void Apply(SortedSet<Member> a, SortedSet<Member> b, SortedSet<Member> result)
+		public override void Apply(HashSet<Member> a, HashSet<Member> b, HashSet<Member> result)
 		{
 			result.Union(a);
 			result.Union(b);

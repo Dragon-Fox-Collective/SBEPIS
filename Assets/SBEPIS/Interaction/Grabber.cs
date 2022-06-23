@@ -97,7 +97,7 @@ namespace SBEPIS.Interaction
 		{
 			print($"No longer colliding with {grabbable}");
 			collidingGrabbables.Remove(grabbable);
-			grabbable.onStopTouch.Invoke(this);
+			grabbable.onStopTouch?.Invoke(this);
 		}
 
 		public void ClearCollisions()

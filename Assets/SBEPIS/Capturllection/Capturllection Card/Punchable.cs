@@ -6,20 +6,11 @@ namespace SBEPIS.Thaumaturgy
 	public class Punchable : MonoBehaviour
 	{
 		public SkinnedMeshRenderer punchHoles;
-		[SerializeField]
-		private string defaultCode;
-
-		public BitSet punchedBits { get; private set; }
-
-		private void Start()
-		{
-			if (defaultCode.Length > 0)
-				Punch((BitSet)defaultCode);
-		}
+		public BitSet punchedBits;
 
 		public void Punch(BitSet bits)
 		{
-			this.punchedBits = bits;
+			punchedBits = bits;
 
 			for (int i = 0; i < 48; i++)
 			{

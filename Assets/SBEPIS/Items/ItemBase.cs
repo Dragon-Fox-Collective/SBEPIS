@@ -5,30 +5,39 @@ using UnityEngine;
 
 namespace SBEPIS.Items
 {
-	[RequireComponent(typeof(CompoundRigidbody), typeof(Grabbable))]
 	public class ItemBase : MonoBehaviour
 	{
-		public new CompoundRigidbody rigidbody { get; private set; }
-
-		public BitSet bits;
+		public MemberedBitSetFactory baseBits;
+		[SerializeField]
+		[HideInInspector]
+		private MemberedBitSet _bits;
+		private bool madeBits;
+		public MemberedBitSet bits {
+			get
+			{
+				if (!madeBits)
+				{
+					if (baseBits is not null)
+						_bits = baseBits.Make();
+					madeBits = true;
+				}
+				return _bits;
+			}
+			set => _bits = value;
+		}
 
 		public Transform replaceObject;
 		public Transform aeratedAttachmentPoint;
 
 		private void Awake()
 		{
-			rigidbody = GetComponent<CompoundRigidbody>();
-			if (transform.parent && transform.parent.GetComponentInParent<ItemBase>())
-				DestroyForCombining();
+			if (!transform.parent || !transform.parent.GetComponentInParent<Item>())
+				gameObject.AddComponent<Item>();
 		}
 
-		public void DestroyForCombining()
+		public override string ToString()
 		{
-			Destroy(this);
-			Destroy(GetComponent<Grabbable>());
-			Destroy(rigidbody);
-			Destroy(rigidbody.rigidbody);
-			rigidbody.rigidbody.Disable();
+			return $"{base.ToString()}{{{bits}}}";
 		}
 	}
 }

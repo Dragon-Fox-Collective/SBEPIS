@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace SBEPIS.Interaction
 {
+	[RequireComponent(typeof(Rigidbody))]
 	public class CompoundRigidbody : MonoBehaviour
 	{
 		public new Rigidbody rigidbody { get; private set; }

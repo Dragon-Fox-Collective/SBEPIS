@@ -10,9 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8044952471338840126}
   - component: {fileID: 7356093425838162561}
-  - component: {fileID: 1282221109836913991}
-  - component: {fileID: 6631825363804135193}
-  - component: {fileID: 5866809038306683449}
   m_Layer: 0
   m_Name: Hammer
   m_TagString: Untagged
@@ -49,72 +46,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2302cb7652a6c5342a08c09565ce1fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseBits:
+    bits: BCAAAAAA
+    itemBase: {fileID: 0}
   bits:
-    weaponTypeBits: 1
-    weaponUseBits: 2
-    equipmentBits: 0
-    elementalBits: 0
-    multiplicityBits: 0
-    structureBits: 0
-    interactionBits: 0
-    materialBits: 0
+    _bits:
+      weaponTypeBits: 0
+      weaponUseBits: 0
+      equipmentBits: 0
+      elementalBits: 0
+      multiplicityBits: 0
+      structureBits: 0
+      interactionBits: 0
+      materialBits: 0
+    _members: []
   replaceObject: {fileID: 4994258105038354586}
   aeratedAttachmentPoint: {fileID: 3288445182620608022}
---- !u!54 &1282221109836913991
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2054407263187719757}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &6631825363804135193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2054407263187719757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e4f2fdaaaa2f5f4a888de724f0bfa19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5866809038306683449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2054407263187719757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onTouch:
-    m_PersistentCalls:
-      m_Calls: []
-  onGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onHoldUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  onDrop:
-    m_PersistentCalls:
-      m_Calls: []
-  onStopTouch:
-    m_PersistentCalls:
-      m_Calls: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &4258274633088970149
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,6 +101,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 8044952471338840126}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 3402d8d967dd10c418f960aebe772afd, type: 3}
@@ -186,6 +137,7 @@ PrefabInstance:
       value: Hammer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 3402d8d967dd10c418f960aebe772afd, type: 3}
 --- !u!1 &2648964682008469667 stripped
 GameObject:

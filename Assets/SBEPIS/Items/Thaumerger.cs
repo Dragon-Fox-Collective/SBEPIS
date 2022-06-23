@@ -1,75 +1,39 @@
+using SBEPIS.Bits.Bits;
+using SBEPIS.Bits.Members;
 using SBEPIS.Bits.ThaumergeRules;
+using SBEPIS.Interaction;
 using SBEPIS.Items;
 using System;
+using System.Linq;
+using UnityEngine;
 
 namespace SBEPIS.Bits
 {
 	public static class Thaumerger
 	{
 		private static readonly ThaumergeRule[] rules = {
+			new BaseModelReplaceThaumergeRule(),
 			new AeratedAttachThaumergeRule(),
 			new DefaultReplaceThaumergeRule(),
 		};
 
-		public static ItemBase Thaumerge(BitSet bits, ItemBaseManager itemBases)
+		public static ItemBase Thaumerge(MemberedBitSet bits, ItemBaseManager bases)
 		{
-			ItemBase item = null;
-			foreach (ItemBase baseItem in itemBases)
-			{
-				if (bits.Has(baseItem.bits))
-				{
-					item = baseItem;
-					break;
-				}
-			}
+			Item item = UnityEngine.Object.Instantiate(bases.trueBase.gameObject).GetComponent<Item>();
 
-			if (item == null)
-				throw new InvalidOperationException($"No item base for {bits} found");
+			foreach (ThaumergeRule rule in rules)
+				rule.Init();
 
-			item = UnityEngine.Object.Instantiate(item.gameObject).GetComponent<ItemBase>();
-			BitSet usedBits = item.bits;
-
-			if (usedBits != bits)
+			while (true)
 			{
 				foreach (ThaumergeRule rule in rules)
-				{
-					if (rule.IsApplicable(bits))
-					{
-						ItemBase module = null;
-						int moduleScore = int.MinValue;
-						foreach (ItemBase newModule in itemBases)
-						{
-							if (bits.Has(newModule.bits))
-							{
-								int newModuleScore = CaptureCodeUtils.GetUniquenessScore(item.bits, newModule.bits);
-								if (newModuleScore > moduleScore)
-								{
-									module = newModule;
-									moduleScore = newModuleScore;
-								}
-							}
-						}
-
-						if (module == null)
-							throw new InvalidOperationException($"No module for {bits} found");
-
-						module = UnityEngine.Object.Instantiate(module.gameObject).GetComponent<ItemBase>();
-						module.DestroyForCombining();
-
-						rule.Apply(item, module);
-
-						usedBits |= module.bits;
-
-						if (usedBits == bits)
-							break;
-					}
-				}
+					if (rule.Apply(bits, item, bases))
+						goto loop;
+				break;
+			loop:;
 			}
 
-			if (usedBits != bits)
-				throw new InvalidOperationException($"Leftover bits found for {item}: {usedBits ^ bits}");
-
-			item.rigidbody.Recalculate();
+			item.GetComponent<CompoundRigidbody>().Recalculate();
 
 			return item;
 		}
@@ -78,31 +42,97 @@ namespace SBEPIS.Bits
 
 namespace SBEPIS.Bits.ThaumergeRules
 {
-	public interface ThaumergeRule
+	public abstract class ThaumergeRule
 	{
-		public abstract bool IsApplicable(BitSet totalBits);
-		public abstract void Apply(ItemBase itemBase, ItemBase module);
+		public virtual void Init() { }
+		public abstract bool Apply(MemberedBitSet bits, Item item, ItemBaseManager bases);
 	}
 
-	public class AeratedAttachThaumergeRule : ThaumergeRule
+	public abstract class DoOnceThaumaturgeRule : ThaumergeRule
 	{
-		public bool IsApplicable(BitSet totalBits) => totalBits.Has(WeaponUseBits.Aerated);
+		protected bool applied;
 
-		public void Apply(ItemBase itemBase, ItemBase module)
+		public override void Init() => applied = false;
+
+		public override bool Apply(MemberedBitSet bits, Item item, ItemBaseManager bases)
 		{
-			module.transform.Replace(itemBase.aeratedAttachmentPoint);
-			itemBase.aeratedAttachmentPoint = module.aeratedAttachmentPoint;
+			if (applied)
+				return false;
+
+			bool rtn = ApplyOnce(bits, item, bases);
+			applied = true;
+			return rtn;
+		}
+
+		public abstract bool ApplyOnce(MemberedBitSet bits, Item item, ItemBaseManager bases);
+	}
+
+	public class BaseModelReplaceThaumergeRule : DoOnceThaumaturgeRule
+	{
+		public override bool ApplyOnce(MemberedBitSet bits, Item item, ItemBaseManager bases)
+		{
+			if (item.bits.members.Any(member => member is BaseModelMember))
+				return false;
+
+			BaseModelMember member = bits.members.FirstOrDefault(member => member is BaseModelMember) as BaseModelMember;
+			if (member is null)
+				return false;
+
+			ItemBase module = UnityEngine.Object.Instantiate(member.itemBase.gameObject).GetComponent<ItemBase>();
+
+			module.transform.Replace(item.replaceObject);
+			item.replaceObject = module.replaceObject;
+
+			item.bits += member;
+
+			return true;
+		}
+	}
+
+	public class AeratedAttachThaumergeRule : DoOnceThaumaturgeRule
+	{
+		public override bool ApplyOnce(MemberedBitSet bits, Item item, ItemBaseManager bases)
+		{
+			if (!bits.Has(Bits1.Aerated) || !item.aeratedAttachmentPoint)
+				return false;
+
+			return true;
 		}
 	}
 
 	public class DefaultReplaceThaumergeRule : ThaumergeRule
 	{
-		public bool IsApplicable(BitSet totalBits) => true;
-
-		public void Apply(ItemBase itemBase, ItemBase module)
+		public override bool Apply(MemberedBitSet bits, Item item, ItemBaseManager bases)
 		{
-			module.transform.Replace(itemBase.replaceObject);
-			itemBase.replaceObject = module.replaceObject;
+			if (bits.bits == item.bits.bits)
+				return false;
+
+			ItemBase module = null;
+			int moduleScore = int.MinValue;
+			foreach (ItemBase newModule in bases.itemBases)
+			{
+				if (bits.Has(newModule.bits.bits) && (item.bits.bits & newModule.bits.bits) != newModule.bits.bits)
+				{
+					int newModuleScore = CaptureCodeUtils.GetUniquenessScore(item.bits.bits, newModule.bits.bits);
+					if (newModuleScore > moduleScore)
+					{
+						module = newModule;
+						moduleScore = newModuleScore;
+					}
+				}
+			}
+
+			if (module is null)
+				return false;
+
+			module = UnityEngine.Object.Instantiate(module.gameObject).GetComponent<ItemBase>();
+
+			module.transform.Replace(item.replaceObject);
+			item.replaceObject = module.replaceObject;
+
+			item.bits |= module.bits.bits;
+
+			return true;
 		}
 	}
 }

@@ -6,7 +6,7 @@ namespace SBEPIS.Interaction
 {
 	public class ClickTracker : MonoBehaviour
 	{
-		public UnityEvent onClick;
+		public UnityEvent onClick = new();
 
 		/// <summary>
 		/// Must be greater than your mouse tap time or it won't work
