@@ -24,9 +24,7 @@ namespace SBEPIS.Bits
 				bindingPath = property.propertyPath,
 			};
 
-			PropertyField bitsField;
-			foldout.Add(bitsField = new PropertyField(property.FindPropertyRelative("bits")));
-			bitsField.RegisterValueChangeCallback(Debug.Log);
+			foldout.Add(new PropertyField(property.FindPropertyRelative("bits")));
 
 			foldout.Add(new ObjectPopupField()
 			{

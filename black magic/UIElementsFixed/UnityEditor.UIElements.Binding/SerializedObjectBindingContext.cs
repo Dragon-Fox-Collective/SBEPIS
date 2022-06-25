@@ -346,6 +346,15 @@ internal class SerializedObjectBindingContext
 		case SerializedPropertyType.ObjectReference:
 			DefaultBind(element, prop, SerializedPropertyHelper.GetObjectRefPropertyValue, SerializedPropertyHelper.SetObjectRefPropertyValue, SerializedPropertyHelper.ValueEquals);
 			break;
+		/*case SerializedPropertyType.ManagedReference:
+			DefaultBind(element, prop, SerializedPropertyHelper.GetManagedRefPropertyValue, SerializedPropertyHelper.SetManagedRefPropertyValue, SerializedPropertyHelper.ValueEquals);
+			break;
+		case SerializedPropertyType.ExposedReference:
+			DefaultBind(element, prop, SerializedPropertyHelper.GetExposedRefPropertyValue, SerializedPropertyHelper.SetExposedRefPropertyValue, SerializedPropertyHelper.ValueEquals);
+			break;*/
+		case SerializedPropertyType.Generic:
+			DefaultBind(element, prop, SerializedPropertyHelper.GetGenericPropertyValue, SerializedPropertyHelper.SetGenericPropertyValue, SerializedPropertyHelper.ValueEquals);
+			break;
 		case SerializedPropertyType.LayerMask:
 			DefaultBind(element, prop, SerializedPropertyHelper.GetLayerMaskPropertyValue, SerializedPropertyHelper.SetLayerMaskPropertyValue, SerializedPropertyHelper.ValueEquals);
 			break;
@@ -404,9 +413,6 @@ internal class SerializedObjectBindingContext
 				DefaultBind(element, prop, SerializedPropertyHelper.GetCharacterPropertyValue, SerializedPropertyHelper.SetCharacterPropertyValue, SerializedPropertyHelper.ValueEquals);
 			}
 			break;
-		case SerializedPropertyType.Generic:
-		case SerializedPropertyType.ExposedReference:
-			break;
 		default:
 			Debug.LogWarning($"Binding is not supported for {prop.type} properties \"{prop.propertyPath}\"");
 			break;
@@ -424,9 +430,13 @@ internal class SerializedObjectBindingContext
 		{
 			SerializedObjectBinding<TValue>.CreateBind(notifyValueChanged, this, prop, propertyReadFunc, propertyWriteFunc, valueComparerFunc);
 		}
+		else if (prop.propertyType == SerializedPropertyType.Generic)
+		{
+			Debug.LogWarning($"Field type {element.GetType().FullName} is not compatible with {prop.type} ({prop.propertyType}) property \"{prop.propertyPath}\" (Generic property fields should be of type System.Object, not {prop.type})");
+		}
 		else
 		{
-			Debug.LogWarning(string.Format("Field type {0} is not compatible with {2} property \"{1}\"", element.GetType().FullName, prop.propertyPath, prop.type));
+			Debug.LogWarning($"Field type {element.GetType().FullName} is not compatible with {prop.type} ({prop.propertyType}) property \"{prop.propertyPath}\"");
 		}
 	}
 

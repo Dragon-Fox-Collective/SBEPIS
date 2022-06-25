@@ -11,7 +11,7 @@ namespace SBEPIS.Utils
 			get
 			{
 				if (!_instance)
-					_instance = Resources.Load<T>("");
+					_instance = Resources.Load<T>(typeof(T).Name);
 
 				return _instance;
 			}

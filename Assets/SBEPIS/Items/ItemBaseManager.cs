@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace SBEPIS.Items
 {
-	[CreateAssetMenu]
+	[CreateAssetMenu(fileName=nameof(ItemBaseManager))]
 	public class ItemBaseManager : ScriptableSingleton<ItemBaseManager>
 	{
 		[SerializeField]

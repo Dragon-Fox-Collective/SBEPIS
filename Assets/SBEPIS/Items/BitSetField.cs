@@ -7,10 +7,16 @@ using UnityEngine.UIElements;
 
 namespace SBEPIS.Bits
 {
-	public class BitSetField : BaseField<BitSet>
+	public class BitSetField : BaseField<object>
 	{
 		private readonly TextField codeField;
 		private readonly ListView bitList;
+
+		public BitSet bits
+		{
+			get => (BitSet)(value ?? default(BitSet));
+			set => this.value = value;
+		}
 
 		public BitSetField() : this(null) { }
 		public BitSetField(string label) : base(label, null)
@@ -21,14 +27,14 @@ namespace SBEPIS.Bits
 
 			codeField = new()
 			{
-				value = value.ToCode(),
+				value = bits.ToCode(),
 				isDelayed = true,
 			};
 			codeField.style.marginLeft = 0;
 			codeField.style.marginRight = 0;
 			codeField.RegisterValueChangedCallback(e =>
 			{
-				value = CaptureCodeUtils.FromCode(e.newValue);
+				bits = CaptureCodeUtils.FromCode(e.newValue);
 			});
 			container.Add(codeField);
 
@@ -56,7 +62,7 @@ namespace SBEPIS.Bits
 				{
 					Toggle toggle = e as Toggle;
 					toggle.text = props[i][j].ToString();
-					toggle.value = CaptureCodeUtils.GetCaptureBit(value, i * 6 + j);
+					toggle.value = CaptureCodeUtils.GetCaptureBit(bits, i * 6 + j);
 					toggle.style.width = new Length(95, LengthUnit.Percent);
 					if (callbacks.ContainsKey(toggle))
 					{
@@ -67,9 +73,9 @@ namespace SBEPIS.Bits
 					{
 						BitSet bit = CaptureCodeUtils.GetCapturePlacement(i * 6 + j);
 						if (e.newValue)
-							value |= bit;
+							bits |= bit;
 						else
-							value &= ~bit;
+							bits &= ~bit;
 					}
 					toggle.RegisterValueChangedCallback(callback);
 					callbacks[toggle] = callback;
@@ -78,11 +84,10 @@ namespace SBEPIS.Bits
 			container.Add(bitList);
 		}
 
-		public override void SetValueWithoutNotify(BitSet newValue)
+		public override void SetValueWithoutNotify(object newValue)
 		{
-			Debug.Log($"*Actually* setting from {value} to {newValue}");
 			base.SetValueWithoutNotify(newValue);
-			codeField.SetValueWithoutNotify(value.ToCode());
+			codeField.SetValueWithoutNotify(bits.ToCode());
 			bitList.RefreshItems();
 		}
 	}

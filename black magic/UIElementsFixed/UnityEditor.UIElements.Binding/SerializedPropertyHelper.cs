@@ -34,11 +34,6 @@ internal static class SerializedPropertyHelper
 		return p.intValue;
 	}
 
-	public static object GetManagedReferenceValue(SerializedProperty p)
-	{
-		return p.managedReferenceValue;
-	}
-
 	public static long GetLongPropertyValue(SerializedProperty p)
 	{
 		return p.longValue;
@@ -72,6 +67,21 @@ internal static class SerializedPropertyHelper
 	public static UnityEngine.Object GetObjectRefPropertyValue(SerializedProperty p)
 	{
 		return p.objectReferenceValue;
+	}
+
+	public static object GetManagedRefPropertyValue(SerializedProperty p)
+	{
+		return p.managedReferenceValue;
+	}
+
+	public static UnityEngine.Object GetExposedRefPropertyValue(SerializedProperty p)
+	{
+		return p.exposedReferenceValue;
+	}
+
+	public static object GetGenericPropertyValue(SerializedProperty p)
+	{
+		return p.boxedValue;
 	}
 
 	public static int GetLayerMaskPropertyValue(SerializedProperty p)
@@ -212,6 +222,21 @@ internal static class SerializedPropertyHelper
 	public static void SetObjectRefPropertyValue(SerializedProperty p, UnityEngine.Object v)
 	{
 		p.objectReferenceValue = v;
+	}
+
+	public static void SetManagedRefPropertyValue(SerializedProperty p, object v)
+	{
+		p.managedReferenceValue = v;
+	}
+
+	public static void SetExposedRefPropertyValue(SerializedProperty p, UnityEngine.Object v)
+	{
+		p.exposedReferenceValue = v;
+	}
+
+	public static void SetGenericPropertyValue(SerializedProperty p, object v)
+	{
+		p.boxedValue = v;
 	}
 
 	public static void SetLayerMaskPropertyValue(SerializedProperty p, int v)
