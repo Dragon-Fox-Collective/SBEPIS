@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 271759304162609781}
   - component: {fileID: 3889197873707336915}
   - component: {fileID: 5795463978175099182}
+  - component: {fileID: 786914195804380724}
   m_Layer: 0
   m_Name: True Base
   m_TagString: Untagged
@@ -104,17 +105,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad76ab59557dd44db98872af0ea05d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bits:
-    weaponTypeBits: 0
-    weaponUseBits: 0
-    equipmentBits: 0
-    elementalBits: 0
-    multiplicityBits: 0
-    structureBits: 0
-    interactionBits: 0
-    materialBits: 0
+--- !u!114 &786914195804380724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511768885155869850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2302cb7652a6c5342a08c09565ce1fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseBits:
+    bits:
+      bits1: 0
+      bits2: 0
+    itemBase: {fileID: 0}
+  _bits:
+    _bits:
+      bits1: 0
+      bits2: 0
+    _members: []
   replaceObject: {fileID: 6093150015542321795}
   aeratedAttachmentPoint: {fileID: 4700073189028015130}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &4752833937422572390
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,7 +142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6093150015542321795}
   m_Layer: 0
-  m_Name: Replace Object
+  m_Name: Non-Model Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

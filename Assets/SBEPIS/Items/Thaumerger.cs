@@ -17,7 +17,7 @@ namespace SBEPIS.Bits
 			new DefaultReplaceThaumergeRule(),
 		};
 
-		public static ItemBase Thaumerge(MemberedBitSet bits, ItemBaseManager bases)
+		public static Item Thaumerge(MemberedBitSet bits, ItemBaseManager bases)
 		{
 			Item item = UnityEngine.Object.Instantiate(bases.trueBase.gameObject).GetComponent<Item>();
 
@@ -27,13 +27,13 @@ namespace SBEPIS.Bits
 			while (true)
 			{
 				foreach (ThaumergeRule rule in rules)
-					if (rule.Apply(bits, item, bases))
+					if (rule.Apply(bits, item.itemBase, bases))
 						goto loop;
 				break;
 			loop:;
 			}
 
-			item.GetComponent<CompoundRigidbody>().Recalculate();
+			item.rigidbody.Recalculate();
 
 			return item;
 		}
@@ -45,31 +45,29 @@ namespace SBEPIS.Bits.ThaumergeRules
 	public abstract class ThaumergeRule
 	{
 		public virtual void Init() { }
-		public abstract bool Apply(MemberedBitSet bits, Item item, ItemBaseManager bases);
+		public abstract bool Apply(MemberedBitSet bits, ItemBase item, ItemBaseManager bases);
 	}
 
 	public abstract class DoOnceThaumaturgeRule : ThaumergeRule
 	{
-		protected bool applied;
+		private bool applied;
 
 		public override void Init() => applied = false;
 
-		public override bool Apply(MemberedBitSet bits, Item item, ItemBaseManager bases)
+		public override bool Apply(MemberedBitSet bits, ItemBase item, ItemBaseManager bases)
 		{
 			if (applied)
 				return false;
-
-			bool rtn = ApplyOnce(bits, item, bases);
 			applied = true;
-			return rtn;
+			return ApplyOnce(bits, item, bases);
 		}
 
-		public abstract bool ApplyOnce(MemberedBitSet bits, Item item, ItemBaseManager bases);
+		public abstract bool ApplyOnce(MemberedBitSet bits, ItemBase item, ItemBaseManager bases);
 	}
 
 	public class BaseModelReplaceThaumergeRule : DoOnceThaumaturgeRule
 	{
-		public override bool ApplyOnce(MemberedBitSet bits, Item item, ItemBaseManager bases)
+		public override bool ApplyOnce(MemberedBitSet bits, ItemBase item, ItemBaseManager bases)
 		{
 			if (item.bits.members.Any(member => member is BaseModelMember))
 				return false;
@@ -91,7 +89,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 
 	public class AeratedAttachThaumergeRule : DoOnceThaumaturgeRule
 	{
-		public override bool ApplyOnce(MemberedBitSet bits, Item item, ItemBaseManager bases)
+		public override bool ApplyOnce(MemberedBitSet bits, ItemBase item, ItemBaseManager bases)
 		{
 			if (!bits.Has(Bits1.Aerated) || !item.aeratedAttachmentPoint)
 				return false;
@@ -102,7 +100,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 
 	public class DefaultReplaceThaumergeRule : ThaumergeRule
 	{
-		public override bool Apply(MemberedBitSet bits, Item item, ItemBaseManager bases)
+		public override bool Apply(MemberedBitSet bits, ItemBase item, ItemBaseManager bases)
 		{
 			if (bits.bits == item.bits.bits)
 				return false;

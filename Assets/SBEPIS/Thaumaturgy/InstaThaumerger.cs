@@ -7,7 +7,7 @@ namespace SBEPIS.Thaumaturgy
 {
 	public class InstaThaumerger : MonoBehaviour
 	{
-		public MemberedBitSetFactory bits;
+		public MemberedBitSetFactory itemToAlchemize;
 
 		private void Start()
 		{
@@ -17,7 +17,7 @@ namespace SBEPIS.Thaumaturgy
 
 		private void Alchemize()
 		{
-			ItemBase item = Thaumerger.Thaumerge(bits.Make(), ItemBaseManager.instance);
+			Item item = Thaumerger.Thaumerge(itemToAlchemize.Make(), ItemBaseManager.instance);
 			item.transform.SetPositionAndRotation(transform.position, transform.rotation);
 		}
 	}

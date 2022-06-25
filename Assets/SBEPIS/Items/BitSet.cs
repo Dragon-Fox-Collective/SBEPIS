@@ -21,7 +21,7 @@ namespace SBEPIS.Bits
 			this.bits2 = (Bits2)((ulong)bits2 & CaptureCodeUtils.INT_MASK);
 		}
 
-		public override string ToString() => $"BitSet{{{bits1}; {bits2}}}";
+		public override string ToString() => "BitSet{" + ((bits1 != 0 ? bits1 : "") + (bits1 != 0 && bits2 != 0 ? ", " : "") + (bits2 != 0 ? bits2 : "")) + "}";
 		public override int GetHashCode() => (bits1, bits2).GetHashCode();
 		public override bool Equals(object obj) => obj is BitSet set && this == set;
 

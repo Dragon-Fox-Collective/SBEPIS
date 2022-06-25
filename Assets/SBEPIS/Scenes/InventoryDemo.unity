@@ -195,6 +195,14 @@ PrefabInstance:
       propertyPath: bits.interactionBits
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.bits.bits1
+      value: 769
+      objectReference: {fileID: 0}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.bits.bits2
+      value: 1048576
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
@@ -316,6 +324,14 @@ PrefabInstance:
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: bitHashLeast
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.bits.bits1
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.bits.bits2
+      value: 1048576
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -446,6 +462,14 @@ PrefabInstance:
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: bits.bitsExpanded
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.bits.bits1
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.bits.bits2
+      value: 1048576
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -683,6 +707,14 @@ PrefabInstance:
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: bitHashLeast
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.bits.bits1
+      value: 768
+      objectReference: {fileID: 0}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.bits.bits2
+      value: 1048576
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -1623,6 +1655,14 @@ PrefabInstance:
       propertyPath: bitHashLeast
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.bits.bits1
+      value: 513
+      objectReference: {fileID: 0}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.bits.bits2
+      value: 1048576
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
@@ -1919,10 +1959,6 @@ PrefabInstance:
     - target: {fileID: 1770917994978766158, guid: 1514c60c815aa00468e4fab937ae030d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7497967490746782413, guid: 1514c60c815aa00468e4fab937ae030d, type: 3}
-      propertyPath: baseBits.bits
-      value: AAAAAAAA
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -2654,10 +2690,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3776803931549723359, guid: 539d53a75f6876e4b92ceaed0091762b, type: 3}
-      propertyPath: baseBits.bits
-      value: AAAAAAAA
-      objectReference: {fileID: 0}
     - target: {fileID: 6050137804469988690, guid: 539d53a75f6876e4b92ceaed0091762b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -3046,12 +3078,24 @@ PrefabInstance:
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: bits.itemBase
+      value: 
+      objectReference: {fileID: 2410156869842693511, guid: ad8ab9bd49c161445b0ef53b64288cb5, type: 3}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: bits.dummyField.a
+      value: beeepis
+      objectReference: {fileID: 0}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: bits.weaponUseBits
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: bits.weaponTypeBits
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.bits.bits1
+      value: 513
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -3064,10 +3108,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6153945020463396275, guid: 3ca216a8acdba77458f93d3df2307d6c, type: 3}
-      propertyPath: baseBits.bits
-      value: AAAAAAAA
-      objectReference: {fileID: 0}
     - target: {fileID: 8632012672265556490, guid: 3ca216a8acdba77458f93d3df2307d6c, type: 3}
       propertyPath: m_Name
       value: hammer tiem

@@ -29,9 +29,9 @@ namespace SBEPIS.Items
 		public Transform replaceObject;
 		public Transform aeratedAttachmentPoint;
 
-		private void Awake()
+		private void Start()
 		{
-			if (!transform.parent || !transform.parent.GetComponentInParent<Item>())
+			if (!GetComponentInParent<Item>())
 				gameObject.AddComponent<Item>();
 		}
 

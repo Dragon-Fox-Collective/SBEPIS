@@ -46,18 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseBits:
-    bits: QQAAAEAA
+    bits:
+      bits1: 4112
+      bits2: 1024
     itemBase: {fileID: 0}
-  bits:
+  _bits:
     _bits:
-      weaponTypeBits: 0
-      weaponUseBits: 0
-      equipmentBits: 0
-      elementalBits: 0
-      multiplicityBits: 0
-      structureBits: 0
-      interactionBits: 0
-      materialBits: 0
+      bits1: 0
+      bits2: 0
     _members: []
   replaceObject: {fileID: 0}
   aeratedAttachmentPoint: {fileID: 0}
