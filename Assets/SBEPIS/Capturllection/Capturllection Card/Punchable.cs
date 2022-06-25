@@ -8,6 +8,11 @@ namespace SBEPIS.Thaumaturgy
 		public SkinnedMeshRenderer punchHoles;
 		public BitSet punchedBits;
 
+		private void Start()
+		{
+			Punch(punchedBits);
+		}
+
 		public void Punch(BitSet bits)
 		{
 			punchedBits = bits;
