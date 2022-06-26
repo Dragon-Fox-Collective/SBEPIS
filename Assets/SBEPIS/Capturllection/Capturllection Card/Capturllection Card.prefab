@@ -63,10 +63,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df7ab0d2c856cc4693bb479b4e1ec01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  punchHoles: {fileID: 3513014274298477046}
   punchedBits:
     bits1: 0
     bits2: 0
+  materials:
+  - {fileID: 2100000, guid: 14780cba2b2008b42949209af650a747, type: 2}
+  - {fileID: 2100000, guid: f1a726a08ce8cd643896224bdd1373e3, type: 2}
+  renderers:
+  - {fileID: 7857901446257573216}
 --- !u!114 &5278794268727047552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   captureMaterial: {fileID: 2100000, guid: f1a726a08ce8cd643896224bdd1373e3, type: 2}
   renderers:
-  - {fileID: 3513014274298477046}
+  - {fileID: 7857901446257573216}
 --- !u!114 &440917820055669988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,9 +219,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: eb326c31e56434a4c8d2cdc75f9f9985, type: 3}
---- !u!137 &3513014274298477046 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -3887185075125053422, guid: eb326c31e56434a4c8d2cdc75f9f9985, type: 3}
+--- !u!23 &7857901446257573216 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: eb326c31e56434a4c8d2cdc75f9f9985, type: 3}
   m_PrefabInstance: {fileID: 8848810319768150500}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &9027451602535581199 stripped
