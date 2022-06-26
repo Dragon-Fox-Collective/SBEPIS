@@ -111,7 +111,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 			{
 				if (bits.Has(newModule.bits.bits) && (item.bits.bits & newModule.bits.bits) != newModule.bits.bits)
 				{
-					int newModuleScore = CaptureCodeUtils.GetUniquenessScore(item.bits.bits, newModule.bits.bits);
+					int newModuleScore = BitSet.GetUniquenessScore(item.bits.bits, newModule.bits.bits);
 					if (newModuleScore > moduleScore)
 					{
 						module = newModule;

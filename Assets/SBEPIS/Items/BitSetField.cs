@@ -32,7 +32,7 @@ namespace SBEPIS.Bits
 			};
 			codeField.style.marginLeft = 0;
 			codeField.style.marginRight = 0;
-			codeField.RegisterValueChangedCallback(e => bits = CaptureCodeUtils.FromCode(e.newValue));
+			codeField.RegisterValueChangedCallback(e => bits = BitSet.FromCode(e.newValue));
 			container.Add(codeField);
 
 			List<List<Enum>> props = new Type[] { typeof(Bits1), typeof(Bits2) }.SelectMany(type => Enum.GetValues(type).Cast<Enum>())
@@ -59,7 +59,7 @@ namespace SBEPIS.Bits
 				{
 					Toggle toggle = e as Toggle;
 					toggle.text = props[i][j].ToString();
-					toggle.SetValueWithoutNotify(CaptureCodeUtils.GetCaptureBit(bits, i * 6 + j));
+					toggle.SetValueWithoutNotify(bits.BitAt(i * 6 + j));
 					toggle.style.width = new Length(95, LengthUnit.Percent);
 					if (callbacks.ContainsKey(toggle))
 					{
@@ -68,7 +68,7 @@ namespace SBEPIS.Bits
 					}
 					void callback(ChangeEvent<bool> e)
 					{
-						BitSet bit = CaptureCodeUtils.GetCapturePlacement(i * 6 + j);
+						BitSet bit = BitSet.FromBit(i * 6 + j);
 						if (e.newValue)
 							bits |= bit;
 						else

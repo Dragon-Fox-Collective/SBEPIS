@@ -1,5 +1,5 @@
 using SBEPIS.Bits;
-using System;
+using SBEPIS.Thaumaturgy;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection
@@ -25,21 +25,10 @@ namespace SBEPIS.Capturllection
 		public void UpdateCaptureCode()
 		{
 			BitSet bits = capture.capturedItem ? capture.capturedItem.bits : BitSet.NOTHING;
-			PerformOnMaterial(renderers, captureMaterial, material => {
-				material.SetFloat("Seed", CaptureCodeUtils.GetCaptureSeed(bits));
+			Punchable.PerformOnMaterial(renderers, captureMaterial, material => {
+				material.SetFloat("Seed", bits.Seed);
 				material.SetTexture("CaptchaCode", CaptureCamera.GetCaptureCodeTexture(bits));
 			});
-		}
-
-		public static void PerformOnMaterial(Renderer[] renderers, Material material, Action<Material> action)
-		{
-			foreach (Renderer renderer in renderers)
-				for (int i = 0; i < renderer.materials.Length; i++)
-				{
-					string materialName = renderer.materials[i].name;
-					if (materialName.EndsWith(" (Instance)") && materialName[..^11] == material.name)
-						action.Invoke(renderer.materials[i]);
-				}
 		}
 	}
 }

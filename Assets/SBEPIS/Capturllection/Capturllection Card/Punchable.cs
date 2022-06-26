@@ -1,12 +1,14 @@
 using SBEPIS.Bits;
+using System;
 using UnityEngine;
 
 namespace SBEPIS.Thaumaturgy
 {
 	public class Punchable : MonoBehaviour
 	{
-		public SkinnedMeshRenderer punchHoles;
 		public BitSet punchedBits;
+		public Material[] materials;
+		public Renderer[] renderers;
 
 		private void Start()
 		{
@@ -18,16 +20,19 @@ namespace SBEPIS.Thaumaturgy
 			punchedBits = bits;
 
 			for (int i = 0; i < 48; i++)
-			{
-				punchHoles.SetBlendShapeWeight(punchHoles.sharedMesh.GetBlendShapeIndex($"Key {i + 1}"), CaptureCodeUtils.GetCaptureBit(punchedBits, i) ? 100 : 0);
+				foreach (Material material in materials)
+					PerformOnMaterial(renderers, material, material => material.SetFloat($"_Bit_{i + 1}", bits.BitAt(i) ? 1 : 0));
+		}
 
-				for (int j = 0; j < i; j++)
+		public static void PerformOnMaterial(Renderer[] renderers, Material material, Action<Material> action)
+		{
+			foreach (Renderer renderer in renderers)
+				for (int i = 0; i < renderer.materials.Length; i++)
 				{
-					int sharedIndex = punchHoles.sharedMesh.GetBlendShapeIndex($"Key {j + 1} + {i + 1}");
-					if (sharedIndex >= 0)
-						punchHoles.SetBlendShapeWeight(sharedIndex, CaptureCodeUtils.GetCaptureBit(punchedBits, i) || CaptureCodeUtils.GetCaptureBit(punchedBits, j) ? 100 : 0);
+					string materialName = renderer.materials[i].name;
+					if (materialName.EndsWith(" (Instance)") && materialName[..^11] == material.name)
+						action.Invoke(renderer.materials[i]);
 				}
-			}
 		}
 	}
 }

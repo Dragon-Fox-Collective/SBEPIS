@@ -13,7 +13,7 @@ namespace SBEPIS.Tests.EditMode
 		[Test]
 		public void CodeBecomesBits()
 		{
-			Assert.AreEqual(bits, CaptureCodeUtils.FromCode(code));
+			Assert.AreEqual(bits, BitSet.FromCode(code));
 		}
 
 		[Test]
@@ -25,25 +25,25 @@ namespace SBEPIS.Tests.EditMode
 		[Test]
 		public void BitsBecomeADigit()
 		{
-			Assert.AreEqual(63, CaptureCodeUtils.GetCaptureDigit(bits, 6));
+			Assert.AreEqual(63, bits.DigitAt(6));
 		}
 
 		[Test]
 		public void BitsBecomeAPercent()
 		{
-			Assert.AreEqual(1, CaptureCodeUtils.GetCapturePercent(bits, 6));
+			Assert.AreEqual(1, bits.PercentAt(6));
 		}
 
 		[Test]
 		public void BitsBecomeACharacter()
 		{
-			Assert.AreEqual('/', CaptureCodeUtils.GetCaptureChar(bits, 6));
+			Assert.AreEqual('/', bits.CharAt(6));
 		}
 
 		[Test]
 		public void BitsBecomeABoolean()
 		{
-			Assert.AreEqual(true, CaptureCodeUtils.GetCaptureBit(bits, 3));
+			Assert.AreEqual(true, bits.BitAt(3));
 		}
 
 		[Test]
@@ -103,7 +103,7 @@ namespace SBEPIS.Tests.EditMode
 		[Test]
 		public void BitsHaveUniqueness()
 		{
-			Assert.AreEqual(1, CaptureCodeUtils.GetUniquenessScore(bits, (BitSet)0b111));
+			Assert.AreEqual(1, BitSet.GetUniquenessScore(bits, (BitSet)0b111));
 		}
 	}
 }
