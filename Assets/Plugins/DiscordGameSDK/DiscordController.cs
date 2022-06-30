@@ -12,6 +12,7 @@ namespace Discord
 
 		private void Start()
 		{
+#if !UNITY_EDITOR
 			try
 			{
 				discord = new Discord(948761142950514738, (UInt64)CreateFlags.NoRequireDiscord);
@@ -23,22 +24,23 @@ namespace Discord
 				print("No Discord! Destroying");
 				Destroy(this);
 			}
+#endif
 		}
 
 		private void Update()
 		{
-			discord.RunCallbacks();
+			discord?.RunCallbacks();
 		}
 
 		private void OnApplicationQuit()
 		{
-			discord.GetActivityManager().ClearActivity(result => print(result));
+			discord?.GetActivityManager().ClearActivity(result => print(result));
 		}
 
 		private void UpdatePresence()
 		{
 			print("Updating presence");
-			discord.GetActivityManager().UpdateActivity(new Activity
+			discord?.GetActivityManager().UpdateActivity(new Activity
 			{
 				Details = "Exploring " + SceneManager.GetActiveScene().name,
 				State = "discord.gg/qHREQu7Zxm",
