@@ -8,7 +8,7 @@ namespace SBEPIS.Tests
 	{
 		public Grabber grabber;
 		public CaptureDequeHolder dequeHolder;
-		public CaptureCamerable camerable;
+		public GameObject obj;
 		public Capturllectainer emptyCard;
 		public Capturllectainer fullCard;
 	}

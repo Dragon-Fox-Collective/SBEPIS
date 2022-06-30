@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 2599729124153350906}
   - component: {fileID: 1567465723137536217}
   - component: {fileID: 6408443924259538308}
-  - component: {fileID: 3431021441257790128}
   - component: {fileID: 440917820055669988}
   - component: {fileID: 436234427008818838}
   - component: {fileID: 8180044113546759222}
+  - component: {fileID: 3431021441257790128}
+  - component: {fileID: 2485712713380246229}
   m_Layer: 0
   m_Name: Capturllection Card
   m_TagString: Untagged
@@ -69,21 +70,6 @@ MonoBehaviour:
   materials:
   - {fileID: 2100000, guid: 14780cba2b2008b42949209af650a747, type: 2}
   - {fileID: 2100000, guid: f1a726a08ce8cd643896224bdd1373e3, type: 2}
-  renderers:
-  - {fileID: 7857901446257573216}
---- !u!114 &3431021441257790128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1275059195579274974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ea103b4ef2854b48913993f43a1da91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  captureMaterial: {fileID: 2100000, guid: f1a726a08ce8cd643896224bdd1373e3, type: 2}
   renderers:
   - {fileID: 7857901446257573216}
 --- !u!114 &440917820055669988
@@ -143,10 +129,88 @@ MonoBehaviour:
   capturedItem: {fileID: 0}
   onCapture:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3431021441257790128}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.CaptureBack, SBEPIS.Capturllection
+        m_MethodName: UpdateCaptureCode
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2485712713380246229}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.CaptureFront, SBEPIS.Capturllection
+        m_MethodName: UpdateImage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onRetrieve:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3431021441257790128}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.CaptureBack, SBEPIS.Capturllection
+        m_MethodName: UpdateCaptureCodeToDefault
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2485712713380246229}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.CaptureFront, SBEPIS.Capturllection
+        m_MethodName: RemoveImage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3431021441257790128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275059195579274974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea103b4ef2854b48913993f43a1da91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  captureMaterial: {fileID: 2100000, guid: f1a726a08ce8cd643896224bdd1373e3, type: 2}
+  renderers:
+  - {fileID: 7857901446257573216}
+--- !u!114 &2485712713380246229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275059195579274974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1318d7814368b934cbe0b1d378b6444d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  captureMaterial: {fileID: 2100000, guid: 14780cba2b2008b42949209af650a747, type: 2}
+  renderers:
+  - {fileID: 7857901446257573216}
 --- !u!1001 &8848810319768150500
 PrefabInstance:
   m_ObjectHideFlags: 0
