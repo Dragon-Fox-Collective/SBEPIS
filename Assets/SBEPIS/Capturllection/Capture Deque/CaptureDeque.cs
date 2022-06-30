@@ -7,8 +7,8 @@ namespace SBEPIS.Capturllection
 	{
 		public int Count => cards.Count;
 
-		private List<Capturllector> cards = new List<Capturllector>();
+		private List<Capturllectainer> cards = new List<Capturllectainer>();
 
-		public Capturllector this[int i] => cards[i];
+		public Capturllectainer this[int i] => cards[i];
 	}
 }

@@ -31,8 +31,18 @@ namespace SBEPIS.Items
 
 		private void Start()
 		{
+			BecomeItem();
+		}
+
+		public bool BecomeItem()
+		{
 			if (!GetComponentInParent<Item>())
+			{
 				gameObject.AddComponent<Item>();
+				return true;
+			}
+			else
+				return false;
 		}
 
 		public override string ToString()

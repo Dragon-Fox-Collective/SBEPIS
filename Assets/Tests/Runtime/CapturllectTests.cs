@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using OculusTouchController = Unity.XR.Oculus.Input.OculusTouchController;
 using SBEPIS.Capturllection;
 using SBEPIS.Bits;
+using SBEPIS.Items;
 
 namespace SBEPIS.Tests
 {
@@ -91,7 +92,7 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator CapturllectFetchesItem_WhenHoldingCard()
 		{
-			CaptureHashable capturedItem = scene.fullCard.capturedItem;
+			Item capturedItem = scene.fullCard.capturedItem;
 			Assert.IsNotNull(capturedItem);
 			Assert.IsFalse(capturedItem.gameObject.activeInHierarchy);
 

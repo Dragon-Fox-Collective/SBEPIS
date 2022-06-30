@@ -1,20 +1,23 @@
 using SBEPIS.Bits;
+using SBEPIS.Items;
 using SBEPIS.Thaumaturgy;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	[RequireComponent(typeof(Capturllector))]
+	[RequireComponent(typeof(Capturllectainer))]
 	public class CaptureBack : MonoBehaviour
 	{
 		public Material captureMaterial;
 		public Renderer[] renderers;
 
-		private Capturllector capture;
+		private Capturllectainer capture;
 
 		private void Awake()
 		{
-			capture = GetComponent<Capturllector>();
+			capture = GetComponent<Capturllectainer>();
+			capture.onCapture.AddListener(UpdateCaptureCode);
+			capture.onRetrieve.AddListener(UpdateCaptureCode);
 		}
 
 		private void Start()
@@ -22,9 +25,17 @@ namespace SBEPIS.Capturllection
 			UpdateCaptureCode();
 		}
 
+		private void OnDestroy()
+		{
+			capture.onCapture.RemoveListener(UpdateCaptureCode);
+			capture.onRetrieve.RemoveListener(UpdateCaptureCode);
+		}
+
+		private void UpdateCaptureCode(Item item) => UpdateCaptureCode();
+
 		public void UpdateCaptureCode()
 		{
-			BitSet bits = capture.capturedItem ? capture.capturedItem.bits : BitSet.NOTHING;
+			BitSet bits = capture.capturedItem ? capture.capturedItem.itemBase.bits.bits : BitSet.NOTHING;
 			Punchable.PerformOnMaterial(renderers, captureMaterial, material => {
 				material.SetFloat("Seed", bits.Seed);
 				material.SetTexture("CaptchaCode", CaptureCamera.GetCaptureCodeTexture(bits));

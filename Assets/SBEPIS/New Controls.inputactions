@@ -60,9 +60,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Capturllect",
+                    "name": "Capturllect Right",
                     "type": "Button",
                     "id": "4e524db6-ffa3-4e86-906d-d3d9257629b0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Capturllect Left",
+                    "type": "Button",
+                    "id": "1daccaf8-b745-4fab-87e0-f780953ab842",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Tap",
@@ -302,7 +311,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Capturllect",
+                    "action": "Capturllect Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -313,28 +322,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "OpenXR",
-                    "action": "Capturllect",
+                    "action": "Capturllect Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "6d4487e4-3ad5-4214-8284-ded751aa8e85",
-                    "path": "<Keyboard>/c",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Toggle Deque",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0aaf21e6-ba16-4328-ad48-bf860cda0623",
-                    "path": "<XRController>{RightHand}/primaryButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
                     "action": "Toggle Deque",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -369,6 +367,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a9f2ff1-3949-4f6d-a5b4-e82965de10a5",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Capturllect Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

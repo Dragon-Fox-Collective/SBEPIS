@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 2599729124153350906}
   - component: {fileID: 1567465723137536217}
   - component: {fileID: 6408443924259538308}
-  - component: {fileID: 5278794268727047552}
   - component: {fileID: 3431021441257790128}
   - component: {fileID: 440917820055669988}
   - component: {fileID: 436234427008818838}
+  - component: {fileID: 8180044113546759222}
   m_Layer: 0
   m_Name: Capturllection Card
   m_TagString: Untagged
@@ -71,19 +71,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f1a726a08ce8cd643896224bdd1373e3, type: 2}
   renderers:
   - {fileID: 7857901446257573216}
---- !u!114 &5278794268727047552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1275059195579274974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9252a1ce5bec80d479d06804db114d95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultCapturedItem: {fileID: 0}
 --- !u!114 &3431021441257790128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +127,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceCollider: {fileID: 1567465723137536217}
   mass: 1
+--- !u!114 &8180044113546759222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275059195579274974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6603116df82fe8549984b384b2cc2586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultCapturedItem: {fileID: 0}
+  capturedItem: {fileID: 0}
+  onCapture:
+    m_PersistentCalls:
+      m_Calls: []
+  onRetrieve:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &8848810319768150500
 PrefabInstance:
   m_ObjectHideFlags: 0

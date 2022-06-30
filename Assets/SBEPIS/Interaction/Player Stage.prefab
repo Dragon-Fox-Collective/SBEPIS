@@ -352,6 +352,7 @@ GameObject:
   - component: {fileID: 2758302851383953299}
   - component: {fileID: 2758302851383953296}
   - component: {fileID: 2758302851383953298}
+  - component: {fileID: 5608005884839062307}
   m_Layer: 7
   m_Name: Left Hand
   m_TagString: Untagged
@@ -419,6 +420,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enabledScheme: 1
+--- !u!114 &5608005884839062307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2758302851383953302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9252a1ce5bec80d479d06804db114d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 8180044113546759222, guid: e8226037b0905f24f9753127b25ced23, type: 3}
 --- !u!1 &2758302851484042463
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,7 +1218,31 @@ MonoBehaviour:
     m_ActionId: fe9ce19e-3484-4843-976a-8fb9bec890da
     m_ActionName: Gameplay/Zoom[/Mouse/scroll/y]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7104566830342196467}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.Capturllector, SBEPIS.Capturllection
+        m_MethodName: OnCapture
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6079231096613178978}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.Capturllector, SBEPIS.Capturllection
+        m_MethodName: OnCapture
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 4e524db6-ffa3-4e86-906d-d3d9257629b0
     m_ActionName: Gameplay/Capturllect[/Keyboard/c]
   - m_PersistentCalls:
@@ -1227,6 +1265,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 6eb5b6ca-498a-480e-b0a1-0a839c0ba152
     m_ActionName: Gameplay/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5608005884839062307}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.Capturllector, SBEPIS.Capturllection
+        m_MethodName: OnCapture
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1daccaf8-b745-4fab-87e0-f780953ab842
+    m_ActionName: Gameplay/Capturllect Left
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -1491,6 +1545,7 @@ GameObject:
   - component: {fileID: 6376568278754761722}
   - component: {fileID: 6376568278754761721}
   - component: {fileID: 6376568278754761723}
+  - component: {fileID: 6079231096613178978}
   m_Layer: 7
   m_Name: Right Hand
   m_TagString: Untagged
@@ -1558,6 +1613,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enabledScheme: 1
+--- !u!114 &6079231096613178978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376568278754761727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9252a1ce5bec80d479d06804db114d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 8180044113546759222, guid: e8226037b0905f24f9753127b25ced23, type: 3}
 --- !u!1 &6376568278921566390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2138,6 +2206,7 @@ GameObject:
   - component: {fileID: 118103674006127513}
   - component: {fileID: 2912737772371389282}
   - component: {fileID: 5441740124525441581}
+  - component: {fileID: 7104566830342196467}
   m_Layer: 7
   m_Name: Flatscreen Hand
   m_TagString: Untagged
@@ -2204,6 +2273,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enabledScheme: 2
+--- !u!114 &7104566830342196467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6916329119411000770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9252a1ce5bec80d479d06804db114d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 8180044113546759222, guid: e8226037b0905f24f9753127b25ced23, type: 3}
 --- !u!1 &7553907235795562006
 GameObject:
   m_ObjectHideFlags: 0

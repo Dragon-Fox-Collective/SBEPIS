@@ -36,34 +36,55 @@ namespace SBEPIS.Interaction
 
 			bool isPressed = context.performed;
 
-			if (isPressed && !heldGrabbable && collidingGrabbables.Count > 0)
+			if (isPressed)
+				Grab();
+			else if (!isPressed)
+				Release();
+		}
+
+		public void Grab()
+		{
+			if (heldGrabbable || collidingGrabbables.Count == 0)
+				return;
+
+			foreach (Grabbable collidingGrabbable in collidingGrabbables)
 			{
-				foreach (Grabbable collidingGrabbable in collidingGrabbables)
+				print($"Attempting to grab {collidingGrabbable}");
+				if (collidingGrabbable.canGrab)
 				{
-					print($"Attempting to grab {collidingGrabbable}");
-					if (collidingGrabbable.canGrab)
-					{
-						heldGrabbable = collidingGrabbable;
-
-						heldGrabbableJoint = collidingGrabbable.gameObject.AddComponent<FixedJoint>();
-						heldGrabbableJoint.connectedBody = rigidbody;
-
-						collidingGrabbable.Grab(this);
-						break;
-					}
+					Grab(collidingGrabbable);
+					break;
 				}
 			}
-			else if (!isPressed && heldGrabbable)
-			{
-				Grabbable droppedGrabbable = heldGrabbable;
-				heldGrabbable = null;
+		}
 
-				Destroy(heldGrabbableJoint);
-				heldGrabbableJoint = null;
-				droppedGrabbable.rigidbody.AddForce(Vector3.up * 0.01f);
+		public void Grab(Grabbable grabbable)
+		{
+			if (!grabbable || !grabbable.canGrab)
+				return;
 
-				droppedGrabbable.Drop(this);
-			}
+			heldGrabbable = grabbable;
+
+			heldGrabbableJoint = grabbable.gameObject.AddComponent<FixedJoint>();
+			heldGrabbableJoint.connectedBody = rigidbody;
+
+			grabbable.Grab(this);
+		}
+		
+		public Grabbable Release()
+		{
+			if (!heldGrabbable)
+				return null;
+
+			Grabbable droppedGrabbable = heldGrabbable;
+			heldGrabbable = null;
+
+			Destroy(heldGrabbableJoint);
+			heldGrabbableJoint = null;
+			droppedGrabbable.rigidbody.AddForce(Vector3.up * 0.01f);
+
+			droppedGrabbable.Drop(this);
+			return droppedGrabbable;
 		}
 
 		private void OnTriggerEnter(Collider other)
@@ -89,6 +110,9 @@ namespace SBEPIS.Interaction
 		private void StartCollidingWith(Grabbable grabbable)
 		{
 			print($"Colliding with {grabbable}");
+			if (!grabbable)
+				return;
+
 			grabbable.onTouch.Invoke(this);
 			collidingGrabbables.Add(grabbable);
 		}
@@ -96,6 +120,9 @@ namespace SBEPIS.Interaction
 		private void StopCollidingWith(Grabbable grabbable)
 		{
 			print($"No longer colliding with {grabbable}");
+			if (!grabbable)
+				return;
+
 			collidingGrabbables.Remove(grabbable);
 			grabbable.onStopTouch?.Invoke(this);
 		}
@@ -109,7 +136,9 @@ namespace SBEPIS.Interaction
 		public void ClearInvalidCollisions()
 		{
 			for (int i = 0; i < collidingGrabbables.Count; i++)
-				if (!collidingGrabbables[i].gameObject.activeInHierarchy)
+				if (!collidingGrabbables[i])
+					collidingGrabbables.RemoveAt(i--);
+				else if (!collidingGrabbables[i].gameObject.activeInHierarchy)
 					StopCollidingWith(collidingGrabbables[i--]);
 		}
 
