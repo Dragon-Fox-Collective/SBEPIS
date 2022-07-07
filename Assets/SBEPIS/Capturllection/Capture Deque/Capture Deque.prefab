@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7617101641436224015}
   - component: {fileID: 5737410847915139685}
   - component: {fileID: 6881145044469183986}
+  - component: {fileID: 875576330294720319}
   m_Layer: 0
   m_Name: Capture Deque
   m_TagString: Untagged
@@ -47,8 +48,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.066675, y: 0.092074, z: 0.012}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.066675, y: 0.08100586, z: 0.012}
+  m_Center: {x: 0, y: -0.005534075, z: 0}
 --- !u!114 &7617101641436224015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,6 +62,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834066343270ba147b47a2957044d46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainBox: {fileID: 6933793677958583015}
+  cards: []
+  currentCard: {fileID: 0}
 --- !u!114 &5737410847915139685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +106,19 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!65 &875576330294720319
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762745506201212150}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.07, y: 0.03, z: 0.02}
+  m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!1001 &178777184448903901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -180,23 +197,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -953342466816307569, guid: 340882bcddc452945a7265d2f5c497d5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.70710766
       objectReference: {fileID: 0}
     - target: {fileID: -953342466816307569, guid: 340882bcddc452945a7265d2f5c497d5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -953342466816307569, guid: 340882bcddc452945a7265d2f5c497d5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -953342466816307569, guid: 340882bcddc452945a7265d2f5c497d5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.7071059
       objectReference: {fileID: 0}
     - target: {fileID: -953342466816307569, guid: 340882bcddc452945a7265d2f5c497d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 340882bcddc452945a7265d2f5c497d5, type: 3}
       propertyPath: m_Name

@@ -113,7 +113,7 @@ namespace SBEPIS.Interaction
 			if (!grabbable)
 				return;
 
-			grabbable.onTouch.Invoke(this);
+			grabbable.onTouch?.Invoke(this, grabbable);
 			collidingGrabbables.Add(grabbable);
 		}
 
@@ -124,7 +124,7 @@ namespace SBEPIS.Interaction
 				return;
 
 			collidingGrabbables.Remove(grabbable);
-			grabbable.onStopTouch?.Invoke(this);
+			grabbable.onStopTouch?.Invoke(this, grabbable);
 		}
 
 		public void ClearCollisions()

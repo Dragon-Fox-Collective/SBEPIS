@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -64,6 +65,11 @@ public static class ExtensionMethods
 		foreach (Transform child in other)
 			child.SetParent(transform, true);
 		UnityEngine.Object.Destroy(other.gameObject);
+	}
+
+	public static IEnumerable<T> Insert<T>(this IEnumerable<T> enumerable, int index, T element)
+	{
+		return enumerable.Take(index).Append(element).Concat(enumerable.TakeLast(enumerable.Count() - index));
 	}
 
 	// From PhysX

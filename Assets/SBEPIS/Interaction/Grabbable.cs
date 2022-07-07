@@ -24,22 +24,22 @@ namespace SBEPIS.Interaction
 		{
 			grabbingGrabber = player;
 
-			onGrab.Invoke(player);
+			onGrab.Invoke(player, this);
 		}
 
 		public void HoldUpdate(Grabber player)
 		{
-			onHoldUpdate.Invoke(player);
+			onHoldUpdate.Invoke(player, this);
 		}
 
 		public void Drop(Grabber player)
 		{
 			grabbingGrabber = null;
 
-			onDrop.Invoke(player);
+			onDrop.Invoke(player, this);
 		}
 	}
 
 	[Serializable]
-	public class ItemEvent : UnityEvent<Grabber> { }
+	public class ItemEvent : UnityEvent<Grabber, Grabbable> { }
 }

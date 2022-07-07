@@ -112,6 +112,7 @@ namespace SBEPIS.Tests
 			Assert.IsTrue(capturedItem.gameObject.activeInHierarchy);
 		}
 
+		/*
 		[UnityTest]
 		public IEnumerator CapturllectEjectsItem_WhenCardIsFull()
 		{
@@ -191,6 +192,7 @@ namespace SBEPIS.Tests
 
 			yield return null;
 		}
+		*/
 
 		[UnityTest]
 		public IEnumerator CaptureCameraTakesPicturesOfCodes()

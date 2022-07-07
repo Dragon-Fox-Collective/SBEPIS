@@ -7,7 +7,7 @@ namespace SBEPIS.Tests
 	public class CapturllectScene : MonoBehaviour
 	{
 		public Grabber grabber;
-		public CaptureDequeHolder dequeHolder;
+		public CaptureDequeSummoner dequeHolder;
 		public GameObject obj;
 		public Capturllectainer emptyCard;
 		public Capturllectainer fullCard;

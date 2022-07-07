@@ -1,9 +1,11 @@
+using SBEPIS.Interaction;
 using UnityEngine;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Capturllection
 {
-	public class CaptureDequeHolder : MonoBehaviour
+	[RequireComponent(typeof(Grabber))]
+	public class CaptureDequeSummoner : MonoBehaviour
 	{
 		public CaptureDeque deque;
 
@@ -14,18 +16,10 @@ namespace SBEPIS.Capturllection
 
 		public void OnToggleDeque(CallbackContext context)
 		{
-			if (!context.performed)
+			if (!gameObject.activeInHierarchy || !enabled || !context.performed)
 				return;
 
 			deque.gameObject.SetActive(!deque.gameObject.activeSelf);
-		}
-
-		public void OnCapturllect(CallbackContext context)
-		{
-			if (!context.performed)
-				return;
-
-			print("capturllected");
 		}
 	}
 }

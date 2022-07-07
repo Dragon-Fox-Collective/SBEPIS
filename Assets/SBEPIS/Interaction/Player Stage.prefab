@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 147550587149835106}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -353,6 +353,7 @@ GameObject:
   - component: {fileID: 2758302851383953296}
   - component: {fileID: 2758302851383953298}
   - component: {fileID: 5608005884839062307}
+  - component: {fileID: 141378730522278369}
   m_Layer: 7
   m_Name: Left Hand
   m_TagString: Untagged
@@ -433,6 +434,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 8180044113546759222, guid: e8226037b0905f24f9753127b25ced23, type: 3}
+--- !u!114 &141378730522278369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2758302851383953302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2947df0b19261a4480e7d0a48e2aaa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deque: {fileID: 0}
 --- !u!1 &2758302851484042463
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,7 +1260,43 @@ MonoBehaviour:
     m_ActionId: 4e524db6-ffa3-4e86-906d-d3d9257629b0
     m_ActionName: Gameplay/Capturllect[/Keyboard/c]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4714804858968353103}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.CaptureDequeSummoner, SBEPIS.Capturllection
+        m_MethodName: OnToggleDeque
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1973565709355410790}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.CaptureDequeSummoner, SBEPIS.Capturllection
+        m_MethodName: OnToggleDeque
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 141378730522278369}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.CaptureDequeSummoner, SBEPIS.Capturllection
+        m_MethodName: OnToggleDeque
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 56a1f853-d0d7-48ce-b37c-2fa99356ce65
     m_ActionName: Gameplay/Toggle Deque[/Keyboard/c]
   - m_PersistentCalls:
@@ -1546,6 +1596,7 @@ GameObject:
   - component: {fileID: 6376568278754761721}
   - component: {fileID: 6376568278754761723}
   - component: {fileID: 6079231096613178978}
+  - component: {fileID: 1973565709355410790}
   m_Layer: 7
   m_Name: Right Hand
   m_TagString: Untagged
@@ -1626,6 +1677,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 8180044113546759222, guid: e8226037b0905f24f9753127b25ced23, type: 3}
+--- !u!114 &1973565709355410790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376568278754761727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2947df0b19261a4480e7d0a48e2aaa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deque: {fileID: 0}
 --- !u!1 &6376568278921566390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2207,6 +2271,7 @@ GameObject:
   - component: {fileID: 2912737772371389282}
   - component: {fileID: 5441740124525441581}
   - component: {fileID: 7104566830342196467}
+  - component: {fileID: 4714804858968353103}
   m_Layer: 7
   m_Name: Flatscreen Hand
   m_TagString: Untagged
@@ -2286,6 +2351,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 8180044113546759222, guid: e8226037b0905f24f9753127b25ced23, type: 3}
+--- !u!114 &4714804858968353103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6916329119411000770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2947df0b19261a4480e7d0a48e2aaa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deque: {fileID: 0}
 --- !u!1 &7553907235795562006
 GameObject:
   m_ObjectHideFlags: 0
