@@ -1,5 +1,5 @@
 {
-    "m_SGVersion": 2,
+    "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.GraphData",
     "m_ObjectId": "fbb73b5285de4191aeaf100f8f7fc1c3",
     "m_Properties": [
@@ -8,6 +8,12 @@
         }
     ],
     "m_Keywords": [],
+    "m_Dropdowns": [],
+    "m_CategoryData": [
+        {
+            "m_Id": "030f2c41ec504a658250e23c30c50eb8"
+        }
+    ],
     "m_Nodes": [
         {
             "m_Id": "61d08bbf3234490583b284bc69101dc3"
@@ -151,15 +157,28 @@
         "serializedMesh": {
             "m_SerializedMesh": "{\"mesh\":{\"instanceID\":0}}",
             "m_Guid": ""
-        }
+        },
+        "preventRotation": false
     },
     "m_Path": "Sub Graphs",
-    "m_ConcretePrecision": 0,
+    "m_GraphPrecision": 0,
     "m_PreviewMode": 2,
     "m_OutputNode": {
         "m_Id": "61d08bbf3234490583b284bc69101dc3"
     },
     "m_ActiveTargets": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.CategoryData",
+    "m_ObjectId": "030f2c41ec504a658250e23c30c50eb8",
+    "m_Name": "",
+    "m_ChildObjectList": [
+        {
+            "m_Id": "8b79c201bebe42bb9a550b91795ece44"
+        }
+    ]
 }
 
 {
@@ -464,7 +483,7 @@
 }
 
 {
-    "m_SGVersion": 0,
+    "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.ViewDirectionNode",
     "m_ObjectId": "6c3eb6f9f7794496acd055aba19c5245",
     "m_Group": {
@@ -475,10 +494,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 34.99999237060547,
-            "y": 816.0,
-            "width": 208.0,
-            "height": 316.0
+            "x": 34.0000114440918,
+            "y": 813.0,
+            "width": 208.00001525878907,
+            "height": 315.0
         }
     },
     "m_Slots": [
@@ -568,9 +587,13 @@
         "m_GuidSerialized": "469c3ecc-75cf-42f7-b22f-d761abe206c8"
     },
     "m_Name": "Depth",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_8b79c201bebe42bb9a550b91795ece44",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,

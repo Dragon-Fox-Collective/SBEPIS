@@ -6,7 +6,7 @@ namespace SBEPIS.Interaction
 	[RequireComponent(typeof(PhysicsSlider))]
 	public class PhysicsSliderProgressProxy : MonoBehaviour
 	{
-		public UnityEvent<float> onInvokeProgress;
+		public UnityEvent<float> onInvokeProgress = new();
 
 		private PhysicsSlider slider;
 

@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class TriggerProxy : MonoBehaviour
 {
-	public TriggerEvent onTriggerEnter, onTriggerStay, onTriggerExit;
+	public TriggerEvent onTriggerEnter = new(), onTriggerStay = new(), onTriggerExit = new();
 
 	private void OnTriggerEnter(Collider other)
 	{

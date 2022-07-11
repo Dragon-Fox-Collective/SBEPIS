@@ -10,7 +10,7 @@ namespace SBEPIS.Interaction
 		public float threshold = 0.75f;
 		public float forcePressFactor = 100;
 
-		public UnityEvent onPressed, onUnpressed;
+		public UnityEvent onPressed = new(), onUnpressed = new();
 
 		[NonSerialized]
 		public bool isPressed;

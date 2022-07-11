@@ -35,10 +35,7 @@ namespace SBEPIS.Interaction.XR
 				if (e.actionId == context.action.id.ToString())
 					e.RemoveListener(AttemptBind);
 
-			devices.UnionWith(
-				from control in context.action.controls
-				select control.device
-			);
+			devices.UnionWith(context.action.controls.Select(control => control.device));
 			bindTo.SwitchCurrentControlScheme("OpenXR", devices.ToArray());
 		}
 	}

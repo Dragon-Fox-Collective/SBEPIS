@@ -6,7 +6,7 @@ namespace SBEPIS.Interaction.Flatscreen
 {
 	public class FlatscreenHandTrackerPositioner : MonoBehaviour
 	{
-		public Rigidbody connectionPoint;
+		public Rigidbody tracker;
 		public Grabber grabber;
 		public LayerMask raycastMask = 1;
 
@@ -17,19 +17,19 @@ namespace SBEPIS.Interaction.Flatscreen
 
 		private void Update()
 		{
-			connectionPoint.position = transform.position + transform.forward * (zoomed ? nearHoldDistance : farHoldDistance);
+			tracker.position = transform.position + transform.forward * (zoomed ? nearHoldDistance : farHoldDistance);
 
 			if (!grabber.heldGrabbable)
 			{
 				if (CastForGrabbables(out RaycastHit hit))
 				{
-					grabber.gameObject.SetActive(true);
+					//grabber.gameObject.SetActive(true);
 					grabber.transform.position = hit.point;
 				}
 				else
 				{
 					grabber.ClearCollisions();
-					grabber.gameObject.SetActive(false);
+					//grabber.gameObject.SetActive(false);
 				}
 			}
 		}

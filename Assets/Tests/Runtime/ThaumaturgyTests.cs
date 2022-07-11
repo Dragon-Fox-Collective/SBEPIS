@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using NUnit.Framework;
+using SBEPIS.Bits;
 using SBEPIS.Thaumaturgy;
 using SBEPIS.Utils;
 using UnityEngine;
@@ -20,14 +22,14 @@ namespace SBEPIS.Tests
 		[TearDown]
 		public void Teardown()
 		{
-			Object.Destroy(scene.gameObject);
+			UnityEngine.Object.Destroy(scene.gameObject);
 		}
 
 		[UnityTest]
 		public IEnumerator PunchingCaptureCardsMakesHoles()
 		{
-			Punchable card = Object.Instantiate(scene.captureCardPrefab, scene.transform).GetComponent<Punchable>();
-			card.Punch(CaptureCodeUtils.HashCaptureCode("BAAAAAAA"));
+			/*Punchable card = Object.Instantiate(scene.captureCardPrefab, scene.transform).GetComponent<Punchable>();
+			card.Punch(BitSet.FromCode("BAAAAAAA"));
 
 			for (int i = 0; i < card.punchHoles.sharedMesh.blendShapeCount; i++)
 			{
@@ -39,7 +41,8 @@ namespace SBEPIS.Tests
 					Assert.AreEqual(0, card.punchHoles.GetBlendShapeWeight(i));
 			}
 
-			yield return null;
+			yield return null;*/
+			throw new NotImplementedException();
 		}
 	}
 }

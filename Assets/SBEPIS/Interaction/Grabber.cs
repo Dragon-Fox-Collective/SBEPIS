@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
@@ -8,18 +9,19 @@ namespace SBEPIS.Interaction
 	[RequireComponent(typeof(Rigidbody))]
 	public class Grabber : MonoBehaviour
 	{
-		public Scheme enabledScheme;
+		private Collider[] collisionColliders;
 
 		public Grabbable heldGrabbable { get; private set; }
 
 		private FixedJoint heldGrabbableJoint;
 		public new Rigidbody rigidbody { get; private set; }
 
-		private List<Grabbable> collidingGrabbables = new List<Grabbable>();
+		private readonly List<Grabbable> collidingGrabbables = new();
 
 		private void Awake()
 		{
 			rigidbody = GetComponent<Rigidbody>();
+			collisionColliders = GetComponentsInChildren<Collider>().Where(collider => collider.enabled && !collider.isTrigger).ToArray();
 		}
 
 		private void Update()
@@ -97,7 +99,7 @@ namespace SBEPIS.Interaction
 		{
 			print($"No longer colliding with {grabbable}");
 			collidingGrabbables.Remove(grabbable);
-			grabbable.onStopTouch.Invoke(this);
+			grabbable.onStopTouch?.Invoke(this);
 		}
 
 		public void ClearCollisions()
@@ -115,14 +117,15 @@ namespace SBEPIS.Interaction
 
 		public void OnControlsChanged(PlayerInput input)
 		{
-			if (input.currentControlScheme == enabledScheme.ToString())
+			if (input.currentControlScheme == "OpenXR")
 			{
-				print($"Activating {enabledScheme} input for {this}");
-				gameObject.SetActive(true);
+				foreach (Collider collider in collisionColliders)
+					collider.enabled = true;
 			}
 			else
 			{
-				gameObject.SetActive(false);
+				foreach (Collider collider in collisionColliders)
+					collider.enabled = false;
 			}
 		}
 
