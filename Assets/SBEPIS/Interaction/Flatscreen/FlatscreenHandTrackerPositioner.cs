@@ -23,13 +23,11 @@ namespace SBEPIS.Interaction.Flatscreen
 			{
 				if (CastForGrabbables(out RaycastHit hit))
 				{
-					//grabber.gameObject.SetActive(true);
 					grabber.transform.position = hit.point;
 				}
 				else
 				{
 					grabber.ClearCollisions();
-					//grabber.gameObject.SetActive(false);
 				}
 			}
 		}
