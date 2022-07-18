@@ -43,7 +43,7 @@ public static class ExtensionMethods
 
 	public static string ToDelimString<T>(this IEnumerable<T> enumerable)
 	{
-		return "[ " + string.Join(", ", enumerable) +  " ]";
+		return "[" + string.Join(", ", enumerable) +  "]";
 	}
 
 	public static T Pop<T>(this List<T> list)

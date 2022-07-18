@@ -9,7 +9,7 @@ namespace SBEPIS.Interaction
 	[RequireComponent(typeof(Rigidbody))]
 	public class Grabber : MonoBehaviour
 	{
-		private Collider[] collisionColliders;
+		private Collider[] collisionColliders = new Collider[0];
 
 		public Grabbable heldGrabbable { get; private set; }
 
@@ -17,6 +17,9 @@ namespace SBEPIS.Interaction
 		public new Rigidbody rigidbody { get; private set; }
 
 		private readonly List<Grabbable> collidingGrabbables = new();
+
+		private bool shouldEnableColliders;
+		private bool shouldDisableColliders;
 
 		private void Awake()
 		{
@@ -26,6 +29,7 @@ namespace SBEPIS.Interaction
 
 		private void Update()
 		{
+			HandleEnablingColliders();
 			ClearInvalidCollisions();
 			if (heldGrabbable)
 				heldGrabbable.HoldUpdate(this);
@@ -115,17 +119,46 @@ namespace SBEPIS.Interaction
 					StopCollidingWith(collidingGrabbables[i--]);
 		}
 
-		public void OnControlsChanged(PlayerInput input)
+		public void QueueEnableColliders()
 		{
-			if (input.currentControlScheme == "OpenXR")
-			{
+			shouldEnableColliders = true;
+			shouldDisableColliders = false;
+		}
+
+		public void QueueDisableColliders()
+		{
+			shouldEnableColliders = false;
+			shouldDisableColliders = true;
+		}
+
+		private void HandleEnablingColliders()
+		{
+			if (collisionColliders.Length == 0 || (!shouldEnableColliders && !shouldDisableColliders))
+				return;
+
+			if (shouldEnableColliders)
 				foreach (Collider collider in collisionColliders)
 					collider.enabled = true;
-			}
-			else
-			{
+			shouldEnableColliders = false;
+
+			if (shouldDisableColliders)
 				foreach (Collider collider in collisionColliders)
 					collider.enabled = false;
+			shouldDisableColliders = false;
+		}
+
+		// Note that this happens *before* Awake is called
+		public void OnControlsChanged(PlayerInput input)
+		{
+			switch (input.currentControlScheme)
+			{
+				case "OpenXR":
+					QueueEnableColliders();
+					break;
+
+				default:
+					QueueDisableColliders();
+					break;
 			}
 		}
 
@@ -133,7 +166,8 @@ namespace SBEPIS.Interaction
 		{
 			NONE,
 			OpenXR,
-			Keyboard
+			Keyboard,
+			Controller,
 		}
 	}
 }

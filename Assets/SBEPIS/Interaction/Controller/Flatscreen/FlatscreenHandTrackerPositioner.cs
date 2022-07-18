@@ -54,13 +54,14 @@ namespace SBEPIS.Interaction.Flatscreen
 		{
 			switch (input.currentControlScheme)
 			{
-				case "Keyboard":
-					print("Activating Keyboard input");
-					enabled = true;
+				case "OpenXR":
+					print("Activating OpenXR input");
+					enabled = false;
 					break;
 
 				default:
-					enabled = false;
+					print($"Activating default ({input.currentControlScheme}) input");
+					enabled = true;
 					break;
 			}
 		}

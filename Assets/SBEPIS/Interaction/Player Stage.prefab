@@ -773,13 +773,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPosition: {fileID: 6376568280094680653}
-  yawRotation: {fileID: 6376568278532902885}
+  yawRotation: {fileID: 6376568279122881040}
   pauseButtons: {fileID: 7475380293285515536}
   main: {fileID: 7583878585626512701}
   settings: {fileID: 8800242104889866177}
   sensitivitySlider: {fileID: 4454766888223375874}
   input: {fileID: 6098800601631693807}
-  controller: {fileID: 5816985420801532654}
+  movementController: {fileID: 5816985420801532654}
+  lookController: {fileID: 622339949498080691}
   mouseSensitivityMin: 0.01
   mouseSensitivityMax: 0.7
 --- !u!1 &4894537130919007913
@@ -822,7 +823,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4894537130919007913}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -932,7 +933,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5159398627618986266}
   - component: {fileID: 6098800601631693807}
-  - component: {fileID: 5964811541422315624}
   m_Layer: 0
   m_Name: Input System
   m_TagString: Untagged
@@ -962,7 +962,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5040132003472840282}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -1036,9 +1036,8 @@ MonoBehaviour:
     m_ActionName: Normal/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5816985420801532654}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.RigidbodyMovementController,
-          SBEPIS.Interaction
+      - m_Target: {fileID: 622339949498080691}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.LookController, SBEPIS.Interaction
         m_MethodName: OnLookPitch
         m_Mode: 0
         m_Arguments:
@@ -1053,9 +1052,8 @@ MonoBehaviour:
     m_ActionName: Normal/Look[/Mouse/delta/y,/Mouse/delta/y,/Mouse/delta/x,/Mouse/delta/x]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5816985420801532654}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.RigidbodyMovementController,
-          SBEPIS.Interaction
+      - m_Target: {fileID: 622339949498080691}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.LookController, SBEPIS.Interaction
         m_MethodName: OnLookYaw
         m_Mode: 0
         m_Arguments:
@@ -1070,9 +1068,8 @@ MonoBehaviour:
     m_ActionName: Gameplay/LookYaw[/Mouse/delta/x]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5816985420801532654}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.RigidbodyMovementController,
-          SBEPIS.Interaction
+      - m_Target: {fileID: 6761588775947424754}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.JumpController, SBEPIS.Interaction
         m_MethodName: OnJump
         m_Mode: 0
         m_Arguments:
@@ -1163,19 +1160,6 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 6376568279122881047}
---- !u!114 &5964811541422315624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5040132003472840282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de7a3c3ee0dd34a4c9a3902dc1fbccd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ticks: 1
 --- !u!1 &5747239524736332981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1937,7 +1921,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6376568280094680653}
   - component: {fileID: 8136032471875334439}
+  - component: {fileID: 5520224315998567352}
   - component: {fileID: 5816985420801532654}
+  - component: {fileID: 622339949498080691}
+  - component: {fileID: 6761588775947424754}
   m_Layer: 8
   m_Name: Player Body
   m_TagString: Untagged
@@ -1979,6 +1966,23 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &5520224315998567352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376568280094680652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034485eceac52544f93e74c714bfb195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheck: {fileID: 6376568280010574378}
+  groundCheckDistance: 0.4
+  groundCheckMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!114 &5816985420801532654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1991,20 +1995,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08cdaa4f47345a14fbfbae485548673e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveAimer: {fileID: 6376568279122881040}
+  maxGroundSpeed: 6
+  groundAcceleration: 80
+  airAcceleration: 20
+  frictionDeceleration: 20
+--- !u!114 &622339949498080691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376568280094680652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af8dc00e344fc434e8c1e238b1d1a436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   pitchRotator: {fileID: 6376568279122881040}
   yawRotator: {fileID: 6376568280094680653}
-  moveAimer: {fileID: 6376568279122881040}
   sensitivity: 0.3
-  maxGroundSpeed: 6
-  groundAcceleration: 100
-  airAcceleration: 20
-  jumpSpeed: 4.5
-  frictionDeceleration: 20
-  groundCheck: {fileID: 6376568280010574378}
-  groundCheckDistance: 0.4
-  groundCheckMask:
-    serializedVersion: 2
-    m_Bits: 1
+--- !u!114 &6761588775947424754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376568280094680652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0fba6bf4ef9415448b7fe574d37a959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpSpeed: 5
 --- !u!1 &7553907235795562006
 GameObject:
   m_ObjectHideFlags: 0

@@ -176,6 +176,17 @@
                 },
                 {
                     "name": "",
+                    "id": "aca93bdb-5e87-4268-a95b-7b12f418ebd1",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "ecc21d25-ea1c-4884-b115-68322da022dd",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -209,11 +220,33 @@
                 },
                 {
                     "name": "",
+                    "id": "e861774f-ba07-43ae-b6c4-81c9efacab14",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "10953cb6-cc8b-43ee-b1a8-2d44902d8139",
                     "path": "<Mouse>/delta/y",
                     "interactions": "",
                     "processors": "Scale(factor=0.5)",
                     "groups": "Keyboard",
+                    "action": "LookPitch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2963b633-6063-4f9c-a964-30f22a37753e",
+                    "path": "<Gamepad>/rightStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
                     "action": "LookPitch",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -236,6 +269,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "OpenXR",
+                    "action": "Pick Up Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "756b4864-6e3c-4011-ad5d-557af54ae287",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
                     "action": "Pick Up Right",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -286,6 +330,17 @@
                 },
                 {
                     "name": "",
+                    "id": "733d072a-a9e7-4f04-a8dd-0de5ae4996a5",
+                    "path": "<Gamepad>/rightStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "LookYaw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d5dbbe72-3c14-4a60-8b56-0a7a8433f228",
                     "path": "<XRController>{LeftHand}/gripPressed",
                     "interactions": "",
@@ -319,6 +374,17 @@
                 },
                 {
                     "name": "",
+                    "id": "49152919-eca5-468a-a1e7-e79ec4c3e892",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Capturllect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "6d4487e4-3ad5-4214-8284-ded751aa8e85",
                     "path": "<Keyboard>/c",
                     "interactions": "",
@@ -335,6 +401,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "OpenXR",
+                    "action": "Toggle Deque",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3dd30aaa-b6e9-4935-815e-2ac04f34266f",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
                     "action": "Toggle Deque",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -367,7 +444,18 @@
                     "path": "<XRController>{LeftHand}/menu",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "OpenXR",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9367757c-30cc-4bb5-bb5f-2920a784e127",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -414,6 +502,17 @@
                 },
                 {
                     "devicePath": "<XRHMD>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Controller",
+            "bindingGroup": "Controller",
+            "devices": [
+                {
+                    "devicePath": "<Gamepad>",
                     "isOptional": false,
                     "isOR": false
                 }

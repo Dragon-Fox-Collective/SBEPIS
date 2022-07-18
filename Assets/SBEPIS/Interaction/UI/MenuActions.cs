@@ -19,7 +19,8 @@ namespace SBEPIS.Interaction
 
 		public PlayerInput input;
 
-		public RigidbodyMovementController controller;
+		public MovementController movementController;
+		public LookController lookController;
 
 		public float mouseSensitivityMin = 0.1f;
 		public float mouseSensitivityMax = 1;
@@ -28,9 +29,9 @@ namespace SBEPIS.Interaction
 
 		private void Start()
 		{
-			settingsData = new PlayerSettingsSaveData { filename = "settings", sensitivity = controller.sensitivity };
+			settingsData = new PlayerSettingsSaveData { filename = "settings", sensitivity = lookController.sensitivity };
 			DataSaver.LoadData(ref settingsData);
-			controller.sensitivity = settingsData.sensitivity;
+			lookController.sensitivity = settingsData.sensitivity;
 		}
 
 		public void StartNewGame()
@@ -76,7 +77,7 @@ namespace SBEPIS.Interaction
 			main.gameObject.SetActive(false);
 			settings.gameObject.SetActive(true);
 
-			sensitivitySlider.ResetAnchor(controller.sensitivity.Map(mouseSensitivityMin, mouseSensitivityMax, 0, 1));
+			sensitivitySlider.ResetAnchor(lookController.sensitivity.Map(mouseSensitivityMin, mouseSensitivityMax, 0, 1));
 		}
 
 		public void OnTogglePauseMenu(CallbackContext context)
@@ -96,8 +97,8 @@ namespace SBEPIS.Interaction
 
 		public void ChangeMouseSensitivity(float percent)
 		{
-			controller.sensitivity = percent.Map(0, 1, mouseSensitivityMin, mouseSensitivityMax);
-			settingsData.sensitivity = controller.sensitivity;
+			lookController.sensitivity = percent.Map(0, 1, mouseSensitivityMin, mouseSensitivityMax);
+			settingsData.sensitivity = lookController.sensitivity;
 			DataSaver.SaveData(settingsData);
 		}
 	}
