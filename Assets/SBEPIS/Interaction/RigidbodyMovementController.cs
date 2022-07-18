@@ -11,7 +11,8 @@ namespace SBEPIS.Interaction
 		public Transform moveAimer;
 		public float sensitivity = 1;
 		public float maxGroundSpeed = 8;
-		public float groundAcceleration = 1;
+		public float groundAcceleration = 10;
+		public float airAcceleration = 1;
 		public float jumpSpeed = 3;
 		public float frictionDeceleration = 1;
 		public Transform groundCheck;
@@ -23,7 +24,7 @@ namespace SBEPIS.Interaction
 		private float camYaw;
 		private Vector3 controlsTarget;
 		private bool isGrounded;
-		private Collider[] groundedColliders = new Collider[1];
+		private readonly Collider[] groundedColliders = new Collider[1];
 
 		private void Awake()
 		{
@@ -39,6 +40,7 @@ namespace SBEPIS.Interaction
 		{
 			isGrounded = Physics.OverlapSphereNonAlloc(groundCheck.position, groundCheckDistance, groundedColliders, groundCheckMask) > 0;
 			Vector3 groundVelocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+			float currentSpeed = groundVelocity.magnitude;
 
 			// if the player is moving controls and is not grounded, accelerate in that direction until we are moving faster than the max
 			// if the player is moving controls and is grounded, accelerate, probably apply friction in not the direction that the player is going
@@ -49,15 +51,17 @@ namespace SBEPIS.Interaction
 			if (controlsTarget != Vector3.zero)
 			{
 				Vector3 accelerationDirection = moveAimer.right * controlsTarget.x + Vector3.Cross(moveAimer.right, Vector3.up) * controlsTarget.z;
-				Vector3 currentvelocityInDirection = Vector3.Project(groundVelocity, accelerationDirection);
-				if (currentvelocityInDirection.magnitude < maxGroundSpeed)
-					rigidbody.AddForce(accelerationDirection * groundAcceleration, ForceMode.Acceleration);
+				float maxSpeed = Mathf.Max(currentSpeed, maxGroundSpeed);
+				Vector3 newVelocity = groundVelocity + Time.fixedDeltaTime * (isGrounded ? groundAcceleration : airAcceleration) * accelerationDirection;
+				Vector3 clampedNewVelocity = Vector3.ClampMagnitude(newVelocity, maxSpeed);
+				rigidbody.velocity += clampedNewVelocity - groundVelocity;
+				Debug.Log($"{groundVelocity} {newVelocity} {clampedNewVelocity} {rigidbody.velocity}");
 			}
 			
 			// Apply friction
-			if (isGrounded)
+			else if (isGrounded)
 			{
-				if (groundVelocity.sqrMagnitude < 0.01)
+				if (currentSpeed < 0.01)
 				{
 					rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
 				}
