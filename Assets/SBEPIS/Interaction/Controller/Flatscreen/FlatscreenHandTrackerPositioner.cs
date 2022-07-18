@@ -20,16 +20,10 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 			tracker.position = transform.position + transform.forward * (zoomed ? nearHoldDistance : farHoldDistance);
 
 			if (!grabber.heldGrabbable)
-			{
 				if (CastForGrabbables(out RaycastHit hit))
-				{
 					grabber.transform.position = hit.point;
-				}
 				else
-				{
 					grabber.ClearCollisions();
-				}
-			}
 		}
 
 		public void OnZoom(CallbackContext context)
