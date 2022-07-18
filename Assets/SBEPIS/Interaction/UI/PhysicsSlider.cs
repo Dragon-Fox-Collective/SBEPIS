@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace SBEPIS.Interaction
+namespace SBEPIS.Interaction.UI
 {
 	[RequireComponent(typeof(Rigidbody), typeof(ConfigurableJoint))]
 	public class PhysicsSlider : MonoBehaviour

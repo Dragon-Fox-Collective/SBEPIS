@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SBEPIS.Interaction
+namespace SBEPIS.Interaction.Controller
 {
 	public class GroundDetector : MonoBehaviour
 	{
@@ -16,7 +16,7 @@ namespace SBEPIS.Interaction
 
 		private void FixedUpdate()
 		{
-			isGrounded = Physics.OverlapSphereNonAlloc(groundCheck.position, groundCheckDistance, groundedColliders, groundCheckMask) > 0;
+			isGrounded = UnityEngine.Physics.OverlapSphereNonAlloc(groundCheck.position, groundCheckDistance, groundedColliders, groundCheckMask) > 0;
 		}
 	}
 }

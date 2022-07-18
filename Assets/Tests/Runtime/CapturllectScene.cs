@@ -1,5 +1,5 @@
 using SBEPIS.Capturllection;
-using SBEPIS.Interaction;
+using SBEPIS.Interaction.Controller;
 using UnityEngine;
 
 namespace SBEPIS.Tests

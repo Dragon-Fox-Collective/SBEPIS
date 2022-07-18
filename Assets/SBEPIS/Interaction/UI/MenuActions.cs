@@ -1,3 +1,4 @@
+using SBEPIS.Interaction.Controller;
 using SBEPIS.Utils;
 using System.Collections;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
-namespace SBEPIS.Interaction
+namespace SBEPIS.Interaction.UI
 {
 	public class MenuActions : MonoBehaviour
 	{

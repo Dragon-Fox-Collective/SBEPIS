@@ -1,6 +1,7 @@
+using SBEPIS.Interaction.Controller;
 using UnityEngine;
 
-namespace SBEPIS.Interaction
+namespace SBEPIS.Interaction.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class VelocityJoint : MonoBehaviour

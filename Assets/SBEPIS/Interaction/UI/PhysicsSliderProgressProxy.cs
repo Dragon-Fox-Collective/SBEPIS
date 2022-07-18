@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace SBEPIS.Interaction
+namespace SBEPIS.Interaction.UI
 {
 	[RequireComponent(typeof(PhysicsSlider))]
 	public class PhysicsSliderProgressProxy : MonoBehaviour

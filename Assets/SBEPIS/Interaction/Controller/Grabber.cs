@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
-namespace SBEPIS.Interaction
+namespace SBEPIS.Interaction.Controller
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class Grabber : MonoBehaviour

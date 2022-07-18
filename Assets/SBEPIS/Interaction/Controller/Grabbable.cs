@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace SBEPIS.Interaction
+namespace SBEPIS.Interaction.Controller
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class Grabbable : MonoBehaviour

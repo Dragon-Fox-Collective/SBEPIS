@@ -2,7 +2,7 @@ using UnityEngine;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 using Pose = UnityEngine.XR.OpenXR.Input.Pose;
 
-namespace SBEPIS.Interaction.XR
+namespace SBEPIS.Interaction.Controller.XR
 {
 	public class TrackedPoseDriverEvent : MonoBehaviour
 	{

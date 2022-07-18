@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SBEPIS.Interaction
+namespace SBEPIS.Interaction.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class CompoundRigidbody : MonoBehaviour

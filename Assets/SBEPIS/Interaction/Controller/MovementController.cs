@@ -1,7 +1,7 @@
 using UnityEngine;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
-namespace SBEPIS.Interaction
+namespace SBEPIS.Interaction.Controller
 {
 	[RequireComponent(typeof(Rigidbody), typeof(GroundDetector))]
 	public class MovementController : MonoBehaviour

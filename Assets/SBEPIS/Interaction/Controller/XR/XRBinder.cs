@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.PlayerInput;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
-namespace SBEPIS.Interaction.XR
+namespace SBEPIS.Interaction.Controller.XR
 {
 	[RequireComponent(typeof(PlayerInput))]
 	public class XRBinder : MonoBehaviour

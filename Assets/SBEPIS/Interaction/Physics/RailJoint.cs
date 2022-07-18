@@ -1,7 +1,8 @@
+using SBEPIS.Interaction.Controller;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SBEPIS.Interaction
+namespace SBEPIS.Interaction.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class RailJoint : MonoBehaviour

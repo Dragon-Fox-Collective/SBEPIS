@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
-namespace SBEPIS.Interaction.Flatscreen
+namespace SBEPIS.Interaction.Controller.Flatscreen
 {
 	public class FlatscreenHandTrackerPositioner : MonoBehaviour
 	{
@@ -42,7 +42,7 @@ namespace SBEPIS.Interaction.Flatscreen
 
 		public bool Cast(out RaycastHit hit, LayerMask mask)
 		{
-			return Physics.Raycast(transform.position, transform.forward, out hit, farHoldDistance, mask);
+			return UnityEngine.Physics.Raycast(transform.position, transform.forward, out hit, farHoldDistance, mask);
 		}
 
 		public bool CastForGrabbables(out RaycastHit hit)
