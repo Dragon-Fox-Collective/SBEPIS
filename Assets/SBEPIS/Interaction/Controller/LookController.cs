@@ -21,17 +21,30 @@ namespace SBEPIS.Interaction.Controller
 
 		private void RotateCamera()
 		{
+			Pitch();
+			Yaw();
+		}
+
+		private void Pitch()
+		{
 			float pitch = pitchControl * sensitivity;
 			camPitch = Mathf.Clamp(camPitch - pitch, -90, 90);
 
+			Vector3 localRotation = pitchRotator.transform.localRotation.eulerAngles;
+			localRotation.x = camPitch;
+			pitchRotator.transform.localRotation = Quaternion.Euler(localRotation);
+		}
+
+		private void Yaw()
+		{
 			float yaw = yawControl * sensitivity;
 			camYaw += yaw;
 
-			Vector3 localRotation = pitchRotator.transform.localRotation.eulerAngles;
-			localRotation.x = camPitch;
+			Vector3 localRotation = yawRotator.transform.localRotation.eulerAngles;
 			localRotation.y = camYaw;
-			pitchRotator.transform.localRotation = Quaternion.Euler(localRotation);
+			yawRotator.transform.localRotation = Quaternion.Euler(localRotation);
 		}
+
 		public void OnLookPitch(CallbackContext context)
 		{
 			pitchControl = context.ReadValue<float>();
