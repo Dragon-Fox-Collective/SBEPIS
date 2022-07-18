@@ -83,7 +83,7 @@ namespace SBEPIS.Interaction
 			if (other.attachedRigidbody)
 			{
 				Grabbable hitGrabbable = other.attachedRigidbody.GetComponent<Grabbable>();
-				if (hitGrabbable)
+				if (hitGrabbable && collidingGrabbables.Contains(hitGrabbable))
 					StopCollidingWith(hitGrabbable);
 			}
 		}
