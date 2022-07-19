@@ -61,7 +61,7 @@ namespace SBEPIS.Interaction.Controller
 		{
 			if (controlsTarget == Vector3.zero && groundDetector.isGrounded)
 			{
-				if (groundVelocity.magnitude < 0.01)
+				if (groundVelocity.magnitude < frictionDeceleration * Time.fixedDeltaTime)
 					rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
 				else
 					rigidbody.AddForce(-groundVelocity.normalized * frictionDeceleration, ForceMode.Acceleration);
@@ -72,7 +72,6 @@ namespace SBEPIS.Interaction.Controller
 		{
 			Vector2 controls = context.ReadValue<Vector2>();
 			controlsTarget = new Vector3(controls.x, 0, controls.y);
-			Debug.Log(controlsTarget);
 		}
 	}
 }
