@@ -9,21 +9,20 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 		public Rigidbody tracker;
 		public Grabber grabber;
 		public LayerMask raycastMask = 1;
+		public float raycastDistance = 1;
 
-		public float farHoldDistance = 2;
-		public float nearHoldDistance = 0.7f;
+		public Transform holdPosition;
 
 		private bool zoomed;
 
-		private void Update()
+		private void FixedUpdate()
 		{
-			tracker.position = transform.position + transform.forward * (zoomed ? nearHoldDistance : farHoldDistance);
-
-			if (!grabber.heldGrabbable)
-				if (CastForGrabbables(out RaycastHit hit))
-					grabber.transform.position = hit.point;
-				else
-					grabber.ClearCollisions();
+			if (grabber.heldGrabbable)
+				tracker.transform.position = transform.position + transform.forward * raycastDistance;
+			else if (CastForGrabbables(out RaycastHit hit))
+				tracker.transform.position = hit.point;
+			else
+				tracker.transform.SetPositionAndRotation(holdPosition.position, holdPosition.rotation);
 		}
 
 		public void OnZoom(CallbackContext context)
@@ -36,7 +35,7 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 
 		public bool Cast(out RaycastHit hit, LayerMask mask)
 		{
-			return UnityEngine.Physics.Raycast(transform.position, transform.forward, out hit, farHoldDistance, mask);
+			return UnityEngine.Physics.Raycast(transform.position, transform.forward, out hit, raycastDistance, mask);
 		}
 
 		public bool CastForGrabbables(out RaycastHit hit)

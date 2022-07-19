@@ -42,7 +42,6 @@ namespace SBEPIS.Interaction.Controller
 
 		private void Accelerate(Vector3 groundVelocity)
 		{
-			print($"{moveAimer.gameObject.name} {moveAimer.rotation.eulerAngles} {moveAimer.right} {moveAimer.forward}");
 			if (controlsTarget != Vector3.zero)
 			{
 				Vector3 accelerationDirection = moveAimer.right * controlsTarget.x + Vector3.Cross(moveAimer.right, Vector3.up) * controlsTarget.z;

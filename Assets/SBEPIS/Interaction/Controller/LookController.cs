@@ -26,7 +26,6 @@ namespace SBEPIS.Interaction.Controller
 
 		private void RotateCamera()
 		{
-			print($"{pitchRotator.gameObject.name} {pitchRotator.rotation.eulerAngles} {yawRotator.gameObject.name} {yawRotator.rotation.eulerAngles}");
 			Pitch();
 			Yaw();
 		}
@@ -39,8 +38,6 @@ namespace SBEPIS.Interaction.Controller
 			Vector3 localRotation = pitchRotator.transform.localRotation.eulerAngles;
 			localRotation.x = camPitch;
 			pitchRotator.transform.localRotation = Quaternion.Euler(localRotation);
-
-			print($"Cam pitch {camPitch} {pitchRotator.gameObject.name} {pitchRotator.transform.rotation.eulerAngles}");
 		}
 
 		private void Yaw()
@@ -51,20 +48,16 @@ namespace SBEPIS.Interaction.Controller
 			Vector3 localRotation = yawRotator.transform.localRotation.eulerAngles;
 			localRotation.y = camYaw;
 			yawRotator.transform.localRotation = Quaternion.Euler(localRotation);
-
-			print($"Cam yaw {camYaw} {yawRotator.gameObject.name} {yawRotator.transform.rotation.eulerAngles} {pitchRotator.transform.rotation.eulerAngles}");
 		}
 
 		public void OnLookPitch(CallbackContext context)
 		{
 			pitchControl = context.ReadValue<float>();
-			print($"Moving pitch {pitchControl}");
 		}
 
 		public void OnLookYaw(CallbackContext context)
 		{
 			yawControl = context.ReadValue<float>();
-			print($"Moving yaw {yawControl}");
 		}
 	}
 }
