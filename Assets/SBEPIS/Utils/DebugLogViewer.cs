@@ -20,7 +20,7 @@ public class DebugLogViewer : MonoBehaviour
 			log = stackTrace + "\n" + log;
 		log = logString + "\n" + log;
 		if (log.Length > 5000)
-			log = log.Substring(0, 4000);
+			log = log[..4000];
 	}
 
 	void OnGUI()
