@@ -22,11 +22,6 @@ namespace SBEPIS.Interaction.Controller
 			groundDetector = GetComponent<GroundDetector>();
 		}
 
-		private void Start()
-		{
-			Cursor.lockState = CursorLockMode.Locked;
-		}
-
 		private void FixedUpdate()
 		{
 			MoveTick();
@@ -47,7 +42,7 @@ namespace SBEPIS.Interaction.Controller
 
 		private void Accelerate(Vector3 groundVelocity)
 		{
-			print($"{moveAimer.rotation.eulerAngles} {moveAimer.right} {moveAimer.up} {moveAimer.forward}");
+			print($"{moveAimer.gameObject.name} {moveAimer.rotation.eulerAngles} {moveAimer.right} {moveAimer.forward}");
 			if (controlsTarget != Vector3.zero)
 			{
 				Vector3 accelerationDirection = moveAimer.right * controlsTarget.x + Vector3.Cross(moveAimer.right, Vector3.up) * controlsTarget.z;
