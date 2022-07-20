@@ -42,7 +42,7 @@ namespace SBEPIS.Interaction.UI
 
 		private IEnumerator LoadNewGameScene()
 		{
-			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("InventoryDemo");
+			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Demo");
 			while (!asyncLoad.isDone)
 				yield return null;
 		}
