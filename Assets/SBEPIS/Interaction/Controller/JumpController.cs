@@ -7,6 +7,7 @@ namespace SBEPIS.Interaction.Controller
 	public class JumpController : MonoBehaviour
 	{
 		public float jumpSpeed = 3;
+		public float groundDetectorDelay = 0.5f;
 
 		private new Rigidbody rigidbody;
 		private GroundDetector groundDetector;
@@ -19,12 +20,17 @@ namespace SBEPIS.Interaction.Controller
 
 		private void Jump()
 		{
-			MovementController.AddVelocityAgainstGround(rigidbody, UnityEngine.Physics.gravity.normalized * -jumpSpeed, groundDetector);
+			if (!groundDetector.isGrounded || (!groundDetector.isFalling && groundDetector.verticalVelocity.magnitude >= jumpSpeed))
+				return;
+
+			MovementController.AddVelocityAgainstGround(rigidbody, groundDetector.upDirection * jumpSpeed - groundDetector.verticalVelocity, groundDetector);
+
+			groundDetector.Delay(groundDetectorDelay);
 		}
 
 		public void OnJump(CallbackContext context)
 		{
-			if (!context.performed || !groundDetector.isGrounded)
+			if (!context.performed)
 				return;
 
 			Jump();

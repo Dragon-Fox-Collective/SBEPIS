@@ -33,8 +33,6 @@ namespace SBEPIS.Interaction.Controller
 
 		private void MoveTick()
 		{
-			Vector3 upDirection = Vector3.up;
-			Vector3 groundVelocity = Vector3.ProjectOnPlane(rigidbody.velocity - (groundDetector.groundRigidbody ? groundDetector.groundRigidbody.velocity : Vector3.zero), upDirection);
 			CheckSprint();
 
 			// if the player is moving controls and is not grounded, accelerate in that direction until we are moving faster than the max
@@ -42,8 +40,8 @@ namespace SBEPIS.Interaction.Controller
 			// if the player is not moving controls and the player is not grounded, do nothing
 			// if the player is not moving controls and the player is grounded, apply friction
 
-			Accelerate(groundVelocity, upDirection);
-			ApplyFriction(groundVelocity);
+			Accelerate(groundDetector.relativeVelocity, groundDetector.groundVelocity, groundDetector.upDirection);
+			ApplyFriction(groundDetector.groundVelocity);
 		}
 
 		private void CheckSprint()
@@ -54,15 +52,16 @@ namespace SBEPIS.Interaction.Controller
 				isSprinting = true;
 		}
 
-		private void Accelerate(Vector3 groundVelocity, Vector3 upDirection)
+		private void Accelerate(Vector3 velocity, Vector3 groundVelocity, Vector3 upDirection)
 		{
 			if (controlsTarget != Vector3.zero)
 			{
+				Vector3 controlledVelocity = groundDetector.isGrounded ? velocity : groundVelocity;
 				Vector3 accelerationDirection = moveAimer.right * controlsTarget.x + Vector3.Cross(moveAimer.right, upDirection) * controlsTarget.z;
-				float maxSpeed = Mathf.Max(groundVelocity.magnitude, maxGroundSpeed * accelerationDirection.magnitude * (isSprinting ? sprintFactor : 1));
-				Vector3 newVelocity = groundVelocity + Time.fixedDeltaTime * (groundDetector.isGrounded ? groundAcceleration : airAcceleration) * accelerationDirection.normalized;
+				float maxSpeed = Mathf.Max(controlledVelocity.magnitude, maxGroundSpeed * accelerationDirection.magnitude * (isSprinting ? sprintFactor : 1));
+				Vector3 newVelocity = controlledVelocity + Time.fixedDeltaTime * (groundDetector.isGrounded ? groundAcceleration : airAcceleration) * accelerationDirection.normalized;
 				Vector3 clampedNewVelocity = Vector3.ClampMagnitude(newVelocity, maxSpeed);
-				AddVelocityAgainstGround(rigidbody, clampedNewVelocity - groundVelocity, groundDetector);
+				AddVelocityAgainstGround(rigidbody, clampedNewVelocity - controlledVelocity, groundDetector);
 			}
 		}
 

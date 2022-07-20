@@ -2009,6 +2009,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6376568280094680653}
   - component: {fileID: 8136032471875334439}
+  - component: {fileID: 882628095479484305}
   - component: {fileID: 5520224315998567352}
   - component: {fileID: 5816985420801532654}
   - component: {fileID: 6761588775947424754}
@@ -2056,6 +2057,20 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &882628095479484305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376568280094680652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0726fbf18d1fc479e36108d1fb2217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upDirection: {x: 0, y: 1, z: 0}
+  gravity: 9.81
 --- !u!114 &5520224315998567352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2105,6 +2120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpSpeed: 5
+  groundDetectorDelay: 0.5
 --- !u!114 &5733076409996360854
 MonoBehaviour:
   m_ObjectHideFlags: 0
