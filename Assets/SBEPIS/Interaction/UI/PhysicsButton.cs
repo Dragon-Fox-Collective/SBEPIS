@@ -37,13 +37,13 @@ namespace SBEPIS.Interaction.UI
 				case ButtonAxis.XPosition:
 				case ButtonAxis.YPosition:
 				case ButtonAxis.ZPosition:
-					rigidbody.AddRelativeForce(Axis * (direction == ButtonDirection.LessThan ? -1 : 1) * forcePressFactor);
+					rigidbody.AddRelativeForce((direction == ButtonDirection.LessThan ? -1 : 1) * forcePressFactor * Axis, ForceMode.Impulse);
 					break;
 
 				case ButtonAxis.XRotation:
 				case ButtonAxis.YRotation:
 				case ButtonAxis.ZRotation:
-					rigidbody.AddRelativeTorque(Axis * (direction == ButtonDirection.LessThan ? -1 : 1) * forcePressFactor);
+					rigidbody.AddRelativeTorque((direction == ButtonDirection.LessThan ? -1 : 1) * forcePressFactor * Axis, ForceMode.Impulse);
 					break;
 			}
 		}

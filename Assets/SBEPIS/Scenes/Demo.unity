@@ -442,11 +442,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175886, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.515582
+      value: 0.8955822
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175886, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.686083
+      value: -11.236083
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175886, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1650,7 +1650,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 952006758}
 --- !u!33 &500824634
@@ -3022,7 +3022,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-25928
+  m_Name: pb_Mesh87840
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -12975,7 +12975,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_YDrive:
     serializedVersion: 3
-    positionSpring: 10
+    positionSpring: 100
     positionDamper: 1
     maximumForce: 3.4028233e+38
   m_ZDrive:
@@ -13564,7 +13564,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-29720
+  m_Name: pb_Mesh88566
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -13741,11 +13741,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175886, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.445582
+      value: 2.8955822
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175886, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.686083
+      value: -11.236083
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175886, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -14061,7 +14061,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3090586411226163947}
   serializedVersion: 2
-  m_Mass: 0.1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -14378,7 +14378,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 10
+    positionSpring: 100
     positionDamper: 1
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 0
@@ -14400,7 +14400,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5258952183561622468}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -14426,7 +14426,7 @@ MonoBehaviour:
       m_Calls: []
   direction: 1
   threshold: 0.9
-  forcePressFactor: 100
+  forcePressFactor: 30
   onPressed:
     m_PersistentCalls:
       m_Calls:

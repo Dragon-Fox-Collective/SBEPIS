@@ -19,7 +19,7 @@ namespace SBEPIS.Interaction.Controller
 
 		private void Jump()
 		{
-			rigidbody.AddForce(UnityEngine.Physics.gravity.normalized * -jumpSpeed, ForceMode.VelocityChange);
+			MovementController.AddVelocityAgainstGround(rigidbody, UnityEngine.Physics.gravity.normalized * -jumpSpeed, groundDetector);
 		}
 
 		public void OnJump(CallbackContext context)

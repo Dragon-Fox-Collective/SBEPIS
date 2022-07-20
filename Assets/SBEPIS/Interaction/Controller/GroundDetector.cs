@@ -13,12 +13,13 @@ namespace SBEPIS.Interaction.Controller
 		private readonly Collider[] groundedColliders = new Collider[1];
 
 		public bool isGrounded { get; private set; }
-		public Collider ground { get; private set; }
+		public Collider groundCollider { get; private set; }
+		public Rigidbody groundRigidbody => groundCollider ? groundCollider.attachedRigidbody : null;
 
 		private void FixedUpdate()
 		{
 			isGrounded = UnityEngine.Physics.OverlapSphereNonAlloc(groundCheck.position, groundCheckDistance, groundedColliders, groundCheckMask) > 0;
-			ground = isGrounded ? groundedColliders[0] : null;
+			groundCollider = isGrounded ? groundedColliders[0] : null;
 		}
 	}
 }

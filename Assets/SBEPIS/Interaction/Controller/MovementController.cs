@@ -34,7 +34,7 @@ namespace SBEPIS.Interaction.Controller
 		private void MoveTick()
 		{
 			Vector3 upDirection = Vector3.up;
-			Vector3 groundVelocity = Vector3.ProjectOnPlane(rigidbody.velocity - (groundDetector.isGrounded && groundDetector.ground.attachedRigidbody ? groundDetector.ground.attachedRigidbody.velocity : Vector3.zero), upDirection);
+			Vector3 groundVelocity = Vector3.ProjectOnPlane(rigidbody.velocity - (groundDetector.groundRigidbody ? groundDetector.groundRigidbody.velocity : Vector3.zero), upDirection);
 			CheckSprint();
 
 			// if the player is moving controls and is not grounded, accelerate in that direction until we are moving faster than the max
@@ -62,19 +62,17 @@ namespace SBEPIS.Interaction.Controller
 				float maxSpeed = Mathf.Max(groundVelocity.magnitude, maxGroundSpeed * accelerationDirection.magnitude * (isSprinting ? sprintFactor : 1));
 				Vector3 newVelocity = groundVelocity + Time.fixedDeltaTime * (groundDetector.isGrounded ? groundAcceleration : airAcceleration) * accelerationDirection.normalized;
 				Vector3 clampedNewVelocity = Vector3.ClampMagnitude(newVelocity, maxSpeed);
-				rigidbody.velocity += clampedNewVelocity - groundVelocity;
+				AddVelocityAgainstGround(rigidbody, clampedNewVelocity - groundVelocity, groundDetector);
 			}
 		}
 
 		private void ApplyFriction(Vector3 groundVelocity)
 		{
 			if (controlsTarget == Vector3.zero && groundDetector.isGrounded)
-			{
 				if (groundVelocity.magnitude < frictionDeceleration * Time.fixedDeltaTime)
-					rigidbody.velocity -= groundVelocity;
+					AddVelocityAgainstGround(rigidbody, -groundVelocity, null);
 				else
-					rigidbody.velocity -= frictionDeceleration * Time.fixedDeltaTime * groundVelocity.normalized;
-			}
+					AddVelocityAgainstGround(rigidbody, -frictionDeceleration * Time.fixedDeltaTime * groundVelocity.normalized, null);
 		}
 
 		public void OnMove(CallbackContext context)
@@ -86,6 +84,14 @@ namespace SBEPIS.Interaction.Controller
 		public void OnSprint(CallbackContext context)
 		{
 			isTryingToSprint = context.performed;
+		}
+
+		public static void AddVelocityAgainstGround(Rigidbody rigidbody, Vector3 velocity, GroundDetector groundDetector)
+		{
+			rigidbody.velocity += velocity;
+			if (groundDetector && groundDetector.groundRigidbody)
+				//groundDetector.groundRigidbody.AddForceAtPosition(-velocity * rigidbody.mass, groundDetector.groundCheck.position + Vector3.down * 0.5f, ForceMode.Impulse);
+				groundDetector.groundRigidbody.AddForce(-velocity * rigidbody.mass, ForceMode.Impulse);
 		}
 	}
 }
