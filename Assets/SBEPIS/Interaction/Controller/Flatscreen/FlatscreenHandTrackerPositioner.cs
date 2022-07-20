@@ -40,7 +40,7 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 
 		public bool CastForGrabbables(out RaycastHit hit)
 		{
-			return Cast(out hit, raycastMask) && hit.rigidbody && !hit.collider.isTrigger;
+			return Cast(out hit, raycastMask) && hit.rigidbody && !hit.collider.isTrigger && hit.rigidbody.GetComponent<Grabbable>();
 		}
 
 		public void OnControlsChanged(PlayerInput input)
