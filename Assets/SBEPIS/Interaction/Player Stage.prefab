@@ -1323,6 +1323,23 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 6eb5b6ca-498a-480e-b0a1-0a839c0ba152
     m_ActionName: Gameplay/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5816985420801532654}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.Controller.MovementController,
+          SBEPIS.Interaction
+        m_MethodName: OnSprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 12f82c29-5d59-43bc-9866-f7e4007f0941
+    m_ActionName: Gameplay/Sprint[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -2073,6 +2090,8 @@ MonoBehaviour:
   groundAcceleration: 80
   airAcceleration: 20
   frictionDeceleration: 20
+  sprintFactor: 1.5
+  sprintControlThreshold: 0.9
 --- !u!114 &6761588775947424754
 MonoBehaviour:
   m_ObjectHideFlags: 0
