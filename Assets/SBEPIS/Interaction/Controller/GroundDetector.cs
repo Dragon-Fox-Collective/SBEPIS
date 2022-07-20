@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using SBEPIS.Interaction.Physics;
 using UnityEngine;
 
 namespace SBEPIS.Interaction.Controller
@@ -36,7 +35,7 @@ namespace SBEPIS.Interaction.Controller
 		{
 			if (delayTimeLeft > 0)
 				delayTimeLeft -= Time.fixedDeltaTime;
-			isGrounded = delayTimeLeft <= 0 && UnityEngine.Physics.OverlapSphereNonAlloc(groundCheck.position, groundCheckDistance, groundedColliders, groundCheckMask) > 0;
+			isGrounded = delayTimeLeft <= 0 && UnityEngine.Physics.OverlapSphereNonAlloc(groundCheck.position, groundCheckDistance, groundedColliders, groundCheckMask, QueryTriggerInteraction.Ignore) > 0;
 			groundCollider = isGrounded ? groundedColliders[0] : null;
 		}
 
