@@ -6,28 +6,35 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 {
 	public class FlatscreenHandTrackerPositioner : MonoBehaviour
 	{
-		public Rigidbody tracker;
-		public Grabber grabber;
+		public Rigidbody rightTracker;
+		public Grabber rightGrabber;
+		public Rigidbody leftTracker;
+		public Grabber leftGrabber;
 		public LayerMask raycastMask = 1;
 		public float raycastDistance = 1;
 
-		public Transform holdPosition;
+		public Transform rightHoldPosition;
+		public Transform leftHoldPosition;
+
+		public Orientation playerOrientation;
 
 		private bool zoomed;
 
 		private void FixedUpdate()
 		{
-			if (grabber.heldGrabbable)
-				tracker.transform.position = transform.position + transform.forward * raycastDistance;
+			if (rightGrabber.heldGrabbable)
+				rightTracker.transform.SetPositionAndRotation(transform.position + transform.forward * raycastDistance, Quaternion.LookRotation(transform.forward, transform.up));
 			else if (CastForGrabbables(out RaycastHit hit))
-				tracker.transform.position = hit.point;
+				rightTracker.transform.SetPositionAndRotation(hit.point, Quaternion.LookRotation(-hit.normal, playerOrientation.upDirection));
 			else
-				tracker.transform.SetPositionAndRotation(holdPosition.position, holdPosition.rotation);
+				rightTracker.transform.SetPositionAndRotation(rightHoldPosition.position, rightHoldPosition.rotation);
+
+			leftTracker.transform.SetPositionAndRotation(leftHoldPosition.position, leftHoldPosition.rotation);
 		}
 
 		public void OnZoom(CallbackContext context)
 		{
-			if (!grabber.heldGrabbable || context.ReadValue<float>() > 0)
+			if (!rightGrabber.heldGrabbable || context.ReadValue<float>() > 0)
 				zoomed = false;
 			else if (context.ReadValue<float>() < 0)
 				zoomed = true;
