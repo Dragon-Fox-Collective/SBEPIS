@@ -27,6 +27,13 @@ namespace SBEPIS.Interaction.Controller
 			collisionColliders = GetComponentsInChildren<Collider>().Where(collider => collider.enabled && !collider.isTrigger).ToArray();
 		}
 
+		private void Start()
+		{
+			rigidbody.centerOfMass = Vector3.zero;
+			rigidbody.inertiaTensor = Vector3.one;
+			rigidbody.inertiaTensorRotation = Quaternion.identity;
+		}
+
 		private void Update()
 		{
 			HandleEnablingColliders();
@@ -153,11 +160,11 @@ namespace SBEPIS.Interaction.Controller
 			switch (input.currentControlScheme)
 			{
 				case "OpenXR":
-					QueueEnableColliders();
+					//QueueEnableColliders();
 					break;
 
 				default:
-					QueueDisableColliders();
+					//QueueDisableColliders();
 					break;
 			}
 		}

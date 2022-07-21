@@ -4,7 +4,7 @@ using UnityEngine;
 namespace SBEPIS.Interaction.Controller
 {
 	[RequireComponent(typeof(Rigidbody), typeof(GravitySum))]
-	public class GroundDetector : MonoBehaviour
+	public class Orientation : MonoBehaviour
 	{
 		public Transform groundCheck;
 		public float groundCheckDistance = 0.3f;
