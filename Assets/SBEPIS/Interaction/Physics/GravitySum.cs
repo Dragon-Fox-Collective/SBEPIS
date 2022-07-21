@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Events;
+using SBEPIS.Interaction.Controller;
 
 namespace SBEPIS.Interaction.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class GravityNormalizer : MonoBehaviour
+	public class GravitySum : MonoBehaviour
 	{
 		[NonSerialized]
 		public Vector3 upDirection = -UnityEngine.Physics.gravity.normalized;
@@ -16,7 +17,7 @@ namespace SBEPIS.Interaction.Physics
 
 		public UnityEvent<Vector3> onGravityChanged = new();
 
-		private new Rigidbody rigidbody;
+		public new Rigidbody rigidbody { get; private set; }
 		private readonly List<MassiveBody> massiveBodies = new();
 
 		private void Awake()

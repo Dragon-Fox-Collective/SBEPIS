@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SBEPIS.Interaction.Controller
 {
-	[RequireComponent(typeof(Rigidbody), typeof(GravityNormalizer))]
+	[RequireComponent(typeof(Rigidbody), typeof(GravitySum))]
 	public class GroundDetector : MonoBehaviour
 	{
 		public Transform groundCheck;
@@ -11,7 +11,7 @@ namespace SBEPIS.Interaction.Controller
 		public LayerMask groundCheckMask;
 
 		private new Rigidbody rigidbody;
-		private GravityNormalizer gravityNormalizer;
+		private GravitySum gravityNormalizer;
 		private readonly Collider[] groundedColliders = new Collider[1];
 		private float delayTimeLeft;
 
@@ -28,7 +28,7 @@ namespace SBEPIS.Interaction.Controller
 		private void Awake()
 		{
 			rigidbody = GetComponent<Rigidbody>();
-			gravityNormalizer = GetComponent<GravityNormalizer>();
+			gravityNormalizer = GetComponent<GravitySum>();
 		}
 
 		private void FixedUpdate()
