@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SBEPIS.Interaction
@@ -8,7 +6,7 @@ namespace SBEPIS.Interaction
 	{
 		public void Orient(Vector3 up)
 		{
-			transform.up = up;
+			transform.LookAt(transform.position + Vector3.ProjectOnPlane(transform.forward, up), up);
 		}
 	}
 }

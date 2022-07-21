@@ -12,7 +12,6 @@ namespace SBEPIS.Interaction.Controller
 		private float pitchControl;
 		private float yawControl;
 		private float camPitch;
-		private float camYaw;
 
 		private void Start()
 		{
@@ -35,19 +34,14 @@ namespace SBEPIS.Interaction.Controller
 			float pitch = pitchControl * sensitivity;
 			camPitch = Mathf.Clamp(camPitch - pitch, -90, 90);
 
-			Vector3 localRotation = pitchRotator.transform.localRotation.eulerAngles;
-			localRotation.x = camPitch;
-			pitchRotator.transform.localRotation = Quaternion.Euler(localRotation);
+			pitchRotator.transform.localRotation = Quaternion.Euler(Vector3.right * camPitch);
 		}
 
 		private void Yaw()
 		{
 			float yaw = yawControl * sensitivity;
-			camYaw += yaw;
 
-			Vector3 localRotation = yawRotator.transform.localRotation.eulerAngles;
-			localRotation.y = camYaw;
-			yawRotator.transform.localRotation = Quaternion.Euler(localRotation);
+			yawRotator.transform.Rotate(Vector3.up, yaw);
 		}
 
 		public void OnLookPitch(CallbackContext context)
