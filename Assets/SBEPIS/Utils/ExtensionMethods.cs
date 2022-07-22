@@ -72,6 +72,10 @@ public static class ExtensionMethods
 		return enumerable.Take(index).Append(element).Concat(enumerable.TakeLast(enumerable.Count() - index));
 	}
 
+	public static Vector3 Operate(this Vector3 vector, Func<float, float> func) => new(func.Invoke(vector.x), func.Invoke(vector.y), func.Invoke(vector.z));
+
+	public static Vector3 OperateVectorIndex(Func<int, float> func) => new(func.Invoke(0), func.Invoke(1), func.Invoke(2));
+
 	// From PhysX
 	// indexed rotation around axis, with sine and cosine of half-angle
 	private static Quaternion IndexedRotation(int axis, float s, float c)

@@ -7,9 +7,7 @@ namespace SBEPIS.Interaction.Controller
 	[CreateAssetMenu]
 	public class StrengthSettings : ScriptableObject
 	{
-		public float strength = 10;
-		public float maxEffectiveDistance = 1;
-		public float torque = 10;
-		public float maxEffectiveAngle = 1;
+		public AnimationCurve strengthCurve;
+		public float torqueInputFactor = 1;
 	}
 }

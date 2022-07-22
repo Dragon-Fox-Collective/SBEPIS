@@ -1434,6 +1434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionPoint: {fileID: 6376568278921566391}
+  attachedRigidbody: {fileID: 8136032471875334439}
   strength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
 --- !u!114 &6376568278754761723
 MonoBehaviour:
@@ -1961,6 +1962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0726fbf18d1fc479e36108d1fb2217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  customCenterOfMass: {fileID: 6376568280010574378}
   onGravityChanged:
     m_PersistentCalls:
       m_Calls:
@@ -2253,7 +2255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7078601075283105826
 Transform:
   m_ObjectHideFlags: 0
@@ -2302,6 +2304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionPoint: {fileID: 2758302851484042462}
+  attachedRigidbody: {fileID: 8136032471875334439}
   strength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
 --- !u!114 &6271847251800222012
 MonoBehaviour:
