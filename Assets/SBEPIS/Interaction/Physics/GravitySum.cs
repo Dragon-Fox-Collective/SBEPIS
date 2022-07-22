@@ -6,7 +6,6 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Interaction.Physics
 {
-	[RequireComponent(typeof(Rigidbody))]
 	public class GravitySum : MonoBehaviour
 	{
 		public Transform customCenterOfMass;
@@ -18,6 +17,8 @@ namespace SBEPIS.Interaction.Physics
 		public float gravityAcceleration = 0;
 
 		public new Rigidbody rigidbody { get; private set; }
+		public Vector3 worldCenterOfMass { get; private set; }
+
 		private readonly List<MassiveBody> massiveBodies = new();
 
 		private void Awake()
@@ -33,7 +34,7 @@ namespace SBEPIS.Interaction.Physics
 
 		private void UpdateGravity()
 		{
-			Vector3 centerOfMass = customCenterOfMass ? customCenterOfMass.position : rigidbody.worldCenterOfMass;
+			worldCenterOfMass = customCenterOfMass ? customCenterOfMass.position : rigidbody ? rigidbody.worldCenterOfMass : transform.position;
 			Vector3 gravity = massiveBodies.Count == 0 ? Vector3.zero : massiveBodies
 				.Distinct()
 				.GroupBy(body => body.priority)
@@ -41,7 +42,7 @@ namespace SBEPIS.Interaction.Physics
 				.Aggregate(Vector3.zero, (lowerProrityGravity, group) => 
 					group.Sum(body =>
 					{
-						Vector3 localCenterOfMass = body.transform.InverseTransformPoint(centerOfMass);
+						Vector3 localCenterOfMass = body.transform.InverseTransformPoint(worldCenterOfMass);
 						return Vector3.Lerp(
 							lowerProrityGravity / group.Count(),
 							body.transform.TransformDirection(body.GetGravity(localCenterOfMass)),
