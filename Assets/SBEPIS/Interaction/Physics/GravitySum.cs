@@ -13,9 +13,9 @@ namespace SBEPIS.Interaction.Physics
 		public UnityEvent<Vector3> onGravityChanged = new();
 
 		[NonSerialized]
-		public Vector3 upDirection = -UnityEngine.Physics.gravity.normalized;
+		public Vector3 upDirection = Vector3.up;
 		[NonSerialized]
-		public float gravityAcceleration = UnityEngine.Physics.gravity.magnitude;
+		public float gravityAcceleration = 0;
 
 		public new Rigidbody rigidbody { get; private set; }
 		private readonly List<MassiveBody> massiveBodies = new();
