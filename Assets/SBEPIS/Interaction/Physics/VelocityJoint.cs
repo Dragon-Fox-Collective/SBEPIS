@@ -34,6 +34,7 @@ namespace SBEPIS.Interaction.Physics
 		private void UpdatePosition()
 		{
 			Vector3 newVelocity = targets.Sum(target => ApproachCurve(target.target.position - rigidbody.position, target.strength.strengthCurve));
+			newVelocity += attachedRigidbody.velocity;
 			Vector3 force = (newVelocity - rigidbody.velocity) * rigidbody.mass / Time.fixedDeltaTime;
 			attachedRigidbody.AddForce(-force);
 			rigidbody.velocity = newVelocity;
