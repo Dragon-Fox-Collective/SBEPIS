@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,12 +12,13 @@ namespace SBEPIS.Interaction.Controller
 	{
 		private Collider[] collisionColliders = new Collider[0];
 
+		public Collider heldCollider { get; private set; }
 		public Grabbable heldGrabbable { get; private set; }
 
 		private FixedJoint heldGrabbableJoint;
 		public new Rigidbody rigidbody { get; private set; }
 
-		private readonly List<Grabbable> collidingGrabbables = new();
+		private readonly List<Collider> collidingColliders = new();
 
 		private bool isAttemptingGrab;
 
@@ -64,92 +66,98 @@ namespace SBEPIS.Interaction.Controller
 
 		public void Grab()
 		{
-			if (heldGrabbable || collidingGrabbables.Count == 0)
+			if (heldCollider || collidingColliders.Count == 0)
 				return;
 
-			foreach (Grabbable collidingGrabbable in collidingGrabbables)
+			foreach (Collider collidingCollider in collidingColliders)
 			{
-				print($"Attempting to grab {collidingGrabbable}");
-				if (Grab(collidingGrabbable))
+				print($"Attempting to grab {collidingCollider}");
+				if (Grab(collidingCollider))
 					break;
 			}
 		}
 
-		public bool Grab(Grabbable grabbable)
+		public bool Grab(Collider collider)
 		{
-			if (heldGrabbable || !grabbable.canGrab)
+			Grabbable grabbable = collider.SelectGrabbable();
+			if (heldCollider || (grabbable && !grabbable.canGrab))
 				return false;
 
+			heldCollider = collider;
 			heldGrabbable = grabbable;
 
-			heldGrabbableJoint = grabbable.gameObject.AddComponent<FixedJoint>();
-			heldGrabbableJoint.connectedBody = rigidbody;
+			heldGrabbableJoint = gameObject.AddComponent<FixedJoint>();
+			if (collider.attachedRigidbody)
+				heldGrabbableJoint.connectedBody = collider.attachedRigidbody;
 
-			grabbable.Grab(this);
+			if (grabbable)
+				grabbable.Grab(this);
 
 			return true;
 		}
 
 		public void Drop()
 		{
-			if (!heldGrabbable)
+			if (!heldCollider)
 				return;
 
+			Collider droppedCollider = heldCollider;
 			Grabbable droppedGrabbable = heldGrabbable;
+			heldCollider = null;
 			heldGrabbable = null;
 
 			Destroy(heldGrabbableJoint);
 			heldGrabbableJoint = null;
-			droppedGrabbable.rigidbody.AddForce(Vector3.up * 0.01f);
 
-			droppedGrabbable.Drop(this);
+			if (droppedCollider.attachedRigidbody)
+				droppedCollider.attachedRigidbody.AddForce(Vector3.up * 0.01f);
+			if (droppedGrabbable)
+				droppedGrabbable.Drop(this);
 		}
 
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.attachedRigidbody)
-			{
-				Grabbable hitGrabbable = other.attachedRigidbody.GetComponent<Grabbable>();
-				if (hitGrabbable && !collidingGrabbables.Contains(hitGrabbable))
-					StartCollidingWith(hitGrabbable);
-			}
+			if (!collidingColliders.Contains(other))
+				StartCollidingWith(other);
 		}
 
 		private void OnTriggerExit(Collider other)
 		{
-			if (other.attachedRigidbody)
-			{
-				Grabbable hitGrabbable = other.attachedRigidbody.GetComponent<Grabbable>();
-				if (hitGrabbable && collidingGrabbables.Contains(hitGrabbable))
-					StopCollidingWith(hitGrabbable);
-			}
+			if (collidingColliders.Contains(other))
+				StopCollidingWith(other);
 		}
 
-		private void StartCollidingWith(Grabbable grabbable)
+		private void StartCollidingWith(Collider collider)
 		{
-			print($"Colliding with {grabbable}");
-			grabbable.onTouch.Invoke(this);
-			collidingGrabbables.Add(grabbable);
+			if (collider.isTrigger)
+				return;
+
+			print($"Colliding with {collider}");
+			collider.SelectGrabbable(grabbable => grabbable.onTouch.Invoke(this));
+			collidingColliders.Add(collider);
 		}
 
-		private void StopCollidingWith(Grabbable grabbable)
+		private void StopCollidingWith(Collider collider)
 		{
-			print($"No longer colliding with {grabbable}");
-			collidingGrabbables.Remove(grabbable);
-			grabbable.onStopTouch?.Invoke(this);
+			if (collider.isTrigger)
+				return;
+
+			print($"No longer colliding with {collider}");
+			collidingColliders.Remove(collider);
+			collider.SelectGrabbable(grabbable => grabbable.onStopTouch.Invoke(this));
 		}
 
 		public void ClearCollisions()
 		{
-			while (collidingGrabbables.Count > 0)
-				StopCollidingWith(collidingGrabbables[0]);
+			while (collidingColliders.Count > 0)
+				StopCollidingWith(collidingColliders[0]);
 		}
 
 		public void ClearInvalidCollisions()
 		{
-			for (int i = 0; i < collidingGrabbables.Count; i++)
-				if (!collidingGrabbables[i].gameObject.activeInHierarchy)
-					StopCollidingWith(collidingGrabbables[i--]);
+			for (int i = 0; i < collidingColliders.Count; i++)
+				if (!collidingColliders[i].gameObject.activeInHierarchy)
+					StopCollidingWith(collidingColliders[i--]);
 		}
 
 		public void QueueEnableColliders()
@@ -201,6 +209,24 @@ namespace SBEPIS.Interaction.Controller
 			OpenXR,
 			Keyboard,
 			Controller,
+		}
+	}
+
+	internal static class GrabberExtensionMethods
+	{
+		public static Grabbable SelectGrabbable(this Collider collider) => collider.attachedRigidbody ? collider.attachedRigidbody.GetComponent<Grabbable>() : null;
+
+		public static TResult SelectGrabbable<TResult>(this Collider collider, Func<Grabbable, TResult> func)
+		{
+			Grabbable grabbable = collider.SelectGrabbable();
+			return grabbable ? func(grabbable) : default;
+		}
+
+		public static void SelectGrabbable(this Collider collider, Action<Grabbable> func)
+		{
+			Grabbable grabbable = collider.SelectGrabbable();
+			if (grabbable)
+				func(grabbable);
 		}
 	}
 }
