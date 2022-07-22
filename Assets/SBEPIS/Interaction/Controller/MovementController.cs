@@ -61,7 +61,7 @@ namespace SBEPIS.Interaction.Controller
 				float maxSpeed = Mathf.Max(controlledVelocity.magnitude, maxGroundSpeed * accelerationDirection.magnitude * (isSprinting ? sprintFactor : 1));
 				Vector3 newVelocity = controlledVelocity + Time.fixedDeltaTime * (groundDetector.isGrounded ? groundAcceleration : airAcceleration) * accelerationDirection.normalized;
 				Vector3 clampedNewVelocity = Vector3.ClampMagnitude(newVelocity, maxSpeed);
-				AddVelocityAgainstGround(rigidbody, clampedNewVelocity - controlledVelocity, groundDetector);
+				AddVelocityAgainstGround(rigidbody, clampedNewVelocity - controlledVelocity, groundDetector.groundRigidbody);
 			}
 		}
 
@@ -85,12 +85,12 @@ namespace SBEPIS.Interaction.Controller
 			isTryingToSprint = context.performed;
 		}
 
-		public static void AddVelocityAgainstGround(Rigidbody rigidbody, Vector3 velocity, Orientation groundDetector)
+		public static void AddVelocityAgainstGround(Rigidbody rigidbody, Vector3 velocity, Rigidbody jumpPlatform)
 		{
 			rigidbody.velocity += velocity;
-			if (groundDetector && groundDetector.groundRigidbody)
-				//groundDetector.groundRigidbody.AddForceAtPosition(-velocity * rigidbody.mass, groundDetector.groundCheck.position + Vector3.down * 0.5f, ForceMode.Impulse);
-				groundDetector.groundRigidbody.AddForce(-velocity * rigidbody.mass, ForceMode.Impulse);
+			if (jumpPlatform)
+				//jumpPlatform.AddForceAtPosition(-velocity * rigidbody.mass, groundDetector.groundCheck.position + Vector3.down * 0.5f, ForceMode.Impulse);
+				jumpPlatform.AddForce(-velocity * rigidbody.mass, ForceMode.Impulse);
 		}
 	}
 }
