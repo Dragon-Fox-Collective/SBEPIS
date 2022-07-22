@@ -28,7 +28,7 @@ namespace SBEPIS.Interaction.Physics
 
 		public static float GetPriorityFalloff(float x, float radius, float falloffDistance)
 		{
-			return Mathf.Clamp(Mathf.Abs(x).Map(radius, radius - falloffDistance, 0, 1), 0, 1);
+			return falloffDistance > 0 ? Mathf.Clamp(Mathf.Abs(x).Map(radius, radius - falloffDistance, 0, 1), 0, 1) : Mathf.Abs(x) < radius ? 1 : 0;
 		}
 
 		public override Vector3 GetGravity(Vector3 centerOfMass)
