@@ -22,9 +22,9 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 
 		private void FixedUpdate()
 		{
-			if (rightGrabber.heldGrabbable)
+			if (rightGrabber.heldCollider)
 				rightTracker.transform.SetPositionAndRotation(transform.position + transform.forward * raycastDistance, Quaternion.LookRotation(transform.forward, transform.up));
-			else if (CastForGrabbables(out RaycastHit hit))
+			else if (Cast(out RaycastHit hit))
 				rightTracker.transform.SetPositionAndRotation(hit.point, Quaternion.LookRotation(-hit.normal, playerOrientation.upDirection));
 			else
 				rightTracker.transform.SetPositionAndRotation(rightHoldPosition.position, rightHoldPosition.rotation);
@@ -34,20 +34,15 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 
 		public void OnZoom(CallbackContext context)
 		{
-			if (!rightGrabber.heldGrabbable || context.ReadValue<float>() > 0)
+			if (!rightGrabber.heldCollider || context.ReadValue<float>() > 0)
 				zoomed = false;
 			else if (context.ReadValue<float>() < 0)
 				zoomed = true;
 		}
 
-		public bool Cast(out RaycastHit hit, LayerMask mask)
+		public bool Cast(out RaycastHit hit)
 		{
-			return UnityEngine.Physics.Raycast(transform.position, transform.forward, out hit, raycastDistance, mask);
-		}
-
-		public bool CastForGrabbables(out RaycastHit hit)
-		{
-			return Cast(out hit, raycastMask) && hit.rigidbody && !hit.collider.isTrigger && hit.rigidbody.GetComponent<Grabbable>();
+			return UnityEngine.Physics.Raycast(transform.position, transform.forward, out hit, raycastDistance, raycastMask, QueryTriggerInteraction.Ignore);
 		}
 
 		public void OnControlsChanged(PlayerInput input)
