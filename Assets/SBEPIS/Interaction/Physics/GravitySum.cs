@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Events;
-using SBEPIS.Interaction.Controller;
 
 namespace SBEPIS.Interaction.Physics
 {
@@ -34,14 +33,20 @@ namespace SBEPIS.Interaction.Physics
 
 		private void UpdateGravity()
 		{
-			Vector3 gravity = massiveBodies.Count == 0 ? Vector3.zero :
-				massiveBodies
-					.Distinct()
-					.GroupBy(body => body.priority)
-					.OrderBy(group => group.Key)
-					.Aggregate(Vector3.zero, (lowerProrityGravity, group) => 
-						group.Aggregate(Vector3.zero, (thisPriorityGravity, body) =>
-							thisPriorityGravity + body.GetGravity(customCenterOfMass ? customCenterOfMass.position : rigidbody.worldCenterOfMass, lowerProrityGravity / group.Count())));
+			Vector3 centerOfMass = customCenterOfMass ? customCenterOfMass.position : rigidbody.worldCenterOfMass;
+			Vector3 gravity = massiveBodies.Count == 0 ? Vector3.zero : massiveBodies
+				.Distinct()
+				.GroupBy(body => body.priority)
+				.OrderBy(group => group.Key)
+				.Aggregate(Vector3.zero, (lowerProrityGravity, group) => 
+					group.Sum(body =>
+					{
+						Vector3 localCenterOfMass = body.transform.InverseTransformPoint(centerOfMass);
+						return Vector3.Lerp(
+							lowerProrityGravity / group.Count(),
+							body.transform.TransformDirection(body.GetGravity(localCenterOfMass)),
+							body.GetPriority(localCenterOfMass).Aggregate(1, (product, x) => product * x));
+					}));
 
 			gravityAcceleration = gravity.magnitude;
 			if (gravityAcceleration > 0)
