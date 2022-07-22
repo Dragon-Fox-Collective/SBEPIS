@@ -5,10 +5,10 @@ namespace SBEPIS.Interaction.Physics
 {
 	public class ConfigurableMassiveBody : MassiveBody
 	{
-		public AnimationCurve gravityCurve;
-		public bool useX;
-		public bool useY;
-		public bool useZ;
+		public AnimationCurve gravityCurve = AnimationCurve.Linear(0, 0, 1, 1);
+		public bool useX = true;
+		public bool useY = true;
+		public bool useZ = true;
 		public AnimationCurve priorityLerpX = AnimationCurve.Constant(0, 1, 1);
 		public AnimationCurve priorityLerpY = AnimationCurve.Constant(0, 1, 1);
 		public AnimationCurve priorityLerpZ = AnimationCurve.Constant(0, 1, 1);

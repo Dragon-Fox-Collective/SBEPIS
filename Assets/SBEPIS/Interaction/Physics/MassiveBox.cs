@@ -20,20 +20,20 @@ namespace SBEPIS.Interaction.Physics
 		{
 			Vector3 localCenterOfMass = centerOfMass - box.center;
 			return new(
-				GetPriorityFalloff(localCenterOfMass.x, box.size.x / 2),
-				localCenterOfMass.y > -box.size.y / 2 ? GetPriorityFalloff(localCenterOfMass.y + box.size.y / 2, box.size.y) : 0,
-				GetPriorityFalloff(localCenterOfMass.z, box.size.z / 2)
+				GetPriorityFalloff(localCenterOfMass.x, box.size.x / 2, falloffDistance),
+				localCenterOfMass.y > -box.size.y / 2 ? GetPriorityFalloff(localCenterOfMass.y + box.size.y / 2, box.size.y, falloffDistance) : 0,
+				GetPriorityFalloff(localCenterOfMass.z, box.size.z / 2, falloffDistance)
 			);
 		}
 
-		private float GetPriorityFalloff(float x, float radius)
+		public static float GetPriorityFalloff(float x, float radius, float falloffDistance)
 		{
 			return Mathf.Clamp(Mathf.Abs(x).Map(radius, radius - falloffDistance, 0, 1), 0, 1);
 		}
 
 		public override Vector3 GetGravity(Vector3 centerOfMass)
 		{
-			return Vector3.down * gravity;
+			return gravity * Vector3.down;
 		}
 	}
 }
