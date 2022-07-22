@@ -1433,9 +1433,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f30f14504d9f21549b14a828f89ad4b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectionPoint: {fileID: 6376568278921566391}
   attachedRigidbody: {fileID: 8136032471875334439}
-  strength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
+  targets:
+  - target: {fileID: 6376568278921566391}
+    strength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
+  - target: {fileID: 6376568279122881040}
+    strength: {fileID: 11400000, guid: 62f936c0f1b65b24195f4c0723eefee9, type: 2}
 --- !u!114 &6376568278754761723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1662,7 +1665,7 @@ MonoBehaviour:
   raycastMask:
     serializedVersion: 2
     m_Bits: 513
-  raycastDistance: 3
+  raycastDistance: 2
   rightHoldPosition: {fileID: 4916433771989261608}
   leftHoldPosition: {fileID: 1818974022422500201}
   playerOrientation: {fileID: 690210978355806070}
@@ -2303,9 +2306,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f30f14504d9f21549b14a828f89ad4b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectionPoint: {fileID: 2758302851484042462}
   attachedRigidbody: {fileID: 8136032471875334439}
-  strength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
+  targets:
+  - target: {fileID: 2758302851484042462}
+    strength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
+  - target: {fileID: 6376568279122881040}
+    strength: {fileID: 11400000, guid: 62f936c0f1b65b24195f4c0723eefee9, type: 2}
 --- !u!114 &6271847251800222012
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d618915bf0532164c983d3d9ae077318, type: 3}
-  m_Name: Default Strength
+  m_Name: Arm Limit Strength
   m_EditorClassIdentifier: 
   strengthCurve:
     serializedVersion: 2
@@ -18,22 +18,31 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 10
-      outSlope: 10
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: 10
-      inSlope: 10
-      outSlope: 10
-      tangentMode: 34
+      time: 2
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.997851
       outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 3
+      value: 1000
+      inSlope: 2870.3467
+      outSlope: 2870.3467
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.05587387
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  torqueInputFactor: 1
+  torqueInputFactor: 0
