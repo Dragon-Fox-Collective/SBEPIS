@@ -22,7 +22,6 @@ namespace SBEPIS.Interaction.Physics
 				radiusPriority,
 				1
 			);
-			print(priority);
 			return priority;
 		}
 
