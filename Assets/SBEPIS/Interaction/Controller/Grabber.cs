@@ -18,6 +18,8 @@ namespace SBEPIS.Interaction.Controller
 
 		private readonly List<Grabbable> collidingGrabbables = new();
 
+		private bool isAttemptingGrab;
+
 		private bool shouldEnableColliders;
 		private bool shouldDisableColliders;
 
@@ -38,45 +40,69 @@ namespace SBEPIS.Interaction.Controller
 		{
 			HandleEnablingColliders();
 			ClearInvalidCollisions();
+			UpdateGrabAttempt();
 			if (heldGrabbable)
 				heldGrabbable.HoldUpdate(this);
 		}
 
 		public void OnGrab(CallbackContext context)
 		{
-			if (!gameObject.activeInHierarchy || !enabled)
+			isAttemptingGrab = context.performed;
+			UpdateGrabAttempt();
+		}
+
+		public void UpdateGrabAttempt()
+		{
+			if (!enabled || !gameObject.activeInHierarchy)
 				return;
 
-			bool isPressed = context.performed;
+			if (isAttemptingGrab)
+				Grab();
+			else
+				Drop();
+		}
 
-			if (isPressed && !heldGrabbable && collidingGrabbables.Count > 0)
+		public void Grab()
+		{
+			if (heldGrabbable || collidingGrabbables.Count == 0)
+				return;
+
+			foreach (Grabbable collidingGrabbable in collidingGrabbables)
 			{
-				foreach (Grabbable collidingGrabbable in collidingGrabbables)
-				{
-					print($"Attempting to grab {collidingGrabbable}");
-					if (collidingGrabbable.canGrab)
-					{
-						heldGrabbable = collidingGrabbable;
-
-						heldGrabbableJoint = collidingGrabbable.gameObject.AddComponent<FixedJoint>();
-						heldGrabbableJoint.connectedBody = rigidbody;
-
-						collidingGrabbable.Grab(this);
-						break;
-					}
-				}
+				print($"Attempting to grab {collidingGrabbable}");
+				if (Grab(collidingGrabbable))
+					break;
 			}
-			else if (!isPressed && heldGrabbable)
-			{
-				Grabbable droppedGrabbable = heldGrabbable;
-				heldGrabbable = null;
+		}
 
-				Destroy(heldGrabbableJoint);
-				heldGrabbableJoint = null;
-				droppedGrabbable.rigidbody.AddForce(Vector3.up * 0.01f);
+		public bool Grab(Grabbable grabbable)
+		{
+			if (heldGrabbable || !grabbable.canGrab)
+				return false;
 
-				droppedGrabbable.Drop(this);
-			}
+			heldGrabbable = grabbable;
+
+			heldGrabbableJoint = grabbable.gameObject.AddComponent<FixedJoint>();
+			heldGrabbableJoint.connectedBody = rigidbody;
+
+			grabbable.Grab(this);
+
+			return true;
+		}
+
+		public void Drop()
+		{
+			if (!heldGrabbable)
+				return;
+
+			Grabbable droppedGrabbable = heldGrabbable;
+			heldGrabbable = null;
+
+			Destroy(heldGrabbableJoint);
+			heldGrabbableJoint = null;
+			droppedGrabbable.rigidbody.AddForce(Vector3.up * 0.01f);
+
+			droppedGrabbable.Drop(this);
 		}
 
 		private void OnTriggerEnter(Collider other)
