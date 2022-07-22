@@ -7,6 +7,7 @@ namespace SBEPIS.Interaction.Physics
 	public class VelocityJoint : MonoBehaviour
 	{
 		public Transform connectionPoint;
+		public Rigidbody attachedRigidbody;
 		public StrengthSettings strength;
 
 		private new Rigidbody rigidbody;
@@ -24,8 +25,10 @@ namespace SBEPIS.Interaction.Physics
 
 		private void UpdatePosition()
 		{
-			//rigidbody.velocity = Approach(rigidbody.velocity, connectionPoint.position - rigidbody.position, strength.velocityTarget, strength.maxAcceleration, transform.lossyScale.x);
-			rigidbody.velocity = OldApproach(connectionPoint.position - rigidbody.position, strength.strength, strength.maxEffectiveDistance);
+			Vector3 newVelocity = ApproachCurve(connectionPoint.position - rigidbody.position, strength.strengthCurve);
+			Vector3 force = (newVelocity - rigidbody.velocity) * rigidbody.mass / Time.fixedDeltaTime;
+			attachedRigidbody.AddForce(-force);
+			rigidbody.velocity = newVelocity;
 		}
 
 		private void UpdateRotation()
@@ -35,25 +38,14 @@ namespace SBEPIS.Interaction.Physics
 			if (delta.y > 180) delta.y -= 360;
 			if (delta.z > 180) delta.z -= 360;
 			delta *= Mathf.Deg2Rad;
-			//rigidbody.angularVelocity = Approach(rigidbody.angularVelocity, delta, strength.angularVelocityTarget, strength.maxAngularAcceleration, transform.lossyScale.x);
-			rigidbody.angularVelocity = OldApproach(delta, strength.torque, strength.maxEffectiveAngle);
+			delta *= strength.torqueInputFactor;
+			rigidbody.angularVelocity = ApproachCurve(delta, strength.strengthCurve);
 		}
 
-		private static Vector3 Approach(Vector3 currentVelocity, Vector3 delta, float speedTarget, float maxAcceleration, float scale)
+		private static Vector3 ApproachCurve(Vector3 delta, AnimationCurve strength)
 		{
 			Vector3 oneFrameThreshold = delta / Time.fixedDeltaTime;
-			Vector3 velocityTarget = delta.normalized * speedTarget;
-			if (oneFrameThreshold.sqrMagnitude < velocityTarget.sqrMagnitude) velocityTarget = oneFrameThreshold;
-			float scaledMaxAcceleration = maxAcceleration * scale;
-			return scaledMaxAcceleration > 0 ? Vector3.MoveTowards(currentVelocity, velocityTarget, scaledMaxAcceleration) : velocityTarget;
-		}
-
-		private static Vector3 OldApproach(Vector3 delta, float strength, float maxEffectiveDistance)
-		{
-			Vector3 oneFrameThreshold = delta / Time.fixedDeltaTime;
-			Vector3 velocity = strength * delta;
-			float maxVelocity = strength * maxEffectiveDistance;
-			if (maxVelocity > 0) velocity = Vector3.ClampMagnitude(velocity, maxVelocity);
+			Vector3 velocity = strength.Evaluate(delta.magnitude) * delta.normalized;
 			if (oneFrameThreshold.sqrMagnitude < velocity.sqrMagnitude) velocity = oneFrameThreshold;
 			return velocity;
 		}

@@ -10,12 +10,13 @@ namespace SBEPIS.Interaction.Physics
 	[RequireComponent(typeof(Rigidbody))]
 	public class GravitySum : MonoBehaviour
 	{
+		public Transform customCenterOfMass;
+		public UnityEvent<Vector3> onGravityChanged = new();
+
 		[NonSerialized]
 		public Vector3 upDirection = -UnityEngine.Physics.gravity.normalized;
 		[NonSerialized]
 		public float gravityAcceleration = UnityEngine.Physics.gravity.magnitude;
-
-		public UnityEvent<Vector3> onGravityChanged = new();
 
 		public new Rigidbody rigidbody { get; private set; }
 		private readonly List<MassiveBody> massiveBodies = new();
@@ -33,17 +34,14 @@ namespace SBEPIS.Interaction.Physics
 
 		private void UpdateGravity()
 		{
-			Vector3 gravity = Vector3.zero;
-
-			if (massiveBodies.Count > 0)
-			{
-				IEnumerable<MassiveBody> distinctBodies = massiveBodies.Distinct();
-				int highestPriority = distinctBodies.Max(body => body.priority);
-				IEnumerable<MassiveBody> applicableBodies = distinctBodies.Where(body => body.priority == highestPriority);
-
-				foreach (MassiveBody body in applicableBodies)
-					gravity += body.GetGravity(this);
-			}
+			Vector3 gravity = massiveBodies.Count == 0 ? Vector3.zero :
+				massiveBodies
+					.Distinct()
+					.GroupBy(body => body.priority)
+					.OrderBy(group => group.Key)
+					.Aggregate(Vector3.zero, (lowerProrityGravity, group) => 
+						group.Aggregate(Vector3.zero, (thisPriorityGravity, body) =>
+							thisPriorityGravity + body.GetGravity(customCenterOfMass ? customCenterOfMass.position : rigidbody.worldCenterOfMass, lowerProrityGravity / group.Count())));
 
 			gravityAcceleration = gravity.magnitude;
 			if (gravityAcceleration > 0)
