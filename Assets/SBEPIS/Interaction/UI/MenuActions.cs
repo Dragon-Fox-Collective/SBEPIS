@@ -85,13 +85,22 @@ namespace SBEPIS.Interaction.UI
 			if (!context.performed)
 				return;
 
-			pauseButtons.gameObject.SetActive(!pauseButtons.gameObject.activeSelf);
-
 			if (pauseButtons.gameObject.activeSelf)
-			{
-				pauseButtons.SetPositionAndRotation(playerOrientation.transform.position, playerOrientation.transform.rotation);
-				GoToMain();
-			}
+				Unpause();
+			else
+				Pause();
+		}
+
+		public void Pause()
+		{
+			pauseButtons.gameObject.SetActive(true);
+			pauseButtons.SetPositionAndRotation(playerOrientation.transform.position, playerOrientation.transform.rotation);
+			GoToMain();
+		}
+
+		public void Unpause()
+		{
+			pauseButtons.gameObject.SetActive(false);
 		}
 
 		public void ChangeMouseSensitivity(float percent)
