@@ -10,8 +10,7 @@ namespace SBEPIS.Interaction.UI
 {
 	public class MenuActions : MonoBehaviour
 	{
-		public Transform playerPosition;
-		public Transform yawRotation;
+		public Orientation playerOrientation;
 		public Transform pauseButtons;
 		public Transform main;
 		public Transform settings;
@@ -90,8 +89,7 @@ namespace SBEPIS.Interaction.UI
 
 			if (pauseButtons.gameObject.activeSelf)
 			{
-				pauseButtons.position = playerPosition.position;
-				pauseButtons.rotation = Quaternion.Euler(0, yawRotation.rotation.eulerAngles.y, 0);
+				pauseButtons.SetPositionAndRotation(playerOrientation.transform.position, playerOrientation.transform.rotation);
 				GoToMain();
 			}
 		}
