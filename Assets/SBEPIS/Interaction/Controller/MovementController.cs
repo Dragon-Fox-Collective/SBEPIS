@@ -40,7 +40,7 @@ namespace SBEPIS.Interaction.Controller
 			// if the player is not moving controls and the player is not grounded, do nothing
 			// if the player is not moving controls and the player is grounded, apply friction
 
-			Accelerate(groundDetector.relativeVelocity, groundDetector.groundVelocity, groundDetector.upDirection);
+			Accelerate(groundDetector.relativeVelocity, groundDetector.groundVelocity, groundDetector.upDirection != Vector3.zero ? groundDetector.upDirection : Vector3.up);
 			ApplyFriction(groundDetector.groundVelocity);
 		}
 
