@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -72,9 +73,26 @@ public static class ExtensionMethods
 		return enumerable.Take(index).Append(element).Concat(enumerable.TakeLast(enumerable.Count() - index));
 	}
 
-	public static Vector3 Operate(this Vector3 vector, Func<float, float> func) => new(func.Invoke(vector.x), func.Invoke(vector.y), func.Invoke(vector.z));
+	public static IEnumerable<float> AsEnumerable(this Vector3 vector)
+	{
+		yield return vector.x;
+		yield return vector.y;
+		yield return vector.z;
+	}
 
-	public static Vector3 OperateVectorIndex(Func<int, float> func) => new(func.Invoke(0), func.Invoke(1), func.Invoke(2));
+	public static Vector3 AsVector3(this IEnumerable<float> enumerable)
+	{
+		return new(enumerable.ElementAtOrDefault(0), enumerable.ElementAtOrDefault(1), enumerable.ElementAtOrDefault(2));
+	}
+
+	public static Vector3 Select(this Vector3 vector, Func<float, float> func) => new(func.Invoke(vector.x), func.Invoke(vector.y), func.Invoke(vector.z));
+	public static Vector3 SelectIndex(this Vector3 vector, Func<int, float, float> func) => new(func.Invoke(0, vector.x), func.Invoke(1, vector.y), func.Invoke(2, vector.z));
+	public static Vector3 SelectVectorIndex(Func<int, float> func) => new(func.Invoke(0), func.Invoke(1), func.Invoke(2));
+
+	public static float Aggregate(this Vector3 vector, Func<float, float, float> func) => vector.Aggregate(0, func);
+	public static float Aggregate(this Vector3 vector, float seed, Func<float, float, float> func) => func.Invoke(func.Invoke(func.Invoke(seed, vector.x), vector.y), vector.z);
+
+	public static Vector3 Sum<T>(this IEnumerable<T> enumerable, Func<T, Vector3> func) => enumerable.Aggregate(Vector3.zero, (sum, x) => sum + func.Invoke(x));
 
 	// From PhysX
 	// indexed rotation around axis, with sine and cosine of half-angle
