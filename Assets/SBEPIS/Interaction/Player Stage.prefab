@@ -1180,8 +1180,8 @@ MonoBehaviour:
     m_ActionName: Gameplay/Pick Up Right[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.VR.VRGrabber, SBEPIS.Interaction
+      - m_Target: {fileID: 6271847251800222012}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.Controller.Grabber, SBEPIS.Interaction
         m_MethodName: OnGrab
         m_Mode: 0
         m_Arguments:
@@ -1252,6 +1252,23 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 12f82c29-5d59-43bc-9866-f7e4007f0941
     m_ActionName: Gameplay/Sprint[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6470668690988925192}
+        m_TargetAssemblyTypeName: SBEPIS.Interaction.Controller.Flatscreen.FlatscreenHandTrackerPositioner,
+          SBEPIS.Interaction
+        m_MethodName: OnUseLeftHand
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 68e27118-dcb5-48fe-ad39-37390cc655b4
+    m_ActionName: Gameplay/Use Left Hand[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -1691,6 +1708,7 @@ MonoBehaviour:
   rightGrabber: {fileID: 6376568278754761723}
   leftTracker: {fileID: 2758302851484042459}
   leftGrabber: {fileID: 6271847251800222012}
+  bothHandsOffset: 0.5
   raycastMask:
     serializedVersion: 2
     m_Bits: 513
