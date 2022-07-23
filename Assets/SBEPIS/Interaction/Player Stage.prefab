@@ -44,6 +44,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72aa0d73bb41e5944a3ce0730bbd8809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1042287024757287397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4304772429932534635}
+  m_Layer: 7
+  m_Name: Grab Normal Caster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4304772429932534635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042287024757287397}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7078601075283105826}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1139269190207973816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 354921643590445730}
+  m_Layer: 7
+  m_Name: Grab Normal Caster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &354921643590445730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139269190207973816}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: -0.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6376568278754761720}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1953997974963445433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,6 +1506,7 @@ Transform:
   - {fileID: 6376568279556092930}
   - {fileID: 6988586072954747951}
   - {fileID: 5090504188453658562}
+  - {fileID: 354921643590445730}
   m_Father: {fileID: 6112518582163472336}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -1493,10 +1556,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8013fae809d62549923c80a6ebd750d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shortRangeGrabDistace: 1
-  shortRangeGrabMask:
+  grabMask:
     serializedVersion: 2
     m_Bits: 513
+  grabNormalCaster: {fileID: 354921643590445730}
+  slipAngle: 80
+  shortRangeGrabDistace: 1
+  playerOrientation: {fileID: 690210978355806070}
 --- !u!1 &6376568278921566390
 GameObject:
   m_ObjectHideFlags: 0
@@ -1709,9 +1775,6 @@ MonoBehaviour:
   leftTracker: {fileID: 2758302851484042459}
   leftGrabber: {fileID: 6271847251800222012}
   bothHandsOffset: 0.5
-  raycastMask:
-    serializedVersion: 2
-    m_Bits: 513
   raycastDistance: 2
   minimumZoomDistance: 1
   zoomSensitivity: 0.001
@@ -2348,6 +2411,7 @@ Transform:
   - {fileID: 4598024357493546990}
   - {fileID: 4829634578946563956}
   - {fileID: 1378427799947317192}
+  - {fileID: 4304772429932534635}
   m_Father: {fileID: 6112518582163472336}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -2397,10 +2461,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8013fae809d62549923c80a6ebd750d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shortRangeGrabDistace: 1
-  shortRangeGrabMask:
+  grabMask:
     serializedVersion: 2
     m_Bits: 513
+  grabNormalCaster: {fileID: 4304772429932534635}
+  slipAngle: 80
+  shortRangeGrabDistace: 1
+  playerOrientation: {fileID: 690210978355806070}
 --- !u!1 &7829406395582683541
 GameObject:
   m_ObjectHideFlags: 0

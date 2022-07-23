@@ -11,7 +11,6 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 		public Rigidbody leftTracker;
 		public Grabber leftGrabber;
 		public float bothHandsOffset = 0.5f;
-		public LayerMask raycastMask = 1;
 		public float raycastDistance = 2;
 		public float minimumZoomDistance = 1;
 		public float zoomSensitivity = 0.1f;
@@ -54,8 +53,7 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 				transform.position + transform.right * offset,
 				transform.forward,
 				playerOrientation.upDirection,
-				raycastDistance,
-				raycastMask);
+				raycastDistance);
 		}
 
 		private static void UpdateHand(
@@ -68,14 +66,13 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 			Vector3 casterPosition,
 			Vector3 casterForward,
 			Vector3 up,
-			float raycastDistance,
-			LayerMask raycastMask)
+			float raycastDistance)
 		{
 			grabber.OverrideShortRangeGrab(casterPosition, casterForward, raycastDistance);
 
 			if (grabber.heldCollider)
 				tracker.transform.SetPositionAndRotation(fullHoldPosition, rotation);
-			else if (CastHand(out RaycastHit hit, casterPosition, casterForward, raycastDistance, raycastMask, grabber))
+			else if (CastHand(out RaycastHit hit, casterPosition, casterForward, raycastDistance, grabber))
 				tracker.transform.SetPositionAndRotation(hit.point, Quaternion.LookRotation(-hit.normal, up));
 			else if (CastShortRangeGrab(out _, casterPosition, casterForward, raycastDistance, grabber))
 				tracker.transform.SetPositionAndRotation(shortRangeTargetPosition, rotation);
@@ -93,14 +90,14 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 			useLeftHand = context.performed;
 		}
 
-		private static bool CastHand(out RaycastHit hit, Vector3 casterPosition, Vector3 casterForward, float raycastDistance, LayerMask raycastMask, Grabber grabber)
+		private static bool CastHand(out RaycastHit hit, Vector3 casterPosition, Vector3 casterForward, float raycastDistance, Grabber grabber)
 		{
-			return grabber.canShortRangeGrab = UnityEngine.Physics.Raycast(casterPosition, casterForward, out hit, raycastDistance - grabber.shortRangeGrabDistace, raycastMask, QueryTriggerInteraction.Ignore);
+			return grabber.canShortRangeGrab = UnityEngine.Physics.Raycast(casterPosition, casterForward, out hit, raycastDistance - grabber.shortRangeGrabDistace, grabber.grabMask, QueryTriggerInteraction.Ignore);
 		}
 
 		private static bool CastShortRangeGrab(out RaycastHit hit, Vector3 casterPosition, Vector3 casterForward, float raycastDistance, Grabber grabber)
 		{
-			return grabber.canShortRangeGrab = UnityEngine.Physics.Raycast(casterPosition, casterForward, out hit, raycastDistance, grabber.shortRangeGrabMask, QueryTriggerInteraction.Ignore);
+			return grabber.canShortRangeGrab = UnityEngine.Physics.Raycast(casterPosition, casterForward, out hit, raycastDistance, grabber.grabMask, QueryTriggerInteraction.Ignore);
 		}
 
 		public void OnControlsChanged(PlayerInput input)

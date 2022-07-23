@@ -10,8 +10,14 @@ namespace SBEPIS.Interaction.Controller
 	[RequireComponent(typeof(Rigidbody))]
 	public class Grabber : MonoBehaviour
 	{
+		public LayerMask grabMask = 1;
+		[Tooltip("Should be within the hand collision box, far enough that you wouldn't reasonably be able to clip into it")]
+		public Transform grabNormalCaster;
+		[Tooltip("Angle between the terrain's normal and player's up past which the grabber slips off")]
+		public float slipAngle = 80;
 		public float shortRangeGrabDistace = 1;
-		public LayerMask shortRangeGrabMask = 1;
+
+		public Orientation playerOrientation;
 
 		[NonSerialized]
 		public bool canShortRangeGrab = true;
@@ -21,25 +27,22 @@ namespace SBEPIS.Interaction.Controller
 		private Vector3 overrideShortRangeGrabCasterForward;
 		private float overrideShortRangeGrabDistance;
 
-		private Collider[] collisionColliders = new Collider[0];
-
 		public Collider heldCollider { get; private set; }
 		public Grabbable heldGrabbable { get; private set; }
-
 		private FixedJoint heldGrabbableJoint;
+		private Vector3 heldGrabbableNormal;
+
+		private RaycastHit[] grabNormalHits = new RaycastHit[16];
+
 		public new Rigidbody rigidbody { get; private set; }
 
 		private readonly List<Collider> collidingColliders = new();
 
-		private bool isAttemptingGrab;
-
-		private bool shouldEnableColliders;
-		private bool shouldDisableColliders;
+		private bool isHoldingGrab;
 
 		private void Awake()
 		{
 			rigidbody = GetComponent<Rigidbody>();
-			collisionColliders = GetComponentsInChildren<Collider>().Where(collider => collider.enabled && !collider.isTrigger).ToArray();
 		}
 
 		private void Start()
@@ -51,7 +54,6 @@ namespace SBEPIS.Interaction.Controller
 
 		private void Update()
 		{
-			HandleEnablingColliders();
 			ClearInvalidCollisions();
 			UpdateGrabAttempt();
 			if (heldGrabbable)
@@ -60,7 +62,7 @@ namespace SBEPIS.Interaction.Controller
 
 		public void OnGrab(CallbackContext context)
 		{
-			isAttemptingGrab = context.performed;
+			isHoldingGrab = context.performed;
 			UpdateGrabAttempt();
 		}
 
@@ -69,8 +71,11 @@ namespace SBEPIS.Interaction.Controller
 			if (!enabled || !gameObject.activeInHierarchy)
 				return;
 
-			if (isAttemptingGrab)
-				Grab();
+			if (isHoldingGrab)
+				if (heldCollider && heldGrabbableNormal != Vector3.zero && Vector3.Angle(heldGrabbableNormal, playerOrientation.upDirection) > slipAngle)
+					Drop();
+				else
+					Grab();
 			else
 				Drop();
 		}
@@ -98,6 +103,17 @@ namespace SBEPIS.Interaction.Controller
 			Grabbable grabbable = collider.SelectGrabbable();
 			if (grabbable && !grabbable.canGrab)
 				return false;
+
+			if (grabbable)
+				heldGrabbableNormal = Vector3.zero;
+			else if (CastGrabNormal(out RaycastHit hit, collider))
+			{
+				heldGrabbableNormal = hit.normal;
+				if (Vector3.Angle(heldGrabbableNormal, playerOrientation.upDirection) > slipAngle)
+					return false;
+			}
+			else
+				heldGrabbableNormal = Vector3.zero;
 
 			heldCollider = collider;
 			heldGrabbable = grabbable;
@@ -144,9 +160,16 @@ namespace SBEPIS.Interaction.Controller
 		private bool CastShortRangeGrab(out RaycastHit hit)
 		{
 			if (overrideShortRangeGrab)
-				return UnityEngine.Physics.Raycast(overrideShortRangeGrabCasterPosition, overrideShortRangeGrabCasterForward, out hit, overrideShortRangeGrabDistance, shortRangeGrabMask, QueryTriggerInteraction.Ignore);
+				return UnityEngine.Physics.Raycast(overrideShortRangeGrabCasterPosition, overrideShortRangeGrabCasterForward, out hit, overrideShortRangeGrabDistance, grabMask, QueryTriggerInteraction.Ignore);
 			else
-				return UnityEngine.Physics.Raycast(transform.position, transform.forward, out hit, shortRangeGrabDistace, shortRangeGrabMask, QueryTriggerInteraction.Ignore);
+				return UnityEngine.Physics.Raycast(transform.position, transform.forward, out hit, shortRangeGrabDistace, grabMask, QueryTriggerInteraction.Ignore);
+		}
+
+		private bool CastGrabNormal(out RaycastHit hit, Collider colliderToLookFor)
+		{
+			int hitCount = UnityEngine.Physics.RaycastNonAlloc(grabNormalCaster.position, grabNormalCaster.forward, grabNormalHits, shortRangeGrabDistace, grabMask, QueryTriggerInteraction.Ignore);
+			hit = grabNormalHits.Take(hitCount).FirstOrDefault(hit => hit.collider == colliderToLookFor);
+			return grabNormalHits.Take(hitCount).Any(hit => hit.collider == colliderToLookFor);
 		}
 
 		public void OverrideShortRangeGrab(Vector3 casterPosition, Vector3 casterForward, float distance)
@@ -164,7 +187,7 @@ namespace SBEPIS.Interaction.Controller
 
 		private void OnTriggerEnter(Collider other)
 		{
-			if (!collidingColliders.Contains(other))
+			if (other.gameObject.IsOnLayer(grabMask) && !collidingColliders.Contains(other))
 				StartCollidingWith(other);
 		}
 
@@ -205,57 +228,6 @@ namespace SBEPIS.Interaction.Controller
 			for (int i = 0; i < collidingColliders.Count; i++)
 				if (!collidingColliders[i].gameObject.activeInHierarchy)
 					StopCollidingWith(collidingColliders[i--]);
-		}
-
-		public void QueueEnableColliders()
-		{
-			shouldEnableColliders = true;
-			shouldDisableColliders = false;
-		}
-
-		public void QueueDisableColliders()
-		{
-			shouldEnableColliders = false;
-			shouldDisableColliders = true;
-		}
-
-		private void HandleEnablingColliders()
-		{
-			if (collisionColliders.Length == 0 || (!shouldEnableColliders && !shouldDisableColliders))
-				return;
-
-			if (shouldEnableColliders)
-				foreach (Collider collider in collisionColliders)
-					collider.enabled = true;
-			shouldEnableColliders = false;
-
-			if (shouldDisableColliders)
-				foreach (Collider collider in collisionColliders)
-					collider.enabled = false;
-			shouldDisableColliders = false;
-		}
-
-		// Note that this happens *before* Awake is called
-		public void OnControlsChanged(PlayerInput input)
-		{
-			switch (input.currentControlScheme)
-			{
-				case "OpenXR":
-					//QueueEnableColliders();
-					break;
-
-				default:
-					//QueueDisableColliders();
-					break;
-			}
-		}
-
-		public enum Scheme
-		{
-			NONE,
-			OpenXR,
-			Keyboard,
-			Controller,
 		}
 	}
 
