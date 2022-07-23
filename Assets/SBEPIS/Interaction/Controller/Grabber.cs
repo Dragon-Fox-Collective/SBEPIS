@@ -10,6 +10,15 @@ namespace SBEPIS.Interaction.Controller
 	[RequireComponent(typeof(Rigidbody))]
 	public class Grabber : MonoBehaviour
 	{
+		public float shortRangeGrabDistace = 1;
+		public LayerMask shortRangeGrabMask = 1;
+
+		[NonSerialized]
+		public bool canShortRangeGrab = true;
+
+		private Transform overrideShortRangeGrabCaster;
+		private float overrideShortRangeGrabDistance;
+
 		private Collider[] collisionColliders = new Collider[0];
 
 		public Collider heldCollider { get; private set; }
@@ -66,21 +75,26 @@ namespace SBEPIS.Interaction.Controller
 
 		public void Grab()
 		{
-			if (heldCollider || collidingColliders.Count == 0)
+			if (heldCollider)
 				return;
 
 			foreach (Collider collidingCollider in collidingColliders)
 			{
 				print($"Attempting to grab {collidingCollider}");
 				if (Grab(collidingCollider))
-					break;
+					return;
 			}
+
+			if (canShortRangeGrab)
+				ShortRangeGrab();
 		}
 
 		public bool Grab(Collider collider)
 		{
+			if (heldCollider)
+				return false;
 			Grabbable grabbable = collider.SelectGrabbable();
-			if (heldCollider || (grabbable && !grabbable.canGrab))
+			if (grabbable && !grabbable.canGrab)
 				return false;
 
 			heldCollider = collider;
@@ -94,6 +108,16 @@ namespace SBEPIS.Interaction.Controller
 				grabbable.Grab(this);
 
 			return true;
+		}
+
+		private void ShortRangeGrab()
+		{
+			if (CastShortRangeGrab(out RaycastHit hit))
+			{
+				print($"Short range grabbing {hit.collider}");
+				transform.SetPositionAndRotation(hit.point, Quaternion.LookRotation(-hit.normal, transform.up));
+				Grab(hit.collider);
+			}
 		}
 
 		public void Drop()
@@ -113,6 +137,20 @@ namespace SBEPIS.Interaction.Controller
 				droppedCollider.attachedRigidbody.AddForce(Vector3.up * 0.01f);
 			if (droppedGrabbable)
 				droppedGrabbable.Drop(this);
+		}
+
+		private bool CastShortRangeGrab(out RaycastHit hit)
+		{
+			if (overrideShortRangeGrabCaster)
+				return UnityEngine.Physics.Raycast(overrideShortRangeGrabCaster.position, overrideShortRangeGrabCaster.forward, out hit, overrideShortRangeGrabDistance, shortRangeGrabMask, QueryTriggerInteraction.Ignore);
+			else
+				return UnityEngine.Physics.Raycast(transform.position, transform.forward, out hit, shortRangeGrabDistace, shortRangeGrabMask, QueryTriggerInteraction.Ignore);
+		}
+
+		public void OverrideShortRangeGrab(Transform caster, float distance)
+		{
+			overrideShortRangeGrabCaster = caster;
+			overrideShortRangeGrabDistance = distance;
 		}
 
 		private void OnTriggerEnter(Collider other)
