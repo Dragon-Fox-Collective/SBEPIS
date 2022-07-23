@@ -16,7 +16,9 @@ namespace SBEPIS.Interaction.Controller
 		[NonSerialized]
 		public bool canShortRangeGrab = true;
 
-		private Transform overrideShortRangeGrabCaster;
+		private bool overrideShortRangeGrab;
+		private Vector3 overrideShortRangeGrabCasterPosition;
+		private Vector3 overrideShortRangeGrabCasterForward;
 		private float overrideShortRangeGrabDistance;
 
 		private Collider[] collisionColliders = new Collider[0];
@@ -141,16 +143,23 @@ namespace SBEPIS.Interaction.Controller
 
 		private bool CastShortRangeGrab(out RaycastHit hit)
 		{
-			if (overrideShortRangeGrabCaster)
-				return UnityEngine.Physics.Raycast(overrideShortRangeGrabCaster.position, overrideShortRangeGrabCaster.forward, out hit, overrideShortRangeGrabDistance, shortRangeGrabMask, QueryTriggerInteraction.Ignore);
+			if (overrideShortRangeGrab)
+				return UnityEngine.Physics.Raycast(overrideShortRangeGrabCasterPosition, overrideShortRangeGrabCasterForward, out hit, overrideShortRangeGrabDistance, shortRangeGrabMask, QueryTriggerInteraction.Ignore);
 			else
 				return UnityEngine.Physics.Raycast(transform.position, transform.forward, out hit, shortRangeGrabDistace, shortRangeGrabMask, QueryTriggerInteraction.Ignore);
 		}
 
-		public void OverrideShortRangeGrab(Transform caster, float distance)
+		public void OverrideShortRangeGrab(Vector3 casterPosition, Vector3 casterForward, float distance)
 		{
-			overrideShortRangeGrabCaster = caster;
+			overrideShortRangeGrab = true;
+			overrideShortRangeGrabCasterPosition = casterPosition;
+			overrideShortRangeGrabCasterForward = casterForward;
 			overrideShortRangeGrabDistance = distance;
+		}
+
+		public void ResetShortRangeGrabOverride()
+		{
+			overrideShortRangeGrab = false;
 		}
 
 		private void OnTriggerEnter(Collider other)
