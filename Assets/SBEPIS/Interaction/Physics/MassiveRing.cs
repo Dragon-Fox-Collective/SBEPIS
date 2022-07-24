@@ -16,7 +16,7 @@ namespace SBEPIS.Interaction.Physics
 			float distance = ringCenterOfMass.magnitude;
 			float radiusPriority = falloffRadius > standingRadius ?
 				distance > standingRadius ? MassiveBox.GetPriorityFalloff(distance - standingRadius, falloffRadius - standingRadius, falloffDistance) : 0 :
-				distance < standingRadius ? MassiveBox.GetPriorityFalloff(standingRadius - distance, standingRadius - falloffDistance, falloffDistance) : 0;
+				distance < standingRadius ? MassiveBox.GetPriorityFalloff(standingRadius - distance, standingRadius - falloffRadius, falloffDistance) : 0;
 			Vector3 priority = new(
 				MassiveBox.GetPriorityFalloff(centerOfMass.x, width / 2, falloffDistance),
 				radiusPriority,

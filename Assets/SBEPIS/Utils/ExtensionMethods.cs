@@ -93,6 +93,7 @@ public static class ExtensionMethods
 	public static float Aggregate(this Vector3 vector, float seed, Func<float, float, float> func) => func.Invoke(func.Invoke(func.Invoke(seed, vector.x), vector.y), vector.z);
 
 	public static Vector3 Sum<T>(this IEnumerable<T> enumerable, Func<T, Vector3> func) => enumerable.Aggregate(Vector3.zero, (sum, x) => sum + func.Invoke(x));
+	public static Vector3 Sum(this IEnumerable<Vector3> enumerable) => enumerable.Aggregate(Vector3.zero, (sum, x) => sum + x);
 
 	// From PhysX
 	// indexed rotation around axis, with sine and cosine of half-angle
