@@ -112,6 +112,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Right Hand Pose",
+                    "type": "Value",
+                    "id": "d5026919-cb71-422d-b054-65dc856f770c",
+                    "expectedControlType": "Pose",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Left Hand Pose",
+                    "type": "Value",
+                    "id": "944d50a1-0fe1-4e30-be46-730d26ed4fe5",
+                    "expectedControlType": "Pose",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Head Position",
+                    "type": "Value",
+                    "id": "f29df7bd-272b-40fd-94dc-4fbec9b0edfb",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Head Rotation",
+                    "type": "Value",
+                    "id": "c1a219b6-0712-4ee7-9810-39daf3f9aaf7",
+                    "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -183,17 +219,6 @@
                 },
                 {
                     "name": "",
-                    "id": "8c6813ef-403a-4de3-b979-a098432b2b46",
-                    "path": "<XRController>{LeftHand}/trackpad",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "aca93bdb-5e87-4268-a95b-7b12f418ebd1",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
@@ -210,17 +235,6 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "298b751e-30a7-4bff-9d36-fbbe7676a311",
-                    "path": "<XRController>{RightHand}/trackpadPressed",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -320,17 +334,6 @@
                     "interactions": "",
                     "processors": "Scale(factor=0.5)",
                     "groups": "Keyboard",
-                    "action": "LookYaw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4d46030b-7509-4ad7-a39c-8a5153598f8b",
-                    "path": "<XRController>{RightHand}/trackpad/x",
-                    "interactions": "",
-                    "processors": "Scale(factor=3)",
-                    "groups": "OpenXR",
                     "action": "LookYaw",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -524,17 +527,6 @@
                 },
                 {
                     "name": "",
-                    "id": "dc4f2fc5-0d45-4f51-828f-f98e3ec9dd0a",
-                    "path": "<XRController>{LeftHand}/trackpadPressed",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Sprint",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "142894fe-ded9-445b-a22f-72ce5c9b308a",
                     "path": "<XRController>{LeftHand}/thumbstickClicked",
                     "interactions": "",
@@ -565,14 +557,52 @@
                     "action": "Use Left Hand",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4ad1dd6a-dfda-4299-ba5d-0b44e80be87d",
+                    "path": "<XRController>{RightHand}/devicePose",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Right Hand Pose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ef8e581-a68d-4a37-8932-d37ce6213dc8",
+                    "path": "<XRController>{LeftHand}/devicePose",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Left Hand Pose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aeb5332d-3804-4565-ae60-513b1782f854",
+                    "path": "<XRHMD>/centerEyePosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Head Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0a684e9-e484-4617-99da-41947ab0aa77",
+                    "path": "<XRHMD>/centerEyeRotation",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Head Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
-        },
-        {
-            "name": "Typing",
-            "id": "15a91472-5740-487e-81de-d25ed80da327",
-            "actions": [],
-            "bindings": []
         }
     ],
     "controlSchemes": [
@@ -609,6 +639,16 @@
                 {
                     "devicePath": "<XRHMD>",
                     "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": true,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": true,
                     "isOR": false
                 }
             ]

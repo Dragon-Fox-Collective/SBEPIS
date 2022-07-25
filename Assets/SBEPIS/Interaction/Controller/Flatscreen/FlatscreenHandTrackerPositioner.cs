@@ -13,6 +13,7 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 		public float bothHandsOffset = 0.5f;
 		public float raycastDistance = 2;
 		public float minimumZoomDistance = 1;
+		public float startingZoomDistance = 1;
 		public float zoomSensitivity = 0.1f;
 
 		public Transform rightHoldPosition;
@@ -25,7 +26,7 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 
 		private void Awake()
 		{
-			zoomAmount = minimumZoomDistance;
+			zoomAmount = startingZoomDistance;
 		}
 
 		private void FixedUpdate()
@@ -37,7 +38,7 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 			else
 			{
 				leftTracker.transform.SetPositionAndRotation(leftHoldPosition.position, leftHoldPosition.rotation);
-				leftGrabber.canShortRangeGrab = false;
+				leftGrabber.canGrab = false;
 			}
 		}
 
@@ -92,12 +93,12 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 
 		private static bool CastHand(out RaycastHit hit, Vector3 casterPosition, Vector3 casterForward, float raycastDistance, Grabber grabber)
 		{
-			return grabber.canShortRangeGrab = UnityEngine.Physics.Raycast(casterPosition, casterForward, out hit, raycastDistance - grabber.shortRangeGrabDistace, grabber.grabMask, QueryTriggerInteraction.Ignore);
+			return grabber.canGrab = UnityEngine.Physics.Raycast(casterPosition, casterForward, out hit, raycastDistance - grabber.shortRangeGrabDistace, grabber.grabMask, QueryTriggerInteraction.Ignore);
 		}
 
 		private static bool CastShortRangeGrab(out RaycastHit hit, Vector3 casterPosition, Vector3 casterForward, float raycastDistance, Grabber grabber)
 		{
-			return grabber.canShortRangeGrab = UnityEngine.Physics.Raycast(casterPosition, casterForward, out hit, raycastDistance, grabber.grabMask, QueryTriggerInteraction.Ignore);
+			return grabber.canGrab = UnityEngine.Physics.Raycast(casterPosition, casterForward, out hit, raycastDistance, grabber.grabMask, QueryTriggerInteraction.Ignore);
 		}
 
 		public void OnControlsChanged(PlayerInput input)
