@@ -54,6 +54,8 @@ namespace SBEPIS.Interaction.Physics
 			}
 			rigidbody.inertiaTensor = inertiaTensor.Diagonalize(out Quaternion inertiaTensorRotation);
 			rigidbody.inertiaTensorRotation = inertiaTensorRotation;
+
+			rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
 		}
 	}
 }

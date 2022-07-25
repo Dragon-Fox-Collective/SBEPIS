@@ -19,8 +19,7 @@ namespace SBEPIS.Interaction.Controller
 
 		public Orientation playerOrientation;
 
-		[NonSerialized]
-		public bool canShortRangeGrab = true;
+		public bool canGrab { get; set; } = true;
 
 		private bool overrideShortRangeGrab;
 		private Vector3 overrideShortRangeGrabCasterPosition;
@@ -32,7 +31,7 @@ namespace SBEPIS.Interaction.Controller
 		private FixedJoint heldGrabbableJoint;
 		private Vector3 heldGrabbableNormal;
 
-		private RaycastHit[] grabNormalHits = new RaycastHit[16];
+		private readonly RaycastHit[] grabNormalHits = new RaycastHit[16];
 
 		public new Rigidbody rigidbody { get; private set; }
 
@@ -82,7 +81,7 @@ namespace SBEPIS.Interaction.Controller
 
 		public void Grab()
 		{
-			if (heldCollider)
+			if (!canGrab || heldCollider)
 				return;
 
 			foreach (Collider collidingCollider in collidingColliders)
@@ -92,8 +91,7 @@ namespace SBEPIS.Interaction.Controller
 					return;
 			}
 
-			if (canShortRangeGrab)
-				ShortRangeGrab();
+			ShortRangeGrab();
 		}
 
 		public bool Grab(Collider collider)
@@ -183,6 +181,7 @@ namespace SBEPIS.Interaction.Controller
 		public void ResetShortRangeGrabOverride()
 		{
 			overrideShortRangeGrab = false;
+			canGrab = true;
 		}
 
 		private void OnTriggerEnter(Collider other)

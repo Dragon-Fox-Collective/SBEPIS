@@ -33,7 +33,7 @@ namespace SBEPIS.Interaction.Physics
 
 		private void UpdatePosition()
 		{
-			Vector3 newVelocity = targets.Sum(target => ApproachCurve(target.target.position - rigidbody.position, target.strength.strengthCurve));
+			Vector3 newVelocity = targets.Sum(target => ApproachCurve(target.target.position - rigidbody.position, target.strength.strength));
 			newVelocity += attachedRigidbody.velocity;
 			Vector3 force = (newVelocity - rigidbody.velocity) * rigidbody.mass / Time.fixedDeltaTime;
 			attachedRigidbody.AddForce(-force);
@@ -44,16 +44,14 @@ namespace SBEPIS.Interaction.Physics
 		{
 			Vector3 newVelocity = targets.Sum(target =>
 			{
-				if (target.strength.torqueInputFactor <= 0)
-					return Vector3.zero;
-
 				Vector3 delta = (target.target.rotation * Quaternion.Inverse(rigidbody.rotation)).eulerAngles;
 				if (delta.x > 180) delta.x -= 360;
 				if (delta.y > 180) delta.y -= 360;
 				if (delta.z > 180) delta.z -= 360;
 				delta *= Mathf.Deg2Rad;
-				delta *= target.strength.torqueInputFactor;
-				return ApproachCurve(delta, target.strength.strengthCurve);
+				Vector3 velocity = ApproachCurve(delta, target.strength.torque);
+				velocity *= target.strength.linearDistanceTorqueFactor.Evaluate(Vector3.Distance(target.target.position, rigidbody.position));
+				return velocity;
 			});
 			rigidbody.angularVelocity = newVelocity;
 		}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d618915bf0532164c983d3d9ae077318, type: 3}
   m_Name: Arm Limit Strength
   m_EditorClassIdentifier: 
-  strengthCurve:
+  strength:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -45,4 +45,15 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  torqueInputFactor: 0
+  torque:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  linearDistanceTorqueLerp:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

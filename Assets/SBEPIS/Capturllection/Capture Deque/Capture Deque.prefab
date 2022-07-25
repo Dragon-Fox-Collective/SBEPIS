@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7617101641436224015}
   - component: {fileID: 5737410847915139685}
   - component: {fileID: 6881145044469183986}
+  - component: {fileID: 8899563152095457308}
   m_Layer: 0
   m_Name: Capture Deque
   m_TagString: Untagged
@@ -102,6 +103,22 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!54 &8899563152095457308
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762745506201212150}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1001 &178777184448903901
 PrefabInstance:
   m_ObjectHideFlags: 0
