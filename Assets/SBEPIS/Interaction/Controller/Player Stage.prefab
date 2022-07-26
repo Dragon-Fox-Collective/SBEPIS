@@ -44,6 +44,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72aa0d73bb41e5944a3ce0730bbd8809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1023693791734592071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9126860789424371723}
+  - component: {fileID: 3235497005700588093}
+  - component: {fileID: 6336871723133193097}
+  m_Layer: 8
+  m_Name: Yaw Proxy (Yawxy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9126860789424371723
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023693791734592071}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6112518582163472336}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3235497005700588093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023693791734592071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9cbe500f1f652147b53b21e6e295a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6336871723133193097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023693791734592071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b9c2949b4289445b9a485ab77d0483, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFixedUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4968331796699711886}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.TransformSync, SBEPIS.Utils
+        m_MethodName: SyncRotation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1042287024757287397
 GameObject:
   m_ObjectHideFlags: 0
@@ -2366,7 +2441,6 @@ GameObject:
   - component: {fileID: 5733076409996360854}
   - component: {fileID: 4968331796699711886}
   - component: {fileID: 690210978355806070}
-  - component: {fileID: 5674716536330625497}
   - component: {fileID: 5527374197635610314}
   m_Layer: 8
   m_Name: Player Body
@@ -2427,7 +2501,7 @@ MonoBehaviour:
   onGravityChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5674716536330625497}
+      - m_Target: {fileID: 3235497005700588093}
         m_TargetAssemblyTypeName: SBEPIS.Interaction.Orienter, SBEPIS.Interaction
         m_MethodName: Orient
         m_Mode: 0
@@ -2470,9 +2544,6 @@ MonoBehaviour:
   frictionDeceleration: 20
   sprintFactor: 1.5
   sprintControlThreshold: 0.9
-  cameraRig: {fileID: 1231929498068553383}
-  headTracker: {fileID: 6376568279122881040}
-  headAnchor: {fileID: 9068631112331909942}
 --- !u!114 &6761588775947424754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2500,7 +2571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pitchRotator: {fileID: 6376568279122881040}
-  yawRotator: {fileID: 6376568280094680653}
+  yawRotator: {fileID: 9126860789424371723}
   sensitivity: 0.3
 --- !u!114 &5733076409996360854
 MonoBehaviour:
@@ -2563,18 +2634,6 @@ MonoBehaviour:
   groundCheckMask:
     serializedVersion: 2
     m_Bits: 1
---- !u!114 &5674716536330625497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6376568280094680652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9cbe500f1f652147b53b21e6e295a32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5527374197635610314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3627,6 +3686,7 @@ Transform:
   - {fileID: 6376568278754761720}
   - {fileID: 7078601075283105826}
   - {fileID: 5195515549641077384}
+  - {fileID: 9126860789424371723}
   - {fileID: 6376568280094680653}
   - {fileID: 7102078932346942673}
   - {fileID: 5996882585862293508}
