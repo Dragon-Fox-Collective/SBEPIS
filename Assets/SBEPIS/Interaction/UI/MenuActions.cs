@@ -2,7 +2,6 @@ using SBEPIS.Interaction.Controller;
 using SBEPIS.Utils;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
@@ -11,28 +10,22 @@ namespace SBEPIS.Interaction.UI
 	public class MenuActions : MonoBehaviour
 	{
 		public Orientation playerOrientation;
+
+		[Header("Menu transforms")]
 		public Transform pauseButtons;
 		public Transform main;
 		public Transform settings;
-
+		
+		[Header("Controls")]
 		public PhysicsSlider sensitivitySlider;
-
-		public PlayerInput input;
-
-		public MovementController movementController;
-		public LookController lookController;
-
 		public float mouseSensitivityMin = 0.1f;
 		public float mouseSensitivityMax = 1;
 
-		private PlayerSettingsSaveData settingsData;
+		[Header("Settings readers")]
+		public MovementController movementController;
+		public LookController lookController;
 
-		private void Start()
-		{
-			settingsData = new PlayerSettingsSaveData { filename = "settings", sensitivity = lookController.sensitivity };
-			DataSaver.LoadData(ref settingsData);
-			lookController.sensitivity = settingsData.sensitivity;
-		}
+		private PlayerSettingsSaveData settingsData;
 
 		public void StartNewGame()
 		{
@@ -77,7 +70,7 @@ namespace SBEPIS.Interaction.UI
 			main.gameObject.SetActive(false);
 			settings.gameObject.SetActive(true);
 
-			sensitivitySlider.ResetAnchor(lookController.sensitivity.Map(mouseSensitivityMin, mouseSensitivityMax, 0, 1));
+			ResetMouseSensitivitySlider();
 		}
 
 		public void OnTogglePauseMenu(CallbackContext context)
@@ -103,10 +96,45 @@ namespace SBEPIS.Interaction.UI
 			pauseButtons.gameObject.SetActive(false);
 		}
 
+
+		private void Start()
+		{
+			settingsData = new PlayerSettingsSaveData { filename = "settings" };
+
+			if (DataSaver.LoadData(ref settingsData))
+			{
+				LoadMouseSensitivity(ref settingsData);
+				//LoadEyeHeight(ref settingsData);
+			}
+			else
+			{
+				SaveMouseSensitivity(ref settingsData);
+				//SaveEyeHeight(ref settingsData);
+			}
+		}
+
+		public void LoadMouseSensitivity(ref PlayerSettingsSaveData settingsData)
+		{
+			if (settingsData.version >= 0)
+				lookController.sensitivity = settingsData.sensitivity;
+			else
+				SaveMouseSensitivity(ref settingsData);
+		}
+
+		public void SaveMouseSensitivity(ref PlayerSettingsSaveData settingsData)
+		{
+			settingsData.sensitivity = lookController.sensitivity;
+		}
+
+		public void ResetMouseSensitivitySlider()
+		{
+			sensitivitySlider.ResetAnchor(lookController.sensitivity.Map(mouseSensitivityMin, mouseSensitivityMax, 0, 1));
+		}
+
 		public void ChangeMouseSensitivity(float percent)
 		{
 			lookController.sensitivity = percent.Map(0, 1, mouseSensitivityMin, mouseSensitivityMax);
-			settingsData.sensitivity = lookController.sensitivity;
+			SaveMouseSensitivity(ref settingsData);
 			DataSaver.SaveData(settingsData);
 		}
 	}
