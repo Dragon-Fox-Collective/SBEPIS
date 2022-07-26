@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace SBEPIS.Interaction
+namespace SBEPIS.Interaction.Controller
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class JointTargetter : MonoBehaviour
@@ -11,6 +9,7 @@ namespace SBEPIS.Interaction
 		public Transform target;
 		public Transform anchor;
 		public float anchorDistance = 0.5f;
+		public StrengthSettings strength;
 
 		private new Rigidbody rigidbody;
 		private Quaternion initialOffset;
@@ -27,6 +26,18 @@ namespace SBEPIS.Interaction
 		private void Start()
 		{
 			initialOffset = (joint.transform.rotation.Inverse() * transform.rotation).Inverse();
+			joint.xDrive = joint.yDrive = joint.zDrive = new JointDrive
+			{
+				positionSpring = strength.linearSpring,
+				positionDamper = strength.linearDamper,
+				maximumForce = strength.linearMaxForce,
+			};
+			joint.slerpDrive = new JointDrive
+			{
+				positionSpring = strength.angularSpring,
+				positionDamper = strength.angularDamper,
+				maximumForce = strength.angularMaxForce,
+			};
 		}
 
 		private void FixedUpdate()

@@ -1908,6 +1908,7 @@ MonoBehaviour:
   target: {fileID: 6376568278921566391}
   anchor: {fileID: 0}
   anchorDistance: 0.5
+  strength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
 --- !u!1 &6376568278921566390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2601,19 +2602,19 @@ ConfigurableJoint:
   m_TargetVelocity: {x: 0, y: 0, z: 0}
   m_XDrive:
     serializedVersion: 3
-    positionSpring: 5000
-    positionDamper: 1000
-    maximumForce: 1500
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 0
   m_YDrive:
     serializedVersion: 3
-    positionSpring: 5000
-    positionDamper: 1000
-    maximumForce: 1500
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 0
   m_ZDrive:
     serializedVersion: 3
-    positionSpring: 5000
-    positionDamper: 1000
-    maximumForce: 1500
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
   m_RotationDriveMode: 1
@@ -2629,9 +2630,9 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 3000
-    positionDamper: 200
-    maximumForce: 75
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 0
   m_ProjectionMode: 0
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
@@ -2697,19 +2698,19 @@ ConfigurableJoint:
   m_TargetVelocity: {x: 0, y: 0, z: 0}
   m_XDrive:
     serializedVersion: 3
-    positionSpring: 5000
-    positionDamper: 1000
-    maximumForce: 1500
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 0
   m_YDrive:
     serializedVersion: 3
-    positionSpring: 5000
-    positionDamper: 1000
-    maximumForce: 1500
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 0
   m_ZDrive:
     serializedVersion: 3
-    positionSpring: 5000
-    positionDamper: 1000
-    maximumForce: 1500
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
   m_RotationDriveMode: 1
@@ -2725,9 +2726,9 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 3000
-    positionDamper: 200
-    maximumForce: 75
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 0
   m_ProjectionMode: 0
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
@@ -3162,6 +3163,7 @@ MonoBehaviour:
   target: {fileID: 2758302851484042462}
   anchor: {fileID: 0}
   anchorDistance: 0.5
+  strength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
 --- !u!1 &7829406395582683541
 GameObject:
   m_ObjectHideFlags: 0
