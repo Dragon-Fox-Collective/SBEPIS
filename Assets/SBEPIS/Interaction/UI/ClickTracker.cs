@@ -13,25 +13,26 @@ namespace SBEPIS.Interaction.UI
 		/// </summary>
 		private const float TAP_TIME = 0.3f;
 
-		private bool isTracking;
+		private int trackingCount;
 		private float startTime;
 
 		public void StartTracking()
 		{
-			if (isTracking)
-				throw new InvalidOperationException($"Click tracker {gameObject} is already tracking");
-			isTracking = true;
+			trackingCount++;
 			startTime = Time.unscaledTime;
 		}
 
 		public void FinishTracking()
 		{
-			if (!isTracking)
-				throw new InvalidOperationException($"Click tracker {gameObject} is not tracking yet");
-			isTracking = false;
-			print($"{gameObject} finished clicking, held for {Time.unscaledTime - startTime}, clicked? {Time.unscaledTime - startTime <= TAP_TIME}");
-			if (Time.unscaledTime - startTime <= TAP_TIME)
-				onClick.Invoke();
+			if (trackingCount == 0)
+				throw new InvalidOperationException($"Click tracker {gameObject} is not tracking");
+			trackingCount--;
+			if (trackingCount == 0)
+			{
+				print($"{gameObject} finished clicking, held for {Time.unscaledTime - startTime}, clicked? {Time.unscaledTime - startTime <= TAP_TIME}");
+				if (Time.unscaledTime - startTime <= TAP_TIME)
+					onClick.Invoke();
+			}
 		}
 	}
 }
