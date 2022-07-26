@@ -44,13 +44,6 @@ namespace SBEPIS.Interaction.Controller
 			rigidbody = GetComponent<Rigidbody>();
 		}
 
-		private void Start()
-		{
-			rigidbody.centerOfMass = Vector3.zero;
-			rigidbody.inertiaTensor = Vector3.one;
-			rigidbody.inertiaTensorRotation = Quaternion.identity;
-		}
-
 		private void Update()
 		{
 			ClearInvalidCollisions();

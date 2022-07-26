@@ -68,6 +68,8 @@ public static class ExtensionMethods
 		UnityEngine.Object.Destroy(other.gameObject);
 	}
 
+	public static Quaternion Inverse(this Quaternion quaternion) => Quaternion.Inverse(quaternion);
+
 	public static IEnumerable<T> Insert<T>(this IEnumerable<T> enumerable, int index, T element)
 	{
 		return enumerable.Take(index).Append(element).Concat(enumerable.TakeLast(enumerable.Count() - index));
@@ -94,6 +96,8 @@ public static class ExtensionMethods
 
 	public static Vector3 Sum<T>(this IEnumerable<T> enumerable, Func<T, Vector3> func) => enumerable.Aggregate(Vector3.zero, (sum, x) => sum + func.Invoke(x));
 	public static Vector3 Sum(this IEnumerable<Vector3> enumerable) => enumerable.Aggregate(Vector3.zero, (sum, x) => sum + x);
+
+	public static Quaternion Select(this Quaternion quaternion, Func<float, float> func) => new(func.Invoke(quaternion.x), func.Invoke(quaternion.y), func.Invoke(quaternion.z), func.Invoke(quaternion.w));
 
 	// From PhysX
 	// indexed rotation around axis, with sine and cosine of half-angle

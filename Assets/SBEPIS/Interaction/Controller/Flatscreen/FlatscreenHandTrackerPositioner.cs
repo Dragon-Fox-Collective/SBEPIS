@@ -6,9 +6,9 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 {
 	public class FlatscreenHandTrackerPositioner : MonoBehaviour
 	{
-		public Rigidbody rightTracker;
+		public Transform rightTracker;
 		public Grabber rightGrabber;
-		public Rigidbody leftTracker;
+		public Transform leftTracker;
 		public Grabber leftGrabber;
 		public float bothHandsOffset = 0.5f;
 		public float raycastDistance = 2;
@@ -42,7 +42,7 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 			}
 		}
 
-		private void UpdateHand(Rigidbody tracker, Grabber hand, Transform emptyHoldPosition, float offset)
+		private void UpdateHand(Transform tracker, Grabber hand, Transform emptyHoldPosition, float offset)
 		{
 			UpdateHand(
 				tracker,
@@ -58,7 +58,7 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 		}
 
 		private static void UpdateHand(
-			Rigidbody tracker,
+			Transform tracker,
 			Grabber grabber,
 			Transform emptyHoldPosition,
 			Vector3 fullHoldPosition,
@@ -72,13 +72,13 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 			grabber.OverrideShortRangeGrab(casterPosition, casterForward, raycastDistance);
 
 			if (grabber.heldCollider)
-				tracker.transform.SetPositionAndRotation(fullHoldPosition, rotation);
+				tracker.SetPositionAndRotation(fullHoldPosition, rotation);
 			else if (CastHand(out RaycastHit hit, casterPosition, casterForward, raycastDistance, grabber))
-				tracker.transform.SetPositionAndRotation(hit.point, Quaternion.LookRotation(-hit.normal, up));
+				tracker.SetPositionAndRotation(hit.point, Quaternion.LookRotation(-hit.normal, up));
 			else if (CastShortRangeGrab(out _, casterPosition, casterForward, raycastDistance, grabber))
-				tracker.transform.SetPositionAndRotation(shortRangeTargetPosition, rotation);
+				tracker.SetPositionAndRotation(shortRangeTargetPosition, rotation);
 			else
-				tracker.transform.SetPositionAndRotation(emptyHoldPosition.position, emptyHoldPosition.rotation);
+				tracker.SetPositionAndRotation(emptyHoldPosition.position, emptyHoldPosition.rotation);
 		}
 
 		public void OnZoom(CallbackContext context)
@@ -101,22 +101,10 @@ namespace SBEPIS.Interaction.Controller.Flatscreen
 			return grabber.canGrab = UnityEngine.Physics.Raycast(casterPosition, casterForward, out hit, raycastDistance, grabber.grabMask, QueryTriggerInteraction.Ignore);
 		}
 
-		public void OnControlsChanged(PlayerInput input)
+		private void OnDisable()
 		{
-			switch (input.currentControlScheme)
-			{
-				case "OpenXR":
-					print("Activating OpenXR input");
-					enabled = false;
-					rightGrabber.ResetShortRangeGrabOverride();
-					leftGrabber.ResetShortRangeGrabOverride();
-					break;
-
-				default:
-					print($"Activating default ({input.currentControlScheme}) input");
-					enabled = true;
-					break;
-			}
+			rightGrabber.ResetShortRangeGrabOverride();
+			leftGrabber.ResetShortRangeGrabOverride();
 		}
 	}
 }
