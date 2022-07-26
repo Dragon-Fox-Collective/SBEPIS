@@ -15,7 +15,7 @@ namespace SBEPIS.Interaction.Controller
 		public float sprintControlThreshold = 0.9f;
 
 		private new Rigidbody rigidbody;
-		private Orientation groundDetector;
+		private Orientation orientation;
 		private Vector3 controlsTarget;
 		private bool isTryingToSprint;
 		private bool isSprinting;
@@ -23,7 +23,7 @@ namespace SBEPIS.Interaction.Controller
 		private void Awake()
 		{
 			rigidbody = GetComponent<Rigidbody>();
-			groundDetector = GetComponent<Orientation>();
+			orientation = GetComponent<Orientation>();
 		}
 
 		private void FixedUpdate()
@@ -39,9 +39,9 @@ namespace SBEPIS.Interaction.Controller
 			// if the player is moving controls and is grounded, accelerate, probably apply friction in not the direction that the player is going
 			// if the player is not moving controls and the player is not grounded, do nothing
 			// if the player is not moving controls and the player is grounded, apply friction
-
-			Accelerate(groundDetector.relativeVelocity, groundDetector.groundVelocity, groundDetector.upDirection);
-			ApplyFriction(groundDetector.groundVelocity);
+			
+			Accelerate(orientation.relativeVelocity, orientation.groundVelocity, orientation.upDirection);
+			ApplyFriction(orientation.groundVelocity);
 		}
 
 		private void CheckSprint()
@@ -56,18 +56,18 @@ namespace SBEPIS.Interaction.Controller
 		{
 			if (controlsTarget != Vector3.zero)
 			{
-				Vector3 controlledVelocity = groundDetector.isGrounded ? velocity : groundVelocity;
+				Vector3 controlledVelocity = orientation.isGrounded ? velocity : groundVelocity;
 				Vector3 accelerationDirection = moveAimer.right * controlsTarget.x + Vector3.Cross(moveAimer.right, upDirection) * controlsTarget.z;
 				float maxSpeed = Mathf.Max(controlledVelocity.magnitude, maxGroundSpeed * accelerationDirection.magnitude * (isSprinting ? sprintFactor : 1));
-				Vector3 newVelocity = controlledVelocity + Time.fixedDeltaTime * (groundDetector.isGrounded ? groundAcceleration : airAcceleration) * accelerationDirection.normalized;
+				Vector3 newVelocity = controlledVelocity + Time.fixedDeltaTime * (orientation.isGrounded ? groundAcceleration : airAcceleration) * accelerationDirection.normalized;
 				Vector3 clampedNewVelocity = Vector3.ClampMagnitude(newVelocity, maxSpeed);
-				AddVelocityAgainstGround(rigidbody, clampedNewVelocity - controlledVelocity, groundDetector.groundRigidbody);
+				AddVelocityAgainstGround(rigidbody, clampedNewVelocity - controlledVelocity, orientation.groundRigidbody);
 			}
 		}
 
 		private void ApplyFriction(Vector3 groundVelocity)
 		{
-			if (controlsTarget == Vector3.zero && groundDetector.isGrounded)
+			if (controlsTarget == Vector3.zero && orientation.isGrounded)
 				if (groundVelocity.magnitude < frictionDeceleration * Time.fixedDeltaTime)
 					AddVelocityAgainstGround(rigidbody, -groundVelocity, null);
 				else
@@ -85,12 +85,12 @@ namespace SBEPIS.Interaction.Controller
 			isTryingToSprint = context.performed;
 		}
 
-		public static void AddVelocityAgainstGround(Rigidbody rigidbody, Vector3 velocity, Rigidbody jumpPlatform)
+		public static void AddVelocityAgainstGround(Rigidbody rigidbody, Vector3 velocity, Rigidbody ground)
 		{
 			rigidbody.velocity += velocity;
-			if (jumpPlatform)
+			if (ground)
 				//jumpPlatform.AddForceAtPosition(-velocity * rigidbody.mass, groundDetector.groundCheck.position + Vector3.down * 0.5f, ForceMode.Impulse);
-				jumpPlatform.AddForce(-velocity * rigidbody.mass, ForceMode.Impulse);
+				ground.AddForce(-velocity * rigidbody.mass, ForceMode.Impulse);
 		}
 	}
 }
