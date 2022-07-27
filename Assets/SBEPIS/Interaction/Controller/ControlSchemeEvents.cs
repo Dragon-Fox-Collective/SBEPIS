@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-namespace SBEPIS.Interaction
+namespace SBEPIS.Interaction.Controller
 {
 	public class ControlSchemeEvents : MonoBehaviour
 	{

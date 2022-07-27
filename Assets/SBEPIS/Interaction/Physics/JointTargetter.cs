@@ -10,12 +10,14 @@ namespace SBEPIS.Interaction.Controller
 		public Transform anchor;
 		public float anchorDistance = 0.5f;
 		public StrengthSettings strength;
+		public CameraRigMover headMover;
 
 		private new Rigidbody rigidbody;
 		private ConfigurableJoint joint;
 		private Quaternion initialOffset;
 		private Vector3 prevTargetPosition;
 		private Quaternion prevTargetRotation;
+		private Quaternion prevBodyRotation;
 
 		private void Awake()
 		{
@@ -63,18 +65,26 @@ namespace SBEPIS.Interaction.Controller
 			}
 			else
 				joint.targetPosition = targetPosition;
-			joint.targetVelocity = (targetPosition - prevTargetPosition) / Time.fixedDeltaTime;
+
+			Vector3 velocity = (targetPosition - prevTargetPosition) / Time.fixedDeltaTime;
+			Vector3 headVelocity = Vector3.zero;//connectedRigidbody.transform.InverseTransformVector(headMover.actualDelta) / Time.fixedDeltaTime;
+			Vector3 bodyTangentialVelocity = Vector3.zero;//(connectedRigidbody.rotation * prevBodyRotation.Inverse() * targetPosition - targetPosition) / Time.fixedDeltaTime;
+			joint.targetVelocity = velocity + headVelocity + bodyTangentialVelocity;
+
 			prevTargetPosition = targetPosition;
+			prevBodyRotation = connectedRigidbody.rotation;
 		}
 
 		private void UpdateRotation()
 		{
 			joint.targetRotation = connectedRigidbody.transform.rotation.Inverse() * target.rotation * initialOffset;
+
 			Quaternion delta = target.rotation * prevTargetRotation.Inverse();
 			if (delta.w < 0) delta = delta.Select(x => -x);
 			delta.ToAngleAxis(out float angle, out Vector3 axis);
 			angle *= Mathf.Deg2Rad;
 			joint.targetAngularVelocity = connectedRigidbody.transform.rotation.Inverse() * (angle / Time.fixedDeltaTime * axis);
+
 			prevTargetRotation = target.rotation;
 		}
 	}
