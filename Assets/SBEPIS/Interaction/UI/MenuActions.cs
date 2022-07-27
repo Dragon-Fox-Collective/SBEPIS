@@ -2,6 +2,7 @@ using SBEPIS.Interaction.Controller;
 using SBEPIS.Utils;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
@@ -9,7 +10,7 @@ namespace SBEPIS.Interaction.UI
 {
 	public class MenuActions : MonoBehaviour
 	{
-		public Orientation playerOrientation;
+		public UnityEvent onPause = new(), onUnpause = new();
 
 		[Header("Menu transforms")]
 		public Transform pauseButtons;
@@ -87,13 +88,14 @@ namespace SBEPIS.Interaction.UI
 		public void Pause()
 		{
 			pauseButtons.gameObject.SetActive(true);
-			pauseButtons.SetPositionAndRotation(playerOrientation.transform.position, playerOrientation.transform.rotation);
 			GoToMain();
+			onPause.Invoke();
 		}
 
 		public void Unpause()
 		{
 			pauseButtons.gameObject.SetActive(false);
+			onUnpause.Invoke();
 		}
 
 

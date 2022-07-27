@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SBEPIS.Interaction
+namespace SBEPIS.Interaction.Controller
 {
 	public class Orienter : MonoBehaviour
 	{
