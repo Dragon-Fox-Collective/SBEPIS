@@ -67,7 +67,7 @@ namespace SBEPIS.Interaction.Controller
 				joint.targetPosition = targetPosition;
 
 			Vector3 velocity = (targetPosition - prevTargetPosition) / Time.fixedDeltaTime;
-			Vector3 headVelocity = Vector3.zero;//connectedRigidbody.transform.InverseTransformVector(headMover.actualDelta) / Time.fixedDeltaTime;
+			Vector3 headVelocity = connectedRigidbody.transform.InverseTransformVector(headMover.actualDelta) / Time.fixedDeltaTime;
 			Vector3 bodyTangentialVelocity = Vector3.zero;//(connectedRigidbody.rotation * prevBodyRotation.Inverse() * targetPosition - targetPosition) / Time.fixedDeltaTime;
 			joint.targetVelocity = velocity + headVelocity + bodyTangentialVelocity;
 
