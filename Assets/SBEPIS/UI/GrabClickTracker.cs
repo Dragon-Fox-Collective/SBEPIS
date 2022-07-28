@@ -1,9 +1,7 @@
 using SBEPIS.Interaction.Controller;
-using System;
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace SBEPIS.Interaction.UI
+namespace SBEPIS.UI
 {
 	[RequireComponent(typeof(Grabbable))]
 	public class GrabClickTracker : ClickTracker

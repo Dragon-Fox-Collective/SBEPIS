@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace SBEPIS.Interaction.UI
+namespace SBEPIS.UI
 {
 	public class ClickTracker : MonoBehaviour
 	{
