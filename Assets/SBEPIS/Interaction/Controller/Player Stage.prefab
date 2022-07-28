@@ -476,10 +476,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5195515549641077384}
-  - component: {fileID: 5236287852790771331}
-  - component: {fileID: 2676992361525324662}
-  - component: {fileID: 5556805838138818552}
   - component: {fileID: 6416902667113802744}
+  - component: {fileID: 7704183718463448045}
   m_Layer: 8
   m_Name: Player Head
   m_TagString: Untagged
@@ -495,64 +493,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2270262736022290535}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.7, z: 0.11}
+  m_LocalPosition: {x: 0, y: 1.553, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5111922743027255961}
-  m_Father: {fileID: 6112518582163472336}
+  m_Father: {fileID: 6376568280094680653}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &5236287852790771331
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2270262736022290535}
-  serializedVersion: 2
-  m_Mass: 5
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &2676992361525324662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2270262736022290535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a0726fbf18d1fc479e36108d1fb2217, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customCenterOfMass: {fileID: 0}
-  onGravityChanged:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &5556805838138818552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2270262736022290535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51c3c6fd460df174e8bbc51ef9654cd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  connectedRigidbody: {fileID: 8136032471875334439}
-  target: {fileID: 4804159942654709961}
-  anchor: {fileID: 0}
-  anchorDistance: 1
-  strength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
-  headMover: {fileID: 2473247748198071974}
 --- !u!135 &6416902667113802744
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -565,7 +513,20 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.25
-  m_Center: {x: 0, y: -0.088, z: -0.11}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7704183718463448045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2270262736022290535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dbee4c853a42a14fa23f7f9b1b0f7c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headTracker: {fileID: 4804159942654709961}
 --- !u!1 &2325035966454255976
 GameObject:
   m_ObjectHideFlags: 0
@@ -1696,7 +1657,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/Left Hand Pose
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3748172573636064158}
         m_TargetAssemblyTypeName: SBEPIS.Utils.TransformSync, SBEPIS.Utils
         m_MethodName: SyncPosition
         m_Mode: 0
@@ -1712,7 +1673,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/Head Position
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3748172573636064158}
         m_TargetAssemblyTypeName: SBEPIS.Utils.TransformSync, SBEPIS.Utils
         m_MethodName: SyncRotation
         m_Mode: 0
@@ -2454,6 +2415,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5195515549641077384}
   - {fileID: 6376568280010574378}
   - {fileID: 2067788949567459463}
   - {fileID: 7303530764315680464}
@@ -2570,6 +2532,18 @@ MonoBehaviour:
       - m_Target: {fileID: 3952244479721996640}
         m_TargetAssemblyTypeName: SBEPIS.Utils.TransformSync, SBEPIS.Utils
         m_MethodName: SyncTransform
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8961783590673577305}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.TransformSync, SBEPIS.Utils
+        m_MethodName: SyncPosition
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3391,7 +3365,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8706890909652620599}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.088, z: -0.11}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3539,6 +3513,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4804159942654709961}
+  - component: {fileID: 3748172573636064158}
   m_Layer: 0
   m_Name: Head Tracker
   m_TagString: Untagged
@@ -3562,6 +3537,20 @@ Transform:
   m_Father: {fileID: 1231929498068553383}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3748172573636064158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8884166373067930792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c73a6674eebc3b4d954d6455c75f6c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &8900464323754095863
 GameObject:
   m_ObjectHideFlags: 0
@@ -3692,7 +3681,6 @@ Transform:
   - {fileID: 5402565688679179036}
   - {fileID: 6376568278754761720}
   - {fileID: 7078601075283105826}
-  - {fileID: 5195515549641077384}
   - {fileID: 7573663971075507264}
   - {fileID: 6376568280094680653}
   - {fileID: 7102078932346942673}
