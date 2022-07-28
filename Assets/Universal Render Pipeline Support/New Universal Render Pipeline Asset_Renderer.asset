@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugShaders:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
-  m_RendererFeatures:
-  - {fileID: 6075936466803506061}
-  m_RendererFeatureMap: 8d3baa5d06105254
+  m_RendererFeatures: []
+  m_RendererFeatureMap: 
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -70,7 +69,6 @@ MonoBehaviour:
   settings:
     TextureName: _GrabPassTransparent
     LayerMask:
-      serializedVersion: 2
       m_Bits: 1024
     RenderPassEvent: 1000
     Offset: 0

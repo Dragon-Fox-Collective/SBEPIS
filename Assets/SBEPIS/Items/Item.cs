@@ -1,5 +1,5 @@
-using SBEPIS.Interaction.Controller;
-using SBEPIS.Interaction.Physics;
+using SBEPIS.Controller;
+using SBEPIS.Physics;
 using UnityEngine;
 
 namespace SBEPIS.Items

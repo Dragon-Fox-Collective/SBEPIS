@@ -1,4 +1,4 @@
-using SBEPIS.Interaction.Controller;
+using SBEPIS.Controller;
 using SBEPIS.Utils;
 using System.Collections;
 using UnityEngine;
