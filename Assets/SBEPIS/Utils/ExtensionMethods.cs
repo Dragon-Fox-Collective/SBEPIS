@@ -68,6 +68,19 @@ public static class ExtensionMethods
 		UnityEngine.Object.Destroy(other.gameObject);
 	}
 
+	public static Quaternion TransformRotation(this Transform transform, Quaternion rotation) => transform.rotation * rotation;
+	public static Quaternion InverseTransformRotation(this Transform transform, Quaternion rotation) => transform.rotation.Inverse() * rotation;
+
+	public static Vector3 CenterOfRotation(Vector3 pos1, Vector3 up1, Vector3 pos2, Vector3 up2)
+	{
+		float theta = Vector3.Angle(up1, up2) * Mathf.Deg2Rad;
+		float height = Mathf.Sqrt((pos2 - pos1).sqrMagnitude / (1 - Mathf.Cos(theta)) / 2f); // cosine rule frickery
+		bool centerIsDown = ((pos1 + up1) - (pos2 + up2)).sqrMagnitude > (pos2 - pos1).sqrMagnitude;
+		if (centerIsDown)
+			height *= -1;
+		return pos2 + height * up2; // biased toward pos2 but idc
+	}
+
 	public static Quaternion Inverse(this Quaternion quaternion) => Quaternion.Inverse(quaternion);
 
 	public static IEnumerable<T> Insert<T>(this IEnumerable<T> enumerable, int index, T element)

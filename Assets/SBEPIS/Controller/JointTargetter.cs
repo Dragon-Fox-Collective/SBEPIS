@@ -10,14 +10,12 @@ namespace SBEPIS.Controller
 		public Transform anchor;
 		public float anchorDistance = 0.5f;
 		public StrengthSettings strength;
-		public CameraRigMover headMover;
 
 		private new Rigidbody rigidbody;
 		private ConfigurableJoint joint;
 		private Quaternion initialOffset;
 		private Vector3 prevTargetPosition;
 		private Quaternion prevTargetRotation;
-		private Quaternion prevBodyRotation;
 
 		private void Awake()
 		{
@@ -28,7 +26,7 @@ namespace SBEPIS.Controller
 
 		private void Start()
 		{
-			initialOffset = (connectedRigidbody.transform.rotation.Inverse() * transform.rotation).Inverse();
+			initialOffset = connectedRigidbody.transform.InverseTransformRotation(transform.rotation).Inverse();
 
 			joint = connectedRigidbody.gameObject.AddComponent<ConfigurableJoint>();
 			joint.connectedBody = rigidbody;
@@ -61,23 +59,18 @@ namespace SBEPIS.Controller
 			if (anchor)
 			{
 				Vector3 anchorPosition = connectedRigidbody.transform.InverseTransformPoint(anchor.position);
-				joint.targetPosition = anchorPosition + Vector3.ClampMagnitude(targetPosition - anchorPosition, anchorDistance);
+				targetPosition = anchorPosition + Vector3.ClampMagnitude(targetPosition - anchorPosition, anchorDistance);
 			}
-			else
-				joint.targetPosition = targetPosition;
 
-			Vector3 velocity = (targetPosition - prevTargetPosition) / Time.fixedDeltaTime;
-			Vector3 headVelocity = connectedRigidbody.transform.InverseTransformVector(headMover.actualDelta) / Time.fixedDeltaTime;
-			Vector3 bodyTangentialVelocity = Vector3.zero;//(connectedRigidbody.rotation * prevBodyRotation.Inverse() * targetPosition - targetPosition) / Time.fixedDeltaTime;
-			joint.targetVelocity = velocity + headVelocity + bodyTangentialVelocity;
+			joint.targetPosition = targetPosition;
+			joint.targetVelocity = (targetPosition - prevTargetPosition) / Time.fixedDeltaTime;
 
 			prevTargetPosition = targetPosition;
-			prevBodyRotation = connectedRigidbody.rotation;
 		}
 
 		private void UpdateRotation()
 		{
-			joint.targetRotation = connectedRigidbody.transform.rotation.Inverse() * target.rotation * initialOffset;
+			joint.targetRotation = connectedRigidbody.transform.InverseTransformRotation(target.rotation) * initialOffset;
 
 			Quaternion delta = target.rotation * prevTargetRotation.Inverse();
 			if (delta.w < 0) delta = delta.Select(x => -x);

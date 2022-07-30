@@ -60,7 +60,8 @@ namespace SBEPIS.Physics
 
 		private void ApplyGravity()
 		{
-			rigidbody.velocity += -gravityAcceleration * Time.fixedDeltaTime * upDirection;
+			if (rigidbody)
+				rigidbody.velocity += -gravityAcceleration * Time.fixedDeltaTime * upDirection;
 		}
 
 		public void Accumulate(MassiveBody body)

@@ -13,6 +13,9 @@ namespace SBEPIS.Controller
 		private float yawControl;
 		private float camPitch;
 
+		public float deltaYaw => yawControl * sensitivity * Time.deltaTime;
+		public float deltaPitch => pitchControl * sensitivity * Time.deltaTime;
+
 		private void Start()
 		{
 			Cursor.lockState = CursorLockMode.Locked;
@@ -31,7 +34,7 @@ namespace SBEPIS.Controller
 
 		private void Pitch()
 		{
-			float pitch = pitchControl * sensitivity;
+			float pitch = deltaPitch;
 			camPitch = Mathf.Clamp(camPitch - pitch, -90, 90);
 
 			pitchRotator.transform.localRotation = Quaternion.Euler(Vector3.right * camPitch);
@@ -39,7 +42,7 @@ namespace SBEPIS.Controller
 
 		private void Yaw()
 		{
-			float yaw = yawControl * sensitivity;
+			float yaw = deltaYaw;
 
 			yawRotator.transform.Rotate(Vector3.up, yaw);
 		}
