@@ -823,6 +823,7 @@ GameObject:
   - component: {fileID: 6308269547464211983}
   - component: {fileID: 9031247351748657295}
   - component: {fileID: 1746505250530069798}
+  - component: {fileID: 5411447600993677361}
   m_Layer: 8
   m_Name: Football
   m_TagString: Untagged
@@ -971,6 +972,22 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &5411447600993677361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3022089293146867446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0726fbf18d1fc479e36108d1fb2217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customCenterOfMass: {fileID: 0}
+  onGravityChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3273053849925285691
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,7 +2750,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveAimer: {fileID: 6376568279122881040}
-  football: {fileID: 9031247351748657295}
   footballCollider: {fileID: 6308269547464211983}
   footballJoint: {fileID: 1746505250530069798}
   maxGroundSpeed: 6
@@ -2756,6 +2772,7 @@ MonoBehaviour:
   footballJoint: {fileID: 1746505250530069798}
   jumpSpeed: 5
   groundDetectorDelay: 0.5
+  connectedAnchorTarget: {x: 0, y: 0, z: 0}
 --- !u!114 &8432642417375942626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3612,7 +3629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5111922743027255961
 Transform:
   m_ObjectHideFlags: 0
