@@ -7,10 +7,14 @@ namespace SBEPIS.Controller
 	public class MovementController : MonoBehaviour
 	{
 		public Transform moveAimer;
+
+		public Rigidbody football;
+		public SphereCollider footballCollider;
+		public ConfigurableJoint footballJoint;
+
 		public float maxGroundSpeed = 8;
 		public float groundAcceleration = 10;
 		public float airAcceleration = 1;
-		public float frictionDeceleration = 1;
 		public float sprintFactor = 2;
 		public float sprintControlThreshold = 0.9f;
 
@@ -34,14 +38,7 @@ namespace SBEPIS.Controller
 		private void MoveTick()
 		{
 			CheckSprint();
-
-			// if the player is moving controls and is not grounded, accelerate in that direction until we are moving faster than the max
-			// if the player is moving controls and is grounded, accelerate, probably apply friction in not the direction that the player is going
-			// if the player is not moving controls and the player is not grounded, do nothing
-			// if the player is not moving controls and the player is grounded, apply friction
-			
 			Accelerate(orientation.relativeVelocity, orientation.groundVelocity, orientation.upDirection);
-			ApplyFriction(orientation.groundVelocity);
 		}
 
 		private void CheckSprint()
@@ -54,24 +51,26 @@ namespace SBEPIS.Controller
 
 		private void Accelerate(Vector3 velocity, Vector3 groundVelocity, Vector3 upDirection)
 		{
-			if (controlsTarget != Vector3.zero)
-			{
-				Vector3 controlledVelocity = orientation.isGrounded ? velocity : groundVelocity;
-				Vector3 accelerationDirection = moveAimer.right * controlsTarget.x + Vector3.Cross(moveAimer.right, upDirection) * controlsTarget.z;
-				float maxSpeed = Mathf.Max(controlledVelocity.magnitude, maxGroundSpeed * accelerationDirection.magnitude * (isSprinting ? sprintFactor : 1));
-				Vector3 newVelocity = controlledVelocity + Time.fixedDeltaTime * (orientation.isGrounded ? groundAcceleration : airAcceleration) * accelerationDirection.normalized;
-				Vector3 clampedNewVelocity = Vector3.ClampMagnitude(newVelocity, maxSpeed);
-				AddVelocityAgainstGround(rigidbody, clampedNewVelocity - controlledVelocity, orientation.groundRigidbody);
-			}
+			Vector3 accelerationDirection = moveAimer.right * controlsTarget.x + Vector3.Cross(moveAimer.right, upDirection) * controlsTarget.z;
+			AccelerateGround(groundVelocity, upDirection, accelerationDirection);
+			if (accelerationDirection != Vector3.zero && !orientation.isGrounded)
+				AccelerateAir(velocity, upDirection, accelerationDirection);
 		}
 
-		private void ApplyFriction(Vector3 groundVelocity)
+		private void AccelerateGround(Vector3 groundVelocity, Vector3 upDirection, Vector3 accelerationDirection)
 		{
-			if (controlsTarget == Vector3.zero && orientation.isGrounded)
-				if (groundVelocity.magnitude < frictionDeceleration * Time.fixedDeltaTime)
-					AddVelocityAgainstGround(rigidbody, -groundVelocity, null);
-				else
-					AddVelocityAgainstGround(rigidbody, -frictionDeceleration * Time.fixedDeltaTime * groundVelocity.normalized, null);
+			float maxSpeed = maxGroundSpeed * accelerationDirection.magnitude * (isSprinting ? sprintFactor : 1);
+			Vector3 newVelocity = accelerationDirection.normalized * maxSpeed;
+			Vector3 angularVelocity = newVelocity.magnitude / footballCollider.radius * Vector3.Cross(upDirection, newVelocity).normalized;
+			footballJoint.targetAngularVelocity = -footballJoint.transform.InverseTransformVector(angularVelocity);
+		}
+
+		private void AccelerateAir(Vector3 velocity, Vector3 upDirection, Vector3 accelerationDirection)
+		{
+			float maxSpeed = Mathf.Max(velocity.magnitude, maxGroundSpeed * accelerationDirection.magnitude * (isSprinting ? sprintFactor : 1));
+			Vector3 newVelocity = velocity + Time.fixedDeltaTime * airAcceleration * accelerationDirection.normalized;
+			Vector3 clampedNewVelocity = Vector3.ClampMagnitude(newVelocity, maxSpeed);
+			rigidbody.velocity += clampedNewVelocity - velocity;
 		}
 
 		public void OnMove(CallbackContext context)
