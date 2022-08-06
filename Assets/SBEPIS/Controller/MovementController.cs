@@ -8,7 +8,6 @@ namespace SBEPIS.Controller
 	{
 		public Transform moveAimer;
 
-		public Rigidbody football;
 		public SphereCollider footballCollider;
 		public ConfigurableJoint footballJoint;
 
@@ -82,14 +81,6 @@ namespace SBEPIS.Controller
 		public void OnSprint(CallbackContext context)
 		{
 			isTryingToSprint = context.performed;
-		}
-
-		public static void AddVelocityAgainstGround(Rigidbody rigidbody, Vector3 velocity, Rigidbody ground)
-		{
-			rigidbody.velocity += velocity;
-			if (ground)
-				//jumpPlatform.AddForceAtPosition(-velocity * rigidbody.mass, groundDetector.groundCheck.position + Vector3.down * 0.5f, ForceMode.Impulse);
-				ground.AddForce(-velocity * rigidbody.mass, ForceMode.Impulse);
 		}
 	}
 }
