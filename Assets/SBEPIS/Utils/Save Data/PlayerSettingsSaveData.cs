@@ -6,5 +6,6 @@ namespace SBEPIS.Utils
 	public class PlayerSettingsSaveData : SaveData
 	{
 		public float sensitivity;
+		public float eyeHeight;
 	}
 }

@@ -1,4 +1,4 @@
-using SBEPIS.Interaction;
+using SBEPIS.Controller;
 using UnityEngine;
 
 namespace SBEPIS.Tests
