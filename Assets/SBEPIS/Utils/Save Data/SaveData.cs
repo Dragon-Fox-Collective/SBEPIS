@@ -6,5 +6,6 @@ namespace SBEPIS.Utils
 	public class SaveData
 	{
 		public string filename;
+		public int version;
 	}
 }
