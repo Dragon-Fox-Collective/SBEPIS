@@ -12,7 +12,9 @@ namespace Discord
 
 		private void Start()
 		{
-#if !UNITY_EDITOR
+#if UNITY_EDITOR
+			Destroy(this);
+#else
 			try
 			{
 				discord = new Discord(948761142950514738, (UInt64)CreateFlags.NoRequireDiscord);

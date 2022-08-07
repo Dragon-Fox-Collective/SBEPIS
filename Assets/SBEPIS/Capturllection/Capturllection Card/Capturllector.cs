@@ -1,4 +1,4 @@
-using SBEPIS.Interaction;
+using SBEPIS.Controller;
 using SBEPIS.Items;
 using UnityEngine;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
@@ -36,7 +36,7 @@ namespace SBEPIS.Capturllection
 			if (!item)
 				return;
 
-			grabber.Release();
+			grabber.Drop();
 			Capturllectainer card = Instantiate(cardPrefab.gameObject).GetComponent<Capturllectainer>();
 			card.GetComponent<ItemBase>().BecomeItem();
 			card.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
@@ -46,7 +46,7 @@ namespace SBEPIS.Capturllection
 
 		public void RetrieveAndGrabItem(Capturllectainer card)
 		{
-			grabber.Release();
+			grabber.Drop();
 			Grabbable grabbable = card.Retrieve().GetComponent<Grabbable>();
 			Destroy(card.gameObject);
 			grabber.Grab(grabbable);

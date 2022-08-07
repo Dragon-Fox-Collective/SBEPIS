@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class ExtensionMethods
@@ -43,7 +44,7 @@ public static class ExtensionMethods
 
 	public static string ToDelimString<T>(this IEnumerable<T> enumerable)
 	{
-		return "[ " + string.Join(", ", enumerable) +  " ]";
+		return "[" + string.Join(", ", enumerable) +  "]";
 	}
 
 	public static T Pop<T>(this List<T> list)
@@ -67,10 +68,49 @@ public static class ExtensionMethods
 		UnityEngine.Object.Destroy(other.gameObject);
 	}
 
+	public static Quaternion TransformRotation(this Transform transform, Quaternion rotation) => transform.rotation * rotation;
+	public static Quaternion InverseTransformRotation(this Transform transform, Quaternion rotation) => transform.rotation.Inverse() * rotation;
+
+	public static Vector3 CenterOfRotation(Vector3 pos1, Vector3 up1, Vector3 pos2, Vector3 up2)
+	{
+		float theta = Vector3.Angle(up1, up2) * Mathf.Deg2Rad;
+		float height = Mathf.Sqrt((pos2 - pos1).sqrMagnitude / (1 - Mathf.Cos(theta)) / 2f); // cosine rule frickery
+		bool centerIsDown = ((pos1 + up1) - (pos2 + up2)).sqrMagnitude > (pos2 - pos1).sqrMagnitude;
+		if (centerIsDown)
+			height *= -1;
+		return pos2 + height * up2; // biased toward pos2 but idc
+	}
+
+	public static Quaternion Inverse(this Quaternion quaternion) => Quaternion.Inverse(quaternion);
+
 	public static IEnumerable<T> Insert<T>(this IEnumerable<T> enumerable, int index, T element)
 	{
 		return enumerable.Take(index).Append(element).Concat(enumerable.TakeLast(enumerable.Count() - index));
 	}
+
+	public static IEnumerable<float> AsEnumerable(this Vector3 vector)
+	{
+		yield return vector.x;
+		yield return vector.y;
+		yield return vector.z;
+	}
+
+	public static Vector3 AsVector3(this IEnumerable<float> enumerable)
+	{
+		return new(enumerable.ElementAtOrDefault(0), enumerable.ElementAtOrDefault(1), enumerable.ElementAtOrDefault(2));
+	}
+
+	public static Vector3 Select(this Vector3 vector, Func<float, float> func) => new(func.Invoke(vector.x), func.Invoke(vector.y), func.Invoke(vector.z));
+	public static Vector3 SelectIndex(this Vector3 vector, Func<int, float, float> func) => new(func.Invoke(0, vector.x), func.Invoke(1, vector.y), func.Invoke(2, vector.z));
+	public static Vector3 SelectVectorIndex(Func<int, float> func) => new(func.Invoke(0), func.Invoke(1), func.Invoke(2));
+
+	public static float Aggregate(this Vector3 vector, Func<float, float, float> func) => vector.Aggregate(0, func);
+	public static float Aggregate(this Vector3 vector, float seed, Func<float, float, float> func) => func.Invoke(func.Invoke(func.Invoke(seed, vector.x), vector.y), vector.z);
+
+	public static Vector3 Sum<T>(this IEnumerable<T> enumerable, Func<T, Vector3> func) => enumerable.Aggregate(Vector3.zero, (sum, x) => sum + func.Invoke(x));
+	public static Vector3 Sum(this IEnumerable<Vector3> enumerable) => enumerable.Aggregate(Vector3.zero, (sum, x) => sum + x);
+
+	public static Quaternion Select(this Quaternion quaternion, Func<float, float> func) => new(func.Invoke(quaternion.x), func.Invoke(quaternion.y), func.Invoke(quaternion.z), func.Invoke(quaternion.w));
 
 	// From PhysX
 	// indexed rotation around axis, with sine and cosine of half-angle
