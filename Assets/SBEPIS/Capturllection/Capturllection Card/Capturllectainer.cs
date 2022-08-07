@@ -9,8 +9,8 @@ namespace SBEPIS.Capturllection
 	{
 		public Item defaultCapturedItem;
 
-		[HideInInspector]
-		public Item capturedItem;
+		public Item capturedItem { get; private set; }
+		public Item capturedItemCollider { get; private set; }
 
 		public UnityEvent<Item> onCapture = new(), onRetrieve = new();
 

@@ -10,19 +10,23 @@ namespace SBEPIS.Utils
 		{
 			using (FileStream file = File.Create(GetFilePath(data)))
 				new BinaryFormatter().Serialize(file, data);
-			Debug.Log("Saved to " + GetFilePath(data));
+			Debug.Log($"Saved to {GetFilePath(data)}");
 		}
 
-		public static void LoadData<T>(ref T data) where T : SaveData
+		public static bool LoadData<T>(ref T data) where T : SaveData
 		{
 			if (File.Exists(GetFilePath(data)))
 			{
 				using (FileStream file = File.Open(GetFilePath(data), FileMode.Open))
 					data = (T)new BinaryFormatter().Deserialize(file);
-				Debug.Log("Loaded");
+				Debug.Log($"Loaded {data.filename}");
+				return true;
 			}
 			else
+			{
 				Debug.LogWarning("No save data to load");
+				return false;
+			}
 		}
 
 		public static void ResetData<T>(ref T data) where T : SaveData
