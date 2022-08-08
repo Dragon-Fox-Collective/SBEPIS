@@ -23,7 +23,7 @@ namespace SBEPIS.Capturllection
 				return;
 
 			Capturllectainer card = grabber.heldGrabbable.GetComponent<Capturllectainer>();
-			if (card)
+			if (card && card.capturedItem)
 				RetrieveAndGrabItem(card);
 			else
 				CaptureAndGrabCard();
