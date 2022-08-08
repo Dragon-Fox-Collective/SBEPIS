@@ -9,8 +9,8 @@ const makeParents = parameters.has('makeparents');
 	//  Graph data
 	let data = await d3.json('bits.json');
 
-	let node_data = [];
-	let link_data = [];
+	let nodeData = [];
+	let linkData = [];
 
 	function namespace(nodeId, nodeType)
 	{
@@ -26,10 +26,10 @@ const makeParents = parameters.has('makeparents');
 		
 		if ('id' in node && (makeParents || !('nodes' in node)) && ['members', 'bits', 'class', 'items'].includes(nodeType))
 		{
-			node_data.push(Object.assign({ 'id':namespace(node.id, nodeType), 'name':node.id, 'isParent':'nodes' in node }, attrs));
+			nodeData.push(Object.assign({ 'id':namespace(node.id, nodeType), 'name':node.id, 'isParent':'nodes' in node }, attrs));
 
 			if (parentNode !== null && makeParents)
-			 	link_data.push({ source: namespace(parentNode.id, parentNode.id === 'base' ? null : nodeType), target: namespace(node.id, nodeType) });
+			 	linkData.push({ source: namespace(parentNode.id, parentNode.id === 'base' ? null : nodeType), target: namespace(node.id, nodeType) });
 		}
 
 		['bits', 'members', 'items'].forEach(sourceType =>
@@ -38,7 +38,7 @@ const makeParents = parameters.has('makeparents');
 			{
 				if (typeof node[sourceType] !== "object")
 					throw new Error(namespace(node.id, nodeType) + " uses " + sourceType + " as a " + typeof node[sourceType] + " instead of a object");
-				node[sourceType].forEach(source => link_data.push({ source:namespace(source, sourceType), target:namespace(node.id, nodeType) }));
+				node[sourceType].forEach(source => linkData.push({ source:namespace(source, sourceType), target:namespace(node.id, nodeType) }));
 			}
 		});
 
@@ -48,7 +48,7 @@ const makeParents = parameters.has('makeparents');
 			{
 				if (typeof node[sourceType] !== "string")
 					throw new Error(namespace(node.id, nodeType) + " uses " + sourceType + " as a " + typeof node[sourceType] + " instead of a string");
-				link_data.push({ source:namespace(node[sourceType], sourceType), target:namespace(node.id, nodeType) });
+				linkData.push({ source:namespace(node[sourceType], sourceType), target:namespace(node.id, nodeType) });
 			}
 		});
 
@@ -91,12 +91,12 @@ const makeParents = parameters.has('makeparents');
 			.attr('fill', marker => marker.sourceParent ? '#00000010' : '#000000')
 
 	let links = svg.selectAll('.link')
-		.data(link_data)
+		.data(linkData)
 		.join('line')
 		.classed('link', true);
 
 	let nodes = svg.selectAll('.node')
-		.data(node_data)
+		.data(nodeData)
 		.join('g')
 		.classed('node', true);
 	
@@ -130,10 +130,10 @@ const makeParents = parameters.has('makeparents');
 
 
 	//  Simulation
-	let simulation = d3.forceSimulation(node_data)
+	let simulation = d3.forceSimulation(nodeData)
 		.force('charge', d3.forceManyBody().strength(-50))
 		.force('center', d3.forceCenter(graphWidth * graphScale / 2, graphHeight * graphScale / 2))
-		.force('link', d3.forceLink(link_data).id(node => node.id).distance(20))
+		.force('link', d3.forceLink(linkData).id(node => node.id).distance(20))
 		.on('tick', tick);
 
 	nodes
