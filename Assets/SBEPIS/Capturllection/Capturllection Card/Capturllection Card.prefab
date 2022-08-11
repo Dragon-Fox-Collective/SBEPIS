@@ -17,8 +17,6 @@ GameObject:
   - component: {fileID: 8180044113546759222}
   - component: {fileID: 3431021441257790128}
   - component: {fileID: 2485712713380246229}
-  - component: {fileID: 2600629910731344568}
-  - component: {fileID: 5938334533744930316}
   m_Layer: 0
   m_Name: Capturllection Card
   m_TagString: Untagged
@@ -229,36 +227,6 @@ MonoBehaviour:
   captureMaterial: {fileID: 2100000, guid: 14780cba2b2008b42949209af650a747, type: 2}
   renderers:
   - {fileID: 7857901446257573216}
---- !u!114 &2600629910731344568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1275059195579274974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 491a428fc3f67ac4b9804947453655b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smoothTime: 1
-  lerpPosition: 0
-  positionTarget: {x: 0, y: 0, z: 0}
-  lerpRotation: 0
-  rotationTarget: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &5938334533744930316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1275059195579274974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58aa7d8afd685e74abc59a26910d21af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boxCollider: {fileID: 1567465723137536217}
 --- !u!1001 &8848810319768150500
 PrefabInstance:
   m_ObjectHideFlags: 0

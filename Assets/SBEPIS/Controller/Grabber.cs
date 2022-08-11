@@ -29,7 +29,7 @@ namespace SBEPIS.Controller
 		public Collider heldCollider { get; private set; }
 		public Grabbable heldGrabbable { get; private set; }
 		private FixedJoint heldGrabbableJoint;
-		private Vector3 heldGrabbableNormal;
+		private Vector3 heldPureColliderNormal;
 
 		private readonly RaycastHit[] grabNormalHits = new RaycastHit[16];
 
@@ -38,6 +38,8 @@ namespace SBEPIS.Controller
 		private readonly List<Collider> collidingColliders = new();
 
 		private bool isHoldingGrab;
+
+		private bool isSlipping => heldPureColliderNormal != Vector3.zero && Vector3.Angle(heldPureColliderNormal, playerOrientation.upDirection) > slipAngle;
 
 		private void Awake()
 		{
@@ -64,7 +66,7 @@ namespace SBEPIS.Controller
 				return;
 
 			if (isHoldingGrab)
-				if (heldCollider && heldGrabbableNormal != Vector3.zero && Vector3.Angle(heldGrabbableNormal, playerOrientation.upDirection) > slipAngle)
+				if (heldCollider && (!heldCollider.gameObject.activeInHierarchy || isSlipping))
 					Drop();
 				else
 					Grab();
@@ -89,7 +91,7 @@ namespace SBEPIS.Controller
 
 		public bool Grab(Collider collider)
 		{
-			if (heldCollider)
+			if (!collider || heldCollider)
 				return false;
 
 			Grabbable grabbable = collider.SelectGrabbable();
@@ -98,12 +100,12 @@ namespace SBEPIS.Controller
 
 			if (CastGrabNormal(out RaycastHit hit, collider))
 			{
-				heldGrabbableNormal = hit.normal;
-				if (Vector3.Angle(heldGrabbableNormal, playerOrientation.upDirection) > slipAngle)
+				heldPureColliderNormal = hit.normal;
+				if (Vector3.Angle(heldPureColliderNormal, playerOrientation.upDirection) > slipAngle)
 					return false;
 			}
 			else
-				heldGrabbableNormal = Vector3.zero;
+				heldPureColliderNormal = Vector3.zero;
 
 			heldCollider = collider;
 
@@ -116,10 +118,10 @@ namespace SBEPIS.Controller
 
 		public bool Grab(Grabbable grabbable)
 		{
-			if (heldCollider || !grabbable.canGrab)
+			if (!grabbable || heldCollider || !grabbable.canGrab)
 				return false;
 
-			heldGrabbableNormal = Vector3.zero;
+			heldPureColliderNormal = Vector3.zero;
 
 			heldCollider = grabbable.rigidbody.GetComponentInChildren<Collider>();
 			heldGrabbable = grabbable;
@@ -235,6 +237,22 @@ namespace SBEPIS.Controller
 					collidingColliders.RemoveAt(i--);
 				else if (!collidingColliders[i].gameObject.activeInHierarchy)
 					StopCollidingWith(collidingColliders[i--]);
+		}
+
+		public void OnUse(CallbackContext context)
+		{
+			if (!context.performed)
+				return;
+
+			UseHeldItem();
+		}
+
+		public void UseHeldItem()
+		{
+			if (!heldGrabbable)
+				return;
+
+			heldGrabbable.onUse.Invoke(this, heldGrabbable);
 		}
 	}
 

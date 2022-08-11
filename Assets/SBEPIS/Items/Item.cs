@@ -16,10 +16,5 @@ namespace SBEPIS.Items
 			rigidbody = GetComponent<CompoundRigidbody>();
 			itemBase = GetComponent<ItemBase>();
 		}
-
-		private void Start()
-		{
-			rigidbody.rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
-		}
 	}
 }

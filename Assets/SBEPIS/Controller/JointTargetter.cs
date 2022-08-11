@@ -17,11 +17,18 @@ namespace SBEPIS.Controller
 		private Vector3 prevTargetPosition;
 		private Quaternion prevTargetRotation;
 
+		private Vector3 initialTensor;
+		private Quaternion initialTensorRotation;
+
 		private void Awake()
 		{
 			rigidbody = GetComponent<Rigidbody>();
-			rigidbody.inertiaTensorRotation = Quaternion.identity;
+
+			initialTensor = rigidbody.inertiaTensor;
+			initialTensorRotation = rigidbody.inertiaTensorRotation;
+
 			rigidbody.inertiaTensor = Vector3.one * 0.02f;
+			rigidbody.inertiaTensorRotation = Quaternion.identity;
 		}
 
 		private void Start()
@@ -79,6 +86,18 @@ namespace SBEPIS.Controller
 			joint.targetAngularVelocity = connectedRigidbody.transform.rotation.Inverse() * (angle / Time.fixedDeltaTime * axis);
 
 			prevTargetRotation = target.rotation;
+		}
+
+		private void OnDestroy()
+		{
+			if (joint)
+				Destroy(joint);
+
+			if (rigidbody)
+			{
+				rigidbody.inertiaTensor = initialTensor;
+				rigidbody.inertiaTensorRotation = initialTensorRotation;
+			}
 		}
 	}
 }
