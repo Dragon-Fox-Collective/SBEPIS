@@ -52,6 +52,12 @@ namespace SBEPIS.Controller
 				positionDamper = strength.angularDamper,
 				maximumForce = strength.angularMaxForce,
 			};
+
+			rigidbody.velocity = Vector3.zero;
+			rigidbody.angularVelocity = Vector3.zero;
+
+			prevTargetPosition = connectedRigidbody.transform.InverseTransformPoint(target.position);
+			prevTargetRotation = target.rotation;
 		}
 
 		private void FixedUpdate()
