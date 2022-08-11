@@ -250,7 +250,11 @@ namespace SBEPIS.Controller
 			else
 			{
 				Grab();
-				Drop();
+				if (isHoldingSomething)
+				{
+					UseHeldItem();
+					Drop();
+				}
 			}
 		}
 
