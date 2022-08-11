@@ -26,6 +26,7 @@ namespace SBEPIS.Controller
 		private Vector3 overrideShortRangeGrabCasterForward;
 		private float overrideShortRangeGrabDistance;
 
+		public bool isHoldingSomething => heldCollider;
 		public Collider heldCollider { get; private set; }
 		public Grabbable heldGrabbable { get; private set; }
 		private FixedJoint heldGrabbableJoint;
@@ -66,7 +67,7 @@ namespace SBEPIS.Controller
 				return;
 
 			if (isHoldingGrab)
-				if (heldCollider && (!heldCollider.gameObject.activeInHierarchy || isSlipping))
+				if (isHoldingSomething && (!heldCollider.gameObject.activeInHierarchy || isSlipping))
 					Drop();
 				else
 					Grab();
@@ -76,7 +77,7 @@ namespace SBEPIS.Controller
 
 		public void Grab()
 		{
-			if (!canGrab || heldCollider)
+			if (!canGrab || isHoldingSomething)
 				return;
 
 			foreach (Collider collidingCollider in collidingColliders)
@@ -91,7 +92,7 @@ namespace SBEPIS.Controller
 
 		public bool Grab(Collider collider)
 		{
-			if (!collider || heldCollider)
+			if (!collider || isHoldingSomething)
 				return false;
 
 			Grabbable grabbable = collider.SelectGrabbable();
@@ -118,7 +119,7 @@ namespace SBEPIS.Controller
 
 		public bool Grab(Grabbable grabbable)
 		{
-			if (!grabbable || heldCollider || !grabbable.canGrab)
+			if (!grabbable || isHoldingSomething || !grabbable.canGrab)
 				return false;
 
 			heldPureColliderNormal = Vector3.zero;
@@ -146,7 +147,7 @@ namespace SBEPIS.Controller
 
 		public void Drop()
 		{
-			if (!heldCollider)
+			if (!isHoldingSomething)
 				return;
 
 			Collider droppedCollider = heldCollider;
@@ -243,8 +244,14 @@ namespace SBEPIS.Controller
 		{
 			if (!context.performed)
 				return;
-
-			UseHeldItem();
+			
+			if (isHoldingSomething)
+				UseHeldItem();
+			else
+			{
+				Grab();
+				Drop();
+			}
 		}
 
 		public void UseHeldItem()
