@@ -27,14 +27,12 @@ public static class ExtensionMethods
 	{
 		rigidbody.isKinematic = true;
 		rigidbody.detectCollisions = false;
-		rigidbody.interpolation = RigidbodyInterpolation.None;
 	}
 
 	public static void Enable(this Rigidbody rigidbody)
 	{
 		rigidbody.isKinematic = false;
 		rigidbody.detectCollisions = true;
-		rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
 	}
 
 	public static string Join<T>(this string delimiter, IEnumerable<T> enumerable)

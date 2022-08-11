@@ -9,9 +9,11 @@ namespace SBEPIS.Capturllection
 	{
 		public CaptureDeque deque;
 
-		private void Start()
+		private Grabber grabber;
+
+		private void Awake()
 		{
-			deque.gameObject.SetActive(false);
+			grabber = GetComponent<Grabber>();
 		}
 
 		public void OnToggleDeque(CallbackContext context)
@@ -19,7 +21,30 @@ namespace SBEPIS.Capturllection
 			if (!gameObject.activeInHierarchy || !enabled || !context.performed)
 				return;
 
-			deque.gameObject.SetActive(!deque.gameObject.activeSelf);
+			ToggleDeque();
+		}
+
+		public void ToggleDeque()
+		{
+			if (deque.gameObject.activeSelf)
+				DesummonDeque();
+			else
+				SummonDeque();
+		}
+
+		public void SummonDeque()
+		{
+			deque.gameObject.SetActive(true);
+			deque.transform.SetPositionAndRotation(transform.position, transform.rotation * Quaternion.Euler(0, 180, 0));
+			deque.grabbable.rigidbody.velocity = Vector3.zero;
+			deque.grabbable.rigidbody.angularVelocity = Vector3.zero;
+			grabber.Grab(deque.grabbable);
+		}
+
+		public void DesummonDeque()
+		{
+			deque.gameObject.SetActive(false);
+			deque.DesummonDiajector();
 		}
 	}
 }
