@@ -12,37 +12,48 @@ namespace SBEPIS.Capturllection
 		public UnityEvent onAssembled = new(), onDisassembled = new();
 
 		private CardTarget[] cardTargets;
-		private Transform[] cards;
-		private TransformLerper[] cardLerpers;
+		private GameObject[] cards;
+		private ProceduralAnimation[] cardAnimations;
 
-		public void StartAssembly(CaptureDeque deque, Diajector diajector, Rigidbody staticRigidbody, StrengthSettings cardStrength)
+		public void CreateCards(GameObject cardPrefab, IEnumerable<Transform> targets, AnimationCurve curve, StrengthSettings cardStrength, Rigidbody staticRigidbody)
 		{
 			cardTargets = GetComponentsInChildren<CardTarget>();
-			cardLerpers = cardTargets.Select(target =>
+
+			cards = cardTargets.Select(target =>
 			{
-				GameObject card = Instantiate(diajector.cardPrefab);
-				card.SetActive(false);
+				GameObject card = Instantiate(cardPrefab);
 
-				TransformLerper lerper = card.AddComponent<TransformLerper>();
-				lerper.target = deque.cardTarget;
-				lerper.timeToComplete = diajector.pageTime;
-				
-				TransformLerper finalLerper = lerper.Chain(diajector.upperTarget).Chain(target.transform);
-				finalLerper.onEnd.AddListener(() =>
-				{
-					Vector3 position = transform.position;
-					Quaternion rotation = transform.rotation;
-					CreateCardJoint(card, target.transform, staticRigidbody, cardStrength);
-					Grabbable grabbable = card.GetComponent<Grabbable>();
-					grabbable.onGrab.AddListener((grabber, grabbable) => DestroyCardJoint(card));
-					grabbable.onDrop.AddListener((grabber, grabbable) => CreateCardJoint(card, target.transform, staticRigidbody, cardStrength));
-				});
+				Grabbable grabbable = card.GetComponent<Grabbable>();
+				grabbable.onGrab.AddListener((grabber, grabbable) => DestroyCardJoint(card));
+				grabbable.onDrop.AddListener((grabber, grabbable) => CreateCardJoint(card, target.transform, staticRigidbody, cardStrength));
 
-				return lerper;
+				return card;
 			}).ToArray();
-			cards = cardLerpers.Select(lerper => lerper.transform).ToArray();
 
-			StartCoroutine(SpawnCards(deque.cardStart, diajector.cardDelay));
+			cardAnimations = cards.Zip(cardTargets, (card, target) =>
+			{
+				ProceduralAnimation animation = card.AddComponent<ProceduralAnimation>();
+				animation.targets.AddRange(targets);
+				animation.targets.Add(target.transform);
+				animation.curve = curve;
+				animation.onPlay.AddListener(() =>
+				{
+					card.SetActive(true);
+				});
+				animation.onEnd.AddListener(() =>
+				{
+					CreateCardJoint(card, target.transform, staticRigidbody, cardStrength);
+				});
+				animation.onReversePlay.AddListener(() =>
+				{
+					DestroyCardJoint(card);
+				});
+				animation.onReverseEnd.AddListener(() =>
+				{
+					card.SetActive(false);
+				});
+				return animation;
+			}).ToArray();
 		}
 
 		private void CreateCardJoint(GameObject card, Transform target, Rigidbody staticRigidbody, StrengthSettings cardStrength)
@@ -59,20 +70,39 @@ namespace SBEPIS.Capturllection
 			Destroy(targetter);
 		}
 
-		private IEnumerator SpawnCards(Transform start, float cardDelay)
+		public void StartAssembly(MonoBehaviour coroutineOwner, float cardDelay)
 		{
-			foreach (TransformLerper card in cardLerpers)
+			coroutineOwner.StartCoroutine(SpawnCards(cardDelay));
+		}
+
+		private IEnumerator SpawnCards(float cardDelay)
+		{
+			print($"Starting to spawn {cardAnimations.ToDelimString()} {cardDelay}");
+			foreach (ProceduralAnimation cardAnimation in cardAnimations)
 			{
-				card.gameObject.SetActive(true);
-				card.StartTargetting(start);
+				print($"Spawning {cardAnimation}");
+				cardAnimation.PlayForward();
 				yield return new WaitForSeconds(cardDelay);
 			}
 		}
 
-		public void StartDisassembly(CaptureDeque deque, Diajector diajector)
+		public void StartDisassembly(MonoBehaviour coroutineOwner, float cardDelay)
 		{
-			foreach (Transform card in cards)
-				Destroy(card.gameObject);
+			coroutineOwner.StartCoroutine(DespawnCards(cardDelay));
+		}
+
+		private IEnumerator DespawnCards(float cardDelay)
+		{
+			print($"Starting to despawn {cardAnimations.ToDelimString()} {cardDelay}");
+			foreach (ProceduralAnimation cardAnimation in cardAnimations)
+			{
+				print($"Despawning {cardAnimation}");
+				cardAnimation.PlayReverse();
+				print($"Despawninged {cardAnimation}");
+				yield return new WaitForSeconds(cardDelay);
+				print($"Despawningeded {cardAnimation}");
+			}
+			print($"Despawningededed {cardAnimations.ToDelimString()}");
 		}
 	}
 }

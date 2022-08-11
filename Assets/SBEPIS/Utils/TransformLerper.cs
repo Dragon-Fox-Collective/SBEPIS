@@ -7,11 +7,9 @@ public class TransformLerper : MonoBehaviour
 	public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 	public UnityEvent onEnd = new();
 
+	public Transform start;
 	public Transform target;
 
-	private Transform start;
-	private Vector3 startPosition;
-	private Quaternion startRotation;
 	private float time = 0;
 
 	private new Rigidbody rigidbody;
@@ -20,39 +18,39 @@ public class TransformLerper : MonoBehaviour
 	{
 		enabled = false;
 		rigidbody = GetComponent<Rigidbody>();
-		rigidbody.Disable();
+		if (rigidbody)
+			rigidbody.Disable();
+	}
+
+	private void OnEnable()
+	{
+		time = 0;
 	}
 
 	private void Update()
 	{
 		time += Time.deltaTime / timeToComplete;
 		transform.SetPositionAndRotation(
-			Vector3.Lerp(start ? start.position : startPosition, target.position, curve.Evaluate(time)),
-			Quaternion.Lerp(start ? start.rotation : startRotation, target.rotation, curve.Evaluate(time)));
+			Vector3.Lerp(start.position, target.position, curve.Evaluate(time)),
+			Quaternion.Lerp(start.rotation, target.rotation, curve.Evaluate(time)));
 
 		if (time >= 1)
 		{
 			Destroy(this);
-			rigidbody.Enable();
+			if (rigidbody)
+				rigidbody.Enable();
 			onEnd.Invoke();
 		}
-	}
-
-	public void StartTargetting(Transform start)
-	{
-		enabled = true;
-		this.start = start;
-		startPosition = transform.position;
-		startRotation = transform.rotation;
-		time = 0;
 	}
 
 	public TransformLerper Chain(Transform next)
 	{
 		TransformLerper newLerper = gameObject.AddComponent<TransformLerper>();
+		newLerper.start = target;
 		newLerper.target = next;
 		newLerper.timeToComplete = timeToComplete;
-		onEnd.AddListener(() => newLerper.StartTargetting(target));
+		newLerper.curve = curve;
+		onEnd.AddListener(() => newLerper.enabled = true);
 		return newLerper;
 	}
 }
