@@ -39,7 +39,7 @@ namespace SBEPIS.Capturllection
 			grabber.Drop();
 			Capturllectainer card = Instantiate(cardPrefab.gameObject).GetComponent<Capturllectainer>();
 			card.GetComponent<ItemBase>().BecomeItem();
-			card.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
+			card.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation * Quaternion.Euler(0, 180, 0));
 			card.Capture(item);
 			grabber.Grab(card.GetComponent<Grabbable>());
 		}
