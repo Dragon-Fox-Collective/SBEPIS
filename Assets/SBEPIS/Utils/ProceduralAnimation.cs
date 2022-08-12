@@ -44,7 +44,6 @@ public class ProceduralAnimation : MonoBehaviour
 
 	public void PlayForward()
 	{
-		print($"Playing {this} forward");
 		Resume();
 		speed = Mathf.Abs(speed);
 		if (time == startTime)
@@ -53,7 +52,6 @@ public class ProceduralAnimation : MonoBehaviour
 
 	public void PlayReverse()
 	{
-		print($"Playing {this} reverse");
 		Resume();
 		speed = -Mathf.Abs(speed);
 		if (time == endTime)
@@ -62,14 +60,12 @@ public class ProceduralAnimation : MonoBehaviour
 
 	public void Stop()
 	{
-		print($"Stopping {this} start");
 		Pause();
 		SeekStart();
 	}
 
 	public void StopEnd()
 	{
-		print($"Stopping {this} end");
 		Pause();
 		SeekEnd();
 	}

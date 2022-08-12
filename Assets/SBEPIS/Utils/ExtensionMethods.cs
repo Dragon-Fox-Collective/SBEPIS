@@ -55,6 +55,11 @@ public static class ExtensionMethods
 		return obj;
 	}
 
+	public static void AddRange<T>(this List<T> list, params T[] items)
+	{
+		list.AddRange(items);
+	}
+
 	public static void Replace(this Transform transform, Transform other)
 	{
 		transform.transform.parent = other.parent;

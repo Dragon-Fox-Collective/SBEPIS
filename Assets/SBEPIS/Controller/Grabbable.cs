@@ -12,6 +12,7 @@ namespace SBEPIS.Controller
 		public Grabber grabbingGrabber { get; private set; }
 		public bool canGrab { get; set; }
 		public new Rigidbody rigidbody { get; private set; }
+		public bool isBeingHeld { get; private set; }
 
 		private void Awake()
 		{
@@ -22,7 +23,7 @@ namespace SBEPIS.Controller
 		public void Grab(Grabber player)
 		{
 			grabbingGrabber = player;
-
+			isBeingHeld = true;
 			onGrab.Invoke(player, this);
 		}
 
@@ -34,7 +35,7 @@ namespace SBEPIS.Controller
 		public void Drop(Grabber player)
 		{
 			grabbingGrabber = null;
-
+			isBeingHeld = false;
 			onDrop.Invoke(player, this);
 		}
 	}
