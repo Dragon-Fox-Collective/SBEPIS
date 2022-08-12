@@ -43,5 +43,10 @@ namespace SBEPIS.Capturllection
 
 			diajector.StartDisassembly(this);
 		}
+
+		public void ForceClose()
+		{
+			diajector.ForceClose();
+		}
 	}
 }

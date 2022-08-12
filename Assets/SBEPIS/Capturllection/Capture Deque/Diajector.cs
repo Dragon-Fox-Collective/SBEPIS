@@ -41,5 +41,12 @@ namespace SBEPIS.Capturllection
 				mainPage.StartDisassembly(deque);
 			gameObject.SetActive(false);
 		}
+
+		public void ForceClose()
+		{
+			deque.StopAllCoroutines();
+			mainPage.ForceClose();
+			gameObject.SetActive(false);
+		}
 	}
 }

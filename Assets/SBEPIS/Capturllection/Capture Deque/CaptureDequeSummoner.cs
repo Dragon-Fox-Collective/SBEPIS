@@ -18,7 +18,7 @@ namespace SBEPIS.Capturllection
 
 		public void OnToggleDeque(CallbackContext context)
 		{
-			if (!gameObject.activeInHierarchy || !enabled || !context.performed)
+			if (!isActiveAndEnabled || !context.performed)
 				return;
 
 			ToggleDeque();
@@ -44,7 +44,7 @@ namespace SBEPIS.Capturllection
 		public void DesummonDeque()
 		{
 			deque.gameObject.SetActive(false);
-			deque.DesummonDiajector();
+			deque.ForceClose();
 		}
 	}
 }
