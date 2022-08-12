@@ -6,7 +6,7 @@ namespace SBEPIS.Capturllection
 	public class Diajector : MonoBehaviour
 	{
 		public Transform upperTarget;
-		public GameObject cardPrefab;
+		public DequeStorable cardPrefab;
 		public DequePage mainPage;
 		public float cardDelay = 0.5f;
 		public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1.5f, 3);
@@ -21,17 +21,24 @@ namespace SBEPIS.Capturllection
 			if (!this.deque)
 			{
 				this.deque = deque;
-				mainPage.CreateCards(cardPrefab, new Transform[] { deque.cardStart, deque.cardTarget, upperTarget }, curve, cardStrength, staticRigidbody);
+
+				DequePage page = mainPage;
+				page.baseTargets.AddRange(deque.cardStart, deque.cardTarget, upperTarget);
+				page.curve = curve;
+				page.cardDelay = cardDelay;
+				page.staticRigidbody = staticRigidbody;
+				page.cardStrength = cardStrength;
+				page.CreateCards(cardPrefab);
 			}
 
 			gameObject.SetActive(true);
-			mainPage.StartAssembly(deque, cardDelay);
+			mainPage.StartAssembly(deque);
 		}
 
 		public void StartDisassembly(CaptureDeque deque)
 		{
 			if (deque)
-				mainPage.StartDisassembly(deque, cardDelay);
+				mainPage.StartDisassembly(deque);
 			gameObject.SetActive(false);
 		}
 	}

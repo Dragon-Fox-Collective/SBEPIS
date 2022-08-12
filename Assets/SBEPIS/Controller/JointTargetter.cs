@@ -10,6 +10,7 @@ namespace SBEPIS.Controller
 		public Transform anchor;
 		public float anchorDistance = 0.5f;
 		public StrengthSettings strength;
+		public bool accountForTargetMovement = true;
 
 		private new Rigidbody rigidbody;
 		private ConfigurableJoint joint;
@@ -76,7 +77,9 @@ namespace SBEPIS.Controller
 			}
 
 			joint.targetPosition = targetPosition;
-			joint.targetVelocity = (targetPosition - prevTargetPosition) / Time.fixedDeltaTime;
+
+			if (accountForTargetMovement)
+				joint.targetVelocity = (targetPosition - prevTargetPosition) / Time.fixedDeltaTime;
 
 			prevTargetPosition = targetPosition;
 		}
@@ -85,11 +88,14 @@ namespace SBEPIS.Controller
 		{
 			joint.targetRotation = connectedRigidbody.transform.InverseTransformRotation(target.rotation) * initialOffset;
 
-			Quaternion delta = target.rotation * prevTargetRotation.Inverse();
-			if (delta.w < 0) delta = delta.Select(x => -x);
-			delta.ToAngleAxis(out float angle, out Vector3 axis);
-			angle *= Mathf.Deg2Rad;
-			joint.targetAngularVelocity = connectedRigidbody.transform.rotation.Inverse() * (angle / Time.fixedDeltaTime * axis);
+			if (accountForTargetMovement)
+			{
+				Quaternion delta = target.rotation * prevTargetRotation.Inverse();
+				if (delta.w < 0) delta = delta.Select(x => -x);
+				delta.ToAngleAxis(out float angle, out Vector3 axis);
+				angle *= Mathf.Deg2Rad;
+				joint.targetAngularVelocity = connectedRigidbody.transform.rotation.Inverse() * (angle / Time.fixedDeltaTime * axis);
+			}
 
 			prevTargetRotation = target.rotation;
 		}
