@@ -11,9 +11,9 @@ public class ProceduralAnimation : MonoBehaviour
 
 	public float startTime => curve[0].time;
 	public float endTime => curve[curve.length - 1].time;
+	public float time { get; private set; } = 0;
 
 	private new Rigidbody rigidbody;
-	private float time = 0;
 
 	private void Awake()
 	{

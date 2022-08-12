@@ -63,7 +63,7 @@ namespace SBEPIS.Controller
 
 		public void UpdateGrabAttempt()
 		{
-			if (!enabled || !gameObject.activeInHierarchy)
+			if (!isActiveAndEnabled)
 				return;
 
 			if (isHoldingGrab)

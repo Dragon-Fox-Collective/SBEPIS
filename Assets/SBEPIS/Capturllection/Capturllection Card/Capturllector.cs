@@ -19,7 +19,7 @@ namespace SBEPIS.Capturllection
 
 		public void OnCapture(CallbackContext context)
 		{
-			if (!gameObject.activeInHierarchy || !enabled || !context.performed || !grabber.heldGrabbable)
+			if (!isActiveAndEnabled || !context.performed || !grabber.heldGrabbable)
 				return;
 
 			Capturllectainer card = grabber.heldGrabbable.GetComponent<Capturllectainer>();

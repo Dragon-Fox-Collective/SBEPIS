@@ -17,6 +17,7 @@ namespace SBEPIS.Capturllection
 		public UnityEvent onAssembled = new(), onDisassembled = new();
 
 		private readonly List<ProceduralAnimation> cards = new();
+		private Coroutine currentCoroutine;
 
 		public void CreateCards(DequeStorable cardPrefab)
 		{
@@ -97,6 +98,18 @@ namespace SBEPIS.Capturllection
 			{
 				card.PlayReverse();
 				yield return new WaitForSeconds(cardDelay);
+			}
+		}
+
+		public void ForceClose()
+		{
+			foreach (ProceduralAnimation card in cards)
+			{
+				if (card.time == card.endTime)
+					card.onReversePlay.Invoke();
+				if (card.time != card.startTime)
+					card.onReverseEnd.Invoke();
+				card.Stop();
 			}
 		}
 	}
