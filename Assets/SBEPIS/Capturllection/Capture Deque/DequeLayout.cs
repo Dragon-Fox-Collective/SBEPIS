@@ -11,7 +11,8 @@ namespace SBEPIS.Capturllection
 		public CardTarget cardTargetPrefab;
 		public float cardZ = -1;
 
-		private readonly List<CardTarget> targets = new();
+		private readonly Dictionary<DequeStorable, CardTarget> targets = new();
+		private readonly Dictionary<DequeStorable, CardTarget> tempTargets = new();
 		private DequePage dequePage;
 
 		private void Start()
@@ -35,9 +36,9 @@ namespace SBEPIS.Capturllection
 				return;
 
 			if (card.grabbable.isBeingHeld)
-				card.grabbable.onDrop.AddListener(AddCard);
+				AddTemporaryTarget(card);
 			else
-				AddCard(card);
+				AddCard(card, AddCardTarget(card));
 		}
 
 		private void OnTriggerExit(Collider other)
@@ -48,29 +49,58 @@ namespace SBEPIS.Capturllection
 			if (!card || card.isStored)
 				return;
 
-			card.grabbable.onDrop.RemoveListener(AddCard);
+			if (card.grabbable.isBeingHeld)
+				RemoveTemporaryTarget(card);
 		}
 
-		private void AddCard(Grabber grabber, Grabbable grabbable) => AddCard(grabbable.GetComponent<DequeStorable>());
+		private CardTarget AddCardTarget(DequeStorable card)
+		{
+			CardTarget newTarget = Instantiate(cardTargetPrefab.gameObject, transform).GetComponent<CardTarget>();
+			//newTarget.card = card;
+			targets.Add(card, newTarget);
+			return newTarget;
+		}
 
-		private void AddCard(DequeStorable card)
+		private void RemoveCardTarget(DequeStorable card)
+		{
+			CardTarget target = targets[card];
+			targets.Remove(card);
+			Destroy(target);
+		}
+
+		public CardTarget AddTemporaryTarget(DequeStorable card)
+		{
+			card.grabbable.onDrop.AddListener(MakeCardPermanent);
+			CardTarget target = AddCardTarget(card);
+			tempTargets.Add(card, target);
+			return target;
+		}
+
+		public void RemoveTemporaryTarget(DequeStorable card)
+		{
+			card.grabbable.onDrop.RemoveListener(MakeCardPermanent);
+
+			RemoveCardTarget(card);
+			tempTargets.Remove(card);
+		}
+
+		private void MakeCardPermanent(Grabber grabber, Grabbable grabbable)
+		{
+			DequeStorable card = grabbable.GetComponent<DequeStorable>();
+			card.grabbable.onDrop.RemoveListener(MakeCardPermanent);
+			tempTargets.Remove(card);
+			AddCard(card, targets[card]);
+		}
+
+		private void AddCard(DequeStorable card, CardTarget target)
 		{
 			if (!dequePage)
 				return;
 
-			card.grabbable.onDrop.RemoveListener(AddCard);
-
-			ProceduralAnimation animation = dequePage.AddCard(card, AddCardTarget());
+			ProceduralAnimation animation = dequePage.AddCard(card, target);
 			animation.SeekEnd();
 			animation.onPlay.Invoke();
 			animation.onEnd.Invoke();
-		}
-
-		private CardTarget AddCardTarget()
-		{
-			CardTarget newTarget = Instantiate(cardTargetPrefab.gameObject, transform).GetComponent<CardTarget>();
-			targets.Add(newTarget);
-			return newTarget;
 		}
 
 		private void LayoutTargets()
@@ -78,8 +108,8 @@ namespace SBEPIS.Capturllection
 			if (!diajector.deque)
 				return;
 
-			diajector.deque.dequeType.LayoutTargets(targets);
-			foreach (CardTarget target in targets)
+			diajector.deque.dequeType.LayoutTargets(targets.Values);
+			foreach (CardTarget target in targets.Values)
 			{
 				target.transform.localPosition = target.transform.localPosition + Vector3.forward * cardZ;
 				target.transform.localRotation *= Quaternion.Euler(0, 180, 0);

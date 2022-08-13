@@ -6,6 +6,6 @@ namespace SBEPIS.Capturllection
 {
 	public abstract class DequeType : MonoBehaviour
 	{
-		public abstract void LayoutTargets(List<CardTarget> targets);
+		public abstract void LayoutTargets(IReadOnlyCollection<CardTarget> targets);
 	}
 }
