@@ -16,12 +16,16 @@ namespace SBEPIS.Capturllection
 		public StrengthSettings cardStrength;
 		public UnityEvent onAssembled = new(), onDisassembled = new();
 
-		private readonly List<ProceduralAnimation> cards = new();
+		private readonly Dictionary<DequeStorable, ProceduralAnimation> cards = new();
 
 		public void CreateCards(DequeStorable cardPrefab)
 		{
 			foreach (CardTarget target in GetComponentsInChildren<CardTarget>())
-				AddCard(Instantiate(cardPrefab.gameObject).GetComponent<DequeStorable>(), target);
+			{
+				DequeStorable card = Instantiate(cardPrefab.gameObject).GetComponent<DequeStorable>();
+				//target.card = card;
+				AddCard(card, target);
+			}
 		}
 
 		public ProceduralAnimation AddCard(DequeStorable card, CardTarget target)
@@ -52,7 +56,7 @@ namespace SBEPIS.Capturllection
 				card.gameObject.SetActive(false);
 			});
 
-			cards.Add(animation);
+			cards.Add(card, animation);
 
 			return animation;
 		}
@@ -79,7 +83,7 @@ namespace SBEPIS.Capturllection
 
 		private IEnumerator SpawnCards()
 		{
-			foreach (ProceduralAnimation card in cards)
+			foreach (ProceduralAnimation card in cards.Values)
 			{
 				card.PlayForward();
 				yield return new WaitForSeconds(cardDelay);
@@ -93,7 +97,7 @@ namespace SBEPIS.Capturllection
 
 		private IEnumerator DespawnCards()
 		{
-			foreach (ProceduralAnimation card in cards)
+			foreach (ProceduralAnimation card in cards.Values)
 			{
 				card.PlayReverse();
 				yield return new WaitForSeconds(cardDelay);
@@ -102,7 +106,7 @@ namespace SBEPIS.Capturllection
 
 		public void ForceClose()
 		{
-			foreach (ProceduralAnimation card in cards)
+			foreach (ProceduralAnimation card in cards.Values)
 			{
 				if (card.time == card.endTime)
 					card.onReversePlay.Invoke();
