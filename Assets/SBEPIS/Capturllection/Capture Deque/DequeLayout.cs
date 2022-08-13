@@ -95,12 +95,15 @@ namespace SBEPIS.Capturllection
 
 		private void AddCard(DequeStorable card, CardTarget target)
 		{
-			if (!dequePage)
+			if (!diajector.isBound)
 				return;
 
 			Capturllectainer container = card.GetComponent<Capturllectainer>();
 			if (container)
+			{
 				container.onRetrieve.AddListener(RemoveCard);
+				container.retrievePredicates.Add(CanRetrieve);
+			}
 
 			ProceduralAnimation animation = dequePage.AddCard(card, target);
 			animation.SeekEnd();
@@ -111,11 +114,14 @@ namespace SBEPIS.Capturllection
 		private void RemoveCard(Capturllectainer container, Capturllectable item)
 		{
 			container.onRetrieve.RemoveListener(RemoveCard);
+			container.retrievePredicates.Remove(CanRetrieve);
 
 			DequeStorable card = container.GetComponent<DequeStorable>();
 			dequePage.RemoveCard(card);
 			RemoveCardTarget(card);
 		}
+
+		private bool CanRetrieve(Capturllectainer container) => diajector.deque.dequeType.CanRetrieve(providedTargets, targets[container.GetComponent<DequeStorable>()]);
 
 		private void LayoutTargets()
 		{

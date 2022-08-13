@@ -11,6 +11,28 @@ public static class ExtensionMethods
 		return (value - inputFrom) / (inputTo - inputFrom) * (outputTo - outputFrom) + outputFrom;
 	}
 
+	/// <summary>
+	/// Returns positive mod of value
+	/// </summary>
+	public static float Mod(this float value, float mod)
+	{
+		float res = value % mod;
+		if (res < 0)
+			res += mod;
+		return res;
+	}
+
+	/// <summary>
+	/// Returns mod of value between -mod/2 and mod/2
+	/// </summary>
+	public static float ModAround(this float value, float mod)
+	{
+		float res = value.Mod(mod);
+		if (res > mod / 2)
+			res -= mod;
+		return res;
+	}
+
 	public static bool IsOnLayer(this GameObject gameObject, int layerMask)
 	{
 		return ((1 << gameObject.layer) & layerMask) != 0;

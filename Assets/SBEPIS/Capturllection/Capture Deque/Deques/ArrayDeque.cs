@@ -25,5 +25,7 @@ namespace SBEPIS.Capturllection.Deques
 				i++;
 			}
 		}
+
+		public override bool CanRetrieve(List<CardTarget> targets, CardTarget card) => true;
 	}
 }
