@@ -20,6 +20,11 @@ namespace SBEPIS.Capturllection
 			dequePage = GetComponent<DequePage>();
 		}
 
+		private void FixedUpdate()
+		{
+			LayoutTargets();
+		}
+
 		private void OnTriggerEnter(Collider other)
 		{
 			if (!other.attachedRigidbody)
@@ -64,10 +69,20 @@ namespace SBEPIS.Capturllection
 		{
 			CardTarget newTarget = Instantiate(cardTargetPrefab.gameObject, transform).GetComponent<CardTarget>();
 			targets.Add(newTarget);
+			return newTarget;
+		}
+
+		private void LayoutTargets()
+		{
+			if (!diajector.deque)
+				return;
+
 			diajector.deque.dequeType.LayoutTargets(targets);
 			foreach (CardTarget target in targets)
+			{
 				target.transform.localPosition = target.transform.localPosition + Vector3.forward * cardZ;
-			return newTarget;
+				target.transform.localRotation *= Quaternion.Euler(0, 180, 0);
+			}
 		}
 	}
 }
