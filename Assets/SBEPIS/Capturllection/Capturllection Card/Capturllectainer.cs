@@ -8,10 +8,11 @@ namespace SBEPIS.Capturllection
 	public class Capturllectainer : MonoBehaviour
 	{
 		public Item defaultCapturedItemPrefab;
+		public bool canRetrieve = true;
+
+		public CaptureEvent onCapture = new(), onRetrieve = new();
 
 		public Capturllectable capturedItem { get; private set; }
-
-		public UnityEvent<Capturllectable> onCapture = new(), onRetrieve = new();
 
 		private void Awake()
 		{
@@ -31,7 +32,7 @@ namespace SBEPIS.Capturllection
 			capturedItem = item;
 			item.gameObject.SetActive(false);
 			item.transform.parent = transform;
-			onCapture?.Invoke(item);
+			onCapture.Invoke(this, item);
 		}
 
 		public Capturllectable Retrieve()
@@ -43,8 +44,11 @@ namespace SBEPIS.Capturllection
 			capturedItem = null;
 			item.gameObject.SetActive(true);
 			item.transform.parent = null;
-			onRetrieve?.Invoke(item);
+			onRetrieve.Invoke(this, item);
 			return item;
 		}
 	}
+
+	[Serializable]
+	public class CaptureEvent : UnityEvent<Capturllectainer, Capturllectable> { }
 }

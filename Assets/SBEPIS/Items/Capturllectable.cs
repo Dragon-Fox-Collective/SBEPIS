@@ -1,6 +1,4 @@
 using SBEPIS.Bits;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SBEPIS.Items
@@ -8,7 +6,7 @@ namespace SBEPIS.Items
 	[RequireComponent(typeof(ItemBase))]
 	public class Capturllectable : MonoBehaviour
 	{
-		public bool isCapturllectable = true;
+		public bool canCapturllect = true;
 		public MemberedBitSet bits => itemBase.bits;
 
 		private ItemBase itemBase;

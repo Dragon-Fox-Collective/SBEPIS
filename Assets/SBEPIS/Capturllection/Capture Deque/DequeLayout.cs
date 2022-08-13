@@ -1,4 +1,5 @@
 using SBEPIS.Controller;
+using SBEPIS.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace SBEPIS.Capturllection
 
 		private void OnTriggerEnter(Collider other)
 		{
-			if (!other.attachedRigidbody)
+			if (!diajector.isBound || !other.attachedRigidbody)
 				return;
 			DequeStorable card = other.attachedRigidbody.GetComponent<DequeStorable>();
 			if (!card || card.isStored)
@@ -43,7 +44,7 @@ namespace SBEPIS.Capturllection
 
 		private void OnTriggerExit(Collider other)
 		{
-			if (!other.attachedRigidbody)
+			if (!diajector.isBound || !other.attachedRigidbody)
 				return;
 			DequeStorable card = other.attachedRigidbody.GetComponent<DequeStorable>();
 			if (!card || card.isStored)
@@ -56,7 +57,6 @@ namespace SBEPIS.Capturllection
 		private CardTarget AddCardTarget(DequeStorable card)
 		{
 			CardTarget newTarget = Instantiate(cardTargetPrefab.gameObject, transform).GetComponent<CardTarget>();
-			//newTarget.card = card;
 			targets.Add(card, newTarget);
 			return newTarget;
 		}
@@ -97,10 +97,23 @@ namespace SBEPIS.Capturllection
 			if (!dequePage)
 				return;
 
+			Capturllectainer container = card.GetComponent<Capturllectainer>();
+			if (container)
+				container.onRetrieve.AddListener(RemoveCard);
+
 			ProceduralAnimation animation = dequePage.AddCard(card, target);
 			animation.SeekEnd();
 			animation.onPlay.Invoke();
 			animation.onEnd.Invoke();
+		}
+
+		private void RemoveCard(Capturllectainer container, Capturllectable item)
+		{
+			container.onRetrieve.RemoveListener(RemoveCard);
+
+			DequeStorable card = container.GetComponent<DequeStorable>();
+			dequePage.RemoveCard(card);
+			RemoveCardTarget(card);
 		}
 
 		private void LayoutTargets()

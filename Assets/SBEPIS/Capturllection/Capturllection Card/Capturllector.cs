@@ -33,7 +33,7 @@ namespace SBEPIS.Capturllection
 		{
 			Grabbable grabbable = grabber.heldGrabbable;
 			Capturllectable item = grabbable.GetComponent<Capturllectable>();
-			if (!item || !item.isCapturllectable)
+			if (!item || !item.canCapturllect)
 				return;
 
 			grabber.Drop();
@@ -46,6 +46,9 @@ namespace SBEPIS.Capturllection
 
 		public void RetrieveAndGrabItem(Capturllectainer card)
 		{
+			if (!card.canRetrieve)
+				return;
+
 			grabber.Drop();
 			Grabbable grabbable = card.Retrieve().GetComponent<Grabbable>();
 			Destroy(card.gameObject);

@@ -1,4 +1,5 @@
 using SBEPIS.Controller;
+using SBEPIS.Items;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +18,20 @@ namespace SBEPIS.Capturllection
 		public UnityEvent onAssembled = new(), onDisassembled = new();
 
 		private readonly Dictionary<DequeStorable, ProceduralAnimation> cards = new();
+		private readonly Dictionary<DequeStorable, CardTarget> cardTargets = new();
 
 		public void CreateCards(DequeStorable cardPrefab)
 		{
 			foreach (CardTarget target in GetComponentsInChildren<CardTarget>())
 			{
 				DequeStorable card = Instantiate(cardPrefab.gameObject).GetComponent<DequeStorable>();
-				//target.card = card;
 				AddCard(card, target);
+
+				Capturllectainer container = card.GetComponent<Capturllectainer>();
+				container.canRetrieve = false;
+
+				Capturllectable capturllectable = card.GetComponent<Capturllectable>();
+				capturllectable.canCapturllect = false;
 			}
 		}
 
@@ -32,8 +39,8 @@ namespace SBEPIS.Capturllection
 		{
 			card.isStored = true;
 
-			card.grabbable.onGrab.AddListener((grabber, grabbable) => DestroyCardJoint(card));
-			card.grabbable.onDrop.AddListener((grabber, grabbable) => CreateCardJoint(card, target.transform, staticRigidbody, cardStrength));
+			card.grabbable.onGrab.AddListener(DestroyCardJoint);
+			card.grabbable.onDrop.AddListener(CreateCardJoint);
 
 			ProceduralAnimation animation = card.gameObject.AddComponent<ProceduralAnimation>();
 			animation.targets.AddRange(baseTargets);
@@ -57,8 +64,29 @@ namespace SBEPIS.Capturllection
 			});
 
 			cards.Add(card, animation);
+			cardTargets.Add(card, target);
 
 			return animation;
+		}
+
+		public void RemoveCard(DequeStorable card)
+		{
+			card.isStored = false;
+
+			card.grabbable.onGrab.RemoveListener(DestroyCardJoint);
+			card.grabbable.onDrop.RemoveListener(CreateCardJoint);
+
+			ProceduralAnimation animation = card.GetComponent<ProceduralAnimation>();
+			Destroy(animation);
+
+			cards.Remove(card);
+			cardTargets.Remove(card);
+		}
+
+		private void CreateCardJoint(Grabber grabber, Grabbable grabbable)
+		{
+			DequeStorable card = grabbable.GetComponent<DequeStorable>();
+			CreateCardJoint(card, cardTargets[card].transform, staticRigidbody, cardStrength);
 		}
 
 		private void CreateCardJoint(DequeStorable card, Transform target, Rigidbody staticRigidbody, StrengthSettings cardStrength)
@@ -69,6 +97,8 @@ namespace SBEPIS.Capturllection
 			targetter.strength = cardStrength;
 			targetter.accountForTargetMovement = false;
 		}
+
+		private void DestroyCardJoint(Grabber grabber, Grabbable grabbable) => DestroyCardJoint(grabbable.GetComponent<DequeStorable>());
 
 		private void DestroyCardJoint(DequeStorable card)
 		{
