@@ -16,7 +16,7 @@ namespace SBEPIS.Capturllection.Deques
 		{
 			int i = 0;
 			Vector3 right = cardDistance * (targets.Count - 1) / 2 * Vector3.left;
-			foreach (CardTarget target in targets)
+			foreach (CardTarget target in targets.OrderBy(target => target.lifetime))
 			{
 				Vector3 up = Mathf.Sin(Time.fixedTime + i * wobbleTimeOffset) * wobbleHeight * Vector3.up;
 				target.transform.localPosition = right + up;

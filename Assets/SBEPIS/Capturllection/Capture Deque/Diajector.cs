@@ -14,6 +14,8 @@ namespace SBEPIS.Capturllection
 		public Rigidbody staticRigidbody;
 		public StrengthSettings cardStrength;
 
+		public bool isBound => deque;
+
 		public CaptureDeque deque { get; private set; }
 
 		private void CreateCards(CaptureDeque deque)
@@ -31,7 +33,7 @@ namespace SBEPIS.Capturllection
 
 		public void StartAssembly(CaptureDeque deque)
 		{
-			if (!this.deque)
+			if (!isBound)
 				CreateCards(deque);
 
 			gameObject.SetActive(true);
@@ -40,14 +42,14 @@ namespace SBEPIS.Capturllection
 
 		public void StartDisassembly()
 		{
-			if (deque)
+			if (isBound)
 				mainPage.StartDisassembly(deque);
 			gameObject.SetActive(false);
 		}
 
 		public void ForceClose()
 		{
-			if (deque)
+			if (isBound)
 				deque.StopAllCoroutines();
 			mainPage.ForceClose();
 			gameObject.SetActive(false);
