@@ -25,6 +25,7 @@ namespace SBEPIS.Capturllection
 			foreach (CardTarget target in GetComponentsInChildren<CardTarget>())
 			{
 				DequeStorable card = Instantiate(cardPrefab.gameObject).GetComponent<DequeStorable>();
+				target.card = card;
 				AddCard(card, target);
 
 				Capturllectainer container = card.GetComponent<Capturllectainer>();

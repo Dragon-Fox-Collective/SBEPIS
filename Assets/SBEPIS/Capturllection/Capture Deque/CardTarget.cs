@@ -6,7 +6,9 @@ namespace SBEPIS.Capturllection
 {
 	public class CardTarget : MonoBehaviour
 	{
+		public DequeStorable card { get; set; }
 		public float lifetime { get; private set; }
+		public bool isTemporary { get; set; }
 
 		private void FixedUpdate()
 		{
