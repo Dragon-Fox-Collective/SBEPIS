@@ -33,7 +33,7 @@ namespace SBEPIS.Capturllection
 			if (!diajector.isBound || !other.attachedRigidbody)
 				return;
 			DequeStorable card = other.attachedRigidbody.GetComponent<DequeStorable>();
-			if (!card || card.isStored)
+			if (!card || card.isStored || !card.canStore)
 				return;
 
 			if (card.grabbable.isBeingHeld)
@@ -47,7 +47,7 @@ namespace SBEPIS.Capturllection
 			if (!diajector.isBound || !other.attachedRigidbody)
 				return;
 			DequeStorable card = other.attachedRigidbody.GetComponent<DequeStorable>();
-			if (!card || card.isStored)
+			if (!card || card.isStored || !card.canStore)
 				return;
 
 			if (card.grabbable.isBeingHeld)
