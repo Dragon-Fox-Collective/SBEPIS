@@ -17,7 +17,6 @@ namespace SBEPIS.Capturllection
 		public UnityEvent onAssembled = new(), onDisassembled = new();
 
 		private readonly List<ProceduralAnimation> cards = new();
-		private Coroutine currentCoroutine;
 
 		public void CreateCards(DequeStorable cardPrefab)
 		{

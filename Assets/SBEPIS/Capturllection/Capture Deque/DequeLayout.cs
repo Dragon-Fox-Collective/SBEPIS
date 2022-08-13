@@ -8,8 +8,8 @@ namespace SBEPIS.Capturllection
 	[RequireComponent(typeof(DequePage))]
 	public class DequeLayout : MonoBehaviour
 	{
+		public Diajector diajector;
 		public CardTarget cardTargetPrefab;
-		public float cardDistance = 10;
 		public float cardZ = -1;
 
 		private readonly List<CardTarget> targets = new();
@@ -64,15 +64,9 @@ namespace SBEPIS.Capturllection
 		{
 			CardTarget newTarget = Instantiate(cardTargetPrefab.gameObject, transform).GetComponent<CardTarget>();
 			targets.Add(newTarget);
-
-			Vector3 position = cardDistance * (targets.Count - 1) / 2 * Vector3.left + cardZ * Vector3.forward;
+			diajector.deque.dequeType.LayoutTargets(targets);
 			foreach (CardTarget target in targets)
-			{
-				target.transform.localPosition = position;
-				target.transform.localRotation = Quaternion.Euler(0, 180, 0);
-				position += Vector3.right * cardDistance;
-			}
-
+				target.transform.localPosition = target.transform.localPosition + Vector3.forward * cardZ;
 			return newTarget;
 		}
 	}

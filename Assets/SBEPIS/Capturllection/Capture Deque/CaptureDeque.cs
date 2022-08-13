@@ -5,7 +5,7 @@ using SBEPIS.Controller;
 
 namespace SBEPIS.Capturllection
 {
-	[RequireComponent(typeof(Grabbable))]
+	[RequireComponent(typeof(Grabbable), typeof(DequeType))]
 	public class CaptureDeque : MonoBehaviour
 	{
 		public Diajector diajector;
@@ -14,10 +14,12 @@ namespace SBEPIS.Capturllection
 		public List<DequeStorable> cards = new();
 
 		public Grabbable grabbable { get; private set; }
+		public DequeType dequeType { get; private set; }
 
 		private void Awake()
 		{
 			grabbable = GetComponent<Grabbable>();
+			dequeType = GetComponent<DequeType>();
 		}
 
 		public void ToggleDiajector()
@@ -41,7 +43,7 @@ namespace SBEPIS.Capturllection
 			if (!diajector.gameObject.activeSelf)
 				return;
 
-			diajector.StartDisassembly(this);
+			diajector.StartDisassembly();
 		}
 
 		public void ForceClose()
