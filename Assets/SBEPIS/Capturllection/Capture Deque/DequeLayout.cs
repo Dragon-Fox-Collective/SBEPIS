@@ -13,7 +13,7 @@ namespace SBEPIS.Capturllection
 		public float cardZ = -1;
 
 		private readonly Dictionary<DequeStorable, CardTarget> targets = new();
-		private readonly Dictionary<DequeStorable, CardTarget> tempTargets = new();
+		private readonly List<CardTarget> providedTargets = new();
 		private DequePage dequePage;
 
 		private void Start()
@@ -57,7 +57,9 @@ namespace SBEPIS.Capturllection
 		private CardTarget AddCardTarget(DequeStorable card)
 		{
 			CardTarget newTarget = Instantiate(cardTargetPrefab.gameObject, transform).GetComponent<CardTarget>();
+			newTarget.card = card;
 			targets.Add(card, newTarget);
+			providedTargets.Add(newTarget);
 			return newTarget;
 		}
 
@@ -65,6 +67,7 @@ namespace SBEPIS.Capturllection
 		{
 			CardTarget target = targets[card];
 			targets.Remove(card);
+			providedTargets.Remove(target);
 			Destroy(target);
 		}
 
@@ -72,23 +75,21 @@ namespace SBEPIS.Capturllection
 		{
 			card.grabbable.onDrop.AddListener(MakeCardPermanent);
 			CardTarget target = AddCardTarget(card);
-			tempTargets.Add(card, target);
+			target.isTemporary = true;
 			return target;
 		}
 
 		public void RemoveTemporaryTarget(DequeStorable card)
 		{
 			card.grabbable.onDrop.RemoveListener(MakeCardPermanent);
-
 			RemoveCardTarget(card);
-			tempTargets.Remove(card);
 		}
 
 		private void MakeCardPermanent(Grabber grabber, Grabbable grabbable)
 		{
 			DequeStorable card = grabbable.GetComponent<DequeStorable>();
 			card.grabbable.onDrop.RemoveListener(MakeCardPermanent);
-			tempTargets.Remove(card);
+			targets[card].isTemporary = false;
 			AddCard(card, targets[card]);
 		}
 
@@ -121,7 +122,8 @@ namespace SBEPIS.Capturllection
 			if (!diajector.deque)
 				return;
 
-			diajector.deque.dequeType.LayoutTargets(targets.Values);
+			if (providedTargets.Count > 0)
+				diajector.deque.dequeType.LayoutTargets(providedTargets);
 			foreach (CardTarget target in targets.Values)
 			{
 				target.transform.localPosition = target.transform.localPosition + Vector3.forward * cardZ;

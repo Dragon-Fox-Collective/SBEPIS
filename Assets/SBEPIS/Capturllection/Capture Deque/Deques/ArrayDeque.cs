@@ -12,11 +12,11 @@ namespace SBEPIS.Capturllection.Deques
 		public float wobbleHeight = 10;
 		public float wobbleTimeOffset = 1;
 
-		public override void LayoutTargets(IReadOnlyCollection<CardTarget> targets)
+		public override void LayoutTargets(List<CardTarget> targets)
 		{
 			int i = 0;
 			Vector3 right = cardDistance * (targets.Count - 1) / 2 * Vector3.left;
-			foreach (CardTarget target in targets.OrderBy(target => target.lifetime))
+			foreach (CardTarget target in targets)
 			{
 				Vector3 up = Mathf.Sin(Time.fixedTime + i * wobbleTimeOffset) * wobbleHeight * Vector3.up;
 				target.transform.localPosition = right + up;
