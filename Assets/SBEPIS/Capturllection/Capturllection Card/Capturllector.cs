@@ -32,8 +32,8 @@ namespace SBEPIS.Capturllection
 		public void CaptureAndGrabCard()
 		{
 			Grabbable grabbable = grabber.heldGrabbable;
-			Item item = grabbable.GetComponent<Item>();
-			if (!item)
+			Capturllectable item = grabbable.GetComponent<Capturllectable>();
+			if (!item || !item.isCapturllectable)
 				return;
 
 			grabber.Drop();

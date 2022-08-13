@@ -7,20 +7,23 @@ namespace SBEPIS.Capturllection
 {
 	public class Capturllectainer : MonoBehaviour
 	{
-		public Item defaultCapturedItem;
+		public Item defaultCapturedItemPrefab;
 
-		public Item capturedItem { get; private set; }
+		public Capturllectable capturedItem { get; private set; }
 
-		public UnityEvent<Item> onCapture = new(), onRetrieve = new();
+		public UnityEvent<Capturllectable> onCapture = new(), onRetrieve = new();
 
 		private void Awake()
 		{
-			if (defaultCapturedItem)
-				Capture(defaultCapturedItem);
+			if (defaultCapturedItemPrefab)
+			{
+				Capturllectable item = Instantiate(defaultCapturedItemPrefab.gameObject).GetComponent<Capturllectable>();
+				Capture(item);
+			}
 		}
 
 		// TODO: Let the player capturllect piles of things somehow
-		public void Capture(Item item)
+		public void Capture(Capturllectable item)
 		{
 			if (capturedItem || !item)
 				return;
@@ -31,12 +34,12 @@ namespace SBEPIS.Capturllection
 			onCapture?.Invoke(item);
 		}
 
-		public Item Retrieve()
+		public Capturllectable Retrieve()
 		{
 			if (!capturedItem)
 				return null;
 
-			Item item = capturedItem;
+			Capturllectable item = capturedItem;
 			capturedItem = null;
 			item.gameObject.SetActive(true);
 			item.transform.parent = null;

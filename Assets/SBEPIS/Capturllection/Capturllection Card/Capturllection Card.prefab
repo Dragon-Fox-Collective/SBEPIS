@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6603116df82fe8549984b384b2cc2586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCapturedItem: {fileID: 0}
+  defaultCapturedItemPrefab: {fileID: 0}
   onCapture:
     m_PersistentCalls:
       m_Calls:
@@ -177,8 +177,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3431021441257790128}
         m_TargetAssemblyTypeName: SBEPIS.Capturllection.CaptureBack, SBEPIS.Capturllection
-        m_MethodName: UpdateCaptureCodeToDefault
-        m_Mode: 1
+        m_MethodName: UpdateCaptureCode
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

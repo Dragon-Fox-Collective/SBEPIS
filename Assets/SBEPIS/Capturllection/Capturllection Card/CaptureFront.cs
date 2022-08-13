@@ -10,7 +10,7 @@ namespace SBEPIS.Capturllection
 		public Material captureMaterial;
 		public Renderer[] renderers;
 
-		public void UpdateImage(Item item)
+		public void UpdateImage(Capturllectable item)
 		{
 			Punchable.PerformOnMaterial(renderers, captureMaterial, material => {
 				material.SetTexture("_Base_Map", CaptureCamera.instance.TakePictureOfObject(item.gameObject));
