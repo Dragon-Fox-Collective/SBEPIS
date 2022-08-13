@@ -1,5 +1,7 @@
 using SBEPIS.Items;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,10 +10,12 @@ namespace SBEPIS.Capturllection
 	public class Capturllectainer : MonoBehaviour
 	{
 		public Item defaultCapturedItemPrefab;
-		public bool canRetrieve = true;
+		public bool isRetrievingAllowed = true;
+		public List<Predicate<Capturllectainer>> retrievePredicates = new();
 
 		public CaptureEvent onCapture = new(), onRetrieve = new();
 
+		public bool canRetrieve => retrievePredicates.All(predicate => predicate.Invoke(this));
 		public Capturllectable capturedItem { get; private set; }
 
 		private void Awake()
@@ -21,9 +25,10 @@ namespace SBEPIS.Capturllection
 				Capturllectable item = Instantiate(defaultCapturedItemPrefab.gameObject).GetComponent<Capturllectable>();
 				Capture(item);
 			}
+
+			retrievePredicates.Add(container => isRetrievingAllowed);
 		}
 
-		// TODO: Let the player capturllect piles of things somehow
 		public void Capture(Capturllectable item)
 		{
 			if (capturedItem || !item)

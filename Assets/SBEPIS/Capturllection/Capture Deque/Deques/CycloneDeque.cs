@@ -8,18 +8,33 @@ namespace SBEPIS.Capturllection.Deques
 	{
 		public float radius = 20;
 		public Quaternion cardRotation = Quaternion.identity;
-		public float speed = 1;
+		public float speed = 20;
+
+		private float time;
+
+		private CardTarget topCard;
 
 		public override void LayoutTargets(List<CardTarget> targets)
 		{
-			float angle = Time.fixedTime * speed;
+			time += Time.fixedDeltaTime * speed;
+
+			float angle = time;
 			float deltaAngle = 360f / targets.Count;
 			foreach (CardTarget target in targets)
 			{
 				target.transform.localPosition = Quaternion.Euler(0, 0, angle) * Vector3.up * radius;
-				target.transform.localRotation = cardRotation * Quaternion.Euler(0, 0, angle);
+				target.transform.localRotation = Quaternion.Euler(0, 0, angle) * cardRotation;
+
+				float modAngle = angle.ModAround(360);
+				if (Mathf.Abs(modAngle) < deltaAngle / 2)
+					topCard = target;
+				else
+					target.transform.localRotation *= Quaternion.Euler(0, 180, 0);
+
 				angle += deltaAngle;
 			}
 		}
+
+		public override bool CanRetrieve(List<CardTarget> targets, CardTarget card) => card == topCard;
 	}
 }

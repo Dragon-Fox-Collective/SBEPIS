@@ -17,7 +17,7 @@ namespace SBEPIS.Capturllection
 		public StrengthSettings cardStrength;
 		public UnityEvent onAssembled = new(), onDisassembled = new();
 
-		private readonly Dictionary<DequeStorable, ProceduralAnimation> cards = new();
+		private readonly List<ProceduralAnimation> animations = new();
 		private readonly Dictionary<DequeStorable, CardTarget> cardTargets = new();
 
 		public void CreateCards(DequeStorable cardPrefab)
@@ -29,7 +29,7 @@ namespace SBEPIS.Capturllection
 				AddCard(card, target);
 
 				Capturllectainer container = card.GetComponent<Capturllectainer>();
-				container.canRetrieve = false;
+				container.isRetrievingAllowed = false;
 
 				Capturllectable capturllectable = card.GetComponent<Capturllectable>();
 				capturllectable.canCapturllect = false;
@@ -64,7 +64,7 @@ namespace SBEPIS.Capturllection
 				card.gameObject.SetActive(false);
 			});
 
-			cards.Add(card, animation);
+			animations.Add(animation);
 			cardTargets.Add(card, target);
 
 			return animation;
@@ -80,7 +80,7 @@ namespace SBEPIS.Capturllection
 			ProceduralAnimation animation = card.GetComponent<ProceduralAnimation>();
 			Destroy(animation);
 
-			cards.Remove(card);
+			animations.Remove(animation);
 			cardTargets.Remove(card);
 		}
 
@@ -114,7 +114,7 @@ namespace SBEPIS.Capturllection
 
 		private IEnumerator SpawnCards()
 		{
-			foreach (ProceduralAnimation card in cards.Values)
+			foreach (ProceduralAnimation card in animations)
 			{
 				card.PlayForward();
 				yield return new WaitForSeconds(cardDelay);
@@ -128,7 +128,7 @@ namespace SBEPIS.Capturllection
 
 		private IEnumerator DespawnCards()
 		{
-			foreach (ProceduralAnimation card in cards.Values)
+			foreach (ProceduralAnimation card in animations)
 			{
 				card.PlayReverse();
 				yield return new WaitForSeconds(cardDelay);
@@ -137,7 +137,7 @@ namespace SBEPIS.Capturllection
 
 		public void ForceClose()
 		{
-			foreach (ProceduralAnimation card in cards.Values)
+			foreach (ProceduralAnimation card in animations)
 			{
 				if (card.time == card.endTime)
 					card.onReversePlay.Invoke();
