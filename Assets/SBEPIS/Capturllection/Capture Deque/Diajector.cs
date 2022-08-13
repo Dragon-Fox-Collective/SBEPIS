@@ -14,28 +14,31 @@ namespace SBEPIS.Capturllection
 		public Rigidbody staticRigidbody;
 		public StrengthSettings cardStrength;
 
-		private CaptureDeque deque;
+		public CaptureDeque deque { get; private set; }
+
+		private void CreateCards(CaptureDeque deque)
+		{
+			this.deque = deque;
+
+			DequePage page = mainPage;
+			page.baseTargets.AddRange(deque.cardStart, deque.cardTarget, upperTarget);
+			page.curve = curve;
+			page.cardDelay = cardDelay;
+			page.staticRigidbody = staticRigidbody;
+			page.cardStrength = cardStrength;
+			page.CreateCards(cardPrefab);
+		}
 
 		public void StartAssembly(CaptureDeque deque)
 		{
 			if (!this.deque)
-			{
-				this.deque = deque;
-
-				DequePage page = mainPage;
-				page.baseTargets.AddRange(deque.cardStart, deque.cardTarget, upperTarget);
-				page.curve = curve;
-				page.cardDelay = cardDelay;
-				page.staticRigidbody = staticRigidbody;
-				page.cardStrength = cardStrength;
-				page.CreateCards(cardPrefab);
-			}
+				CreateCards(deque);
 
 			gameObject.SetActive(true);
 			mainPage.StartAssembly(deque);
 		}
 
-		public void StartDisassembly(CaptureDeque deque)
+		public void StartDisassembly()
 		{
 			if (deque)
 				mainPage.StartDisassembly(deque);
@@ -44,7 +47,8 @@ namespace SBEPIS.Capturllection
 
 		public void ForceClose()
 		{
-			deque.StopAllCoroutines();
+			if (deque)
+				deque.StopAllCoroutines();
 			mainPage.ForceClose();
 			gameObject.SetActive(false);
 		}
