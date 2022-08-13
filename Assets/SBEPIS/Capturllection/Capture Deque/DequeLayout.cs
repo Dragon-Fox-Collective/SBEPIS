@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	[RequireComponent(typeof(DequePage))]
 	public class DequeLayout : MonoBehaviour
 	{
 		public Diajector diajector;
@@ -15,9 +14,11 @@ namespace SBEPIS.Capturllection
 		private readonly List<CardTarget> targets = new();
 		private DequePage dequePage;
 
-		private void Awake()
+		private void Start()
 		{
-			dequePage = GetComponent<DequePage>();
+			dequePage = GetComponentInParent<DequePage>();
+			if (!dequePage)
+				Debug.LogError($"Could not get a DequePage from {this}");
 		}
 
 		private void FixedUpdate()
