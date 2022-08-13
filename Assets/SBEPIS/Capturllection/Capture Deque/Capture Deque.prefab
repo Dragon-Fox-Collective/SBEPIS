@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 8899563152095457308}
   - component: {fileID: 8907908523576682515}
   - component: {fileID: 2025800528447268331}
+  - component: {fileID: 1044354550020064954}
   m_Layer: 0
   m_Name: Capture Deque
   m_TagString: Untagged
@@ -245,6 +246,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardDistance: 10
   cardRotation: {x: 0, y: 0.17364818, z: 0, w: 0.9848077}
+  wobbleHeight: 10
+  wobbleTimeOffset: 1
+--- !u!114 &1044354550020064954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762745506201212150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5207c94596a9a68468f3a6df65480069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCapturllectable: 0
 --- !u!1001 &178777184448903901
 PrefabInstance:
   m_ObjectHideFlags: 0

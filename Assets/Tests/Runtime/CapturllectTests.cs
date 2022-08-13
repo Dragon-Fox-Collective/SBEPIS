@@ -92,7 +92,7 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator CapturllectFetchesItem_WhenHoldingCard()
 		{
-			Item capturedItem = scene.fullCard.capturedItem;
+			Capturllectable capturedItem = scene.fullCard.capturedItem;
 			Assert.IsNotNull(capturedItem);
 			Assert.IsFalse(capturedItem.gameObject.activeInHierarchy);
 
