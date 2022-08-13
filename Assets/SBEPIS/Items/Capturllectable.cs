@@ -1,7 +1,8 @@
 using SBEPIS.Bits;
+using SBEPIS.Items;
 using UnityEngine;
 
-namespace SBEPIS.Items
+namespace SBEPIS.Capturllection
 {
 	[RequireComponent(typeof(ItemBase))]
 	public class Capturllectable : MonoBehaviour

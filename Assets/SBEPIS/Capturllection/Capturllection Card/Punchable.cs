@@ -1,5 +1,4 @@
 using SBEPIS.Bits;
-using SBEPIS.Capturllection;
 using System;
 using UnityEngine;
 
@@ -10,13 +9,6 @@ namespace SBEPIS.Thaumaturgy
 		public BitSet punchedBits;
 		public Material[] materials;
 		public Renderer[] renderers;
-
-		private void Awake()
-		{
-			DequeStorable card = GetComponent<DequeStorable>();
-			if (card)
-				card.storePredicates.Add(() => punchedBits == BitSet.NOTHING);
-		}
 
 		private void Start()
 		{

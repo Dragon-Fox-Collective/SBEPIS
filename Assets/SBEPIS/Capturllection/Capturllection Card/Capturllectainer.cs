@@ -21,10 +21,6 @@ namespace SBEPIS.Capturllection
 				Capturllectable item = Instantiate(defaultCapturedItemPrefab.gameObject).GetComponent<Capturllectable>();
 				Capture(item);
 			}
-
-			DequeStorable card = GetComponent<DequeStorable>();
-			if (card)
-				card.storePredicates.Add(() => capturedItem);
 		}
 
 		// TODO: Let the player capturllect piles of things somehow
