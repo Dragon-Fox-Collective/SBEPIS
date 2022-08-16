@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,6 +8,7 @@ namespace SBEPIS.Controller
 	[RequireComponent(typeof(Rigidbody))]
 	public class Grabbable : MonoBehaviour
 	{
+		public List<GrabPoint> grabPoints = new();
 		public ItemEvent onTouch = new(), onGrab = new(), onHoldUpdate = new(), onUse = new(), onDrop = new(), onStopTouch = new();
 
 		public Grabber grabbingGrabber { get; private set; }

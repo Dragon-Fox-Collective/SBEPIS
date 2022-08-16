@@ -123,16 +123,30 @@ namespace SBEPIS.Controller
 				return false;
 
 			heldPureColliderNormal = Vector3.zero;
-
-			heldCollider = grabbable.rigidbody.GetComponentInChildren<Collider>();
 			heldGrabbable = grabbable;
+
+			if (grabbable.grabPoints.Count > 0)
+				BindToGrabPoint(grabbable, grabbable.grabPoints[0]);
+			else
+				heldCollider = grabbable.rigidbody.GetComponentInChildren<Collider>();
 
 			heldGrabbableJoint = gameObject.AddComponent<FixedJoint>();
 			heldGrabbableJoint.connectedBody = grabbable.rigidbody;
+			heldGrabbableJoint.autoConfigureConnectedAnchor = false;
+			heldGrabbableJoint.anchor = transform.InverseTransformPoint(grabbable.transform.position);
+			heldGrabbableJoint.connectedAnchor = Vector3.zero;
 
 			grabbable.Grab(this);
 
 			return true;
+		}
+
+		private void BindToGrabPoint(Grabbable grabbable, GrabPoint grabPoint)
+		{
+			heldCollider = grabPoint.colliderToGrab;
+			grabbable.transform.SetPositionAndRotation(
+				transform.TransformPoint(grabPoint.transform.InverseTransformPoint(grabbable.transform.position)),
+				transform.TransformRotation(grabPoint.transform.InverseTransformRotation(grabbable.transform.rotation)));
 		}
 
 		private void ShortRangeGrab()
