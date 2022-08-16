@@ -48,7 +48,12 @@ namespace SBEPIS.Controller.Flatscreen
 				tracker,
 				hand,
 				emptyHoldPosition,
-				transform.position + transform.forward * zoomAmount + transform.right * offset,
+				hand.heldGrabPoint && hand.heldGrabPoint.flatscreenTarget ?
+					transform.TransformPoint(Vector3.forward * zoomAmount + Vector3.right * offset + hand.heldGrabPoint.flatscreenTarget.InverseTransformPoint(hand.heldGrabPoint.transform.position)) :
+					transform.TransformPoint(Vector3.forward * zoomAmount + Vector3.right * offset),
+				hand.heldGrabPoint && hand.heldGrabPoint.flatscreenTarget ?
+					transform.TransformRotation(hand.heldGrabPoint.flatscreenTarget.InverseTransformRotation(hand.heldGrabPoint.transform.rotation)) :
+					transform.rotation,
 				transform.position + transform.forward * (raycastDistance - rightGrabber.shortRangeGrabDistace) + transform.right * offset,
 				transform.rotation,
 				transform.position + transform.right * offset,
@@ -62,6 +67,7 @@ namespace SBEPIS.Controller.Flatscreen
 			Grabber grabber,
 			Transform emptyHoldPosition,
 			Vector3 fullHoldPosition,
+			Quaternion fullHoldRotation,
 			Vector3 shortRangeTargetPosition,
 			Quaternion rotation,
 			Vector3 casterPosition,
@@ -72,7 +78,7 @@ namespace SBEPIS.Controller.Flatscreen
 			grabber.OverrideShortRangeGrab(casterPosition, casterForward, raycastDistance);
 
 			if (grabber.heldCollider)
-				tracker.SetPositionAndRotation(fullHoldPosition, rotation);
+				tracker.SetPositionAndRotation(fullHoldPosition, fullHoldRotation);
 			else if (CastHand(out RaycastHit hit, casterPosition, casterForward, raycastDistance, grabber))
 				tracker.SetPositionAndRotation(hit.point, Quaternion.LookRotation(-hit.normal, up));
 			else if (CastShortRangeGrab(out _, casterPosition, casterForward, raycastDistance, grabber))

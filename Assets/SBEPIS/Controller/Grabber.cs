@@ -29,6 +29,7 @@ namespace SBEPIS.Controller
 		public bool isHoldingSomething => heldCollider;
 		public Collider heldCollider { get; private set; }
 		public Grabbable heldGrabbable { get; private set; }
+		public GrabPoint heldGrabPoint { get; private set; }
 		private FixedJoint heldGrabbableJoint;
 		private Vector3 heldPureColliderNormal;
 
@@ -143,6 +144,7 @@ namespace SBEPIS.Controller
 
 		private void BindToGrabPoint(Grabbable grabbable, GrabPoint grabPoint)
 		{
+			heldGrabPoint = grabPoint;
 			heldCollider = grabPoint.colliderToGrab;
 			grabbable.transform.SetPositionAndRotation(
 				transform.TransformPoint(grabPoint.transform.InverseTransformPoint(grabbable.transform.position)),
@@ -168,6 +170,7 @@ namespace SBEPIS.Controller
 			Grabbable droppedGrabbable = heldGrabbable;
 			heldCollider = null;
 			heldGrabbable = null;
+			heldGrabPoint = null;
 
 			Destroy(heldGrabbableJoint);
 			heldGrabbableJoint = null;
