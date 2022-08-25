@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SBEPIS.Controller
+namespace SBEPIS.Physics
 {
 	[CreateAssetMenu]
 	public class StrengthSettings : ScriptableObject

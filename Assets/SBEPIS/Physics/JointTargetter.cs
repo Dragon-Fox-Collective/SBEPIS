@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SBEPIS.Controller
+namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class JointTargetter : MonoBehaviour
