@@ -1,4 +1,4 @@
-using SBEPIS.Controller;
+using SBEPIS.Physics;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection
@@ -18,32 +18,45 @@ namespace SBEPIS.Capturllection
 
 		public CaptureDeque deque { get; private set; }
 
-		private void CreateCards(CaptureDeque deque)
-		{
-			this.deque = deque;
+		private DequePage currentPage;
+		public bool hasPageOpen => currentPage;
 
-			DequePage page = mainPage;
+		private void CreateCards(DequePage page)
+		{
 			page.baseTargets.AddRange(deque.cardStart, deque.cardTarget, upperTarget);
 			page.curve = curve;
 			page.cardDelay = cardDelay;
 			page.staticRigidbody = staticRigidbody;
 			page.cardStrength = cardStrength;
-			page.CreateCards(cardPrefab);
+			page.CreateCards(deque, cardPrefab);
 		}
 
-		public void StartAssembly(CaptureDeque deque)
+		public void StartAssembly(CaptureDeque deque) => StartAssembly(deque, mainPage);
+
+		public void StartAssembly(CaptureDeque deque, DequePage page)
 		{
 			if (!isBound)
-				CreateCards(deque);
+				this.deque = deque;
+
+			if (hasPageOpen)
+				StartDisassembly();
+			currentPage = page;
 
 			gameObject.SetActive(true);
-			mainPage.StartAssembly(deque);
+			currentPage.gameObject.SetActive(true);
+			if (!currentPage.cardsCreated)
+				CreateCards(currentPage);
+			currentPage.StartAssembly(deque);
 		}
 
 		public void StartDisassembly()
 		{
-			if (isBound)
-				mainPage.StartDisassembly(deque);
+			if (hasPageOpen)
+			{
+				currentPage.StartDisassembly(deque);
+				currentPage.gameObject.SetActive(false);
+				currentPage = null;
+			}
 			gameObject.SetActive(false);
 		}
 
@@ -51,7 +64,12 @@ namespace SBEPIS.Capturllection
 		{
 			if (isBound)
 				deque.StopAllCoroutines();
-			mainPage.ForceClose();
+			if (hasPageOpen)
+			{
+				currentPage.ForceClose();
+				currentPage.gameObject.SetActive(false);
+				currentPage = null;
+			}
 			gameObject.SetActive(false);
 		}
 	}

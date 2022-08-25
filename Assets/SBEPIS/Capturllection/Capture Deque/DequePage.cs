@@ -1,4 +1,5 @@
 using SBEPIS.Controller;
+using SBEPIS.Physics;
 using SBEPIS.Items;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,8 +21,15 @@ namespace SBEPIS.Capturllection
 		private readonly List<ProceduralAnimation> animations = new();
 		private readonly Dictionary<DequeStorable, CardTarget> cardTargets = new();
 
-		public void CreateCards(DequeStorable cardPrefab)
+		public bool cardsCreated { get; private set; }
+
+		public void CreateCards(CaptureDeque deque, DequeStorable cardPrefab)
 		{
+			if (cardsCreated)
+				return;
+
+			cardsCreated = true;
+
 			foreach (CardTarget target in GetComponentsInChildren<CardTarget>())
 			{
 				DequeStorable card = Instantiate(cardPrefab.gameObject).GetComponent<DequeStorable>();
@@ -33,6 +41,9 @@ namespace SBEPIS.Capturllection
 
 				Capturllectable capturllectable = card.GetComponent<Capturllectable>();
 				capturllectable.canCapturllect = false;
+
+				Grabbable grabbable = card.grabbable;
+				grabbable.onGrab.AddListener((grabber, grabbable) => target.onGrab.Invoke(deque));
 			}
 		}
 
@@ -53,7 +64,7 @@ namespace SBEPIS.Capturllection
 			});
 			animation.onEnd.AddListener(() =>
 			{
-				CreateCardJoint(card, target.transform, staticRigidbody, cardStrength);
+				CreateCardJoint(card, target, staticRigidbody, cardStrength);
 			});
 			animation.onReversePlay.AddListener(() =>
 			{
@@ -87,23 +98,25 @@ namespace SBEPIS.Capturllection
 		private void CreateCardJoint(Grabber grabber, Grabbable grabbable)
 		{
 			DequeStorable card = grabbable.GetComponent<DequeStorable>();
-			CreateCardJoint(card, cardTargets[card].transform, staticRigidbody, cardStrength);
+			CreateCardJoint(card, cardTargets[card], staticRigidbody, cardStrength);
 		}
 
-		private void CreateCardJoint(DequeStorable card, Transform target, Rigidbody staticRigidbody, StrengthSettings cardStrength)
+		private void CreateCardJoint(DequeStorable card, CardTarget target, Rigidbody staticRigidbody, StrengthSettings cardStrength)
 		{
 			JointTargetter targetter = card.gameObject.AddComponent<JointTargetter>();
 			targetter.connectedRigidbody = staticRigidbody;
-			targetter.target = target;
+			targetter.target = target.transform;
 			targetter.strength = cardStrength;
 			targetter.accountForTargetMovement = false;
+			target.targetter = targetter;
 		}
 
 		private void DestroyCardJoint(Grabber grabber, Grabbable grabbable) => DestroyCardJoint(grabbable.GetComponent<DequeStorable>());
 
 		private void DestroyCardJoint(DequeStorable card)
 		{
-			JointTargetter targetter = card.GetComponent<JointTargetter>();
+			JointTargetter targetter = cardTargets[card].targetter;
+			cardTargets[card].targetter = null;
 			Destroy(targetter);
 		}
 
