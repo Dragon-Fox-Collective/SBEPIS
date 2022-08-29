@@ -8,7 +8,9 @@ namespace SBEPIS.Capturllection
 {
 	public class CardTarget : MonoBehaviour
 	{
-		public UnityEvent<CaptureDeque> onGrab = new();
+		public UnityEvent<DequeStorable> onCardCreated = new();
+		public UnityEvent onPrepareCard = new();
+		public UnityEvent<CaptureDeque> onGrab = new(), onDrop = new();
 
 		public DequeStorable card { get; set; }
 		public bool isTemporary { get; set; }
