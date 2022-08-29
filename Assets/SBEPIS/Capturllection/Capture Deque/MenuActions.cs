@@ -2,23 +2,15 @@ using SBEPIS.Controller;
 using SBEPIS.Utils;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
-namespace SBEPIS.UI
+namespace SBEPIS.Capturllection
 {
 	public class MenuActions : MonoBehaviour
 	{
-		public UnityEvent onPause = new(), onUnpause = new();
-
-		[Header("Menu transforms")]
-		public Transform pauseButtons;
-		public Transform main;
-		public Transform settings;
-		
 		[Header("Controls")]
-		public PhysicsSlider sensitivitySlider;
+		[SerializeReference]
+		public SliderCardAttacher sensitivitySlider;
 		public float mouseSensitivityMin = 0.1f;
 		public float mouseSensitivityMax = 1;
 
@@ -60,44 +52,6 @@ namespace SBEPIS.UI
 			Application.Quit();
 		}
 
-		public void GoToMain()
-		{
-			main.gameObject.SetActive(true);
-			settings.gameObject.SetActive(false);
-		}
-
-		public void GoToSettings()
-		{
-			main.gameObject.SetActive(false);
-			settings.gameObject.SetActive(true);
-
-			ResetMouseSensitivitySlider();
-		}
-
-		public void OnTogglePauseMenu(CallbackContext context)
-		{
-			if (!context.performed)
-				return;
-
-			if (pauseButtons.gameObject.activeSelf)
-				Unpause();
-			else
-				Pause();
-		}
-
-		public void Pause()
-		{
-			pauseButtons.gameObject.SetActive(true);
-			GoToMain();
-			onPause.Invoke();
-		}
-
-		public void Unpause()
-		{
-			pauseButtons.gameObject.SetActive(false);
-			onUnpause.Invoke();
-		}
-
 
 		private void Start()
 		{
@@ -130,7 +84,7 @@ namespace SBEPIS.UI
 
 		public void ResetMouseSensitivitySlider()
 		{
-			sensitivitySlider.ResetAnchor(lookController.sensitivity.Map(mouseSensitivityMin, mouseSensitivityMax, 0, 1));
+			sensitivitySlider.SliderValue = lookController.sensitivity.Map(mouseSensitivityMin, mouseSensitivityMax, 0, 1);
 		}
 
 		public void ChangeMouseSensitivity(float percent)

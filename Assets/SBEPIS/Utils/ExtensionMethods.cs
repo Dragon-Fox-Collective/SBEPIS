@@ -113,6 +113,11 @@ public static class ExtensionMethods
 		return enumerable.Take(index).Append(element).Concat(enumerable.TakeLast(enumerable.Count() - index));
 	}
 
+	public static IEnumerable<(T, TSecond)> Zip<T, TSecond>(this IEnumerable<T> first, IEnumerable<TSecond> second)
+	{
+		return first.Zip(second, (first, second) => (first, second));
+	}
+
 	public static IEnumerable<float> AsEnumerable(this Vector3 vector)
 	{
 		yield return vector.x;

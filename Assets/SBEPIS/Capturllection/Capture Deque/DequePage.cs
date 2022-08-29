@@ -16,7 +16,7 @@ namespace SBEPIS.Capturllection
 		public float cardDelay = 0.5f;
 		public Rigidbody staticRigidbody;
 		public StrengthSettings cardStrength;
-		public UnityEvent onAssembled = new(), onDisassembled = new();
+		public UnityEvent onPreparePage = new();
 
 		private readonly List<ProceduralAnimation> animations = new();
 		private readonly Dictionary<DequeStorable, CardTarget> cardTargets = new();
@@ -44,6 +44,9 @@ namespace SBEPIS.Capturllection
 
 				Grabbable grabbable = card.grabbable;
 				grabbable.onGrab.AddListener((grabber, grabbable) => target.onGrab.Invoke(deque));
+				grabbable.onDrop.AddListener((grabber, grabbable) => target.onDrop.Invoke(deque));
+
+				target.onCardCreated.Invoke(card);
 			}
 		}
 
@@ -122,14 +125,16 @@ namespace SBEPIS.Capturllection
 
 		public void StartAssembly(MonoBehaviour coroutineOwner)
 		{
+			onPreparePage.Invoke();
 			coroutineOwner.StartCoroutine(SpawnCards());
 		}
 
 		private IEnumerator SpawnCards()
 		{
-			foreach (ProceduralAnimation card in animations)
+			foreach ((ProceduralAnimation animation, CardTarget target) in animations.Zip(cardTargets.Values))
 			{
-				card.PlayForward();
+				target.onPrepareCard.Invoke();
+				animation.PlayForward();
 				yield return new WaitForSeconds(cardDelay);
 			}
 		}
@@ -141,9 +146,9 @@ namespace SBEPIS.Capturllection
 
 		private IEnumerator DespawnCards()
 		{
-			foreach (ProceduralAnimation card in animations)
+			foreach (ProceduralAnimation animation in animations)
 			{
-				card.PlayReverse();
+				animation.PlayReverse();
 				yield return new WaitForSeconds(cardDelay);
 			}
 		}
