@@ -2654,7 +2654,8 @@ GameObject:
   - component: {fileID: 5733076409996360854}
   - component: {fileID: 4968331796699711886}
   - component: {fileID: 690210978355806070}
-  - component: {fileID: 7378427723189574754}
+  - component: {fileID: 2729175518569589641}
+  - component: {fileID: 3939044753892748274}
   m_Layer: 8
   m_Name: Player Body
   m_TagString: Untagged
@@ -2695,7 +2696,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &882628095479484305
 MonoBehaviour:
@@ -2713,8 +2714,8 @@ MonoBehaviour:
   onGravityChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7378427723189574754}
-        m_TargetAssemblyTypeName: SBEPIS.Interaction.Controller.Orienter, SBEPIS.Interaction
+      - m_Target: {fileID: 2729175518569589641}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.OrienterJoint, SBEPIS.Controller
         m_MethodName: Orient
         m_Mode: 0
         m_Arguments:
@@ -2771,7 +2772,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footballJoint: {fileID: 1746505250530069798}
   jumpSpeed: 5
-  groundDetectorDelay: 0.5
   connectedAnchorTarget: {x: 0, y: 0, z: 0}
 --- !u!114 &8432642417375942626
 MonoBehaviour:
@@ -2861,7 +2861,7 @@ MonoBehaviour:
   groundCheckMask:
     serializedVersion: 2
     m_Bits: 1
---- !u!114 &7378427723189574754
+--- !u!114 &2729175518569589641
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2870,9 +2870,106 @@ MonoBehaviour:
   m_GameObject: {fileID: 6376568280094680652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9cbe500f1f652147b53b21e6e295a32, type: 3}
+  m_Script: {fileID: 11500000, guid: c6295ed33cf7b1140af95db75cf0d119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joint: {fileID: 3939044753892748274}
+--- !u!153 &3939044753892748274
+ConfigurableJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376568280094680652}
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_Axis: {x: 1, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_XMotion: 2
+  m_YMotion: 2
+  m_ZMotion: 2
+  m_AngularXMotion: 2
+  m_AngularYMotion: 2
+  m_AngularZMotion: 2
+  m_LinearLimitSpring:
+    spring: 0
+    damper: 0
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularXLimitSpring:
+    spring: 0
+    damper: 0
+  m_LowAngularXLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_HighAngularXLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularYZLimitSpring:
+    spring: 0
+    damper: 0
+  m_AngularYLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularZLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 1000
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 1000
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 1000
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 1
+    maximumForce: 1000
+  m_ProjectionMode: 0
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 180
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &6433262757480330092
 GameObject:
   m_ObjectHideFlags: 0
@@ -3477,6 +3574,7 @@ MonoBehaviour:
   m_TrackedDeviceOrientationAction: {fileID: 0}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!1 &8654920292855362283
 GameObject:
   m_ObjectHideFlags: 0
