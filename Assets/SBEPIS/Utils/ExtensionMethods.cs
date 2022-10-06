@@ -68,8 +68,9 @@ public static class ExtensionMethods
 		UnityEngine.Object.Destroy(other.gameObject);
 	}
 
-	public static Quaternion TransformRotation(this Transform transform, Quaternion rotation) => transform.rotation * rotation;
-	public static Quaternion InverseTransformRotation(this Transform transform, Quaternion rotation) => transform.rotation.Inverse() * rotation;
+	// Note that lhs * rhs means rotating by lhs and then by rhs
+	public static Quaternion TransformRotation(this Transform from, Quaternion delta) => from.rotation * delta; // from * delta = to
+	public static Quaternion InverseTransformRotation(this Transform from, Quaternion to) => from.rotation.Inverse() * to; // delta = from-1 * to
 
 	public static Vector3 CenterOfRotation(Vector3 pos1, Vector3 up1, Vector3 pos2, Vector3 up2)
 	{
@@ -165,7 +166,7 @@ public static class ExtensionMethods
 		return new Vector3(d[0, 0], d[1, 1], d[2, 2]);
 	}
 
-	public static Matrix4x4 AddedBy(this Matrix4x4 a, Matrix4x4 b)
+	public static Matrix4x4 Plus(this Matrix4x4 a, Matrix4x4 b)
 	{
 		Matrix4x4 rtn = Matrix4x4.zero;
 		for (int i = 0; i < 16; i++)
@@ -173,7 +174,7 @@ public static class ExtensionMethods
 		return rtn;
 	}
 
-	public static Matrix4x4 SubtractedBy(this Matrix4x4 a, Matrix4x4 b)
+	public static Matrix4x4 Minus(this Matrix4x4 a, Matrix4x4 b)
 	{
 		Matrix4x4 rtn = Matrix4x4.zero;
 		for (int i = 0; i < 16; i++)
@@ -181,7 +182,7 @@ public static class ExtensionMethods
 		return rtn;
 	}
 
-	public static Matrix4x4 ScaledBy(this Matrix4x4 a, float b)
+	public static Matrix4x4 Times(this Matrix4x4 a, float b)
 	{
 		Matrix4x4 rtn = Matrix4x4.zero;
 		for (int i = 0; i < 16; i++)
@@ -189,9 +190,11 @@ public static class ExtensionMethods
 		return rtn;
 	}
 
-	public static Matrix4x4 OuterSquared(this Vector3 a) => new Matrix4x4(
+	public static Matrix4x4 OuterSquared(this Vector3 a) => new(
 			new Vector4(a.x * a.x, a.x * a.y, a.x * a.z, 0),
 			new Vector4(a.y * a.x, a.y * a.y, a.y * a.z, 0),
 			new Vector4(a.z * a.x, a.z * a.y, a.z * a.z, 0),
 			new Vector4(0, 0, 0, 1));
+
+	public static float InnerSquared(this Vector3 a) => Vector3.Dot(a, a);
 }
