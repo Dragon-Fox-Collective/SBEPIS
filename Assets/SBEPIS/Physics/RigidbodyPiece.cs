@@ -9,13 +9,13 @@ namespace SBEPIS.Physics
 		public Collider referenceCollider;
 		public float mass = 1;
 
-		public Vector3 WorldCenter => transform.position + referenceCollider switch
+		public Vector3 WorldCenter => transform.TransformPoint(referenceCollider switch
 		{
 			CapsuleCollider capsule => capsule.center,
 			BoxCollider box => box.center,
 			SphereCollider sphere => sphere.center,
 			_ => throw new InvalidOperationException($"Reference collider {referenceCollider} is an invalid shape")
-		};
+		});
 
 		public Matrix4x4 LocalInertiaTensor {
 			get
