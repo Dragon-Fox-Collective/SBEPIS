@@ -2,11 +2,16 @@ using UnityEngine;
 
 namespace SBEPIS.Controller
 {
+	[RequireComponent(typeof(Rigidbody))]
 	public class OrienterJoint : MonoBehaviour
 	{
-		public ConfigurableJoint joint;
-
 		private Vector3 up;
+		private new Rigidbody rigidbody;
+
+		private void Awake()
+		{
+			rigidbody = GetComponent<Rigidbody>();
+		}
 
 		public void Orient(Vector3 up)
 		{
@@ -15,15 +20,15 @@ namespace SBEPIS.Controller
 
 		private void FixedUpdate()
 		{
-			joint.targetRotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(transform.forward, up), Vector3.up);
+			//if (up != Vector3.zero)
+				//transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(transform.forward, up), up);
 
-			//Quaternion delta = Quaternion.FromToRotation(transform.up, up);
-			//if (delta.w < 0) delta = delta.Select(x => -x);
-			//delta.ToAngleAxis(out float angle, out Vector3 axis);
-			//angle *= Mathf.Deg2Rad;
-			//joint.targetAngularVelocity = angle / Time.fixedDeltaTime * axis;
+			Quaternion delta = Quaternion.FromToRotation(transform.up, up);
+			if (delta.w < 0) delta = delta.Select(x => -x);
+			delta.ToAngleAxis(out float angle, out Vector3 axis);
+			angle *= Mathf.Deg2Rad;
+			rigidbody.angularVelocity = angle / Time.fixedDeltaTime * axis;
 
-			print(joint.targetRotation.eulerAngles);
 		}
 	}
 }
