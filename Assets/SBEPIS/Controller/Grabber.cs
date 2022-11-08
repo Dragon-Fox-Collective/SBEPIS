@@ -194,7 +194,7 @@ namespace SBEPIS.Controller
 			if (collider.isTrigger)
 				return;
 
-			print($"Colliding with {collider}");
+			//print($"Colliding with {collider}");
 			collider.SelectGrabbable(grabbable => grabbable.onTouch.Invoke(this));
 			collidingColliders.Add(collider);
 		}
@@ -204,7 +204,7 @@ namespace SBEPIS.Controller
 			if (collider.isTrigger)
 				return;
 
-			print($"No longer colliding with {collider}");
+			//print($"No longer colliding with {collider}");
 			collidingColliders.Remove(collider);
 			collider.SelectGrabbable(grabbable => grabbable.onStopTouch.Invoke(this));
 		}

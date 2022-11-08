@@ -9,7 +9,6 @@ namespace SBEPIS.Physics
 	public class GravitySum : MonoBehaviour
 	{
 		public Transform customCenterOfMass;
-		public UnityEvent<Vector3> onGravityChanged = new();
 
 		public Vector3 upDirection { get; private set; } = Vector3.up;
 		public float gravityAcceleration { get; private set; } = 0;
@@ -51,10 +50,7 @@ namespace SBEPIS.Physics
 			{
 				Vector3 newUpDirection = -gravity.normalized;
 				if (upDirection != newUpDirection)
-				{
 					upDirection = newUpDirection;
-					onGravityChanged.Invoke(upDirection);
-				}
 			}
 		}
 

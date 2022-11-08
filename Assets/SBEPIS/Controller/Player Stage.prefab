@@ -824,6 +824,7 @@ GameObject:
   - component: {fileID: 9031247351748657295}
   - component: {fileID: 1746505250530069798}
   - component: {fileID: 5411447600993677361}
+  - component: {fileID: 354198058439585339}
   m_Layer: 8
   m_Name: Football
   m_TagString: Untagged
@@ -985,9 +986,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customCenterOfMass: {fileID: 0}
-  onGravityChanged:
+--- !u!114 &354198058439585339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3022089293146867446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b84edc86e65316143a53973e358cb382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onImpulseRecieved:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2729175518569589641}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.OrienterJoint, SBEPIS.Controller
+        m_MethodName: Orient
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5875908470612136393}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Orienter, SBEPIS.Controller
+        m_MethodName: Orient
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3273053849925285691
 GameObject:
   m_ObjectHideFlags: 0
@@ -2710,33 +2747,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customCenterOfMass: {fileID: 6376568280010574378}
-  onGravityChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2729175518569589641}
-        m_TargetAssemblyTypeName: SBEPIS.Controller.OrienterJoint, SBEPIS.Controller
-        m_MethodName: Orient
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5875908470612136393}
-        m_TargetAssemblyTypeName: SBEPIS.Controller.Orienter, SBEPIS.Controller
-        m_MethodName: Orient
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &5816985420801532654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2872,6 +2882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6295ed33cf7b1140af95db75cf0d119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  acceleration: 50
 --- !u!1 &6433262757480330092
 GameObject:
   m_ObjectHideFlags: 0
@@ -3824,6 +3835,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0, w: 1}
+--- !u!1 &8895207142012925397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3473430124352329802}
+  m_Layer: 0
+  m_Name: Player Colliders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3473430124352329802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8895207142012925397}
+  m_LocalRotation: {x: -0, y: -1, z: 0, w: 0.00000026822087}
+  m_LocalPosition: {x: 2.1350684, y: 1.3747071, z: -13.508254}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6112518582163472336}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8900464323754095863
 GameObject:
   m_ObjectHideFlags: 0
@@ -3961,6 +4003,7 @@ Transform:
   - {fileID: 5996882585862293508}
   - {fileID: 7475380293285515536}
   - {fileID: 6632124435241510065}
+  - {fileID: 3473430124352329802}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
