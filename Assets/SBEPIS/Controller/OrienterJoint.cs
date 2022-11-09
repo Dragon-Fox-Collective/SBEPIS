@@ -8,25 +8,25 @@ namespace SBEPIS.Controller
 		public float acceleration = 1;
 
 
-		const float VELOCITY_GRAPH_MAX = 6.0f;
+		private const float VelocityGraphMax = 6.0f;
 
-		[DebugGUIPrint, DebugGUIGraph(group: 0, min: -VELOCITY_GRAPH_MAX, max: VELOCITY_GRAPH_MAX, autoScale: false, r: 1.0f, g: 0.3f, b: 0.3f)]
+		[DebugGUIPrint, DebugGUIGraph(group: 0, min: -VelocityGraphMax, max: VelocityGraphMax, autoScale: false, r: 1.0f, g: 0.3f, b: 0.3f)]
 		private float currentVelocity;
 
-		const float DISTANCE_GRAPH_MAX = 3.0f;
+		private const float DistanceGraphMax = 3.0f;
 
-		[DebugGUIPrint, DebugGUIGraph(group: 1, min: -DISTANCE_GRAPH_MAX, max: DISTANCE_GRAPH_MAX, autoScale: false, r: 1.0f, g: 0.3f, b: 0.3f)]
+		[DebugGUIPrint, DebugGUIGraph(group: 1, min: -DistanceGraphMax, max: DistanceGraphMax, autoScale: false, r: 1.0f, g: 0.3f, b: 0.3f)]
 		private float currentDistance;
-		[DebugGUIPrint, DebugGUIGraph(group: 1, min: -DISTANCE_GRAPH_MAX, max: DISTANCE_GRAPH_MAX, autoScale: false, r: 0.3f, g: 1.0f, b: 0.3f)]
+		[DebugGUIPrint, DebugGUIGraph(group: 1, min: -DistanceGraphMax, max: DistanceGraphMax, autoScale: false, r: 0.3f, g: 1.0f, b: 0.3f)]
 		private float maxPoint;
-		[DebugGUIPrint, DebugGUIGraph(group: 1, min: -DISTANCE_GRAPH_MAX, max: DISTANCE_GRAPH_MAX, autoScale: false, r: 0.3f, g: 0.3f, b: 1.0f)]
+		[DebugGUIPrint, DebugGUIGraph(group: 1, min: -DistanceGraphMax, max: DistanceGraphMax, autoScale: false, r: 0.3f, g: 0.3f, b: 1.0f)]
 		private float criticalPoint;
 		[DebugGUIPrint, DebugGUIGraph(group: 1, min: -1.5f, max: 1.5f, autoScale: false, r: 1.0f, g: 1.0f, b: 1.0f)]
 		private float accelerationSign;
 
-		const float TIME_GRAPH_MAX = 2.0f;
+		private const float TimeGraphMax = 2.0f;
 
-		[DebugGUIPrint, DebugGUIGraph(group: 2, min: -TIME_GRAPH_MAX, max: TIME_GRAPH_MAX, autoScale: false, r: 0.3f, g: 1.0f, b: 0.3f)]
+		[DebugGUIPrint, DebugGUIGraph(group: 2, min: -TimeGraphMax, max: TimeGraphMax, autoScale: false, r: 0.3f, g: 1.0f, b: 0.3f)]
 		private float timeToMax;
 
 		[DebugGUIPrint, DebugGUIGraph(group: 3, min: -1.5f, max: 1.5f, autoScale: false, r: 1.0f, g: 1.0f, b: 1.0f)]
@@ -34,7 +34,8 @@ namespace SBEPIS.Controller
 
 
 		private Vector3 up = Vector3.up;
-		private bool isStanding = false;
+		private float timeSinceStanding = 0;
+		private const float StandTimeTimeoutThreshold = 1;
 		private new Rigidbody rigidbody;
 
 		private void Awake()
@@ -46,15 +47,18 @@ namespace SBEPIS.Controller
 		
 		public void Orient(Vector3 up)
 		{
-			isStanding = up != Vector3.zero;
-			if (isStanding)
+			if (up != Vector3.zero)
+			{
+				timeSinceStanding = 0;
 				this.up = up.normalized;
+			}
 		}
 
 		private void FixedUpdate()
 		{
-			if (!isStanding)
+			if (timeSinceStanding > StandTimeTimeoutThreshold)
 				return;
+			timeSinceStanding += Time.fixedDeltaTime;
 
 			Quaternion delta = Quaternion.FromToRotation(transform.up, up);
 			if (delta.w < 0) delta = delta.Select(x => -x);
@@ -62,7 +66,7 @@ namespace SBEPIS.Controller
 			currentDistance *= Mathf.Deg2Rad;
 
 			velocitySign = Vector3.Dot(rigidbody.angularVelocity, axis) > 0 ? -1 : 1;
-			currentVelocity = rigidbody.angularVelocity.magnitude * velocitySign;
+			currentVelocity = Vector3.Project(rigidbody.angularVelocity, axis).magnitude * velocitySign;
 
 			timeToMax = currentVelocity / acceleration;
 			maxPoint = currentDistance - 0.5f * currentVelocity * currentVelocity / -acceleration;
@@ -72,7 +76,7 @@ namespace SBEPIS.Controller
 			accelerationSign = decelerate ? 1 : -1;
 
 			float deltaVelocity = accelerationSign * acceleration * Time.fixedDeltaTime;
-			rigidbody.angularVelocity += deltaVelocity * -axis;
+			rigidbody.angularVelocity = (currentVelocity + deltaVelocity) * -axis;
 
 			if (currentDistance < rigidbody.angularVelocity.magnitude * Time.fixedDeltaTime && rigidbody.angularVelocity.magnitude < 2 * acceleration * Time.fixedDeltaTime)
 				rigidbody.angularVelocity = currentDistance * axis / Time.fixedDeltaTime;
