@@ -63,6 +63,11 @@ namespace SBEPIS.Controller
 			Vector3 newVelocity = accelerationDirection.normalized * maxSpeed;
 			Vector3 angularVelocity = newVelocity.magnitude / footballCollider.radius * Vector3.Cross(upDirection, newVelocity).normalized;
 			footballJoint.targetAngularVelocity = -footballJoint.transform.InverseTransformVector(angularVelocity);
+			
+			if (angularVelocity == Vector3.zero)
+				footballCollider.attachedRigidbody.constraints |= RigidbodyConstraints.FreezeRotation;
+			else
+				footballCollider.attachedRigidbody.constraints &= ~RigidbodyConstraints.FreezeRotation;
 		}
 
 		private void AccelerateAir(Vector3 velocity, Vector3 upDirection, Vector3 accelerationDirection)
