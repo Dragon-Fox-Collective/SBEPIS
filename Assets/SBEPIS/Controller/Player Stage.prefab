@@ -824,7 +824,6 @@ GameObject:
   - component: {fileID: 9031247351748657295}
   - component: {fileID: 1746505250530069798}
   - component: {fileID: 5411447600993677361}
-  - component: {fileID: 354198058439585339}
   m_Layer: 8
   m_Name: Football
   m_TagString: Untagged
@@ -986,19 +985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customCenterOfMass: {fileID: 0}
---- !u!114 &354198058439585339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3022089293146867446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b84edc86e65316143a53973e358cb382, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onImpulseRecieved:
+  onGravityChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2729175518569589641}
@@ -2747,6 +2734,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customCenterOfMass: {fileID: 6376568280010574378}
+  onGravityChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5816985420801532654
 MonoBehaviour:
   m_ObjectHideFlags: 0
