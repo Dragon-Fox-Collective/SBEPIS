@@ -6,33 +6,9 @@ namespace SBEPIS.Controller
 	public class OrienterJoint : MonoBehaviour
 	{
 		public float acceleration = 1;
-
-
-		private const float VelocityGraphMax = 6.0f;
-
-		[DebugGUIPrint, DebugGUIGraph(group: 0, min: -VelocityGraphMax, max: VelocityGraphMax, autoScale: false, r: 1.0f, g: 0.3f, b: 0.3f)]
-		private float currentVelocity;
-
-		private const float DistanceGraphMax = 3.0f;
-
-		[DebugGUIPrint, DebugGUIGraph(group: 1, min: -DistanceGraphMax, max: DistanceGraphMax, autoScale: false, r: 1.0f, g: 0.3f, b: 0.3f)]
-		private float currentDistance;
-		[DebugGUIPrint, DebugGUIGraph(group: 1, min: -DistanceGraphMax, max: DistanceGraphMax, autoScale: false, r: 0.3f, g: 1.0f, b: 0.3f)]
-		private float maxPoint;
-		[DebugGUIPrint, DebugGUIGraph(group: 1, min: -DistanceGraphMax, max: DistanceGraphMax, autoScale: false, r: 0.3f, g: 0.3f, b: 1.0f)]
-		private float criticalPoint;
-		[DebugGUIPrint, DebugGUIGraph(group: 1, min: -1.5f, max: 1.5f, autoScale: false, r: 1.0f, g: 1.0f, b: 1.0f)]
-		private float accelerationSign;
-
-		private const float TimeGraphMax = 2.0f;
-
-		[DebugGUIPrint, DebugGUIGraph(group: 2, min: -TimeGraphMax, max: TimeGraphMax, autoScale: false, r: 0.3f, g: 1.0f, b: 0.3f)]
-		private float timeToMax;
-
-		[DebugGUIPrint, DebugGUIGraph(group: 3, min: -1.5f, max: 1.5f, autoScale: false, r: 1.0f, g: 1.0f, b: 1.0f)]
-		private float velocitySign;
-
-
+		
+		private Vector3 velocity = Vector3.zero;
+		
 		private Vector3 up = Vector3.up;
 		private float timeSinceStanding = 0;
 		private const float StandTimeTimeoutThreshold = 1;
@@ -41,8 +17,6 @@ namespace SBEPIS.Controller
 		private void Awake()
 		{
 			rigidbody = GetComponent<Rigidbody>();
-
-			DebugGUI.Log("Bepis");
 		}
 		
 		public void Orient(Vector3 up)
@@ -62,24 +36,25 @@ namespace SBEPIS.Controller
 
 			Quaternion delta = Quaternion.FromToRotation(transform.up, up);
 			if (delta.w < 0) delta = delta.Select(x => -x);
-			delta.ToAngleAxis(out currentDistance, out Vector3 axis);
+			delta.ToAngleAxis(out float currentDistance, out Vector3 axis);
 			currentDistance *= Mathf.Deg2Rad;
 
-			velocitySign = Vector3.Dot(rigidbody.angularVelocity, axis) > 0 ? -1 : 1;
-			currentVelocity = Vector3.Project(rigidbody.angularVelocity, axis).magnitude * velocitySign;
+			float velocitySign = Vector3.Dot(velocity, axis) > 0 ? -1 : 1;
+			float currentVelocity = Vector3.Project(velocity, axis).magnitude * velocitySign;
 
-			timeToMax = currentVelocity / acceleration;
-			maxPoint = currentDistance - 0.5f * currentVelocity * currentVelocity / -acceleration;
-			criticalPoint = 0.5f * maxPoint;
+			float maxPoint = currentDistance - 0.5f * currentVelocity * currentVelocity / -acceleration;
+			float criticalPoint = 0.5f * maxPoint;
 
 			bool decelerate = currentDistance < criticalPoint && currentVelocity < 0;
-			accelerationSign = decelerate ? 1 : -1;
+			float accelerationSign = decelerate ? 1 : -1;
 
 			float deltaVelocity = accelerationSign * acceleration * Time.fixedDeltaTime;
-			//rigidbody.angularVelocity = (currentVelocity + deltaVelocity) * -axis;
+			velocity = (currentVelocity + deltaVelocity) * -axis;
 
-			//if (currentDistance < rigidbody.angularVelocity.magnitude * Time.fixedDeltaTime && rigidbody.angularVelocity.magnitude < 2 * acceleration * Time.fixedDeltaTime)
-				//rigidbody.angularVelocity = currentDistance * axis / Time.fixedDeltaTime;
+			if (currentDistance < velocity.magnitude * Time.fixedDeltaTime && velocity.magnitude < 2 * acceleration * Time.fixedDeltaTime)
+				velocity = currentDistance * axis / Time.fixedDeltaTime;
+
+			rigidbody.MoveRotation(Quaternion.Euler(velocity) * rigidbody.rotation);
 		}
 	}
 }
