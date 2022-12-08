@@ -76,10 +76,10 @@ namespace SBEPIS.Controller
 			accelerationSign = decelerate ? 1 : -1;
 
 			float deltaVelocity = accelerationSign * acceleration * Time.fixedDeltaTime;
-			rigidbody.angularVelocity = (currentVelocity + deltaVelocity) * -axis;
+			//rigidbody.angularVelocity = (currentVelocity + deltaVelocity) * -axis;
 
-			if (currentDistance < rigidbody.angularVelocity.magnitude * Time.fixedDeltaTime && rigidbody.angularVelocity.magnitude < 2 * acceleration * Time.fixedDeltaTime)
-				rigidbody.angularVelocity = currentDistance * axis / Time.fixedDeltaTime;
+			//if (currentDistance < rigidbody.angularVelocity.magnitude * Time.fixedDeltaTime && rigidbody.angularVelocity.magnitude < 2 * acceleration * Time.fixedDeltaTime)
+				//rigidbody.angularVelocity = currentDistance * axis / Time.fixedDeltaTime;
 		}
 	}
 }
