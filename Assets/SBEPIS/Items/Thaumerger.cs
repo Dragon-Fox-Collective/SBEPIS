@@ -19,7 +19,7 @@ namespace SBEPIS.Bits
 
 		public static Item Thaumerge(MemberedBitSet bits, ItemBaseManager bases)
 		{
-			Item item = UnityEngine.Object.Instantiate(bases.trueBase.gameObject).GetComponent<Item>();
+			Item item = UnityEngine.Object.Instantiate(bases.trueBase);
 
 			foreach (ThaumergeRule rule in rules)
 				rule.Init();
