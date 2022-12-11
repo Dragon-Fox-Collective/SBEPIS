@@ -39,4 +39,17 @@ namespace SBEPIS.Bits.Members
 			_itemBase = itemBase;
 		}
 	}
+
+	[Serializable]
+	public class MaterialMember : Member
+	{
+		[SerializeField]
+		private Material _material;
+		public Material material => _material;
+
+		public MaterialMember(Material material) : base($"material:{material.name}")
+		{
+			_material = material;
+		}
+	}
 }

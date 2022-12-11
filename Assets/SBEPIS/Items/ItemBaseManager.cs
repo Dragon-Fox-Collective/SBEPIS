@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using SBEPIS.Utils;
 using System.Collections.ObjectModel;
@@ -13,7 +15,6 @@ namespace SBEPIS.Items
 
 		[SerializeField]
 		private ItemBase[] _itemBases = new ItemBase[0];
-		private ReadOnlyCollection<ItemBase> readOnlyItemBases;
-		public ReadOnlyCollection<ItemBase> itemBases => readOnlyItemBases ??= new(_itemBases);
+		public IEnumerable<ItemBase> itemBases => _itemBases;
 	}
 }

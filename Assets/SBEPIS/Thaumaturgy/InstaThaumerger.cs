@@ -17,9 +17,12 @@ namespace SBEPIS.Thaumaturgy
 
 		private void Alchemize()
 		{
+			print(ItemBaseManager.instance.itemBases.ToDelimString());
 			Item item = Thaumerger.Thaumerge(itemToAlchemize.Make(), ItemBaseManager.instance);
 			item.gameObject.name = gameObject.name;
+			print($"Made {item} with {item.itemBase.bits}");
 			item.transform.SetPositionAndRotation(transform.position, transform.rotation);
+			print($"Set position of {item} to {transform.position}");
 		}
 	}
 }
