@@ -21,7 +21,7 @@ namespace SBEPIS.Bits
 		public static bool operator ==(Member a, Member b) => a?.GetType() == b?.GetType() && a?.key == b?.key;
 		public static bool operator !=(Member a, Member b) => a?.GetType() != b?.GetType() || a?.key != b?.key;
 
-		public override string ToString() => "Member:" + key;
+		public override string ToString() => "Member{" + key + "}";
 	}
 }
 
