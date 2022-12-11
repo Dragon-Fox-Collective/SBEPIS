@@ -34,8 +34,6 @@ namespace SBEPIS.Bits
 			loop:;
 			}
 
-			item.rigidbody.Recalculate();
-
 			return item;
 		}
 	}
