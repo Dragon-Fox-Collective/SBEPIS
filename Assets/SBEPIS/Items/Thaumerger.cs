@@ -146,14 +146,8 @@ namespace SBEPIS.Bits.ThaumergeRules
 			if (member is null)
 				return false;
 
-			Debug.Log($"Applying material {item.GetComponentsInChildren<Renderer>().ToDelimString()}");
-
 			foreach (Renderer renderer in item.GetComponentsInChildren<Renderer>())
-			{
-				Debug.Log($"Applying material to {renderer.materials.ToDelimString()}");
-				for (int i = 0; i < renderer.materials.Length; i++)
-					renderer.materials[i] = member.material;
-			}
+				renderer.materials = new Material[renderer.materials.Length].Fill(member.material);
 
 			item.bits += member;
 
