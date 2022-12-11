@@ -37,7 +37,7 @@ namespace SBEPIS.Items
 
 		public override string ToString()
 		{
-			return $"{base.ToString()}{{{bits}}}";
+			return $"{name}{{{bits}}}";
 		}
 	}
 }

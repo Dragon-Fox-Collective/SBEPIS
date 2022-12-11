@@ -13,10 +13,12 @@ namespace SBEPIS.Bits
 	{
 		public BitSet bits;
 		public ItemBase itemBase;
+		public Material material;
 
 		public MemberedBitSet Make() => bits.With(new Member[]
 				{
-					itemBase ? new BaseModelMember(itemBase) : null
+					itemBase ? new BaseModelMember(itemBase) : null,
+					material ? new MaterialMember(material) : null,
 				}.Where(member => member != null).ToArray());
 	}
 }

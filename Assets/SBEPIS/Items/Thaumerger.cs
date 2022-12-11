@@ -15,6 +15,7 @@ namespace SBEPIS.Bits
 			new BaseModelReplaceThaumergeRule(),
 			new AeratedAttachThaumergeRule(),
 			new DefaultReplaceThaumergeRule(),
+			new MaterialThaumergeRule(),
 		};
 
 		public static Item Thaumerge(MemberedBitSet bits, ItemBaseManager bases)
@@ -129,6 +130,32 @@ namespace SBEPIS.Bits.ThaumergeRules
 			item.replaceObject = module.replaceObject;
 
 			item.bits |= module.bits.bits;
+
+			return true;
+		}
+	}
+
+	public class MaterialThaumergeRule : DoOnceThaumaturgeRule
+	{
+		public override bool ApplyOnce(MemberedBitSet bits, ItemBase item, ItemBaseManager bases)
+		{
+			if (item.bits.members.Any(member => member is MaterialMember))
+				return false;
+
+			MaterialMember member = bits.members.FirstOrDefault(member => member is MaterialMember) as MaterialMember;
+			if (member is null)
+				return false;
+
+			Debug.Log($"Applying material {item.GetComponentsInChildren<Renderer>().ToDelimString()}");
+
+			foreach (Renderer renderer in item.GetComponentsInChildren<Renderer>())
+			{
+				Debug.Log($"Applying material to {renderer.materials.ToDelimString()}");
+				for (int i = 0; i < renderer.materials.Length; i++)
+					renderer.materials[i] = member.material;
+			}
+
+			item.bits += member;
 
 			return true;
 		}

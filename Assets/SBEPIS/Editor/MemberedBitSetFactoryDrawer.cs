@@ -32,6 +32,8 @@ namespace SBEPIS.Bits
 				bindingPath = property.FindPropertyRelative("itemBase").propertyPath,
 				choices = ItemBaseManager.instance.itemBases.Cast<UnityEngine.Object>().Prepend(null).ToList(),
 			});
+			
+			foldout.Add(new PropertyField(property.FindPropertyRelative("material")));
 
 			return foldout;
 		}
