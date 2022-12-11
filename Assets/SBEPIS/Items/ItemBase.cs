@@ -39,5 +39,10 @@ namespace SBEPIS.Items
 		{
 			return $"{name}{{{bits}}}";
 		}
+
+		private void OnValidate()
+		{
+			madeBits = false;
+		}
 	}
 }
