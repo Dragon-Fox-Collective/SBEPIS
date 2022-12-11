@@ -14,7 +14,7 @@ namespace SBEPIS.Items
 		public Item trueBase => _trueBase;
 
 		[SerializeField]
-		private ItemBase[] _itemBases = new ItemBase[0];
+		private ItemBase[] _itemBases = Array.Empty<ItemBase>();
 		public IEnumerable<ItemBase> itemBases => _itemBases;
 	}
 }
