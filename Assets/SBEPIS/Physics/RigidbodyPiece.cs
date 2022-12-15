@@ -9,7 +9,7 @@ namespace SBEPIS.Physics
 		public Collider referenceCollider;
 		public float mass = 1;
 
-		public Vector3 WorldCenter => transform.TransformPoint(referenceCollider switch
+		public Vector3 worldCenter => transform.TransformPoint(referenceCollider switch
 		{
 			CapsuleCollider capsule => capsule.center,
 			BoxCollider box => box.center,
@@ -17,34 +17,51 @@ namespace SBEPIS.Physics
 			_ => throw new InvalidOperationException($"Reference collider {referenceCollider} is an invalid shape")
 		});
 
-		public Matrix4x4 LocalInertiaTensor {
+		public Matrix4x4 localInertiaTensor {
 			get
 			{
+				Vector3 lossyScale = referenceCollider.transform.lossyScale;
+				if (!Mathf.Approximately(lossyScale.x, lossyScale.y) || !Mathf.Approximately(lossyScale.x, lossyScale.z))
+					Debug.LogWarning($"Rigidbody piece {name} (part of {referenceCollider.GetComponentInParent<CompoundRigidbody>().name}) has an uneven lossy scale {lossyScale}. Avoid this if possible.");
+				float scale = lossyScale.x;
+				
 				switch (referenceCollider)
 				{
 					case CapsuleCollider capsule:
-						float longways = 0.5f * mass * capsule.radius * capsule.radius;
-						float sideways = 0.08333333333f * mass * (3 * capsule.radius * capsule.radius + capsule.height * capsule.height);
+					{
+						float radius = capsule.radius * scale;
+						float height = capsule.height * scale;
+						float longways = 0.5f * mass * radius * radius;
+						float sideways = 0.08333333333f * mass * (3 * radius * radius + height * height);
 						Matrix4x4 capsuleTensor = Matrix4x4.identity;
 						capsuleTensor[0, 0] = capsule.direction == 0 ? longways : sideways;
 						capsuleTensor[1, 1] = capsule.direction == 1 ? longways : sideways;
 						capsuleTensor[2, 2] = capsule.direction == 2 ? longways : sideways;
 						return capsuleTensor;
+					}
 
 					case BoxCollider box:
+					{
+						float width = box.size.x * scale;
+						float height = box.size.y * scale;
+						float depth = box.size.z * scale;
 						Matrix4x4 boxTensor = Matrix4x4.identity;
-						boxTensor[0, 0] = 0.08333333333f * mass * (box.size.y * box.size.y + box.size.z * box.size.z);
-						boxTensor[1, 1] = 0.08333333333f * mass * (box.size.z * box.size.z + box.size.x * box.size.x);
-						boxTensor[2, 2] = 0.08333333333f * mass * (box.size.x * box.size.x + box.size.y * box.size.y);
+						boxTensor[0, 0] = 0.08333333333f * mass * (height * height + depth * depth);
+						boxTensor[1, 1] = 0.08333333333f * mass * (depth * depth + width * width);
+						boxTensor[2, 2] = 0.08333333333f * mass * (width * width + height * height);
 						return boxTensor;
+					}
 
 					case SphereCollider sphere:
-						float inertia = 0.4f * mass * sphere.radius * sphere.radius;
+					{
+						float radius = sphere.radius * scale;
+						float inertia = 0.4f * mass * radius * radius;
 						Matrix4x4 sphereTensor = Matrix4x4.identity;
 						sphereTensor[0, 0] = inertia;
 						sphereTensor[1, 1] = inertia;
 						sphereTensor[2, 2] = inertia;
 						return sphereTensor;
+					}
 
 					default:
 						throw new InvalidOperationException($"Reference collider {referenceCollider} is an invalid shape");
