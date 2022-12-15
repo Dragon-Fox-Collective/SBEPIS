@@ -22,7 +22,7 @@ namespace SBEPIS.Physics
 			Recalculate();
 		}
 
-		public void Recalculate()
+		private void Recalculate()
 		{
 			RigidbodyPiece[] pieces = GetComponentsInChildren<RigidbodyPiece>();
 			if (pieces.Length == 0)
