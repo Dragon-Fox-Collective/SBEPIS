@@ -80,6 +80,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 			module.transform.Replace(item.replaceObject);
 			item.replaceObject = module.replaceObject;
 
+			item.bits |= module.bits.bits;
 			item.bits += member;
 
 			return true;
@@ -108,7 +109,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 			int moduleScore = int.MinValue;
 			foreach (ItemBase newModule in bases.itemBases)
 			{
-				if (bits.Has(newModule.bits.bits) && (item.bits.bits & newModule.bits.bits) != newModule.bits.bits)
+				if (bits.Has(newModule.bits.bits) && !item.bits.Has(newModule.bits.bits))
 				{
 					int newModuleScore = BitSet.GetUniquenessScore(item.bits.bits, newModule.bits.bits);
 					if (newModuleScore > moduleScore)
