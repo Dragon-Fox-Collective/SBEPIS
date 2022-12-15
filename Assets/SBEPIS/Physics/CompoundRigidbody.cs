@@ -19,11 +19,7 @@ namespace SBEPIS.Physics
 
 		private void Start()
 		{
-			if (name.StartsWith("Spear Base"))
-				print($"BEFORE {rigidbody.mass} {rigidbody.centerOfMass} {rigidbody.inertiaTensor} {rigidbody.inertiaTensorRotation.eulerAngles}");
 			Recalculate();
-			if (name.StartsWith("Spear Base"))
-				print($"AFTER {rigidbody.mass} {rigidbody.centerOfMass} {rigidbody.inertiaTensor} {rigidbody.inertiaTensorRotation.eulerAngles}");
 		}
 
 		public void Recalculate()
