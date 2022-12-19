@@ -24,7 +24,7 @@ namespace SBEPIS.Capturllection
 
 		public void UpdateCaptureCode()
 		{
-			BitSet bits = capture.capturedItem ? capture.capturedItem.bits : BitSet.NOTHING;
+			BitSet bits = capture.capturedItem ? capture.capturedItem.bits : BitSet.Nothing;
 			Punchable.PerformOnMaterial(renderers, captureMaterial, material => {
 				material.SetFloat("Seed", bits.Seed);
 				material.SetTexture("CaptchaCode", CaptureCamera.GetCaptureCodeTexture(bits));

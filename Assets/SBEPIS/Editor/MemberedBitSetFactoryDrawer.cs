@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using SBEPIS.Items;
 using System.Linq;
-using SBEPIS.Bits.Members;
+using SBEPIS.Bits.Tags;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
@@ -11,12 +11,12 @@ using SBEPIS.Utils;
 
 namespace SBEPIS.Bits
 {
-	[CustomPropertyDrawer(typeof(MemberedBitSetFactory))]
+	[CustomPropertyDrawer(typeof(TaggedBitSetFactory))]
 	public class MemberedBitSetFactoryDrawer : PropertyDrawer
 	{
 		public override VisualElement CreatePropertyGUI(SerializedProperty property)
 		{
-			MemberedBitSetFactory bitsFactory = (MemberedBitSetFactory)property.boxedValue;
+			TaggedBitSetFactory bitsFactory = (TaggedBitSetFactory)property.boxedValue;
 
 			Foldout foldout = new()
 			{

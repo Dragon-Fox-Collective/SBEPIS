@@ -1,5 +1,6 @@
 using SBEPIS.Bits.Bits;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SBEPIS.Bits
@@ -7,14 +8,13 @@ namespace SBEPIS.Bits
 	[Serializable]
 	public struct BitSet
 	{
-		public static readonly BitSet NOTHING = new(0, 0);
-		public static readonly BitSet EVERYTHING = ~NOTHING;
+		public static readonly BitSet Nothing = new(0, 0);
 
-		public const byte BYTE_MASK = 0x3F;
-		public const ulong INT_MASK = 0x3F3F3F3F;
-		public const ulong LONG_MASK = 0x3F3F3F3F3F3F3F3F;
+		public const byte ByteMask = 0x3F;
+		public const ulong IntMask = 0x3F3F3F3F;
+		public const ulong LongMask = 0x3F3F3F3F3F3F3F3F;
 
-		public static readonly char[] hashCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".ToCharArray();
+		public static readonly char[] HashCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".ToCharArray();
 
 		[SerializeField]
 		private Bits1 bits1;
@@ -23,8 +23,8 @@ namespace SBEPIS.Bits
 
 		public BitSet(Bits1 bits1, Bits2 bits2)
 		{
-			this.bits1 = (Bits1)((ulong)bits1 & INT_MASK);
-			this.bits2 = (Bits2)((ulong)bits2 & INT_MASK);
+			this.bits1 = (Bits1)((ulong)bits1 & IntMask);
+			this.bits2 = (Bits2)((ulong)bits2 & IntMask);
 		}
 
 		public override string ToString() => "BitSet{" + ((bits1 != 0 ? bits1 : "") + (bits1 != 0 && bits2 != 0 ? ", " : "") + (bits2 != 0 ? bits2 : "")) + "}";
@@ -44,15 +44,15 @@ namespace SBEPIS.Bits
 		public static implicit operator BitSet(Bits1 a) => new(a, 0);
 		public static implicit operator BitSet(Bits2 a) => new(0, a);
 
-		public MemberedBitSet With(Member[] members) => new(this, members);
-		public MemberedBitSet With(Member[] a, Member[] b) => With(MemberAppender.Append(a, b));
+		public TaggedBitSet With(IEnumerable<Tag> members) => new(this, members);
+		public TaggedBitSet With(IEnumerable<Tag> a, IEnumerable<Tag> b) => With(TagAppender.Append(a, b));
 
 		public bool Has(BitSet other) => (this & other) == other;
 
-		public byte DigitAt(int i) => (byte)(((ulong)this >> 8 * i) & BYTE_MASK);
+		public byte DigitAt(int i) => (byte)(((ulong)this >> 8 * i) & ByteMask);
 		public float PercentAt(int i) => DigitAt(i) / 63f;
-		public char CharAt(int i) => hashCharacters[DigitAt(i)];
-		public bool BitAt(int i) => (this & FromBit(i)) != NOTHING;
+		public char CharAt(int i) => HashCharacters[DigitAt(i)];
+		public bool BitAt(int i) => (this & FromBit(i)) != Nothing;
 
 		/// <summary>
 		/// Return a Bit with the ith bit on
@@ -64,13 +64,13 @@ namespace SBEPIS.Bits
 			if (code.Length != 8)
 				throw new ArgumentException("Captcha code must have 8 characters");
 
-			BitSet bits = BitSet.NOTHING;
+			BitSet bits = BitSet.Nothing;
 			for (int i = 0; i < 8; i++)
 			{
-				if (Array.IndexOf(hashCharacters, code[i]) == -1)
+				if (Array.IndexOf(HashCharacters, code[i]) == -1)
 					throw new ArgumentException("Captcha code contains illegal characters");
 
-				bits |= (BitSet)((ulong)Array.IndexOf(hashCharacters, code[i]) << i * 8);
+				bits |= (BitSet)((ulong)Array.IndexOf(HashCharacters, code[i]) << i * 8);
 			}
 			return bits;
 		}
@@ -88,7 +88,7 @@ namespace SBEPIS.Bits
 			get
 			{
 				float seed = 0;
-				if (this != BitSet.NOTHING)
+				if (this != BitSet.Nothing)
 					for (int i = 0; i < 8; i++)
 						seed += Mathf.Pow(10f, i - 4) * DigitAt(i);
 				return seed;

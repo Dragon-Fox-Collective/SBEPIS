@@ -1,15 +1,12 @@
 using SBEPIS.Bits;
 using SBEPIS.Items;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Thaumaturgy
 {
 	public class InstaThaumerger : MonoBehaviour
 	{
-		public MemberedBitSetFactory itemToAlchemize;
+		public TaggedBitSetFactory itemToAlchemize;
 
 		private void Start()
 		{
