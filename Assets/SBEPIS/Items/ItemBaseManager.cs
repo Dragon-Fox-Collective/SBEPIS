@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using SBEPIS.Utils;
-using System.Collections.ObjectModel;
 
 namespace SBEPIS.Items
 {
