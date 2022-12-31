@@ -1,4 +1,3 @@
-using SBEPIS.Bits.Bits;
 using SBEPIS.Bits.Tags;
 using SBEPIS.Bits.ThaumergeRules;
 using SBEPIS.Items;
@@ -86,9 +85,16 @@ namespace SBEPIS.Bits.ThaumergeRules
 
 	public class AeratedAttachThaumergeRule : DoOnceThaumaturgeRule
 	{
+		private readonly Bit aerated;
+
+		public AeratedAttachThaumergeRule()
+		{
+			aerated = BitManager.instance.bits.First(bit => bit.name == "Aerated");
+		}
+		
 		public override bool ApplyOnce(TaggedBitSet bits, ItemBase item, ItemBaseManager bases)
 		{
-			if (!bits.Has(Bits1.Aerated) || !item.aeratedAttachmentPoint)
+			if (!bits.Has(aerated) || !item.aeratedAttachmentPoint)
 				return false;
 
 			return true;

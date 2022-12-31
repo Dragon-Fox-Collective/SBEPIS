@@ -1,99 +1,49 @@
-using SBEPIS.Bits.Bits;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Bits
 {
 	[Serializable]
-	public struct BitSet
+	public class BitSet : IEnumerable<Bit>, IEquatable<BitSet>
 	{
-		public static readonly BitSet Nothing = new(0, 0);
-
-		public const byte ByteMask = 0x3F;
-		public const ulong IntMask = 0x3F3F3F3F;
-		public const ulong LongMask = 0x3F3F3F3F3F3F3F3F;
-
-		public static readonly char[] HashCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".ToCharArray();
-
 		[SerializeField]
-		private Bits1 bits1;
-		[SerializeField]
-		private Bits2 bits2;
+		protected List<Bit> bits;
 
-		public BitSet(Bits1 bits1, Bits2 bits2)
+		public BitSet()
 		{
-			this.bits1 = (Bits1)((ulong)bits1 & IntMask);
-			this.bits2 = (Bits2)((ulong)bits2 & IntMask);
+			bits = new List<Bit>();
+		}
+		
+		public BitSet(IEnumerable<Bit> bits)
+		{
+			this.bits = bits.ToList();
 		}
 
-		public override string ToString() => "BitSet{" + ((bits1 != 0 ? bits1 : "") + (bits1 != 0 && bits2 != 0 ? ", " : "") + (bits2 != 0 ? bits2 : "")) + "}";
-		public override int GetHashCode() => (bits1, bits2).GetHashCode();
-		public override bool Equals(object obj) => obj is BitSet set && this == set;
+		public override string ToString() => $"BitSet{bits.ToDelimString()}";
+		public override int GetHashCode() => bits.GetHashCode();
+		public override bool Equals(object obj) => obj is BitSet other && this == other;
+		public bool Equals(BitSet other) => this == other;
 
-		public static BitSet operator |(BitSet a, BitSet b) => new(a.bits1 | b.bits1, a.bits2 | b.bits2);
-		public static BitSet operator &(BitSet a, BitSet b) => new(a.bits1 & b.bits1, a.bits2 & b.bits2);
-		public static BitSet operator ^(BitSet a, BitSet b) => new(a.bits1 ^ b.bits1, a.bits2 ^ b.bits2);
-		public static BitSet operator ~(BitSet a) => new(~a.bits1, ~a.bits2);
-		public static bool operator ==(BitSet a, BitSet b) => a.bits1 == b.bits1 && a.bits2 == b.bits2;
-		public static bool operator !=(BitSet a, BitSet b) => a.bits1 != b.bits1 || a.bits2 != b.bits2;
+		public static BitSet operator |(BitSet a, BitSet b) => new(a.bits.Union(b.bits));
+		public static BitSet operator &(BitSet a, BitSet b) => new(a.bits.Intersect(b.bits));
+		public static BitSet operator ^(BitSet a, BitSet b) => new(a.bits.Except(b.bits).Union(b.bits.Except(a.bits)));
+		public static BitSet operator -(BitSet a, BitSet b) => new(a.bits.Except(b.bits));
+		public static bool operator ==(BitSet a, BitSet b) => a is not null && b is not null ? new HashSet<Bit>(a.bits).SetEquals(b.bits) : a is null && b is null;
+		public static bool operator !=(BitSet a, BitSet b) => !(a == b);
 
-		public static explicit operator ulong(BitSet a) => (ulong)a.bits1 | ((ulong)a.bits2 << 32);
-		public static explicit operator BitSet(ulong a) => new((Bits1)a, (Bits2)(a >> 32));
+		public static implicit operator BitSet(Bit bit) => new(new []{bit});
 
-		public static implicit operator BitSet(Bits1 a) => new(a, 0);
-		public static implicit operator BitSet(Bits2 a) => new(0, a);
-
-		public TaggedBitSet With(IEnumerable<Tag> members) => new(this, members);
+		public TaggedBitSet With(IEnumerable<Tag> tags) => new(this, tags);
 		public TaggedBitSet With(IEnumerable<Tag> a, IEnumerable<Tag> b) => With(TagAppender.Append(a, b));
 
+		public bool Has(Bit other) => bits.Contains(other);
 		public bool Has(BitSet other) => (this & other) == other;
 
-		public byte DigitAt(int i) => (byte)(((ulong)this >> 8 * i) & ByteMask);
-		public float PercentAt(int i) => DigitAt(i) / 63f;
-		public char CharAt(int i) => HashCharacters[DigitAt(i)];
-		public bool BitAt(int i) => (this & FromBit(i)) != Nothing;
-
-		/// <summary>
-		/// Return a Bit with the ith bit on
-		/// </summary>
-		public static BitSet FromBit(int i) => (BitSet)(1UL << (i / 6 * 8 + i % 6));
-		
-		public static BitSet FromCode(string code)
-		{
-			if (code.Length != 8)
-				throw new ArgumentException("Captcha code must have 8 characters");
-
-			BitSet bits = BitSet.Nothing;
-			for (int i = 0; i < 8; i++)
-			{
-				if (Array.IndexOf(HashCharacters, code[i]) == -1)
-					throw new ArgumentException("Captcha code contains illegal characters");
-
-				bits |= (BitSet)((ulong)Array.IndexOf(HashCharacters, code[i]) << i * 8);
-			}
-			return bits;
-		}
-
-		public string ToCode()
-		{
-			string code = "";
-			for (int i = 0; i < 8; i++)
-				code += CharAt(i);
-			return code;
-		}
-
-		public float Seed
-		{
-			get
-			{
-				float seed = 0;
-				if (this != BitSet.Nothing)
-					for (int i = 0; i < 8; i++)
-						seed += Mathf.Pow(10f, i - 4) * DigitAt(i);
-				return seed;
-			}
-		}
+		public int Count => bits.Count;
+		public bool isPerfectlyGeneric => bits.Count == 0;
 
 		public static int GetUniquenessScore(BitSet baseBits, BitSet appliedBits)
 		{
@@ -107,13 +57,10 @@ namespace SBEPIS.Bits
 
 			BitSet uniqueBits = (appliedBits ^ baseBits) & appliedBits;
 			BitSet commonBits = appliedBits & baseBits;
-			int score = 0;
-			for (int i = 0; i < 64; i++)
-				if ((((ulong)uniqueBits >> i) & 1) == 1)
-					score++;
-				else if ((((ulong)commonBits >> i) & 1) == 1)
-					score--;
-			return score;
+			return uniqueBits.bits.Count - commonBits.bits.Count;
 		}
+
+		public IEnumerator GetEnumerator() => bits.GetEnumerator();
+		IEnumerator<Bit> IEnumerable<Bit>.GetEnumerator() => bits.GetEnumerator();
 	}
 }

@@ -57,7 +57,7 @@ namespace SBEPIS.Capturllection
 		private Texture2D TakePictureOfCode(BitSet bits)
 		{
 			codeBox.gameObject.SetActive(true);
-			codeBox.text = bits.ToCode();
+			codeBox.text = BitManager.instance.bits.BitSetToCode(bits);
 			Texture2D rtn = TakePicture();
 			codeBox.gameObject.SetActive(false);
 			return rtn;

@@ -120,14 +120,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseBits:
     bits:
-      bits1: 0
-      bits2: 0
+      bits:
+      - _name: Handled
+      - _name: Handled
+      - _name: Pound
+      - _name: Pointed
+      - _name: Musical
     itemBase: {fileID: 0}
+    material: {fileID: 0}
   _bits:
     _bits:
-      bits1: 0
-      bits2: 0
-    _members: []
+      bits: []
+    _tags: []
   replaceObject: {fileID: 6093150015542321795}
   aeratedAttachmentPoint: {fileID: 4700073189028015130}
   references:
