@@ -14,7 +14,7 @@ namespace SBEPIS.Bits
 		public BitList(IEnumerable<Bit> bits, char[] hashCharacters) : base(bits)
 		{
 			this.hashCharacters = hashCharacters;
-			Debug.Log($"New BitList {numBitsInCharacterGeneral} {NumBitsInCharacterAt(numCharactersInCode - 1)} {numCharactersInCode} {numHashCharacters}");
+			//Debug.Log($"New BitList {numBitsInCharacterGeneral} {NumBitsInCharacterAt(numCharactersInCode - 1)} {numCharactersInCode} {numHashCharacters}");
 		}
 
 		public int numBitsInCharacterGeneral => (int)Mathf.Log(hashCharacters.Length, 2);

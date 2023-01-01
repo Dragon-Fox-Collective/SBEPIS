@@ -111,26 +111,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseBits:
     bits:
-      bits1: 3
-      bits2: 1048576
+      bits:
+      - {fileID: 11400000, guid: 16fd335e94196b943a233369f2c26081, type: 2}
+      - {fileID: 11400000, guid: 9cb3153df63b1d04caa5363c8cb70983, type: 2}
+      - {fileID: 11400000, guid: 3dd42681b51029c4890dab907f973b76, type: 2}
+      - {fileID: 11400000, guid: 8b97485f364731641bbffbb4177b0f21, type: 2}
     itemBase: {fileID: 0}
     material: {fileID: 0}
   _bits:
     _bits:
-      bits1: 0
-      bits2: 0
-    _members: []
+      bits: []
+    _tags: []
   replaceObject: {fileID: 4496700841936096655}
   aeratedAttachmentPoint: {fileID: 1088577300803138367}
-  references:
-    version: 2
-    RefIds: []
 --- !u!1001 &8845946884329526922
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 6483697661105049035}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: ca4ab490ae845a943a194d944526826f, type: 3}
@@ -198,7 +197,18 @@ PrefabInstance:
       value: Drumstick
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ca4ab490ae845a943a194d944526826f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1757552312159780915}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ca4ab490ae845a943a194d944526826f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5938095525190429237}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ca4ab490ae845a943a194d944526826f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6932467273980933402}
   m_SourcePrefab: {fileID: 100100000, guid: ca4ab490ae845a943a194d944526826f, type: 3}
 --- !u!1 &8503486603373734875 stripped
 GameObject:
@@ -213,9 +223,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8503486603373734875}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1962720236653441801, guid: ca4ab490ae845a943a194d944526826f, type: 3}
@@ -227,8 +245,17 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8503486603373734875}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 0
+  serializedVersion: 2
   m_Radius: 0.13
   m_Height: 4
   m_Direction: 2

@@ -1,12 +1,8 @@
-using UnityEngine;
 using UnityEditor;
 using SBEPIS.Items;
 using System.Linq;
-using SBEPIS.Bits.Tags;
-using System.Collections.Generic;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
-using System;
 using SBEPIS.Utils;
 
 namespace SBEPIS.Bits
@@ -24,7 +20,7 @@ namespace SBEPIS.Bits
 
 			foldout.Add(new PropertyField(property.FindPropertyRelative("bits")));
 
-			foldout.Add(new ObjectPopupField()
+			foldout.Add(new ObjectPopupField
 			{
 				label = "Base Item",
 				bindingPath = property.FindPropertyRelative("itemBase").propertyPath,

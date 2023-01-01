@@ -48,19 +48,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseBits:
     bits:
-      bits1: 513
-      bits2: 0
+      bits:
+      - {fileID: 11400000, guid: 16fd335e94196b943a233369f2c26081, type: 2}
+      - {fileID: 11400000, guid: 3dd42681b51029c4890dab907f973b76, type: 2}
     itemBase: {fileID: 0}
+    material: {fileID: 0}
   _bits:
     _bits:
-      bits1: 0
-      bits2: 0
-    _members: []
+      bits: []
+    _tags: []
   replaceObject: {fileID: 4994258105038354586}
   aeratedAttachmentPoint: {fileID: 3288445182620608022}
-  references:
-    version: 2
-    RefIds: []
 --- !u!1 &4258274633088970149
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,7 +95,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 8044952471338840126}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 3402d8d967dd10c418f960aebe772afd, type: 3}
@@ -133,7 +131,27 @@ PrefabInstance:
       value: Hammer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3402d8d967dd10c418f960aebe772afd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5773076187653792663}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3402d8d967dd10c418f960aebe772afd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7813353250713325038}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3402d8d967dd10c418f960aebe772afd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7077595277090319890}
+    - targetCorrespondingSourceObject: {fileID: -259972160606440404, guid: 3402d8d967dd10c418f960aebe772afd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 13897972619720544}
+    - targetCorrespondingSourceObject: {fileID: -259972160606440404, guid: 3402d8d967dd10c418f960aebe772afd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3079723917772435080}
+    - targetCorrespondingSourceObject: {fileID: -259972160606440404, guid: 3402d8d967dd10c418f960aebe772afd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5688218587069410795}
   m_SourcePrefab: {fileID: 100100000, guid: 3402d8d967dd10c418f960aebe772afd, type: 3}
 --- !u!1 &2648964682008469667 stripped
 GameObject:
@@ -148,8 +166,17 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2648964682008469667}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 0
+  serializedVersion: 2
   m_Radius: 0.054
   m_Height: 1.323
   m_Direction: 2
@@ -162,9 +189,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2648964682008469667}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6659003102834268097, guid: 3402d8d967dd10c418f960aebe772afd, type: 3}
@@ -205,9 +240,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6081563965629491678}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8839368762345780380, guid: 3402d8d967dd10c418f960aebe772afd, type: 3}
@@ -219,8 +262,17 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6081563965629491678}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 0
+  serializedVersion: 2
   m_Radius: 0.201
   m_Height: 0.499
   m_Direction: 1
