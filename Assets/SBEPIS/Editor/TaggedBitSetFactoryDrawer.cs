@@ -12,12 +12,10 @@ using SBEPIS.Utils;
 namespace SBEPIS.Bits
 {
 	[CustomPropertyDrawer(typeof(TaggedBitSetFactory))]
-	public class MemberedBitSetFactoryDrawer : PropertyDrawer
+	public class TaggedBitSetFactoryDrawer : PropertyDrawer
 	{
 		public override VisualElement CreatePropertyGUI(SerializedProperty property)
 		{
-			TaggedBitSetFactory bitsFactory = (TaggedBitSetFactory)property.boxedValue;
-
 			Foldout foldout = new()
 			{
 				text = property.displayName,
