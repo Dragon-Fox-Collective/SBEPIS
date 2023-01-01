@@ -79,26 +79,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseBits:
     bits:
-      bits1: 515
-      bits2: 0
+      bits:
+      - {fileID: 11400000, guid: 8b97485f364731641bbffbb4177b0f21, type: 2}
+      - {fileID: 11400000, guid: 16fd335e94196b943a233369f2c26081, type: 2}
+      - {fileID: 11400000, guid: 3dd42681b51029c4890dab907f973b76, type: 2}
     itemBase: {fileID: 0}
     material: {fileID: 0}
   _bits:
     _bits:
-      bits1: 0
-      bits2: 0
-    _members: []
+      bits: []
+    _tags: []
   replaceObject: {fileID: 4573902575806097148}
   aeratedAttachmentPoint: {fileID: 4118782074365742752}
-  references:
-    version: 2
-    RefIds: []
 --- !u!1001 &5923506639748531092
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 6067133607719001619}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a8db93d0e8359c7489bc1e9238b7bb6d, type: 3}
@@ -166,7 +164,27 @@ PrefabInstance:
       value: Tenderizer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a8db93d0e8359c7489bc1e9238b7bb6d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 503505787067345468}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a8db93d0e8359c7489bc1e9238b7bb6d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2193596203611689035}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a8db93d0e8359c7489bc1e9238b7bb6d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8079384580741940111}
+    - targetCorrespondingSourceObject: {fileID: -259972160606440404, guid: a8db93d0e8359c7489bc1e9238b7bb6d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3589721358488219076}
+    - targetCorrespondingSourceObject: {fileID: -259972160606440404, guid: a8db93d0e8359c7489bc1e9238b7bb6d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6397556147823501229}
+    - targetCorrespondingSourceObject: {fileID: -259972160606440404, guid: a8db93d0e8359c7489bc1e9238b7bb6d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7245414609947890554}
   m_SourcePrefab: {fileID: 100100000, guid: a8db93d0e8359c7489bc1e9238b7bb6d, type: 3}
 --- !u!1 &3337415079563818936 stripped
 GameObject:
@@ -181,8 +199,17 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3337415079563818936}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 0
+  serializedVersion: 2
   m_Radius: 0.48
   m_Height: 2.13
   m_Direction: 1
@@ -195,9 +222,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3337415079563818936}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8839368762345780380, guid: a8db93d0e8359c7489bc1e9238b7bb6d, type: 3}
@@ -238,9 +273,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6842634927594028741}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 838446007051130641, guid: a8db93d0e8359c7489bc1e9238b7bb6d, type: 3}
@@ -252,8 +295,17 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6842634927594028741}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 0
+  serializedVersion: 2
   m_Radius: 0.33
   m_Height: 3.23
   m_Direction: 2

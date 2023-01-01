@@ -19,7 +19,7 @@ namespace SBEPIS.Thaumaturgy
 		{
 			punchedBits = bits;
 
-			for (int i = 0; i < 48; i++)
+			for (int i = 0; i < Mathf.Min(48, BitManager.instance.bits.Count); i++)
 				foreach (Material material in materials)
 					PerformOnMaterial(renderers, material, material => material.SetFloat($"_Bit_{i + 1}", BitManager.instance.bits.BitSetHasBitAt(bits, i) ? 1 : 0));
 		}

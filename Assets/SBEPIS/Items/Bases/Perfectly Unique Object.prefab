@@ -80,19 +80,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseBits:
     bits:
-      bits1: 1061109567
-      bits2: 1061109567
+      bits:
+      - {fileID: 11400000, guid: 3dd42681b51029c4890dab907f973b76, type: 2}
+      - {fileID: 11400000, guid: 8636335f515a2574f9ee3df97dcc8fb9, type: 2}
+      - {fileID: 11400000, guid: 9cb3153df63b1d04caa5363c8cb70983, type: 2}
+      - {fileID: 11400000, guid: 8b97485f364731641bbffbb4177b0f21, type: 2}
+      - {fileID: 11400000, guid: 16fd335e94196b943a233369f2c26081, type: 2}
     itemBase: {fileID: 0}
+    material: {fileID: 0}
   _bits:
     _bits:
-      bits1: 0
-      bits2: 0
-    _members: []
+      bits: []
+    _tags: []
   replaceObject: {fileID: 3438405788769717491}
   aeratedAttachmentPoint: {fileID: 2313032213000305134}
-  references:
-    version: 2
-    RefIds: []
 --- !u!1 &6284802180349780102
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,9 +187,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6284802180349780102}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3160064658418714615
