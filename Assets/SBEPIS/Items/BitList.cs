@@ -48,8 +48,8 @@ namespace SBEPIS.Bits
 		
 		public BitSet BitSetFromBitAt(int i) => bits[i];
 		public BitSet BitSetFromBitAt(int codeIndex, int i) => BitSetFromBitAt(codeIndex * numBitsInCharacterGeneral + i);
-		public bool IsBitSetBitAt(BitSet bits, int i) => bits.Has(this[i]);
-		public bool IsBitSetBitAt(BitSet bits, int codeIndex, int i) => IsBitSetBitAt(bits, codeIndex * numBitsInCharacterGeneral + i);
+		public bool BitSetHasBitAt(BitSet bits, int i) => bits.Has(this[i]);
+		public bool IsBitSetBitAt(BitSet bits, int codeIndex, int i) => BitSetHasBitAt(bits, codeIndex * numBitsInCharacterGeneral + i);
 		
 		public BitSet BitSetFromCode(string code)
 		{

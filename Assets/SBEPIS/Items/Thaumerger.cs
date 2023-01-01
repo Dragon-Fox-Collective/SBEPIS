@@ -89,7 +89,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 
 		public AeratedAttachThaumergeRule()
 		{
-			aerated = BitManager.instance.bits.First(bit => bit.name == "Aerated");
+			aerated = BitManager.instance.bits.First(bit => bit.bitName == "Aerated");
 		}
 		
 		public override bool ApplyOnce(TaggedBitSet bits, ItemBase item, ItemBaseManager bases)

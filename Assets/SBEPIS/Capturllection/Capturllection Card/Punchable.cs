@@ -21,7 +21,7 @@ namespace SBEPIS.Thaumaturgy
 
 			for (int i = 0; i < 48; i++)
 				foreach (Material material in materials)
-					PerformOnMaterial(renderers, material, material => material.SetFloat($"_Bit_{i + 1}", BitManager.instance.bits.IsBitSetBitAt(bits, i) ? 1 : 0));
+					PerformOnMaterial(renderers, material, material => material.SetFloat($"_Bit_{i + 1}", BitManager.instance.bits.BitSetHasBitAt(bits, i) ? 1 : 0));
 		}
 
 		public static void PerformOnMaterial(Renderer[] renderers, Material material, Action<Material> action)

@@ -7,10 +7,10 @@ namespace SBEPIS.Tests.EditMode
 {
 	public class BitTests
 	{
-		private static readonly Bit Handled = new("Handled");
-		private static readonly Bit Pound = new("Pound");
-		private static readonly Bit Aerated = new("Aerated");
-		private static readonly Bit Musical = new("Musical");
+		private static readonly Bit Handled = Bit.New("Handled");
+		private static readonly Bit Pound = Bit.New("Pound");
+		private static readonly Bit Aerated = Bit.New("Aerated");
+		private static readonly Bit Musical = Bit.New("Musical");
 		private static readonly char[] HashCharacters = "AB".ToCharArray();
 		private static readonly BitList BitsList = new(new[]{ Handled, Pound, Aerated, Musical }, HashCharacters);
 		private static readonly BitSet Bits = new(new[]{ Handled, Aerated });
@@ -73,10 +73,10 @@ namespace SBEPIS.Tests.EditMode
 		[Test]
 		public void BitsIsBitSetBitAt()
 		{
-			Assert.AreEqual(true, BitsList.IsBitSetBitAt(Bits, 0));
-			Assert.AreEqual(false, BitsList.IsBitSetBitAt(Bits, 1));
-			Assert.AreEqual(true, BitsList.IsBitSetBitAt(Bits, 2));
-			Assert.AreEqual(false, BitsList.IsBitSetBitAt(Bits, 3));
+			Assert.AreEqual(true, BitsList.BitSetHasBitAt(Bits, 0));
+			Assert.AreEqual(false, BitsList.BitSetHasBitAt(Bits, 1));
+			Assert.AreEqual(true, BitsList.BitSetHasBitAt(Bits, 2));
+			Assert.AreEqual(false, BitsList.BitSetHasBitAt(Bits, 3));
 		}
 
 		[Test]
