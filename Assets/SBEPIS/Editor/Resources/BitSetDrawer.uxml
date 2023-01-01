@@ -1,9 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement class="unity-base-field">
-        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="unity-base-field__label" />
-        <ui:VisualElement class="unity-base-field__input">
-            <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" />
-            <ui:ListView focusable="true" show-border="true" virtualization-method="FixedHeight" show-alternating-row-backgrounds="All" show-foldout-header="false" show-add-remove-footer="false" binding-path="bits" />
-        </ui:VisualElement>
-    </ui:VisualElement>
-</ui:UXML>
