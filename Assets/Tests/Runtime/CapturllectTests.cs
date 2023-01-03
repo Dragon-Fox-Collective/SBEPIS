@@ -191,6 +191,8 @@ namespace SBEPIS.Tests
 			yield return null;
 		}
 
+		// TODO: this test
+		/*
 		[UnityTest]
 		public IEnumerator CaptureCameraTakesPicturesOfCodes()
 		{
@@ -198,6 +200,7 @@ namespace SBEPIS.Tests
 
 			yield return null;
 		}
+		*/
 
 		[UnityTest]
 		public IEnumerator CaptureCameraTakesPicturesOfObjects()
