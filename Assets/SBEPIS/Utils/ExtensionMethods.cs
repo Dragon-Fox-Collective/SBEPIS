@@ -68,6 +68,13 @@ public static class ExtensionMethods
 		UnityEngine.Object.Destroy(other.gameObject);
 	}
 
+	public static T[] Fill<T>(this T[] array, T item)
+	{
+		T[] newArray = new T[array.Length];
+		Array.Fill(newArray, item);
+		return newArray;
+	}
+
 	// Note that lhs * rhs means rotating by lhs and then by rhs
 	public static Quaternion TransformRotation(this Transform from, Quaternion delta) => from.rotation * delta; // from * delta = to
 	public static Quaternion InverseTransformRotation(this Transform from, Quaternion to) => from.rotation.Inverse() * to; // delta = from-1 * to

@@ -10,7 +10,7 @@ namespace SBEPIS.Physics
 	{
 		public new Rigidbody rigidbody { get; private set; }
 
-		public Vector3 WorldCenterOfMass => transform.position + rigidbody.centerOfMass;
+		public Vector3 worldCenterOfMass => transform.position + rigidbody.centerOfMass;
 
 		private void Awake()
 		{
@@ -22,7 +22,7 @@ namespace SBEPIS.Physics
 			Recalculate();
 		}
 
-		public void Recalculate()
+		private void Recalculate()
 		{
 			RigidbodyPiece[] pieces = GetComponentsInChildren<RigidbodyPiece>();
 			if (pieces.Length == 0)
@@ -37,7 +37,7 @@ namespace SBEPIS.Physics
 			{
 				if (piece.gameObject.activeInHierarchy)
 				{
-					rigidbody.centerOfMass += (piece.WorldCenter - transform.position) * piece.mass;
+					rigidbody.centerOfMass += transform.InverseTransformPoint(piece.worldCenter) * piece.mass;
 					rigidbody.mass += piece.mass;
 				}
 			}
@@ -50,10 +50,10 @@ namespace SBEPIS.Physics
 				// where m is the mass, I is the local inertia tensor, R is the displacement vector from the center of mass to the new point, and E is the identity
 				// also inner is dot product
 				Matrix4x4 pieceTransform = Matrix4x4.Rotate(piece.transform.rotation);
-				Matrix4x4 worldTensor = pieceTransform * piece.LocalInertiaTensor * pieceTransform.transpose;
+				Matrix4x4 worldTensor = pieceTransform * piece.localInertiaTensor * pieceTransform.transpose;
 				Matrix4x4 inverseTransform = Matrix4x4.Rotate(transform.rotation.Inverse());
 				Matrix4x4 localTensor = inverseTransform * worldTensor * inverseTransform.transpose;
-				Vector3 displacement = WorldCenterOfMass - piece.WorldCenter;
+				Vector3 displacement = worldCenterOfMass - piece.worldCenter;
 				Matrix4x4 parallelTensor = localTensor.Plus(Matrix4x4.identity.Times(displacement.InnerSquared()).Minus(displacement.OuterSquared()).Times(piece.mass));
 				inertiaTensor = inertiaTensor.Plus(parallelTensor);
 			}
