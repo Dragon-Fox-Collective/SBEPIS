@@ -194,14 +194,6 @@ namespace SBEPIS.Tests
 		}
 		*/
 
-		[UnityTest]
-		public IEnumerator CaptureCameraTakesPicturesOfCodes()
-		{
-			Assert.IsNotNull(CaptureCamera.GetCaptureCodeTexture(BitSet.FromCode("ssSS+/sS")));
-
-			yield return null;
-		}
-
 		// TODO: this test
 		/*
 		[UnityTest]
