@@ -1,18 +1,16 @@
 using SBEPIS.Bits;
-using SBEPIS.Interaction;
-using System;
 using UnityEngine;
 
 namespace SBEPIS.Items
 {
 	public class ItemBase : MonoBehaviour
 	{
-		public MemberedBitSetFactory baseBits;
+		public TaggedBitSetFactory baseBits;
 		[SerializeField]
 		[HideInInspector]
-		private MemberedBitSet _bits;
+		private TaggedBitSet _bits;
 		private bool madeBits;
-		public MemberedBitSet bits {
+		public TaggedBitSet bits {
 			get
 			{
 				if (!madeBits)
@@ -31,13 +29,28 @@ namespace SBEPIS.Items
 
 		private void Start()
 		{
+			BecomeItem();
+		}
+
+		public bool BecomeItem()
+		{
 			if (!GetComponentInParent<Item>())
+			{
 				gameObject.AddComponent<Item>();
+				return true;
+			}
+			else
+				return false;
 		}
 
 		public override string ToString()
 		{
-			return $"{base.ToString()}{{{bits}}}";
+			return $"{name}{{{bits}}}";
+		}
+
+		private void OnValidate()
+		{
+			madeBits = false;
 		}
 	}
 }

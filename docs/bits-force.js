@@ -7,10 +7,10 @@ const makeParents = parameters.has('makeparents');
 
 (async () => {
 	//  Graph data
-	let graph = await d3.json('bits.json');
+	let data = await d3.json('bits.json');
 
-	let nodes = [];
-	let links = [];
+	let nodeData = [];
+	let linkData = [];
 
 	function namespace(nodeId, nodeType)
 	{
@@ -26,12 +26,10 @@ const makeParents = parameters.has('makeparents');
 		
 		if ('id' in node && (makeParents || !('nodes' in node)) && ['members', 'bits', 'class', 'items'].includes(nodeType))
 		{
-			//if (nodeType == "items" && !("class" in node) && !("items" in node)) node.class = "handclass";
-
-			nodes.push(Object.assign({ 'id':namespace(node.id, nodeType), 'name':node.id, 'isParent':'nodes' in node }, attrs));
+			nodeData.push(Object.assign({ 'id':namespace(node.id, nodeType), 'name':node.id, 'isParent':'nodes' in node }, attrs));
 
 			if (parentNode !== null && makeParents)
-			 	links.push({ source: namespace(parentNode.id, parentNode.id === 'base' ? null : nodeType), target: namespace(node.id, nodeType) });
+			 	linkData.push({ source: namespace(parentNode.id, parentNode.id === 'base' ? null : nodeType), target: namespace(node.id, nodeType) });
 		}
 
 		['bits', 'members', 'items'].forEach(sourceType =>
@@ -39,8 +37,8 @@ const makeParents = parameters.has('makeparents');
 			if (sourceType in node)
 			{
 				if (typeof node[sourceType] !== "object")
-					throw namespace(node.id, nodeType) + " uses " + sourceType + " as a " + typeof node[sourceType] + " instead of a object";
-				node[sourceType].forEach(source => links.push({ source:namespace(source, sourceType), target:namespace(node.id, nodeType) }));
+					throw new Error(namespace(node.id, nodeType) + " uses " + sourceType + " as a " + typeof node[sourceType] + " instead of a object");
+				node[sourceType].forEach(source => linkData.push({ source:namespace(source, sourceType), target:namespace(node.id, nodeType) }));
 			}
 		});
 
@@ -49,8 +47,8 @@ const makeParents = parameters.has('makeparents');
 			if (sourceType in node)
 			{
 				if (typeof node[sourceType] !== "string")
-					throw namespace(node.id, nodeType) + " uses " + sourceType + " as a " + typeof node[sourceType] + " instead of a string";
-				links.push({ source:namespace(node[sourceType], sourceType), target:namespace(node.id, nodeType) });
+					throw new Error(namespace(node.id, nodeType) + " uses " + sourceType + " as a " + typeof node[sourceType] + " instead of a string");
+				linkData.push({ source:namespace(node[sourceType], sourceType), target:namespace(node.id, nodeType) });
 			}
 		});
 
@@ -58,7 +56,7 @@ const makeParents = parameters.has('makeparents');
 			node.nodes.forEach(child => iterateNode(child, attrs, 'id' in node ? node : parentNode, graph, nodeType === null ? child.id : nodeType));
 	}
 
-	iterateNode(graph, {}, null, graph, null);
+	iterateNode(data, {}, null, data, null);
 
 	//  SVG elements
 	let svg = d3.select('#graph').append('svg')
@@ -92,23 +90,23 @@ const makeParents = parameters.has('makeparents');
 			.attr('d', `M ${markerBoxSize / 2} ${markerBoxSize / 2} 0 ${markerBoxSize / 4} 0 ${markerBoxSize * 3 / 4} ${markerBoxSize / 2} ${markerBoxSize / 2}`)
 			.attr('fill', marker => marker.sourceParent ? '#00000010' : '#000000')
 
-	let link = svg.selectAll('.link')
-		.data(links)
+	let links = svg.selectAll('.link')
+		.data(linkData)
 		.join('line')
 		.classed('link', true);
 
-	let node = svg.selectAll('.node')
-		.data(nodes)
+	let nodes = svg.selectAll('.node')
+		.data(nodeData)
 		.join('g')
 		.classed('node', true);
 	
-	node.append('circle')
+	nodes.append('circle')
 		.attr('r', node => node.isParent ? 5 : 10)
 		.style('fill', node => node.color)
 		.append('title')
 			.text(node => node.name);
 	
-	node.append('text')
+	nodes.append('text')
 		.text(node => node.name)
 		.attr('dx', 0)
 		.attr('dy', node => node.isParent ? -5 : -10)
@@ -118,13 +116,13 @@ const makeParents = parameters.has('makeparents');
 	//  Interaction events
 	function tick()
 	{
-		link
+		links
 			.attr('x1', link => link.source.x)
 			.attr('y1', link => link.source.y)
 			.attr('x2', link => link.target.x)
 			.attr('y2', link => link.target.y);
 
-		node
+		nodes
 			.attr('transform', node => `translate(${node.x}, ${node.y})`)
 			.select('circle')
 				.style('stroke', node => node.pinned ? '#000' : null);
@@ -132,15 +130,13 @@ const makeParents = parameters.has('makeparents');
 
 
 	//  Simulation
-	var simulation = d3.forceSimulation(nodes)
+	let simulation = d3.forceSimulation(nodeData)
 		.force('charge', d3.forceManyBody().strength(-50))
-		//.force('centerX', d3.forceX(graphWidth * graphScale / 2))
-		//.force('centerY', d3.forceY(graphHeight * graphScale / 2))
 		.force('center', d3.forceCenter(graphWidth * graphScale / 2, graphHeight * graphScale / 2))
-		.force('link', d3.forceLink(links).id(node => node.id).distance(20))
+		.force('link', d3.forceLink(linkData).id(node => node.id).distance(20))
 		.on('tick', tick);
 
-	node
+	nodes
 		.call(d3.drag()
 			.on('start', (event, node) => {
 				if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -159,7 +155,7 @@ const makeParents = parameters.has('makeparents');
 					node.fy = null;
 				}
 			}))
-		.on('click', (event, node) => {
+		.on('click', (_event, node) => {
 			simulation.restart();
 			node.pinned = !node.pinned;
 			if (node.pinned)
@@ -176,13 +172,13 @@ const makeParents = parameters.has('makeparents');
 	
 	
 	//  Final attribute and style calls (post forceLink)
-	link
+	links
 		.classed('parent', link => link.source.isParent)
 		.attr('marker-end', link => 'url(#arrow' + (link.source.isParent ? '-sourceParent' : '') + (link.target.isParent ? '-targetParent' : '') + ')');
 
-	node
+	nodes
 		.classed('parent', node => node.isParent)
-		.each(node => node.weight = link.filter(link => link.source === node || link.target === node).size());
+		.each(node => node.weight = links.filter(link => link.source === node || link.target === node).size());
 
 	simulation.force('link')
 		.strength(link => (link.source.isParent ? 0.2 : 1) / Math.min(link.source.weight, link.target.weight))

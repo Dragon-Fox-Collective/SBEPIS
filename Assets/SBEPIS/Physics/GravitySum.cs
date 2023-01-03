@@ -60,7 +60,7 @@ namespace SBEPIS.Physics
 
 		private void ApplyGravity()
 		{
-			if (rigidbody)
+			if (rigidbody && !rigidbody.isKinematic)
 				rigidbody.velocity += -gravityAcceleration * Time.fixedDeltaTime * upDirection;
 		}
 
