@@ -25,7 +25,7 @@ namespace SBEPIS.UI
 			grabbable.onDrop.RemoveListener(FinishTracking);
 		}
 
-		public void StartTracking(Grabber grabber) => StartTracking();
-		public void FinishTracking(Grabber grabber) => FinishTracking();
+		public void StartTracking(Grabber grabber, Grabbable grabbable) => StartTracking();
+		public void FinishTracking(Grabber grabber, Grabbable grabbable) => FinishTracking();
 	}
 }

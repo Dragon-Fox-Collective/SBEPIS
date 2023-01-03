@@ -60,7 +60,25 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Use Left Hand",
+                    "name": "Use Right",
+                    "type": "Value",
+                    "id": "ae303b36-c0e5-4580-b5c4-767c58be050f",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Use Left",
+                    "type": "Value",
+                    "id": "6e0a4047-d826-49b9-aa39-1369fdd8b1cf",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Activate Left Hand",
                     "type": "Value",
                     "id": "68e27118-dcb5-48fe-ad39-37390cc655b4",
                     "expectedControlType": "Axis",
@@ -69,9 +87,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Capturllect",
+                    "name": "Capturllect Right",
                     "type": "Button",
                     "id": "4e524db6-ffa3-4e86-906d-d3d9257629b0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Capturllect Left",
+                    "type": "Button",
+                    "id": "1daccaf8-b745-4fab-87e0-f780953ab842",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Tap",
@@ -83,7 +110,7 @@
                     "id": "56a1f853-d0d7-48ce-b37c-2fa99356ce65",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
@@ -286,7 +313,7 @@
                 {
                     "name": "",
                     "id": "363b6cb1-296e-4fbd-af4b-e49c7b51557d",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -308,7 +335,7 @@
                 {
                     "name": "",
                     "id": "756b4864-6e3c-4011-ad5d-557af54ae287",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -362,6 +389,17 @@
                 },
                 {
                     "name": "",
+                    "id": "a9cd1d67-6824-4772-9f8b-5dcc7c1bbcd4",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Pick Up Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d5dbbe72-3c14-4a60-8b56-0a7a8433f228",
                     "path": "<XRController>{LeftHand}/gripPressed",
                     "interactions": "",
@@ -373,19 +411,8 @@
                 },
                 {
                     "name": "",
-                    "id": "a9cd1d67-6824-4772-9f8b-5dcc7c1bbcd4",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Pick Up Left",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "7914a5e6-8a2b-4207-a423-0216c29245fc",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -400,7 +427,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Capturllect",
+                    "action": "Capturllect Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -411,7 +438,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "OpenXR",
-                    "action": "Capturllect",
+                    "action": "Capturllect Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -429,7 +456,7 @@
                 {
                     "name": "",
                     "id": "6d4487e4-3ad5-4214-8284-ded751aa8e85",
-                    "path": "<Keyboard>/c",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -439,8 +466,8 @@
                 },
                 {
                     "name": "",
-                    "id": "0aaf21e6-ba16-4328-ad48-bf860cda0623",
-                    "path": "<XRController>{RightHand}/primaryButton",
+                    "id": "4ca5faaf-94f7-42c8-b9c5-c3685b381122",
+                    "path": "<XRController>{LeftHand}/secondaryButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "OpenXR",
@@ -472,8 +499,8 @@
                 },
                 {
                     "name": "",
-                    "id": "714e559c-3ed4-475f-9f02-8d4d333ce178",
-                    "path": "<XRController>{LeftHand}/secondaryButton",
+                    "id": "afc936ef-cca9-4524-8081-830a9a3cc48b",
+                    "path": "<XRController>{LeftHand}/menu",
                     "interactions": "",
                     "processors": "",
                     "groups": "OpenXR",
@@ -483,8 +510,8 @@
                 },
                 {
                     "name": "",
-                    "id": "afc936ef-cca9-4524-8081-830a9a3cc48b",
-                    "path": "<XRController>{LeftHand}/menu",
+                    "id": "0a9f2ff1-3949-4f6d-a5b4-e82965de10a5",
+                    "path": "<XRController>{LeftHand}/primaryButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "OpenXR",
@@ -500,17 +527,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a0e9bca6-1382-4c92-8cc5-9ba693476ce6",
-                    "path": "<Gamepad>/leftStickPress",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -539,22 +555,22 @@
                 {
                     "name": "",
                     "id": "1e728aaf-5bd6-4115-a628-62448dc1d956",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Use Left Hand",
+                    "action": "Activate Left Hand",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "a76964f0-f705-437c-9ee1-868445c32a63",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Use Left Hand",
+                    "action": "Activate Left Hand",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -599,6 +615,94 @@
                     "processors": "",
                     "groups": "OpenXR",
                     "action": "Head Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a0e9bca6-1382-4c92-8cc5-9ba693476ce6",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3b91c909-a3a3-425f-b1d4-ca6d226235bd",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Use Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c2b322dd-f61c-4367-a65c-b73a601e4f3f",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Use Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "69235d8e-7546-45f2-903f-367103247ae2",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Use Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "136cb745-0caa-4505-963b-1a93bf9e858e",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Use Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b838bb3-8f33-42ac-99b7-7c3d5a5e66c8",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "OpenXR",
+                    "action": "Use Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cfa2f87a-2b47-4b6a-9af5-cb877f4d36ea",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Use Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d05cb0e-1f81-4996-92e4-f822c647f753",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Capturllect Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

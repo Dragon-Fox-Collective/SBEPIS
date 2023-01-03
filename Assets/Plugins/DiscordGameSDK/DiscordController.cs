@@ -31,18 +31,18 @@ namespace Discord
 
 		private void Update()
 		{
-			discord.RunCallbacks();
+			discord?.RunCallbacks();
 		}
 
 		private void OnApplicationQuit()
 		{
-			discord.GetActivityManager().ClearActivity(result => print(result));
+			discord?.GetActivityManager().ClearActivity(result => print(result));
 		}
 
 		private void UpdatePresence()
 		{
 			print("Updating presence");
-			discord.GetActivityManager().UpdateActivity(new Activity
+			discord?.GetActivityManager().UpdateActivity(new Activity
 			{
 				Details = "Exploring " + SceneManager.GetActiveScene().name,
 				State = "discord.gg/qHREQu7Zxm",
