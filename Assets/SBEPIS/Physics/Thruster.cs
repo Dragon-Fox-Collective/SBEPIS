@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class Impulse : MonoBehaviour
+	public class Thruster : MonoBehaviour
 	{
 		public float speed = 100;
 		public float acceleration = 50;
