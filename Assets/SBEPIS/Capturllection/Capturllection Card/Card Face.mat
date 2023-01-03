@@ -27,6 +27,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Base_Map:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -82,54 +86,54 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
-    - _Bit_1: 1
-    - _Bit_10: 1
-    - _Bit_11: 1
-    - _Bit_12: 1
-    - _Bit_13: 1
-    - _Bit_14: 1
-    - _Bit_15: 1
-    - _Bit_16: 1
-    - _Bit_17: 1
-    - _Bit_18: 1
-    - _Bit_19: 1
-    - _Bit_2: 1
-    - _Bit_20: 1
-    - _Bit_21: 1
-    - _Bit_22: 1
-    - _Bit_23: 1
-    - _Bit_24: 1
-    - _Bit_25: 1
-    - _Bit_26: 1
-    - _Bit_27: 1
-    - _Bit_28: 1
-    - _Bit_29: 1
-    - _Bit_3: 1
-    - _Bit_30: 1
-    - _Bit_31: 1
-    - _Bit_32: 1
-    - _Bit_33: 1
-    - _Bit_34: 1
-    - _Bit_35: 1
-    - _Bit_36: 1
-    - _Bit_37: 1
-    - _Bit_38: 1
-    - _Bit_39: 1
-    - _Bit_4: 1
-    - _Bit_40: 1
-    - _Bit_41: 1
-    - _Bit_42: 1
-    - _Bit_43: 1
-    - _Bit_44: 1
-    - _Bit_45: 1
-    - _Bit_46: 1
-    - _Bit_47: 1
-    - _Bit_48: 1
-    - _Bit_5: 1
-    - _Bit_6: 1
-    - _Bit_7: 1
-    - _Bit_8: 1
-    - _Bit_9: 1
+    - _Bit_1: 0
+    - _Bit_10: 0
+    - _Bit_11: 0
+    - _Bit_12: 0
+    - _Bit_13: 0
+    - _Bit_14: 0
+    - _Bit_15: 0
+    - _Bit_16: 0
+    - _Bit_17: 0
+    - _Bit_18: 0
+    - _Bit_19: 0
+    - _Bit_2: 0
+    - _Bit_20: 0
+    - _Bit_21: 0
+    - _Bit_22: 0
+    - _Bit_23: 0
+    - _Bit_24: 0
+    - _Bit_25: 0
+    - _Bit_26: 0
+    - _Bit_27: 0
+    - _Bit_28: 0
+    - _Bit_29: 0
+    - _Bit_3: 0
+    - _Bit_30: 0
+    - _Bit_31: 0
+    - _Bit_32: 0
+    - _Bit_33: 0
+    - _Bit_34: 0
+    - _Bit_35: 0
+    - _Bit_36: 0
+    - _Bit_37: 0
+    - _Bit_38: 0
+    - _Bit_39: 0
+    - _Bit_4: 0
+    - _Bit_40: 0
+    - _Bit_41: 0
+    - _Bit_42: 0
+    - _Bit_43: 0
+    - _Bit_44: 0
+    - _Bit_45: 0
+    - _Bit_46: 0
+    - _Bit_47: 0
+    - _Bit_48: 0
+    - _Bit_5: 0
+    - _Bit_6: 0
+    - _Bit_7: 0
+    - _Bit_8: 0
+    - _Bit_9: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -147,6 +151,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Map_Scale: 0.67
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
