@@ -8,7 +8,7 @@ namespace SBEPIS.Capturllection
 	public class Capturllectable : MonoBehaviour
 	{
 		public bool canCapturllect = true;
-		public MemberedBitSet bits => itemBase.bits;
+		public TaggedBitSet bits => itemBase.bits;
 
 		private ItemBase itemBase;
 

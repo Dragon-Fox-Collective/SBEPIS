@@ -29,7 +29,7 @@ namespace SBEPIS.Capturllection
 
 			Punchable punchable = GetComponent<Punchable>();
 			if (punchable)
-				storePredicates.Add(() => punchable.punchedBits == Bits.BitSet.NOTHING);
+				storePredicates.Add(() => punchable.punchedBits.isPerfectlyGeneric);
 		}
 	}
 }
