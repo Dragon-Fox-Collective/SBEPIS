@@ -11,6 +11,28 @@ public static class ExtensionMethods
 		return (value - inputFrom) / (inputTo - inputFrom) * (outputTo - outputFrom) + outputFrom;
 	}
 
+	/// <summary>
+	/// Returns positive mod of value
+	/// </summary>
+	public static float Mod(this float value, float mod)
+	{
+		float res = value % mod;
+		if (res < 0)
+			res += mod;
+		return res;
+	}
+
+	/// <summary>
+	/// Returns mod of value between -mod/2 and mod/2
+	/// </summary>
+	public static float ModAround(this float value, float mod)
+	{
+		float res = value.Mod(mod);
+		if (res > mod / 2)
+			res -= mod;
+		return res;
+	}
+
 	public static bool IsOnLayer(this GameObject gameObject, int layerMask)
 	{
 		return ((1 << gameObject.layer) & layerMask) != 0;
@@ -27,14 +49,12 @@ public static class ExtensionMethods
 	{
 		rigidbody.isKinematic = true;
 		rigidbody.detectCollisions = false;
-		rigidbody.interpolation = RigidbodyInterpolation.None;
 	}
 
 	public static void Enable(this Rigidbody rigidbody)
 	{
 		rigidbody.isKinematic = false;
 		rigidbody.detectCollisions = true;
-		rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
 	}
 
 	public static string Join<T>(this string delimiter, IEnumerable<T> enumerable)
@@ -68,6 +88,18 @@ public static class ExtensionMethods
 		UnityEngine.Object.Destroy(other.gameObject);
 	}
 
+	public static void AddRange<T>(this List<T> list, params T[] items)
+	{
+		list.AddRange(items);
+	}
+
+	public static T[] Fill<T>(this T[] array, T item)
+	{
+		T[] newArray = new T[array.Length];
+		Array.Fill(newArray, item);
+		return newArray;
+	}
+
 	// Note that lhs * rhs means rotating by lhs and then by rhs
 	public static Quaternion TransformRotation(this Transform from, Quaternion delta) => from.rotation * delta; // from * delta = to
 	public static Quaternion InverseTransformRotation(this Transform from, Quaternion to) => from.rotation.Inverse() * to; // delta = from-1 * to
@@ -87,6 +119,11 @@ public static class ExtensionMethods
 	public static IEnumerable<T> Insert<T>(this IEnumerable<T> enumerable, int index, T element)
 	{
 		return enumerable.Take(index).Append(element).Concat(enumerable.TakeLast(enumerable.Count() - index));
+	}
+
+	public static IEnumerable<(T, TSecond)> Zip<T, TSecond>(this IEnumerable<T> first, IEnumerable<TSecond> second)
+	{
+		return first.Zip(second, (first, second) => (first, second));
 	}
 
 	public static IEnumerable<float> AsEnumerable(this Vector3 vector)

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace SBEPIS.Utils
@@ -11,16 +12,22 @@ namespace SBEPIS.Utils
 			get
 			{
 				if (!_instance)
-					_instance = Resources.Load<T>(typeof(T).Name);
+					_instance = Load();
 
 				return _instance;
 			}
 		}
 
-		protected ScriptableSingleton()
+		private static T Load()
 		{
-			if (!_instance)
-				_instance = this as T;
+			T[] assets = Resources.LoadAll<T>("");
+
+			if (assets.Length == 0)
+				throw new ArgumentOutOfRangeException($"There are no {typeof(T).Name} files found");
+			if (assets.Length > 1)
+				throw new ArgumentOutOfRangeException($"There are too many {typeof(T).Name} files found");
+
+			return assets[0];
 		}
 	}
 }

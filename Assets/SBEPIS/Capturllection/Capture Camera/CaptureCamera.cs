@@ -12,6 +12,8 @@ namespace SBEPIS.Capturllection
 	public class CaptureCamera : MonoBehaviour
 	{
 		public TextMeshProUGUI codeBox;
+		public Transform objectParent;
+		public RectTransform stage;
 
 		private new Camera camera;
 
@@ -21,35 +23,31 @@ namespace SBEPIS.Capturllection
 		private void Awake()
 		{
 			if (instance && instance != this)
-				Destroy(instance);
+				Destroy(this);
 			instance = this;
 
 			camera = GetComponent<Camera>();
 		}
 
-		public Texture2D TakePictureOfObject(CaptureCamerable camerable)
+		public Texture2D TakePictureOfObject(GameObject obj)
 		{
-			Transform oldParent = camerable.transform.parent;
-			Vector3 oldPosition = camerable.transform.localPosition;
-			Quaternion oldRotation = camerable.transform.localRotation;
-			Vector3 oldScale = camerable.transform.localScale;
-			bool wasActive = camerable.gameObject.activeSelf;
+			Transform oldParent = obj.transform.parent;
+			bool wasActive = obj.activeSelf;
 
-			camerable.transform.parent = codeBox.transform.parent;
-			camerable.transform.localPosition = camerable.location;
-			camerable.transform.localRotation = Quaternion.Euler(0, 180, 0) * camerable.rotation;
-			camerable.transform.localScale = Vector3.one * camerable.scale;
-			if (!wasActive) camerable.gameObject.SetActive(true);
+			obj.transform.SetParent(objectParent, false);
+			obj.SetActive(true);
 
-			camerable.prePicture.Invoke();
+			Bounds bounds = new(obj.transform.position, Vector3.zero);
+			foreach (Renderer renderer in obj.GetComponentsInChildren<Renderer>())
+				bounds.Encapsulate(renderer.bounds);
+			objectParent.position = stage.position + objectParent.position - bounds.center;
+			stage.localScale = Mathf.Min(stage.rect.width / 2f / bounds.size.x, stage.rect.height / bounds.size.y) * Vector3.one;
+
 			Texture2D rtn = TakePicture();
-			camerable.postPicture.Invoke();
 
-			camerable.transform.parent = oldParent;
-			camerable.transform.localPosition = oldPosition;
-			camerable.transform.localRotation = oldRotation;
-			camerable.transform.localScale = oldScale;
-			if (!wasActive) camerable.gameObject.SetActive(false);
+			stage.localScale = Vector3.one;
+			obj.transform.SetParent(oldParent, false);
+			obj.SetActive(wasActive);
 
 			return rtn;
 		}
@@ -57,7 +55,7 @@ namespace SBEPIS.Capturllection
 		private Texture2D TakePictureOfCode(BitSet bits)
 		{
 			codeBox.gameObject.SetActive(true);
-			codeBox.text = bits.ToCode();
+			codeBox.text = BitManager.instance.bits.BitSetToCode(bits);
 			Texture2D rtn = TakePicture();
 			codeBox.gameObject.SetActive(false);
 			return rtn;

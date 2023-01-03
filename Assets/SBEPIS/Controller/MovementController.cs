@@ -36,11 +36,11 @@ namespace SBEPIS.Controller
 
 		private void MoveTick()
 		{
-			CheckSprint();
-			Accelerate(orientation.relativeVelocity, orientation.groundVelocity, orientation.upDirection);
+			UpdateSprinting();
+			Accelerate(orientation.relativeVelocity, orientation.upDirection);
 		}
 
-		private void CheckSprint()
+		private void UpdateSprinting()
 		{
 			if (isSprinting && controlsTarget.magnitude < sprintControlThreshold)
 				isSprinting = false;
@@ -48,28 +48,37 @@ namespace SBEPIS.Controller
 				isSprinting = true;
 		}
 
-		private void Accelerate(Vector3 velocity, Vector3 groundVelocity, Vector3 upDirection)
+		private void Accelerate(Vector3 currentVelocity, Vector3 upDirection)
 		{
-			Vector3 accelerationDirection = moveAimer.right * controlsTarget.x + Vector3.Cross(moveAimer.right, upDirection) * controlsTarget.z;
-			AccelerateGround(groundVelocity, upDirection, accelerationDirection);
-			if (accelerationDirection != Vector3.zero && !orientation.isGrounded)
-				AccelerateAir(velocity, upDirection, accelerationDirection);
+			Vector3 accelerationControl = moveAimer.right * controlsTarget.x + Vector3.Cross(moveAimer.right, upDirection) * controlsTarget.z;
+			AccelerateGround(upDirection, accelerationControl);
+			if (accelerationControl != Vector3.zero && !orientation.isGrounded)
+				AccelerateAir(currentVelocity, accelerationControl);
 		}
 
-		private void AccelerateGround(Vector3 groundVelocity, Vector3 upDirection, Vector3 accelerationDirection)
+		private void AccelerateGround(Vector3 upDirection, Vector3 accelerationControl)
 		{
-			float maxSpeed = maxGroundSpeed * accelerationDirection.magnitude * (isSprinting ? sprintFactor : 1);
-			Vector3 newVelocity = accelerationDirection.normalized * maxSpeed;
+			float maxSpeed = maxGroundSpeed * accelerationControl.magnitude * (isSprinting ? sprintFactor : 1);
+			Vector3 newVelocity = accelerationControl.normalized * maxSpeed;
 			Vector3 angularVelocity = newVelocity.magnitude / footballCollider.radius * Vector3.Cross(upDirection, newVelocity).normalized;
 			footballJoint.targetAngularVelocity = -footballJoint.transform.InverseTransformVector(angularVelocity);
+			LockFootballIfStopping();
 		}
 
-		private void AccelerateAir(Vector3 velocity, Vector3 upDirection, Vector3 accelerationDirection)
+		private void LockFootballIfStopping()
 		{
-			float maxSpeed = Mathf.Max(velocity.magnitude, maxGroundSpeed * accelerationDirection.magnitude * (isSprinting ? sprintFactor : 1));
-			Vector3 newVelocity = velocity + Time.fixedDeltaTime * airAcceleration * accelerationDirection.normalized;
+			if (footballJoint.targetAngularVelocity == Vector3.zero)
+				footballCollider.attachedRigidbody.constraints |= RigidbodyConstraints.FreezeRotation;
+			else
+				footballCollider.attachedRigidbody.constraints &= ~RigidbodyConstraints.FreezeRotation;
+		}
+
+		private void AccelerateAir(Vector3 currentVelocity, Vector3 accelerationControl)
+		{
+			float maxSpeed = Mathf.Max(currentVelocity.magnitude, maxGroundSpeed * accelerationControl.magnitude * (isSprinting ? sprintFactor : 1));
+			Vector3 newVelocity = currentVelocity + Time.fixedDeltaTime * airAcceleration * accelerationControl.normalized;
 			Vector3 clampedNewVelocity = Vector3.ClampMagnitude(newVelocity, maxSpeed);
-			rigidbody.velocity += clampedNewVelocity - velocity;
+			rigidbody.velocity += clampedNewVelocity - currentVelocity;
 		}
 
 		public void OnMove(CallbackContext context)

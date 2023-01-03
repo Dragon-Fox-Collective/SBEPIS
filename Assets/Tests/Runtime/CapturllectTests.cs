@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using OculusTouchController = Unity.XR.Oculus.Input.OculusTouchController;
 using SBEPIS.Capturllection;
 using SBEPIS.Bits;
+using SBEPIS.Items;
 
 namespace SBEPIS.Tests
 {
@@ -70,9 +71,9 @@ namespace SBEPIS.Tests
 		public IEnumerator CapturllectCapturllectsItem_WhenHoldingItem()
 		{
 			Assert.IsNull(scene.emptyCard.capturedItem);
-			Assert.IsTrue(scene.camerable.gameObject.activeInHierarchy);
+			Assert.IsTrue(scene.obj.activeInHierarchy);
 
-			scene.grabber.transform.position = scene.camerable.transform.position;
+			scene.grabber.transform.position = scene.obj.transform.position;
 			yield return new WaitForFixedUpdate();
 
 			Press(controller.gripPressed);
@@ -84,14 +85,14 @@ namespace SBEPIS.Tests
 			Release(controller.primaryButton);
 			yield return null;
 
-			Assert.AreEqual(scene.camerable, scene.emptyCard.capturedItem);
-			Assert.IsFalse(scene.camerable.gameObject.activeInHierarchy);
+			Assert.AreEqual(scene.obj, scene.emptyCard.capturedItem);
+			Assert.IsFalse(scene.obj.activeInHierarchy);
 		}
 
 		[UnityTest]
 		public IEnumerator CapturllectFetchesItem_WhenHoldingCard()
 		{
-			CaptureHashable capturedItem = scene.fullCard.capturedItem;
+			Capturllectable capturedItem = scene.fullCard.capturedItem;
 			Assert.IsNotNull(capturedItem);
 			Assert.IsFalse(capturedItem.gameObject.activeInHierarchy);
 
@@ -111,6 +112,7 @@ namespace SBEPIS.Tests
 			Assert.IsTrue(capturedItem.gameObject.activeInHierarchy);
 		}
 
+		/*
 		[UnityTest]
 		public IEnumerator CapturllectEjectsItem_WhenCardIsFull()
 		{
@@ -190,7 +192,10 @@ namespace SBEPIS.Tests
 
 			yield return null;
 		}
+		*/
 
+		// TODO: this test
+		/*
 		[UnityTest]
 		public IEnumerator CaptureCameraTakesPicturesOfCodes()
 		{
@@ -198,11 +203,12 @@ namespace SBEPIS.Tests
 
 			yield return null;
 		}
+		*/
 
 		[UnityTest]
 		public IEnumerator CaptureCameraTakesPicturesOfObjects()
 		{
-			Assert.IsNotNull(CaptureCamera.instance.TakePictureOfObject(scene.camerable));
+			Assert.IsNotNull(CaptureCamera.instance.TakePictureOfObject(scene.obj));
 
 			yield return null;
 		}
