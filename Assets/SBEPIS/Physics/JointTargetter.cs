@@ -1,11 +1,13 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class JointTargetter : MonoBehaviour
 	{
-		public Rigidbody connectedRigidbody;
+		[FormerlySerializedAs("connectedRigidbody")]
+		public Rigidbody jointOwner;
 		public Transform target;
 		public Transform anchor;
 		public float anchorDistance = 0.5f;
@@ -34,9 +36,9 @@ namespace SBEPIS.Physics
 
 		private void Start()
 		{
-			initialOffset = connectedRigidbody.transform.InverseTransformRotation(transform.rotation).Inverse();
+			initialOffset = jointOwner.transform.InverseTransformRotation(transform.rotation).Inverse();
 
-			joint = connectedRigidbody.gameObject.AddComponent<ConfigurableJoint>();
+			joint = jointOwner.gameObject.AddComponent<ConfigurableJoint>();
 			joint.connectedBody = rigidbody;
 			joint.autoConfigureConnectedAnchor = false;
 			joint.anchor = joint.connectedAnchor = Vector3.zero;
@@ -57,7 +59,7 @@ namespace SBEPIS.Physics
 			rigidbody.velocity = Vector3.zero;
 			rigidbody.angularVelocity = Vector3.zero;
 
-			prevTargetPosition = connectedRigidbody.transform.InverseTransformPoint(target.position);
+			prevTargetPosition = jointOwner.transform.InverseTransformPoint(target.position);
 			prevTargetRotation = target.rotation;
 		}
 
@@ -69,10 +71,10 @@ namespace SBEPIS.Physics
 
 		private void UpdatePosition()
 		{
-			Vector3 targetPosition = connectedRigidbody.transform.InverseTransformPoint(target.position);
+			Vector3 targetPosition = jointOwner.transform.InverseTransformPoint(target.position);
 			if (anchor)
 			{
-				Vector3 anchorPosition = connectedRigidbody.transform.InverseTransformPoint(anchor.position);
+				Vector3 anchorPosition = jointOwner.transform.InverseTransformPoint(anchor.position);
 				targetPosition = anchorPosition + Vector3.ClampMagnitude(targetPosition - anchorPosition, anchorDistance);
 			}
 
@@ -86,7 +88,7 @@ namespace SBEPIS.Physics
 
 		private void UpdateRotation()
 		{
-			joint.targetRotation = connectedRigidbody.transform.InverseTransformRotation(target.rotation) * initialOffset;
+			joint.targetRotation = jointOwner.transform.InverseTransformRotation(target.rotation) * initialOffset;
 
 			if (accountForTargetMovement)
 			{
@@ -94,7 +96,7 @@ namespace SBEPIS.Physics
 				if (delta.w < 0) delta = delta.Select(x => -x);
 				delta.ToAngleAxis(out float angle, out Vector3 axis);
 				angle *= Mathf.Deg2Rad;
-				joint.targetAngularVelocity = connectedRigidbody.transform.rotation.Inverse() * (angle / Time.fixedDeltaTime * axis);
+				joint.targetAngularVelocity = jointOwner.transform.rotation.Inverse() * (angle / Time.fixedDeltaTime * axis);
 			}
 
 			prevTargetRotation = target.rotation;
