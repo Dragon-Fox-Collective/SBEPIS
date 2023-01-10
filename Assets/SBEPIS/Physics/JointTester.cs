@@ -8,20 +8,21 @@ namespace SBEPIS.Physics
 	public class JointTester : MonoBehaviour
 	{
 		public Rigidbody connectedBody;
+
+		public Vector3 initialTargetPosition;
+		public Vector3 initialTargetVelocity;
 		
 		public Transform target;
 
-		public Vector3 targetPosition;
-		public Vector3 targetVelocity;
-
 		public bool updateTargetPosition = false;
-		public bool updateTargetVelocity = false;
-
-		public float spring = 0;
-		public float damping = 0;
 		
-		public float dampingTime = 1;
-		public float maxSpeed = Mathf.Infinity;
+		public float positionAngularFrequency = 0;
+		public float positionDampingRatio = 0;
+		
+		public bool updateTargetVelocity = false;
+		
+		public float velocityDampingTime = 1;
+		public float velocityMaxSpeed = Mathf.Infinity;
 
 		private new Rigidbody rigidbody;
 		private ConfigurableJoint joint;
@@ -38,15 +39,23 @@ namespace SBEPIS.Physics
 			
 			joint.connectedBody = connectedBody;
 			
-			joint.targetPosition = targetPosition;
-			joint.targetVelocity = targetVelocity;
-
-			joint.xDrive = joint.yDrive = joint.zDrive = new JointDrive
-			{
-				positionSpring = spring,
-				positionDamper = damping,
-				maximumForce = Mathf.Infinity,
-			};
+			joint.targetPosition = initialTargetPosition;
+			joint.targetVelocity = initialTargetVelocity;
+			
+			if (updateTargetVelocity)
+				joint.xDrive = joint.yDrive = joint.zDrive = new JointDrive
+				{
+					positionSpring = 0,
+					positionDamper = 1000000,
+					maximumForce = Mathf.Infinity,
+				};
+			else
+				joint.xDrive = joint.yDrive = joint.zDrive = new JointDrive
+				{
+					positionSpring = positionAngularFrequency * positionAngularFrequency,
+					positionDamper = 2 * positionDampingRatio * positionAngularFrequency,
+					maximumForce = Mathf.Infinity,
+				};
 		}
 
 		private void FixedUpdate()
@@ -55,7 +64,7 @@ namespace SBEPIS.Physics
 				joint.targetPosition = transform.InverseTransformPoint(target.position);
 
 			if (updateTargetVelocity)
-				joint.targetVelocity = Vector3.ClampMagnitude((target.position - connectedBody.position) / dampingTime, maxSpeed);
+				joint.targetVelocity = Vector3.ClampMagnitude((target.position - connectedBody.position) / velocityDampingTime, velocityMaxSpeed);
 		}
 	}
 }

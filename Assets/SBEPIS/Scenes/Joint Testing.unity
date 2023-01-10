@@ -514,15 +514,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedBody: {fileID: 465661367}
+  initialTargetPosition: {x: 0, y: 0, z: 0}
+  initialTargetVelocity: {x: 0, y: 0, z: 0}
   target: {fileID: 208499063}
-  targetPosition: {x: 0, y: 0, z: 0}
-  targetVelocity: {x: 0, y: 0, z: 0}
-  updateTargetPosition: 0
-  updateTargetVelocity: 1
-  spring: 0
-  damping: 1000000
-  dampingTime: 1
-  maxSpeed: 3.4028235e+38
+  updateTargetPosition: 1
+  positionAngularFrequency: 10
+  positionDampingRatio: 1
+  updateTargetVelocity: 0
+  velocityDampingTime: 1
+  velocityMaxSpeed: Infinity
 --- !u!1 &465661365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,15 +1274,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedBody: {fileID: 1080084847}
+  initialTargetPosition: {x: 0, y: 0, z: 0}
+  initialTargetVelocity: {x: 0, y: 0, z: 0}
   target: {fileID: 1935907202}
-  targetPosition: {x: 0, y: 0, z: 0}
-  targetVelocity: {x: 0, y: 0, z: 0}
   updateTargetPosition: 0
+  positionAngularFrequency: 1
+  positionDampingRatio: 1
   updateTargetVelocity: 1
-  spring: 0
-  damping: 1000000
-  dampingTime: 1
-  maxSpeed: 3.4028235e+38
+  velocityDampingTime: 0.2
+  velocityMaxSpeed: Infinity
 --- !u!54 &2044580472
 Rigidbody:
   m_ObjectHideFlags: 0
