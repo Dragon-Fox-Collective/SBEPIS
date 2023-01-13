@@ -430,7 +430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2067788949567459463}
   m_Layer: 8
-  m_Name: Camera Rig Limit
+  m_Name: Camera Rig Anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3495,9 +3495,9 @@ GameObject:
   - component: {fileID: 8432642417375942626}
   - component: {fileID: 4968331796699711886}
   - component: {fileID: 690210978355806070}
-  - component: {fileID: 2729175518569589641}
   - component: {fileID: 218406820163240569}
   - component: {fileID: 9042183274841322284}
+  - component: {fileID: 4704795409870569521}
   m_Layer: 8
   m_Name: Player Body
   m_TagString: Untagged
@@ -3567,7 +3567,7 @@ MonoBehaviour:
   onGravityChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2729175518569589641}
+      - m_Target: {fileID: 4704795409870569521}
         m_TargetAssemblyTypeName: SBEPIS.Controller.OrienterJoint, SBEPIS.Controller
         m_MethodName: Orient
         m_Mode: 0
@@ -3660,19 +3660,6 @@ MonoBehaviour:
   groundCheckMask:
     serializedVersion: 2
     m_Bits: 1
---- !u!114 &2729175518569589641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6376568280094680652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6295ed33cf7b1140af95db75cf0d119, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  acceleration: 50
 --- !u!114 &218406820163240569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3687,7 +3674,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connectedBody: {fileID: 6376568278754761722}
   target: {fileID: 6376568278921566391}
+  anchor: {fileID: 2067788949567459463}
+  anchorDistance: 1
   strength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
+  accountForTargetMovement: 0
 --- !u!114 &9042183274841322284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3702,7 +3692,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connectedBody: {fileID: 8141195637632158654}
   target: {fileID: 2758302851484042462}
+  anchor: {fileID: 2067788949567459463}
+  anchorDistance: 1
   strength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
+  accountForTargetMovement: 0
+--- !u!114 &4704795409870569521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376568280094680652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6295ed33cf7b1140af95db75cf0d119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceleration: 50
 --- !u!1 &6433262757480330092
 GameObject:
   m_ObjectHideFlags: 0

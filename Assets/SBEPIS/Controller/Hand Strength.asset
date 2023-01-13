@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d618915bf0532164c983d3d9ae077318, type: 3}
   m_Name: Hand Strength
   m_EditorClassIdentifier: 
-  linearDampingTime: 0.1
-  linearMaxSpeed: Infinity
+  linearSpring: 5000
+  linearDamper: 1000
   linearMaxForce: 1500
-  angularDampingTime: 0.1
-  angularMaxSpeed: Infinity
-  angularMaxForce: 200
+  angularSpring: 3000
+  angularDamper: 200
+  angularMaxForce: 75
