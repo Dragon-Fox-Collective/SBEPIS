@@ -9,48 +9,112 @@ namespace SBEPIS.Physics
 		public Rigidbody connectedBody;
 		
 		public Transform target;
+		
+		public Transform anchor;
+		public float anchorDistance = 0.5f;
 
 		public StrengthSettings strength;
 
-		private new Rigidbody rigidbody;
 		private ConfigurableJoint joint;
+		
+		private Quaternion initialOffset;
+		
+		private Vector3 prevTargetPosition;
+		private Quaternion prevTargetRotation;
 
-		private void Awake()
-		{
-			rigidbody = GetComponent<Rigidbody>();
-			joint = gameObject.AddComponent<ConfigurableJoint>();
-		}
+		private Vector3 initialTensor;
+		private Quaternion initialTensorRotation;
 
 		private void Start()
 		{
-			Vector3 initialPosition = rigidbody.position;
+			Rigidbody thisRigidbody = GetComponent<Rigidbody>();
+			Vector3 thisInitialPosition = thisRigidbody.position;
 			
-			joint.autoConfigureConnectedAnchor = false;
+			initialOffset = transform.InverseTransformRotation(connectedBody.transform.rotation).Inverse();
+			
+			initialTensor = connectedBody.inertiaTensor;
+			initialTensorRotation = connectedBody.inertiaTensorRotation;
+
+			connectedBody.inertiaTensor = Vector3.one * 0.02f;
+			connectedBody.inertiaTensorRotation = Quaternion.identity;
+			
+			joint = gameObject.AddComponent<ConfigurableJoint>();
 			
 			joint.connectedBody = connectedBody;
+			
+			joint.autoConfigureConnectedAnchor = false;
+			joint.anchor = joint.connectedAnchor = Vector3.zero;
 
 			joint.xDrive = joint.yDrive = joint.zDrive = new JointDrive
 			{
-				positionSpring = 0,
-				positionDamper = 1000000,
+				positionSpring = strength.linearSpring,
+				positionDamper = strength.linearDamper,
 				maximumForce = strength.linearMaxForce,
 			};
 
 			joint.rotationDriveMode = RotationDriveMode.Slerp;
 			joint.slerpDrive = new JointDrive
 			{
-				positionSpring = 0,
-				positionDamper = 1000000,
+				positionSpring = strength.angularSpring,
+				positionDamper = strength.angularDamper,
 				maximumForce = strength.angularMaxForce,
 			};
+			
+			connectedBody.velocity = Vector3.zero;
+			connectedBody.angularVelocity = Vector3.zero;
 
-			rigidbody.position = initialPosition;
+			prevTargetPosition = transform.InverseTransformPoint(target.position);
+			prevTargetRotation = target.rotation;
+
+			thisRigidbody.position = thisInitialPosition;
 		}
 
 		private void FixedUpdate()
 		{
-			joint.targetVelocity = Vector3.ClampMagnitude(transform.InverseTransformVector(target.position - connectedBody.position) / strength.linearDampingTime, strength.linearMaxSpeed);
-			joint.targetAngularVelocity = Vector3.ClampMagnitude(transform.InverseTransformVector((target.rotation * connectedBody.rotation.Inverse()).ToEulersAngleAxis()) / strength.angularDampingTime, strength.angularMaxSpeed);
+			UpdatePosition();
+			UpdateRotation();
+		}
+		
+		private void UpdatePosition()
+		{
+			Vector3 targetPosition = transform.InverseTransformPoint(target.position);
+			if (anchor)
+			{
+				Vector3 anchorPosition = transform.InverseTransformPoint(anchor.position);
+				targetPosition = anchorPosition + Vector3.ClampMagnitude(targetPosition - anchorPosition, anchorDistance);
+			}
+
+			joint.targetPosition = targetPosition;
+
+			//if (accountForTargetMovement)
+				//joint.targetVelocity = (targetPosition - prevTargetPosition) / Time.fixedDeltaTime;
+
+			prevTargetPosition = targetPosition;
+		}
+
+		private void UpdateRotation()
+		{
+			joint.targetRotation = transform.InverseTransformRotation(target.rotation) * initialOffset;
+
+			/*if (accountForTargetMovement)
+			{
+				Vector3 axis = (target.rotation * prevTargetRotation.Inverse()).ToEulersAngleAxis();
+				joint.targetAngularVelocity = transform.rotation.Inverse() * (axis / Time.fixedDeltaTime);
+			}*/
+
+			prevTargetRotation = target.rotation;
+		}
+
+		private void OnDestroy()
+		{
+			if (joint)
+				Destroy(joint);
+
+			if (connectedBody)
+			{
+				connectedBody.inertiaTensor = initialTensor;
+				connectedBody.inertiaTensorRotation = initialTensorRotation;
+			}
 		}
 	}
 }
