@@ -104,13 +104,12 @@ namespace SBEPIS.Capturllection
 			CreateCardJoint(card, cardTargets[card], staticRigidbody, cardStrength);
 		}
 
-		private void CreateCardJoint(DequeStorable card, CardTarget target, Rigidbody staticRigidbody, StrengthSettings cardStrength)
+		private static void CreateCardJoint(DequeStorable card, CardTarget target, Rigidbody staticRigidbody, StrengthSettings cardStrength)
 		{
-			JointTargetter targetter = card.gameObject.AddComponent<JointTargetter>();
-			targetter.jointOwner = staticRigidbody;
+			JointTargetter targetter = staticRigidbody.gameObject.AddComponent<JointTargetter>();
+			targetter.connectedBody = card.grabbable.rigidbody;
 			targetter.target = target.transform;
 			targetter.strength = cardStrength;
-			targetter.accountForTargetMovement = false;
 			target.targetter = targetter;
 		}
 
