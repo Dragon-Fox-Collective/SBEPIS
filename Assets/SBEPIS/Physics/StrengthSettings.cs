@@ -5,11 +5,11 @@ namespace SBEPIS.Physics
 	[CreateAssetMenu]
 	public class StrengthSettings : ScriptableObject
 	{
-		public float linearSpring;
-		public float linearDamper;
-		public float linearMaxForce = 3.402823e+38f;
-		public float angularSpring;
-		public float angularDamper;
-		public float angularMaxForce = 3.402823e+38f;
+		public float linearDampingTime = 1;
+		public float linearMaxSpeed = Mathf.Infinity;
+		public float linearMaxForce = Mathf.Infinity;
+		public float angularDampingTime = 1;
+		public float angularMaxSpeed = Mathf.Infinity;
+		public float angularMaxForce = Mathf.Infinity;
 	}
 }

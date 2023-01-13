@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Physics
 {
@@ -35,6 +33,8 @@ namespace SBEPIS.Physics
 
 		private void Start()
 		{
+			Vector3 initialPosition = rigidbody.position;
+			
 			joint.autoConfigureConnectedAnchor = false;
 			
 			joint.connectedBody = connectedBody;
@@ -56,6 +56,8 @@ namespace SBEPIS.Physics
 					positionDamper = 2 * positionDampingRatio * positionAngularFrequency,
 					maximumForce = Mathf.Infinity,
 				};
+
+			rigidbody.position = initialPosition;
 		}
 
 		private void FixedUpdate()
@@ -65,6 +67,8 @@ namespace SBEPIS.Physics
 
 			if (updateTargetVelocity)
 				joint.targetVelocity = Vector3.ClampMagnitude((target.position - connectedBody.position) / velocityDampingTime, velocityMaxSpeed);
+			
+			// Debug.Log($"Body {rigidbody.position} {rigidbody.velocity} Hand {connectedBody.position} {connectedBody.velocity} Target {target.position}");
 		}
 	}
 }
