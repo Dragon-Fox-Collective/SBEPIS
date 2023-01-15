@@ -47,16 +47,16 @@ namespace SBEPIS.Physics
 
 			joint.xDrive = joint.yDrive = joint.zDrive = new JointDrive
 			{
-				positionSpring = strength.linearSpring,
-				positionDamper = strength.linearDamper,
+				positionSpring = strength.linearSpeed * strength.linearSpeed,
+				positionDamper = 2 * strength.linearSpeed,
 				maximumForce = strength.linearMaxForce,
 			};
 
 			joint.rotationDriveMode = RotationDriveMode.Slerp;
 			joint.slerpDrive = new JointDrive
 			{
-				positionSpring = strength.angularSpring,
-				positionDamper = strength.angularDamper,
+				positionSpring = strength.angularSpeed * strength.angularSpeed,
+				positionDamper = 2 * strength.angularSpeed,
 				maximumForce = strength.angularMaxForce,
 			};
 			
