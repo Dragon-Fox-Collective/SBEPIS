@@ -75,10 +75,13 @@ namespace SBEPIS.Controller
 
 		private void AccelerateAir(Vector3 currentVelocity, Vector3 accelerationControl)
 		{
-			float maxSpeed = Mathf.Max(currentVelocity.magnitude, maxGroundSpeed * accelerationControl.magnitude * (isSprinting ? sprintFactor : 1));
-			Vector3 newVelocity = currentVelocity + Time.fixedDeltaTime * airAcceleration * accelerationControl.normalized;
-			Vector3 clampedNewVelocity = Vector3.ClampMagnitude(newVelocity, maxSpeed);
-			rigidbody.velocity += clampedNewVelocity - currentVelocity;
+			//float maxSpeed = Mathf.Max(currentVelocity.magnitude, maxGroundSpeed * accelerationControl.magnitude * (isSprinting ? sprintFactor : 1));
+			//Vector3 newVelocity = currentVelocity + Time.fixedDeltaTime * airAcceleration * accelerationControl.normalized;
+			//Vector3 clampedNewVelocity = Vector3.ClampMagnitude(newVelocity, maxSpeed);
+			//rigidbody.velocity += clampedNewVelocity - currentVelocity;
+			
+			Vector3 newVelocity = currentVelocity + Time.fixedDeltaTime * airAcceleration * accelerationControl;
+			rigidbody.velocity += newVelocity - currentVelocity;
 		}
 
 		public void OnMove(CallbackContext context)

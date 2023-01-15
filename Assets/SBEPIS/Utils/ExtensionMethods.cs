@@ -116,6 +116,13 @@ public static class ExtensionMethods
 
 	public static Quaternion Inverse(this Quaternion quaternion) => Quaternion.Inverse(quaternion);
 
+	public static Vector3 ToEulersAngleAxis(this Quaternion quaternion)
+	{
+		if (quaternion.w < 0) quaternion = quaternion.Select(x => -x);
+		quaternion.ToAngleAxis(out float angle, out Vector3 axis);
+		return angle * Mathf.Deg2Rad * axis;
+	}
+
 	public static IEnumerable<T> Insert<T>(this IEnumerable<T> enumerable, int index, T element)
 	{
 		return enumerable.Take(index).Append(element).Concat(enumerable.TakeLast(enumerable.Count() - index));
