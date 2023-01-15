@@ -34,10 +34,9 @@ namespace SBEPIS.Controller
 				return;
 			timeSinceStanding += Time.fixedDeltaTime;
 
-			Quaternion delta = Quaternion.FromToRotation(transform.up, up);
-			if (delta.w < 0) delta = delta.Select(x => -x);
-			delta.ToAngleAxis(out float currentDistance, out Vector3 axis);
-			currentDistance *= Mathf.Deg2Rad;
+			Vector3 axis = Quaternion.FromToRotation(transform.up, up).ToEulersAngleAxis();
+			float currentDistance = axis.magnitude;
+			axis = axis.normalized;
 
 			float velocitySign = Vector3.Dot(velocity, axis) > 0 ? -1 : 1;
 			float currentVelocity = Vector3.Project(velocity, axis).magnitude * velocitySign;
