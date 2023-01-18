@@ -2257,8 +2257,8 @@ MonoBehaviour:
     m_ActionName: Gameplay/Capturllect[/Keyboard/c]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1599668585548364781}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.CaptureDequeSummoner, SBEPIS.Capturllection
+      - m_Target: {fileID: 3809690549557016831}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeOwner, SBEPIS.Capturllection
         m_MethodName: OnToggleDeque
         m_Mode: 0
         m_Arguments:
@@ -2269,10 +2269,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 56a1f853-d0d7-48ce-b37c-2fa99356ce65
-    m_ActionName: Gameplay/Toggle Deque[/Keyboard/c]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 6eb5b6ca-498a-480e-b0a1-0a839c0ba152
     m_ActionName: Gameplay/Pause[/Keyboard/escape]
   - m_PersistentCalls:
@@ -2934,7 +2930,6 @@ GameObject:
   - component: {fileID: 6376568278754761722}
   - component: {fileID: 6376568278754761723}
   - component: {fileID: 2824848723725198686}
-  - component: {fileID: 1599668585548364781}
   m_Layer: 7
   m_Name: Right Hand
   m_TagString: Untagged
@@ -3021,19 +3016,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 8180044113546759222, guid: e8226037b0905f24f9753127b25ced23, type: 3}
---- !u!114 &1599668585548364781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6376568278754761727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2947df0b19261a4480e7d0a48e2aaa3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deque: {fileID: 3241805893771118654}
 --- !u!1 &6376568278921566390
 GameObject:
   m_ObjectHideFlags: 0
@@ -3498,6 +3480,7 @@ GameObject:
   - component: {fileID: 218406820163240569}
   - component: {fileID: 9042183274841322284}
   - component: {fileID: 4704795409870569521}
+  - component: {fileID: 3809690549557016831}
   m_Layer: 8
   m_Name: Player Body
   m_TagString: Untagged
@@ -3677,7 +3660,6 @@ MonoBehaviour:
   anchor: {fileID: 2067788949567459463}
   anchorDistance: 1
   strength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
-  accountForTargetMovement: 0
 --- !u!114 &9042183274841322284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3695,7 +3677,6 @@ MonoBehaviour:
   anchor: {fileID: 2067788949567459463}
   anchorDistance: 1
   strength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
-  accountForTargetMovement: 0
 --- !u!114 &4704795409870569521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3709,6 +3690,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 50
+--- !u!114 &3809690549557016831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376568280094680652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f4ceabfeb07a740830c3074cf463fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deque: {fileID: 3241805893771118654}
 --- !u!1 &6433262757480330092
 GameObject:
   m_ObjectHideFlags: 0
@@ -5122,15 +5116,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.47300273
+      value: 1.32
       objectReference: {fileID: 0}
     - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.1726999
+      value: 0.409
       objectReference: {fileID: 0}
     - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.0019994
+      value: 3.518
       objectReference: {fileID: 0}
     - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5167,10 +5161,6 @@ PrefabInstance:
     - target: {fileID: 7762745506201212150, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
       propertyPath: m_Name
       value: Capture Deck
-      objectReference: {fileID: 0}
-    - target: {fileID: 7762745506201212150, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2025800528447268331, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
