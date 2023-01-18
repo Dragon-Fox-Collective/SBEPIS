@@ -32,12 +32,12 @@ namespace SBEPIS.Tests
 			grabAction.canceled += scene.grabber.OnGrab;
 			grabAction.Enable();
 			capturllectAction = new InputAction("Capturllect", InputActionType.Button, "<XRController>/primaryButton", "tap");
-			capturllectAction.performed += scene.dequeHolder.OnToggleDeque;
-			capturllectAction.canceled += scene.dequeHolder.OnToggleDeque;
+			capturllectAction.performed += scene.dequeOwner.OnToggleDeque;
+			capturllectAction.canceled += scene.dequeOwner.OnToggleDeque;
 			capturllectAction.Enable();
 			toggleDequeAction = new InputAction("Toggle Deque", InputActionType.Button, "<XRController>/primaryButton", "hold");
-			toggleDequeAction.performed += scene.dequeHolder.OnToggleDeque;
-			toggleDequeAction.canceled += scene.dequeHolder.OnToggleDeque;
+			toggleDequeAction.performed += scene.dequeOwner.OnToggleDeque;
+			toggleDequeAction.canceled += scene.dequeOwner.OnToggleDeque;
 			toggleDequeAction.Enable();
 		}
 
@@ -51,12 +51,12 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator CapturllectTogglesDeque()
 		{
-			bool wasActive = scene.dequeHolder.deque.gameObject.activeSelf;
+			bool wasActive = scene.dequeOwner.deque.gameObject.activeSelf;
 
 			Press(controller.primaryButton);
 			yield return new WaitForSeconds(0.5f);
 
-			Assert.That(scene.dequeHolder.deque.gameObject.activeSelf, Is.Not.EqualTo(wasActive));
+			Assert.That(scene.dequeOwner.deque.gameObject.activeSelf, Is.Not.EqualTo(wasActive));
 
 			Release(controller.primaryButton);
 			yield return null;
@@ -64,7 +64,7 @@ namespace SBEPIS.Tests
 			Press(controller.primaryButton);
 			yield return new WaitForSeconds(0.5f);
 
-			Assert.That(scene.dequeHolder.deque.gameObject.activeSelf, Is.EqualTo(wasActive));
+			Assert.That(scene.dequeOwner.deque.gameObject.activeSelf, Is.EqualTo(wasActive));
 		}
 
 		[UnityTest]

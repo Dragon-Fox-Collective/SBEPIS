@@ -11,7 +11,7 @@ namespace SBEPIS.Capturllection
 		public Diajector diajector;
 		public Transform cardStart;
 		public Transform cardTarget;
-		public List<DequeStorable> cards = new();
+		// public List<DequeStorable> cards = new(); // apparently all of the cards are just CardTargets in children of DequePage???
 
 		public Grabbable grabbable { get; private set; }
 		public DequeType dequeType { get; private set; }
