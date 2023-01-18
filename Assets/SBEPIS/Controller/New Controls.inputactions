@@ -105,9 +105,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Toggle Deque",
+                    "name": "Toggle Inventory",
                     "type": "Button",
-                    "id": "56a1f853-d0d7-48ce-b37c-2fa99356ce65",
+                    "id": "6eb5b6ca-498a-480e-b0a1-0a839c0ba152",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -121,15 +121,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "6eb5b6ca-498a-480e-b0a1-0a839c0ba152",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
                 {
                     "name": "Sprint",
@@ -455,83 +446,6 @@
                 },
                 {
                     "name": "",
-                    "id": "6d4487e4-3ad5-4214-8284-ded751aa8e85",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Toggle Deque",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4ca5faaf-94f7-42c8-b9c5-c3685b381122",
-                    "path": "<XRController>{LeftHand}/secondaryButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Toggle Deque",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3dd30aaa-b6e9-4935-815e-2ac04f34266f",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Toggle Deque",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5bfcb3b7-b151-4c97-b327-f5e3428d140b",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "afc936ef-cca9-4524-8081-830a9a3cc48b",
-                    "path": "<XRController>{LeftHand}/menu",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0a9f2ff1-3949-4f6d-a5b4-e82965de10a5",
-                    "path": "<XRController>{LeftHand}/primaryButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "OpenXR",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9367757c-30cc-4bb5-bb5f-2920a784e127",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "dbfc8db6-b741-4886-a87d-757b53a7e67d",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
@@ -703,6 +617,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Capturllect Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5bfcb3b7-b151-4c97-b327-f5e3428d140b",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Toggle Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9367757c-30cc-4bb5-bb5f-2920a784e127",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Toggle Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
