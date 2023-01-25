@@ -1,20 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RotationFlipper : MonoBehaviour
+namespace SBEPIS.Utils
 {
-	private bool flipped;
-
-	public void Flip()
+	public class RotationFlipper : MonoBehaviour
 	{
-		flipped = !flipped;
-		transform.Rotate(0, 180, 0);
-	}
+		private bool flipped;
 
-	public void ResetFlip()
-	{
-		if (flipped)
-			Flip();
+		public void Flip()
+		{
+			flipped = !flipped;
+			transform.Rotate(0, 180, 0);
+		}
+
+		public void ResetFlip()
+		{
+			if (flipped)
+				Flip();
+		}
 	}
 }

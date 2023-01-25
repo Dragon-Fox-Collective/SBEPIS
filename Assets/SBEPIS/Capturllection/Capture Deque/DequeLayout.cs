@@ -1,26 +1,24 @@
 using SBEPIS.Controller;
-using SBEPIS.Items;
-using System.Collections;
 using System.Collections.Generic;
+using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
 	public class DequeLayout : MonoBehaviour
 	{
-		public Diajector diajector;
 		public CardTarget cardTargetPrefab;
 		public float cardZ = -1;
 
+		private Diajector diajector;
 		private readonly Dictionary<DequeStorable, CardTarget> targets = new();
 		private readonly List<CardTarget> providedTargets = new();
 		private DequePage dequePage;
 
-		private void Start()
+		private void Awake()
 		{
+			diajector = GetComponentInParent<Diajector>();
 			dequePage = GetComponentInParent<DequePage>();
-			if (!dequePage)
-				Debug.LogError($"Could not get a DequePage from {this}");
 		}
 
 		private void FixedUpdate()
@@ -106,10 +104,10 @@ namespace SBEPIS.Capturllection
 				container.retrievePredicates.Add(CanRetrieve);
 			}
 
-			ProceduralAnimation animation = dequePage.AddCard(card, target);
-			animation.SeekEnd();
-			animation.onPlay.Invoke();
-			animation.onEnd.Invoke();
+			ProceduralAnimation anim = dequePage.AddCard(card, target);
+			anim.SeekEnd();
+			anim.onPlay.Invoke();
+			anim.onEnd.Invoke();
 		}
 
 		private void RemoveCard(Capturllectainer container, Capturllectable item)
@@ -126,14 +124,14 @@ namespace SBEPIS.Capturllection
 
 		private void LayoutTargets()
 		{
-			if (!diajector.deque)
+			if (!diajector.isBound)
 				return;
 
 			if (providedTargets.Count > 0)
 				diajector.deque.dequeType.LayoutTargets(providedTargets);
 			foreach (CardTarget target in targets.Values)
 			{
-				target.transform.localPosition = target.transform.localPosition + Vector3.forward * cardZ;
+				target.transform.localPosition += Vector3.forward * cardZ;
 				target.transform.localRotation *= Quaternion.Euler(0, 180, 0);
 			}
 		}
