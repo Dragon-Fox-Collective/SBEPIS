@@ -2,25 +2,28 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TriggerProxy : MonoBehaviour
+namespace SBEPIS.Utils
 {
-	public TriggerEvent onTriggerEnter = new(), onTriggerStay = new(), onTriggerExit = new();
-
-	private void OnTriggerEnter(Collider other)
+	public class TriggerProxy : MonoBehaviour
 	{
-		onTriggerEnter.Invoke(other);
-	}
+		public TriggerEvent onTriggerEnter = new(), onTriggerStay = new(), onTriggerExit = new();
 
-	private void OnTriggerStay(Collider other)
-	{
-		onTriggerStay.Invoke(other);
-	}
+		private void OnTriggerEnter(Collider other)
+		{
+			onTriggerEnter.Invoke(other);
+		}
 
-	private void OnTriggerExit(Collider other)
-	{
-		onTriggerExit.Invoke(other);
-	}
+		private void OnTriggerStay(Collider other)
+		{
+			onTriggerStay.Invoke(other);
+		}
 
-	[Serializable]
-	public class TriggerEvent : UnityEvent<Collider> { }
+		private void OnTriggerExit(Collider other)
+		{
+			onTriggerExit.Invoke(other);
+		}
+
+		[Serializable]
+		public class TriggerEvent : UnityEvent<Collider> { }
+	}
 }

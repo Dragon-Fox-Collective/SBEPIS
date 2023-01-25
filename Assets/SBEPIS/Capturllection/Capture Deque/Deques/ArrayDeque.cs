@@ -7,9 +7,9 @@ namespace SBEPIS.Capturllection.Deques
 {
 	public class ArrayDeque : DequeType
 	{
-		public float cardDistance = 10;
+		public float cardDistance = 0.1f;
 		public Quaternion cardRotation = Quaternion.identity;
-		public float wobbleHeight = 10;
+		public float wobbleHeight = 0.1f;
 		public float wobbleTimeOffset = 1;
 
 		public override void LayoutTargets(List<CardTarget> targets)

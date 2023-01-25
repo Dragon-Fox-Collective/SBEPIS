@@ -1,9 +1,9 @@
+using System;
 using SBEPIS.Controller;
 using SBEPIS.Physics;
-using SBEPIS.Items;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,28 +11,25 @@ namespace SBEPIS.Capturllection
 {
 	public class DequePage : MonoBehaviour
 	{
-		public List<Transform> baseTargets = new();
-		public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 3, 3);
-		public float cardDelay = 0.5f;
-		public Rigidbody staticRigidbody;
-		public StrengthSettings cardStrength;
-		public UnityEvent onPreparePage = new();
+		private Diajector diajector;
+		private List<Func<Transform>> baseTargetProviders = new();
+		private UnityEvent onPreparePage = new();
 
 		private readonly List<ProceduralAnimation> animations = new();
 		private readonly Dictionary<DequeStorable, CardTarget> cardTargets = new();
 
-		public bool cardsCreated { get; private set; }
-
-		public void CreateCards(CaptureDeque deque, DequeStorable cardPrefab)
+		private void Awake()
 		{
-			if (cardsCreated)
-				return;
-
-			cardsCreated = true;
-
+			diajector = GetComponentInParent<Diajector>();
+			baseTargetProviders.AddRange(diajector.targetProviders);
+			CreateCards();
+		}
+		
+		private void CreateCards()
+		{
 			foreach (CardTarget target in GetComponentsInChildren<CardTarget>())
 			{
-				DequeStorable card = Instantiate(cardPrefab.gameObject).GetComponent<DequeStorable>();
+				DequeStorable card = Instantiate(diajector.cardPrefab.gameObject).GetComponent<DequeStorable>();
 				card.name += $" ({target.label})";
 				target.card = card;
 				AddCard(card, target);
@@ -44,8 +41,8 @@ namespace SBEPIS.Capturllection
 				capturllectable.canCapturllect = false;
 
 				Grabbable grabbable = card.grabbable;
-				grabbable.onGrab.AddListener((grabber, grabbable) => target.onGrab.Invoke(deque));
-				grabbable.onDrop.AddListener((grabber, grabbable) => target.onDrop.Invoke(deque));
+				grabbable.onGrab.AddListener((grabber, grabbable) => target.onGrab.Invoke());
+				grabbable.onDrop.AddListener((grabber, grabbable) => target.onDrop.Invoke());
 
 				target.onCardCreated.Invoke(card);
 			}
@@ -58,31 +55,31 @@ namespace SBEPIS.Capturllection
 			card.grabbable.onGrab.AddListener(DestroyCardJoint);
 			card.grabbable.onDrop.AddListener(CreateCardJoint);
 
-			ProceduralAnimation animation = card.gameObject.AddComponent<ProceduralAnimation>();
-			animation.targets.AddRange(baseTargets);
-			animation.targets.Add(target.transform);
-			animation.curve = curve;
-			animation.onPlay.AddListener(() =>
+			ProceduralAnimation anim = card.gameObject.AddComponent<ProceduralAnimation>();
+			anim.targetProviders.AddRange(baseTargetProviders);
+			anim.targetProviders.Add(() => target.transform);
+			anim.curve = diajector.curve;
+			anim.onPlay.AddListener(() =>
 			{
 				card.gameObject.SetActive(true);
 			});
-			animation.onEnd.AddListener(() =>
+			anim.onEnd.AddListener(() =>
 			{
-				CreateCardJoint(card, target, staticRigidbody, cardStrength);
+				CreateCardJoint(card, target, diajector.staticRigidbody, diajector.cardStrength);
 			});
-			animation.onReversePlay.AddListener(() =>
+			anim.onReversePlay.AddListener(() =>
 			{
 				DestroyCardJoint(card);
 			});
-			animation.onReverseEnd.AddListener(() =>
+			anim.onReverseEnd.AddListener(() =>
 			{
 				card.gameObject.SetActive(false);
 			});
 
-			animations.Add(animation);
+			animations.Add(anim);
 			cardTargets.Add(card, target);
 
-			return animation;
+			return anim;
 		}
 
 		public void RemoveCard(DequeStorable card)
@@ -92,17 +89,17 @@ namespace SBEPIS.Capturllection
 			card.grabbable.onGrab.RemoveListener(DestroyCardJoint);
 			card.grabbable.onDrop.RemoveListener(CreateCardJoint);
 
-			ProceduralAnimation animation = card.GetComponent<ProceduralAnimation>();
-			Destroy(animation);
+			ProceduralAnimation anim = card.GetComponent<ProceduralAnimation>();
+			Destroy(anim);
 
-			animations.Remove(animation);
+			animations.Remove(anim);
 			cardTargets.Remove(card);
 		}
 
 		private void CreateCardJoint(Grabber grabber, Grabbable grabbable)
 		{
 			DequeStorable card = grabbable.GetComponent<DequeStorable>();
-			CreateCardJoint(card, cardTargets[card], staticRigidbody, cardStrength);
+			CreateCardJoint(card, cardTargets[card], diajector.staticRigidbody, diajector.cardStrength);
 		}
 
 		private static void CreateCardJoint(DequeStorable card, CardTarget target, Rigidbody staticRigidbody, StrengthSettings cardStrength)
@@ -123,33 +120,33 @@ namespace SBEPIS.Capturllection
 			Destroy(targetter);
 		}
 
-		public void StartAssembly(MonoBehaviour coroutineOwner)
+		public void StartAssembly()
 		{
 			onPreparePage.Invoke();
-			coroutineOwner.StartCoroutine(SpawnCards());
+			diajector.coroutineOwner.StartCoroutine(SpawnCards());
 		}
 
 		private IEnumerator SpawnCards()
 		{
-			foreach ((ProceduralAnimation animation, CardTarget target) in animations.Zip(cardTargets.Values))
+			foreach ((ProceduralAnimation anim, CardTarget target) in animations.Zip(cardTargets.Values))
 			{
 				target.onPrepareCard.Invoke();
-				animation.PlayForward();
-				yield return new WaitForSeconds(cardDelay);
+				anim.PlayForward();
+				yield return new WaitForSeconds(diajector.cardDelay);
 			}
 		}
 
-		public void StartDisassembly(MonoBehaviour coroutineOwner)
+		public void StartDisassembly()
 		{
-			coroutineOwner.StartCoroutine(DespawnCards());
+			diajector.coroutineOwner.StartCoroutine(DespawnCards());
 		}
 
 		private IEnumerator DespawnCards()
 		{
-			foreach (ProceduralAnimation animation in animations)
+			foreach (ProceduralAnimation anim in animations)
 			{
-				animation.PlayReverse();
-				yield return new WaitForSeconds(cardDelay);
+				anim.PlayReverse();
+				yield return new WaitForSeconds(diajector.cardDelay);
 			}
 		}
 
@@ -157,9 +154,9 @@ namespace SBEPIS.Capturllection
 		{
 			foreach (ProceduralAnimation card in animations)
 			{
-				if (card.time == card.endTime)
+				if (card.time >= card.endTime)
 					card.onReversePlay.Invoke();
-				if (card.time != card.startTime)
+				if (card.time > card.startTime)
 					card.onReverseEnd.Invoke();
 				card.Stop();
 			}

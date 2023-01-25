@@ -10,8 +10,8 @@ namespace SBEPIS.Capturllection
 		
 		public UnityEvent<DequeStorable> onCardCreated = new();
 		public UnityEvent onPrepareCard = new();
-		public UnityEvent<CaptureDeque> onGrab = new();
-		public UnityEvent<CaptureDeque> onDrop = new();
+		public UnityEvent onGrab = new();
+		public UnityEvent onDrop = new();
 
 		public DequeStorable card { get; set; }
 		public bool isTemporary { get; set; }

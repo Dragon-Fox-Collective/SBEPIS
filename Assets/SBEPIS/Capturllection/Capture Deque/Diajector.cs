@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using SBEPIS.Physics;
 using UnityEngine;
 
@@ -12,48 +14,41 @@ namespace SBEPIS.Capturllection
 		public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1.5f, 3);
 
 		public Rigidbody staticRigidbody;
+		public MonoBehaviour coroutineOwner;
 		public StrengthSettings cardStrength;
 
-		public bool isBound => deque;
+		public IEnumerable<Func<Transform>> targetProviders => new Func<Transform>[]
+		{
+			() => deque.cardStart,
+			() => deque.cardTarget,
+			() => upperTarget,
+		};
 
-		public CaptureDeque deque { get; private set; }
+		public bool isBound => deque;
+		[NonSerialized]
+		public CaptureDeque deque;
 
 		private DequePage currentPage;
 		public bool hasPageOpen => currentPage;
 
-		private void CreateCards(DequePage page)
+		public void StartAssembly() => StartAssembly(mainPage);
+
+		public void StartAssembly(DequePage page)
 		{
-			page.baseTargets.AddRange(deque.cardStart, deque.cardTarget, upperTarget);
-			page.curve = curve;
-			page.cardDelay = cardDelay;
-			page.staticRigidbody = staticRigidbody;
-			page.cardStrength = cardStrength;
-			page.CreateCards(deque, cardPrefab);
-		}
-
-		public void StartAssembly(CaptureDeque deque) => StartAssembly(deque, mainPage);
-
-		public void StartAssembly(CaptureDeque deque, DequePage page)
-		{
-			if (!isBound)
-				this.deque = deque;
-
 			if (hasPageOpen)
 				StartDisassembly();
 			currentPage = page;
 
 			gameObject.SetActive(true);
 			currentPage.gameObject.SetActive(true);
-			if (!currentPage.cardsCreated)
-				CreateCards(currentPage);
-			currentPage.StartAssembly(deque);
+			currentPage.StartAssembly();
 		}
 
 		public void StartDisassembly()
 		{
 			if (hasPageOpen)
 			{
-				currentPage.StartDisassembly(deque);
+				currentPage.StartDisassembly();
 				currentPage.gameObject.SetActive(false);
 				currentPage = null;
 			}
@@ -62,8 +57,8 @@ namespace SBEPIS.Capturllection
 
 		public void ForceClose()
 		{
-			if (isBound)
-				deque.StopAllCoroutines();
+			coroutineOwner.StopAllCoroutines();
+			
 			if (hasPageOpen)
 			{
 				currentPage.ForceClose();
