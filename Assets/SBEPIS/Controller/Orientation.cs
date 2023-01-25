@@ -6,8 +6,7 @@ namespace SBEPIS.Controller
 	[RequireComponent(typeof(Rigidbody), typeof(GravitySum))]
 	public class Orientation : MonoBehaviour
 	{
-		public Transform groundCheck;
-		public float groundCheckDistance = 0.3f;
+		public SphereCollider groundCheck;
 		public LayerMask groundCheckMask;
 
 		private new Rigidbody rigidbody;
@@ -35,7 +34,7 @@ namespace SBEPIS.Controller
 		{
 			if (delayTimeLeft > 0)
 				delayTimeLeft -= Time.fixedDeltaTime;
-			isGrounded = delayTimeLeft <= 0 && UnityEngine.Physics.OverlapSphereNonAlloc(groundCheck.position, groundCheckDistance, groundedColliders, groundCheckMask, QueryTriggerInteraction.Ignore) > 0;
+			isGrounded = delayTimeLeft <= 0 && UnityEngine.Physics.OverlapSphereNonAlloc(groundCheck.transform.TransformPoint(groundCheck.center), groundCheck.radius, groundedColliders, groundCheckMask, QueryTriggerInteraction.Ignore) > 0;
 			groundCollider = isGrounded ? groundedColliders[0] : null;
 		}
 

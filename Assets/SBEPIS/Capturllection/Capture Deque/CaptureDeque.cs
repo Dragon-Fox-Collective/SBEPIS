@@ -24,6 +24,9 @@ namespace SBEPIS.Capturllection
 
 		public void ToggleDiajector()
 		{
+			if (!diajector)
+				return;
+			
 			if (diajector.gameObject.activeSelf)
 				DesummonDiajector();
 			else
@@ -32,6 +35,9 @@ namespace SBEPIS.Capturllection
 
 		public void SummonDiajector()
 		{
+			if (!diajector)
+				return;
+
 			if (diajector.gameObject.activeSelf)
 				return;
 
@@ -40,6 +46,9 @@ namespace SBEPIS.Capturllection
 
 		public void DesummonDiajector()
 		{
+			if (!diajector)
+				return;
+
 			if (!diajector.gameObject.activeSelf)
 				return;
 
@@ -48,6 +57,9 @@ namespace SBEPIS.Capturllection
 
 		public void ForceClose()
 		{
+			if (!diajector)
+				return;
+
 			diajector.ForceClose();
 		}
 	}
