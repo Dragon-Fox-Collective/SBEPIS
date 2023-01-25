@@ -8,6 +8,7 @@ namespace SBEPIS.Capturllection
 	[RequireComponent(typeof(Grabber))]
 	public class Capturllector : MonoBehaviour
 	{
+		public DequeOwner dequeOwner;
 		public Capturllectainer cardPrefab;
 
 		private Grabber grabber;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,17 @@ namespace SBEPIS.Capturllection
 	public class DequePageSwitcher : MonoBehaviour
 	{
 		public DequePage dequePage;
+		
+		private Diajector diajector;
 
-		public void SwitchPage(CaptureDeque deque)
+		private void Start()
 		{
-			deque.diajector.StartAssembly(deque, dequePage);
+			diajector = GetComponentInParent<Diajector>();
+		}
+
+		public void SwitchPage()
+		{
+			diajector.StartAssembly(dequePage);
 		}
 	}
 }

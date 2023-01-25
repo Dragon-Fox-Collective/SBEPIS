@@ -6,7 +6,7 @@ namespace SBEPIS.Capturllection.Deques
 {
 	public class CycloneDeque : DequeType
 	{
-		public float radius = 20;
+		public float radius = 0.1f;
 		public Quaternion cardRotation = Quaternion.identity;
 		public float speed = 20;
 
