@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,7 +10,12 @@ namespace SBEPIS.Controller
 	public class Grabbable : MonoBehaviour
 	{
 		public List<GrabPoint> grabPoints = new();
-		public ItemEvent onTouch = new(), onGrab = new(), onHoldUpdate = new(), onUse = new(), onDrop = new(), onStopTouch = new();
+		public ItemEvent onTouch = new();
+		public ItemEvent onGrab = new();
+		public ItemEvent onHoldUpdate = new();
+		public ItemEvent onUse = new();
+		public ItemEvent onDrop = new();
+		public ItemEvent onStopTouch = new();
 
 		public Grabber grabbingGrabber { get; private set; }
 		public bool canGrab { get; set; }
