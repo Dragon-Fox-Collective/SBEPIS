@@ -9,6 +9,4 @@ namespace SBEPIS.Capturllection
 		public abstract void LayoutTargets(List<CardTarget> targets);
 		public abstract bool CanRetrieve(List<CardTarget> targets, CardTarget card);
 	}
-
-	public abstract class DequeCardInfo { }
 }

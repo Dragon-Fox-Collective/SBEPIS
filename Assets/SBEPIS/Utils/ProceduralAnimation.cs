@@ -7,7 +7,10 @@ public class ProceduralAnimation : MonoBehaviour
 	public List<Transform> targets = new();
 	public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 	public float speed = 1;
-	public UnityEvent onPlay = new(), onEnd = new(), onReversePlay = new(), onReverseEnd = new();
+	public UnityEvent onPlay = new();
+	public UnityEvent onEnd = new();
+	public UnityEvent onReversePlay = new();
+	public UnityEvent onReverseEnd = new();
 
 	public float startTime => curve[0].time;
 	public float endTime => curve[curve.length - 1].time;
@@ -46,7 +49,7 @@ public class ProceduralAnimation : MonoBehaviour
 	{
 		Resume();
 		speed = Mathf.Abs(speed);
-		if (time == startTime)
+		if (time <= startTime)
 			onPlay.Invoke();
 	}
 
@@ -54,7 +57,7 @@ public class ProceduralAnimation : MonoBehaviour
 	{
 		Resume();
 		speed = -Mathf.Abs(speed);
-		if (time == endTime)
+		if (time >= endTime)
 			onReversePlay.Invoke();
 	}
 
