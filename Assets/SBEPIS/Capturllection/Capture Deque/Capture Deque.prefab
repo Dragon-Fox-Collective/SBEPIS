@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 6881145044469183986}
   - component: {fileID: 8899563152095457308}
   - component: {fileID: 8907908523576682515}
+  - component: {fileID: 7226077107626474507}
   - component: {fileID: 2025800528447268331}
   - component: {fileID: 1044354550020064954}
   m_Layer: 0
@@ -102,7 +103,7 @@ Transform:
   - {fileID: 8534325952982911961}
   - {fileID: 8549242687996600689}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6933793677958583015
 BoxCollider:
@@ -112,9 +113,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7762745506201212150}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 0.13335, y: 0.184148, z: 0.024}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7617101641436224015
@@ -129,10 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834066343270ba147b47a2957044d46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diajector: {fileID: 0}
   cardStart: {fileID: 8549242687996600689}
   cardTarget: {fileID: 8534325952982911961}
-  cards: []
 --- !u!114 &5737410847915139685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,19 +168,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseBits:
     bits:
-      bits1: 0
-      bits2: 0
+      bits: []
     itemBase: {fileID: 0}
+    material: {fileID: 0}
   _bits:
     _bits:
-      bits1: 0
-      bits2: 0
-    _members: []
+      bits: []
+    _tags: []
   replaceObject: {fileID: 0}
   aeratedAttachmentPoint: {fileID: 0}
-  references:
-    version: 2
-    RefIds: []
 --- !u!54 &8899563152095457308
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -181,10 +184,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7762745506201212150}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -202,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grabPoints: []
   onTouch:
     m_PersistentCalls:
       m_Calls: []
@@ -217,7 +232,7 @@ MonoBehaviour:
       - m_Target: {fileID: 7617101641436224015}
         m_TargetAssemblyTypeName: SBEPIS.Capturllection.CaptureDeque, SBEPIS.Capturllection
         m_MethodName: ToggleDiajector
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -232,6 +247,22 @@ MonoBehaviour:
   onStopTouch:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7226077107626474507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762745506201212150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e1325b004ff2024b90cd03a4331dc80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texture: {fileID: 2800000, guid: 26f2f6ca9e272b74ba8f7626d5bf2aae, type: 3}
+  meshRenderers:
+  - {fileID: 1565758740033431129}
+  - {fileID: 7244397759719486261}
 --- !u!114 &2025800528447268331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,9 +275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 571212e3b54eb694293d5a0c04ec16a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardDistance: 10
+  cardDistance: 0.1
   cardRotation: {x: 0, y: 0.17364818, z: 0, w: 0.9848077}
-  wobbleHeight: 10
+  wobbleHeight: 0.1
   wobbleTimeOffset: 1
 --- !u!114 &1044354550020064954
 MonoBehaviour:
@@ -266,7 +297,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 6318976731672604005}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 340882bcddc452945a7265d2f5c497d5, type: 3}
@@ -402,10 +433,22 @@ PrefabInstance:
       value: 0.006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 340882bcddc452945a7265d2f5c497d5, type: 3}
 --- !u!4 &428296731100716342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 340882bcddc452945a7265d2f5c497d5, type: 3}
+  m_PrefabInstance: {fileID: 178777184448903901}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1565758740033431129 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 340882bcddc452945a7265d2f5c497d5, type: 3}
+  m_PrefabInstance: {fileID: 178777184448903901}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7244397759719486261 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7418098771544918504, guid: 340882bcddc452945a7265d2f5c497d5, type: 3}
   m_PrefabInstance: {fileID: 178777184448903901}
   m_PrefabAsset: {fileID: 0}

@@ -8,10 +8,8 @@ namespace SBEPIS.Capturllection
 	[RequireComponent(typeof(Grabbable), typeof(DequeType))]
 	public class CaptureDeque : MonoBehaviour
 	{
-		public Diajector diajector;
 		public Transform cardStart;
 		public Transform cardTarget;
-		// public List<DequeStorable> cards = new(); // apparently all of the cards are just CardTargets in children of DequePage???
 
 		public Grabbable grabbable { get; private set; }
 		public DequeType dequeType { get; private set; }
@@ -22,45 +20,24 @@ namespace SBEPIS.Capturllection
 			dequeType = GetComponent<DequeType>();
 		}
 
-		public void ToggleDiajector()
+		public void ToggleDiajector(Grabber grabber, Grabbable grabbable)
 		{
-			if (!diajector)
+			Capturllector capturllector = grabber.GetComponent<Capturllector>();
+			if (!capturllector)
 				return;
-			
-			if (diajector.gameObject.activeSelf)
-				DesummonDiajector();
+
+			DequeOwner dequeOwner = capturllector.dequeOwner;
+			if (dequeOwner.deque == this)
+				dequeOwner.ToggleDiajector();
 			else
-				SummonDiajector();
-		}
-
-		public void SummonDiajector()
-		{
-			if (!diajector)
-				return;
-
-			if (diajector.gameObject.activeSelf)
-				return;
-
-			diajector.StartAssembly(this);
-		}
-
-		public void DesummonDiajector()
-		{
-			if (!diajector)
-				return;
-
-			if (!diajector.gameObject.activeSelf)
-				return;
-
-			diajector.StartDisassembly();
-		}
-
-		public void ForceClose()
-		{
-			if (!diajector)
-				return;
-
-			diajector.ForceClose();
+			{
+				dequeOwner.deque = this;
+				if (dequeOwner.diajector.hasPageOpen)
+				{
+					dequeOwner.ToggleDiajector();
+					dequeOwner.ToggleDiajector();
+				}
+			}
 		}
 	}
 }

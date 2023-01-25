@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+namespace SBEPIS.Utils
+{
+	
 public class ProceduralAnimation : MonoBehaviour
 {
-	public List<Transform> targets = new();
+	public List<Func<Transform>> targetProviders = new();
 	public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 	public float speed = 1;
 	public UnityEvent onPlay = new();
@@ -87,22 +91,23 @@ public class ProceduralAnimation : MonoBehaviour
 
 	private void Update()
 	{
-		if (targets.Count == 0)
+		if (targetProviders.Count == 0)
 			return;
-		else if (targets.Count == 1)
+		else if (targetProviders.Count == 1)
 		{
-			transform.SetPositionAndRotation(targets[0].position, targets[0].rotation);
+			Transform target = targetProviders[0].Invoke();
+			transform.SetPositionAndRotation(target.position, target.rotation);
 			return;
 		}
 
 		time += Time.deltaTime * speed;
 
 		float evaluation = curve.Evaluate(time);
-		int i = (int)Mathf.Clamp(evaluation, 0, targets.Count - 2);
+		int i = (int)Mathf.Clamp(evaluation, 0, targetProviders.Count - 2);
 		evaluation -= i;
 
-		Transform start = targets[i];
-		Transform end = targets[i + 1];
+		Transform start = targetProviders[i].Invoke();
+		Transform end = targetProviders[i + 1].Invoke();
 		transform.SetPositionAndRotation(
 				Vector3.Lerp(start.position, end.position, evaluation),
 				Quaternion.Lerp(start.rotation, end.rotation, evaluation));
@@ -118,4 +123,6 @@ public class ProceduralAnimation : MonoBehaviour
 			onReverseEnd.Invoke();
 		}
 	}
+}
+
 }
