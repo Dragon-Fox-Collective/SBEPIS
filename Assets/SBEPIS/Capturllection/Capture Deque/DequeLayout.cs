@@ -87,6 +87,7 @@ namespace SBEPIS.Capturllection
 
 		private void MakeCardPermanent(Grabber grabber, Grabbable grabbable)
 		{
+			print("MakeCardPermanent");
 			DequeStorable card = grabbable.GetComponent<DequeStorable>();
 			card.grabbable.onDrop.RemoveListener(MakeCardPermanent);
 			targets[card].isTemporary = false;

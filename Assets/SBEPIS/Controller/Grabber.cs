@@ -171,7 +171,7 @@ namespace SBEPIS.Controller
 			heldCollider = null;
 			heldGrabbable = null;
 			heldGrabPoint = null;
-
+			
 			Destroy(heldGrabbableJoint);
 			heldGrabbableJoint = null;
 
@@ -183,10 +183,9 @@ namespace SBEPIS.Controller
 
 		private bool CastShortRangeGrab(out RaycastHit hit)
 		{
-			if (overrideShortRangeGrab)
-				return UnityEngine.Physics.Raycast(overrideShortRangeGrabCasterPosition, overrideShortRangeGrabCasterForward, out hit, overrideShortRangeGrabDistance, grabMask, QueryTriggerInteraction.Ignore);
-			else
-				return UnityEngine.Physics.Raycast(transform.position, transform.forward, out hit, shortRangeGrabDistace, grabMask, QueryTriggerInteraction.Ignore);
+			return overrideShortRangeGrab ?
+				UnityEngine.Physics.Raycast(overrideShortRangeGrabCasterPosition, overrideShortRangeGrabCasterForward, out hit, overrideShortRangeGrabDistance, grabMask, QueryTriggerInteraction.Ignore) :
+				UnityEngine.Physics.Raycast(transform.position, transform.forward, out hit, shortRangeGrabDistace, grabMask, QueryTriggerInteraction.Ignore);
 		}
 
 		private bool CastGrabNormal(out RaycastHit hit, Collider colliderToLookFor)

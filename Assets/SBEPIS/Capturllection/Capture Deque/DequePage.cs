@@ -33,6 +33,7 @@ namespace SBEPIS.Capturllection
 			foreach (CardTarget target in GetComponentsInChildren<CardTarget>())
 			{
 				DequeStorable card = Instantiate(cardPrefab.gameObject).GetComponent<DequeStorable>();
+				card.name += $" ({target.label})";
 				target.card = card;
 				AddCard(card, target);
 

@@ -87,7 +87,7 @@ Transform:
   - {fileID: 5936047809841997661}
   - {fileID: 8018883751580757012}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1567465723137536217
 BoxCollider:
@@ -97,9 +97,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1275059195579274974}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 0.127, y: 0.1778, z: 0.005}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6408443924259538308
@@ -115,8 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   punchedBits:
-    bits1: 0
-    bits2: 0
+    bits: []
   materials:
   - {fileID: 2100000, guid: 14780cba2b2008b42949209af650a747, type: 2}
   - {fileID: 2100000, guid: f1a726a08ce8cd643896224bdd1373e3, type: 2}
@@ -136,19 +143,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseBits:
     bits:
-      bits1: 0
-      bits2: 0
+      bits: []
     itemBase: {fileID: 0}
+    material: {fileID: 0}
   _bits:
     _bits:
-      bits1: 0
-      bits2: 0
-    _members: []
+      bits: []
+    _tags: []
   replaceObject: {fileID: 0}
   aeratedAttachmentPoint: {fileID: 0}
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &436234427008818838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,10 +173,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1275059195579274974}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -410,7 +424,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 2599729124153350906}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: eb326c31e56434a4c8d2cdc75f9f9985, type: 3}
@@ -498,7 +512,9 @@ PrefabInstance:
       value: Capturllection Card
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb326c31e56434a4c8d2cdc75f9f9985, type: 3}
 --- !u!23 &7857901446257573216 stripped
 MeshRenderer:

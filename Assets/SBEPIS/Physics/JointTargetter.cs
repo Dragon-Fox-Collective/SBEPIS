@@ -108,12 +108,14 @@ namespace SBEPIS.Physics
 		private void OnDestroy()
 		{
 			if (joint)
+			{
 				Destroy(joint);
 
-			if (connectedBody)
-			{
-				connectedBody.inertiaTensor = initialTensor;
-				connectedBody.inertiaTensorRotation = initialTensorRotation;
+				if (connectedBody)
+				{
+					connectedBody.inertiaTensor = initialTensor;
+					connectedBody.inertiaTensorRotation = initialTensorRotation;
+				}
 			}
 		}
 	}
