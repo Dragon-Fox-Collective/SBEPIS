@@ -80,6 +80,8 @@ GameObject:
   - component: {fileID: 7226077107626474507}
   - component: {fileID: 2025800528447268331}
   - component: {fileID: 1044354550020064954}
+  - component: {fileID: 6448398786241785265}
+  - component: {fileID: 1557519686661420847}
   m_Layer: 0
   m_Name: Capture Deque
   m_TagString: Untagged
@@ -231,7 +233,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7617101641436224015}
         m_TargetAssemblyTypeName: SBEPIS.Capturllection.CaptureDeque, SBEPIS.Capturllection
-        m_MethodName: ToggleDiajector
+        m_MethodName: AdoptDeque
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -292,6 +294,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canCapturllect: 0
+--- !u!114 &6448398786241785265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762745506201212150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0726fbf18d1fc479e36108d1fb2217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customCenterOfMass: {fileID: 0}
+  onGravityChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1557519686661420847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762745506201212150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 315068b87f958e54b8fa2f86710b05a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  primeDelay: 0.5
+  trigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &178777184448903901
 PrefabInstance:
   m_ObjectHideFlags: 0

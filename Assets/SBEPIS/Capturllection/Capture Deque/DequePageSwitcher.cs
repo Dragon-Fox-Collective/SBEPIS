@@ -18,7 +18,7 @@ namespace SBEPIS.Capturllection
 
 		public void SwitchPage()
 		{
-			diajector.StartAssembly(dequePage);
+			diajector.ChangePage(dequePage);
 		}
 	}
 }
