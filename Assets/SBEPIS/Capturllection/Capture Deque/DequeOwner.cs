@@ -10,6 +10,10 @@ namespace SBEPIS.Capturllection
 		private CaptureDeque initialDeque;
 		public Diajector diajector;
 
+		public Transform tossTarget;
+		[Tooltip("Height above the hand the deque should toss through, must be non-negative")]
+		public float tossHeight;
+
 		public Transform attachmentTarget;
 		public StrengthSettings attachmentStrength;
 
@@ -24,20 +28,17 @@ namespace SBEPIS.Capturllection
 				if (_deque == value)
 					return;
 				
-				_deque = value;
-				diajector.deque = _deque;
-				
-				if (joint)
-					Destroy(joint);
 				if (_deque)
-				{
-					joint = gameObject.AddComponent<JointTargetter>();
-					joint.connectedBody = _deque.grabbable.rigidbody;
-					joint.target = attachmentTarget;
-					joint.strength = attachmentStrength;
-				}
+					_deque.collisionTrigger.trigger.RemoveListener(StartDiajectorAssembly);
+				
+				_deque = value;
+				_deque.collisionTrigger.trigger.AddListener(StartDiajectorAssembly);
+				diajector.deque = _deque;
+				CreateJoint();
 			}
 		}
+
+		private bool dequeDeployed;
 
 		private void Start()
 		{
@@ -56,26 +57,65 @@ namespace SBEPIS.Capturllection
 		
 		public void ToggleDiajector()
 		{
-			if (diajector.gameObject.activeSelf)
-				DesummonDiajector();
+			if (dequeDeployed)
+				RetrieveDeque();
 			else
-				SummonDiajector();
+				TossDeque();
 		}
 
-		public void SummonDiajector()
+		private void TossDeque()
 		{
-			if (diajector.gameObject.activeSelf)
-				return;
+			dequeDeployed = true;
+			Destroy(joint);
+			
+			deque.collisionTrigger.StartPrime();
 
-			diajector.StartAssembly();
+			Vector3 upDirection = tossTarget.up;
+			
+			float gravityMag = -deque.gravitySum.gravityAcceleration;
+			float startHeight = tossTarget.InverseTransformPoint(deque.transform.position).y;
+			float upTossSpeed = CalcTossYVelocity(gravityMag, startHeight, startHeight + tossHeight);
+			Vector3 upwardVelocity = upDirection * upTossSpeed;
+
+			float timeToHit = (-upTossSpeed - Mathf.Sqrt(upTossSpeed * upTossSpeed - 2 * gravityMag * startHeight)) / gravityMag;
+			Vector3 groundDelta = Vector3.ProjectOnPlane(tossTarget.position - deque.transform.position, upDirection);
+			Vector3 groundVelocity = groundDelta / timeToHit;
+
+			deque.gravitySum.rigidbody.velocity = upwardVelocity + groundVelocity;
+		}
+		
+		private static float CalcTossYVelocity(float gravity, float startHeight, float peakHeight) => Mathf.Sqrt(2 * gravity * (startHeight - peakHeight));
+
+		private void RetrieveDeque()
+		{
+			dequeDeployed = false;
+			deque.collisionTrigger.CancelPrime();
+			CreateJoint();
+			if (diajector.isOpen)
+				diajector.StartDisassembly();
 		}
 
-		public void DesummonDiajector()
+		private void CreateJoint()
 		{
-			if (!diajector.gameObject.activeSelf)
-				return;
+			if (joint)
+				Destroy(joint);
+			
+			if (deque && !dequeDeployed)
+			{
+				joint = gameObject.AddComponent<JointTargetter>();
+				joint.connectedBody = deque.grabbable.rigidbody;
+				joint.target = attachmentTarget;
+				joint.strength = attachmentStrength;
+			}
+		}
 
-			diajector.StartDisassembly();
+		private void StartDiajectorAssembly()
+		{
+			Vector3 position = deque.transform.position;
+			Vector3 upDirection = deque.gravitySum.upDirection;
+			Vector3 groundDelta = Vector3.ProjectOnPlane(transform.position - position, upDirection);
+			Quaternion rotation = Quaternion.LookRotation(groundDelta, upDirection);
+			diajector.StartAssembly(position, rotation);
 		}
 	}
 }

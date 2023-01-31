@@ -167,14 +167,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1166888080331197304}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.8472378, z: -0.53121376, w: 0}
+  m_LocalPosition: {x: 0, y: 0.625, z: 0}
   m_LocalScale: {x: 2, y: 1.5, z: 0.1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6473137358106335053}
+  - {fileID: 1438454189580415232}
   m_Father: {fileID: 1841813887827987595}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 64.175, y: 180, z: 0}
 --- !u!33 &2466365138929473970
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -275,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa61bd48a892d2948a3bb8455d3da060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label: 
+  label: Mouse Sensitivity
   onCardCreated:
     m_PersistentCalls:
       m_Calls:
@@ -742,6 +744,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2063937150868323156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1997131638894466065}
+  m_Layer: 0
+  m_Name: Deque Toss Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1997131638894466065
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063937150868323156}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6376568280094680653}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2105035367729156253
 GameObject:
   m_ObjectHideFlags: 0
@@ -2470,17 +2503,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5072491935164147993}
-  m_LocalRotation: {x: 0.24836516, y: 0.2717503, z: -0.072815284, w: 0.92691123}
-  m_LocalPosition: {x: 2.02, y: 1.078, z: 4.417}
+  m_LocalRotation: {x: -0, y: -0.9202219, z: -0, w: 0.39139715}
+  m_LocalPosition: {x: 2.67, y: 0, z: 4.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3626820707496965858}
-  - {fileID: 6473137358106335053}
-  - {fileID: 1438454189580415232}
   m_Father: {fileID: 6112518582163472336}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 30, y: 32.68, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -133.917, z: 0}
 --- !u!114 &2162956669282852240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2806,7 +2837,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2446032473590802354}
   m_Layer: 8
-  m_Name: Deque Target
+  m_Name: Deque Attach Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3542,6 +3573,7 @@ Transform:
   - {fileID: 2067788949567459463}
   - {fileID: 7303530764315680464}
   - {fileID: 2446032473590802354}
+  - {fileID: 1997131638894466065}
   m_Father: {fileID: 6112518582163472336}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3741,6 +3773,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialDeque: {fileID: 0}
   diajector: {fileID: 2162956669282852240}
+  tossTarget: {fileID: 1997131638894466065}
+  tossHeight: 0.5
   attachmentTarget: {fileID: 2446032473590802354}
   attachmentStrength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
 --- !u!1 &6433262757480330092
@@ -4219,12 +4253,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7927973737090238991}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0, y: 0, z: -0.836}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 1, z: -0.000000029802319, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -8.360003}
+  m_LocalScale: {x: 0.5, y: 0.66666675, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1841813887827987595}
+  m_Father: {fileID: 3626820707496965858}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &8249927293962966560
@@ -4253,19 +4287,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8249927293962966560}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.051}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.51000005}
+  m_LocalScale: {x: 0.5, y: 0.66666675, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1482343842721246768}
   - {fileID: 6534613646656972935}
-  m_Father: {fileID: 1841813887827987595}
+  m_Father: {fileID: 3626820707496965858}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 2, y: 1.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1393471605506578454
