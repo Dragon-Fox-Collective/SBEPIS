@@ -16,35 +16,43 @@ namespace SBEPIS.Controller
 		public ItemEvent onUse = new();
 		public ItemEvent onDrop = new();
 		public ItemEvent onStopTouch = new();
-
+		
 		public Grabber grabbingGrabber { get; private set; }
-		public bool canGrab { get; set; }
 		public new Rigidbody rigidbody { get; private set; }
 		public bool isBeingHeld { get; private set; }
+		
+		private const float DropCooldown = 0.2f;
+		private float timeSinceLastDrop;
+		public bool canGrab => timeSinceLastDrop > DropCooldown;
 
 		private void Awake()
 		{
 			rigidbody = GetComponent<Rigidbody>();
-			canGrab = true;
 		}
 
-		public void Grab(Grabber player)
+		private void FixedUpdate()
 		{
-			grabbingGrabber = player;
+			timeSinceLastDrop += Time.fixedDeltaTime;
+		}
+
+		public void GetGrabbed(Grabber grabber)
+		{
+			grabbingGrabber = grabber;
 			isBeingHeld = true;
-			onGrab.Invoke(player, this);
+			onGrab.Invoke(grabber, this);
 		}
 
-		public void HoldUpdate(Grabber player)
+		public void HoldUpdate(Grabber grabber)
 		{
-			onHoldUpdate.Invoke(player, this);
+			onHoldUpdate.Invoke(grabber, this);
 		}
 
-		public void Drop(Grabber player)
+		public void GetDropped(Grabber grabber)
 		{
 			grabbingGrabber = null;
 			isBeingHeld = false;
-			onDrop.Invoke(player, this);
+			timeSinceLastDrop = 0;
+			onDrop.Invoke(grabber, this);
 		}
 	}
 

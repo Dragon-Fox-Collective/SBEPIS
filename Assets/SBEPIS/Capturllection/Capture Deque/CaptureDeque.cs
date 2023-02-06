@@ -6,7 +6,7 @@ using SBEPIS.Utils;
 namespace SBEPIS.Capturllection
 {
 	[RequireComponent(typeof(Grabbable), typeof(DequeType), typeof(GravitySum))]
-	[RequireComponent(typeof(CollisionTrigger))]
+	[RequireComponent(typeof(CollisionTrigger), typeof(CouplingPlug))]
 	public class CaptureDeque : MonoBehaviour
 	{
 		public Transform cardStart;
@@ -16,6 +16,7 @@ namespace SBEPIS.Capturllection
 		public DequeType dequeType { get; private set; }
 		public GravitySum gravitySum { get; private set; }
 		public CollisionTrigger collisionTrigger { get; private set; }
+		public CouplingPlug plug { get; private set; }
 
 		private void Awake()
 		{
@@ -23,6 +24,7 @@ namespace SBEPIS.Capturllection
 			dequeType = GetComponent<DequeType>();
 			gravitySum = GetComponent<GravitySum>();
 			collisionTrigger = GetComponent<CollisionTrigger>();
+			plug = GetComponent<CouplingPlug>();
 		}
 
 		public void AdoptDeque(Grabber grabber, Grabbable grabbable)
@@ -32,15 +34,7 @@ namespace SBEPIS.Capturllection
 				return;
 
 			DequeOwner dequeOwner = capturllector.dequeOwner;
-			if (dequeOwner.deque != this)
-			{
-				dequeOwner.deque = this;
-				if (dequeOwner.diajector.isOpen)
-				{
-					dequeOwner.ToggleDiajector();
-					dequeOwner.ToggleDiajector();
-				}
-			}
+			dequeOwner.deque = this;
 		}
 	}
 }
