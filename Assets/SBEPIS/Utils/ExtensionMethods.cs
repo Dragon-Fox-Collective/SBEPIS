@@ -102,6 +102,17 @@ public static class ExtensionMethods
 
 	public static T GetAttachedComponent<T>(this Collider collider) => collider ? collider.attachedRigidbody ? collider.attachedRigidbody.GetComponent<T>() : default : default;
 
+	public static void PerformOnMaterial(this IEnumerable<Renderer> renderers, Material material, Action<Material> action)
+	{
+		foreach (Renderer renderer in renderers)
+			for (int i = 0; i < renderer.materials.Length; i++)
+			{
+				string materialName = renderer.materials[i].name;
+				if (materialName.EndsWith(" (Instance)") && materialName[..^11] == material.name)
+					action.Invoke(renderer.materials[i]);
+			}
+	}
+	
 	// Note that lhs * rhs means rotating by lhs and then by rhs
 	public static Quaternion TransformRotation(this Transform from, Quaternion delta) => from.rotation * delta; // from * delta = to
 	public static Quaternion InverseTransformRotation(this Transform from, Quaternion to) => from.rotation.Inverse() * to; // delta = from-1 * to

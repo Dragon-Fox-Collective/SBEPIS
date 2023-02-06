@@ -35,7 +35,7 @@ namespace SBEPIS.Capturllection
 
 		private void Start()
 		{
-			Punchable.PerformOnMaterial(renderers, dequeMaterial, material =>
+			renderers.PerformOnMaterial(dequeMaterial, material =>
 			{
 				Texture2D firstTexture = definition.deques[0].dequeTexture;
 				material.SetTexture("_Fallback_Texture", firstTexture);
