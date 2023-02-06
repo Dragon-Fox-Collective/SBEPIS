@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace SBEPIS.Predicates
 {
-	public class GameObjectPredicate : MonoBehaviour
+	public abstract class GameObjectPredicate : MonoBehaviour
 	{
-		public virtual bool IsTrue(GameObject obj) => true;
+		public abstract bool IsTrue(GameObject obj);
 	}
 
 	public static class PredicateExtensionMethods

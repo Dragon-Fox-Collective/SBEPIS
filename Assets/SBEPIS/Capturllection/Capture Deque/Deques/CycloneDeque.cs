@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection.Deques
 {
+	[CreateAssetMenu(menuName="Deque/"+nameof(CycloneDeque))]
 	public class CycloneDeque : DequeType
 	{
 		public float radius = 0.1f;
