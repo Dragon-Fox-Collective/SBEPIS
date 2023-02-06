@@ -58,11 +58,12 @@ namespace SBEPIS.Capturllection
 			deque.grabbable.onDrop.RemoveListener(CheckForPriming);
 			deque.grabbable.onGrab.RemoveListener(CancelPriming);
 			deque.grabbable.onUse.RemoveListener(CloseDiajector);
-			
+
 			if (!isDequeDeployed)
+			{
 				socket.Decouple(deque.plug);
-			
-			deque.transform.position += deque.transform.forward * 0.1f;
+				deque.transform.position += deque.transform.forward * 0.1f;
+			}
 		}
 		
 		private void SetupNewDeque()
