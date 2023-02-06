@@ -80,14 +80,10 @@ namespace SBEPIS.Controller
 		{
 			if (!canGrab || isHoldingSomething)
 				return;
-
-			foreach (Collider collidingCollider in collidingColliders)
-			{
-				print($"Attempting to grab {collidingCollider}");
-				if (Grab(collidingCollider))
-					return;
-			}
-
+			
+			if (collidingColliders.Any(collidingCollider => Grab(collidingCollider)))
+				return;
+			
 			ShortRangeGrab();
 		}
 
@@ -95,8 +91,8 @@ namespace SBEPIS.Controller
 		{
 			if (!collider || isHoldingSomething)
 				return false;
-
-			Grabbable grabbable = collider.SelectGrabbable();
+			
+			Grabbable grabbable = collider.GetAttachedComponent<Grabbable>();
 			if (grabbable)
 				return Grab(grabbable);
 
@@ -122,6 +118,8 @@ namespace SBEPIS.Controller
 		{
 			if (!grabbable || isHoldingSomething || !grabbable.canGrab)
 				return false;
+			
+			print($"Grabbing {grabbable}");
 
 			heldPureColliderNormal = Vector3.zero;
 			heldGrabbable = grabbable;
@@ -137,7 +135,7 @@ namespace SBEPIS.Controller
 			heldGrabbableJoint.anchor = transform.InverseTransformPoint(grabbable.transform.position);
 			heldGrabbableJoint.connectedAnchor = Vector3.zero;
 
-			grabbable.Grab(this);
+			grabbable.GetGrabbed(this);
 
 			return true;
 		}
@@ -155,7 +153,6 @@ namespace SBEPIS.Controller
 		{
 			if (CastShortRangeGrab(out RaycastHit hit))
 			{
-				print($"Short range grabbing {hit.collider}");
 				transform.SetPositionAndRotation(hit.point, Quaternion.LookRotation(-hit.normal, transform.up));
 				Grab(hit.collider);
 			}
@@ -165,6 +162,8 @@ namespace SBEPIS.Controller
 		{
 			if (!isHoldingSomething)
 				return;
+			
+			print($"Dropping {(heldGrabbable ? heldGrabbable : heldCollider)}");
 
 			Collider droppedCollider = heldCollider;
 			Grabbable droppedGrabbable = heldGrabbable;
@@ -178,7 +177,7 @@ namespace SBEPIS.Controller
 			if (droppedCollider.attachedRigidbody)
 				droppedCollider.attachedRigidbody.AddForce(Vector3.up * 0.01f);
 			if (droppedGrabbable)
-				droppedGrabbable.Drop(this);
+				droppedGrabbable.GetDropped(this);
 		}
 
 		private bool CastShortRangeGrab(out RaycastHit hit)
@@ -225,8 +224,7 @@ namespace SBEPIS.Controller
 		{
 			if (collider.isTrigger)
 				return;
-
-			print($"Colliding with {collider}");
+			
 			collider.SelectGrabbable(grabbable => grabbable.onTouch.Invoke(this, grabbable));
 			collidingColliders.Add(collider);
 		}
@@ -235,8 +233,7 @@ namespace SBEPIS.Controller
 		{
 			if (collider.isTrigger)
 				return;
-
-			print($"No longer colliding with {collider}");
+			
 			collidingColliders.Remove(collider);
 			collider.SelectGrabbable(grabbable => grabbable.onStopTouch.Invoke(this, grabbable));
 		}
@@ -285,17 +282,15 @@ namespace SBEPIS.Controller
 
 	internal static class GrabberExtensionMethods
 	{
-		public static Grabbable SelectGrabbable(this Collider collider) => collider.attachedRigidbody ? collider.attachedRigidbody.GetComponent<Grabbable>() : null;
-
 		public static TResult SelectGrabbable<TResult>(this Collider collider, Func<Grabbable, TResult> func)
 		{
-			Grabbable grabbable = collider.SelectGrabbable();
+			Grabbable grabbable = collider.GetAttachedComponent<Grabbable>();
 			return grabbable ? func(grabbable) : default;
 		}
 
 		public static void SelectGrabbable(this Collider collider, Action<Grabbable> func)
 		{
-			Grabbable grabbable = collider.SelectGrabbable();
+			Grabbable grabbable = collider.GetAttachedComponent<Grabbable>();
 			if (grabbable)
 				func(grabbable);
 		}
