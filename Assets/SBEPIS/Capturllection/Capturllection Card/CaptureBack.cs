@@ -16,7 +16,7 @@ namespace SBEPIS.Capturllection
 
 		public void UpdateCaptureCode(BitSet bits)
 		{
-			Punchable.PerformOnMaterial(renderers, captureMaterial, material => {
+			renderers.PerformOnMaterial(captureMaterial, material => {
 				material.SetFloat("_Seed", BitManager.instance.bits.BitSetToSeed(bits));
 				material.SetTexture("_Capture_Code", CaptureCamera.GetCaptureCodeTexture(bits));
 			});

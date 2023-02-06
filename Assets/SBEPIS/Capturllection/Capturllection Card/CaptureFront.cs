@@ -12,14 +12,14 @@ namespace SBEPIS.Capturllection
 
 		public void UpdateImage(Capturllectainer card, Capturllectable item)
 		{
-			Punchable.PerformOnMaterial(renderers, captureMaterial, material => {
+			renderers.PerformOnMaterial(captureMaterial, material => {
 				material.SetTexture("_Base_Map", CaptureCamera.instance.TakePictureOfObject(item.gameObject));
 			});
 		}
 
 		public void RemoveImage()
 		{
-			Punchable.PerformOnMaterial(renderers, captureMaterial, material => {
+			renderers.PerformOnMaterial(captureMaterial, material => {
 				material.SetTexture("_Base_Map", null);
 			});
 		}
