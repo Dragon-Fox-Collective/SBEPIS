@@ -22,8 +22,8 @@ namespace SBEPIS.Controller
 		public bool isBeingHeld { get; private set; }
 		
 		private const float DropCooldown = 0.2f;
-		private float timeSinceLastDrop;
-		public bool canGrab => timeSinceLastDrop > DropCooldown;
+		private float timeSinceLastDrop = DropCooldown;
+		public bool canGrab => timeSinceLastDrop >= DropCooldown;
 
 		private void Awake()
 		{
