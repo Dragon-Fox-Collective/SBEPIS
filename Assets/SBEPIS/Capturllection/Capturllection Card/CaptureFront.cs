@@ -12,8 +12,9 @@ namespace SBEPIS.Capturllection
 
 		public void UpdateImage(Capturllectainer card, Capturllectable item)
 		{
+			Texture2D texture = CaptureCamera.instance.TakePictureOfObject(item.gameObject);
 			renderers.PerformOnMaterial(captureMaterial, material => {
-				material.SetTexture("_Base_Map", CaptureCamera.instance.TakePictureOfObject(item.gameObject));
+				material.SetTexture("_Base_Map", texture);
 			});
 		}
 
