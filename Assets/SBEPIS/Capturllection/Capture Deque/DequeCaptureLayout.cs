@@ -9,6 +9,7 @@ namespace SBEPIS.Capturllection
 	{
 		public CardTarget cardTargetPrefab;
 		public float cardZ = -1;
+		public float fetchableCardY = 0.1f;
 
 		private Diajector diajector;
 		private readonly Dictionary<DequeStorable, CardTarget> targets = new();
@@ -23,7 +24,7 @@ namespace SBEPIS.Capturllection
 
 		private void FixedUpdate()
 		{
-			LayoutTargets();
+			TickAndLayoutTargets();
 		}
 
 		private void OnTriggerEnter(Collider other)
@@ -101,7 +102,7 @@ namespace SBEPIS.Capturllection
 			if (container)
 			{
 				container.onRetrieve.AddListener(RemoveCard);
-				container.retrievePredicates.Add(CanRetrieve);
+				container.retrievePredicates.Add(CanFetch);
 			}
 
 			ProceduralAnimation anim = dequePage.AddCard(card, target);
@@ -113,26 +114,32 @@ namespace SBEPIS.Capturllection
 		private void RemoveCard(Capturllectainer container, Capturllectable item)
 		{
 			container.onRetrieve.RemoveListener(RemoveCard);
-			container.retrievePredicates.Remove(CanRetrieve);
+			container.retrievePredicates.Remove(CanFetch);
 
 			DequeStorable card = container.GetComponent<DequeStorable>();
 			dequePage.RemoveCard(card);
 			RemoveCardTarget(card);
 		}
 
-		private bool CanRetrieve(Capturllectainer container) => diajector.deque.definition.CanRetrieve(providedTargets, targets[container.GetComponent<DequeStorable>()]);
-
-		private void LayoutTargets()
+		private bool CanFetch(Capturllectainer container) => CanFetch(container.GetComponent<DequeStorable>());
+		private bool CanFetch(DequeStorable card) => CanFetch(targets[card]);
+		private bool CanFetch(CardTarget target) => diajector.deque.definition.CanFetch(providedTargets, target);
+		
+		private void TickAndLayoutTargets()
 		{
 			if (!diajector.isBound)
 				return;
-
-			if (providedTargets.Count > 0)
-				diajector.deque.definition.LayoutTargets(providedTargets);
+			
+			diajector.deque.definition.TickDeque(providedTargets, Time.fixedDeltaTime);
+			diajector.deque.definition.LayoutTargets(providedTargets);
+			
 			foreach (CardTarget target in targets.Values)
 			{
 				target.transform.localPosition += Vector3.forward * cardZ;
 				target.transform.localRotation *= Quaternion.Euler(0, 180, 0);
+
+				if (CanFetch(target))
+					target.transform.position += target.transform.up * fetchableCardY;
 			}
 		}
 	}
