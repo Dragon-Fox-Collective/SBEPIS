@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 6448398786241785265}
   - component: {fileID: 1557519686661420847}
   - component: {fileID: 9131961386945647344}
+  - component: {fileID: 7682035672794459721}
   m_Layer: 0
   m_Name: Capture Deque
   m_TagString: Untagged
@@ -144,10 +145,6 @@ MonoBehaviour:
   definition:
     deques:
     - {fileID: 11400000, guid: 2737fe1c5b066864ca16926e00f866aa, type: 2}
-  dequeMaterial: {fileID: 2100000, guid: 7f3246d92d02ff940b958e1ba143678d, type: 2}
-  renderers:
-  - {fileID: 1565758740033431129}
-  - {fileID: 8203533746901049725}
 --- !u!114 &5737410847915139685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,6 +308,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea1a4d90d21dd14b8651bbf1e452792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7682035672794459721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762745506201212150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d9f62758464343b8fd83c1afcf5535, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 1565758740033431129}
+  - {fileID: 8203533746901049725}
+  material: {fileID: 2100000, guid: 7f3246d92d02ff940b958e1ba143678d, type: 2}
 --- !u!1001 &178777184448903901
 PrefabInstance:
   m_ObjectHideFlags: 0

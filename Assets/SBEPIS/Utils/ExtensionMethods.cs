@@ -146,6 +146,12 @@ public static class ExtensionMethods
 		return first.Zip(second, (first, second) => (first, second));
 	}
 
+	public static void Do<T>(this IEnumerable<T> enumerable, Action<T> action)
+	{
+		foreach (T t in enumerable)
+			action.Invoke(t);
+	}
+
 	public static IEnumerable<float> AsEnumerable(this Vector3 vector)
 	{
 		yield return vector.x;

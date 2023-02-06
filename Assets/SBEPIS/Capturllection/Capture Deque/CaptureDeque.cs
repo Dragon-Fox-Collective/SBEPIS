@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using SBEPIS.Controller;
 using SBEPIS.Physics;
@@ -8,7 +9,7 @@ using SBEPIS.Utils;
 
 namespace SBEPIS.Capturllection
 {
-	[RequireComponent(typeof(Grabbable), typeof(GravitySum))]
+	[RequireComponent(typeof(Grabbable), typeof(GravitySum), typeof(SplitTextureSetup))]
 	[RequireComponent(typeof(CollisionTrigger), typeof(CouplingPlug))]
 	public class CaptureDeque : MonoBehaviour
 	{
@@ -17,11 +18,9 @@ namespace SBEPIS.Capturllection
 		
 		public DequeLayer definition;
 
-		public Material dequeMaterial;
-		public List<Renderer> renderers;
-
 		public Grabbable grabbable { get; private set; }
 		public GravitySum gravitySum { get; private set; }
+		public SplitTextureSetup split { get; private set; }
 		public CollisionTrigger collisionTrigger { get; private set; }
 		public CouplingPlug plug { get; private set; }
 
@@ -29,24 +28,14 @@ namespace SBEPIS.Capturllection
 		{
 			grabbable = GetComponent<Grabbable>();
 			gravitySum = GetComponent<GravitySum>();
+			split = GetComponent<SplitTextureSetup>();
 			collisionTrigger = GetComponent<CollisionTrigger>();
 			plug = GetComponent<CouplingPlug>();
 		}
 
 		private void Start()
 		{
-			renderers.PerformOnMaterial(dequeMaterial, material =>
-			{
-				Texture2D firstTexture = definition.deques[0].dequeTexture;
-				material.SetTexture("_Fallback_Texture", firstTexture);
-				
-				Texture2DArray texture = new(firstTexture.width, firstTexture.height, definition.deques.Count, firstTexture.format, firstTexture.mipmapCount > 1);
-				for (int i = 0; i < definition.deques.Count; i++)
-					Graphics.CopyTexture(definition.deques[i].dequeTexture, 0, texture, i);
-				material.SetTexture("_Textures", texture);
-				
-				material.SetFloat("_Num_Textures", definition.deques.Count);
-			});
+			split.UpdateTexture(definition.deques.Select(deque => deque.dequeTexture).ToList());
 		}
 
 		public void AdoptDeque(Grabber grabber, Grabbable grabbable)

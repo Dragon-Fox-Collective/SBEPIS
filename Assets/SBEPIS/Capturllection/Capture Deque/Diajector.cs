@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using SBEPIS.Physics;
 using UnityEngine;
 
@@ -25,8 +26,21 @@ namespace SBEPIS.Capturllection
 		};
 
 		public bool isBound => deque;
-		[NonSerialized]
-		public CaptureDeque deque;
+
+		private CaptureDeque _deque;
+		public CaptureDeque deque
+		{
+			get => _deque;
+			set
+			{
+				_deque = value;
+
+				if (_deque)
+					GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Do(cardTarget => _deque.definition.UpdateCardTexture(cardTarget.card));
+				else
+					GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Do(cardTarget => cardTarget.card.split.ResetTexture());
+			}
+		}
 
 		private DequePage currentPage;
 		public bool isOpen => currentPage;
