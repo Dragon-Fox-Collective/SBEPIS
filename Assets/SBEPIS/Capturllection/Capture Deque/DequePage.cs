@@ -29,7 +29,7 @@ namespace SBEPIS.Capturllection
 		{
 			foreach (CardTarget target in GetComponentsInChildren<CardTarget>())
 			{
-				DequeStorable card = Instantiate(diajector.cardPrefab.gameObject).GetComponent<DequeStorable>();
+				DequeStorable card = Instantiate(diajector.cardPrefab);
 				card.name += $" ({target.label})";
 				target.card = card;
 				AddCard(card, target);
@@ -78,6 +78,8 @@ namespace SBEPIS.Capturllection
 
 			animations.Add(anim);
 			cardTargets.Add(card, target);
+			
+			diajector.deque.definition.UpdateCardTexture(card);
 
 			return anim;
 		}

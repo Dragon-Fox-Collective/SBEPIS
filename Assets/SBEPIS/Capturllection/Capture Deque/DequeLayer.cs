@@ -10,6 +10,8 @@ namespace SBEPIS.Capturllection
 	{
 		public List<DequeType> deques;
 
+		private List<Texture2D> cardTextures;
+
 		public void LayoutTargets(List<CardTarget> targets)
 		{
 			deques[0].LayoutTargets(targets);
@@ -18,6 +20,12 @@ namespace SBEPIS.Capturllection
 		public bool CanRetrieve(List<CardTarget> targets, CardTarget card)
 		{
 			return deques.AsEnumerable().Reverse().Any(deque => deque.CanRetrieve(targets, card));
+		}
+
+		public void UpdateCardTexture(DequeStorable card)
+		{
+			cardTextures ??= deques.Select(deque => deque.cardTexture).ToList();
+			card.split.UpdateTexture(cardTextures);
 		}
 	}
 }
