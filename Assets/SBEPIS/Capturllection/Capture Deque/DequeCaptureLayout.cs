@@ -120,7 +120,7 @@ namespace SBEPIS.Capturllection
 			RemoveCardTarget(card);
 		}
 
-		private bool CanRetrieve(Capturllectainer container) => diajector.deque.dequeType.CanRetrieve(providedTargets, targets[container.GetComponent<DequeStorable>()]);
+		private bool CanRetrieve(Capturllectainer container) => diajector.deque.definition.CanRetrieve(providedTargets, targets[container.GetComponent<DequeStorable>()]);
 
 		private void LayoutTargets()
 		{
@@ -128,7 +128,7 @@ namespace SBEPIS.Capturllection
 				return;
 
 			if (providedTargets.Count > 0)
-				diajector.deque.dequeType.LayoutTargets(providedTargets);
+				diajector.deque.definition.LayoutTargets(providedTargets);
 			foreach (CardTarget target in targets.Values)
 			{
 				target.transform.localPosition += Vector3.forward * cardZ;
