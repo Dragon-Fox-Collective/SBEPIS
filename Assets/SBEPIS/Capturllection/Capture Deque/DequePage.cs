@@ -24,7 +24,7 @@ namespace SBEPIS.Capturllection
 			baseTargetProviders.AddRange(diajector.targetProviders);
 			CreateCards();
 		}
-		
+
 		private void CreateCards()
 		{
 			foreach (CardTarget target in GetComponentsInChildren<CardTarget>())
@@ -122,6 +122,7 @@ namespace SBEPIS.Capturllection
 
 		public void StartAssembly()
 		{
+			gameObject.SetActive(true);
 			onPreparePage.Invoke();
 			diajector.coroutineOwner.StartCoroutine(SpawnCards());
 		}
@@ -139,6 +140,7 @@ namespace SBEPIS.Capturllection
 		public void StartDisassembly()
 		{
 			diajector.coroutineOwner.StartCoroutine(DespawnCards());
+			gameObject.SetActive(false);
 		}
 
 		private IEnumerator DespawnCards()
@@ -160,6 +162,7 @@ namespace SBEPIS.Capturllection
 					card.onReverseEnd.Invoke();
 				card.Stop();
 			}
+			gameObject.SetActive(false);
 		}
 	}
 }

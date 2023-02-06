@@ -29,42 +29,74 @@ namespace SBEPIS.Capturllection
 		public CaptureDeque deque;
 
 		private DequePage currentPage;
-		public bool hasPageOpen => currentPage;
+		public bool isOpen => currentPage;
 
-		public void StartAssembly() => StartAssembly(mainPage);
+		public void StartAssembly(Vector3 position, Quaternion rotation) => StartAssembly(position, rotation, mainPage);
 
-		public void StartAssembly(DequePage page)
+		public void StartAssembly(Vector3 position, Quaternion rotation, DequePage page)
 		{
-			if (hasPageOpen)
-				StartDisassembly();
-			currentPage = page;
+			if (isOpen)
+			{
+				Debug.LogError("Tried to start assembly when already assembled");
+				return;
+			}
 
 			gameObject.SetActive(true);
-			currentPage.gameObject.SetActive(true);
+			transform.SetPositionAndRotation(position, rotation);
+			AssembleNewPage(page);
+		}
+
+		public void RefreshPage()
+		{
+			ChangePage(currentPage);
+		}
+
+		public void ChangePage(DequePage page)
+		{
+			DisassembleCurrentPage();
+			AssembleNewPage(page);
+		}
+
+		private void AssembleNewPage(DequePage page)
+		{
+			currentPage = page;
 			currentPage.StartAssembly();
+		}
+		
+		private void DisassembleCurrentPage()
+		{
+			if (!isOpen)
+			{
+				Debug.LogError("Tried to start disassembly when not assembled");
+				return;
+			}
+
+			currentPage.StartDisassembly();
+			currentPage = null;
+		}
+		
+		private void ForceCloseCurrentPage()
+		{
+			if (!isOpen)
+			{
+				Debug.LogError("Tried to start disassembly when not assembled");
+				return;
+			}
+
+			currentPage.ForceClose();
+			currentPage = null;
 		}
 
 		public void StartDisassembly()
 		{
-			if (hasPageOpen)
-			{
-				currentPage.StartDisassembly();
-				currentPage.gameObject.SetActive(false);
-				currentPage = null;
-			}
+			DisassembleCurrentPage();
 			gameObject.SetActive(false);
 		}
 
 		public void ForceClose()
 		{
 			coroutineOwner.StopAllCoroutines();
-			
-			if (hasPageOpen)
-			{
-				currentPage.ForceClose();
-				currentPage.gameObject.SetActive(false);
-				currentPage = null;
-			}
+			ForceCloseCurrentPage();
 			gameObject.SetActive(false);
 		}
 	}

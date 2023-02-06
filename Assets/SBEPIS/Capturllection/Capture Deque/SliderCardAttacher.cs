@@ -1,6 +1,4 @@
 using SBEPIS.UI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -34,13 +32,9 @@ namespace SBEPIS.Capturllection
 			}
 		}
 
-		private void Awake()
-		{
-			cardTarget = GetComponent<CardTarget>();
-		}
-
 		public void Attach(DequeStorable card)
 		{
+			cardTarget = GetComponent<CardTarget>(); // lol. lmao. awake isn't called before this fires
 			slider = card.gameObject.AddComponent<SliderCard>();
 			slider.startPoint = startPoint;
 			slider.endPoint = endPoint;

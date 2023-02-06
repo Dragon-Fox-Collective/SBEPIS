@@ -34,7 +34,7 @@ namespace SBEPIS.Controller
 		{
 			if (delayTimeLeft > 0)
 				delayTimeLeft -= Time.fixedDeltaTime;
-			isGrounded = delayTimeLeft <= 0 && UnityEngine.Physics.OverlapSphereNonAlloc(groundCheck.transform.TransformPoint(groundCheck.center), groundCheck.radius, groundedColliders, groundCheckMask, QueryTriggerInteraction.Ignore) > 0;
+			isGrounded = delayTimeLeft <= 0 && UnityEngine.Physics.OverlapSphereNonAlloc(groundCheck.transform.TransformPoint(groundCheck.center), groundCheck.radius * groundCheck.transform.lossyScale.Aggregate(Mathf.Max), groundedColliders, groundCheckMask, QueryTriggerInteraction.Ignore) > 0;
 			groundCollider = isGrounded ? groundedColliders[0] : null;
 		}
 

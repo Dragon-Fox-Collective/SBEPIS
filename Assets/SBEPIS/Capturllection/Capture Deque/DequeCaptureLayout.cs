@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	public class DequeLayout : MonoBehaviour
+	public class DequeCaptureLayout : MonoBehaviour
 	{
 		public CardTarget cardTargetPrefab;
 		public float cardZ = -1;
