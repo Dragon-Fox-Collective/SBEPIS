@@ -26,5 +26,7 @@ namespace SBEPIS.Capturllection.Deques
 		}
 
 		public override bool CanRetrieve(List<CardTarget> targets, CardTarget card) => targets.IndexOf(card) == 0;
+		
+		public override int GetIndexToInsertAt(List<CardTarget> targets, CardTarget card) => 0;
 	}
 }

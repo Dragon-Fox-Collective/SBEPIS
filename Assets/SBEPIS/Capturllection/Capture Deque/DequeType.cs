@@ -11,5 +11,6 @@ namespace SBEPIS.Capturllection
 		public abstract void TickDeque(List<CardTarget> targets, float delta);
 		public abstract void LayoutTargets(List<CardTarget> targets);
 		public abstract bool CanRetrieve(List<CardTarget> targets, CardTarget card);
+		public abstract int GetIndexToInsertAt(List<CardTarget> targets, CardTarget card);
 	}
 }

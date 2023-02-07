@@ -26,6 +26,11 @@ namespace SBEPIS.Capturllection
 		{
 			return deques.AsEnumerable().Reverse().Any(deque => deque.CanRetrieve(targets, card));
 		}
+		
+		public int GetIndexToInsertAt(List<CardTarget> targets, CardTarget card)
+		{
+			return deques[^1].GetIndexToInsertAt(targets, card);
+		}
 
 		public void UpdateCardTexture(DequeStorable card)
 		{
