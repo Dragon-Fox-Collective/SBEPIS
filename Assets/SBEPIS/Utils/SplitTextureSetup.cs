@@ -18,7 +18,7 @@ namespace SBEPIS.Utils
 			Texture2D firstTexture = textures[0];
 			Texture2DArray textureArray = new(firstTexture.width, firstTexture.height, textures.Count, firstTexture.format, firstTexture.mipmapCount > 1);
 			for (int i = 0; i < textures.Count; i++)
-				Graphics.CopyTexture(textures[i], 0, textureArray, i);
+				Graphics.CopyTexture(textures[^(i+1)], 0, textureArray, i);
 			
 			renderers.PerformOnMaterial(material, material =>
 			{
