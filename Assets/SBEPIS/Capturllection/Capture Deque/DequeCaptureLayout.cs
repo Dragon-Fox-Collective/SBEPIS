@@ -55,10 +55,10 @@ namespace SBEPIS.Capturllection
 
 		private CardTarget AddCardTarget(DequeStorable card)
 		{
-			CardTarget newTarget = Instantiate(cardTargetPrefab.gameObject, transform).GetComponent<CardTarget>();
+			CardTarget newTarget = Instantiate(cardTargetPrefab, transform);
 			newTarget.card = card;
 			targets.Add(card, newTarget);
-			providedTargets.Add(newTarget);
+			providedTargets.Insert(diajector.deque.definition.GetIndexToInsertAt(providedTargets, newTarget), newTarget);
 			return newTarget;
 		}
 

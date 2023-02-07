@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,5 +25,7 @@ namespace SBEPIS.Capturllection.Deques
 		}
 
 		public override bool CanRetrieve(List<CardTarget> targets, CardTarget card) => targets.IndexOf(card) == targets.Count - 1;
+		
+		public override int GetIndexToInsertAt(List<CardTarget> targets, CardTarget card) => 0;
 	}
 }
