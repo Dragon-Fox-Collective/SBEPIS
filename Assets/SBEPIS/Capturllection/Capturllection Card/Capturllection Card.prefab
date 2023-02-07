@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 4607624570678814688}
   - component: {fileID: 5650769596121791423}
   - component: {fileID: -3685217413209224028}
+  - component: {fileID: 1929706404228634041}
   m_Layer: 0
   m_Name: Capturllection Card
   m_TagString: Untagged
@@ -373,6 +374,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canCapturllect: 1
+--- !u!114 &1929706404228634041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275059195579274974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d9f62758464343b8fd83c1afcf5535, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 7857901446257573216}
+  material: {fileID: 2100000, guid: 844d7a0c4630e8d4ba7369119cc22223, type: 2}
 --- !u!1 &1809637530485951540
 GameObject:
   m_ObjectHideFlags: 0

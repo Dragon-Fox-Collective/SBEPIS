@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection.Deques
 {
+	[CreateAssetMenu(menuName="Deque/"+nameof(ArrayDeque))]
 	public class ArrayDeque : DequeType
 	{
 		public float cardDistance = 0.1f;
@@ -12,13 +13,20 @@ namespace SBEPIS.Capturllection.Deques
 		public float wobbleHeight = 0.1f;
 		public float wobbleTimeOffset = 1;
 
+		private float time;
+
+		public override void TickDeque(List<CardTarget> targets, float delta)
+		{
+			time += delta;
+		}
+
 		public override void LayoutTargets(List<CardTarget> targets)
 		{
 			int i = 0;
 			Vector3 right = cardDistance * (targets.Count - 1) / 2 * Vector3.left;
 			foreach (CardTarget target in targets)
 			{
-				Vector3 up = Mathf.Sin(Time.fixedTime + i * wobbleTimeOffset) * wobbleHeight * Vector3.up;
+				Vector3 up = Mathf.Sin(time + i * wobbleTimeOffset) * wobbleHeight * Vector3.up;
 				target.transform.localPosition = right + up;
 				target.transform.localRotation = cardRotation;
 				right += Vector3.right * cardDistance;
@@ -27,5 +35,7 @@ namespace SBEPIS.Capturllection.Deques
 		}
 
 		public override bool CanRetrieve(List<CardTarget> targets, CardTarget card) => true;
+		
+		public override int GetIndexToInsertAt(List<CardTarget> targets, CardTarget card) => targets.Count;
 	}
 }
