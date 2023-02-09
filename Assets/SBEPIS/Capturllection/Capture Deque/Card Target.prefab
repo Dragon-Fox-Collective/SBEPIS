@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7933075258843950224}
   - component: {fileID: 914007334191890185}
+  - component: {fileID: 8562261679961323365}
   m_Layer: 6
   m_Name: Card Target
   m_TagString: Untagged
@@ -49,3 +50,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa61bd48a892d2948a3bb8455d3da060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  label: 
+  onCardCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  onPrepareCard:
+    m_PersistentCalls:
+      m_Calls: []
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &8562261679961323365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7770716162754255256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ace458ca0e0b6d43a89f69a86cf528c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onMoveFrom:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 914007334191890185}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.CardTarget, SBEPIS.Capturllection
+        m_MethodName: DestroyCardJoint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onMoveFromTravelUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveToTravelUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveTo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 914007334191890185}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.CardTarget, SBEPIS.Capturllection
+        m_MethodName: CreateCardJoint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

@@ -12,7 +12,7 @@ namespace SBEPIS.Capturllection
 
 		public void UpdateCaptureCodeToDefault() => UpdateCaptureCode(new BitSet());
 
-		public void UpdateCaptureCode(Capturllectainer card, Capturllectable item) => UpdateCaptureCode(item.bits.bits);
+		public void UpdateCaptureCode(Capturellectainer card, Capturllectable item) => UpdateCaptureCode(item.bits.bits);
 
 		public void UpdateCaptureCode(BitSet bits)
 		{

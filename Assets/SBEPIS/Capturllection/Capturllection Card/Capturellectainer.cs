@@ -7,11 +7,11 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
-	public class Capturllectainer : MonoBehaviour
+	public class Capturellectainer : MonoBehaviour
 	{
 		public Item defaultCapturedItemPrefab;
 		public bool isRetrievingAllowed = true;
-		public List<Predicate<Capturllectainer>> retrievePredicates = new();
+		public List<Predicate<Capturellectainer>> retrievePredicates = new();
 
 		public CaptureEvent onCapture = new(), onRetrieve = new();
 
@@ -55,5 +55,5 @@ namespace SBEPIS.Capturllection
 	}
 
 	[Serializable]
-	public class CaptureEvent : UnityEvent<Capturllectainer, Capturllectable> { }
+	public class CaptureEvent : UnityEvent<Capturellectainer, Capturllectable> { }
 }

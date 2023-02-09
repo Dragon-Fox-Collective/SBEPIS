@@ -54,6 +54,7 @@ namespace SBEPIS.Capturllection
 
 		private void FinishUpOldDeque()
 		{
+			deque.owner = null;
 			deque.collisionTrigger.trigger.RemoveListener(StartDiajectorAssembly);
 			deque.grabbable.onDrop.RemoveListener(CheckForPriming);
 			deque.grabbable.onGrab.RemoveListener(CancelPriming);
@@ -68,6 +69,7 @@ namespace SBEPIS.Capturllection
 		
 		private void SetupNewDeque()
 		{
+			deque.owner = this;
 			deque.collisionTrigger.trigger.AddListener(StartDiajectorAssembly);
 			deque.grabbable.onDrop.AddListener(CheckForPriming);
 			deque.grabbable.onGrab.AddListener(CancelPriming);
@@ -85,7 +87,7 @@ namespace SBEPIS.Capturllection
 		{
 			diajector.deque = null;
 			if (diajector.isOpen)
-				diajector.ForceClose();
+				diajector.ForceClose(_deque.lowerTarget);
 		}
 
 		public void OnToggleDeque(CallbackContext context)

@@ -10,7 +10,7 @@ namespace SBEPIS.Capturllection
 		public Material captureMaterial;
 		public Renderer[] renderers;
 
-		public void UpdateImage(Capturllectainer card, Capturllectable item)
+		public void UpdateImage(Capturellectainer card, Capturllectable item)
 		{
 			Texture2D texture = CaptureCamera.instance.TakePictureOfObject(item.gameObject);
 			renderers.PerformOnMaterial(captureMaterial, material => {

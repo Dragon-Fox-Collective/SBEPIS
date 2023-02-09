@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SBEPIS.Physics;
+using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
 	public class Diajector : MonoBehaviour
 	{
-		public Transform upperTarget;
+		public LerpTarget upperTarget;
 		public DequeStorable cardPrefab;
 		public DequePage mainPage;
 		public float cardDelay = 0.5f;
@@ -18,10 +19,10 @@ namespace SBEPIS.Capturllection
 		public MonoBehaviour coroutineOwner;
 		public StrengthSettings cardStrength;
 
-		public IEnumerable<Func<Transform>> targetProviders => new Func<Transform>[]
+		public IEnumerable<Func<LerpTarget>> targetProviders => new Func<LerpTarget>[]
 		{
-			() => deque.cardStart,
-			() => deque.cardTarget,
+			() => deque.lowerTarget,
+			() => deque.upperTarget,
 			() => upperTarget,
 		};
 
@@ -42,8 +43,16 @@ namespace SBEPIS.Capturllection
 			}
 		}
 
-		private DequePage currentPage;
+		public DequePage currentPage { get; private set; }
 		public bool isOpen => currentPage;
+		
+		public DequeCaptureLayout captureLayout { get; private set; }
+
+		private void Awake()
+		{
+			captureLayout = GetComponentInChildren<DequeCaptureLayout>(includeInactive:true);
+			print($"Capture layout {captureLayout}");
+		}
 
 		public void StartAssembly(Vector3 position, Quaternion rotation) => StartAssembly(position, rotation, mainPage);
 
@@ -62,7 +71,7 @@ namespace SBEPIS.Capturllection
 
 		public void RefreshPage()
 		{
-			ChangePage(currentPage);
+			currentPage.Refresh();
 		}
 
 		public void ChangePage(DequePage page)
@@ -89,7 +98,7 @@ namespace SBEPIS.Capturllection
 			currentPage = null;
 		}
 		
-		private void ForceCloseCurrentPage()
+		private void ForceCloseCurrentPage(LerpTarget bottomTarget)
 		{
 			if (!isOpen)
 			{
@@ -97,7 +106,7 @@ namespace SBEPIS.Capturllection
 				return;
 			}
 
-			currentPage.ForceClose();
+			currentPage.ForceClose(bottomTarget);
 			currentPage = null;
 		}
 
@@ -107,10 +116,10 @@ namespace SBEPIS.Capturllection
 			gameObject.SetActive(false);
 		}
 
-		public void ForceClose()
+		public void ForceClose(LerpTarget bottomTarget)
 		{
 			coroutineOwner.StopAllCoroutines();
-			ForceCloseCurrentPage();
+			ForceCloseCurrentPage(bottomTarget);
 			gameObject.SetActive(false);
 		}
 	}
