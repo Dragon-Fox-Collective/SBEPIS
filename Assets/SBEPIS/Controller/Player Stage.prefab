@@ -238,6 +238,7 @@ GameObject:
   - component: {fileID: 7286783685991272249}
   - component: {fileID: 7088020557096787483}
   - component: {fileID: 2230470260887843658}
+  - component: {fileID: 692932815356266608}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -334,6 +335,48 @@ MonoBehaviour:
       - m_Target: {fileID: 4806943500720040952}
         m_TargetAssemblyTypeName: SBEPIS.Capturllection.MenuActions, SBEPIS.Capturllection
         m_MethodName: ChangeMouseSensitivity
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &692932815356266608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208816322751926669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ace458ca0e0b6d43a89f69a86cf528c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onMoveFrom:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7088020557096787483}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.CardTarget, SBEPIS.Capturllection
+        m_MethodName: DestroyCardJoint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onMoveTo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7088020557096787483}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.CardTarget, SBEPIS.Capturllection
+        m_MethodName: CreateCardJoint
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -867,6 +910,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardTargetPrefab: {fileID: 914007334191890185, guid: 1c8bc15bcd83611459142f20ba433cd1, type: 3}
   cardZ: -0.05
+  fetchableCardY: 0.1
 --- !u!65 &277508201454612873
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2524,7 +2568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d00b0cf08b2be42b94e48c15a25370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upperTarget: {fileID: 1438454189580415232}
+  upperTarget: {fileID: 1404265936580636440}
   cardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
   mainPage: {fileID: 1375851625624827706}
   cardDelay: 0.2
@@ -2534,38 +2578,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.7183534
+      outSlope: 0.7183534
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.25
-      value: 1
-      inSlope: 4
-      outSlope: 4
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.112566516
     - serializedVersion: 3
       time: 0.5
-      value: 2
-      inSlope: 0
-      outSlope: 0
+      value: 1
+      inSlope: 0.44960007
+      outSlope: 0.44960007
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 3
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
+      inWeight: 0.097421154
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -4384,6 +4410,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1438454189580415232}
+  - component: {fileID: 1404265936580636440}
+  - component: {fileID: 70454494686087777}
   m_Layer: 0
   m_Name: Upper Target
   m_TagString: Untagged
@@ -4406,6 +4434,50 @@ Transform:
   m_Father: {fileID: 3626820707496965858}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1404265936580636440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7927973737090238991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ace458ca0e0b6d43a89f69a86cf528c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onMoveFrom:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveTo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 70454494686087777}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.LerpTargetDiajectorTargetter,
+          SBEPIS.Capturllection
+        m_MethodName: TargetDequeOrDiajector
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &70454494686087777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7927973737090238991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cecd28a7562d05b4592aa119fb2f0456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diajector: {fileID: 2162956669282852240}
 --- !u!1 &8249927293962966560
 GameObject:
   m_ObjectHideFlags: 0

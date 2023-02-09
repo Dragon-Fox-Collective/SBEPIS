@@ -28,7 +28,7 @@ namespace SBEPIS.Capturllection
 			storePredicates.Add(() => isStoringAllowed);
 
 			// This sucks but it's the best place to put it for now :/
-			Capturllectainer container = GetComponent<Capturllectainer>();
+			Capturellectainer container = GetComponent<Capturellectainer>();
 			if (container)
 				storePredicates.Add(() => container.capturedItem);
 

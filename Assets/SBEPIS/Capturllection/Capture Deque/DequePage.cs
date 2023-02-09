@@ -11,17 +11,16 @@ namespace SBEPIS.Capturllection
 {
 	public class DequePage : MonoBehaviour
 	{
-		private Diajector diajector;
-		private List<Func<Transform>> baseTargetProviders = new();
+		public Diajector diajector { get; private set; }
+		
 		private UnityEvent onPreparePage = new();
 
-		private readonly List<ProceduralAnimation> animations = new();
+		private readonly Dictionary<LerpTargetAnimator, CardTarget> animators = new();
 		private readonly Dictionary<DequeStorable, CardTarget> cardTargets = new();
 
 		private void Awake()
 		{
 			diajector = GetComponentInParent<Diajector>();
-			baseTargetProviders.AddRange(diajector.targetProviders);
 			CreateCards();
 		}
 
@@ -32,9 +31,11 @@ namespace SBEPIS.Capturllection
 				DequeStorable card = Instantiate(diajector.cardPrefab);
 				card.name += $" ({target.label})";
 				target.card = card;
-				AddCard(card, target);
+				
+				LerpTargetAnimator animator = AddCard(card, target);
+				animator.TeleportTo(diajector.deque.lowerTarget);
 
-				Capturllectainer container = card.GetComponent<Capturllectainer>();
+				Capturellectainer container = card.GetComponent<Capturellectainer>();
 				container.isRetrievingAllowed = false;
 
 				Capturllectable capturllectable = card.GetComponent<Capturllectable>();
@@ -48,40 +49,22 @@ namespace SBEPIS.Capturllection
 			}
 		}
 
-		public ProceduralAnimation AddCard(DequeStorable card, CardTarget target)
+		public LerpTargetAnimator AddCard(DequeStorable card, CardTarget target)
 		{
 			card.isStored = true;
 
 			card.grabbable.onGrab.AddListener(DestroyCardJoint);
 			card.grabbable.onDrop.AddListener(CreateCardJoint);
 
-			ProceduralAnimation anim = card.gameObject.AddComponent<ProceduralAnimation>();
-			anim.targetProviders.AddRange(baseTargetProviders);
-			anim.targetProviders.Add(() => target.transform);
-			anim.curve = diajector.curve;
-			anim.onPlay.AddListener(() =>
-			{
-				card.gameObject.SetActive(true);
-			});
-			anim.onEnd.AddListener(() =>
-			{
-				CreateCardJoint(card, target, diajector.staticRigidbody, diajector.cardStrength);
-			});
-			anim.onReversePlay.AddListener(() =>
-			{
-				DestroyCardJoint(card);
-			});
-			anim.onReverseEnd.AddListener(() =>
-			{
-				card.gameObject.SetActive(false);
-			});
+			LerpTargetAnimator animator = card.gameObject.AddComponent<LerpTargetAnimator>();
+			animator.curve = diajector.curve;
 
-			animations.Add(anim);
+			animators.Add(animator, target);
 			cardTargets.Add(card, target);
 			
 			diajector.deque.definition.UpdateCardTexture(card);
 
-			return anim;
+			return animator;
 		}
 
 		public void RemoveCard(DequeStorable card)
@@ -91,10 +74,10 @@ namespace SBEPIS.Capturllection
 			card.grabbable.onGrab.RemoveListener(DestroyCardJoint);
 			card.grabbable.onDrop.RemoveListener(CreateCardJoint);
 
-			ProceduralAnimation anim = card.GetComponent<ProceduralAnimation>();
+			LerpTargetAnimator anim = card.GetComponent<LerpTargetAnimator>();
 			Destroy(anim);
 
-			animations.Remove(anim);
+			animators.Remove(anim);
 			cardTargets.Remove(card);
 		}
 
@@ -103,6 +86,8 @@ namespace SBEPIS.Capturllection
 			DequeStorable card = grabbable.GetComponent<DequeStorable>();
 			CreateCardJoint(card, cardTargets[card], diajector.staticRigidbody, diajector.cardStrength);
 		}
+
+		public void CreateCardJoint(CardTarget target) => CreateCardJoint(target.card, target, diajector.staticRigidbody, diajector.cardStrength);
 
 		private static void CreateCardJoint(DequeStorable card, CardTarget target, Rigidbody staticRigidbody, StrengthSettings cardStrength)
 		{
@@ -115,6 +100,8 @@ namespace SBEPIS.Capturllection
 
 		private void DestroyCardJoint(Grabber grabber, Grabbable grabbable) => DestroyCardJoint(grabbable.GetComponent<DequeStorable>());
 
+		public void DestroyCardJoint(CardTarget target) => DestroyCardJoint(target.card);
+		
 		private void DestroyCardJoint(DequeStorable card)
 		{
 			JointTargetter targetter = cardTargets[card].targetter;
@@ -122,6 +109,14 @@ namespace SBEPIS.Capturllection
 			Destroy(targetter);
 		}
 
+		public bool HasAnimator(LerpTargetAnimator animator) => animators.ContainsKey(animator);
+		public LerpTarget GetLerpTargetForAnimator(LerpTargetAnimator animator) => animators[animator].lerpTarget;
+
+		public void Refresh()
+		{
+			onPreparePage.Invoke();
+		}
+		
 		public void StartAssembly()
 		{
 			gameObject.SetActive(true);
@@ -131,10 +126,10 @@ namespace SBEPIS.Capturllection
 
 		private IEnumerator SpawnCards()
 		{
-			foreach ((ProceduralAnimation anim, CardTarget target) in animations.Zip(cardTargets.Values))
+			foreach ((LerpTargetAnimator animator, CardTarget target) in animators)
 			{
 				target.onPrepareCard.Invoke();
-				anim.PlayForward();
+				animator.TargetTo(diajector.deque.upperTarget);
 				yield return new WaitForSeconds(diajector.cardDelay);
 			}
 		}
@@ -147,23 +142,17 @@ namespace SBEPIS.Capturllection
 
 		private IEnumerator DespawnCards()
 		{
-			foreach (ProceduralAnimation anim in animations)
+			foreach ((LerpTargetAnimator animator, CardTarget target) in animators)
 			{
-				anim.PlayReverse();
+				animator.TargetTo(diajector.upperTarget);
 				yield return new WaitForSeconds(diajector.cardDelay);
 			}
 		}
 
-		public void ForceClose()
+		public void ForceClose(LerpTarget bottomTarget)
 		{
-			foreach (ProceduralAnimation card in animations)
-			{
-				if (card.time >= card.endTime)
-					card.onReversePlay.Invoke();
-				if (card.time > card.startTime)
-					card.onReverseEnd.Invoke();
-				card.Stop();
-			}
+			foreach ((LerpTargetAnimator animator, CardTarget target) in animators)
+				animator.TeleportTo(bottomTarget);
 			gameObject.SetActive(false);
 		}
 	}

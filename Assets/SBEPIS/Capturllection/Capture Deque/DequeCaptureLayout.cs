@@ -38,7 +38,7 @@ namespace SBEPIS.Capturllection
 			if (card.grabbable.isBeingHeld)
 				AddTemporaryTarget(card);
 			else
-				AddCard(card, AddCardTarget(card));
+				AddPermanentTarget(card);
 		}
 
 		private void OnTriggerExit(Collider other)
@@ -78,6 +78,13 @@ namespace SBEPIS.Capturllection
 			return target;
 		}
 
+		public CardTarget AddPermanentTarget(DequeStorable card)
+		{
+			CardTarget target = AddCardTarget(card);
+			AddCard(card, target);
+			return target;
+		}
+
 		public void RemoveTemporaryTarget(DequeStorable card)
 		{
 			card.grabbable.onDrop.RemoveListener(MakeCardPermanent);
@@ -86,7 +93,6 @@ namespace SBEPIS.Capturllection
 
 		private void MakeCardPermanent(Grabber grabber, Grabbable grabbable)
 		{
-			print("MakeCardPermanent");
 			DequeStorable card = grabbable.GetComponent<DequeStorable>();
 			card.grabbable.onDrop.RemoveListener(MakeCardPermanent);
 			targets[card].isTemporary = false;
@@ -98,20 +104,20 @@ namespace SBEPIS.Capturllection
 			if (!diajector.isBound)
 				return;
 
-			Capturllectainer container = card.GetComponent<Capturllectainer>();
+			Capturellectainer container = card.GetComponent<Capturellectainer>();
 			if (container)
 			{
 				container.onRetrieve.AddListener(RemoveCard);
 				container.retrievePredicates.Add(CanFetch);
 			}
 
-			ProceduralAnimation anim = dequePage.AddCard(card, target);
-			anim.SeekEnd();
-			anim.onPlay.Invoke();
-			anim.onEnd.Invoke();
+			LerpTargetAnimator animator = dequePage.AddCard(card, target);
+			diajector.deque.lowerTarget.onMoveFrom.Invoke(animator);
+			if (!card.grabbable.isBeingHeld)
+				animator.TeleportTo(target.lerpTarget);
 		}
 
-		private void RemoveCard(Capturllectainer container, Capturllectable item)
+		private void RemoveCard(Capturellectainer container, Capturllectable item)
 		{
 			container.onRetrieve.RemoveListener(RemoveCard);
 			container.retrievePredicates.Remove(CanFetch);
@@ -121,7 +127,7 @@ namespace SBEPIS.Capturllection
 			RemoveCardTarget(card);
 		}
 
-		private bool CanFetch(Capturllectainer container) => CanFetch(container.GetComponent<DequeStorable>());
+		private bool CanFetch(Capturellectainer container) => CanFetch(container.GetComponent<DequeStorable>());
 		private bool CanFetch(DequeStorable card) => CanFetch(targets[card]);
 		private bool CanFetch(CardTarget target) => diajector.deque.definition.CanFetch(providedTargets, target);
 		

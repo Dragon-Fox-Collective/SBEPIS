@@ -6,10 +6,10 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 namespace SBEPIS.Capturllection
 {
 	[RequireComponent(typeof(Grabber))]
-	public class Capturllector : MonoBehaviour
+	public class Capturellector : MonoBehaviour
 	{
 		public DequeOwner dequeOwner;
-		public Capturllectainer cardPrefab;
+		public Capturellectainer cardPrefab;
 
 		private Grabber grabber;
 
@@ -23,7 +23,7 @@ namespace SBEPIS.Capturllection
 			if (!isActiveAndEnabled || !context.performed || !grabber.heldGrabbable)
 				return;
 
-			Capturllectainer card = grabber.heldGrabbable.GetComponent<Capturllectainer>();
+			Capturellectainer card = grabber.heldGrabbable.GetComponent<Capturellectainer>();
 			if (card && card.capturedItem)
 				RetrieveAndGrabItem(card);
 			else
@@ -38,14 +38,20 @@ namespace SBEPIS.Capturllection
 				return;
 
 			grabber.Drop();
-			Capturllectainer card = Instantiate(cardPrefab.gameObject).GetComponent<Capturllectainer>();
+			Capturellectainer card = Instantiate(cardPrefab);
 			card.GetComponent<ItemBase>().BecomeItem();
 			ResetCardTransform(card);
 			card.Capture(item);
-			grabber.Grab(card.GetComponent<Grabbable>());
+
+			Grabbable cardGrabbable = card.GetComponent<Grabbable>();
+			if (cardGrabbable)
+				grabber.Grab(cardGrabbable);
+			DequeStorable dequeStorable = card.GetComponent<DequeStorable>();
+			if (dequeStorable)
+				dequeOwner.diajector.captureLayout.AddPermanentTarget(dequeStorable);
 		}
 
-		public void RetrieveAndGrabItem(Capturllectainer card)
+		public void RetrieveAndGrabItem(Capturellectainer card)
 		{
 			if (!card.canRetrieve)
 				return;
@@ -57,7 +63,7 @@ namespace SBEPIS.Capturllection
 			grabber.Grab(grabbable);
 		}
 
-		private void ResetCardTransform(Capturllectainer card)
+		private void ResetCardTransform(Capturellectainer card)
 		{
 			card.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation * Quaternion.Euler(0, 180, 0));
 		}
