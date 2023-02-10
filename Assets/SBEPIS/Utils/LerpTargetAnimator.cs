@@ -48,6 +48,11 @@ namespace SBEPIS.Utils
 			End();
 		}
 
+		public void SetPausedAt(LerpTarget target)
+		{
+			pausedAtTarget = target;
+		}
+
 		private void End()
 		{
 			transform.SetPositionAndRotation(currentTarget.transform.position, currentTarget.transform.rotation);
