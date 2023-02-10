@@ -51,7 +51,6 @@ namespace SBEPIS.Capturllection
 		private void Awake()
 		{
 			captureLayout = GetComponentInChildren<DequeCaptureLayout>(includeInactive:true);
-			print($"Capture layout {captureLayout}");
 		}
 
 		public void StartAssembly(Vector3 position, Quaternion rotation) => StartAssembly(position, rotation, mainPage);

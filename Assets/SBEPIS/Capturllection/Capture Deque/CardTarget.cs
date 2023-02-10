@@ -1,12 +1,13 @@
 using System;
 using SBEPIS.Physics;
+using SBEPIS.UI;
 using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
-	[RequireComponent(typeof(LerpTarget))]
+	[RequireComponent(typeof(LerpTarget)), RequireComponent(typeof(ElectricArc))]
 	public class CardTarget : MonoBehaviour
 	{
 		public string label;
@@ -16,16 +17,27 @@ namespace SBEPIS.Capturllection
 		public UnityEvent onGrab = new();
 		public UnityEvent onDrop = new();
 
-		public DequeStorable card { get; set; }
+		private DequeStorable _card;
+		public DequeStorable card
+		{
+			get => _card;
+			set
+			{
+				_card = value;
+				electricArc.otherPoint = _card.transform;
+			}
+		}
 		public bool isTemporary { get; set; }
 		public JointTargetter targetter { get; set; }
 		public LerpTarget lerpTarget { get; private set; }
 		public DequePage page { get; private set; }
+		private ElectricArc electricArc;
 
 		public void Awake()
 		{
 			lerpTarget = GetComponent<LerpTarget>();
 			page = GetComponentInParent<DequePage>();
+			electricArc = GetComponent<ElectricArc>();
 		}
 
 		public void DropTargettingCard()
@@ -36,17 +48,11 @@ namespace SBEPIS.Capturllection
 
 		public void CreateCardJoint(LerpTargetAnimator animator)
 		{
-			if (animator.gameObject != card.gameObject)
-				return;
-			
 			page.CreateCardJoint(this);
 		}
 
 		public void DestroyCardJoint(LerpTargetAnimator animator)
 		{
-			if (animator.gameObject != card.gameObject)
-				return;
-			
 			page.DestroyCardJoint(this);
 		}
 	}

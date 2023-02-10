@@ -21,6 +21,10 @@ namespace SBEPIS.Capturllection
 		private void Awake()
 		{
 			diajector = GetComponentInParent<Diajector>();
+		}
+
+		private void Start()
+		{
 			CreateCards();
 		}
 
@@ -40,12 +44,6 @@ namespace SBEPIS.Capturllection
 
 				Capturllectable capturllectable = card.GetComponent<Capturllectable>();
 				capturllectable.canCapturllect = false;
-
-				Grabbable grabbable = card.grabbable;
-				grabbable.onGrab.AddListener((grabber, grabbable) => target.onGrab.Invoke());
-				grabbable.onDrop.AddListener((grabber, grabbable) => target.onDrop.Invoke());
-
-				target.onCardCreated.Invoke(card);
 			}
 		}
 
@@ -55,6 +53,8 @@ namespace SBEPIS.Capturllection
 
 			card.grabbable.onGrab.AddListener(DestroyCardJoint);
 			card.grabbable.onDrop.AddListener(CreateCardJoint);
+			card.grabbable.onGrab.AddListener(InvokeCardTargetOnGrab);
+			card.grabbable.onDrop.AddListener(InvokeCardTargetOnDrop);
 
 			LerpTargetAnimator animator = card.gameObject.AddComponent<LerpTargetAnimator>();
 			animator.curve = diajector.curve;
@@ -63,6 +63,8 @@ namespace SBEPIS.Capturllection
 			cardTargets.Add(card, target);
 			
 			diajector.deque.definition.UpdateCardTexture(card);
+			
+			target.onCardCreated.Invoke(card);
 
 			return animator;
 		}
@@ -73,22 +75,22 @@ namespace SBEPIS.Capturllection
 
 			card.grabbable.onGrab.RemoveListener(DestroyCardJoint);
 			card.grabbable.onDrop.RemoveListener(CreateCardJoint);
+			card.grabbable.onGrab.RemoveListener(InvokeCardTargetOnGrab);
+			card.grabbable.onDrop.RemoveListener(InvokeCardTargetOnDrop);
 
 			LerpTargetAnimator anim = card.GetComponent<LerpTargetAnimator>();
 			Destroy(anim);
+			
+			if (cardTargets[card].targetter)
+				DestroyCardJoint(card);
 
 			animators.Remove(anim);
 			cardTargets.Remove(card);
 		}
 
-		private void CreateCardJoint(Grabber grabber, Grabbable grabbable)
-		{
-			DequeStorable card = grabbable.GetComponent<DequeStorable>();
-			CreateCardJoint(card, cardTargets[card], diajector.staticRigidbody, diajector.cardStrength);
-		}
-
+		private void CreateCardJoint(Grabber grabber, Grabbable grabbable) => CreateCardJoint(grabbable.GetComponent<DequeStorable>());
+		private void CreateCardJoint(DequeStorable target) => CreateCardJoint(cardTargets[target]);
 		public void CreateCardJoint(CardTarget target) => CreateCardJoint(target.card, target, diajector.staticRigidbody, diajector.cardStrength);
-
 		private static void CreateCardJoint(DequeStorable card, CardTarget target, Rigidbody staticRigidbody, StrengthSettings cardStrength)
 		{
 			JointTargetter targetter = staticRigidbody.gameObject.AddComponent<JointTargetter>();
@@ -99,14 +101,22 @@ namespace SBEPIS.Capturllection
 		}
 
 		private void DestroyCardJoint(Grabber grabber, Grabbable grabbable) => DestroyCardJoint(grabbable.GetComponent<DequeStorable>());
-
-		public void DestroyCardJoint(CardTarget target) => DestroyCardJoint(target.card);
-		
-		private void DestroyCardJoint(DequeStorable card)
+		private void DestroyCardJoint(DequeStorable card) => DestroyCardJoint(cardTargets[card]);
+		public void DestroyCardJoint(CardTarget target)
 		{
-			JointTargetter targetter = cardTargets[card].targetter;
-			cardTargets[card].targetter = null;
+			JointTargetter targetter = target.targetter;
+			target.targetter = null;
 			Destroy(targetter);
+		}
+
+		private void InvokeCardTargetOnGrab(Grabber grabber, Grabbable grabbable)
+		{
+			cardTargets[grabbable.GetComponent<DequeStorable>()].onGrab.Invoke();
+		}
+		
+		private void InvokeCardTargetOnDrop(Grabber grabber, Grabbable grabbable)
+		{
+			cardTargets[grabbable.GetComponent<DequeStorable>()].onDrop.Invoke();
 		}
 
 		public bool HasAnimator(LerpTargetAnimator animator) => animators.ContainsKey(animator);
@@ -126,6 +136,9 @@ namespace SBEPIS.Capturllection
 
 		private IEnumerator SpawnCards()
 		{
+			if (animators.Count == 0)
+				yield return 0;
+			
 			foreach ((LerpTargetAnimator animator, CardTarget target) in animators)
 			{
 				target.onPrepareCard.Invoke();

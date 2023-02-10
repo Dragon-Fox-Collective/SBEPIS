@@ -67,7 +67,7 @@ namespace SBEPIS.Capturllection
 			CardTarget target = targets[card];
 			targets.Remove(card);
 			providedTargets.Remove(target);
-			Destroy(target);
+			Destroy(target.gameObject);
 		}
 
 		public CardTarget AddTemporaryTarget(DequeStorable card)
@@ -115,6 +115,11 @@ namespace SBEPIS.Capturllection
 			diajector.deque.lowerTarget.onMoveFrom.Invoke(animator);
 			if (!card.grabbable.isBeingHeld)
 				animator.TeleportTo(target.lerpTarget);
+			else
+			{
+				animator.SetPausedAt(target.lerpTarget);
+				target.onGrab.Invoke();
+			}
 		}
 
 		private void RemoveCard(Capturellectainer container, Capturllectable item)
