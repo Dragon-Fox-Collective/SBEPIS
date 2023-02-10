@@ -371,6 +371,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onMoveFromTravelUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveToTravelUpdate:
+    m_PersistentCalls:
+      m_Calls: []
   onMoveTo:
     m_PersistentCalls:
       m_Calls:
@@ -2316,7 +2322,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/Capturllect[/Keyboard/c]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3809690549557016831}
+      - m_Target: {fileID: 644252844828260369}
         m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeOwner, SBEPIS.Capturllection
         m_MethodName: OnToggleDeque
         m_Mode: 0
@@ -2869,6 +2875,9 @@ GameObject:
   - component: {fileID: 8504006784513637809}
   - component: {fileID: 343684413715036165}
   - component: {fileID: 1614780430120271008}
+  - component: {fileID: 2069586595830321789}
+  - component: {fileID: 6234797776867132548}
+  - component: {fileID: 644252844828260369}
   m_Layer: 8
   m_Name: Deque Attach Target
   m_TagString: Untagged
@@ -3030,7 +3039,97 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 391b0487fb54ddf46b323e459b6dabb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dequeOwner: {fileID: 3809690549557016831}
+  dequeOwner: {fileID: 644252844828260369}
+--- !u!114 &2069586595830321789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159469505427324889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ace458ca0e0b6d43a89f69a86cf528c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onMoveFrom:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveFromTravelUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveToTravelUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveTo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6234797776867132548}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.LerpTargetDequeTargetter,
+          SBEPIS.Capturllection
+        m_MethodName: Couple
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6234797776867132548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159469505427324889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ab4a9070c9b4c46872cdcc46a4eaaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  socket: {fileID: 343684413715036165}
+--- !u!114 &644252844828260369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159469505427324889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f4ceabfeb07a740830c3074cf463fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDeque: {fileID: 0}
+  diajector: {fileID: 2162956669282852240}
+  tossTarget: {fileID: 1997131638894466065}
+  tossHeight: 0.1
+  retrievalAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.3
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6376568278165176233
 GameObject:
   m_ObjectHideFlags: 0
@@ -3233,7 +3332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9252a1ce5bec80d479d06804db114d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dequeOwner: {fileID: 3809690549557016831}
+  dequeOwner: {fileID: 644252844828260369}
   cardPrefab: {fileID: 8180044113546759222, guid: e8226037b0905f24f9753127b25ced23, type: 3}
 --- !u!1 &6376568278921566390
 GameObject:
@@ -3721,7 +3820,6 @@ GameObject:
   - component: {fileID: 218406820163240569}
   - component: {fileID: 9042183274841322284}
   - component: {fileID: 4704795409870569521}
-  - component: {fileID: 3809690549557016831}
   m_Layer: 8
   m_Name: Player Body
   m_TagString: Untagged
@@ -3931,23 +4029,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 50
---- !u!114 &3809690549557016831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6376568280094680652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35f4ceabfeb07a740830c3074cf463fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialDeque: {fileID: 0}
-  diajector: {fileID: 2162956669282852240}
-  tossTarget: {fileID: 1997131638894466065}
-  tossHeight: 0.5
-  socket: {fileID: 343684413715036165}
 --- !u!1 &6433262757480330092
 GameObject:
   m_ObjectHideFlags: 0
@@ -4399,7 +4480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9252a1ce5bec80d479d06804db114d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dequeOwner: {fileID: 3809690549557016831}
+  dequeOwner: {fileID: 644252844828260369}
   cardPrefab: {fileID: 8180044113546759222, guid: e8226037b0905f24f9753127b25ced23, type: 3}
 --- !u!1 &7927973737090238991
 GameObject:
@@ -4447,6 +4528,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onMoveFrom:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveFromTravelUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveToTravelUpdate:
     m_PersistentCalls:
       m_Calls: []
   onMoveTo:
