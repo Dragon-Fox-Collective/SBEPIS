@@ -1,9 +1,12 @@
+using System;
 using SBEPIS.Controller;
+using SBEPIS.Utils;
 using UnityEngine;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Capturllection
 {
+	[RequireComponent(typeof(CouplingSocket), typeof(LerpTarget))]
 	public class DequeOwner : MonoBehaviour
 	{
 		[SerializeField]
@@ -13,8 +16,13 @@ namespace SBEPIS.Capturllection
 		public Transform tossTarget;
 		[Tooltip("Height above the hand the deque should toss through, must be non-negative")]
 		public float tossHeight;
+		
+		public AnimationCurve retrievalAnimationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-		public CouplingSocket socket;
+		public CouplingSocket socket { get; private set; }
+		public LerpTarget lerpTarget { get; private set; }
+		
+		private LerpTargetAnimator animator;
 		
 		private bool isDequeDeployed => !socket.isCoupled;
 
@@ -43,6 +51,12 @@ namespace SBEPIS.Capturllection
 			}
 		}
 
+		private void Awake()
+		{
+			socket = GetComponent<CouplingSocket>();
+			lerpTarget = GetComponent<LerpTarget>();
+		}
+
 		private void Start()
 		{
 			socket.onDecouple.AddListener(CheckForPriming);
@@ -59,6 +73,8 @@ namespace SBEPIS.Capturllection
 			deque.grabbable.onDrop.RemoveListener(CheckForPriming);
 			deque.grabbable.onGrab.RemoveListener(CancelPriming);
 			deque.grabbable.onUse.RemoveListener(CloseDiajector);
+			
+			Destroy(animator);
 
 			if (!isDequeDeployed)
 			{
@@ -75,8 +91,10 @@ namespace SBEPIS.Capturllection
 			deque.grabbable.onGrab.AddListener(CancelPriming);
 			deque.grabbable.onUse.AddListener(CloseDiajector);
 			
+			animator = deque.gameObject.AddComponent<LerpTargetAnimator>();
+			animator.curve = retrievalAnimationCurve;
 			if (!diajector.isOpen)
-				socket.Couple(deque.plug);
+				animator.TargetTo(lerpTarget);
 
 			diajector.deque = deque;
 			if (diajector.isOpen)
@@ -125,7 +143,7 @@ namespace SBEPIS.Capturllection
 
 		private void RetrieveDeque()
 		{
-			socket.Couple(deque.plug);
+			animator.TargetTo(lerpTarget);
 		}
 
 		private void StartDiajectorAssembly()
