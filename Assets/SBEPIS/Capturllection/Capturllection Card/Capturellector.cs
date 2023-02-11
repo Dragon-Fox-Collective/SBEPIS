@@ -32,23 +32,32 @@ namespace SBEPIS.Capturllection
 
 		public void CaptureAndGrabCard()
 		{
-			Grabbable grabbable = grabber.heldGrabbable;
-			Capturllectable item = grabbable.GetComponent<Capturllectable>();
+			Grabbable itemGrabbable = grabber.heldGrabbable;
+			Capturllectable item = itemGrabbable.GetComponent<Capturllectable>();
 			if (!item || !item.canCapturllect)
 				return;
 
 			grabber.Drop();
-			Capturellectainer card = Instantiate(cardPrefab);
-			card.GetComponent<ItemBase>().BecomeItem();
-			ResetCardTransform(card);
-			card.Capture(item);
+			Capturellectainer container = Instantiate(cardPrefab);
+			container.GetComponent<ItemBase>().BecomeItem();
+			ResetCardTransform(container);
+			container.Capture(item);
 
-			Grabbable cardGrabbable = card.GetComponent<Grabbable>();
+			Grabbable cardGrabbable = container.GetComponent<Grabbable>();
 			if (cardGrabbable)
 				grabber.Grab(cardGrabbable);
-			DequeStorable dequeStorable = card.GetComponent<DequeStorable>();
-			if (dequeStorable)
-				dequeOwner.diajector.captureLayout.AddPermanentTarget(dequeStorable);
+			
+			DequeStorable card = container.GetComponent<DequeStorable>();
+			if (card)
+			{
+				dequeOwner.storage.StoreCard(card);
+				if (dequeOwner.diajector.captureLayout && dequeOwner.diajector.captureLayout.isActiveAndEnabled)
+					dequeOwner.diajector.captureLayout.AddPermanentTarget(card);
+				else if (cardGrabbable && cardGrabbable.isBeingHeld)
+					dequeOwner.dequeBox.AddHeldTemporaryTarget(card, cardGrabbable);
+				else
+					dequeOwner.dequeBox.AddTemporaryTarget(card);
+			}
 		}
 
 		public void RetrieveAndGrabItem(Capturellectainer card)
@@ -58,7 +67,7 @@ namespace SBEPIS.Capturllection
 
 			grabber.Drop();
 			ResetCardTransform(card);
-			Grabbable grabbable = card.Retrieve().GetComponent<Grabbable>();
+			Grabbable grabbable = card.Fetch().GetComponent<Grabbable>();
 			Destroy(card.gameObject);
 			grabber.Grab(grabbable);
 		}

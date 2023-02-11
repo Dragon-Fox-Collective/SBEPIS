@@ -7,6 +7,6 @@ namespace SBEPIS.Predicates
 	{
 		public DequeOwner dequeOwner;
 		
-		public override bool IsTrue(GameObject obj) => obj == dequeOwner.deque.gameObject;
+		public override bool IsTrue(GameObject obj) => obj == dequeOwner.dequeBox.gameObject;
 	}
 }

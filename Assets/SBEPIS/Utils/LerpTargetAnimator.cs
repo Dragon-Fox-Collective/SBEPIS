@@ -1,4 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Utils
 {
@@ -15,6 +19,8 @@ namespace SBEPIS.Utils
 		private LerpTarget prevTarget;
 		private Vector3 startPosition;
 		private Quaternion startRotation;
+
+		private Dictionary<LerpTarget, List<UnityAction<LerpTargetAnimator>>> onMoveToActions = new();
 
 		private void Awake()
 		{
@@ -57,10 +63,13 @@ namespace SBEPIS.Utils
 		{
 			transform.SetPositionAndRotation(currentTarget.transform.position, currentTarget.transform.rotation);
 			rigidbody.Enable();
-			pausedAtTarget = currentTarget;
+			LerpTarget oldTarget = pausedAtTarget = currentTarget;
 			currentTarget = null;
 			
-			pausedAtTarget.onMoveTo.Invoke(this);
+			oldTarget.onMoveTo.Invoke(this);
+			if (onMoveToActions.ContainsKey(oldTarget))
+				foreach (UnityAction<LerpTargetAnimator> action in onMoveToActions[oldTarget].ToList())
+					action.Invoke(this);
 		}
 		
 		private void Update()
@@ -84,6 +93,22 @@ namespace SBEPIS.Utils
 			{
 				End();
 			}
+		}
+		
+		public void AddListenerOnMoveTo(LerpTarget target, UnityAction<LerpTargetAnimator> func)
+		{
+			if (!onMoveToActions.ContainsKey(target))
+				onMoveToActions[target] = new List<UnityAction<LerpTargetAnimator>>();
+			
+			onMoveToActions[target].Add(func);
+		}
+
+		public void RemoveListenerOnMoveTo(LerpTarget target, UnityAction<LerpTargetAnimator> func)
+		{
+			if (!onMoveToActions.ContainsKey(target))
+				return;
+
+			onMoveToActions[target].Remove(func);
 		}
 	}
 }

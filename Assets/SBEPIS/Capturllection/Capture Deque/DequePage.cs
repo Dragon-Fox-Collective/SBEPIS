@@ -37,7 +37,7 @@ namespace SBEPIS.Capturllection
 				target.card = card;
 				
 				LerpTargetAnimator animator = AddCard(card, target);
-				animator.TeleportTo(diajector.deque.lowerTarget);
+				animator.TeleportTo(diajector.dequeBox.lowerTarget);
 
 				Capturellectainer container = card.GetComponent<Capturellectainer>();
 				container.isRetrievingAllowed = false;
@@ -62,7 +62,7 @@ namespace SBEPIS.Capturllection
 			animators.Add(animator, target);
 			cardTargets.Add(card, target);
 			
-			diajector.deque.definition.UpdateCardTexture(card);
+			diajector.dequeBox.definition.UpdateCardTexture(card);
 			
 			target.onCardCreated.Invoke(card);
 
@@ -142,7 +142,7 @@ namespace SBEPIS.Capturllection
 			foreach ((LerpTargetAnimator animator, CardTarget target) in animators)
 			{
 				target.onPrepareCard.Invoke();
-				animator.TargetTo(diajector.deque.upperTarget);
+				animator.TargetTo(diajector.dequeBox.upperTarget);
 				yield return new WaitForSeconds(diajector.cardDelay);
 			}
 		}

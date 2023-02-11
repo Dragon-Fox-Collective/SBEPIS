@@ -12,33 +12,33 @@ namespace SBEPIS.Capturllection.Deques
 		public float speed = 20;
 
 		private float time;
-		private CardTarget topCard;
+		private DequeStorable topCard;
 
-		public override void TickDeque(List<CardTarget> targets, float delta)
+		public override void Tick(List<DequeStorable> cards, float delta)
 		{
 			time += delta;
-			UpdateTopCard(targets);
+			UpdateTopCard(cards);
 		}
 
-		private void UpdateTopCard(List<CardTarget> targets)
+		private void UpdateTopCard(List<DequeStorable> cards)
 		{
 			float cardAngle = time * speed;
-			float deltaAngle = 360f / targets.Count;
-			foreach (CardTarget target in targets)
+			float deltaAngle = 360f / cards.Count;
+			foreach (DequeStorable card in cards)
 			{
 				float modAngle = cardAngle.ModAround(360);
 				if (Mathf.Abs(modAngle) < deltaAngle / 2)
-					topCard = target;
+					topCard = card;
 				
 				cardAngle += deltaAngle;
 			}
 		}
 
-		public override void LayoutTargets(List<CardTarget> targets)
+		public override void LayoutTargets(Dictionary<DequeStorable, CardTarget> targets)
 		{
 			float cardAngle = time * speed;
 			float deltaAngle = 360f / targets.Count;
-			foreach (CardTarget target in targets)
+			foreach ((DequeStorable card, CardTarget target) in targets)
 			{
 				target.transform.localPosition = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * radius;
 				target.transform.localRotation = Quaternion.Euler(0, 0, cardAngle) * cardRotation;
@@ -47,8 +47,8 @@ namespace SBEPIS.Capturllection.Deques
 			}
 		}
 
-		public override bool CanRetrieve(List<CardTarget> targets, CardTarget card) => card == topCard;
+		public override bool CanFetch(List<DequeStorable> cards, DequeStorable card) => card == topCard;
 		
-		public override int GetIndexToInsertAt(List<CardTarget> targets, CardTarget card) => targets.Count;
+		public override int GetIndexToInsertInto(List<DequeStorable> cards, DequeStorable card) => cards.Count;
 	}
 }
