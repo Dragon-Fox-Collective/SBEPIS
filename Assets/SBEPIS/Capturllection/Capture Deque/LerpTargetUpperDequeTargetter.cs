@@ -5,7 +5,7 @@ namespace SBEPIS.Capturllection
 {
 	public class LerpTargetUpperDequeTargetter : MonoBehaviour
 	{
-		public CaptureDeque deque;
+		public DequeBox deque;
 
 		public void TargetDequeOrDiajector(LerpTargetAnimator animator)
 		{

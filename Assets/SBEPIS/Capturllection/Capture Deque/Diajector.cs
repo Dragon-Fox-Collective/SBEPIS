@@ -21,23 +21,23 @@ namespace SBEPIS.Capturllection
 
 		public IEnumerable<Func<LerpTarget>> targetProviders => new Func<LerpTarget>[]
 		{
-			() => deque.lowerTarget,
-			() => deque.upperTarget,
+			() => dequeBox.lowerTarget,
+			() => dequeBox.upperTarget,
 			() => upperTarget,
 		};
 
-		public bool isBound => deque;
+		public bool isBound => dequeBox;
 
-		private CaptureDeque _deque;
-		public CaptureDeque deque
+		private DequeBox _dequeBox;
+		public DequeBox dequeBox
 		{
-			get => _deque;
+			get => _dequeBox;
 			set
 			{
-				_deque = value;
+				_dequeBox = value;
 
-				if (_deque)
-					GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Do(cardTarget => _deque.definition.UpdateCardTexture(cardTarget.card));
+				if (_dequeBox)
+					GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Do(cardTarget => _dequeBox.definition.UpdateCardTexture(cardTarget.card));
 				else
 					GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Do(cardTarget => cardTarget.card.split.ResetTexture());
 			}

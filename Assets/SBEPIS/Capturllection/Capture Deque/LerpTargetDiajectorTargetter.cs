@@ -12,7 +12,7 @@ namespace SBEPIS.Capturllection
 			if (diajector.isOpen && diajector.currentPage.HasAnimator(animator))
 				animator.TargetTo(diajector.currentPage.GetLerpTargetForAnimator(animator));
 			else
-				animator.TargetTo(diajector.deque.upperTarget);
+				animator.TargetTo(diajector.dequeBox.upperTarget);
 		}
 	}
 }

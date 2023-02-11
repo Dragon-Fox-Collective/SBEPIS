@@ -40,7 +40,7 @@ namespace SBEPIS.Capturllection
 			onCapture.Invoke(this, item);
 		}
 
-		public Capturllectable Retrieve()
+		public Capturllectable Fetch()
 		{
 			if (!capturedItem)
 				return null;

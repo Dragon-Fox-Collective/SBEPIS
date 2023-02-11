@@ -15,16 +15,16 @@ namespace SBEPIS.Capturllection.Deques
 
 		private float time;
 
-		public override void TickDeque(List<CardTarget> targets, float delta)
+		public override void Tick(List<DequeStorable> cards, float delta)
 		{
 			time += delta;
 		}
 
-		public override void LayoutTargets(List<CardTarget> targets)
+		public override void LayoutTargets(Dictionary<DequeStorable, CardTarget> targets)
 		{
 			int i = 0;
 			Vector3 right = cardDistance * (targets.Count - 1) / 2 * Vector3.left;
-			foreach (CardTarget target in targets)
+			foreach ((DequeStorable card, CardTarget target) in targets)
 			{
 				Vector3 up = Mathf.Sin(time + i * wobbleTimeOffset) * wobbleHeight * Vector3.up;
 				target.transform.localPosition = right + up;
@@ -34,8 +34,8 @@ namespace SBEPIS.Capturllection.Deques
 			}
 		}
 
-		public override bool CanRetrieve(List<CardTarget> targets, CardTarget card) => true;
+		public override bool CanFetch(List<DequeStorable> cards, DequeStorable card) => true;
 		
-		public override int GetIndexToInsertAt(List<CardTarget> targets, CardTarget card) => targets.Count;
+		public override int GetIndexToInsertInto(List<DequeStorable> cards, DequeStorable card) => cards.Count;
 	}
 }

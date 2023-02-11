@@ -9,29 +9,29 @@ namespace SBEPIS.Capturllection
 	public class DequeLayer
 	{
 		public List<DequeType> deques;
-
+		
 		private List<Texture2D> cardTextures;
-
-		public void TickDeque(List<CardTarget> targets, float delta)
+		
+		public void Tick(List<DequeStorable> cards, float delta)
 		{
-			deques.Do(deque => deque.TickDeque(targets, delta));
+			deques.Do(deque => deque.Tick(cards, delta));
 		}
-
-		public void LayoutTargets(List<CardTarget> targets)
+		
+		public void LayoutTargets(Dictionary<DequeStorable, CardTarget> targets)
 		{
 			deques[0].LayoutTargets(targets);
 		}
 		
-		public bool CanFetch(List<CardTarget> targets, CardTarget card)
+		public bool CanFetch(List<DequeStorable> cards, DequeStorable card)
 		{
-			return deques.AsEnumerable().Reverse().Any(deque => deque.CanRetrieve(targets, card));
+			return deques.AsEnumerable().Reverse().Any(deque => deque.CanFetch(cards, card));
 		}
 		
-		public int GetIndexToInsertAt(List<CardTarget> targets, CardTarget card)
+		public int GetIndexToInsertInto(List<DequeStorable> cards, DequeStorable card)
 		{
-			return deques[^1].GetIndexToInsertAt(targets, card);
+			return deques[^1].GetIndexToInsertInto(cards, card);
 		}
-
+		
 		public void UpdateCardTexture(DequeStorable card)
 		{
 			cardTextures ??= deques.Select(deque => deque.cardTexture).ToList();
