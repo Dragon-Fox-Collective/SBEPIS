@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using SBEPIS.Controller;
 using SBEPIS.Physics;
+using SBEPIS.UI;
 using SBEPIS.Utils;
 
 namespace SBEPIS.Capturllection
@@ -16,6 +18,8 @@ namespace SBEPIS.Capturllection
 		public DequeLayer definition;
 		
 		public DequeOwner owner { get; set; }
+
+		public ElectricArc electricArcPrefab;
 		
 		public bool isDeployed => !plug.isCoupled;
 		
@@ -25,6 +29,8 @@ namespace SBEPIS.Capturllection
 		public CollisionTrigger collisionTrigger { get; private set; }
 		public CouplingPlug plug { get; private set; }
 		
+		private Dictionary<DequeStorable, ElectricArc> electricArcs = new();
+
 		private void Awake()
 		{
 			grabbable = GetComponent<Grabbable>();
@@ -52,16 +58,24 @@ namespace SBEPIS.Capturllection
 		public void AddHeldTemporaryTarget(DequeStorable card, Grabbable cardGrabbable)
 		{
 			definition.UpdateCardTexture(card);
-			cardGrabbable.onDrop.AddListener(AddTemporaryTarget);
-			// Add arc
+			cardGrabbable.onDrop.AddListener(RemoveHeldTemporaryTarget);
+
+			ElectricArc newElectricArc = Instantiate(electricArcPrefab, transform);
+			newElectricArc.otherPoint = card.transform;
+			electricArcs.Add(card, newElectricArc);
 		}
 		
-		private void AddTemporaryTarget(Grabber grabber, Grabbable grabbable)
+		private void RemoveHeldTemporaryTarget(Grabber grabber, Grabbable grabbable)
 		{
-			grabbable.onDrop.RemoveListener(AddTemporaryTarget);
-			AddTemporaryTarget(grabbable.GetComponent<DequeStorable>());
-			// Remove arc
+			DequeStorable card = grabbable.GetComponent<DequeStorable>();
+			grabbable.onDrop.RemoveListener(RemoveHeldTemporaryTarget);
+			
+			Destroy(electricArcs[card].gameObject);
+			electricArcs.Remove(card);
+			
+			AddTemporaryTarget(card);
 		}
+		
 		public void AddTemporaryTarget(DequeStorable card)
 		{
 			definition.UpdateCardTexture(card);

@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace SBEPIS.UI
@@ -27,10 +24,14 @@ namespace SBEPIS.UI
 		private void Awake()
 		{
 			line = gameObject.AddComponent<LineRenderer>();
+			line.enabled = enabled;
+		}
+
+		private void Start()
+		{
 			line.material = arcMaterial;
 			points = new Vector3[numPoints];
 			line.positionCount = numPoints;
-			line.enabled = enabled;
 		}
 		
 		private void Update()

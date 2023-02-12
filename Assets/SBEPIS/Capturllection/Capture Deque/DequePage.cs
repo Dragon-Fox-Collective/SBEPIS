@@ -3,6 +3,7 @@ using SBEPIS.Controller;
 using SBEPIS.Physics;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
@@ -139,7 +140,7 @@ namespace SBEPIS.Capturllection
 			if (animators.Count == 0)
 				yield return 0;
 			
-			foreach ((LerpTargetAnimator animator, CardTarget target) in animators)
+			foreach ((LerpTargetAnimator animator, CardTarget target) in animators.ToList())
 			{
 				target.onPrepareCard.Invoke();
 				animator.TargetTo(diajector.dequeBox.upperTarget);
