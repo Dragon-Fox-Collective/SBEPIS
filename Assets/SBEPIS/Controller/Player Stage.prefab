@@ -1436,6 +1436,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8fb9d5b878ca534bb3ebb13730f545e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onPreparePage:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3795778032702601619
 GameObject:
   m_ObjectHideFlags: 0
@@ -2713,6 +2716,7 @@ GameObject:
   - component: {fileID: 2069586595830321789}
   - component: {fileID: 6234797776867132548}
   - component: {fileID: 644252844828260369}
+  - component: {fileID: 4143261443762292299}
   m_Layer: 8
   m_Name: Deque Attach Target
   m_TagString: Untagged
@@ -2965,6 +2969,18 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4143261443762292299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159469505427324889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b341dd3160f51c4690f2ba6f113fd20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6376568278165176233
 GameObject:
   m_ObjectHideFlags: 0
@@ -4135,6 +4151,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8fb9d5b878ca534bb3ebb13730f545e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onPreparePage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8639406400778484178}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeCaptureLayout, SBEPIS.Capturllection
+        m_MethodName: SyncCards
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7681668139728260876
 GameObject:
   m_ObjectHideFlags: 0

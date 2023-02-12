@@ -58,22 +58,25 @@ namespace SBEPIS.Capturllection
 		public void AddHeldTemporaryTarget(DequeStorable card, Grabbable cardGrabbable)
 		{
 			definition.UpdateCardTexture(card);
-			cardGrabbable.onDrop.AddListener(RemoveHeldTemporaryTarget);
+			cardGrabbable.onDrop.AddListener(ReleaseHeldTemporaryTarget);
 
 			ElectricArc newElectricArc = Instantiate(electricArcPrefab, transform);
 			newElectricArc.otherPoint = card.transform;
 			electricArcs.Add(card, newElectricArc);
 		}
 		
-		private void RemoveHeldTemporaryTarget(Grabber grabber, Grabbable grabbable)
+		private void ReleaseHeldTemporaryTarget(Grabber grabber, Grabbable grabbable)
 		{
 			DequeStorable card = grabbable.GetComponent<DequeStorable>();
-			grabbable.onDrop.RemoveListener(RemoveHeldTemporaryTarget);
-			
+			RemoveHeldTemporaryTarget(card, grabbable);
+			AddTemporaryTarget(card);
+		}
+		
+		public void RemoveHeldTemporaryTarget(DequeStorable card, Grabbable cardGrabbable)
+		{
+			cardGrabbable.onDrop.RemoveListener(ReleaseHeldTemporaryTarget);
 			Destroy(electricArcs[card].gameObject);
 			electricArcs.Remove(card);
-			
-			AddTemporaryTarget(card);
 		}
 		
 		public void AddTemporaryTarget(DequeStorable card)
