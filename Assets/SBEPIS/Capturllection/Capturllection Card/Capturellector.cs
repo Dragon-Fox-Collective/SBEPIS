@@ -52,7 +52,7 @@ namespace SBEPIS.Capturllection
 			{
 				dequeOwner.storage.StoreCard(card);
 				if (dequeOwner.diajector.captureLayout && dequeOwner.diajector.captureLayout.isActiveAndEnabled)
-					dequeOwner.diajector.captureLayout.AddPermanentTarget(card);
+					dequeOwner.diajector.captureLayout.AddPermanentTargetAtTable(card);
 				else if (cardGrabbable && cardGrabbable.isBeingHeld)
 					dequeOwner.dequeBox.AddHeldTemporaryTarget(card, cardGrabbable);
 				else

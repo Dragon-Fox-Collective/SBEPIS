@@ -12,9 +12,9 @@ namespace SBEPIS.Capturllection
 {
 	public class DequePage : MonoBehaviour
 	{
-		public Diajector diajector { get; private set; }
+		public UnityEvent onPreparePage = new();
 		
-		private UnityEvent onPreparePage = new();
+		public Diajector diajector { get; private set; }
 
 		private readonly Dictionary<LerpTargetAnimator, CardTarget> animators = new();
 		private readonly Dictionary<DequeStorable, CardTarget> cardTargets = new();
@@ -24,14 +24,9 @@ namespace SBEPIS.Capturllection
 			diajector = GetComponentInParent<Diajector>();
 		}
 
-		private void Start()
+		private void CreateCards(IEnumerable<CardTarget> targets)
 		{
-			CreateCards();
-		}
-
-		private void CreateCards()
-		{
-			foreach (CardTarget target in GetComponentsInChildren<CardTarget>())
+			foreach (CardTarget target in targets)
 			{
 				DequeStorable card = Instantiate(diajector.cardPrefab);
 				card.name += $" ({target.label})";
@@ -131,16 +126,15 @@ namespace SBEPIS.Capturllection
 		public void StartAssembly()
 		{
 			gameObject.SetActive(true);
+			if (animators.Count == 0)
+				CreateCards(GetComponentsInChildren<CardTarget>());
 			onPreparePage.Invoke();
 			diajector.coroutineOwner.StartCoroutine(SpawnCards());
 		}
 
 		private IEnumerator SpawnCards()
 		{
-			if (animators.Count == 0)
-				yield return 0;
-			
-			foreach ((LerpTargetAnimator animator, CardTarget target) in animators.ToList())
+			foreach ((LerpTargetAnimator animator, CardTarget target) in animators)
 			{
 				target.onPrepareCard.Invoke();
 				animator.TargetTo(diajector.dequeBox.upperTarget);

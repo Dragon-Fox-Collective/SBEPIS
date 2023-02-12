@@ -57,7 +57,7 @@ namespace SBEPIS.Capturllection
 			if (card.grabbable.isBeingHeld)
 				AddTemporaryTarget(card);
 			else
-				AddPermanentTarget(card);
+				AddPermanentTargetAtTable(card);
 		}
 		
 		private void OnTriggerExit(Collider other)
@@ -107,13 +107,31 @@ namespace SBEPIS.Capturllection
 			card.grabbable.onDrop.RemoveListener(MakeCardPermanent);
 			CardTarget target = targets[card];
 			target.isTemporary = false;
-			AddCard(card, target);
+			LerpTargetAnimator animator = AddCard(card, target);
+			animator.TeleportTo(target.lerpTarget);
 		}
 		
-		public CardTarget AddPermanentTarget(DequeStorable card)
+		public CardTarget AddPermanentTargetAtTable(DequeStorable card)
 		{
 			CardTarget target = AddCardTarget(card);
-			AddCard(card, target);
+			LerpTargetAnimator animator = AddCard(card, target);
+			if (!card.grabbable.isBeingHeld)
+			{
+				animator.TeleportTo(target.lerpTarget);
+			}
+			else
+			{
+				animator.SetPausedAt(target.lerpTarget);
+				target.onGrab.Invoke();
+			}
+			return target;
+		}
+		
+		public CardTarget AddPermanentTargetAtDeque(DequeStorable card)
+		{
+			CardTarget target = AddCardTarget(card);
+			LerpTargetAnimator animator = AddCard(card, target);
+			animator.TeleportTo(diajector.dequeBox.lowerTarget);
 			return target;
 		}
 
@@ -122,10 +140,10 @@ namespace SBEPIS.Capturllection
 			RemoveCard(card.GetComponent<Capturellectainer>(), card);
 		}
 		
-		private void AddCard(DequeStorable card, CardTarget target)
+		private LerpTargetAnimator AddCard(DequeStorable card, CardTarget target)
 		{
 			if (!diajector.isBound)
-				return;
+				return null;
 			
 			Capturellectainer container = card.GetComponent<Capturellectainer>();
 			if (container)
@@ -136,15 +154,8 @@ namespace SBEPIS.Capturllection
 			
 			LerpTargetAnimator animator = dequePage.AddCard(card, target);
 			diajector.dequeBox.lowerTarget.onMoveFrom.Invoke(animator);
-			if (!card.grabbable.isBeingHeld)
-			{
-				animator.TeleportTo(target.lerpTarget);
-			}
-			else
-			{
-				animator.SetPausedAt(target.lerpTarget);
-				target.onGrab.Invoke();
-			}
+
+			return animator;
 		}
 		
 		private void RemoveCard(Capturellectainer container, Capturllectable item) => RemoveCard(container, container.GetComponent<DequeStorable>());
@@ -159,19 +170,15 @@ namespace SBEPIS.Capturllection
 		
 		private bool CanFetch(Capturellectainer card) => CanFetch(card.GetComponent<DequeStorable>());
 		private bool CanFetch(DequeStorable card) => diajector.dequeBox.owner.storage.CanFetch(card);
-		
+
+		public void SyncCards() => SyncCards(diajector.dequeBox.owner.storage);
 		public void SyncCards(DequeStorage cards)
 		{
 			foreach ((DequeStorable card,  CardTarget target) in targets.Where(pair => !cards.Contains(pair.Key)).ToList())
 				RemovePermanentTarget(card);
 
 			foreach (DequeStorable card in cards.Where(card => !targets.ContainsKey(card)))
-				AddPermanentTarget(card);
-		}
-
-		private void OnEnable()
-		{
-			SyncCards(diajector.dequeBox.owner.storage);
+				AddPermanentTargetAtDeque(card);
 		}
 	}
 }
