@@ -59,9 +59,12 @@ namespace SBEPIS.Physics
 				positionDamper = 2 * strength.angularSpeed,
 				maximumForce = strength.angularMaxForce,
 			};
-			
-			connectedBody.velocity = Vector3.zero;
-			connectedBody.angularVelocity = Vector3.zero;
+
+			if (!connectedBody.isKinematic)
+			{
+				connectedBody.velocity = Vector3.zero;
+				connectedBody.angularVelocity = Vector3.zero;
+			}
 
 			prevTargetPosition = transform.InverseTransformPoint(target.position);
 			prevTargetRotation = target.rotation;
