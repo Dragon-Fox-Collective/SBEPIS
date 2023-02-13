@@ -1,4 +1,3 @@
-using System;
 using SBEPIS.Controller;
 using System.Collections.Generic;
 using System.Linq;
@@ -178,7 +177,13 @@ namespace SBEPIS.Capturllection
 				RemovePermanentTarget(card);
 
 			foreach (DequeStorable card in cards.Where(card => !targets.ContainsKey(card)))
-				AddPermanentTargetAtDeque(card);
+			{
+				diajector.dequeBox.CleanUpCard(card);
+				if (card.grabbable.isBeingHeld)
+					AddPermanentTargetAtTable(card);
+				else
+					AddPermanentTargetAtDeque(card);
+			}
 		}
 	}
 }
