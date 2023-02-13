@@ -30,6 +30,7 @@ namespace SBEPIS.Capturllection
 		public CouplingPlug plug { get; private set; }
 		
 		private Dictionary<DequeStorable, ElectricArc> electricArcs = new();
+		private Dictionary<DequeStorable, LerpTargetAnimator> animators = new();
 
 		private void Awake()
 		{
@@ -84,15 +85,26 @@ namespace SBEPIS.Capturllection
 			definition.UpdateCardTexture(card);
 			
 			LerpTargetAnimator animator = card.gameObject.AddComponent<LerpTargetAnimator>();
+			animators.Add(card, animator);
 			animator.curve = owner.diajector.curve;
 			animator.AddListenerOnMoveTo(lowerTarget, CleanUpTemporaryTarget);
 			animator.TargetTo(upperTarget);
 		}
-		
-		public void CleanUpTemporaryTarget(LerpTargetAnimator animator)
+
+		private void CleanUpTemporaryTarget(LerpTargetAnimator animator) => CleanUpTemporaryTarget(animator.GetComponent<DequeStorable>(), animator);
+		public void CleanUpTemporaryTarget(DequeStorable card, LerpTargetAnimator animator)
 		{
+			animators.Remove(card);
 			animator.RemoveListenerOnMoveTo(lowerTarget, CleanUpTemporaryTarget);
 			Destroy(animator);
+		}
+		
+		public void CleanUpCard(DequeStorable card)
+		{
+			if (electricArcs.ContainsKey(card))
+				RemoveHeldTemporaryTarget(card, card.GetComponent<Grabbable>());
+			else if (animators.ContainsKey(card))
+				CleanUpTemporaryTarget(card, card.GetComponent<LerpTargetAnimator>());
 		}
 	}
 }
