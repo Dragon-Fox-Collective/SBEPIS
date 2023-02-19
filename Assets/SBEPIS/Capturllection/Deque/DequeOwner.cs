@@ -79,7 +79,7 @@ namespace SBEPIS.Capturllection
 			
 			dequeBox.state.SetBool(DequeBox.IsBound, true);
 			dequeBox.state.SetBool(DequeBox.IsDiajectorOpen, diajector.isOpen);
-			dequeBox.state.SetBool(DequeBox.IsDeployed, true);
+			dequeBox.state.SetBool(DequeBox.IsDeployed, diajector.isOpen);
 			
 			diajector.dequeBox = dequeBox;
 		}
