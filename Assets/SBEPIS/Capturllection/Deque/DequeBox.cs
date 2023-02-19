@@ -18,19 +18,25 @@ namespace SBEPIS.Capturllection
 		public DequeLayer definition;
 		
 		public DequeOwner owner { get; set; }
-
-		public ElectricArc electricArcPrefab;
 		
-		public bool isDeployed => !plug.isCoupled;
+		public bool isDeployed => !state.GetBool(IsCoupled);
 		
 		public Grabbable grabbable { get; private set; }
 		public GravitySum gravitySum { get; private set; }
 		public SplitTextureSetup split { get; private set; }
 		public CollisionTrigger collisionTrigger { get; private set; }
 		public CouplingPlug plug { get; private set; }
+		public Animator state { get; private set; }
 		
 		private Dictionary<DequeStorable, ElectricArc> electricArcs = new();
 		private Dictionary<DequeStorable, LerpTargetAnimator> animators = new();
+		
+		public static readonly int IsGrabbed = Animator.StringToHash("Is Grabbed");
+		public static readonly int IsCoupled = Animator.StringToHash("Is Coupled");
+		public static readonly int IsBound = Animator.StringToHash("Is Bound");
+		public static readonly int Collide = Animator.StringToHash("On Collide");
+		public static readonly int Retrieve = Animator.StringToHash("On Retrieve");
+		public static readonly int Toss = Animator.StringToHash("On Toss");
 
 		private void Awake()
 		{
@@ -39,6 +45,7 @@ namespace SBEPIS.Capturllection
 			split = GetComponent<SplitTextureSetup>();
 			collisionTrigger = GetComponent<CollisionTrigger>();
 			plug = GetComponent<CouplingPlug>();
+			state = GetComponent<Animator>();
 		}
 		
 		private void Start()
@@ -61,7 +68,7 @@ namespace SBEPIS.Capturllection
 			definition.UpdateCardTexture(card);
 			cardGrabbable.onDrop.AddListener(ReleaseHeldTemporaryTarget);
 
-			ElectricArc newElectricArc = Instantiate(electricArcPrefab, transform);
+			ElectricArc newElectricArc = Instantiate(owner.diajector.electricArcPrefab, transform);
 			newElectricArc.otherPoint = card.transform;
 			electricArcs.Add(card, newElectricArc);
 		}
@@ -105,6 +112,11 @@ namespace SBEPIS.Capturllection
 				RemoveHeldTemporaryTarget(card, card.GetComponent<Grabbable>());
 			else if (animators.ContainsKey(card))
 				CleanUpTemporaryTarget(card, card.GetComponent<LerpTargetAnimator>());
+		}
+
+		public void SetStateGrabbed(bool grabbed)
+		{
+			state.SetBool(IsGrabbed, grabbed);
 		}
 	}
 }

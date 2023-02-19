@@ -225,6 +225,7 @@ GameObject:
   - component: {fileID: 1557519686661420847}
   - component: {fileID: 9131961386945647344}
   - component: {fileID: 7682035672794459721}
+  - component: {fileID: 3228183663557612735}
   m_Layer: 0
   m_Name: Capture Deque
   m_TagString: Untagged
@@ -248,7 +249,7 @@ Transform:
   - {fileID: 8549242687996600689}
   - {fileID: 8534325952982911961}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6933793677958583015
 BoxCollider:
@@ -288,7 +289,6 @@ MonoBehaviour:
   definition:
     deques:
     - {fileID: 11400000, guid: 2737fe1c5b066864ca16926e00f866aa, type: 2}
-  electricArcPrefab: {fileID: 7962134878051775022, guid: bd0964b77b3f6f0459fc55699ed10fd6, type: 3}
 --- !u!114 &5737410847915139685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,7 +371,19 @@ MonoBehaviour:
       m_Calls: []
   onGrab:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7617101641436224015}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeBox, SBEPIS.Capturllection
+        m_MethodName: SetStateGrabbed
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onHoldUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -392,7 +404,19 @@ MonoBehaviour:
         m_CallState: 2
   onDrop:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7617101641436224015}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeBox, SBEPIS.Capturllection
+        m_MethodName: SetStateGrabbed
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onStopTouch:
     m_PersistentCalls:
       m_Calls: []
@@ -468,6 +492,26 @@ MonoBehaviour:
   - {fileID: 1565758740033431129}
   - {fileID: 8203533746901049725}
   material: {fileID: 2100000, guid: 7f3246d92d02ff940b958e1ba143678d, type: 2}
+--- !u!95 &3228183663557612735
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762745506201212150}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2c9a76e56da09554c841bb8810a558ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 1
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1001 &178777184448903901
 PrefabInstance:
   m_ObjectHideFlags: 0
