@@ -19,7 +19,7 @@ namespace SBEPIS.Capturllection
 		
 		public DequeOwner owner { get; set; }
 		
-		public bool isDeployed => !state.GetBool(IsCoupled);
+		public bool isDeployed => state.GetBool(IsDeployed);
 		
 		public Grabbable grabbable { get; private set; }
 		public GravitySum gravitySum { get; private set; }
@@ -34,8 +34,8 @@ namespace SBEPIS.Capturllection
 		public static readonly int IsGrabbed = Animator.StringToHash("Is Grabbed");
 		public static readonly int IsCoupled = Animator.StringToHash("Is Coupled");
 		public static readonly int IsBound = Animator.StringToHash("Is Bound");
-		public static readonly int Collide = Animator.StringToHash("On Collide");
-		public static readonly int Retrieve = Animator.StringToHash("On Retrieve");
+		public static readonly int IsDiajectorOpen = Animator.StringToHash("Is Diajector Open");
+		public static readonly int IsDeployed = Animator.StringToHash("Is Deployed");
 		public static readonly int Toss = Animator.StringToHash("On Toss");
 
 		private void Awake()

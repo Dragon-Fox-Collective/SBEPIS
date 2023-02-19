@@ -55,20 +55,22 @@ namespace SBEPIS.Capturllection
 		{
 			dequeBox.owner = null;
 			dequeBox.collisionTrigger.trigger.RemoveListener(StartDiajectorAssembly);
-			dequeBox.grabbable.onUse.RemoveListener(RetrieveDeque);
+			dequeBox.grabbable.onUse.RemoveListener(CloseDiajector);
 
 			storage.definition = null;
 			
 			Destroy(dequeAnimator);
 			
 			dequeBox.state.SetBool(DequeBox.IsBound, false);
+			dequeBox.state.SetBool(DequeBox.IsDiajectorOpen, false);
+			dequeBox.state.SetBool(DequeBox.IsDeployed, false);
 		}
 		
 		private void SetupNewDeque()
 		{
 			dequeBox.owner = this;
 			dequeBox.collisionTrigger.trigger.AddListener(StartDiajectorAssembly);
-			dequeBox.grabbable.onUse.AddListener(RetrieveDeque);
+			dequeBox.grabbable.onUse.AddListener(CloseDiajector);
 
 			storage.definition = dequeBox.definition;
 			
@@ -76,6 +78,8 @@ namespace SBEPIS.Capturllection
 			dequeAnimator.curve = retrievalAnimationCurve;
 			
 			dequeBox.state.SetBool(DequeBox.IsBound, true);
+			dequeBox.state.SetBool(DequeBox.IsDiajectorOpen, diajector.isOpen);
+			dequeBox.state.SetBool(DequeBox.IsDeployed, true);
 			
 			diajector.dequeBox = dequeBox;
 		}
@@ -92,12 +96,15 @@ namespace SBEPIS.Capturllection
 			socket = GetComponent<CouplingSocket>();
 			lerpTarget = GetComponent<LerpTarget>();
 			storage = GetComponent<DequeStorage>();
+			
+			socket.onDecouple.AddListener(DecoupleDeque);
 		}
 		
 		private void Start()
 		{
 			dequeBox = initialDeque;
-			RetrieveDeque();
+			if (dequeBox)
+				RetrieveDeque();
 		}
 		
 		public void OnToggleDeque(CallbackContext context)
@@ -107,27 +114,42 @@ namespace SBEPIS.Capturllection
 			if (!dequeBox)
 				return;
 			
-			if (isDequeDeployed)
+			if (dequeBox.grabbable.isBeingHeld)
+				CloseDiajector();
+			else if (isDequeDeployed)
 				RetrieveDeque();
 			else
 				TossDeque();
 		}
 
-		private void RetrieveDeque(Grabber grabber, Grabbable grabbable) => RetrieveDeque();
+		private void CloseDiajector(Grabber grabber, Grabbable grabbable) => CloseDiajector();
+		private void CloseDiajector()
+		{
+			dequeBox.state.SetBool(DequeBox.IsDiajectorOpen, false);
+		}
+		
 		private void RetrieveDeque()
 		{
-			dequeBox.state.SetTrigger(DequeBox.Retrieve);
+			CloseDiajector();
+			dequeBox.state.SetBool(DequeBox.IsDeployed, false);
 		}
 
 		private void TossDeque()
 		{
-			dequeBox.state.SetBool(DequeBox.IsCoupled, false);
+			DecoupleDeque();
 			dequeBox.state.SetTrigger(DequeBox.Toss);
 		}
 		
 		private void StartDiajectorAssembly()
 		{
-			dequeBox.state.SetTrigger(DequeBox.Collide);
+			dequeBox.state.SetBool(DequeBox.IsDiajectorOpen, true);
+		}
+
+		private void DecoupleDeque(CouplingPlug plug, CouplingSocket socket) => DecoupleDeque();
+		private void DecoupleDeque()
+		{
+			dequeBox.state.SetBool(DequeBox.IsDeployed, true);
+			dequeBox.state.SetBool(DequeBox.IsCoupled, false);
 		}
 	}
 }
