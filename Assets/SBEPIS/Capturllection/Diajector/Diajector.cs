@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SBEPIS.Physics;
+using SBEPIS.UI;
 using SBEPIS.Utils;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace SBEPIS.Capturllection
 	{
 		public LerpTarget upperTarget;
 		public DequeStorable cardPrefab;
+		public ElectricArc electricArcPrefab;
 		public DequePage mainPage;
 		public float cardDelay = 0.5f;
 		public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1.5f, 3);

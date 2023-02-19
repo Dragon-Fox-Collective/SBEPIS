@@ -22,9 +22,9 @@ namespace SBEPIS.Capturllection
 		public LerpTarget lerpTarget { get; private set; }
 		public DequeStorage storage { get; private set; }
 		
-		private LerpTargetAnimator animator;
+		public LerpTargetAnimator dequeAnimator { get; private set; }
 		
-		private bool isDequeDeployed => !socket.isCoupled;
+		private bool isDequeDeployed => dequeBox && dequeBox.isDeployed;
 
 		private DequeBox _dequeBox;
 		public DequeBox dequeBox
@@ -51,6 +51,42 @@ namespace SBEPIS.Capturllection
 			}
 		}
 		
+		private void FinishUpOldDeque()
+		{
+			dequeBox.owner = null;
+			dequeBox.collisionTrigger.trigger.RemoveListener(StartDiajectorAssembly);
+			dequeBox.grabbable.onUse.RemoveListener(RetrieveDeque);
+
+			storage.definition = null;
+			
+			Destroy(dequeAnimator);
+			
+			dequeBox.state.SetBool(DequeBox.IsBound, false);
+		}
+		
+		private void SetupNewDeque()
+		{
+			dequeBox.owner = this;
+			dequeBox.collisionTrigger.trigger.AddListener(StartDiajectorAssembly);
+			dequeBox.grabbable.onUse.AddListener(RetrieveDeque);
+
+			storage.definition = dequeBox.definition;
+			
+			dequeAnimator = dequeBox.gameObject.AddComponent<LerpTargetAnimator>();
+			dequeAnimator.curve = retrievalAnimationCurve;
+			
+			dequeBox.state.SetBool(DequeBox.IsBound, true);
+			
+			diajector.dequeBox = dequeBox;
+		}
+		
+		private void UnsetDeque()
+		{
+			diajector.dequeBox = null;
+			if (diajector.isOpen)
+				diajector.ForceClose(dequeBox.lowerTarget);
+		}
+		
 		private void Awake()
 		{
 			socket = GetComponent<CouplingSocket>();
@@ -60,64 +96,15 @@ namespace SBEPIS.Capturllection
 		
 		private void Start()
 		{
-			socket.onDecouple.AddListener(CheckForPriming);
-			socket.onCouple.AddListener(CancelPriming);
-			socket.onCouple.AddListener(CloseDiajector);
-			
 			dequeBox = initialDeque;
-		}
-		
-		private void FinishUpOldDeque()
-		{
-			dequeBox.owner = null;
-			dequeBox.collisionTrigger.trigger.RemoveListener(StartDiajectorAssembly);
-			dequeBox.grabbable.onDrop.RemoveListener(CheckForPriming);
-			dequeBox.grabbable.onGrab.RemoveListener(CancelPriming);
-			dequeBox.grabbable.onUse.RemoveListener(CloseDiajector);
-
-			storage.definition = null;
-			
-			Destroy(animator);
-			
-			if (!isDequeDeployed)
-			{
-				socket.Decouple(dequeBox.plug);
-				dequeBox.transform.position += dequeBox.transform.forward * 0.1f;
-			}
-		}
-		
-		private void SetupNewDeque()
-		{
-			dequeBox.owner = this;
-			dequeBox.collisionTrigger.trigger.AddListener(StartDiajectorAssembly);
-			dequeBox.grabbable.onDrop.AddListener(CheckForPriming);
-			dequeBox.grabbable.onGrab.AddListener(CancelPriming);
-			dequeBox.grabbable.onUse.AddListener(CloseDiajector);
-
-			storage.definition = dequeBox.definition;
-			
-			animator = dequeBox.gameObject.AddComponent<LerpTargetAnimator>();
-			animator.curve = retrievalAnimationCurve;
-			if (!diajector.isOpen)
-				animator.TargetTo(lerpTarget);
-			
-			diajector.dequeBox = dequeBox;
-			if (diajector.isOpen)
-				diajector.RefreshPage();
-		}
-		
-		private void UnsetDeque()
-		{
-			diajector.dequeBox = null;
-			if (diajector.isOpen)
-				diajector.ForceClose(_dequeBox.lowerTarget);
+			RetrieveDeque();
 		}
 		
 		public void OnToggleDeque(CallbackContext context)
 		{
 			if (!isActiveAndEnabled || !context.performed)
 				return;
-			if (!diajector.dequeBox)
+			if (!dequeBox)
 				return;
 			
 			if (isDequeDeployed)
@@ -125,64 +112,22 @@ namespace SBEPIS.Capturllection
 			else
 				TossDeque();
 		}
-		
-		private void TossDeque()
-		{
-			socket.Decouple(dequeBox.plug);
 
-			Vector3 upDirection = tossTarget.up;
-			
-			float gravityMag = -dequeBox.gravitySum.gravityAcceleration;
-			float startHeight = tossTarget.InverseTransformPoint(dequeBox.transform.position).y;
-			float upTossSpeed = CalcTossYVelocity(gravityMag, startHeight, startHeight + tossHeight);
-			Vector3 upwardVelocity = upDirection * upTossSpeed;
-
-			float timeToHit = (-upTossSpeed - Mathf.Sqrt(upTossSpeed * upTossSpeed - 2 * gravityMag * startHeight)) / gravityMag;
-			Vector3 groundDelta = Vector3.ProjectOnPlane(tossTarget.position - dequeBox.transform.position, upDirection);
-			Vector3 groundVelocity = groundDelta / timeToHit;
-
-			dequeBox.gravitySum.rigidbody.velocity = upwardVelocity + groundVelocity;
-		}
-		
-		private static float CalcTossYVelocity(float gravity, float startHeight, float peakHeight) => Mathf.Sqrt(2 * gravity * (startHeight - peakHeight));
-		
+		private void RetrieveDeque(Grabber grabber, Grabbable grabbable) => RetrieveDeque();
 		private void RetrieveDeque()
 		{
-			animator.TargetTo(lerpTarget);
+			dequeBox.state.SetTrigger(DequeBox.Retrieve);
+		}
+
+		private void TossDeque()
+		{
+			dequeBox.state.SetBool(DequeBox.IsCoupled, false);
+			dequeBox.state.SetTrigger(DequeBox.Toss);
 		}
 		
 		private void StartDiajectorAssembly()
 		{
-			Vector3 position = dequeBox.transform.position;
-			Vector3 upDirection = dequeBox.gravitySum.upDirection;
-			Vector3 groundDelta = Vector3.ProjectOnPlane(transform.position - position, upDirection);
-			Quaternion rotation = Quaternion.LookRotation(groundDelta, upDirection);
-			diajector.StartAssembly(position, rotation);
-		}
-		
-		private void CheckForPriming(Grabber grabber, Grabbable grabbable) => CheckForPriming();
-		private void CheckForPriming(CouplingPlug plug, CouplingSocket socket) => CheckForPriming();
-		private void CheckForPriming()
-		{
-			if (dequeBox.grabbable.isBeingHeld || dequeBox.plug.isCoupled || diajector.isOpen)
-				return;
-			
-			dequeBox.collisionTrigger.StartPrime();
-		}
-		
-		private void CancelPriming(Grabber grabber, Grabbable grabbable) => CancelPriming();
-		private void CancelPriming(CouplingPlug plug, CouplingSocket socket) => CancelPriming();
-		private void CancelPriming()
-		{
-			dequeBox.collisionTrigger.CancelPrime();
-		}
-		
-		private void CloseDiajector(Grabber grabber, Grabbable grabbable) => CloseDiajector();
-		private void CloseDiajector(CouplingPlug plug, CouplingSocket socket) => CloseDiajector();
-		private void CloseDiajector()
-		{
-			if (diajector.isOpen)
-				diajector.StartDisassembly();
+			dequeBox.state.SetTrigger(DequeBox.Collide);
 		}
 	}
 }
