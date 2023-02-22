@@ -1,12 +1,14 @@
 using SBEPIS.Capturllection;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Predicates
 {
 	public class IsOwnedDeque : GameObjectPredicate
 	{
-		public DequeOwner dequeOwner;
+		[FormerlySerializedAs("dequeOwner")]
+		public DequeOwner owner;
 		
-		public override bool IsTrue(GameObject obj) => obj == dequeOwner.dequeBox.gameObject;
+		public override bool IsTrue(GameObject obj) => obj == owner.dequeBox.gameObject;
 	}
 }

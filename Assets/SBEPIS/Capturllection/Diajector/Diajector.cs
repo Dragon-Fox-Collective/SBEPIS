@@ -35,11 +35,11 @@ namespace SBEPIS.Capturllection
 		
 		public bool isOpen => currentPage;
 		
-		public DequeCaptureLayout captureLayout { get; private set; }
+		public DequeCaptureLayout layout { get; private set; }
 		
 		private void Awake()
 		{
-			captureLayout = GetComponentInChildren<DequeCaptureLayout>(includeInactive:true);
+			layout = GetComponentInChildren<DequeCaptureLayout>(includeInactive:true);
 		}
 		
 		public void StartAssembly(Vector3 position, Quaternion rotation) => StartAssembly(position, rotation, mainPage);
@@ -123,5 +123,6 @@ namespace SBEPIS.Capturllection
 		}
 
 		public LerpTarget GetLerpTarget(DequeStorable card) => currentPage.GetLerpTarget(card);
+		public CardTarget GetCardTarget(DequeStorable card) => currentPage.GetCardTarget(card);
 	}
 }

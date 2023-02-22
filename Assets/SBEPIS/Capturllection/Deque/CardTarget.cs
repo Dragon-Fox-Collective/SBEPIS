@@ -4,6 +4,7 @@ using SBEPIS.UI;
 using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturllection
 {
@@ -12,14 +13,13 @@ namespace SBEPIS.Capturllection
 	{
 		public string label;
 		
-		public UnityEvent<DequeStorable> onCardCreated = new();
+		[FormerlySerializedAs("onCardCreated")]
+		public UnityEvent<DequeStorable> onCardBound = new();
 		public UnityEvent onPrepareCard = new();
 		public UnityEvent onGrab = new();
 		public UnityEvent onDrop = new();
 		
-		public DequeStorable card { get; set; }
-		public bool isTemporary { get; set; }
-		public JointTargetter targetter { get; set; }
+		public DequeStorable card { get; set; } // TODO: Unlink this
 		
 		public LerpTarget lerpTarget { get; private set; }
 		public DequePage page { get; private set; }
@@ -38,13 +38,11 @@ namespace SBEPIS.Capturllection
 
 		public void AttachToTarget(LerpTargetAnimator animator)
 		{
-			page.CreateCardJoint(this);
 			card.state.SetBool(DequeStorable.HasBeenAssembled, true);
 		}
 
 		public void DetatchFromTarget(LerpTargetAnimator animator)
 		{
-			page.DestroyCardJoint(this);
 			card.state.SetBool(DequeStorable.HasBeenAssembled, false);
 		}
 	}

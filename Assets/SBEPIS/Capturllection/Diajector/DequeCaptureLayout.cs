@@ -90,7 +90,6 @@ namespace SBEPIS.Capturllection
 		{
 			card.grabbable.onDrop.AddListener(MakeCardPermanent)
 			CardTarget target = AddCardTarget(card);
-			target.isTemporary = true;
 			return target;
 		}
 		
@@ -105,7 +104,6 @@ namespace SBEPIS.Capturllection
 			DequeStorable card = grabbable.GetComponent<DequeStorable>()
 			card.grabbable.onDrop.RemoveListener(MakeCardPermanent);
 			CardTarget target = targets[card];
-			target.isTemporary = false;
 			LerpTargetAnimator animator = AddCard(card, target);
 			animator.TeleportTo(target.lerpTarget);
 		}
