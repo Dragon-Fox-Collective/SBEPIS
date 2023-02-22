@@ -24,13 +24,16 @@ namespace SBEPIS.Capturllection
 
 		public bool isStored => owner;
 		public bool canStore => storePredicates.All(predicate => predicate.Invoke());
-		
+
+		private readonly List<DequeCaptureLayout> layouts = new();
+
 		public static readonly int IsGrabbed = Animator.StringToHash("Is Grabbed");
 		public static readonly int IsPageOpen = Animator.StringToHash("Is Page Open");
 		public static readonly int IsAssembling = Animator.StringToHash("Is Assembling");
 		public static readonly int IsDisassembling = Animator.StringToHash("Is Disassembling");
 		public static readonly int HasBeenAssembled = Animator.StringToHash("Has Been Assembled");
 		public static readonly int IsBound = Animator.StringToHash("Is Bound");
+		public static readonly int IsInLayoutArea = Animator.StringToHash("Is In Layout Area");
 		public static readonly int TargetNumber = Animator.StringToHash("Target Number");
 		public static readonly int ForceClose = Animator.StringToHash("On Force Close");
 
@@ -57,6 +60,26 @@ namespace SBEPIS.Capturllection
 		public void SetStateGrabbed(bool grabbed)
 		{
 			state.SetBool(IsGrabbed, grabbed);
+		}
+
+		private void OnTriggerEnter(Collider other)
+		{
+			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DequeCaptureLayout layout))
+			{
+				layouts.Add(layout);
+				if (layouts.Count == 1)
+					state.SetBool(IsInLayoutArea, true);
+			}
+		}
+		
+		private void OnTriggerExit(Collider other)
+		{
+			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DequeCaptureLayout layout))
+			{
+				layouts.Remove(layout);
+				if (layouts.Count == 0)
+					state.SetBool(IsInLayoutArea, true);
+			}
 		}
 	}
 }

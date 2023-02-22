@@ -29,10 +29,11 @@ namespace SBEPIS.Capturllection
 				card.name += $" ({target.label})";
 				card.owner = diajector.owner.dequeBox.owner;
 				card.state.SetBool(DequeStorable.IsBound, true);
+				diajector.owner.dequeBox.definition.UpdateCardTexture(card);
 				target.card = card;
 				
-				LerpTargetAnimator animator = AddCard(card, target);
-				animator.TeleportTo(diajector.owner.dequeBox.lowerTarget);
+				AddCard(card, target);
+				card.animator.TeleportTo(diajector.owner.dequeBox.lowerTarget);
 
 				Capturellectainer container = card.GetComponent<Capturellectainer>();
 				container.isRetrievingAllowed = false
@@ -42,66 +43,20 @@ namespace SBEPIS.Capturllection
 			}
 		}
 
-		public LerpTargetAnimator AddCard(DequeStorable card, CardTarget target)
+		public void AddCard(DequeStorable card, CardTarget target)
 		{
-			card.grabbable.onGrab.AddListener(DestroyCardJoint);
-			card.grabbable.onDrop.AddListener(CreateCardJoint);
-			card.grabbable.onGrab.AddListener(InvokeCardTargetOnGrab);
-			card.grabbable.onDrop.AddListener(InvokeCardTargetOnDrop);
-
 			cardTargets.Add(card, target);
-			
-			diajector.owner.dequeBox.definition.UpdateCardTexture(card);
-			
-			target.onCardCreated.Invoke(card);
+			target.onCardBound.Invoke(card);
 		}
 
 		public void RemoveCard(DequeStorable card)
 		{
-			card.grabbable.onGrab.RemoveListener(DestroyCardJoint);
-			card.grabbable.onDrop.RemoveListener(CreateCardJoint);
-			card.grabbable.onGrab.RemoveListener(InvokeCardTargetOnGrab);
-			card.grabbable.onDrop.RemoveListener(InvokeCardTargetOnDrop);
-
-			if (cardTargets[card].targetter)
-				DestroyCardJoint(card);
-			
 			cardTargets.Remove(card);
 		}
 
-		private void CreateCardJoint(Grabber grabber, Grabbable grabbable) => CreateCardJoint(grabbable.GetComponent<DequeStorable>());
-		private void CreateCardJoint(DequeStorable target) => CreateCardJoint(cardTargets[target]);
-		public void CreateCardJoint(CardTarget target) => CreateCardJoint(target.card, target, diajector.staticRigidbody, diajector.cardStrength);
-		private static void CreateCardJoint(DequeStorable card, CardTarget target, Rigidbody staticRigidbody, StrengthSettings cardStrength)
-		{
-			JointTargetter targetter = staticRigidbody.gameObject.AddComponent<JointTargetter>();
-			targetter.connectedBody = card.grabbable.rigidbody;
-			targetter.target = target.transform;
-			targetter.strength = cardStrength;
-			target.targetter = targetter;
-		}
-
-		private void DestroyCardJoint(Grabber grabber, Grabbable grabbable) => DestroyCardJoint(grabbable.GetComponent<DequeStorable>());
-		private void DestroyCardJoint(DequeStorable card) => DestroyCardJoint(cardTargets[card]);
-		public void DestroyCardJoint(CardTarget target)
-		{
-			JointTargetter targetter = target.targetter;
-			target.targetter = null;
-			Destroy(targetter);
-		}
-
-		private void InvokeCardTargetOnGrab(Grabber grabber, Grabbable grabbable)
-		{
-			cardTargets[grabbable.GetComponent<DequeStorable>()].onGrab.Invoke();
-		}
-		
-		private void InvokeCardTargetOnDrop(Grabber grabber, Grabbable grabbable)
-		{
-			cardTargets[grabbable.GetComponent<DequeStorable>()].onDrop.Invoke();
-		}
-
 		public bool HasCard(DequeStorable card) => cardTargets.ContainsKey(card);
-		public LerpTarget GetLerpTarget(DequeStorable card) => cardTargets[card].lerpTarget;
+		public CardTarget GetCardTarget(DequeStorable card) => cardTargets[card];
+		public LerpTarget GetLerpTarget(DequeStorable card) => GetCardTarget(card).lerpTarget;
 
 		public void Refresh()
 		{

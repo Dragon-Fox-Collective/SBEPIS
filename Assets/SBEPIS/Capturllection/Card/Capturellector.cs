@@ -57,8 +57,8 @@ namespace SBEPIS.Capturllection
 				owner.dequeBox.definition.UpdateCardTexture(card);
 				owner.storage.StoreCard(card);
 				
-				if (owner.diajector.captureLayout && owner.diajector.captureLayout.isActiveAndEnabled)
-					owner.diajector.captureLayout.AddPermanentTargetAtTable(card)
+				if (owner.diajector.layout && owner.diajector.layout.isActiveAndEnabled)
+					owner.diajector.layout.AddPermanentTargetAtTable(card)
 			}
 		}
 
