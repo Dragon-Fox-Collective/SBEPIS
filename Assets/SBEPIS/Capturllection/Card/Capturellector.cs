@@ -1,6 +1,7 @@
 using SBEPIS.Controller;
 using SBEPIS.Items;
 using UnityEngine;
+using UnityEngine.Serialization;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Capturllection
@@ -8,7 +9,8 @@ namespace SBEPIS.Capturllection
 	[RequireComponent(typeof(Grabber))]
 	public class Capturellector : MonoBehaviour
 	{
-		public DequeOwner dequeOwner;
+		[FormerlySerializedAs("dequeOwner")]
+		public DequeOwner owner;
 		public Capturellectainer cardPrefab;
 
 		private Grabber grabber;
@@ -50,13 +52,13 @@ namespace SBEPIS.Capturllection
 			DequeStorable card = container.GetComponent<DequeStorable>();
 			if (card)
 			{
-				dequeOwner.storage.StoreCard(card);
-				if (dequeOwner.diajector.captureLayout && dequeOwner.diajector.captureLayout.isActiveAndEnabled)
-					dequeOwner.diajector.captureLayout.AddPermanentTargetAtTable(card);
-				else if (cardGrabbable && cardGrabbable.isBeingHeld)
-					dequeOwner.dequeBox.AddHeldTemporaryTarget(card, cardGrabbable);
-				else
-					dequeOwner.dequeBox.AddTemporaryTarget(card);
+				card.owner = owner;
+				card.state.SetBool(DequeStorable.IsBound, true);
+				owner.dequeBox.definition.UpdateCardTexture(card);
+				owner.storage.StoreCard(card);
+				
+				if (owner.diajector.captureLayout && owner.diajector.captureLayout.isActiveAndEnabled)
+					owner.diajector.captureLayout.AddPermanentTargetAtTable(card)
 			}
 		}
 

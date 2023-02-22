@@ -9,7 +9,7 @@ using SBEPIS.Utils;
 namespace SBEPIS.Capturllection
 {
 	[RequireComponent(typeof(Grabbable), typeof(GravitySum), typeof(SplitTextureSetup))]
-	[RequireComponent(typeof(CollisionTrigger), typeof(CouplingPlug))]
+	[RequireComponent(typeof(CollisionTrigger), typeof(CouplingPlug), typeof(Animator))]
 	public class DequeBox : MonoBehaviour
 	{
 		public LerpTarget lowerTarget;
@@ -27,9 +27,6 @@ namespace SBEPIS.Capturllection
 		public CollisionTrigger collisionTrigger { get; private set; }
 		public CouplingPlug plug { get; private set; }
 		public Animator state { get; private set; }
-		
-		private Dictionary<DequeStorable, ElectricArc> electricArcs = new();
-		private Dictionary<DequeStorable, LerpTargetAnimator> animators = new();
 		
 		public static readonly int IsGrabbed = Animator.StringToHash("Is Grabbed");
 		public static readonly int IsCoupled = Animator.StringToHash("Is Coupled");
@@ -59,59 +56,8 @@ namespace SBEPIS.Capturllection
 			if (!capturellector)
 				return;
 
-			DequeOwner dequeOwner = capturellector.dequeOwner;
+			DequeOwner dequeOwner = capturellector.owner;
 			dequeOwner.dequeBox = this;
-		}
-		
-		public void AddHeldTemporaryTarget(DequeStorable card, Grabbable cardGrabbable)
-		{
-			definition.UpdateCardTexture(card);
-			cardGrabbable.onDrop.AddListener(ReleaseHeldTemporaryTarget);
-
-			ElectricArc newElectricArc = Instantiate(owner.diajector.electricArcPrefab, transform);
-			newElectricArc.otherPoint = card.transform;
-			electricArcs.Add(card, newElectricArc);
-		}
-		
-		private void ReleaseHeldTemporaryTarget(Grabber grabber, Grabbable grabbable)
-		{
-			DequeStorable card = grabbable.GetComponent<DequeStorable>();
-			RemoveHeldTemporaryTarget(card, grabbable);
-			AddTemporaryTarget(card);
-		}
-		
-		public void RemoveHeldTemporaryTarget(DequeStorable card, Grabbable cardGrabbable)
-		{
-			cardGrabbable.onDrop.RemoveListener(ReleaseHeldTemporaryTarget);
-			Destroy(electricArcs[card].gameObject);
-			electricArcs.Remove(card);
-		}
-		
-		public void AddTemporaryTarget(DequeStorable card)
-		{
-			definition.UpdateCardTexture(card);
-			
-			LerpTargetAnimator animator = card.gameObject.AddComponent<LerpTargetAnimator>();
-			animators.Add(card, animator);
-			animator.curve = owner.diajector.curve;
-			animator.AddListenerOnMoveTo(lowerTarget, CleanUpTemporaryTarget);
-			animator.TargetTo(upperTarget);
-		}
-
-		private void CleanUpTemporaryTarget(LerpTargetAnimator animator) => CleanUpTemporaryTarget(animator.GetComponent<DequeStorable>(), animator);
-		public void CleanUpTemporaryTarget(DequeStorable card, LerpTargetAnimator animator)
-		{
-			animators.Remove(card);
-			animator.RemoveListenerOnMoveTo(lowerTarget, CleanUpTemporaryTarget);
-			Destroy(animator);
-		}
-		
-		public void CleanUpCard(DequeStorable card)
-		{
-			if (electricArcs.ContainsKey(card))
-				RemoveHeldTemporaryTarget(card, card.GetComponent<Grabbable>());
-			else if (animators.ContainsKey(card))
-				CleanUpTemporaryTarget(card, card.GetComponent<LerpTargetAnimator>());
 		}
 
 		public void SetStateGrabbed(bool grabbed)

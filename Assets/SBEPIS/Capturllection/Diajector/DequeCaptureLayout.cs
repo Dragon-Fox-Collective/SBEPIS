@@ -32,8 +32,8 @@ namespace SBEPIS.Capturllection
 			if (!diajector.isBound)
 				return;
 			
-			diajector.dequeBox.owner.storage.Tick(Time.fixedDeltaTime);
-			diajector.dequeBox.owner.storage.LayoutTargets(targets);
+			diajector.owner.storage.Tick(Time.fixedDeltaTime);
+			diajector.owner.storage.LayoutTargets(targets);
 			
 			foreach ((DequeStorable card, CardTarget target) in targets)
 			{
@@ -50,7 +50,7 @@ namespace SBEPIS.Capturllection
 			if (!diajector.isBound || !other.attachedRigidbody)
 				return;
 			DequeStorable card = other.attachedRigidbody.GetComponent<DequeStorable>();
-			if (!card || card.isStored || !card.canStore)
+			if (!card || !card.canStore)
 				return;
 			
 			if (card.grabbable.isBeingHeld)
@@ -64,7 +64,7 @@ namespace SBEPIS.Capturllection
 			if (!diajector.isBound || !other.attachedRigidbody)
 				return;
 			DequeStorable card = other.attachedRigidbody.GetComponent<DequeStorable>();
-			if (!card || card.isStored || !card.canStore)
+			if (!card || !card.canStore)
 				return;
 			
 			if (card.grabbable.isBeingHeld)
@@ -73,7 +73,7 @@ namespace SBEPIS.Capturllection
 		
 		private CardTarget AddCardTarget(DequeStorable card)
 		{
-			CardTarget newTarget = Instantiate(cardTargetPrefab, transform);
+			CardTarget newTarget = Instantiate(cardTargetPrefab, transform)
 			newTarget.card = card;
 			targets.Add(card, newTarget);
 			return newTarget;
@@ -88,7 +88,7 @@ namespace SBEPIS.Capturllection
 		
 		public CardTarget AddTemporaryTarget(DequeStorable card)
 		{
-			card.grabbable.onDrop.AddListener(MakeCardPermanent);
+			card.grabbable.onDrop.AddListener(MakeCardPermanent)
 			CardTarget target = AddCardTarget(card);
 			target.isTemporary = true;
 			return target;
@@ -102,7 +102,7 @@ namespace SBEPIS.Capturllection
 		
 		private void MakeCardPermanent(Grabber grabber, Grabbable grabbable)
 		{
-			DequeStorable card = grabbable.GetComponent<DequeStorable>();
+			DequeStorable card = grabbable.GetComponent<DequeStorable>()
 			card.grabbable.onDrop.RemoveListener(MakeCardPermanent);
 			CardTarget target = targets[card];
 			target.isTemporary = false;
@@ -112,7 +112,7 @@ namespace SBEPIS.Capturllection
 		
 		public CardTarget AddPermanentTargetAtTable(DequeStorable card)
 		{
-			CardTarget target = AddCardTarget(card);
+			CardTarget target = AddCardTarget(card)
 			LerpTargetAnimator animator = AddCard(card, target);
 			if (!card.grabbable.isBeingHeld)
 			{
@@ -128,9 +128,9 @@ namespace SBEPIS.Capturllection
 		
 		public CardTarget AddPermanentTargetAtDeque(DequeStorable card)
 		{
-			CardTarget target = AddCardTarget(card);
+			CardTarget target = AddCardTarget(card)
 			LerpTargetAnimator animator = AddCard(card, target);
-			animator.TeleportTo(diajector.dequeBox.lowerTarget);
+			animator.TeleportTo(diajector.owner.dequeBox.lowerTarget);
 			return target;
 		}
 
@@ -142,7 +142,7 @@ namespace SBEPIS.Capturllection
 		private LerpTargetAnimator AddCard(DequeStorable card, CardTarget target)
 		{
 			if (!diajector.isBound)
-				return null;
+				return null
 			
 			Capturellectainer container = card.GetComponent<Capturellectainer>();
 			if (container)
@@ -152,7 +152,7 @@ namespace SBEPIS.Capturllection
 			}
 			
 			LerpTargetAnimator animator = dequePage.AddCard(card, target);
-			diajector.dequeBox.lowerTarget.onMoveFrom.Invoke(animator);
+			diajector.owner.dequeBox.lowerTarget.onMoveFrom.Invoke(animator);
 
 			return animator;
 		}
@@ -168,9 +168,9 @@ namespace SBEPIS.Capturllection
 		}
 		
 		private bool CanFetch(Capturellectainer card) => CanFetch(card.GetComponent<DequeStorable>());
-		private bool CanFetch(DequeStorable card) => diajector.dequeBox.owner.storage.CanFetch(card);
+		private bool CanFetch(DequeStorable card) => diajector.owner.storage.CanFetch(card);
 
-		public void SyncCards() => SyncCards(diajector.dequeBox.owner.storage);
+		public void SyncCards() => SyncCards(diajector.owner.storage);
 		public void SyncCards(DequeStorage cards)
 		{
 			foreach ((DequeStorable card,  CardTarget target) in targets.Where(pair => !cards.Contains(pair.Key)).ToList())
@@ -178,7 +178,7 @@ namespace SBEPIS.Capturllection
 
 			foreach (DequeStorable card in cards.Where(card => !targets.ContainsKey(card)))
 			{
-				diajector.dequeBox.CleanUpCard(card);
+				diajector.owner.dequeBox.CleanUpCard(card);
 				if (card.grabbable.isBeingHeld)
 					AddPermanentTargetAtTable(card);
 				else

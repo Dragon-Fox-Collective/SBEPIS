@@ -15,48 +15,35 @@ namespace SBEPIS.Capturllection
 		public ElectricArc electricArcPrefab;
 		public DequePage mainPage;
 		public float cardDelay = 0.5f;
-		public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1.5f, 3);
-
+		
 		public Rigidbody staticRigidbody;
 		public MonoBehaviour coroutineOwner;
 		public StrengthSettings cardStrength;
-
+		
 		public IEnumerable<Func<LerpTarget>> targetProviders => new Func<LerpTarget>[]
 		{
-			() => dequeBox.lowerTarget,
-			() => dequeBox.upperTarget,
+			() => owner.dequeBox.lowerTarget,
+			() => owner.dequeBox.upperTarget,
 			() => upperTarget,
 		};
+		
+		public bool isBound => owner.dequeBox;
+		
+		public DequeOwner owner { get; set; }
 
-		public bool isBound => dequeBox;
-
-		private DequeBox _dequeBox;
-		public DequeBox dequeBox
-		{
-			get => _dequeBox;
-			set
-			{
-				_dequeBox = value;
-
-				if (_dequeBox)
-					GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Do(cardTarget => _dequeBox.definition.UpdateCardTexture(cardTarget.card));
-				else
-					GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Do(cardTarget => cardTarget.card.split.ResetTexture());
-			}
-		}
-
-		public DequePage currentPage { get; private set; }
+		private DequePage currentPage;
+		
 		public bool isOpen => currentPage;
 		
 		public DequeCaptureLayout captureLayout { get; private set; }
-
+		
 		private void Awake()
 		{
 			captureLayout = GetComponentInChildren<DequeCaptureLayout>(includeInactive:true);
 		}
-
+		
 		public void StartAssembly(Vector3 position, Quaternion rotation) => StartAssembly(position, rotation, mainPage);
-
+		
 		public void StartAssembly(Vector3 position, Quaternion rotation, DequePage page)
 		{
 			if (isOpen)
@@ -64,23 +51,23 @@ namespace SBEPIS.Capturllection
 				Debug.LogError("Tried to start assembly when already assembled");
 				return;
 			}
-
+			
 			gameObject.SetActive(true);
 			transform.SetPositionAndRotation(position, rotation);
 			AssembleNewPage(page);
 		}
-
+		
 		public void RefreshPage()
 		{
 			currentPage.Refresh();
 		}
-
+		
 		public void ChangePage(DequePage page)
 		{
 			DisassembleCurrentPage();
 			AssembleNewPage(page);
 		}
-
+		
 		private void AssembleNewPage(DequePage page)
 		{
 			currentPage = page;
@@ -94,7 +81,7 @@ namespace SBEPIS.Capturllection
 				Debug.LogError("Tried to start disassembly when not assembled");
 				return;
 			}
-
+			
 			currentPage.StartDisassembly();
 			currentPage = null;
 		}
@@ -106,22 +93,35 @@ namespace SBEPIS.Capturllection
 				Debug.LogError("Tried to start disassembly when not assembled");
 				return;
 			}
-
+			
 			currentPage.ForceClose(bottomTarget);
 			currentPage = null;
 		}
-
+		
 		public void StartDisassembly()
 		{
 			DisassembleCurrentPage();
 			gameObject.SetActive(false);
 		}
-
+		
 		public void ForceClose(LerpTarget bottomTarget)
 		{
 			coroutineOwner.StopAllCoroutines();
 			ForceCloseCurrentPage(bottomTarget);
 			gameObject.SetActive(false);
 		}
+		
+		public bool ShouldCardBeDisplayed(DequeStorable card) => isOpen && currentPage.HasCard(card);
+		
+		public void UpdateCardTexture() => UpdateCardTexture(owner.dequeBox);
+		public void UpdateCardTexture(DequeBox dequeBox)
+		{
+			if (dequeBox)
+				GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Do(cardTarget => dequeBox.definition.UpdateCardTexture(cardTarget.card));
+			else
+				GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Do(cardTarget => cardTarget.card.split.ResetTexture());
+		}
+
+		public LerpTarget GetLerpTarget(DequeStorable card) => currentPage.GetLerpTarget(card);
 	}
 }

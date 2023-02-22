@@ -65,6 +65,7 @@ GameObject:
   - component: {fileID: 5650769596121791423}
   - component: {fileID: -3685217413209224028}
   - component: {fileID: 1929706404228634041}
+  - component: {fileID: 1232492613499314681}
   m_Layer: 0
   m_Name: Capturellection Card
   m_TagString: Untagged
@@ -88,7 +89,7 @@ Transform:
   - {fileID: 5936047809841997661}
   - {fileID: 8018883751580757012}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1567465723137536217
 BoxCollider:
@@ -311,7 +312,19 @@ MonoBehaviour:
       m_Calls: []
   onGrab:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5650769596121791423}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeStorable, SBEPIS.Capturllection
+        m_MethodName: SetStateGrabbed
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onHoldUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -337,6 +350,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: RotationFlipper, SBEPIS.Utils
         m_MethodName: ResetFlip
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5650769596121791423}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeStorable, SBEPIS.Capturllection
+        m_MethodName: SetStateGrabbed
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -389,6 +414,26 @@ MonoBehaviour:
   renderers:
   - {fileID: 7857901446257573216}
   material: {fileID: 2100000, guid: 844d7a0c4630e8d4ba7369119cc22223, type: 2}
+--- !u!95 &1232492613499314681
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275059195579274974}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1809637530485951540
 GameObject:
   m_ObjectHideFlags: 0

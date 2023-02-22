@@ -105,7 +105,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 914007334191890185}
         m_TargetAssemblyTypeName: SBEPIS.Capturllection.CardTarget, SBEPIS.Capturllection
-        m_MethodName: DestroyCardJoint
+        m_MethodName: DetatchFromTarget
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 914007334191890185}
         m_TargetAssemblyTypeName: SBEPIS.Capturllection.CardTarget, SBEPIS.Capturllection
-        m_MethodName: CreateCardJoint
+        m_MethodName: AttachToTarget
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

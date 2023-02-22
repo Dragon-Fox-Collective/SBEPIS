@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	public class LerpTargetDequeTargetter : MonoBehaviour
+	public class LerpTargetDequeCoupler : MonoBehaviour
 	{
 		public void Couple(LerpTargetAnimator animator)
 		{

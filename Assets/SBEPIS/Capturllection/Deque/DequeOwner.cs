@@ -81,12 +81,12 @@ namespace SBEPIS.Capturllection
 			dequeBox.state.SetBool(DequeBox.IsDiajectorOpen, diajector.isOpen);
 			dequeBox.state.SetBool(DequeBox.IsDeployed, diajector.isOpen);
 			
-			diajector.dequeBox = dequeBox;
+			diajector.UpdateCardTexture();
 		}
 		
 		private void UnsetDeque()
 		{
-			diajector.dequeBox = null;
+			diajector.UpdateCardTexture();
 			if (diajector.isOpen)
 				diajector.ForceClose(dequeBox.lowerTarget);
 		}
@@ -102,6 +102,8 @@ namespace SBEPIS.Capturllection
 		
 		private void Start()
 		{
+			diajector.owner = this;
+			
 			dequeBox = initialDeque;
 			if (dequeBox)
 				RetrieveDeque();
