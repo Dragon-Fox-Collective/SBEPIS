@@ -2414,6 +2414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upperTarget: {fileID: 1404265936580636440}
   cardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
+  electricArcPrefab: {fileID: 7962134878051775022, guid: bd0964b77b3f6f0459fc55699ed10fd6, type: 3}
   mainPage: {fileID: 1375851625624827706}
   cardDelay: 0.2
   curve:
@@ -2928,7 +2929,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ab4a9070c9b4c46872cdcc46a4eaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  socket: {fileID: 343684413715036165}
 --- !u!114 &644252844828260369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4358,7 +4358,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1438454189580415232}
   - component: {fileID: 1404265936580636440}
-  - component: {fileID: 70454494686087777}
   m_Layer: 0
   m_Name: Upper Target
   m_TagString: Untagged
@@ -4404,33 +4403,7 @@ MonoBehaviour:
       m_Calls: []
   onMoveTo:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 70454494686087777}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.LerpTargetDiajectorTargetter,
-          SBEPIS.Capturllection
-        m_MethodName: TargetDequeOrDiajector
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &70454494686087777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7927973737090238991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cecd28a7562d05b4592aa119fb2f0456, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  diajector: {fileID: 2162956669282852240}
+      m_Calls: []
 --- !u!1 &8249927293962966560
 GameObject:
   m_ObjectHideFlags: 0

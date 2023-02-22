@@ -35,6 +35,7 @@ namespace SBEPIS.Capturllection
 				return;
 
 			capturedItem = item;
+			name += $" ({item})";
 			item.gameObject.SetActive(false);
 			item.transform.parent = transform;
 			onCapture.Invoke(this, item);

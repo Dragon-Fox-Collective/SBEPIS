@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,18 +20,20 @@ namespace SBEPIS.Utils
 		private Quaternion startRotation;
 
 		private Dictionary<LerpTarget, List<UnityAction<LerpTargetAnimator>>> onMoveToActions = new();
+		private UnityAction<LerpTargetAnimator>[] tempOnMoveToActions;
 
 		private void Awake()
 		{
 			rigidbody = GetComponent<Rigidbody>();
 		}
 		
-		public void TargetTo(LerpTarget target)
+		public void TargetTo(LerpTarget target, params UnityAction<LerpTargetAnimator>[] tempActions)
 		{
 			rigidbody.Disable();
 			currentTarget = target;
 			SetStartPositionAndRotation(transform.position, transform.rotation);
 			time = 0;
+			tempOnMoveToActions = tempActions;
 
 			if (pausedAtTarget)
 			{
@@ -67,6 +68,8 @@ namespace SBEPIS.Utils
 			currentTarget = null;
 			
 			oldTarget.onMoveTo.Invoke(this);
+			foreach (UnityAction<LerpTargetAnimator> action in tempOnMoveToActions.ToList())
+				action.Invoke(this);
 			if (onMoveToActions.ContainsKey(oldTarget))
 				foreach (UnityAction<LerpTargetAnimator> action in onMoveToActions[oldTarget].ToList())
 					action.Invoke(this);

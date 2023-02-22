@@ -47,20 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onMoveFrom:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5970685025260058276}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.LerpTargetLowerDequeTargetter,
-          SBEPIS.Capturllection
-        m_MethodName: ActivateAnimator
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onMoveFromTravelUpdate:
     m_PersistentCalls:
       m_Calls:
@@ -95,20 +82,7 @@ MonoBehaviour:
         m_CallState: 2
   onMoveTo:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5970685025260058276}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.LerpTargetLowerDequeTargetter,
-          SBEPIS.Capturllection
-        m_MethodName: DeactivateAnimator
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &5970685025260058276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a38c633eaef3ba408fb3095659f7183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upperTarget: {fileID: 3710867468495898251}
+  otherTarget: {fileID: 3710867468495898251}
 --- !u!1 &6549942791269551679
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,7 +106,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8534325952982911961}
   - component: {fileID: 3710867468495898251}
-  - component: {fileID: 7183582366566965670}
   m_Layer: 0
   m_Name: Upper Target
   m_TagString: Untagged
@@ -178,33 +151,7 @@ MonoBehaviour:
       m_Calls: []
   onMoveTo:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7183582366566965670}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.LerpTargetDequeTargetter,
-          SBEPIS.Capturllection
-        m_MethodName: TargetDequeOrDiajector
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &7183582366566965670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6549942791269551679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c4978045a4e05941a44b58fa1d19895, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deque: {fileID: 7617101641436224015}
+      m_Calls: []
 --- !u!1 &7762745506201212150
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +196,7 @@ Transform:
   - {fileID: 8549242687996600689}
   - {fileID: 8534325952982911961}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6933793677958583015
 BoxCollider:
