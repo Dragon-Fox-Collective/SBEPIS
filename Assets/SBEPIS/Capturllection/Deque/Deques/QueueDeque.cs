@@ -13,7 +13,7 @@ namespace SBEPIS.Capturllection.Deques
 		
 		public override void Tick(List<DequeStorable> targets, float delta) { }
 
-		public override void LayoutTargets(Dictionary<DequeStorable, CardTarget> targets)
+		public override void LayoutTargets(List<DequeStorable> cards, Dictionary<DequeStorable, CardTarget> targets)
 		{
 			Vector3 right = separatingDistance * (targets.Count - 1) / 2 * Vector3.left;
 			foreach ((DequeStorable card, CardTarget target) in targets)

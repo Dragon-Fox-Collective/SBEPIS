@@ -34,7 +34,7 @@ namespace SBEPIS.Capturllection.Deques
 			}
 		}
 
-		public override void LayoutTargets(Dictionary<DequeStorable, CardTarget> targets)
+		public override void LayoutTargets(List<DequeStorable> cards, Dictionary<DequeStorable, CardTarget> targets)
 		{
 			float cardAngle = time * speed;
 			float deltaAngle = 360f / targets.Count;

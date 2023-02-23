@@ -17,7 +17,7 @@ namespace SBEPIS.Capturllection
 		
 		public void LayoutTargets(Dictionary<DequeStorable, CardTarget> targets)
 		{
-			definition.LayoutTargets(targets);
+			definition.LayoutTargets(cards, targets);
 		}
 		
 		public bool CanFetch(DequeStorable card)

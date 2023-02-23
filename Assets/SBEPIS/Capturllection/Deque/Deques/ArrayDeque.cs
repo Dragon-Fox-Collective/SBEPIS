@@ -20,7 +20,7 @@ namespace SBEPIS.Capturllection.Deques
 			time += delta;
 		}
 
-		public override void LayoutTargets(Dictionary<DequeStorable, CardTarget> targets)
+		public override void LayoutTargets(List<DequeStorable> cards, Dictionary<DequeStorable, CardTarget> targets)
 		{
 			int i = 0;
 			Vector3 right = cardDistance * (targets.Count - 1) / 2 * Vector3.left;
