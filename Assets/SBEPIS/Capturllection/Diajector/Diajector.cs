@@ -86,7 +86,7 @@ namespace SBEPIS.Capturllection
 			currentPage = null;
 		}
 		
-		private void ForceCloseCurrentPage(LerpTarget bottomTarget)
+		private void ForceCloseCurrentPage()
 		{
 			if (!isOpen)
 			{
@@ -94,7 +94,7 @@ namespace SBEPIS.Capturllection
 				return;
 			}
 			
-			currentPage.ForceClose(bottomTarget);
+			currentPage.ForceClose();
 			currentPage = null;
 		}
 		
@@ -104,10 +104,10 @@ namespace SBEPIS.Capturllection
 			gameObject.SetActive(false);
 		}
 		
-		public void ForceClose(LerpTarget bottomTarget)
+		public void ForceClose()
 		{
 			coroutineOwner.StopAllCoroutines();
-			ForceCloseCurrentPage(bottomTarget);
+			ForceCloseCurrentPage();
 			gameObject.SetActive(false);
 		}
 		

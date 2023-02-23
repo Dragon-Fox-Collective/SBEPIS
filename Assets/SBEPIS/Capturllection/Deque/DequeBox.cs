@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using SBEPIS.Capturllection.DequeState;
 using UnityEngine;
 using SBEPIS.Controller;
 using SBEPIS.Physics;
@@ -19,21 +20,14 @@ namespace SBEPIS.Capturllection
 		
 		public DequeOwner owner { get; set; }
 		
-		public bool isDeployed => state.GetBool(IsDeployed);
+		public bool isDeployed => state.isDeployed;
 		
 		public Grabbable grabbable { get; private set; }
 		public GravitySum gravitySum { get; private set; }
 		public SplitTextureSetup split { get; private set; }
 		public CollisionTrigger collisionTrigger { get; private set; }
 		public CouplingPlug plug { get; private set; }
-		public Animator state { get; private set; }
-		
-		public static readonly int IsGrabbed = Animator.StringToHash("Is Grabbed");
-		public static readonly int IsCoupled = Animator.StringToHash("Is Coupled");
-		public static readonly int IsBound = Animator.StringToHash("Is Bound");
-		public static readonly int IsDiajectorOpen = Animator.StringToHash("Is Diajector Open");
-		public static readonly int IsDeployed = Animator.StringToHash("Is Deployed");
-		public static readonly int Toss = Animator.StringToHash("On Toss");
+		public DequeStateMachine state { get; private set; }
 
 		private void Awake()
 		{
@@ -42,7 +36,7 @@ namespace SBEPIS.Capturllection
 			split = GetComponent<SplitTextureSetup>();
 			collisionTrigger = GetComponent<CollisionTrigger>();
 			plug = GetComponent<CouplingPlug>();
-			state = GetComponent<Animator>();
+			state = new DequeStateMachine(GetComponent<Animator>());
 		}
 		
 		private void Start()
@@ -60,9 +54,6 @@ namespace SBEPIS.Capturllection
 			dequeOwner.dequeBox = this;
 		}
 
-		public void SetStateGrabbed(bool grabbed)
-		{
-			state.SetBool(IsGrabbed, grabbed);
-		}
+		public void SetStateGrabbed(bool grabbed) => state.isGrabbed = grabbed;
 	}
 }

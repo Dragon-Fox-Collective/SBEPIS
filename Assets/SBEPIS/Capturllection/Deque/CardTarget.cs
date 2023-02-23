@@ -38,12 +38,12 @@ namespace SBEPIS.Capturllection
 
 		public void AttachToTarget(LerpTargetAnimator animator)
 		{
-			card.state.SetBool(DequeStorable.HasBeenAssembled, true);
+			card.state.hasBeenAssembled = true;
 		}
 
 		public void DetatchFromTarget(LerpTargetAnimator animator)
 		{
-			card.state.SetBool(DequeStorable.HasBeenAssembled, false);
+			card.state.hasBeenAssembled = false;
 		}
 	}
 }

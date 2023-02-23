@@ -17,9 +17,9 @@ namespace SBEPIS.Capturllection
 			deques.Do(deque => deque.Tick(cards, delta));
 		}
 		
-		public void LayoutTargets(Dictionary<DequeStorable, CardTarget> targets)
+		public void LayoutTargets(List<DequeStorable> cards, Dictionary<DequeStorable, CardTarget> targets)
 		{
-			deques[0].LayoutTargets(targets);
+			deques[0].LayoutTargets(cards, targets);
 		}
 		
 		public bool CanFetch(List<DequeStorable> cards, DequeStorable card)

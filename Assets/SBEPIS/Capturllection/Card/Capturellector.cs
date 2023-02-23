@@ -38,27 +38,22 @@ namespace SBEPIS.Capturllection
 			Capturllectable item = itemGrabbable.GetComponent<Capturllectable>();
 			if (!item || !item.canCapturllect)
 				return;
-
+			
 			grabber.Drop();
 			Capturellectainer container = Instantiate(cardPrefab);
 			container.GetComponent<ItemBase>().BecomeItem();
 			ResetCardTransform(container);
 			container.Capture(item);
-
-			Grabbable cardGrabbable = container.GetComponent<Grabbable>();
-			if (cardGrabbable)
+			
+			if (container.TryGetComponent(out Grabbable cardGrabbable))
 				grabber.Grab(cardGrabbable);
 			
-			DequeStorable card = container.GetComponent<DequeStorable>();
-			if (card)
+			if (container.TryGetComponent(out DequeStorable card))
 			{
 				card.owner = owner;
-				card.state.SetBool(DequeStorable.IsBound, true);
+				card.state.isBound = true;
 				owner.dequeBox.definition.UpdateCardTexture(card);
 				owner.storage.StoreCard(card);
-				
-				if (owner.diajector.layout && owner.diajector.layout.isActiveAndEnabled)
-					owner.diajector.layout.AddPermanentTargetAtTable(card)
 			}
 		}
 

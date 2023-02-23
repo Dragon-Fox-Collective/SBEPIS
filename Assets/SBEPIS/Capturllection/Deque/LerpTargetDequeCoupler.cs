@@ -8,7 +8,7 @@ namespace SBEPIS.Capturllection
 		public void Couple(LerpTargetAnimator animator)
 		{
 			DequeBox dequeBox = animator.GetComponent<DequeBox>();
-			dequeBox.state.SetBool(DequeBox.IsCoupled, true);
+			dequeBox.state.isCoupled = true;
 		}
 	}
 }

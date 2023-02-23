@@ -9,7 +9,7 @@ namespace SBEPIS.Capturllection
 		public Texture2D dequeTexture;
 		
 		public abstract void Tick(List<DequeStorable> cards, float delta);
-		public abstract void LayoutTargets(Dictionary<DequeStorable, CardTarget> targets);
+		public abstract void LayoutTargets(List<DequeStorable> cards, Dictionary<DequeStorable, CardTarget> targets);
 		
 		public abstract bool CanFetch(List<DequeStorable> cards, DequeStorable card);
 		public abstract int GetIndexToInsertInto(List<DequeStorable> cards, DequeStorable card);

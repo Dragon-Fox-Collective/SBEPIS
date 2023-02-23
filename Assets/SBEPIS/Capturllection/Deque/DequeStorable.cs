@@ -3,6 +3,7 @@ using SBEPIS.Thaumaturgy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SBEPIS.Capturllection.CardState;
 using SBEPIS.Utils;
 using UnityEngine;
 
@@ -17,31 +18,21 @@ namespace SBEPIS.Capturllection
 		
 		public Grabbable grabbable { get; private set; }
 		public SplitTextureSetup split { get; private set; }
-		public Animator state { get; private set; }
+		public CardStateMachine state { get; private set; }
 		public LerpTargetAnimator animator { get; private set; }
 		
 		public DequeOwner owner { get; set; }
-
+		
 		public bool isStored => owner;
 		public bool canStore => storePredicates.All(predicate => predicate.Invoke());
-
-		private readonly List<DequeCaptureLayout> layouts = new();
-
-		public static readonly int IsGrabbed = Animator.StringToHash("Is Grabbed");
-		public static readonly int IsPageOpen = Animator.StringToHash("Is Page Open");
-		public static readonly int IsAssembling = Animator.StringToHash("Is Assembling");
-		public static readonly int IsDisassembling = Animator.StringToHash("Is Disassembling");
-		public static readonly int HasBeenAssembled = Animator.StringToHash("Has Been Assembled");
-		public static readonly int IsBound = Animator.StringToHash("Is Bound");
-		public static readonly int IsInLayoutArea = Animator.StringToHash("Is In Layout Area");
-		public static readonly int TargetNumber = Animator.StringToHash("Target Number");
-		public static readonly int ForceClose = Animator.StringToHash("On Force Close");
-
+		
+		private List<DequeCaptureLayout> layouts = new();
+		
 		private void Awake()
 		{
 			grabbable = GetComponent<Grabbable>();
 			split = GetComponent<SplitTextureSetup>();
-			state = GetComponent<Animator>();
+			state = new CardStateMachine(GetComponent<Animator>());
 			animator = GetComponent<LerpTargetAnimator>();
 			
 			storePredicates.Add(() => isStoringAllowed);
@@ -59,27 +50,43 @@ namespace SBEPIS.Capturllection
 		
 		public void SetStateGrabbed(bool grabbed)
 		{
-			state.SetBool(IsGrabbed, grabbed);
+			state.isGrabbed = grabbed;
 		}
-
+		
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DequeCaptureLayout layout))
-			{
-				layouts.Add(layout);
-				if (layouts.Count == 1)
-					state.SetBool(IsInLayoutArea, true);
-			}
+			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DequeCaptureLayout layout) && canStore)
+				AddLayout(layout);
 		}
 		
 		private void OnTriggerExit(Collider other)
 		{
-			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DequeCaptureLayout layout))
-			{
-				layouts.Remove(layout);
-				if (layouts.Count == 0)
-					state.SetBool(IsInLayoutArea, true);
-			}
+			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DequeCaptureLayout layout) && layout.HasTemporaryTarget(this))
+				RemoveLayout(layout);
+		}
+
+		private void AddLayout(DequeCaptureLayout layout)
+		{
+			layouts.Add(layout);
+			if (layouts.Count == 1)
+				state.isInLayoutArea = true;
+			layout.AddTemporaryTarget(this);
+		}
+		
+		private void RemoveLayout(DequeCaptureLayout layout)
+		{
+			layouts.Add(layout);
+			if (layouts.Count == 1)
+				state.isInLayoutArea = true;
+			layout.AddTemporaryTarget(this);
+		}
+		
+		public DequeCaptureLayout PopAllLayouts()
+		{
+			DequeCaptureLayout lastLayout = layouts[^1];
+			while (layouts.Count > 0)
+				RemoveLayout(layouts[0]);
+			return lastLayout;
 		}
 	}
 }

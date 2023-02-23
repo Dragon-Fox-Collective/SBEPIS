@@ -61,9 +61,9 @@ namespace SBEPIS.Capturllection
 			
 			Destroy(dequeAnimator);
 			
-			dequeBox.state.SetBool(DequeBox.IsBound, false);
-			dequeBox.state.SetBool(DequeBox.IsDiajectorOpen, false);
-			dequeBox.state.SetBool(DequeBox.IsDeployed, false);
+			dequeBox.state.isBound = false;
+			dequeBox.state.isDiajectorOpen = false;
+			dequeBox.state.isDeployed = false;
 		}
 		
 		private void SetupNewDeque()
@@ -77,9 +77,9 @@ namespace SBEPIS.Capturllection
 			dequeAnimator = dequeBox.gameObject.AddComponent<LerpTargetAnimator>();
 			dequeAnimator.curve = retrievalAnimationCurve;
 			
-			dequeBox.state.SetBool(DequeBox.IsBound, true);
-			dequeBox.state.SetBool(DequeBox.IsDiajectorOpen, diajector.isOpen);
-			dequeBox.state.SetBool(DequeBox.IsDeployed, diajector.isOpen);
+			dequeBox.state.isBound = true;
+			dequeBox.state.isDiajectorOpen = diajector.isOpen;
+			dequeBox.state.isDeployed = diajector.isOpen;
 			
 			diajector.UpdateCardTexture();
 		}
@@ -88,7 +88,7 @@ namespace SBEPIS.Capturllection
 		{
 			diajector.UpdateCardTexture();
 			if (diajector.isOpen)
-				diajector.ForceClose(dequeBox.lowerTarget);
+				diajector.ForceClose();
 		}
 		
 		private void Awake()
@@ -127,31 +127,31 @@ namespace SBEPIS.Capturllection
 		private void CloseDiajector(Grabber grabber, Grabbable grabbable) => CloseDiajector();
 		private void CloseDiajector()
 		{
-			dequeBox.state.SetBool(DequeBox.IsDiajectorOpen, false);
+			dequeBox.state.isDiajectorOpen = false;
 		}
 		
 		private void RetrieveDeque()
 		{
 			CloseDiajector();
-			dequeBox.state.SetBool(DequeBox.IsDeployed, false);
+			dequeBox.state.isDeployed = false;
 		}
 
 		private void TossDeque()
 		{
 			DecoupleDeque();
-			dequeBox.state.SetTrigger(DequeBox.Toss);
+			dequeBox.state.Toss();
 		}
 		
 		private void StartDiajectorAssembly()
 		{
-			dequeBox.state.SetBool(DequeBox.IsDiajectorOpen, true);
+			dequeBox.state.isDiajectorOpen = true;
 		}
 
 		private void DecoupleDeque(CouplingPlug plug, CouplingSocket socket) => DecoupleDeque();
 		private void DecoupleDeque()
 		{
-			dequeBox.state.SetBool(DequeBox.IsDeployed, true);
-			dequeBox.state.SetBool(DequeBox.IsCoupled, false);
+			dequeBox.state.isDeployed = true;
+			dequeBox.state.isCoupled = false;
 		}
 	}
 }

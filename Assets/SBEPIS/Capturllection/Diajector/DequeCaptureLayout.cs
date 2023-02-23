@@ -1,3 +1,4 @@
+using System;
 using SBEPIS.Controller;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,124 +46,49 @@ namespace SBEPIS.Capturllection
 			}
 		}
 		
-		private void OnTriggerEnter(Collider other)
+		public CardTarget AddTemporaryTarget(DequeStorable card)
 		{
-			if (!diajector.isBound || !other.attachedRigidbody)
-				return;
-			DequeStorable card = other.attachedRigidbody.GetComponent<DequeStorable>();
-			if (!card || !card.canStore)
-				return;
+			if (targets.ContainsKey(card))
+				throw new ArgumentException($"Tried to add a target of {card} to {this} but {targets[card]} already exists");
 			
-			if (card.grabbable.isBeingHeld)
-				AddTemporaryTarget(card);
-			else
-				AddPermanentTargetAtTable(card);
-		}
-		
-		private void OnTriggerExit(Collider other)
-		{
-			if (!diajector.isBound || !other.attachedRigidbody)
-				return;
-			DequeStorable card = other.attachedRigidbody.GetComponent<DequeStorable>();
-			if (!card || !card.canStore)
-				return;
-			
-			if (card.grabbable.isBeingHeld)
-				RemoveTemporaryTarget(card);
-		}
-		
-		private CardTarget AddCardTarget(DequeStorable card)
-		{
-			CardTarget newTarget = Instantiate(cardTargetPrefab, transform)
+			CardTarget newTarget = Instantiate(cardTargetPrefab, transform);
 			newTarget.card = card;
 			targets.Add(card, newTarget);
 			return newTarget;
 		}
 		
-		private void RemoveCardTarget(DequeStorable card)
+		public void RemoveTemporaryTarget(DequeStorable card)
 		{
 			CardTarget target = targets[card];
 			targets.Remove(card);
 			Destroy(target.gameObject);
 		}
-		
-		public CardTarget AddTemporaryTarget(DequeStorable card)
-		{
-			card.grabbable.onDrop.AddListener(MakeCardPermanent)
-			CardTarget target = AddCardTarget(card);
-			return target;
-		}
-		
-		public void RemoveTemporaryTarget(DequeStorable card)
-		{
-			card.grabbable.onDrop.RemoveListener(MakeCardPermanent);
-			RemoveCardTarget(card);
-		}
-		
-		private void MakeCardPermanent(Grabber grabber, Grabbable grabbable)
-		{
-			DequeStorable card = grabbable.GetComponent<DequeStorable>()
-			card.grabbable.onDrop.RemoveListener(MakeCardPermanent);
-			CardTarget target = targets[card];
-			LerpTargetAnimator animator = AddCard(card, target);
-			animator.TeleportTo(target.lerpTarget);
-		}
-		
-		public CardTarget AddPermanentTargetAtTable(DequeStorable card)
-		{
-			CardTarget target = AddCardTarget(card)
-			LerpTargetAnimator animator = AddCard(card, target);
-			if (!card.grabbable.isBeingHeld)
-			{
-				animator.TeleportTo(target.lerpTarget);
-			}
-			else
-			{
-				animator.SetPausedAt(target.lerpTarget);
-				target.onGrab.Invoke();
-			}
-			return target;
-		}
-		
-		public CardTarget AddPermanentTargetAtDeque(DequeStorable card)
-		{
-			CardTarget target = AddCardTarget(card)
-			LerpTargetAnimator animator = AddCard(card, target);
-			animator.TeleportTo(diajector.owner.dequeBox.lowerTarget);
-			return target;
-		}
 
-		public void RemovePermanentTarget(DequeStorable card)
+		public bool HasTemporaryTarget(DequeStorable card) => targets.ContainsKey(card) && !diajector.owner.storage.Contains(card);
+
+		public CardTarget AddPermanentTargetAndCard(DequeStorable card)
 		{
-			RemoveCard(card.GetComponent<Capturellectainer>(), card);
-		}
-		
-		private LerpTargetAnimator AddCard(DequeStorable card, CardTarget target)
-		{
-			if (!diajector.isBound)
-				return null
-			
-			Capturellectainer container = card.GetComponent<Capturellectainer>();
-			if (container)
+			CardTarget target = HasTemporaryTarget(card) ? targets[card] : AddTemporaryTarget(card);
+			if (card.TryGetComponent(out Capturellectainer container))
 			{
-				container.onRetrieve.AddListener(RemoveCard);
+				container.onRetrieve.AddListener(RemovePermanentTargetAndCard);
 				container.retrievePredicates.Add(CanFetch);
 			}
-			
-			LerpTargetAnimator animator = dequePage.AddCard(card, target);
-			diajector.owner.dequeBox.lowerTarget.onMoveFrom.Invoke(animator);
-
-			return animator;
+			dequePage.AddCard(card, target);
+			diajector.owner.dequeBox.lowerTarget.onMoveFrom.Invoke(card.animator);
+			return target;
 		}
 		
-		private void RemoveCard(Capturellectainer container, Capturllectable item) => RemoveCard(container, container.GetComponent<DequeStorable>());
-		private void RemoveCard(Capturellectainer container, DequeStorable card)
+		private void RemovePermanentTargetAndCard(Capturellectainer container, Capturllectable item) => RemovePermanentTargetAndCard(container.GetComponent<DequeStorable>());
+		public void RemovePermanentTargetAndCard(DequeStorable card)
 		{
-			container.onRetrieve.RemoveListener(RemoveCard);
-			container.retrievePredicates.Remove(CanFetch);
-			
+			if (card.TryGetComponent(out Capturellectainer container))
+			{
+				container.onRetrieve.RemoveListener(RemovePermanentTargetAndCard);
+				container.retrievePredicates.Remove(CanFetch);
+			}
 			dequePage.RemoveCard(card);
-			RemoveCardTarget(card);
+			RemoveTemporaryTarget(card);
 		}
 		
 		private bool CanFetch(Capturellectainer card) => CanFetch(card.GetComponent<DequeStorable>());
@@ -171,16 +97,21 @@ namespace SBEPIS.Capturllection
 		public void SyncCards() => SyncCards(diajector.owner.storage);
 		public void SyncCards(DequeStorage cards)
 		{
-			foreach ((DequeStorable card,  CardTarget target) in targets.Where(pair => !cards.Contains(pair.Key)).ToList())
-				RemovePermanentTarget(card);
+			foreach ((DequeStorable card, CardTarget target) in targets.Where(pair => !cards.Contains(pair.Key)).ToList())
+				RemovePermanentTargetAndCard(card);
 
 			foreach (DequeStorable card in cards.Where(card => !targets.ContainsKey(card)))
 			{
-				diajector.owner.dequeBox.CleanUpCard(card);
+				CardTarget target = AddPermanentTargetAndCard(card);
 				if (card.grabbable.isBeingHeld)
-					AddPermanentTargetAtTable(card);
+				{
+					card.animator.SetPausedAt(target.lerpTarget);
+					target.onGrab.Invoke();
+				}
 				else
-					AddPermanentTargetAtDeque(card);
+				{
+					card.animator.TeleportTo(diajector.owner.dequeBox.lowerTarget);
+				}
 			}
 		}
 	}
