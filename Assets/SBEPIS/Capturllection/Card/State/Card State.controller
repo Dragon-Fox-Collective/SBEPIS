@@ -344,7 +344,7 @@ AnimatorStateTransition:
     m_ConditionEvent: Is Disassembling
     m_EventTreshold: 0
   - m_ConditionMode: 4
-    m_ConditionEvent: Board Target
+    m_ConditionEvent: Target Number
     m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 0}
@@ -429,7 +429,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: Board Target
+    m_ConditionEvent: Target Number
     m_EventTreshold: 1
   - m_ConditionMode: 1
     m_ConditionEvent: Is Disassembling
@@ -947,7 +947,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: Board Target
+  - m_Name: Target Number
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -1019,7 +1019,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: Board Target
+    m_ConditionEvent: Target Number
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: Is Assembling
@@ -1145,7 +1145,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: Board Target
+    m_ConditionEvent: Target Number
     m_EventTreshold: 2
   - m_ConditionMode: 1
     m_ConditionEvent: Is Disassembling
@@ -1238,7 +1238,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: Board Target
+    m_ConditionEvent: Target Number
     m_EventTreshold: 1
   - m_ConditionMode: 1
     m_ConditionEvent: Is Assembling
