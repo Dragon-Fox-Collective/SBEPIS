@@ -3,19 +3,18 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection.CardState
 {
-	public class CardEnableDisableState : StateMachineBehaviour
+	public class EnablerDisablerState : StateMachineBehaviour
 	{
-		[Tooltip("If enabled, the gameobject is disabled on entry and enabled on exit")]
-		public bool invert;
-		
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			animator.gameObject.SetActive(!invert);
+			EnablerDisabler enabler = animator.GetComponent<EnablerDisabler>();
+			enabler.Disable();
 		}
 		
 		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			animator.gameObject.SetActive(invert);
+			EnablerDisabler enabler = animator.GetComponent<EnablerDisabler>();
+			enabler.Enable();
 		}
 	}
 }

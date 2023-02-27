@@ -54,6 +54,6 @@ namespace SBEPIS.Capturllection
 			dequeOwner.dequeBox = this;
 		}
 
-		public void SetStateGrabbed(bool grabbed) => state.isGrabbed = grabbed;
+		public void SetStateGrabbed(bool isGrabbed) => state.isGrabbed = isGrabbed;
 	}
 }
