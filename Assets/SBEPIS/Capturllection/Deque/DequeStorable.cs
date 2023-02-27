@@ -48,10 +48,7 @@ namespace SBEPIS.Capturllection
 				storePredicates.Add(() => punchable.punchedBits.isPerfectlyGeneric);
 		}
 		
-		public void SetStateGrabbed(bool grabbed)
-		{
-			state.isGrabbed = grabbed;
-		}
+		public void SetStateGrabbed(bool grabbed) => state.isGrabbed = grabbed;
 		
 		private void OnTriggerEnter(Collider other)
 		{
