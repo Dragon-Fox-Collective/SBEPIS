@@ -40,6 +40,10 @@ namespace SBEPIS.Capturllection
 
 				Capturllectable capturllectable = card.GetComponent<Capturllectable>();
 				capturllectable.canCapturllect = false;
+				
+				Grabbable cardGrabbable = card.GetComponent<Grabbable>();
+				cardGrabbable.onGrab.AddListener((grabber, grabbable) => target.onGrab.Invoke());
+				cardGrabbable.onDrop.AddListener((grabber, grabbable) => target.onDrop.Invoke());
 			}
 		}
 
