@@ -59,8 +59,8 @@ namespace SBEPIS.Capturllection
 		}
 
 		public bool HasCard(DequeStorable card) => cardTargets.ContainsKey(card);
-		public CardTarget GetCardTarget(DequeStorable card) => cardTargets[card];
-		public LerpTarget GetLerpTarget(DequeStorable card) => GetCardTarget(card).lerpTarget;
+		public CardTarget GetCardTarget(DequeStorable card) => cardTargets.ContainsKey(card) ? cardTargets[card] : null;
+		public LerpTarget GetLerpTarget(DequeStorable card) => cardTargets.ContainsKey(card) ? GetCardTarget(card).lerpTarget : null;
 
 		public void Refresh()
 		{
