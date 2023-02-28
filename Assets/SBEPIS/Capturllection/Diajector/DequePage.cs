@@ -72,9 +72,9 @@ namespace SBEPIS.Capturllection
 			gameObject.SetActive(true);
 			if (cardTargets.Count == 0)
 				CreateCards(GetComponentsInChildren<CardTarget>());
+			onPreparePage.Invoke();
 			foreach ((DequeStorable card, CardTarget target) in cardTargets)
 				card.state.isPageOpen = true;
-			onPreparePage.Invoke();
 			diajector.coroutineOwner.StartCoroutine(SpawnCards());
 		}
 
