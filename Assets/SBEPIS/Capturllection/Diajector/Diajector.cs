@@ -34,6 +34,7 @@ namespace SBEPIS.Capturllection
 		private DequePage currentPage;
 		
 		public bool isOpen => currentPage;
+		public bool isLayoutActive => layout && layout.isActiveAndEnabled;
 		
 		public DequeCaptureLayout layout { get; private set; }
 		

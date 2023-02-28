@@ -45,16 +45,22 @@ namespace SBEPIS.Capturllection
 			ResetCardTransform(container);
 			container.Capture(item);
 			
-			if (container.TryGetComponent(out Grabbable cardGrabbable))
-				grabber.Grab(cardGrabbable);
-			
 			if (container.TryGetComponent(out DequeStorable card))
 			{
 				card.owner = owner;
 				card.state.isBound = true;
 				owner.dequeBox.definition.UpdateCardTexture(card);
 				owner.storage.StoreCard(card);
+				
+				if (owner.diajector.isLayoutActive)
+				{
+					owner.diajector.layout.AddPermanentTargetAndCard(card);
+					card.state.isPageOpen = true;
+				}
 			}
+			
+			if (container.TryGetComponent(out Grabbable cardGrabbable))
+				grabber.Grab(cardGrabbable);
 		}
 
 		public void RetrieveAndGrabItem(Capturellectainer card)
