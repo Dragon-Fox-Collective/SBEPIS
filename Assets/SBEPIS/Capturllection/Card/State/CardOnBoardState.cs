@@ -12,6 +12,8 @@ namespace SBEPIS.Capturllection.CardState
 		{
 			DequeStorable card = animator.GetComponent<DequeStorable>();
 			LerpTarget target = card.owner.diajector.GetLerpTarget(card);
+			if (!target)
+				return;
 			Rigidbody staticRigidbody = card.owner.diajector.staticRigidbody;
 			StrengthSettings cardStrength = card.owner.diajector.cardStrength;
 
@@ -23,7 +25,8 @@ namespace SBEPIS.Capturllection.CardState
 
 		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			Destroy(targetter);
+			if (targetter)
+				Destroy(targetter);
 		}
 	}
 }
