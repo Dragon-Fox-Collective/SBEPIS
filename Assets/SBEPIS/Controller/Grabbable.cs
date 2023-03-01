@@ -17,7 +17,7 @@ namespace SBEPIS.Controller
 		public ItemEvent onDrop = new();
 		public ItemEvent onStopTouch = new();
 		
-		public Grabber grabbingGrabber { get; private set; }  // TODO: Unlink this
+		public Grabber grabbingGrabber { get; private set; }
 		public new Rigidbody rigidbody { get; private set; }
 		public bool isBeingHeld { get; private set; }
 		
