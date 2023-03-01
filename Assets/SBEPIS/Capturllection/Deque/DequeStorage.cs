@@ -6,10 +6,23 @@ namespace SBEPIS.Capturllection
 {
 	public class DequeStorage : MonoBehaviour, IEnumerable<DequeStorable>
 	{
+		public int initialCardCount = 5;
+
+		public DequeStorable cardPrefab;
+		
 		public DequeLayer definition { get; set; }
 		
 		private List<DequeStorable> cards = new();
-		
+
+		private void Start()
+		{
+			for (int _ = 0; _ < initialCardCount; _++)
+			{
+				DequeStorable card = Instantiate(cardPrefab);
+				cards.Add(card);
+			}
+		}
+
 		public void Tick(float deltaTime)
 		{
 			definition.Tick(cards, deltaTime);

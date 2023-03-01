@@ -74,6 +74,7 @@ namespace SBEPIS.Capturllection
 				container.onRetrieve.AddListener(RemovePermanentTargetAndCard);
 				container.retrievePredicates.Add(CanFetch);
 			}
+			card.owner = diajector.owner;
 			dequePage.AddCard(card, target);
 			diajector.owner.dequeBox.lowerTarget.onMoveFrom.Invoke(card.animator);
 			return target;

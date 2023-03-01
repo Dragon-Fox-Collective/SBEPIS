@@ -19,7 +19,7 @@ namespace SBEPIS.Capturllection
 		public UnityEvent onGrab = new();
 		public UnityEvent onDrop = new();
 		
-		public DequeStorable card { get; set; } // TODO: Unlink this
+		public DequeStorable card { get; set; }
 		
 		public LerpTarget lerpTarget { get; private set; }
 		public DequePage page { get; private set; }
