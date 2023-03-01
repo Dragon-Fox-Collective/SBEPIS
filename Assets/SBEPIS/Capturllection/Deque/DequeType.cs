@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection
@@ -29,5 +30,7 @@ namespace SBEPIS.Capturllection
 			int index = cards.FindIndex(predicate);
 			return index != -1 ? index : defaultIndexFunc.Invoke(cards);
 		}
+
+		public static IEnumerable<(DequeStorable, CardTarget)> InOrder(List<DequeStorable> cards, Dictionary<DequeStorable, CardTarget> targets) => cards.Zip(cards.Select(card => targets[card]));
 	}
 }

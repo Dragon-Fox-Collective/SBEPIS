@@ -14,12 +14,13 @@ namespace SBEPIS.Capturllection
 		
 		private List<DequeStorable> cards = new();
 		
-		private void Start()
+		public void CreateInitialCards(DequeOwner owner)
 		{
 			for (int _ = 0; _ < initialCardCount; _++)
 			{
 				DequeStorable card = Instantiate(cardPrefab);
-				cards.Add(card);
+				card.owner = owner;
+				StoreCard(card);
 			}
 		}
 		
@@ -44,16 +45,30 @@ namespace SBEPIS.Capturllection
 			cards.Insert(insertIndex, card);
 		}
 
-		public void StoreItem(Capturllectable item)
+		public (DequeStorable, Capturellectainer) StoreItem(Capturllectable item)
 		{
-			int fetchIndex = definition.GetIndexToStoreInto(cards);
-			DequeStorable fetchCard = cards[fetchIndex];
-			cards.RemoveAt(fetchIndex);
+			int storeIndex = definition.GetIndexToStoreInto(cards);
+			DequeStorable card = cards[storeIndex];
+			cards.RemoveAt(storeIndex);
 			
-			Capturellectainer container = fetchCard.GetComponent<Capturellectainer>();
-			container.Fetch();
+			Capturellectainer container = card.GetComponent<Capturellectainer>();
 			container.Capture(item);
-			StoreCard(fetchCard);
+			StoreCard(card);
+
+			return (card, container);
+		}
+		
+		public Capturllectable FetchItem(DequeStorable card, Capturellectainer container)
+		{
+			if (!CanFetch(card))
+				return null;
+
+			cards.Remove(card);
+			
+			Capturllectable item = container.Fetch();
+			StoreCard(card);
+			
+			return item;
 		}
 		
 		

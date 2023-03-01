@@ -32,16 +32,17 @@ namespace SBEPIS.Capturllection
 		{
 			if (!diajector.isBound)
 				return;
-			
-			diajector.owner.storage.Tick(Time.fixedDeltaTime);
-			diajector.owner.storage.LayoutTargets(targets);
+
+			DequeStorage storage = diajector.owner.storage;
+			storage.Tick(Time.fixedDeltaTime);
+			storage.LayoutTargets(targets);
 			
 			foreach ((DequeStorable card, CardTarget target) in targets)
 			{
 				target.transform.localPosition += Vector3.forward * cardZ;
 				target.transform.localRotation *= Quaternion.Euler(0, 180, 0);
 				
-				if (CanFetch(card))
+				if (storage.CanFetch(card))
 					target.transform.position += target.transform.up * fetchableCardY;
 			}
 		}
@@ -69,31 +70,17 @@ namespace SBEPIS.Capturllection
 		public CardTarget AddPermanentTargetAndCard(DequeStorable card)
 		{
 			CardTarget target = HasTemporaryTarget(card) ? targets[card] : AddTemporaryTarget(card);
-			if (card.TryGetComponent(out Capturellectainer container))
-			{
-				container.onRetrieve.AddListener(RemovePermanentTargetAndCard);
-				container.retrievePredicates.Add(CanFetch);
-			}
 			card.owner = diajector.owner;
 			dequePage.AddCard(card, target);
 			diajector.owner.dequeBox.lowerTarget.onMoveFrom.Invoke(card.animator);
 			return target;
 		}
 		
-		private void RemovePermanentTargetAndCard(Capturellectainer container, Capturllectable item) => RemovePermanentTargetAndCard(container.GetComponent<DequeStorable>());
 		public void RemovePermanentTargetAndCard(DequeStorable card)
 		{
-			if (card.TryGetComponent(out Capturellectainer container))
-			{
-				container.onRetrieve.RemoveListener(RemovePermanentTargetAndCard);
-				container.retrievePredicates.Remove(CanFetch);
-			}
 			dequePage.RemoveCard(card);
 			RemoveTemporaryTarget(card);
 		}
-		
-		private bool CanFetch(Capturellectainer card) => CanFetch(card.GetComponent<DequeStorable>());
-		private bool CanFetch(DequeStorable card) => diajector.owner.storage.CanFetch(card);
 
 		public void SyncCards() => SyncCards(diajector.owner.storage);
 		public void SyncCards(DequeStorage cards)

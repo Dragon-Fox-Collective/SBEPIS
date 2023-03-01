@@ -4,20 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturllection
 {
 	public class Capturellectainer : MonoBehaviour
 	{
 		public Item defaultCapturedItemPrefab;
-		public bool isRetrievingAllowed = true;
-		public List<Predicate<Capturellectainer>> retrievePredicates = new();
+		[FormerlySerializedAs("isRetrievingAllowed")]
+		public bool isFetchingAllowed = true;
+		public List<Predicate<Capturellectainer>> fetchPredicates = new();
+
+		public CaptureEvent onCapture = new();
+		[FormerlySerializedAs("onRetrieve")]
+		public CaptureEvent onFetch = new();
 		
-		public CaptureEvent onCapture = new(), onRetrieve = new();
-		
-		public bool canRetrieve => retrievePredicates.All(predicate => predicate.Invoke(this));
+		public bool canFetch => fetchPredicates.All(predicate => predicate.Invoke(this));
 		public Capturllectable capturedItem { get; private set; }
 		public bool hasCapturedItem => capturedItem;
+
+		private string originalName;
 		
 		private void Awake()
 		{
@@ -27,15 +33,18 @@ namespace SBEPIS.Capturllection
 				Capture(item);
 			}
 			
-			retrievePredicates.Add(container => isRetrievingAllowed);
+			fetchPredicates.Add(container => isFetchingAllowed);
 		}
 
 		public void Capture(Capturllectable item)
 		{
-			if (capturedItem || !item)
+			if (!item)
 				return;
+			if (hasCapturedItem)
+				Fetch();
 			
 			capturedItem = item;
+			originalName = name;
 			name += $" ({item})";
 			item.gameObject.SetActive(false);
 			item.transform.parent = transform;
@@ -44,14 +53,15 @@ namespace SBEPIS.Capturllection
 		
 		public Capturllectable Fetch()
 		{
-			if (!capturedItem)
+			if (!hasCapturedItem)
 				return null;
 			
 			Capturllectable item = capturedItem;
 			capturedItem = null;
+			name = originalName;
 			item.gameObject.SetActive(true);
 			item.transform.parent = null;
-			onRetrieve.Invoke(this, item);
+			onFetch.Invoke(this, item);
 			return item;
 		}
 	}

@@ -18,9 +18,9 @@ namespace SBEPIS.Capturllection
 		
 		public bool CanFetch(List<DequeStorable> cards, DequeStorable card) => deques.AsEnumerable().Reverse().Any(deque => deque.CanFetch(cards, card));
 		
-		public int GetIndexToInsertCardBetween(List<DequeStorable> cards, DequeStorable card) => deques[^1].GetIndexToInsertCardBetween(cards, card);
-
 		public int GetIndexToStoreInto(List<DequeStorable> cards) => deques[^1].GetIndexToStoreInto(cards);
+		
+		public int GetIndexToInsertCardBetween(List<DequeStorable> cards, DequeStorable card) => deques[^1].GetIndexToInsertCardBetween(cards, card);
 
 		public void UpdateCardTexture(DequeStorable card)
 		{

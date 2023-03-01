@@ -38,7 +38,7 @@ namespace SBEPIS.Capturllection.Deques
 		{
 			float cardAngle = time * speed;
 			float deltaAngle = 360f / targets.Count;
-			foreach ((DequeStorable card, CardTarget target) in targets)
+			foreach ((DequeStorable card, CardTarget target) in InOrder(cards, targets))
 			{
 				target.transform.localPosition = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * radius;
 				target.transform.localRotation = Quaternion.Euler(0, 0, cardAngle) * cardRotation;
