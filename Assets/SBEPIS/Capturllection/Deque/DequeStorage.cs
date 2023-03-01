@@ -7,13 +7,13 @@ namespace SBEPIS.Capturllection
 	public class DequeStorage : MonoBehaviour, IEnumerable<DequeStorable>
 	{
 		public int initialCardCount = 5;
-
+		
 		public DequeStorable cardPrefab;
 		
 		public DequeLayer definition { get; set; }
 		
 		private List<DequeStorable> cards = new();
-
+		
 		private void Start()
 		{
 			for (int _ = 0; _ < initialCardCount; _++)
@@ -22,7 +22,7 @@ namespace SBEPIS.Capturllection
 				cards.Add(card);
 			}
 		}
-
+		
 		public void Tick(float deltaTime)
 		{
 			definition.Tick(cards, deltaTime);
@@ -37,24 +37,28 @@ namespace SBEPIS.Capturllection
 		{
 			return definition.CanFetch(cards, card);
 		}
-
+		
 		public void StoreCard(DequeStorable card)
 		{
-			int index = definition.GetIndexToInsertInto(cards, card);
-			cards.Insert(index, card);
+			int insertIndex = definition.GetIndexToInsertCardBetween(cards, card);
+			cards.Insert(insertIndex, card);
 		}
 
-
-		public bool Contains(DequeStorable card) => cards.Contains(card);
-
-		public IEnumerator<DequeStorable> GetEnumerator()
+		public void StoreItem(Capturllectable item)
 		{
-			return cards.GetEnumerator();
+			int fetchIndex = definition.GetIndexToStoreInto(cards);
+			DequeStorable fetchCard = cards[fetchIndex];
+			cards.RemoveAt(fetchIndex);
+			
+			Capturellectainer container = fetchCard.GetComponent<Capturellectainer>();
+			container.Fetch();
+			container.Capture(item);
+			StoreCard(fetchCard);
 		}
 		
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+		
+		public bool Contains(DequeStorable card) => cards.Contains(card);
+		public IEnumerator<DequeStorable> GetEnumerator() => cards.GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
 }

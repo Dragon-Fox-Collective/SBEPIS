@@ -27,6 +27,8 @@ namespace SBEPIS.Capturllection.Deques
 
 		public override bool CanFetch(List<DequeStorable> cards, DequeStorable card) => cards[0] == card;
 		
-		public override int GetIndexToInsertInto(List<DequeStorable> cards, DequeStorable card) => 0;
+		public override int GetIndexToStoreInto(List<DequeStorable> cards) => cards.Count - 1;
+		
+		public override int GetIndexToInsertCardBetween(List<DequeStorable> cards, DequeStorable card) => 0;
 	}
 }

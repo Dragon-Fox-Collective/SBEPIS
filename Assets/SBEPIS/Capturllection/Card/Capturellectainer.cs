@@ -12,12 +12,13 @@ namespace SBEPIS.Capturllection
 		public Item defaultCapturedItemPrefab;
 		public bool isRetrievingAllowed = true;
 		public List<Predicate<Capturellectainer>> retrievePredicates = new();
-
+		
 		public CaptureEvent onCapture = new(), onRetrieve = new();
-
+		
 		public bool canRetrieve => retrievePredicates.All(predicate => predicate.Invoke(this));
 		public Capturllectable capturedItem { get; private set; }
-
+		public bool hasCapturedItem => capturedItem;
+		
 		private void Awake()
 		{
 			if (defaultCapturedItemPrefab)
@@ -25,7 +26,7 @@ namespace SBEPIS.Capturllection
 				Capturllectable item = Instantiate(defaultCapturedItemPrefab.gameObject).GetComponent<Capturllectable>();
 				Capture(item);
 			}
-
+			
 			retrievePredicates.Add(container => isRetrievingAllowed);
 		}
 
@@ -33,19 +34,19 @@ namespace SBEPIS.Capturllection
 		{
 			if (capturedItem || !item)
 				return;
-
+			
 			capturedItem = item;
 			name += $" ({item})";
 			item.gameObject.SetActive(false);
 			item.transform.parent = transform;
 			onCapture.Invoke(this, item);
 		}
-
+		
 		public Capturllectable Fetch()
 		{
 			if (!capturedItem)
 				return null;
-
+			
 			Capturllectable item = capturedItem;
 			capturedItem = null;
 			item.gameObject.SetActive(true);
@@ -54,7 +55,7 @@ namespace SBEPIS.Capturllection
 			return item;
 		}
 	}
-
+	
 	[Serializable]
 	public class CaptureEvent : UnityEvent<Capturellectainer, Capturllectable> { }
 }
