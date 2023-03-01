@@ -10,7 +10,7 @@ namespace SBEPIS.Tests
 		public Grabber grabber;
 		public DequeOwner dequeOwner;
 		public GameObject obj;
-		public Capturllectainer emptyCard;
-		public Capturllectainer fullCard;
+		public Capturellectainer emptyCard;
+		public Capturellectainer fullCard;
 	}
 }
