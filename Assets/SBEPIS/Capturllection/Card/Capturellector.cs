@@ -11,7 +11,6 @@ namespace SBEPIS.Capturllection
 	{
 		[FormerlySerializedAs("dequeOwner")]
 		public DequeOwner owner;
-		public Capturellectainer cardPrefab;
 
 		private Grabber grabber;
 
@@ -40,37 +39,30 @@ namespace SBEPIS.Capturllection
 				return;
 			
 			grabber.Drop();
-			Capturellectainer container = Instantiate(cardPrefab);
-			container.GetComponent<ItemBase>().BecomeItem();
+			(DequeStorable card, Capturellectainer container) = owner.storage.StoreItem(item);
 			ResetCardTransform(container);
-			container.Capture(item);
 			
-			if (container.TryGetComponent(out DequeStorable card))
-			{
-				card.owner = owner;
-				owner.storage.StoreCard(card);
-				
-				if (owner.diajector.isLayoutActive)
-				{
-					owner.diajector.layout.AddPermanentTargetAndCard(card);
-					card.state.isPageOpen = true;
-				}
-			}
+			// put card in right state
 			
 			if (container.TryGetComponent(out Grabbable cardGrabbable))
 				grabber.Grab(cardGrabbable);
 		}
 
-		public void RetrieveAndGrabItem(Capturellectainer card)
+		public void RetrieveAndGrabItem(Capturellectainer container)
 		{
-			if (!card.canRetrieve)
+			if (!container.canFetch)
+				return;
+			if (!container.TryGetComponent(out DequeStorable card) || !owner.storage.CanFetch(card))
 				return;
 
 			grabber.Drop();
-			ResetCardTransform(card);
-			Grabbable grabbable = card.Fetch().GetComponent<Grabbable>();
-			Destroy(card.gameObject);
-			grabber.Grab(grabbable);
+			ResetCardTransform(container);
+			Capturllectable item = owner.storage.FetchItem(card, container);
+			
+			// put card in right state
+			
+			if (item.TryGetComponent(out Grabbable itemGrabbable))
+				grabber.Grab(itemGrabbable);
 		}
 
 		private void ResetCardTransform(Capturellectainer card)

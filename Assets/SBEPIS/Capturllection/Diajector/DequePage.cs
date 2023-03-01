@@ -34,7 +34,7 @@ namespace SBEPIS.Capturllection
 				card.animator.TeleportTo(diajector.owner.dequeBox.lowerTarget);
 				
 				Capturellectainer container = card.GetComponent<Capturellectainer>();
-				container.isRetrievingAllowed = false;
+				container.isFetchingAllowed = false;
 				
 				Capturllectable capturllectable = card.GetComponent<Capturllectable>();
 				capturllectable.canCapturllect = false;
