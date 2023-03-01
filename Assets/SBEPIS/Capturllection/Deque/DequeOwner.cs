@@ -12,6 +12,8 @@ namespace SBEPIS.Capturllection
 		private DequeBox initialDeque;
 		public Diajector diajector;
 		
+		public Transform cardParent;
+		
 		public Transform tossTarget;
 		[Tooltip("Height above the hand the deque should toss through, must be non-negative")]
 		public float tossHeight;

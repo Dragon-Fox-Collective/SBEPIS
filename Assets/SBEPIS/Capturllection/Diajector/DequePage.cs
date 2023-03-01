@@ -50,6 +50,7 @@ namespace SBEPIS.Capturllection
 		public void AddCard(DequeStorable card, CardTarget target)
 		{
 			cardTargets.Add(card, target);
+			card.transform.SetParent(diajector.owner.cardParent);
 			target.onCardBound.Invoke(card);
 		}
 
