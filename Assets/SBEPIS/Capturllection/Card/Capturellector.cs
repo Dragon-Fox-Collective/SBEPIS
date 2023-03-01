@@ -39,11 +39,14 @@ namespace SBEPIS.Capturllection
 				return;
 			
 			grabber.Drop();
-			(DequeStorable card, Capturellectainer container) = owner.storage.StoreItem(item);
-			ResetCardTransform(container);
+			(DequeStorable card, Capturellectainer container) = owner.storage.StoreItem(item, out Capturllectable ejectedItem);
 			
-			// put card in right state
-			
+			if (ejectedItem)
+				if (owner.diajector.ShouldCardBeDisplayed(card))
+					ejectedItem.GetComponent<Rigidbody>().Move(card.transform.position, card.transform.rotation);
+				else
+					ejectedItem.GetComponent<Rigidbody>().Move(owner.dequeBox.transform.position, owner.dequeBox.transform.rotation);
+
 			if (container.TryGetComponent(out Grabbable cardGrabbable))
 				grabber.Grab(cardGrabbable);
 		}
@@ -56,18 +59,12 @@ namespace SBEPIS.Capturllection
 				return;
 
 			grabber.Drop();
-			ResetCardTransform(container);
 			Capturllectable item = owner.storage.FetchItem(card, container);
-			
-			// put card in right state
+			item.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
+			item.GetComponent<Rigidbody>().Move(grabber.transform.position, grabber.transform.rotation);
 			
 			if (item.TryGetComponent(out Grabbable itemGrabbable))
 				grabber.Grab(itemGrabbable);
-		}
-
-		private void ResetCardTransform(Capturellectainer card)
-		{
-			card.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation * Quaternion.Euler(0, 180, 0));
 		}
 	}
 }
