@@ -48,8 +48,6 @@ namespace SBEPIS.Capturllection
 			if (container.TryGetComponent(out DequeStorable card))
 			{
 				card.owner = owner;
-				card.state.isBound = true;
-				owner.dequeBox.definition.UpdateCardTexture(card);
 				owner.storage.StoreCard(card);
 				
 				if (owner.diajector.isLayoutActive)

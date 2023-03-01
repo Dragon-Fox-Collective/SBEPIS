@@ -58,11 +58,6 @@ namespace SBEPIS.Capturllection
 			AssembleNewPage(page);
 		}
 		
-		public void RefreshPage()
-		{
-			currentPage.Refresh();
-		}
-		
 		public void ChangePage(DequePage page)
 		{
 			DisassembleCurrentPage();
