@@ -109,6 +109,8 @@ namespace SBEPIS.Capturllection
 			dequeBox = initialDeque;
 			if (dequeBox)
 				RetrieveDeque();
+			
+			storage.CreateInitialCards(this);
 		}
 		
 		public void OnToggleDeque(CallbackContext context)

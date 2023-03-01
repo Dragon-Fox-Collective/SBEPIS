@@ -20,8 +20,26 @@ namespace SBEPIS.Capturllection
 		public SplitTextureSetup split { get; private set; }
 		public CardStateMachine state { get; private set; }
 		public LerpTargetAnimator animator { get; private set; }
-		
-		public DequeOwner owner { get; set; }
+
+		private DequeOwner _owner;
+		public DequeOwner owner
+		{
+			get => _owner;
+			set
+			{
+				if (owner == value)
+					return;
+				
+				_owner = value;
+				
+				state.isBound = owner;
+				transform.SetParent(owner ? owner.cardParent : null);
+				if (owner)
+				{
+					owner.dequeBox.definition.UpdateCardTexture(this);
+				}
+			}
+		}
 		
 		public bool isStored => owner;
 		public bool canStore => storePredicates.All(predicate => predicate.Invoke());

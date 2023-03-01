@@ -11,7 +11,6 @@ namespace SBEPIS.Capturllection
 	{
 		[FormerlySerializedAs("dequeOwner")]
 		public DequeOwner owner;
-		public Capturellectainer cardPrefab;
 
 		private Grabber grabber;
 
@@ -40,44 +39,32 @@ namespace SBEPIS.Capturllection
 				return;
 			
 			grabber.Drop();
-			Capturellectainer container = Instantiate(cardPrefab);
-			container.GetComponent<ItemBase>().BecomeItem();
-			ResetCardTransform(container);
-			container.Capture(item);
+			(DequeStorable card, Capturellectainer container) = owner.storage.StoreItem(item, out Capturllectable ejectedItem);
 			
-			if (container.TryGetComponent(out DequeStorable card))
-			{
-				card.owner = owner;
-				card.state.isBound = true;
-				owner.dequeBox.definition.UpdateCardTexture(card);
-				owner.storage.StoreCard(card);
-				
-				if (owner.diajector.isLayoutActive)
-				{
-					owner.diajector.layout.AddPermanentTargetAndCard(card);
-					card.state.isPageOpen = true;
-				}
-			}
-			
+			if (ejectedItem)
+				if (owner.diajector.ShouldCardBeDisplayed(card))
+					ejectedItem.GetComponent<Rigidbody>().Move(card.transform.position, card.transform.rotation);
+				else
+					ejectedItem.GetComponent<Rigidbody>().Move(owner.dequeBox.transform.position, owner.dequeBox.transform.rotation);
+
 			if (container.TryGetComponent(out Grabbable cardGrabbable))
 				grabber.Grab(cardGrabbable);
 		}
 
-		public void RetrieveAndGrabItem(Capturellectainer card)
+		public void RetrieveAndGrabItem(Capturellectainer container)
 		{
-			if (!card.canRetrieve)
+			if (!container.canFetch)
+				return;
+			if (!container.TryGetComponent(out DequeStorable card) || !owner.storage.CanFetch(card))
 				return;
 
 			grabber.Drop();
-			ResetCardTransform(card);
-			Grabbable grabbable = card.Fetch().GetComponent<Grabbable>();
-			Destroy(card.gameObject);
-			grabber.Grab(grabbable);
-		}
-
-		private void ResetCardTransform(Capturellectainer card)
-		{
-			card.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation * Quaternion.Euler(0, 180, 0));
+			Capturllectable item = owner.storage.FetchItem(card, container);
+			item.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
+			item.GetComponent<Rigidbody>().Move(grabber.transform.position, grabber.transform.rotation);
+			
+			if (item.TryGetComponent(out Grabbable itemGrabbable))
+				grabber.Grab(itemGrabbable);
 		}
 	}
 }
