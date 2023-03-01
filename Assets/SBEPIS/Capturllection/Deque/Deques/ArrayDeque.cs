@@ -5,8 +5,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection.Deques
 {
-	[CreateAssetMenu(menuName="Deque/"+nameof(ArrayDeque))]
-	public class ArrayDeque : DequeType
+	public class ArrayDeque : DequeBase
 	{
 		public float cardDistance = 0.1f;
 		public Quaternion cardRotation = Quaternion.identity;
