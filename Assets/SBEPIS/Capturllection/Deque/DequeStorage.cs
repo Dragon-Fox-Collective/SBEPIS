@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection
@@ -10,7 +11,8 @@ namespace SBEPIS.Capturllection
 		
 		public DequeStorable cardPrefab;
 		
-		public DequeLayer definition { get; set; }
+		private Deque deque;
+		public List<Texture2D> cardTextures { get; private set; }
 		
 		private List<DequeStorable> cards = new();
 		
@@ -26,29 +28,29 @@ namespace SBEPIS.Capturllection
 		
 		public void Tick(float deltaTime)
 		{
-			definition.Tick(cards, deltaTime);
+			deque.Tick(cards, deltaTime);
 		}
 		
 		public void LayoutTargets(Dictionary<DequeStorable, CardTarget> targets)
 		{
-			definition.LayoutTargets(cards, targets);
+			deque.LayoutTargets(cards, targets);
 		}
 		
 		public bool CanFetch(DequeStorable card)
 		{
-			return definition.CanFetch(cards, card);
+			return deque.CanFetch(cards, card);
 		}
 		
 		public void StoreCard(DequeStorable card)
 		{
 			card.state.hasBeenAssembled = false;
-			int insertIndex = definition.GetIndexToInsertCardBetween(cards, card);
+			int insertIndex = deque.GetIndexToInsertCardBetween(cards, card);
 			cards.Insert(insertIndex, card);
 		}
 
 		public (DequeStorable, Capturellectainer) StoreItem(Capturllectable item, out Capturllectable ejectedItem)
 		{
-			int storeIndex = definition.GetIndexToStoreInto(cards);
+			int storeIndex = deque.GetIndexToStoreInto(cards);
 			DequeStorable card = cards[storeIndex];
 			cards.RemoveAt(storeIndex);
 			
@@ -71,6 +73,12 @@ namespace SBEPIS.Capturllection
 			StoreCard(card);
 			
 			return item;
+		}
+
+		public void SyncDeque(DequeBox dequeBox)
+		{
+			deque = dequeBox.definition;
+			cardTextures = deque.GetCardTextures().ToList();
 		}
 		
 		

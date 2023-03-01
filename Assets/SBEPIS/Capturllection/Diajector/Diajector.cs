@@ -108,14 +108,10 @@ namespace SBEPIS.Capturllection
 		}
 		
 		public bool ShouldCardBeDisplayed(DequeStorable card) => isOpen && currentPage.HasCard(card);
-		
-		public void UpdateCardTexture() => UpdateCardTexture(owner.dequeBox);
-		public void UpdateCardTexture(DequeBox dequeBox)
+
+		public void UpdateCardTexture()
 		{
-			if (dequeBox)
-				GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Do(cardTarget => dequeBox.definition.UpdateCardTexture(cardTarget.card));
-			else
-				GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Do(cardTarget => cardTarget.card.split.ResetTexture());
+			GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Select(cardTarget => cardTarget.card).Concat(owner.storage).Do(card => card.split.UpdateTexture(owner.storage.cardTextures));
 		}
 
 		public LerpTarget GetLerpTarget(DequeStorable card) => currentPage.GetLerpTarget(card);

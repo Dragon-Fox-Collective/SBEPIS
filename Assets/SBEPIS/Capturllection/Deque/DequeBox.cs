@@ -16,7 +16,7 @@ namespace SBEPIS.Capturllection
 		public LerpTarget lowerTarget;
 		public LerpTarget upperTarget;
 		
-		public DequeLayer definition;
+		public Deque definition;
 		
 		public DequeOwner owner { get; set; }
 		
@@ -41,7 +41,7 @@ namespace SBEPIS.Capturllection
 		
 		private void Start()
 		{
-			split.UpdateTexture(definition.deques.Select(deque => deque.dequeTexture).ToList());
+			split.UpdateTexture(definition.GetBoxTextures().ToList());
 		}
 		
 		public void AdoptDeque(Grabber grabber, Grabbable grabbable)

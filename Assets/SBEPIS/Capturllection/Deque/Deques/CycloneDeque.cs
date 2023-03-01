@@ -4,8 +4,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection.Deques
 {
-	[CreateAssetMenu(menuName="Deque/"+nameof(CycloneDeque))]
-	public class CycloneDeque : DequeType
+	public class CycloneDeque : DequeBase
 	{
 		public float radius = 0.1f;
 		public Quaternion cardRotation = Quaternion.identity;
