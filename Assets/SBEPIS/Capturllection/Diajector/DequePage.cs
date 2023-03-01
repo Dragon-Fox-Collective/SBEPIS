@@ -80,6 +80,10 @@ namespace SBEPIS.Capturllection
 
 		private IEnumerator SpawnCards()
 		{
+			// Give cards a moment to get into the In Deque state
+			yield return 0;
+			yield return 0;
+			
 			foreach ((DequeStorable card, CardTarget target) in cardTargets)
 			{
 				target.onPrepareCard.Invoke();
