@@ -47,7 +47,7 @@ namespace SBEPIS.Capturllection
 			originalName = name;
 			name += $" ({item})";
 			item.gameObject.SetActive(false);
-			item.transform.parent = transform;
+			item.transform.SetParent(transform);
 			onCapture.Invoke(this, item);
 		}
 		
@@ -60,7 +60,7 @@ namespace SBEPIS.Capturllection
 			capturedItem = null;
 			name = originalName;
 			item.gameObject.SetActive(true);
-			item.transform.parent = null;
+			item.transform.SetParent(null);
 			onFetch.Invoke(this, item);
 			return item;
 		}

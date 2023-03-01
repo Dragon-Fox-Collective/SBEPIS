@@ -41,17 +41,19 @@ namespace SBEPIS.Capturllection
 		
 		public void StoreCard(DequeStorable card)
 		{
+			card.state.hasBeenAssembled = false;
 			int insertIndex = definition.GetIndexToInsertCardBetween(cards, card);
 			cards.Insert(insertIndex, card);
 		}
 
-		public (DequeStorable, Capturellectainer) StoreItem(Capturllectable item)
+		public (DequeStorable, Capturellectainer) StoreItem(Capturllectable item, out Capturllectable ejectedItem)
 		{
 			int storeIndex = definition.GetIndexToStoreInto(cards);
 			DequeStorable card = cards[storeIndex];
 			cards.RemoveAt(storeIndex);
 			
 			Capturellectainer container = card.GetComponent<Capturellectainer>();
+			ejectedItem = container.Fetch();
 			container.Capture(item);
 			StoreCard(card);
 
