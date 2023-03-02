@@ -1,12 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection.Deques
 {
-	[CreateAssetMenu(menuName="Deque/"+nameof(StackDeque))]
-	public class StackDeque : DequeType
+	public class QueueDeque : DequeBase
 	{
 		public float separatingDistance = 0.1f;
 		public Quaternion cardRotation = Quaternion.identity;
@@ -24,10 +21,10 @@ namespace SBEPIS.Capturllection.Deques
 			}
 		}
 		
-		public override bool CanFetch(List<DequeStorable> cards, DequeStorable card) => cards[0] == card;
+		public override bool CanFetch(List<DequeStorable> cards, DequeStorable card) => cards[^1] == card;
 		
-		public override int GetIndexToStoreInto(List<DequeStorable> cards) => cards.Count - 1;
+		public override int GetIndexToStoreInto(List<DequeStorable> cards) => GetFirstIndexWhere(cards, HasEmptyContainer, OrLastCard);
 		
-		public override int GetIndexToInsertCardBetween(List<DequeStorable> cards, DequeStorable card) => 0;
+		public override int GetIndexToInsertCardBetween(List<DequeStorable> cards, DequeStorable card) => GetFirstIndexWhere(cards, DoesntHaveEmptyContainer, OrBeforeAllCards);
 	}
 }

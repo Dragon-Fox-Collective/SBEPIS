@@ -58,8 +58,6 @@ namespace SBEPIS.Capturllection
 			dequeBox.owner = null;
 			dequeBox.collisionTrigger.trigger.RemoveListener(StartDiajectorAssembly);
 			dequeBox.grabbable.onUse.RemoveListener(CloseDiajector);
-
-			storage.definition = null;
 			
 			Destroy(dequeAnimator);
 			
@@ -73,8 +71,8 @@ namespace SBEPIS.Capturllection
 			dequeBox.owner = this;
 			dequeBox.collisionTrigger.trigger.AddListener(StartDiajectorAssembly);
 			dequeBox.grabbable.onUse.AddListener(CloseDiajector);
-
-			storage.definition = dequeBox.definition;
+			
+			storage.SyncDeque(dequeBox);
 			
 			dequeAnimator = dequeBox.gameObject.AddComponent<LerpTargetAnimator>();
 			dequeAnimator.curve = retrievalAnimationCurve;
@@ -88,7 +86,6 @@ namespace SBEPIS.Capturllection
 		
 		private void UnsetDeque()
 		{
-			diajector.UpdateCardTexture();
 			if (diajector.isOpen)
 				diajector.ForceClose();
 		}

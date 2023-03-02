@@ -6,26 +6,21 @@ using UnityEngine;
 namespace SBEPIS.Capturllection
 {
 	[Serializable]
-	public class DequeLayer
+	public class DequeLayer : Deque
 	{
-		public List<DequeType> deques;
+		public List<Deque> deques;
 		
-		private List<Texture2D> cardTextures;
+		public override void Tick(List<DequeStorable> cards, float delta) => deques.Do(deque => deque.Tick(cards, delta));
 		
-		public void Tick(List<DequeStorable> cards, float delta) => deques.Do(deque => deque.Tick(cards, delta));
+		public override void LayoutTargets(List<DequeStorable> cards, Dictionary<DequeStorable, CardTarget> targets) => deques[0].LayoutTargets(cards, targets);
 		
-		public void LayoutTargets(List<DequeStorable> cards, Dictionary<DequeStorable, CardTarget> targets) => deques[0].LayoutTargets(cards, targets);
+		public override bool CanFetch(List<DequeStorable> cards, DequeStorable card) => deques.AsEnumerable().Reverse().Any(deque => deque.CanFetch(cards, card));
 		
-		public bool CanFetch(List<DequeStorable> cards, DequeStorable card) => deques.AsEnumerable().Reverse().Any(deque => deque.CanFetch(cards, card));
+		public override int GetIndexToStoreInto(List<DequeStorable> cards) => deques[^1].GetIndexToStoreInto(cards);
 		
-		public int GetIndexToStoreInto(List<DequeStorable> cards) => deques[^1].GetIndexToStoreInto(cards);
+		public override int GetIndexToInsertCardBetween(List<DequeStorable> cards, DequeStorable card) => deques[^1].GetIndexToInsertCardBetween(cards, card);
 		
-		public int GetIndexToInsertCardBetween(List<DequeStorable> cards, DequeStorable card) => deques[^1].GetIndexToInsertCardBetween(cards, card);
-
-		public void UpdateCardTexture(DequeStorable card)
-		{
-			cardTextures ??= deques.Select(deque => deque.cardTexture).ToList();
-			card.split.UpdateTexture(cardTextures);
-		}
+		public override IEnumerable<Texture2D> GetCardTextures() => deques.Aggregate(Enumerable.Empty<Texture2D>(), (total, deque) => total.Concat(deque.GetCardTextures()));
+		public override IEnumerable<Texture2D> GetBoxTextures() => deques.Aggregate(Enumerable.Empty<Texture2D>(), (total, deque) => total.Concat(deque.GetBoxTextures()));
 	}
 }

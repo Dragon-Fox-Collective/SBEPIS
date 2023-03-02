@@ -1,22 +1,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	public abstract class DequeType : ScriptableObject
+	public abstract class DequeBase : Deque
 	{
-		public Texture2D cardTexture;
-		public Texture2D dequeTexture;
+		public Dequeration dequeration;
 		
-		public abstract void Tick(List<DequeStorable> cards, float delta);
-		public abstract void LayoutTargets(List<DequeStorable> cards, Dictionary<DequeStorable, CardTarget> targets);
+		public override IEnumerable<Texture2D> GetCardTextures()
+		{
+			yield return dequeration.cardTexture;
+		}
 		
-		public abstract bool CanFetch(List<DequeStorable> cards, DequeStorable card);
-		public abstract int GetIndexToStoreInto(List<DequeStorable> cards);
-		public abstract int GetIndexToInsertCardBetween(List<DequeStorable> cards, DequeStorable card);
-
+		public override IEnumerable<Texture2D> GetBoxTextures()
+		{
+			yield return dequeration.boxTexture;
+		}
+		
+		
 		public static bool HasEmptyContainer(DequeStorable card) => card.TryGetComponent(out Capturellectainer container) && !container.hasCapturedItem;
 		public static bool DoesntHaveEmptyContainer(DequeStorable card) => !HasEmptyContainer(card);
 		
@@ -30,7 +34,7 @@ namespace SBEPIS.Capturllection
 			int index = cards.FindIndex(predicate);
 			return index != -1 ? index : defaultIndexFunc.Invoke(cards);
 		}
-
+		
 		public static IEnumerable<(DequeStorable, CardTarget)> InOrder(List<DequeStorable> cards, Dictionary<DequeStorable, CardTarget> targets) => cards.Zip(cards.Select(card => targets[card]));
 	}
 }
