@@ -36,7 +36,7 @@ namespace SBEPIS.Capturllection
 				transform.SetParent(owner ? owner.cardParent : null);
 				if (owner)
 				{
-					owner.dequeBox.definition.UpdateCardTexture(this);
+					split.UpdateTexture(owner.storage.cardTextures);
 				}
 			}
 		}
