@@ -1,12 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	[Serializable]
-	public class DequeLayer : Deque
+	public class CombobDeque : Deque
 	{
 		public List<Deque> deques;
 		
