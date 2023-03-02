@@ -14,7 +14,7 @@ namespace SBEPIS.Capturllection
 		private Deque deque;
 		public List<Texture2D> cardTextures { get; private set; }
 		
-		private List<DequeStorable> cards = new();
+		private List<Storable> cards = new();
 		
 		public void CreateInitialCards(DequeOwner owner)
 		{
