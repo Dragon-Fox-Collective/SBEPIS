@@ -22,7 +22,17 @@ namespace SBEPIS.Capturllection
 			get => target.transform.localRotation;
 			set => target.transform.localRotation = value;
 		}
-		
+
+		public override bool isEmpty => card;
+
+		public override void Tick(float deltaTime) { }
+
+		public override void Layout()
+		{
+			position = Vector3.zero;
+			rotation = Quaternion.identity;
+		}
+
 		public override bool CanFetch(DequeStorable card) => this.card == card;
 		
 		public override (DequeStorable, Capturellectainer) Store(Capturllectable item, out Capturllectable ejectedItem)
@@ -39,6 +49,11 @@ namespace SBEPIS.Capturllection
 				return null;
 			
 			return card.GetComponent<Capturellectainer>().Fetch();
+		}
+
+		public override void Flush(DequeStorable card)
+		{
+			throw new InvalidOperationException("Can't flush into a single slot");
 		}
 	}
 }
