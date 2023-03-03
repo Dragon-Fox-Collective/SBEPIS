@@ -11,24 +11,19 @@ namespace SBEPIS.Capturllection
 		public DequeRuleset ruleset;
 		public List<Storable> inventory;
 
-		public void Tick(float deltaTime) => ruleset.Tick(inventory, deltaTime);
+		public override bool isEmpty => inventory.All(storable => storable.isEmpty);
 
-		public void Layout() => ruleset.Layout(inventory);
+		public override void Tick(float deltaTime) => ruleset.Tick(inventory, deltaTime);
+		
+		public override void Layout() => ruleset.Layout(inventory);
 		
 		public override bool CanFetch(DequeStorable card) => ruleset.CanFetchFrom(inventory, card);
 
-		public void StoreCard(DequeStorable card)
-		{
-			card.state.hasBeenAssembled = false;
-			int insertIndex = deque.GetIndexToInsertCardBetween(cards, card);
-			cards.Insert(insertIndex, card);
-		}
-
 		public override (DequeStorable, Capturellectainer) Store(Capturllectable item, out Capturllectable ejectedItem)
 		{
-			int storeIndex = deque.GetIndexToStoreInto(cards);
-			DequeStorable card = cards[storeIndex];
-			cards.RemoveAt(storeIndex);
+			int storeIndex = ruleset.GetIndexToStoreInto(inventory);
+			DequeStorable card = inventory[storeIndex];
+			inventory.RemoveAt(storeIndex);
 			
 			Capturellectainer container = card.GetComponent<Capturellectainer>();
 			ejectedItem = container.Fetch();
@@ -43,12 +38,19 @@ namespace SBEPIS.Capturllection
 			if (!CanFetch(card))
 				return null;
 
-			cards.Remove(card);
+			inventory.Remove(card);
 			
 			Capturllectable item = container.Fetch();
 			StoreCard(card);
 			
 			return item;
+		}
+		
+		public override void Flush(DequeStorable card)
+		{
+			card.state.hasBeenAssembled = false;
+			int insertIndex = ruleset.GetIndexToInsertCardBetween(inventory, card);
+			inventory.Insert(insertIndex, card);
 		}
 	}
 }
