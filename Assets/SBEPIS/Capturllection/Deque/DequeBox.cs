@@ -9,12 +9,13 @@ namespace SBEPIS.Capturllection
 {
 	[RequireComponent(typeof(Grabbable), typeof(GravitySum), typeof(SplitTextureSetup))]
 	[RequireComponent(typeof(CollisionTrigger), typeof(CouplingPlug), typeof(Animator))]
+	[RequireComponent(typeof(DequeRoot))]
 	public class DequeBox : MonoBehaviour
 	{
 		public LerpTarget lowerTarget;
 		public LerpTarget upperTarget;
 		
-		public Deque definition;
+		public Storable inventory;
 		
 		public DequeOwner owner { get; set; }
 		

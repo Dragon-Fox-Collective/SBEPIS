@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SBEPIS.Controller;
 using SBEPIS.Utils;
 using UnityEngine;
@@ -5,7 +6,7 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Capturllection
 {
-	[RequireComponent(typeof(CouplingSocket), typeof(LerpTarget), typeof(DequeStorage))]
+	[RequireComponent(typeof(CouplingSocket), typeof(LerpTarget))]
 	public class DequeOwner : MonoBehaviour
 	{
 		[SerializeField]
@@ -13,6 +14,9 @@ namespace SBEPIS.Capturllection
 		public Diajector diajector;
 		
 		public Transform cardParent;
+		
+		public DequeStorable cardPrefab;
+		public int initialCardCount = 5;
 		
 		public Transform tossTarget;
 		[Tooltip("Height above the hand the deque should toss through, must be non-negative")]
@@ -22,12 +26,13 @@ namespace SBEPIS.Capturllection
 		
 		public CouplingSocket socket { get; private set; }
 		public LerpTarget lerpTarget { get; private set; }
-		public DequeStorage storage { get; private set; }
 		
 		public LerpTargetAnimator dequeAnimator { get; private set; }
 		
 		private bool isDequeDeployed => dequeBox && dequeBox.isDeployed;
 
+		private List<DequeStorable> savedInventory = new();
+		
 		private DequeBox _dequeBox;
 		public DequeBox dequeBox
 		{
@@ -64,6 +69,9 @@ namespace SBEPIS.Capturllection
 			dequeBox.state.isBound = false;
 			dequeBox.state.isDiajectorOpen = false;
 			dequeBox.state.isDeployed = false;
+
+			savedInventory = dequeBox.Save();
+			dequeBox.Clear();
 		}
 		
 		private void SetupNewDeque()
@@ -71,9 +79,7 @@ namespace SBEPIS.Capturllection
 			dequeBox.owner = this;
 			dequeBox.collisionTrigger.trigger.AddListener(StartDiajectorAssembly);
 			dequeBox.grabbable.onUse.AddListener(CloseDiajector);
-			
-			storage.SyncDeque(dequeBox);
-			
+
 			dequeAnimator = dequeBox.gameObject.AddComponent<LerpTargetAnimator>();
 			dequeAnimator.curve = retrievalAnimationCurve;
 			
@@ -82,6 +88,8 @@ namespace SBEPIS.Capturllection
 			dequeBox.state.isDeployed = diajector.isOpen;
 			
 			diajector.UpdateCardTexture();
+
+			dequeBox.Load(savedInventory);
 		}
 		
 		private void UnsetDeque()
@@ -94,7 +102,6 @@ namespace SBEPIS.Capturllection
 		{
 			socket = GetComponent<CouplingSocket>();
 			lerpTarget = GetComponent<LerpTarget>();
-			storage = GetComponent<DequeStorage>();
 			
 			socket.onDecouple.AddListener(DecoupleDeque);
 		}
@@ -103,11 +110,16 @@ namespace SBEPIS.Capturllection
 		{
 			diajector.owner = this;
 			
+			for (int _ = 0; _ < initialCardCount; _++)
+			{
+				DequeStorable card = Instantiate(cardPrefab);
+				card.owner = this;
+				savedInventory.Add(card);
+			}
+			
 			dequeBox = initialDeque;
 			if (dequeBox)
 				RetrieveDeque();
-			
-			storage.CreateInitialCards(this);
 		}
 		
 		public void OnToggleDeque(CallbackContext context)

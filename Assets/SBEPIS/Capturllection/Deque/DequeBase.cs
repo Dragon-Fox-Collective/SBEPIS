@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	public abstract class DequeBase : Deque
+	public abstract class DequeBase : DequeRuleset
 	{
 		public Dequeration dequeration;
 		
