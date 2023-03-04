@@ -20,6 +20,7 @@ namespace SBEPIS.Capturllection
 		public SplitTextureSetup split { get; private set; }
 		public CardStateMachine state { get; private set; }
 		public LerpTargetAnimator animator { get; private set; }
+		public Capturellectainer container { get; private set; }
 
 		private DequeOwner _owner;
 		public DequeOwner owner
@@ -43,6 +44,8 @@ namespace SBEPIS.Capturllection
 		
 		public bool isStored => owner;
 		public bool canStore => storePredicates.All(predicate => predicate.Invoke());
+
+		public bool canStoreInto => container && container.isEmpty;
 		
 		private List<DequeCaptureLayout> layouts = new();
 		

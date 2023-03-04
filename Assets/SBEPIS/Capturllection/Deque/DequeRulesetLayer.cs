@@ -16,7 +16,7 @@ namespace SBEPIS.Capturllection
 		
 		public override int GetIndexToStoreInto(List<Storable> inventory) => rulesets[^1].GetIndexToStoreInto(inventory);
 		
-		public override int GetIndexToInsertCardBetween(List<Storable> inventory, DequeStorable card) => rulesets[^1].GetIndexToInsertCardBetween(inventory, card);
+		public override int GetIndexToFlushCardBetween(List<Storable> inventory, DequeStorable card) => rulesets[^1].GetIndexToFlushCardBetween(inventory, card);
 		
 		public override IEnumerable<Texture2D> GetCardTextures() => rulesets.Aggregate(Enumerable.Empty<Texture2D>(), (total, deque) => total.Concat(deque.GetCardTextures()));
 		public override IEnumerable<Texture2D> GetBoxTextures() => rulesets.Aggregate(Enumerable.Empty<Texture2D>(), (total, deque) => total.Concat(deque.GetBoxTextures()));

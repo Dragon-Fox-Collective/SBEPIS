@@ -27,6 +27,10 @@ namespace SBEPIS.Capturllection.Deques
 		
 		public override int GetIndexToStoreInto(List<Storable> inventory) => inventory.Count - 1;
 		
-		public override int GetIndexToInsertCardBetween(List<Storable> inventory, DequeStorable card) => 0;
+		public override int GetIndexToFlushCardBetween(List<Storable> inventory, DequeStorable card) => card.canStoreInto ? 0 : inventory.Count;
+		
+		public override int GetIndexToInsertStorableBetweenAfterStore(List<Storable> inventory, Storable storable, int originalIndex) => 0;
+		
+		public override int GetIndexToInsertStorableBetweenAfterFetch(List<Storable> inventory, Storable storable, int originalIndex) => 0;
 	}
 }
