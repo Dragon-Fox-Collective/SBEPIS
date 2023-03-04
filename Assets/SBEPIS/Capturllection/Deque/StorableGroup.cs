@@ -11,6 +11,9 @@ namespace SBEPIS.Capturllection
 		public DequeRuleset ruleset;
 		public List<Storable> inventory;
 
+		public override Vector3 position { get; set; }
+		public override Quaternion rotation { get; set; }
+
 		public override bool isEmpty => inventory.All(storable => storable.isEmpty);
 
 		public override void Tick(float deltaTime) => ruleset.Tick(inventory, deltaTime);
@@ -18,18 +21,19 @@ namespace SBEPIS.Capturllection
 		public override void Layout() => ruleset.Layout(inventory);
 		
 		public override bool CanFetch(DequeStorable card) => ruleset.CanFetchFrom(inventory, card);
-
+		
+		public override bool Contains(DequeStorable card) => inventory.Any(storable => storable.Contains(card));
+		
 		public override (DequeStorable, Capturellectainer) Store(Capturllectable item, out Capturllectable ejectedItem)
 		{
 			int storeIndex = ruleset.GetIndexToStoreInto(inventory);
-			DequeStorable card = inventory[storeIndex];
+			Storable storable = inventory[storeIndex];
 			inventory.RemoveAt(storeIndex);
 			
-			Capturellectainer container = card.GetComponent<Capturellectainer>();
-			ejectedItem = container.Fetch();
-			container.Capture(item);
-			StoreCard(card);
-
+			(DequeStorable card, Capturellectainer container) = storable.Store(item, out ejectedItem);
+			
+			Replace(storable, storeIndex);
+			
 			return (card, container);
 		}
 		
@@ -37,11 +41,14 @@ namespace SBEPIS.Capturllection
 		{
 			if (!CanFetch(card))
 				return null;
-
-			inventory.Remove(card);
 			
-			Capturllectable item = container.Fetch();
-			StoreCard(card);
+			Storable storable = inventory.First(storable => storable.Contains(card));
+			int fetchIndex = inventory.IndexOf(storable);
+			inventory.Remove(storable);
+			Capturllectable item = storable.Fetch(card);
+			
+			int restoreIndex = ruleset.GetIndexToInsertStorableBetweenAfterStore(inventory, storable, fetchIndex);
+			inventory.Insert(restoreIndex, storable);
 			
 			return item;
 		}
@@ -49,7 +56,7 @@ namespace SBEPIS.Capturllection
 		public override void Flush(DequeStorable card)
 		{
 			card.state.hasBeenAssembled = false;
-			int insertIndex = ruleset.GetIndexToInsertCardBetween(inventory, card);
+			int insertIndex = ruleset.GetIndexToFlushCardBetween(inventory, card);
 			inventory.Insert(insertIndex, card);
 		}
 	}

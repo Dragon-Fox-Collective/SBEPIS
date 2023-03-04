@@ -24,15 +24,15 @@ namespace SBEPIS.Capturllection
 		public static bool HasEmptyContainer(DequeStorable card) => card.TryGetComponent(out Capturellectainer container) && !container.hasCapturedItem;
 		public static bool DoesntHaveEmptyContainer(DequeStorable card) => !HasEmptyContainer(card);
 		
-		public static int OrBeforeAllCards(List<DequeStorable> cards) => 0;
-		public static int OrAfterAllCards(List<DequeStorable> cards) => cards.Count;
-		public static int OrFirstCard(List<DequeStorable> cards) => 0;
-		public static int OrLastCard(List<DequeStorable> cards) => cards.Count - 1;
+		public static int OrBeforeAllCards<T>(List<T> items) => 0;
+		public static int OrAfterAllCards<T>(List<T> items) => items.Count;
+		public static int OrFirstCard<T>(List<T> items) => 0;
+		public static int OrLastCard<T>(List<T> items) => items.Count - 1;
 		
-		public static int GetFirstIndexWhere(List<DequeStorable> cards, Predicate<DequeStorable> predicate, Func<List<DequeStorable>, int> defaultIndexFunc)
+		public static int GetFirstIndexWhere<T>(List<T> items, Predicate<T> predicate, Func<List<T>, int> defaultIndexFunc)
 		{
-			int index = cards.FindIndex(predicate);
-			return index != -1 ? index : defaultIndexFunc.Invoke(cards);
+			int index = items.FindIndex(predicate);
+			return index != -1 ? index : defaultIndexFunc.Invoke(items);
 		}
 		
 		public static IEnumerable<(DequeStorable, CardTarget)> InOrder(List<DequeStorable> cards, Dictionary<DequeStorable, CardTarget> targets) => cards.Zip(cards.Select(card => targets[card]));
