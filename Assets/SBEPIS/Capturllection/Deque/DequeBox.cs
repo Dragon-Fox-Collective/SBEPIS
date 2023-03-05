@@ -9,7 +9,6 @@ namespace SBEPIS.Capturllection
 {
 	[RequireComponent(typeof(Grabbable), typeof(GravitySum), typeof(SplitTextureSetup))]
 	[RequireComponent(typeof(CollisionTrigger), typeof(CouplingPlug), typeof(Animator))]
-	[RequireComponent(typeof(DequeRoot))]
 	public class DequeBox : MonoBehaviour
 	{
 		public LerpTarget lowerTarget;
