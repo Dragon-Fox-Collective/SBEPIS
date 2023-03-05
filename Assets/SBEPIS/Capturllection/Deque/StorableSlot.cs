@@ -8,25 +8,32 @@ namespace SBEPIS.Capturllection
 	[Serializable]
 	public class StorableSlot : Storable
 	{
-		public DequeStorable card;
-		public CardTarget target;
-		
-		public override Vector3 position
+		private DequeStorable _card;
+		public DequeStorable card
 		{
-			get => target.transform.localPosition;
-			set => target.transform.localPosition = value;
+			get => _card;
+			set
+			{
+				_card = value;
+
+				if (card)
+				{
+					card.state.hasBeenAssembled = false;
+				}
+			}
 		}
-		
-		public override Quaternion rotation
-		{
-			get => target.transform.localRotation;
-			set => target.transform.localRotation = value;
-		}
+
+		public override Vector3 position { get; set; }
+		public override Quaternion rotation { get; set; }
 		
 		public override bool isEmpty => card;
+
+		public StorableSlot(DequeStorable card)
+		{
+			this.card = card;
+		}
 		
 		public override void Tick(float deltaTime) { }
-		
 		public override void Layout()
 		{
 			position = Vector3.zero;
@@ -38,23 +45,18 @@ namespace SBEPIS.Capturllection
 		
 		public override (DequeStorable, Capturellectainer) Store(Capturllectable item, out Capturllectable ejectedItem)
 		{
-			Capturellectainer container = card.GetComponent<Capturellectainer>();
-			ejectedItem = container.Fetch();
-			container.Capture(item);
-			return (card, container);
+			ejectedItem = card.container.Fetch();
+			card.container.Capture(item);
+			return (card, card.container);
 		}
 
 		public override Capturllectable Fetch(DequeStorable card)
 		{
-			if (!CanFetch(card))
-				return null;
-			
-			return card.GetComponent<Capturellectainer>().Fetch();
+			return Contains(card) ? card.container.Fetch() : null;
 		}
 
-		public override void Flush(DequeStorable card)
-		{
-			throw new InvalidOperationException("Can't flush into a single slot");
-		}
+		public override IEnumerable<DequeStorable> Save() => Enumerable.Repeat(card, 1);
+		public override void Load(IEnumerable<DequeStorable> inventory) => card = inventory.First();
+		public override void Clear() => card = null;
 	}
 }

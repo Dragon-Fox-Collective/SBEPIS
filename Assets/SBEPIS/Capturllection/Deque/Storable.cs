@@ -13,7 +13,6 @@ namespace SBEPIS.Capturllection
 		public abstract bool isEmpty { get; }
 		
 		public abstract void Tick(float deltaTime);
-		
 		public abstract void Layout();
 		
 		public abstract bool CanFetch(DequeStorable card);
@@ -21,6 +20,9 @@ namespace SBEPIS.Capturllection
 		
 		public abstract (DequeStorable, Capturellectainer) Store(Capturllectable item, out Capturllectable ejectedItem);
 		public abstract Capturllectable Fetch(DequeStorable card);
-		public abstract void Flush(DequeStorable card);
+
+		public abstract IEnumerable<DequeStorable> Save();
+		public abstract void Load(IEnumerable<DequeStorable> inventory);
+		public abstract void Clear();
 	}
 }

@@ -31,7 +31,7 @@ namespace SBEPIS.Capturllection
 		
 		private bool isDequeDeployed => dequeBox && dequeBox.isDeployed;
 
-		private List<DequeStorable> savedInventory = new();
+		private IEnumerable<DequeStorable> savedInventory;
 		
 		private DequeBox _dequeBox;
 		public DequeBox dequeBox
@@ -70,8 +70,8 @@ namespace SBEPIS.Capturllection
 			dequeBox.state.isDiajectorOpen = false;
 			dequeBox.state.isDeployed = false;
 
-			savedInventory = dequeBox.Save();
-			dequeBox.Clear();
+			savedInventory = dequeBox.inventory.Save();
+			dequeBox.inventory.Clear();
 		}
 		
 		private void SetupNewDeque()
@@ -89,7 +89,7 @@ namespace SBEPIS.Capturllection
 			
 			diajector.UpdateCardTexture();
 
-			dequeBox.Load(savedInventory);
+			dequeBox.inventory.Load(savedInventory);
 		}
 		
 		private void UnsetDeque()
@@ -109,13 +109,15 @@ namespace SBEPIS.Capturllection
 		private void Start()
 		{
 			diajector.owner = this;
-			
+
+			List<DequeStorable> initialInventory = new();
 			for (int _ = 0; _ < initialCardCount; _++)
 			{
 				DequeStorable card = Instantiate(cardPrefab);
 				card.owner = this;
-				savedInventory.Add(card);
+				initialInventory.Add(card);
 			}
+			savedInventory = initialInventory;
 			
 			dequeBox = initialDeque;
 			if (dequeBox)
