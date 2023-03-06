@@ -10,7 +10,11 @@ namespace SBEPIS.Capturllection
 		public abstract Vector3 position { get; set; }
 		public abstract Quaternion rotation { get; set; }
 		
-		public abstract bool isEmpty { get; }
+		public abstract bool hasNoCards { get; }
+		public abstract bool hasAllCards { get; }
+		
+		public abstract bool hasAllCardsEmpty { get; }
+		public abstract bool hasAllCardsFull { get; }
 		
 		public abstract void Tick(float deltaTime);
 		public abstract void Layout();
@@ -20,9 +24,10 @@ namespace SBEPIS.Capturllection
 		
 		public abstract (DequeStorable, Capturellectainer) Store(Capturllectable item, out Capturllectable ejectedItem);
 		public abstract Capturllectable Fetch(DequeStorable card);
+		public abstract DequeStorable Flush(DequeStorable card);
 
 		public abstract IEnumerable<DequeStorable> Save();
-		public abstract void Load(IEnumerable<DequeStorable> inventory);
+		public abstract IEnumerable<DequeStorable> Load(IEnumerable<DequeStorable> newInventory);
 		public abstract void Clear();
 	}
 }

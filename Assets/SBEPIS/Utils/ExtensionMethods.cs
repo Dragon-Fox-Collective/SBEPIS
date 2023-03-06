@@ -135,15 +135,17 @@ public static class ExtensionMethods
 		quaternion.ToAngleAxis(out float angle, out Vector3 axis);
 		return angle * Mathf.Deg2Rad * axis;
 	}
-
+	
+	public static (T, IEnumerable<T>) Pop<T>(this IEnumerable<T> list) => (list.First(), list.Skip(1));
+	
 	public static IEnumerable<T> Insert<T>(this IEnumerable<T> enumerable, int index, T element)
 	{
-		return enumerable.Take(index).Append(element).Concat(enumerable.TakeLast(enumerable.Count() - index));
+		return enumerable.Take(index).Append(element).Concat(enumerable.Skip(index));
 	}
 
 	public static IEnumerable<(T, TSecond)> Zip<T, TSecond>(this IEnumerable<T> first, IEnumerable<TSecond> second)
 	{
-		return first.Zip(second, (first, second) => (first, second));
+		return first.Zip(second, (firstItem, secondItem) => (firstItem, secondItem));
 	}
 
 	public static void Do<T>(this IEnumerable<T> enumerable, Action<T> action)

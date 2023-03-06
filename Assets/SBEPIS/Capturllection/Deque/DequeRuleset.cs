@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection
@@ -13,9 +11,9 @@ namespace SBEPIS.Capturllection
 		public abstract bool CanFetchFrom(List<Storable> inventory, DequeStorable card);
 		
 		public abstract int GetIndexToStoreInto(List<Storable> inventory);
-		public abstract int GetIndexToFlushCardBetween(List<Storable> inventory, DequeStorable card);
-		public abstract int GetIndexToInsertStorableBetweenAfterStore(List<Storable> inventory, Storable storable, int originalIndex);
-		public abstract int GetIndexToInsertStorableBetweenAfterFetch(List<Storable> inventory, Storable storable, int originalIndex);
+		public abstract int GetIndexToFlushBetween(List<Storable> inventory, Storable storable);
+		public abstract int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, Storable storable, int originalIndex);
+		public abstract int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, Storable storable, int originalIndex);
 		
 		public abstract IEnumerable<Texture2D> GetCardTextures();
 		public abstract IEnumerable<Texture2D> GetBoxTextures();
