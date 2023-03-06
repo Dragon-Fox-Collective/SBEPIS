@@ -37,7 +37,7 @@ namespace SBEPIS.Capturllection
 				transform.SetParent(owner ? owner.cardParent : null);
 				if (owner)
 				{
-					split.UpdateTexture(owner.storage.cardTextures);
+					split.UpdateTexture(owner.dequeBox.definition.ruleset.GetCardTextures().ToList());
 				}
 			}
 		}
@@ -55,15 +55,14 @@ namespace SBEPIS.Capturllection
 			split = GetComponent<SplitTextureSetup>();
 			state = new CardStateMachine(GetComponent<Animator>());
 			animator = GetComponent<LerpTargetAnimator>();
+			container = GetComponent<Capturellectainer>();
 			
 			storePredicates.Add(() => isStoringAllowed);
 			storePredicates.Add(() => !isStored);
-
-			// This sucks but it's the best place to put it for now :/
-			Capturellectainer container = GetComponent<Capturellectainer>();
+			
 			if (container)
 				storePredicates.Add(() => container.capturedItem);
-
+			
 			Punchable punchable = GetComponent<Punchable>();
 			if (punchable)
 				storePredicates.Add(() => punchable.punchedBits.isPerfectlyGeneric);

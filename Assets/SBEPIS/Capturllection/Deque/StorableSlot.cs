@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace SBEPIS.Capturllection
 {
@@ -28,6 +29,8 @@ namespace SBEPIS.Capturllection
 		
 		public override bool hasAllCardsEmpty => card && card.canStoreInto;
 		public override bool hasAllCardsFull => !hasAllCardsEmpty;
+		
+		public StorableSlot(Transform transform) : base(transform) { }
 
 		public override void Tick(float deltaTime) { }
 		public override void Layout()
@@ -35,7 +38,12 @@ namespace SBEPIS.Capturllection
 			position = Vector3.zero;
 			rotation = Quaternion.identity;
 		}
-		
+		public override void LayoutTarget(DequeStorable card, CardTarget target)
+		{
+			if (Contains(card))
+				target.transform.SetPositionAndRotation(transform.position, transform.rotation);
+		}
+
 		public override bool CanFetch(DequeStorable card) => Contains(card);
 		public override bool Contains(DequeStorable card) => this.card == card;
 		
@@ -66,6 +74,16 @@ namespace SBEPIS.Capturllection
 			card = newCard;
 			return rtn;
 		}
-		public override void Clear() => card = null;
+		
+		public override void Clear()
+		{
+			card = null;
+			Object.Destroy(transform.gameObject);
+		}
+		
+		public override IEnumerator<DequeStorable> GetEnumerator()
+		{
+			yield return card;
+		}
 	}
 }
