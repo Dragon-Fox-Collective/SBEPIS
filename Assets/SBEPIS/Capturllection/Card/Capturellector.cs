@@ -39,7 +39,7 @@ namespace SBEPIS.Capturllection
 				return;
 			
 			grabber.Drop();
-			(DequeStorable card, Capturellectainer container) = owner.storage.StoreItem(item, out Capturllectable ejectedItem);
+			(DequeStorable card, Capturellectainer container) = owner.dequeBox.inventory.Store(item, out Capturllectable ejectedItem);
 			
 			if (ejectedItem)
 				if (owner.diajector.ShouldCardBeDisplayed(card))
@@ -55,11 +55,11 @@ namespace SBEPIS.Capturllection
 		{
 			if (!container.canFetch)
 				return;
-			if (!container.TryGetComponent(out DequeStorable card) || !owner.storage.CanFetch(card))
+			if (!container.TryGetComponent(out DequeStorable card) || !owner.dequeBox.inventory.CanFetch(card))
 				return;
 
 			grabber.Drop();
-			Capturllectable item = owner.storage.FetchItem(card, container);
+			Capturllectable item = owner.dequeBox.inventory.Fetch(card);
 			item.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
 			item.GetComponent<Rigidbody>().Move(grabber.transform.position, grabber.transform.rotation);
 			

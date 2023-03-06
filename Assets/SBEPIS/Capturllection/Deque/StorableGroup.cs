@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace SBEPIS.Capturllection
 {
@@ -17,13 +18,14 @@ namespace SBEPIS.Capturllection
 		public override bool hasAllCardsEmpty => inventory.All(storable => storable.hasAllCardsEmpty);
 		public override bool hasAllCardsFull => inventory.All(storable => storable.hasAllCardsFull);
 		
-		public StorableGroup(StorableGroupDefinition definition)
+		public StorableGroup(Transform transform, StorableGroupDefinition definition) : base(transform)
 		{
 			this.definition = definition;
 		}
 		
 		public override void Tick(float deltaTime) => definition.ruleset.Tick(inventory, deltaTime);
 		public override void Layout() => definition.ruleset.Layout(inventory);
+		public override void LayoutTarget(DequeStorable card, CardTarget target) => inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		
 		public override bool CanFetch(DequeStorable card) => definition.ruleset.CanFetchFrom(inventory, card);
 		public override bool Contains(DequeStorable card) => inventory.Any(storable => storable.Contains(card));
@@ -78,7 +80,7 @@ namespace SBEPIS.Capturllection
 			
 			while (inventory.Count < definition.maxStorables)
 			{
-				Storable storable = definition.GetNewStorable();
+				Storable storable = definition.GetNewStorable(transform);
 				card = storable.Flush(card);
 				
 				int insertIndex = definition.ruleset.GetIndexToFlushBetween(inventory, storable);
@@ -98,6 +100,9 @@ namespace SBEPIS.Capturllection
 			foreach (Storable storable in inventory)
 				storable.Clear();
 			inventory.Clear();
+			Object.Destroy(transform.gameObject);
 		}
+
+		public override IEnumerator<DequeStorable> GetEnumerator() => inventory.SelectMany(storable => storable).GetEnumerator();
 	}
 }

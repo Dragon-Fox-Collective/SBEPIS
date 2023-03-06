@@ -13,7 +13,8 @@ namespace SBEPIS.Capturllection
 	{
 		public LerpTarget lowerTarget;
 		public LerpTarget upperTarget;
-		
+
+		public StorableGroupDefinition definition;
 		public Storable inventory;
 		
 		public DequeOwner owner { get; set; }
@@ -39,7 +40,7 @@ namespace SBEPIS.Capturllection
 		
 		private void Start()
 		{
-			split.UpdateTexture(definition.GetBoxTextures().ToList());
+			split.UpdateTexture(definition.ruleset.GetBoxTextures().ToList());
 		}
 		
 		public void AdoptDeque(Grabber grabber, Grabbable grabbable)

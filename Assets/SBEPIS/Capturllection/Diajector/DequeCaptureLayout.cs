@@ -33,16 +33,18 @@ namespace SBEPIS.Capturllection
 			if (!diajector.isBound)
 				return;
 
-			DequeStorage storage = diajector.owner.storage;
-			storage.Tick(Time.fixedDeltaTime);
-			storage.LayoutTargets(targets);
+			Storable inventory = diajector.owner.dequeBox.inventory;
+			inventory.Tick(Time.fixedDeltaTime);
+			inventory.Layout();
 			
 			foreach ((DequeStorable card, CardTarget target) in targets)
 			{
+				inventory.LayoutTarget(card, target);
+				
 				target.transform.localPosition += Vector3.forward * cardZ;
 				target.transform.localRotation *= Quaternion.Euler(0, 180, 0);
 				
-				if (storage.CanFetch(card))
+				if (inventory.CanFetch(card))
 					target.transform.position += target.transform.up * fetchableCardY;
 			}
 		}
@@ -65,7 +67,7 @@ namespace SBEPIS.Capturllection
 			Destroy(target.gameObject);
 		}
 
-		public bool HasTemporaryTarget(DequeStorable card) => targets.ContainsKey(card) && !diajector.owner.storage.Contains(card);
+		public bool HasTemporaryTarget(DequeStorable card) => targets.ContainsKey(card) && !diajector.owner.dequeBox.inventory.Contains(card);
 
 		public CardTarget AddPermanentTargetAndCard(DequeStorable card)
 		{
@@ -82,13 +84,13 @@ namespace SBEPIS.Capturllection
 			RemoveTemporaryTarget(card);
 		}
 
-		public void SyncCards() => SyncCards(diajector.owner.storage);
-		public void SyncCards(DequeStorage cards)
+		public void SyncCards() => SyncCards(diajector.owner.dequeBox.inventory);
+		public void SyncCards(Storable inventory)
 		{
-			foreach ((DequeStorable card, CardTarget target) in targets.Where(pair => !cards.Contains(pair.Key)).ToList())
+			foreach ((DequeStorable card, CardTarget target) in targets.Where(pair => !inventory.Contains(pair.Key)).ToList())
 				RemovePermanentTargetAndCard(card);
 
-			foreach (DequeStorable card in cards.Where(card => !targets.ContainsKey(card)))
+			foreach (DequeStorable card in inventory.Where(card => !targets.ContainsKey(card)))
 			{
 				CardTarget target = AddPermanentTargetAndCard(card);
 				if (card.grabbable.isBeingHeld)
