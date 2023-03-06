@@ -11,9 +11,6 @@ namespace SBEPIS.Capturllection
 		public StorableGroupDefinition definition;
 		public List<Storable> inventory = new();
 		
-		public override Vector3 position { get; set; }
-		public override Quaternion rotation { get; set; }
-		
 		public override bool hasNoCards => inventory.Count == 0;
 		public override bool hasAllCards => inventory.Count == definition.maxStorables && inventory.All(storable => storable.hasAllCards);
 		

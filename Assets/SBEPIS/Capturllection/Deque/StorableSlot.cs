@@ -23,9 +23,6 @@ namespace SBEPIS.Capturllection
 			}
 		}
 		
-		public override Vector3 position { get; set; }
-		public override Quaternion rotation { get; set; }
-		
 		public override bool hasNoCards => !hasAllCards;
 		public override bool hasAllCards => card;
 		
