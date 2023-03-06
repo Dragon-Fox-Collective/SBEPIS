@@ -14,9 +14,9 @@ namespace SBEPIS.Capturllection
 		public override bool CanFetchFrom(List<Storable> inventory, DequeStorable card) => rulesets.AsEnumerable().Reverse().Any(deque => deque.CanFetchFrom(inventory, card));
 		
 		public override int GetIndexToStoreInto(List<Storable> inventory) => rulesets[^1].GetIndexToStoreInto(inventory);
-		public override int GetIndexToFlushCardBetween(List<Storable> inventory, DequeStorable card) => rulesets[^1].GetIndexToFlushCardBetween(inventory, card);
-		public override int GetIndexToInsertStorableBetweenAfterStore(List<Storable> inventory, Storable storable, int originalIndex) => rulesets[^1].GetIndexToInsertStorableBetweenAfterStore(inventory, storable, originalIndex);
-		public override int GetIndexToInsertStorableBetweenAfterFetch(List<Storable> inventory, Storable storable, int originalIndex) => rulesets[^1].GetIndexToInsertStorableBetweenAfterFetch(inventory, storable, originalIndex);
+		public override int GetIndexToFlushBetween(List<Storable> inventory, DequeStorable card) => rulesets[^1].GetIndexToFlushBetween(inventory, card);
+		public override int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, Storable storable, int originalIndex) => rulesets[^1].GetIndexToInsertBetweenAfterStore(inventory, storable, originalIndex);
+		public override int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, Storable storable, int originalIndex) => rulesets[^1].GetIndexToInsertBetweenAfterFetch(inventory, storable, originalIndex);
 		
 		public override IEnumerable<Texture2D> GetCardTextures() => rulesets.SelectMany(ruleset => ruleset.GetCardTextures());
 		public override IEnumerable<Texture2D> GetBoxTextures() => rulesets.SelectMany(ruleset => ruleset.GetBoxTextures());

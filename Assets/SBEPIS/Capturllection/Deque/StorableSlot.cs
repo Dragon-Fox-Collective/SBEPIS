@@ -22,17 +22,16 @@ namespace SBEPIS.Capturllection
 				}
 			}
 		}
-
+		
 		public override Vector3 position { get; set; }
 		public override Quaternion rotation { get; set; }
 		
-		public override bool isEmpty => card;
-
-		public StorableSlot(DequeStorable card)
-		{
-			this.card = card;
-		}
+		public override bool hasNoCards => !hasAllCards;
+		public override bool hasAllCards => card;
 		
+		public override bool hasAllCardsEmpty => card && card.canStoreInto;
+		public override bool hasAllCardsFull => !hasAllCardsEmpty;
+
 		public override void Tick(float deltaTime) { }
 		public override void Layout()
 		{
@@ -49,14 +48,27 @@ namespace SBEPIS.Capturllection
 			card.container.Capture(item);
 			return (card, card.container);
 		}
-
+		
 		public override Capturllectable Fetch(DequeStorable card)
 		{
 			return Contains(card) ? card.container.Fetch() : null;
 		}
 
+		public override DequeStorable Flush(DequeStorable card)
+		{
+			if (hasAllCards)
+				return card;
+			this.card = card;
+			return null;
+		}
+		
 		public override IEnumerable<DequeStorable> Save() => Enumerable.Repeat(card, 1);
-		public override void Load(IEnumerable<DequeStorable> inventory) => card = inventory.First();
+		public override IEnumerable<DequeStorable> Load(IEnumerable<DequeStorable> newInventory)
+		{
+			(DequeStorable newCard, IEnumerable<DequeStorable> rtn) = newInventory.Pop();
+			card = newCard;
+			return rtn;
+		}
 		public override void Clear() => card = null;
 	}
 }
