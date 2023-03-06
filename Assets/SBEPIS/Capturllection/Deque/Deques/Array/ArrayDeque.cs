@@ -14,29 +14,34 @@ namespace SBEPIS.Capturllection.Deques
 		
 		private float time;
 		
-		public override void Tick(List<DequeStorable> cards, float delta)
+		public override void Tick(List<Storable> inventory, float delta)
 		{
 			time += delta;
 		}
 		
-		public override void LayoutTargets(List<DequeStorable> cards, Dictionary<DequeStorable, CardTarget> targets)
+		public override void Layout(List<Storable> inventory)
 		{
 			int i = 0;
-			Vector3 right = cardDistance * (targets.Count - 1) / 2 * Vector3.left;
-			foreach ((DequeStorable card, CardTarget target) in InOrder(cards, targets))
+			Vector3 right = cardDistance * (inventory.Count - 1) / 2 * Vector3.left;
+			foreach (Storable storable in inventory)
 			{
 				Vector3 up = Mathf.Sin(time + i * wobbleTimeOffset) * wobbleHeight * Vector3.up;
-				target.transform.localPosition = right + up;
-				target.transform.localRotation = cardRotation;
+				storable.position = right + up;
+				storable.rotation = cardRotation;
 				right += Vector3.right * cardDistance;
 				i++;
 			}
 		}
 		
-		public override bool CanFetch(List<DequeStorable> cards, DequeStorable card) => true;
+		public override bool CanFetchFrom(List<Storable> inventory, DequeStorable card) => inventory.Any(storable => storable.CanFetch(card));
 		
-		public override int GetIndexToStoreInto(List<DequeStorable> cards) => GetFirstIndexWhere(cards, HasEmptyContainer, OrFirstCard);
-		
-		public override int GetIndexToInsertCardBetween(List<DequeStorable> cards, DequeStorable card) => GetFirstIndexWhere(cards, HasEmptyContainer, OrAfterAllCards);
+		public override int GetIndexToStoreInto(List<Storable> inventory)
+		{
+			int index = inventory.FindIndex(storable => !storable.hasAllCardsFull);
+			return index is -1 ? 0 : index;
+		}
+		public override int GetIndexToFlushBetween(List<Storable> inventory, Storable storable) => inventory.Count;
+		public override int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, Storable storable, int originalIndex) => originalIndex;
+		public override int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, Storable storable, int originalIndex) => originalIndex;
 	}
 }
