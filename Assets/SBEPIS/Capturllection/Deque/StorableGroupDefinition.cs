@@ -8,7 +8,7 @@ namespace SBEPIS.Capturllection
 		public int maxStorables;
 		public StorableGroupDefinition subdefinition;
 		
-		public string dequeName => ruleset.dequeName + (subdefinition ? $"of {subdefinition.name}" : "");
+		public string dequeName => ruleset.dequeName + (subdefinition ? " of " + subdefinition.dequeName : "");
 		
 		public static Storable GetNewStorable(StorableGroupDefinition definition)
 		{

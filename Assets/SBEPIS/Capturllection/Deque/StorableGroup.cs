@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
@@ -15,9 +16,19 @@ namespace SBEPIS.Capturllection
 		
 		public override bool hasAllCardsEmpty => inventory.All(storable => storable.hasAllCardsEmpty);
 		public override bool hasAllCardsFull => inventory.All(storable => storable.hasAllCardsFull);
-		
-		public override void Tick(float deltaTime) => definition.ruleset.Tick(inventory, deltaTime);
-		public override void Layout() => definition.ruleset.Layout(inventory);
+
+		public override void Tick(float deltaTime)
+		{
+			definition.ruleset.Tick(inventory, deltaTime);
+			foreach (Storable storable in inventory)
+				storable.Tick(deltaTime);
+		}
+		public override void Layout()
+		{
+			definition.ruleset.Layout(inventory);
+			foreach (Storable storable in inventory)
+				storable.Layout();
+		}
 		public override void LayoutTarget(DequeStorable card, CardTarget target) => inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		
 		public override bool CanFetch(DequeStorable card) => definition.ruleset.CanFetchFrom(inventory, card);
@@ -84,6 +95,19 @@ namespace SBEPIS.Capturllection
 				if (cards.Count == 0)
 					return;
 			}
+		}
+		
+		public override IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent)
+		{
+			if (Contains(card))
+			{
+				textures = textures.Append(definition.ruleset.GetCardTextures());
+				int index = inventory.FindIndex(storable => storable.Contains(card));
+				Storable storable = inventory[index];
+				return storable.GetCardTextures(card, textures, index);
+			}
+			else
+				return definition.ruleset.GetCardTextures().ToList();
 		}
 		
 		public override IEnumerator<DequeStorable> GetEnumerator() => inventory.SelectMany(storable => storable).GetEnumerator();
