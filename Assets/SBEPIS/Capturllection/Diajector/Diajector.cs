@@ -106,8 +106,11 @@ namespace SBEPIS.Capturllection
 
 		public void UpdateCardTexture()
 		{
-			List<Texture2D> cardTextures = owner.dequeBox.definition.ruleset.GetCardTextures().ToList();
-			GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Select(cardTarget => cardTarget.card).Concat(owner.inventory).Do(card => card.split.UpdateTexture(cardTextures));
+			List<Texture2D> defaultTextures = owner.dequeBox ? owner.dequeBox.definition.ruleset.GetCardTextures().ToList() : null;
+			foreach (DequeStorable card in GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Select(cardTarget => cardTarget.card))
+				card.split.UpdateTexture(defaultTextures);
+			foreach (DequeStorable card in owner.inventory)
+				card.split.UpdateTexture(owner.inventory.GetCardTextures(card).ToList());
 		}
 
 		public LerpTarget GetLerpTarget(DequeStorable card) => currentPage ? currentPage.GetLerpTarget(card) : null;
