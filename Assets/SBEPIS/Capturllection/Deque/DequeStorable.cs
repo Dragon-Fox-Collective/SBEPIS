@@ -35,7 +35,7 @@ namespace SBEPIS.Capturllection
 				
 				state.isBound = owner;
 				transform.SetParent(owner ? owner.cardParent : null);
-				if (owner)
+				if (owner && owner.dequeBox)
 				{
 					split.UpdateTexture(owner.dequeBox.definition.ruleset.GetCardTextures().ToList());
 				}

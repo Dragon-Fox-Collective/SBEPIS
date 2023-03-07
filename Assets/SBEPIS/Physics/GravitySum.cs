@@ -45,7 +45,7 @@ namespace SBEPIS.Physics
 							.Zip(priorities, (gravity, priority) => Vector3.LerpUnclamped(Vector3.zero, gravity, priority)).Sum(),
 						priorities.Sum());
 				});
-
+			
 			gravityAcceleration = gravity.magnitude;
 			if (gravityAcceleration > 0)
 			{

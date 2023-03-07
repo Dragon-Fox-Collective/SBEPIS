@@ -15,7 +15,6 @@ namespace SBEPIS.Capturllection
 		public LerpTarget upperTarget;
 
 		public StorableGroupDefinition definition;
-		public Storable inventory;
 		
 		public DequeOwner owner { get; set; }
 		
@@ -27,7 +26,7 @@ namespace SBEPIS.Capturllection
 		public CollisionTrigger collisionTrigger { get; private set; }
 		public CouplingPlug plug { get; private set; }
 		public DequeStateMachine state { get; private set; }
-
+		
 		private void Awake()
 		{
 			grabbable = GetComponent<Grabbable>();

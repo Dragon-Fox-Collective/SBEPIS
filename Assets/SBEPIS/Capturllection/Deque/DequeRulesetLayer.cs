@@ -8,6 +8,8 @@ namespace SBEPIS.Capturllection
 	{
 		public List<DequeRuleset> rulesets;
 
+		public override string dequeName => rulesets.Aggregate("", (name, ruleset) => name += ruleset.dequeName);
+
 		public override void Tick(List<Storable> inventory, float delta) => rulesets.Do(deque => deque.Tick(inventory, delta));
 		public override void Layout(List<Storable> inventory) => rulesets[0].Layout(inventory);
 		

@@ -33,7 +33,7 @@ namespace SBEPIS.Capturllection
 			if (!diajector.isBound)
 				return;
 
-			Storable inventory = diajector.owner.dequeBox.inventory;
+			Storable inventory = diajector.owner.inventory;
 			inventory.Tick(Time.fixedDeltaTime);
 			inventory.Layout();
 			
@@ -67,7 +67,7 @@ namespace SBEPIS.Capturllection
 			Destroy(target.gameObject);
 		}
 
-		public bool HasTemporaryTarget(DequeStorable card) => targets.ContainsKey(card) && !diajector.owner.dequeBox.inventory.Contains(card);
+		public bool HasTemporaryTarget(DequeStorable card) => targets.ContainsKey(card) && !diajector.owner.inventory.Contains(card);
 
 		public CardTarget AddPermanentTargetAndCard(DequeStorable card)
 		{
@@ -84,7 +84,7 @@ namespace SBEPIS.Capturllection
 			RemoveTemporaryTarget(card);
 		}
 
-		public void SyncCards() => SyncCards(diajector.owner.dequeBox.inventory);
+		public void SyncCards() => SyncCards(diajector.owner.inventory);
 		public void SyncCards(Storable inventory)
 		{
 			foreach ((DequeStorable card, CardTarget target) in targets.Where(pair => !inventory.Contains(pair.Key)).ToList())
