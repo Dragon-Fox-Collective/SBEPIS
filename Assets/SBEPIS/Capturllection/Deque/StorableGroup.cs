@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace SBEPIS.Capturllection
 {
@@ -17,11 +15,6 @@ namespace SBEPIS.Capturllection
 		
 		public override bool hasAllCardsEmpty => inventory.All(storable => storable.hasAllCardsEmpty);
 		public override bool hasAllCardsFull => inventory.All(storable => storable.hasAllCardsFull);
-		
-		public StorableGroup(Transform transform, StorableGroupDefinition definition) : base(transform)
-		{
-			this.definition = definition;
-		}
 		
 		public override void Tick(float deltaTime) => definition.ruleset.Tick(inventory, deltaTime);
 		public override void Layout() => definition.ruleset.Layout(inventory);
@@ -40,14 +33,15 @@ namespace SBEPIS.Capturllection
 			
 			int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterStore(inventory, storable, storeIndex);
 			inventory.Insert(restoreIndex, storable);
-
+			
 			if (ejectedItem.TryGetComponent(out DequeStorable flushedCard))
 			{
-				DequeStorable remainingCard = Flush(flushedCard);
-				if (!remainingCard)
+				List<DequeStorable> cards = new(){ flushedCard };
+				Flush(cards);
+				if (cards.Count == 0)
 					ejectedItem = null;
 			}
-
+			
 			return (card, container);
 		}
 		
@@ -64,45 +58,34 @@ namespace SBEPIS.Capturllection
 			
 			return item;
 		}
-
-		public override DequeStorable Flush(DequeStorable card) => Flush(card, 0);
-		public DequeStorable Flush(DequeStorable card, int originalIndex)
+		
+		public override void Flush(List<DequeStorable> cards) => Flush(cards, 0);
+		public void Flush(List<DequeStorable> cards, int originalIndex)
 		{
-			if (hasAllCards)
-				return card;
+			if (hasAllCards || cards.Count == 0)
+				return;
 			
 			foreach (Storable storable in inventory.Skip(originalIndex).Concat(inventory.Take(originalIndex)))
 			{
-				card = storable.Flush(card);
-				if (!card)
-					return null;
+				storable.Flush(cards);
+				if (cards.Count == 0)
+					return;
 			}
 			
 			while (inventory.Count < definition.maxStorables)
 			{
-				Storable storable = definition.GetNewStorable(transform);
-				card = storable.Flush(card);
+				Storable storable = StorableGroupDefinition.GetNewStorable(definition.subdefinition);
+				storable.transform.SetParent(transform);
+				storable.Flush(cards);
 				
 				int insertIndex = definition.ruleset.GetIndexToFlushBetween(inventory, storable);
 				inventory.Insert(insertIndex, storable);
 				
-				if (!card)
-					return null;
+				if (cards.Count == 0)
+					return;
 			}
-			
-			return card;
 		}
 		
-		public override IEnumerable<DequeStorable> Save() => inventory.SelectMany(card => card.Save());
-		public override IEnumerable<DequeStorable> Load(IEnumerable<DequeStorable> newInventory) => inventory.Aggregate(newInventory, (current, storable) => storable.Load(current));
-		public override void Clear()
-		{
-			foreach (Storable storable in inventory)
-				storable.Clear();
-			inventory.Clear();
-			Object.Destroy(transform.gameObject);
-		}
-
 		public override IEnumerator<DequeStorable> GetEnumerator() => inventory.SelectMany(storable => storable).GetEnumerator();
 	}
 }

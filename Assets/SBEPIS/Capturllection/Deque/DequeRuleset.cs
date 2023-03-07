@@ -5,6 +5,8 @@ namespace SBEPIS.Capturllection
 {
 	public abstract class DequeRuleset : MonoBehaviour
 	{
+		public abstract string dequeName { get; }
+		
 		public abstract void Tick(List<Storable> inventory, float delta);
 		public abstract void Layout(List<Storable> inventory);
 		

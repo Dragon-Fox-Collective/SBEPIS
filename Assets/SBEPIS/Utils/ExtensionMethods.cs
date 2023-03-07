@@ -69,9 +69,6 @@ public static class ExtensionMethods
 
 	public static T Pop<T>(this List<T> list)
 	{
-		if (list.Count == 0)
-			throw new InvalidOperationException($"Tried to pop an empty list");
-
 		T obj = list[0];
 		list.RemoveAt(0);
 		return obj;
@@ -135,8 +132,6 @@ public static class ExtensionMethods
 		quaternion.ToAngleAxis(out float angle, out Vector3 axis);
 		return angle * Mathf.Deg2Rad * axis;
 	}
-	
-	public static (T, IEnumerable<T>) Pop<T>(this IEnumerable<T> list) => (list.First(), list.Skip(1));
 	
 	public static IEnumerable<T> Insert<T>(this IEnumerable<T> enumerable, int index, T element)
 	{

@@ -7,15 +7,25 @@ namespace SBEPIS.Capturllection
 		public DequeRuleset ruleset;
 		public int maxStorables;
 		public StorableGroupDefinition subdefinition;
-
-		public Storable GetNewStorable(Transform parent)
+		
+		public string dequeName => ruleset.dequeName + (subdefinition ? $"of {subdefinition.name}" : "");
+		
+		public static Storable GetNewStorable(StorableGroupDefinition definition)
 		{
-			GameObject childGameObject = new("Storable");
-			Transform child = childGameObject.transform;
-			child.SetParent(parent);
-			child.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
-			
-			return subdefinition != null ? new StorableGroup(child, subdefinition) : new StorableSlot(child);
+			GameObject childGameObject = new();
+			if (definition)
+			{
+				childGameObject.name = definition.dequeName;
+				StorableGroup group = childGameObject.AddComponent<StorableGroup>();
+				group.definition = definition;
+				return group;
+			}
+			else
+			{
+				childGameObject.name = "Slot";
+				StorableSlot slot = childGameObject.AddComponent<StorableSlot>();
+				return slot;
+			}
 		}
 	}
 }

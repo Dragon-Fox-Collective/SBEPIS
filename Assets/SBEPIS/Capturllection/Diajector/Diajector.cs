@@ -48,6 +48,8 @@ namespace SBEPIS.Capturllection
 			
 			gameObject.SetActive(true);
 			transform.SetPositionAndRotation(position, rotation);
+			owner.inventory.transform.SetParent(layout.transform);
+			owner.inventory.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 			AssembleNewPage(page);
 		}
 		
@@ -105,7 +107,7 @@ namespace SBEPIS.Capturllection
 		public void UpdateCardTexture()
 		{
 			List<Texture2D> cardTextures = owner.dequeBox.definition.ruleset.GetCardTextures().ToList();
-			GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Select(cardTarget => cardTarget.card).Concat(owner.dequeBox.inventory).Do(card => card.split.UpdateTexture(cardTextures));
+			GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Select(cardTarget => cardTarget.card).Concat(owner.inventory).Do(card => card.split.UpdateTexture(cardTextures));
 		}
 
 		public LerpTarget GetLerpTarget(DequeStorable card) => currentPage.GetLerpTarget(card);

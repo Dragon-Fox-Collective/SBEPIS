@@ -10,6 +10,8 @@ namespace SBEPIS.Capturllection
 	{
 		public Dequeration dequeration;
 		
+		public override string dequeName => GetType().Name;
+		
 		public override IEnumerable<Texture2D> GetCardTextures()
 		{
 			yield return dequeration.cardTexture;

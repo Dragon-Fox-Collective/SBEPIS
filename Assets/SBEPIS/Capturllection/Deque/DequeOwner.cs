@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using SBEPIS.Controller;
 using SBEPIS.Utils;
 using UnityEngine;
@@ -30,8 +31,9 @@ namespace SBEPIS.Capturllection
 		public LerpTargetAnimator dequeAnimator { get; private set; }
 		
 		private bool isDequeDeployed => dequeBox && dequeBox.isDeployed;
-
-		private IEnumerable<DequeStorable> savedInventory;
+		
+		private List<DequeStorable> savedInventory;
+		public Storable inventory { get; private set; }
 		
 		private DequeBox _dequeBox;
 		public DequeBox dequeBox
@@ -69,9 +71,9 @@ namespace SBEPIS.Capturllection
 			dequeBox.state.isBound = false;
 			dequeBox.state.isDiajectorOpen = false;
 			dequeBox.state.isDeployed = false;
-
-			savedInventory = dequeBox.inventory.Save();
-			dequeBox.inventory.Clear();
+			
+			savedInventory = inventory.ToList();
+			Destroy(inventory.gameObject);
 		}
 		
 		private void SetupNewDeque()
@@ -79,7 +81,7 @@ namespace SBEPIS.Capturllection
 			dequeBox.owner = this;
 			dequeBox.collisionTrigger.trigger.AddListener(StartDiajectorAssembly);
 			dequeBox.grabbable.onUse.AddListener(CloseDiajector);
-
+			
 			dequeAnimator = dequeBox.gameObject.AddComponent<LerpTargetAnimator>();
 			dequeAnimator.curve = retrievalAnimationCurve;
 			
@@ -87,9 +89,20 @@ namespace SBEPIS.Capturllection
 			dequeBox.state.isDiajectorOpen = diajector.isOpen;
 			dequeBox.state.isDeployed = diajector.isOpen;
 			
-			diajector.UpdateCardTexture();
+			inventory = StorableGroupDefinition.GetNewStorable(dequeBox.definition);
+			if (diajector.isLayoutActive)
+				inventory.transform.SetParent(diajector.layout.transform);
+			inventory.Flush(savedInventory);
+			foreach (DequeStorable card in savedInventory)
+			{
+				print($"Ejecting leftover card {card}");
+				card.gameObject.SetActive(true);
+				card.transform.SetPositionAndRotation(dequeBox.transform.position, dequeBox.transform.rotation);
+				card.owner = null;
+			}
+			savedInventory.Clear();
 
-			dequeBox.inventory.Load(savedInventory);
+			diajector.UpdateCardTexture();
 		}
 		
 		private void UnsetDeque()

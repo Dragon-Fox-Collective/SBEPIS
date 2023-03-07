@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	public abstract class Storable : IEnumerable<DequeStorable>
+	public abstract class Storable : MonoBehaviour, IEnumerable<DequeStorable>
 	{
-		protected readonly Transform transform;
-		
 		public Vector3 position
 		{
 			get => transform.localPosition;
@@ -25,11 +23,6 @@ namespace SBEPIS.Capturllection
 		public abstract bool hasAllCardsEmpty { get; }
 		public abstract bool hasAllCardsFull { get; }
 		
-		public Storable(Transform transform)
-		{
-			this.transform = transform;
-		}
-		
 		public abstract void Tick(float deltaTime);
 		public abstract void Layout();
 		public abstract void LayoutTarget(DequeStorable card, CardTarget target);
@@ -39,11 +32,7 @@ namespace SBEPIS.Capturllection
 		
 		public abstract (DequeStorable, Capturellectainer) Store(Capturllectable item, out Capturllectable ejectedItem);
 		public abstract Capturllectable Fetch(DequeStorable card);
-		public abstract DequeStorable Flush(DequeStorable card);
-		
-		public abstract IEnumerable<DequeStorable> Save();
-		public abstract IEnumerable<DequeStorable> Load(IEnumerable<DequeStorable> newInventory);
-		public abstract void Clear();
+		public abstract void Flush(List<DequeStorable> cards);
 
 		public abstract IEnumerator<DequeStorable> GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
