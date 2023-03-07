@@ -110,7 +110,7 @@ namespace SBEPIS.Capturllection
 			GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Select(cardTarget => cardTarget.card).Concat(owner.inventory).Do(card => card.split.UpdateTexture(cardTextures));
 		}
 
-		public LerpTarget GetLerpTarget(DequeStorable card) => currentPage.GetLerpTarget(card);
-		public CardTarget GetCardTarget(DequeStorable card) => currentPage.GetCardTarget(card);
+		public LerpTarget GetLerpTarget(DequeStorable card) => currentPage ? currentPage.GetLerpTarget(card) : null;
+		public CardTarget GetCardTarget(DequeStorable card) => currentPage ? currentPage.GetCardTarget(card) : null;
 	}
 }
