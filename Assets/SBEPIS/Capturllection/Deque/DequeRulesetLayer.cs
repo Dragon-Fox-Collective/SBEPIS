@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	public class DequeRulesetLayer : DequeRuleset<DequeRulesetLayerState>
+	public class DequeRulesetLayer : DequeRuleset
 	{
 		public List<DequeRuleset> rulesets;
 
