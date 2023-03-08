@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using SBEPIS.Controller;
 using SBEPIS.Utils;
 using UnityEngine;
@@ -5,7 +7,7 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Capturllection
 {
-	[RequireComponent(typeof(CouplingSocket), typeof(LerpTarget), typeof(DequeStorage))]
+	[RequireComponent(typeof(CouplingSocket), typeof(LerpTarget))]
 	public class DequeOwner : MonoBehaviour
 	{
 		[SerializeField]
@@ -13,6 +15,9 @@ namespace SBEPIS.Capturllection
 		public Diajector diajector;
 		
 		public Transform cardParent;
+		
+		public DequeStorable cardPrefab;
+		public int initialCardCount = 5;
 		
 		public Transform tossTarget;
 		[Tooltip("Height above the hand the deque should toss through, must be non-negative")]
@@ -22,12 +27,14 @@ namespace SBEPIS.Capturllection
 		
 		public CouplingSocket socket { get; private set; }
 		public LerpTarget lerpTarget { get; private set; }
-		public DequeStorage storage { get; private set; }
 		
 		public LerpTargetAnimator dequeAnimator { get; private set; }
 		
 		private bool isDequeDeployed => dequeBox && dequeBox.isDeployed;
-
+		
+		private List<DequeStorable> savedInventory;
+		public Storable inventory { get; private set; }
+		
 		private DequeBox _dequeBox;
 		public DequeBox dequeBox
 		{
@@ -64,6 +71,9 @@ namespace SBEPIS.Capturllection
 			dequeBox.state.isBound = false;
 			dequeBox.state.isDiajectorOpen = false;
 			dequeBox.state.isDeployed = false;
+			
+			savedInventory = inventory.ToList();
+			Destroy(inventory.gameObject);
 		}
 		
 		private void SetupNewDeque()
@@ -72,8 +82,6 @@ namespace SBEPIS.Capturllection
 			dequeBox.collisionTrigger.trigger.AddListener(StartDiajectorAssembly);
 			dequeBox.grabbable.onUse.AddListener(CloseDiajector);
 			
-			storage.SyncDeque(dequeBox);
-			
 			dequeAnimator = dequeBox.gameObject.AddComponent<LerpTargetAnimator>();
 			dequeAnimator.curve = retrievalAnimationCurve;
 			
@@ -81,6 +89,19 @@ namespace SBEPIS.Capturllection
 			dequeBox.state.isDiajectorOpen = diajector.isOpen;
 			dequeBox.state.isDeployed = diajector.isOpen;
 			
+			inventory = StorableGroupDefinition.GetNewStorable(dequeBox.definition);
+			if (diajector.isLayoutActive)
+				inventory.transform.SetParent(diajector.layout.transform, false);
+			inventory.Flush(savedInventory);
+			foreach (DequeStorable card in savedInventory)
+			{
+				print($"Ejecting leftover card {card}");
+				card.gameObject.SetActive(true);
+				card.transform.SetPositionAndRotation(dequeBox.transform.position, dequeBox.transform.rotation);
+				card.owner = null;
+			}
+			savedInventory.Clear();
+
 			diajector.UpdateCardTexture();
 		}
 		
@@ -94,7 +115,6 @@ namespace SBEPIS.Capturllection
 		{
 			socket = GetComponent<CouplingSocket>();
 			lerpTarget = GetComponent<LerpTarget>();
-			storage = GetComponent<DequeStorage>();
 			
 			socket.onDecouple.AddListener(DecoupleDeque);
 		}
@@ -102,12 +122,19 @@ namespace SBEPIS.Capturllection
 		private void Start()
 		{
 			diajector.owner = this;
+
+			List<DequeStorable> initialInventory = new();
+			for (int _ = 0; _ < initialCardCount; _++)
+			{
+				DequeStorable card = Instantiate(cardPrefab);
+				card.owner = this;
+				initialInventory.Add(card);
+			}
+			savedInventory = initialInventory;
 			
 			dequeBox = initialDeque;
 			if (dequeBox)
 				RetrieveDeque();
-			
-			storage.CreateInitialCards(this);
 		}
 		
 		public void OnToggleDeque(CallbackContext context)
@@ -139,7 +166,7 @@ namespace SBEPIS.Capturllection
 
 		private void TossDeque()
 		{
-			DecoupleDeque();
+			DecoupleDeque(dequeBox);
 			dequeBox.state.Toss();
 		}
 		
@@ -148,8 +175,8 @@ namespace SBEPIS.Capturllection
 			dequeBox.state.isDiajectorOpen = true;
 		}
 
-		private void DecoupleDeque(CouplingPlug plug, CouplingSocket socket) => DecoupleDeque();
-		private void DecoupleDeque()
+		private static void DecoupleDeque(CouplingPlug plug, CouplingSocket socket) => DecoupleDeque(plug.GetComponent<DequeBox>());
+		private static void DecoupleDeque(DequeBox dequeBox)
 		{
 			dequeBox.state.isDeployed = true;
 			dequeBox.state.isCoupled = false;

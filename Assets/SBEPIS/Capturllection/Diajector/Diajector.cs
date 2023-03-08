@@ -20,13 +20,6 @@ namespace SBEPIS.Capturllection
 		public MonoBehaviour coroutineOwner;
 		public StrengthSettings cardStrength;
 		
-		public IEnumerable<Func<LerpTarget>> targetProviders => new Func<LerpTarget>[]
-		{
-			() => owner.dequeBox.lowerTarget,
-			() => owner.dequeBox.upperTarget,
-			() => upperTarget,
-		};
-		
 		public bool isBound => owner.dequeBox;
 		
 		public DequeOwner owner { get; set; }
@@ -55,6 +48,8 @@ namespace SBEPIS.Capturllection
 			
 			gameObject.SetActive(true);
 			transform.SetPositionAndRotation(position, rotation);
+			owner.inventory.transform.SetParent(layout.transform);
+			owner.inventory.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 			AssembleNewPage(page);
 		}
 		
@@ -111,10 +106,14 @@ namespace SBEPIS.Capturllection
 
 		public void UpdateCardTexture()
 		{
-			GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Select(cardTarget => cardTarget.card).Concat(owner.storage).Do(card => card.split.UpdateTexture(owner.storage.cardTextures));
+			List<Texture2D> defaultTextures = owner.dequeBox ? owner.dequeBox.definition.ruleset.GetCardTextures().ToList() : null;
+			foreach (DequeStorable card in GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Select(cardTarget => cardTarget.card))
+				card.split.UpdateTexture(defaultTextures);
+			foreach (DequeStorable card in owner.inventory)
+				card.split.UpdateTexture(owner.inventory.GetCardTextures(card).ToList());
 		}
 
-		public LerpTarget GetLerpTarget(DequeStorable card) => currentPage.GetLerpTarget(card);
-		public CardTarget GetCardTarget(DequeStorable card) => currentPage.GetCardTarget(card);
+		public LerpTarget GetLerpTarget(DequeStorable card) => currentPage ? currentPage.GetLerpTarget(card) : null;
+		public CardTarget GetCardTarget(DequeStorable card) => currentPage ? currentPage.GetCardTarget(card) : null;
 	}
 }

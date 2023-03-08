@@ -20,6 +20,7 @@ namespace SBEPIS.Capturllection
 		public SplitTextureSetup split { get; private set; }
 		public CardStateMachine state { get; private set; }
 		public LerpTargetAnimator animator { get; private set; }
+		public Capturellectainer container { get; private set; }
 
 		private DequeOwner _owner;
 		public DequeOwner owner
@@ -34,15 +35,17 @@ namespace SBEPIS.Capturllection
 				
 				state.isBound = owner;
 				transform.SetParent(owner ? owner.cardParent : null);
-				if (owner)
+				if (owner && owner.dequeBox)
 				{
-					split.UpdateTexture(owner.storage.cardTextures);
+					split.UpdateTexture(owner.inventory.GetCardTextures(this).ToList());
 				}
 			}
 		}
 		
 		public bool isStored => owner;
 		public bool canStore => storePredicates.All(predicate => predicate.Invoke());
+
+		public bool canStoreInto => container && container.isEmpty;
 		
 		private List<DequeCaptureLayout> layouts = new();
 		
@@ -52,15 +55,14 @@ namespace SBEPIS.Capturllection
 			split = GetComponent<SplitTextureSetup>();
 			state = new CardStateMachine(GetComponent<Animator>());
 			animator = GetComponent<LerpTargetAnimator>();
+			container = GetComponent<Capturellectainer>();
 			
 			storePredicates.Add(() => isStoringAllowed);
 			storePredicates.Add(() => !isStored);
-
-			// This sucks but it's the best place to put it for now :/
-			Capturellectainer container = GetComponent<Capturellectainer>();
+			
 			if (container)
 				storePredicates.Add(() => container.capturedItem);
-
+			
 			Punchable punchable = GetComponent<Punchable>();
 			if (punchable)
 				storePredicates.Add(() => punchable.punchedBits.isPerfectlyGeneric);

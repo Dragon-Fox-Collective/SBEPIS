@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SBEPIS.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturllection
 {
@@ -11,7 +12,8 @@ namespace SBEPIS.Capturllection
 	{
 		public CardTarget cardTargetPrefab;
 		public float cardZ = -1;
-		public float fetchableCardY = 0.1f;
+		[FormerlySerializedAs("fetchableCardY")]
+		public float fetchableCardZ = 0.1f;
 		
 		private Diajector diajector;
 		private readonly Dictionary<DequeStorable, CardTarget> targets = new();
@@ -33,17 +35,18 @@ namespace SBEPIS.Capturllection
 			if (!diajector.isBound)
 				return;
 
-			DequeStorage storage = diajector.owner.storage;
-			storage.Tick(Time.fixedDeltaTime);
-			storage.LayoutTargets(targets);
-			
+			Storable inventory = diajector.owner.inventory;
+			inventory.Tick(Time.fixedDeltaTime, new Vector3(1, 0, 0.1f).normalized);
+
 			foreach ((DequeStorable card, CardTarget target) in targets)
 			{
+				inventory.LayoutTarget(card, target);
+				
 				target.transform.localPosition += Vector3.forward * cardZ;
 				target.transform.localRotation *= Quaternion.Euler(0, 180, 0);
 				
-				if (storage.CanFetch(card))
-					target.transform.position += target.transform.up * fetchableCardY;
+				if (inventory.CanFetch(card))
+					target.transform.localPosition += Vector3.forward * fetchableCardZ;
 			}
 		}
 		
@@ -65,7 +68,7 @@ namespace SBEPIS.Capturllection
 			Destroy(target.gameObject);
 		}
 
-		public bool HasTemporaryTarget(DequeStorable card) => targets.ContainsKey(card) && !diajector.owner.storage.Contains(card);
+		public bool HasTemporaryTarget(DequeStorable card) => targets.ContainsKey(card) && !diajector.owner.inventory.Contains(card);
 
 		public CardTarget AddPermanentTargetAndCard(DequeStorable card)
 		{
@@ -82,13 +85,13 @@ namespace SBEPIS.Capturllection
 			RemoveTemporaryTarget(card);
 		}
 
-		public void SyncCards() => SyncCards(diajector.owner.storage);
-		public void SyncCards(DequeStorage cards)
+		public void SyncCards() => SyncCards(diajector.owner.inventory);
+		public void SyncCards(Storable inventory)
 		{
-			foreach ((DequeStorable card, CardTarget target) in targets.Where(pair => !cards.Contains(pair.Key)).ToList())
+			foreach ((DequeStorable card, CardTarget target) in targets.Where(pair => !inventory.Contains(pair.Key)).ToList())
 				RemovePermanentTargetAndCard(card);
 
-			foreach (DequeStorable card in cards.Where(card => !targets.ContainsKey(card)))
+			foreach (DequeStorable card in inventory.Where(card => !targets.ContainsKey(card)))
 			{
 				CardTarget target = AddPermanentTargetAndCard(card);
 				if (card.grabbable.isBeingHeld)

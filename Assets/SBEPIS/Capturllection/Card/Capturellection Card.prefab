@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultCapturedItemPrefab: {fileID: 0}
-  isRetrievingAllowed: 1
+  isFetchingAllowed: 1
   onCapture:
     m_PersistentCalls:
       m_Calls:
@@ -238,7 +238,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onRetrieve:
+  onFetch:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3431021441257790128}
