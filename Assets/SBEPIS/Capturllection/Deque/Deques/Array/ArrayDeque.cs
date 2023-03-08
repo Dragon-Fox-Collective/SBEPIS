@@ -26,7 +26,7 @@ namespace SBEPIS.Capturllection.Deques
 			foreach ((Storable storable, Vector3 size) in inventory.Zip(sizes))
 			{
 				right += direction * size.x / 2;
-				Vector3 up = Mathf.Sin(time * wobbleTimeFactor + right.magnitude * wobbleSpaceFactor) * wobbleAmplitude * Vector3.up;
+				Vector3 up = Mathf.Sin(time * wobbleTimeFactor + right.x * wobbleSpaceFactor) * wobbleAmplitude * Vector3.up;
 				
 				storable.position = right + up;
 				storable.rotation = Quaternion.identity;
