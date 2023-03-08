@@ -166,7 +166,7 @@ namespace SBEPIS.Capturllection
 
 		private void TossDeque()
 		{
-			DecoupleDeque();
+			DecoupleDeque(dequeBox);
 			dequeBox.state.Toss();
 		}
 		
@@ -175,8 +175,8 @@ namespace SBEPIS.Capturllection
 			dequeBox.state.isDiajectorOpen = true;
 		}
 
-		private void DecoupleDeque(CouplingPlug plug, CouplingSocket socket) => DecoupleDeque();
-		private void DecoupleDeque()
+		private static void DecoupleDeque(CouplingPlug plug, CouplingSocket socket) => DecoupleDeque(plug.GetComponent<DequeBox>());
+		private static void DecoupleDeque(DequeBox dequeBox)
 		{
 			dequeBox.state.isDeployed = true;
 			dequeBox.state.isCoupled = false;
