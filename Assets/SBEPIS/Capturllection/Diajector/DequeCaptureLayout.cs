@@ -36,9 +36,8 @@ namespace SBEPIS.Capturllection
 				return;
 
 			Storable inventory = diajector.owner.inventory;
-			inventory.Tick(Time.fixedDeltaTime);
-			inventory.Layout(new Vector3(1, 0, 0.2f).normalized);
-			
+			inventory.TickAndGetMaxSize(Time.fixedDeltaTime, new Vector3(1, 0, 0.2f).normalized);
+
 			foreach ((DequeStorable card, CardTarget target) in targets)
 			{
 				inventory.LayoutTarget(card, target);

@@ -24,8 +24,7 @@ namespace SBEPIS.Capturllection
 		public abstract bool hasAllCardsEmpty { get; }
 		public abstract bool hasAllCardsFull { get; }
 		
-		public abstract void Tick(float deltaTime);
-		public abstract void Layout(Vector3 direction);
+		public abstract Vector3 TickAndGetMaxSize(float deltaTime, Vector3 direction);
 		public abstract void LayoutTarget(DequeStorable card, CardTarget target);
 		
 		public abstract bool CanFetch(DequeStorable card);

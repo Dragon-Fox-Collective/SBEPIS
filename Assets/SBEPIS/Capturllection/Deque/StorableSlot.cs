@@ -19,9 +19,20 @@ namespace SBEPIS.Capturllection
 				if (card)
 				{
 					card.state.hasBeenAssembled = false;
+
+					Bounds bounds = card.GetComponentInChildren<Renderer>().bounds;
+					foreach (Renderer render in card.GetComponentsInChildren<Renderer>())
+						bounds.Encapsulate(render.bounds);
+					size = bounds.size;
+				}
+				else
+				{
+					size = Vector3.zero;
 				}
 			}
 		}
+		
+		private Vector3 size;
 		
 		public override bool hasNoCards => !hasAllCards;
 		public override bool hasAllCards => card;
@@ -29,14 +40,13 @@ namespace SBEPIS.Capturllection
 		public override bool hasAllCardsEmpty => card && card.canStoreInto;
 		public override bool hasAllCardsFull => !hasAllCardsEmpty;
 
-		public override void Tick(float deltaTime) { }
-		public override void Layout(Vector3 direction) { }
+		public override Vector3 TickAndGetMaxSize(float deltaTime, Vector3 direction) => size;
 		public override void LayoutTarget(DequeStorable card, CardTarget target)
 		{
 			if (Contains(card))
 				target.transform.SetPositionAndRotation(transform.position, transform.rotation);
 		}
-
+		
 		public override bool CanFetch(DequeStorable card) => Contains(card);
 		public override bool Contains(DequeStorable card) => this.card == card;
 		
