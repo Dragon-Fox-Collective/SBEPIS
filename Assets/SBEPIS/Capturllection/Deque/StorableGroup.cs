@@ -11,24 +11,15 @@ namespace SBEPIS.Capturllection
 		public StorableGroupDefinition definition;
 		public List<Storable> inventory = new();
 		
+		private Vector3 size;
+		
 		public override bool hasNoCards => inventory.Count == 0;
 		public override bool hasAllCards => inventory.Count == definition.maxStorables && inventory.All(storable => storable.hasAllCards);
 		
 		public override bool hasAllCardsEmpty => inventory.All(storable => storable.hasAllCardsEmpty);
 		public override bool hasAllCardsFull => inventory.All(storable => storable.hasAllCardsFull);
 
-		public override void Tick(float deltaTime)
-		{
-			definition.ruleset.Tick(inventory, deltaTime);
-			foreach (Storable storable in inventory)
-				storable.Tick(deltaTime);
-		}
-		public override void Layout(Vector3 direction)
-		{
-			definition.ruleset.Layout(inventory, direction);
-			foreach (Storable storable in inventory)
-				storable.Layout(Quaternion.Euler(0, 0, -60) * direction);
-		}
+		public override Vector3 TickAndGetMaxSize(float deltaTime, Vector3 direction) => definition.ruleset.TickAndGetMaxSize(inventory, deltaTime, direction);
 		public override void LayoutTarget(DequeStorable card, CardTarget target) => inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		
 		public override bool CanFetch(DequeStorable card) => definition.ruleset.CanFetchFrom(inventory, card);
@@ -48,7 +39,7 @@ namespace SBEPIS.Capturllection
 			if (ejectedItem && ejectedItem.TryGetComponent(out DequeStorable flushedCard))
 			{
 				List<DequeStorable> cards = new(){ flushedCard };
-				Flush(cards);
+				Flush(cards, storeIndex);
 				if (cards.Count == 0)
 					ejectedItem = null;
 			}
@@ -80,7 +71,7 @@ namespace SBEPIS.Capturllection
 			{
 				storable.Flush(cards);
 				if (cards.Count == 0)
-					return;
+					break;
 			}
 			
 			while (inventory.Count < definition.maxStorables)
@@ -93,7 +84,7 @@ namespace SBEPIS.Capturllection
 				inventory.Insert(insertIndex, storable);
 				
 				if (cards.Count == 0)
-					return;
+					break;
 			}
 		}
 		

@@ -33,6 +33,8 @@ public static class ExtensionMethods
 		return res;
 	}
 
+	public static float Add(float a, float b) => a + b;
+
 	public static bool IsOnLayer(this GameObject gameObject, int layerMask)
 	{
 		return ((1 << gameObject.layer) & layerMask) != 0;
