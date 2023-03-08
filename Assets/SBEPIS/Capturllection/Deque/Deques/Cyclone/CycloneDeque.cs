@@ -37,7 +37,7 @@ namespace SBEPIS.Capturllection.Deques
 			}
 		}
 		
-		public override void Layout(List<Storable> inventory)
+		public override void Layout(List<Storable> inventory, Vector3 direction)
 		{
 			float cardAngle = time * speed;
 			float deltaAngle = 360f / inventory.Count;

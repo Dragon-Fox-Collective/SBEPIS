@@ -19,16 +19,16 @@ namespace SBEPIS.Capturllection.Deques
 			time += delta;
 		}
 		
-		public override void Layout(List<Storable> inventory)
+		public override void Layout(List<Storable> inventory, Vector3 direction)
 		{
 			int i = 0;
-			Vector3 right = cardDistance * (inventory.Count - 1) / 2 * Vector3.left;
+			Vector3 right = -cardDistance * (inventory.Count - 1) / 2 * direction;
 			foreach (Storable storable in inventory)
 			{
 				Vector3 up = Mathf.Sin(time + i * wobbleTimeOffset) * wobbleHeight * Vector3.up;
 				storable.position = right + up;
 				storable.rotation = cardRotation;
-				right += Vector3.right * cardDistance;
+				right += direction * cardDistance;
 				i++;
 			}
 		}
