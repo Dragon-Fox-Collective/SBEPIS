@@ -45,7 +45,7 @@ namespace SBEPIS.Capturllection
 			int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterStore(inventory, storable, storeIndex);
 			inventory.Insert(restoreIndex, storable);
 			
-			if (ejectedItem.TryGetComponent(out DequeStorable flushedCard))
+			if (ejectedItem && ejectedItem.TryGetComponent(out DequeStorable flushedCard))
 			{
 				List<DequeStorable> cards = new(){ flushedCard };
 				Flush(cards);
