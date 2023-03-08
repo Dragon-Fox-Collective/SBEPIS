@@ -30,7 +30,7 @@ namespace SBEPIS.Capturllection
 		public override bool hasAllCardsFull => !hasAllCardsEmpty;
 
 		public override void Tick(float deltaTime) { }
-		public override void Layout() { }
+		public override void Layout(Vector3 direction) { }
 		public override void LayoutTarget(DequeStorable card, CardTarget target)
 		{
 			if (Contains(card))

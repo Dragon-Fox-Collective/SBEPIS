@@ -25,7 +25,7 @@ namespace SBEPIS.Capturllection
 		public abstract bool hasAllCardsFull { get; }
 		
 		public abstract void Tick(float deltaTime);
-		public abstract void Layout();
+		public abstract void Layout(Vector3 direction);
 		public abstract void LayoutTarget(DequeStorable card, CardTarget target);
 		
 		public abstract bool CanFetch(DequeStorable card);
@@ -37,7 +37,7 @@ namespace SBEPIS.Capturllection
 		
 		public IEnumerable<Texture2D> GetCardTextures(DequeStorable card) => GetCardTextures(card, Enumerable.Empty<IEnumerable<Texture2D>>(), 0);
 		public abstract IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent);
-
+		
 		public abstract IEnumerator<DequeStorable> GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}

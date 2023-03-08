@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SBEPIS.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturllection
 {
@@ -11,7 +12,8 @@ namespace SBEPIS.Capturllection
 	{
 		public CardTarget cardTargetPrefab;
 		public float cardZ = -1;
-		public float fetchableCardY = 0.1f;
+		[FormerlySerializedAs("fetchableCardY")]
+		public float fetchableCardZ = 0.1f;
 		
 		private Diajector diajector;
 		private readonly Dictionary<DequeStorable, CardTarget> targets = new();
@@ -35,7 +37,7 @@ namespace SBEPIS.Capturllection
 
 			Storable inventory = diajector.owner.inventory;
 			inventory.Tick(Time.fixedDeltaTime);
-			inventory.Layout();
+			inventory.Layout(new Vector3(1, 0, 0.2f).normalized);
 			
 			foreach ((DequeStorable card, CardTarget target) in targets)
 			{
@@ -45,7 +47,7 @@ namespace SBEPIS.Capturllection
 				target.transform.localRotation *= Quaternion.Euler(0, 180, 0);
 				
 				if (inventory.CanFetch(card))
-					target.transform.position += target.transform.up * fetchableCardY;
+					target.transform.localPosition += Vector3.forward * fetchableCardZ;
 			}
 		}
 		

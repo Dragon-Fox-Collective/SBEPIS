@@ -23,11 +23,11 @@ namespace SBEPIS.Capturllection
 			foreach (Storable storable in inventory)
 				storable.Tick(deltaTime);
 		}
-		public override void Layout()
+		public override void Layout(Vector3 direction)
 		{
-			definition.ruleset.Layout(inventory);
+			definition.ruleset.Layout(inventory, direction);
 			foreach (Storable storable in inventory)
-				storable.Layout();
+				storable.Layout(Quaternion.Euler(0, 0, -60) * direction);
 		}
 		public override void LayoutTarget(DequeStorable card, CardTarget target) => inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		

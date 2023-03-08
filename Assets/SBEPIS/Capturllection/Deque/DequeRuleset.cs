@@ -8,7 +8,7 @@ namespace SBEPIS.Capturllection
 		public abstract string dequeName { get; }
 		
 		public abstract void Tick(List<Storable> inventory, float delta);
-		public abstract void Layout(List<Storable> inventory);
+		public abstract void Layout(List<Storable> inventory, Vector3 direction);
 		
 		public abstract bool CanFetchFrom(List<Storable> inventory, DequeStorable card);
 		

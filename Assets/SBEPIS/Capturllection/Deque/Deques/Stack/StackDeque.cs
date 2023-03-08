@@ -12,14 +12,14 @@ namespace SBEPIS.Capturllection.Deques
 		
 		public override void Tick(List<Storable> inventory, float delta) { }
 		
-		public override void Layout(List<Storable> inventory)
+		public override void Layout(List<Storable> inventory, Vector3 direction)
 		{
-			Vector3 right = separatingDistance * (inventory.Count - 1) / 2 * Vector3.left;
+			Vector3 right = separatingDistance * (inventory.Count - 1) / 2 * direction;
 			foreach (Storable storable in inventory)
 			{
 				storable.position = right;
 				storable.rotation = cardRotation;
-				right += Vector3.right * separatingDistance;
+				right += direction * separatingDistance;
 			}
 		}
 		

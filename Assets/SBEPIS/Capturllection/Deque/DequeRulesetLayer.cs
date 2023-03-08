@@ -11,7 +11,7 @@ namespace SBEPIS.Capturllection
 		public override string dequeName => rulesets.Aggregate("", (name, ruleset) => name += ruleset.dequeName);
 
 		public override void Tick(List<Storable> inventory, float delta) => rulesets.Do(deque => deque.Tick(inventory, delta));
-		public override void Layout(List<Storable> inventory) => rulesets[0].Layout(inventory);
+		public override void Layout(List<Storable> inventory, Vector3 direction) => rulesets[0].Layout(inventory, direction);
 		
 		public override bool CanFetchFrom(List<Storable> inventory, DequeStorable card) => rulesets.AsEnumerable().Reverse().Any(deque => deque.CanFetchFrom(inventory, card));
 		
