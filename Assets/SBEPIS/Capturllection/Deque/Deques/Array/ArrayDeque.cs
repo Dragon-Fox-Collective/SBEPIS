@@ -13,11 +13,11 @@ namespace SBEPIS.Capturllection.Deques
 		
 		private float time;
 		
-		public override Vector3 TickAndGetMaxSize(List<Storable> inventory, float deltaTime, Vector3 direction)
+		public override Vector3 Tick(List<Storable> inventory, float deltaTime, Vector3 direction)
 		{
 			time += deltaTime;
 			
-			List<Vector3> sizes = inventory.Select(storable => storable.TickAndGetMaxSize(deltaTime, Quaternion.Euler(0, 0, -60) * direction)).ToList();
+			List<Vector3> sizes = inventory.Select(storable => storable.Tick(deltaTime, Quaternion.Euler(0, 0, -60) * direction)).ToList();
 			float xSum = -overlap * (inventory.Count - 1) + sizes.Select(size => size.x).Aggregate(ExtensionMethods.Add);
 			float maxYSize = sizes.Select(size => size.y).Aggregate(Mathf.Max);
 			float maxZSize = sizes.Select(size => size.z).Aggregate(Mathf.Max);

@@ -19,7 +19,7 @@ namespace SBEPIS.Capturllection
 		public override bool hasAllCardsEmpty => inventory.All(storable => storable.hasAllCardsEmpty);
 		public override bool hasAllCardsFull => inventory.All(storable => storable.hasAllCardsFull);
 
-		public override Vector3 TickAndGetMaxSize(float deltaTime, Vector3 direction) => definition.ruleset.TickAndGetMaxSize(inventory, deltaTime, direction);
+		public override Vector3 Tick(float deltaTime, Vector3 direction) => definition.ruleset.Tick(inventory, deltaTime, direction);
 		public override void LayoutTarget(DequeStorable card, CardTarget target) => inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		
 		public override bool CanFetch(DequeStorable card) => definition.ruleset.CanFetchFrom(inventory, card);

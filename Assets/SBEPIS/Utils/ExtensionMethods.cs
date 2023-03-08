@@ -32,9 +32,11 @@ public static class ExtensionMethods
 			res -= mod;
 		return res;
 	}
-
+	
 	public static float Add(float a, float b) => a + b;
-
+	public static Vector3 Add(Vector3 a, Vector3 b) => a + b;
+	public static Vector3 Max(Vector3 a, Vector3 b) => new Vector3(Mathf.Max(a.x, b.x), Mathf.Max(a.y, b.y), Mathf.Max(a.z, b.z));
+	
 	public static bool IsOnLayer(this GameObject gameObject, int layerMask)
 	{
 		return ((1 << gameObject.layer) & layerMask) != 0;
@@ -157,12 +159,12 @@ public static class ExtensionMethods
 		yield return vector.y;
 		yield return vector.z;
 	}
-
+	
 	public static Vector3 AsVector3(this IEnumerable<float> enumerable)
 	{
-		return new(enumerable.ElementAtOrDefault(0), enumerable.ElementAtOrDefault(1), enumerable.ElementAtOrDefault(2));
+		return new Vector3(enumerable.ElementAtOrDefault(0), enumerable.ElementAtOrDefault(1), enumerable.ElementAtOrDefault(2));
 	}
-
+	
 	public static Vector3 Select(this Vector3 vector, Func<float, float> func) => new(func.Invoke(vector.x), func.Invoke(vector.y), func.Invoke(vector.z));
 	public static Vector3 SelectIndex(this Vector3 vector, Func<int, float, float> func) => new(func.Invoke(0, vector.x), func.Invoke(1, vector.y), func.Invoke(2, vector.z));
 	public static Vector3 SelectVectorIndex(Func<int, float> func) => new(func.Invoke(0), func.Invoke(1), func.Invoke(2));

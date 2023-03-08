@@ -18,13 +18,15 @@ namespace SBEPIS.Capturllection
 			set => transform.localRotation = value;
 		}
 		
+		public abstract Vector3 maxPossibleSize { get; }
+		
 		public abstract bool hasNoCards { get; }
 		public abstract bool hasAllCards { get; }
 		
 		public abstract bool hasAllCardsEmpty { get; }
 		public abstract bool hasAllCardsFull { get; }
 		
-		public abstract Vector3 TickAndGetMaxSize(float deltaTime, Vector3 direction);
+		public abstract void Tick(float deltaTime, Vector3 direction);
 		public abstract void LayoutTarget(DequeStorable card, CardTarget target);
 		
 		public abstract bool CanFetch(DequeStorable card);

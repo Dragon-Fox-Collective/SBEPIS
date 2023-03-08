@@ -11,7 +11,7 @@ namespace SBEPIS.Capturllection.Deques
 		private float time;
 		private Storable topStorable;
 		
-		public override Vector3 TickAndGetMaxSize(List<Storable> inventory, float deltaTime, Vector3 direction)
+		public override Vector3 Tick(List<Storable> inventory, float deltaTime, Vector3 direction)
 		{
 			time += deltaTime;
 			
@@ -32,7 +32,7 @@ namespace SBEPIS.Capturllection.Deques
 				if (Mathf.Abs(modAngle) < deltaAngle / 2)
 					topStorable = storable;
 				
-				Vector3 size = storable.TickAndGetMaxSize(deltaTime * inventory.Count, Vector3.down);
+				Vector3 size = storable.Tick(deltaTime * inventory.Count, Vector3.down);
 				maxYSize = Mathf.Max(maxYSize, size.y);
 				maxZSize = Mathf.Max(maxZSize, size.z);
 				

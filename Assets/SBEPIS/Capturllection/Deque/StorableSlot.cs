@@ -40,7 +40,7 @@ namespace SBEPIS.Capturllection
 		public override bool hasAllCardsEmpty => card && card.canStoreInto;
 		public override bool hasAllCardsFull => !hasAllCardsEmpty;
 
-		public override Vector3 TickAndGetMaxSize(float deltaTime, Vector3 direction) => size;
+		public override Vector3 Tick(float deltaTime, Vector3 direction) => size;
 		public override void LayoutTarget(DequeStorable card, CardTarget target)
 		{
 			if (Contains(card))
