@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	public class DequeRulesetLayer : DequeRuleset
+	public class DequeRulesetLayer : DequeRuleset<DequeRulesetLayerState>
 	{
 		public List<DequeRuleset> rulesets;
 
-		public override string dequeName => rulesets.Aggregate("", (name, ruleset) => name += ruleset.dequeName);
+		public override string dequeName => rulesets.Aggregate("", (name, ruleset) => name + ruleset.dequeName);
 
 		public override void Tick(List<Storable> inventory, float deltaTime, Vector3 direction) => rulesets.AsEnumerable().Reverse().Do(ruleset => ruleset.Tick(inventory, deltaTime, direction));
 		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory) => rulesets[0].GetMaxPossibleSizeOf(inventory);

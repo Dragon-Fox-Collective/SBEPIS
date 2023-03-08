@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	public abstract class DequeBase : DequeRuleset
+	public abstract class DequeBase<T> : DequeRuleset<T> where T : DequeRulesetState
 	{
 		public Dequeration dequeration;
 		
