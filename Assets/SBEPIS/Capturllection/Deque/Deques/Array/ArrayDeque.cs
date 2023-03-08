@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturllection.Deques
 {
@@ -18,30 +16,29 @@ namespace SBEPIS.Capturllection.Deques
 		public override Vector3 TickAndGetMaxSize(List<Storable> inventory, float deltaTime, Vector3 direction)
 		{
 			time += deltaTime;
-
-			Vector3 maxExtents = Vector3.zero;
 			
-			Vector3 right = -cardDistance * (inventory.Count - 1) / 2 * direction;
-			foreach (Storable storable in inventory)
+			List<Vector3> sizes = inventory.Select(storable => storable.TickAndGetMaxSize(deltaTime, Quaternion.Euler(0, 0, -60) * direction)).ToList();
+			float xSum = -overlap * (inventory.Count - 1) + sizes.Select(size => size.x).Aggregate(ExtensionMethods.Add);
+			float maxYSize = sizes.Select(size => size.y).Aggregate(Mathf.Max);
+			float maxZSize = sizes.Select(size => size.z).Aggregate(Mathf.Max);
+			
+			Vector3 right = -xSum / 2 * direction;
+			foreach ((Storable storable, Vector3 size) in inventory.Zip(sizes))
 			{
+				right += direction * size.x / 2;
 				Vector3 up = Mathf.Sin(time * wobbleTimeFactor + right.magnitude * wobbleSpaceFactor) * wobbleAmplitude * Vector3.up;
+				
 				storable.position = right + up;
 				storable.rotation = Quaternion.identity;
-				right += direction * cardDistance;
+				
+				right += direction * (size.x / 2 - overlap);
 			}
 			
 			return new Vector3(
-				inventory.Select(storable => storable.maxPossibleSize.x).Aggregate(ExtensionMethods.Add),
-				inventory.Select(storable => storable.maxPossibleSize.y).Aggregate(Mathf.Max),
-				inventory.Select(storable => storable.maxPossibleSize.z).Aggregate(Mathf.Max));
+				xSum,
+				(wobbleAmplitude + maxYSize / 2) * 2,
+				maxZSize);
 		}
-		
-		public static Vector3 MaxExtends(Vector3 prevMaxExtents, Vector3 position, Vector3 extent) =>
-			new(MaxExtent(prevMaxExtents.x, position.x, extent.x),
-				MaxExtent(prevMaxExtents.y, position.y, extent.y),
-				MaxExtent(prevMaxExtents.z, position.z, extent.z));
-		public static float MaxExtent(float prevMaxExtent, float position, float extent) =>
-			Mathf.Max(prevMaxExtent, Mathf.Max(Mathf.Abs(position + extent), Mathf.Max(position - extent)));
 		
 		public override bool CanFetchFrom(List<Storable> inventory, DequeStorable card) => inventory.Any(storable => storable.CanFetch(card));
 		
