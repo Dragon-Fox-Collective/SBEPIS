@@ -13,11 +13,14 @@ namespace SBEPIS.Bits
 		
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
 		{
-			return lineHeight + (property.isExpanded ? listHeight : 0);
+			return property.serializedObject.isEditingMultipleObjects ? 0 : lineHeight + (property.isExpanded ? listHeight : 0);
 		}
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 		{
+			if (property.serializedObject.isEditingMultipleObjects)
+				return;
+			
 			if (property.boxedValue is null)
 			{
 				property.boxedValue = new BitSet();
