@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	public class StorableGroup<T, TSub> : Storable where T : DequeRulesetState where TSub : DequeRulesetState
+	public class StorableGroup : Storable
 	{
-		public StorableGroupDefinition<T, TSub> definition;
-		public T state;
+		public StorableGroupDefinition definition;
+		public DequeRulesetState state;
 		public List<Storable> inventory = new();
 		
 		public override bool hasNoCards => inventory.Count == 0;

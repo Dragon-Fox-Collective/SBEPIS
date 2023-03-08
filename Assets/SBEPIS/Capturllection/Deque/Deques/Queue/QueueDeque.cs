@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection.Deques
 {
-	public class QueueDeque : DequeBase
+	public class QueueDeque : DequeBase<NoState>
 	{
 		public float overlap = 0.05f;
 		
-		public override void Tick(List<Storable> inventory, float deltaTime, Vector3 direction)
+		public override void Tick(List<Storable> inventory, NoState state, float deltaTime, Vector3 direction)
 		{
 			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
 			Vector3 absDirection = direction.Select(Mathf.Abs);
@@ -36,19 +36,19 @@ namespace SBEPIS.Capturllection.Deques
 			return ExtensionMethods.Max(maxSize, sumSize);
 		}
 		
-		public override bool CanFetchFrom(List<Storable> inventory, DequeStorable card) => inventory[^1].CanFetch(card);
+		public override bool CanFetchFrom(List<Storable> inventory, NoState state, DequeStorable card) => inventory[^1].CanFetch(card);
 		
-		public override int GetIndexToStoreInto(List<Storable> inventory)
+		public override int GetIndexToStoreInto(List<Storable> inventory, NoState state)
 		{
 			int index = inventory.FindIndex(storable => !storable.hasAllCardsEmpty);
 			return index is -1 or 0 ? inventory.Count - 1 : index - 1;
 		}
-		public override int GetIndexToFlushBetween(List<Storable> inventory, Storable storable)
+		public override int GetIndexToFlushBetween(List<Storable> inventory, NoState state, Storable storable)
 		{
 			int index = inventory.FindIndex(storable => !storable.hasAllCardsEmpty);
 			return index is -1 ? inventory.Count : index;
 		}
-		public override int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, Storable storable, int originalIndex) => GetIndexToFlushBetween(inventory, storable);
-		public override int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, Storable storable, int originalIndex) => GetIndexToFlushBetween(inventory, storable);
+		public override int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, NoState state, Storable storable, int originalIndex) => GetIndexToFlushBetween(inventory, state, storable);
+		public override int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, NoState state, Storable storable, int originalIndex) => GetIndexToFlushBetween(inventory, state, storable);
 	}
 }

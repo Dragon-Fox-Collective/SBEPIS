@@ -1,9 +1,9 @@
-using UnityEngine;
+using System;
 
 namespace SBEPIS.Capturllection
 {
-	public class DequeRulesetState : MonoBehaviour
-	{
-		
-	}
+	public abstract class DequeRulesetState { }
+	
+	[Serializable]
+	public class NoState : DequeRulesetState { }
 }
