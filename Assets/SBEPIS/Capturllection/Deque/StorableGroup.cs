@@ -10,6 +10,8 @@ namespace SBEPIS.Capturllection
 		public DequeRulesetState state;
 		public List<Storable> inventory = new();
 		
+		public override Vector3 maxPossibleSize => definition.ruleset.GetMaxPossibleSizeOf(inventory);
+		
 		public override bool hasNoCards => inventory.Count == 0;
 		public override bool hasAllCards => inventory.Count == definition.maxStorables && inventory.All(storable => storable.hasAllCards);
 		
@@ -41,8 +43,6 @@ namespace SBEPIS.Capturllection
 					ejectedItem = null;
 			}
 			
-			maxPossibleSize = definition.ruleset.GetMaxPossibleSizeOf(inventory);
-			
 			return (card, container);
 		}
 		
@@ -56,8 +56,6 @@ namespace SBEPIS.Capturllection
 			
 			int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterFetch(inventory, state, storable, fetchIndex);
 			inventory.Insert(restoreIndex, storable);
-			
-			maxPossibleSize = definition.ruleset.GetMaxPossibleSizeOf(inventory);
 			
 			return item;
 		}
@@ -87,8 +85,6 @@ namespace SBEPIS.Capturllection
 				if (cards.Count == 0)
 					break;
 			}
-
-			maxPossibleSize = definition.ruleset.GetMaxPossibleSizeOf(inventory);
 		}
 		
 		public override IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent)
