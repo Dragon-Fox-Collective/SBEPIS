@@ -21,14 +21,17 @@ namespace SBEPIS.Capturllection
 					Bounds bounds = card.GetComponentInChildren<Renderer>().bounds;
 					foreach (Renderer render in card.GetComponentsInChildren<Renderer>())
 						bounds.Encapsulate(render.bounds);
-					maxPossibleSize = bounds.size;
+					_maxPossibleSize = bounds.size;
 				}
 				else
 				{
-					maxPossibleSize = Vector3.zero;
+					_maxPossibleSize = Vector3.zero;
 				}
 			}
 		}
+
+		private Vector3 _maxPossibleSize;
+		public override Vector3 maxPossibleSize => _maxPossibleSize;
 		
 		public override bool hasNoCards => !hasAllCards;
 		public override bool hasAllCards => card;
