@@ -7,20 +7,27 @@ namespace SBEPIS.Capturllection.Deques
 {
 	public class StackDeque : DequeBase
 	{
-		public float separatingDistance = 0.1f;
-		public Quaternion cardRotation = Quaternion.identity;
+		public float overlap = 0.05f;
 		
-		public override void Tick(List<Storable> inventory, float delta) { }
-		
-		public override void Layout(List<Storable> inventory, Vector3 direction)
+		public override Vector3 TickAndGetMaxSize(List<Storable> inventory, float deltaTime, Vector3 direction)
 		{
-			Vector3 right = separatingDistance * (inventory.Count - 1) / 2 * direction;
-			foreach (Storable storable in inventory)
+			List<Vector3> sizes = inventory.Select(storable => storable.TickAndGetMaxSize(deltaTime, Quaternion.Euler(0, 0, -60) * direction)).ToList();
+			float xSum = -overlap * (inventory.Count - 1) + sizes.Select(size => size.x).Aggregate(ExtensionMethods.Add);
+			float maxYSize = sizes.Select(size => size.y).Aggregate(Mathf.Max);
+			float maxZSize = sizes.Select(size => size.z).Aggregate(Mathf.Max);
+			
+			Vector3 right = -xSum / 2 * direction;
+			foreach ((Storable storable, Vector3 size) in inventory.Zip(sizes))
 			{
+				right += direction * size.x / 2;
+				
 				storable.position = right;
-				storable.rotation = cardRotation;
-				right += direction * separatingDistance;
+				storable.rotation = Quaternion.identity;
+				
+				right += direction * (size.x / 2 - overlap);
 			}
+			
+			return new Vector3(xSum, maxYSize, maxZSize);
 		}
 		
 		public override bool CanFetchFrom(List<Storable> inventory, DequeStorable card) => inventory[0].CanFetch(card);
