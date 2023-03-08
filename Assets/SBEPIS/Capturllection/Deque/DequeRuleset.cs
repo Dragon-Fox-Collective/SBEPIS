@@ -7,7 +7,8 @@ namespace SBEPIS.Capturllection
 	{
 		public abstract string dequeName { get; }
 		
-		public abstract Vector3 TickAndGetMaxSize(List<Storable> inventory, float deltaTime, Vector3 direction);
+		public abstract void Tick(List<Storable> inventory, float deltaTime, Vector3 direction);
+		public abstract Vector3 GetMaxPossibleSizeOf(List<Storable> inventory);
 		
 		public abstract bool CanFetchFrom(List<Storable> inventory, DequeStorable card);
 		
