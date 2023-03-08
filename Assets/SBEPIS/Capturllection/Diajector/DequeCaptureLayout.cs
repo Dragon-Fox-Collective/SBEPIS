@@ -36,7 +36,7 @@ namespace SBEPIS.Capturllection
 				return;
 
 			Storable inventory = diajector.owner.inventory;
-			inventory.Tick(Time.fixedDeltaTime, new Vector3(1, 0, 0.2f).normalized);
+			inventory.Tick(Time.fixedDeltaTime, new Vector3(1, 0, 0.1f).normalized);
 
 			foreach ((DequeStorable card, CardTarget target) in targets)
 			{

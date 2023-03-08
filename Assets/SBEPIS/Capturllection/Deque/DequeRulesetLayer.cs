@@ -13,7 +13,7 @@ namespace SBEPIS.Capturllection
 		public override void Tick(List<Storable> inventory, float deltaTime, Vector3 direction) => rulesets.AsEnumerable().Reverse().Do(ruleset => ruleset.Tick(inventory, deltaTime, direction));
 		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory) => rulesets[0].GetMaxPossibleSizeOf(inventory);
 		
-		public override bool CanFetchFrom(List<Storable> inventory, DequeStorable card) => rulesets.AsEnumerable().Reverse().Any(deque => deque.CanFetchFrom(inventory, card));
+		public override bool CanFetchFrom(List<Storable> inventory, DequeStorable card) => rulesets.AsEnumerable().Reverse().Any(ruleset => ruleset.CanFetchFrom(inventory, card));
 		
 		public override int GetIndexToStoreInto(List<Storable> inventory) => rulesets[^1].GetIndexToStoreInto(inventory);
 		public override int GetIndexToFlushBetween(List<Storable> inventory, Storable storable) => rulesets[^1].GetIndexToFlushBetween(inventory, storable);

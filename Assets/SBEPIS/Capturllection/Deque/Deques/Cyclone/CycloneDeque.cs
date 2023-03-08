@@ -23,15 +23,15 @@ namespace SBEPIS.Capturllection.Deques
 			float deltaAngle = 360f / inventory.Count;
 			foreach (Storable storable in inventory)
 			{
-				storable.Tick(deltaTime * inventory.Count, Vector3.down);
+				storable.Tick(deltaTime / inventory.Count, Vector3.down);
 				Vector3 size = storable.maxPossibleSize;
 				
 				float modAngle = cardAngle.ModAround(360);
 				if (Mathf.Abs(modAngle) < deltaAngle / 2)
 					topStorable = storable;
-				
+
 				storable.position = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * (innerRadius + size.y / 2);
-				storable.rotation = Quaternion.Euler(0, 0, cardAngle) * Quaternion.identity;
+				storable.rotation = Quaternion.Euler(0, 0, 180f + cardAngle) * Quaternion.identity;
 				
 				cardAngle += deltaAngle;
 			}
@@ -46,9 +46,9 @@ namespace SBEPIS.Capturllection.Deques
 				0);
 			return ExtensionMethods.Max(maxSize, sumSize);
 		}
-		
+
 		public override bool CanFetchFrom(List<Storable> inventory, DequeStorable card) => topStorable.CanFetch(card);
-		
+
 		public override int GetIndexToStoreInto(List<Storable> inventory)
 		{
 			if (inventory.Contains(topStorable))
