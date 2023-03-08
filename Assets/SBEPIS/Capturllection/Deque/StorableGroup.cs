@@ -1,14 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	[Serializable]
-	public class StorableGroup : Storable
+	public class StorableGroup<T, TSub> : Storable where T : DequeRulesetState where TSub : DequeRulesetState
 	{
-		public StorableGroupDefinition definition;
+		public StorableGroupDefinition<T, TSub> definition;
+		public T state;
 		public List<Storable> inventory = new();
 		
 		public override bool hasNoCards => inventory.Count == 0;
@@ -17,21 +16,21 @@ namespace SBEPIS.Capturllection
 		public override bool hasAllCardsEmpty => inventory.All(storable => storable.hasAllCardsEmpty);
 		public override bool hasAllCardsFull => inventory.All(storable => storable.hasAllCardsFull);
 
-		public override void Tick(float deltaTime, Vector3 direction) => definition.ruleset.Tick(inventory, deltaTime, direction);
+		public override void Tick(float deltaTime, Vector3 direction) => definition.ruleset.Tick(inventory, state, deltaTime, direction);
 		public override void LayoutTarget(DequeStorable card, CardTarget target) => inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		
-		public override bool CanFetch(DequeStorable card) => definition.ruleset.CanFetchFrom(inventory, card);
+		public override bool CanFetch(DequeStorable card) => definition.ruleset.CanFetchFrom(inventory, state, card);
 		public override bool Contains(DequeStorable card) => inventory.Any(storable => storable.Contains(card));
 		
 		public override (DequeStorable, Capturellectainer) Store(Capturllectable item, out Capturllectable ejectedItem)
 		{
-			int storeIndex = definition.ruleset.GetIndexToStoreInto(inventory);
+			int storeIndex = definition.ruleset.GetIndexToStoreInto(inventory, state);
 			Storable storable = inventory[storeIndex];
 			inventory.Remove(storable);
 			
 			(DequeStorable card, Capturellectainer container) = storable.Store(item, out ejectedItem);
 			
-			int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterStore(inventory, storable, storeIndex);
+			int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterStore(inventory, state, storable, storeIndex);
 			inventory.Insert(restoreIndex, storable);
 			
 			if (ejectedItem && ejectedItem.TryGetComponent(out DequeStorable flushedCard))
@@ -55,7 +54,7 @@ namespace SBEPIS.Capturllection
 			
 			Capturllectable item = storable.Fetch(card);
 			
-			int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterFetch(inventory, storable, fetchIndex);
+			int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterFetch(inventory, state, storable, fetchIndex);
 			inventory.Insert(restoreIndex, storable);
 			
 			maxPossibleSize = definition.ruleset.GetMaxPossibleSizeOf(inventory);
@@ -82,7 +81,7 @@ namespace SBEPIS.Capturllection
 				storable.transform.SetParent(transform);
 				storable.Flush(cards);
 				
-				int insertIndex = definition.ruleset.GetIndexToFlushBetween(inventory, storable);
+				int insertIndex = definition.ruleset.GetIndexToFlushBetween(inventory, state, storable);
 				inventory.Insert(insertIndex, storable);
 				
 				if (cards.Count == 0)
