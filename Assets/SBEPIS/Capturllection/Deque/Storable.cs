@@ -18,7 +18,7 @@ namespace SBEPIS.Capturllection
 			set => transform.localRotation = value;
 		}
 		
-		public abstract Vector3 maxPossibleSize { get; }
+		public Vector3 maxPossibleSize { get; protected set; }
 		
 		public abstract bool hasNoCards { get; }
 		public abstract bool hasAllCards { get; }
