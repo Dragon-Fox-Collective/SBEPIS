@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection.Deques
@@ -11,41 +12,39 @@ namespace SBEPIS.Capturllection.Deques
 		private float time;
 		private Storable topStorable;
 		
-		public override Vector3 Tick(List<Storable> inventory, float deltaTime, Vector3 direction)
+		public override void Tick(List<Storable> inventory, float deltaTime, Vector3 direction)
 		{
 			time += deltaTime;
 			
 			if (inventory.Count == 0)
-			{
 				topStorable = null;
-				return Vector3.zero;
-			}
-
-			float maxYSize = 0;
-			float maxZSize = 0;
 			
 			float cardAngle = time * speed;
 			float deltaAngle = 360f / inventory.Count;
 			foreach (Storable storable in inventory)
 			{
+				storable.Tick(deltaTime * inventory.Count, Vector3.down);
+				Vector3 size = storable.maxPossibleSize;
+				
 				float modAngle = cardAngle.ModAround(360);
 				if (Mathf.Abs(modAngle) < deltaAngle / 2)
 					topStorable = storable;
-				
-				Vector3 size = storable.Tick(deltaTime * inventory.Count, Vector3.down);
-				maxYSize = Mathf.Max(maxYSize, size.y);
-				maxZSize = Mathf.Max(maxZSize, size.z);
 				
 				storable.position = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * (innerRadius + size.y / 2);
 				storable.rotation = Quaternion.Euler(0, 0, cardAngle) * Quaternion.identity;
 				
 				cardAngle += deltaAngle;
 			}
-			
-			return new Vector3(
-				(innerRadius + maxYSize) * 2,
-				(innerRadius + maxYSize) * 2,
-				maxZSize * 2);
+		}
+		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory)
+		{
+			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
+			Vector3 maxSize = sizes.Aggregate(ExtensionMethods.Max);
+			Vector3 sumSize = new(
+				(innerRadius + maxSize.y) * 2,
+				(innerRadius + maxSize.y) * 2,
+				0);
+			return ExtensionMethods.Max(maxSize, sumSize);
 		}
 		
 		public override bool CanFetchFrom(List<Storable> inventory, DequeStorable card) => topStorable.CanFetch(card);

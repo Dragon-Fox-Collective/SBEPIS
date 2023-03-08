@@ -13,31 +13,37 @@ namespace SBEPIS.Capturllection.Deques
 		
 		private float time;
 		
-		public override Vector3 Tick(List<Storable> inventory, float deltaTime, Vector3 direction)
+		public override void Tick(List<Storable> inventory, float deltaTime, Vector3 direction)
 		{
 			time += deltaTime;
 			
-			List<Vector3> sizes = inventory.Select(storable => storable.Tick(deltaTime, Quaternion.Euler(0, 0, -60) * direction)).ToList();
-			float xSum = -overlap * (inventory.Count - 1) + sizes.Select(size => size.x).Aggregate(ExtensionMethods.Add);
-			float maxYSize = sizes.Select(size => size.y).Aggregate(Mathf.Max);
-			float maxZSize = sizes.Select(size => size.z).Aggregate(Mathf.Max);
+			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
+			Vector3 absDirection = direction.Select(Mathf.Abs);
+			float lengthSum = -overlap * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude;
 			
-			Vector3 right = -xSum / 2 * direction;
+			Vector3 startRight = -lengthSum / 2 * direction;
+			Vector3 right = startRight;
 			foreach ((Storable storable, Vector3 size) in inventory.Zip(sizes))
 			{
-				right += direction * size.x / 2;
-				Vector3 up = Mathf.Sin(time * wobbleTimeFactor + right.x * wobbleSpaceFactor) * wobbleAmplitude * Vector3.up;
+				storable.Tick(deltaTime, Quaternion.Euler(0, 0, -60) * direction);
+				
+				float length = Vector3.Project(size, absDirection).magnitude;
+				right += direction * length / 2;
+				
+				Vector3 up = Mathf.Sin(time * wobbleTimeFactor + (right - startRight).magnitude * wobbleSpaceFactor) * wobbleAmplitude * Vector3.up;
 				
 				storable.position = right + up;
 				storable.rotation = Quaternion.identity;
 				
-				right += direction * (size.x / 2 - overlap);
+				right += direction * (length / 2 - overlap);
 			}
-			
-			return new Vector3(
-				xSum,
-				(wobbleAmplitude + maxYSize / 2) * 2,
-				maxZSize);
+		}
+		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory)
+		{
+			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
+			Vector3 maxSize = sizes.Aggregate(ExtensionMethods.Max);
+			Vector3 sumSize = sizes.Aggregate(ExtensionMethods.Add) - overlap * (inventory.Count - 1) * Vector3.one;
+			return ExtensionMethods.Max(maxSize, sumSize);
 		}
 		
 		public override bool CanFetchFrom(List<Storable> inventory, DequeStorable card) => inventory.Any(storable => storable.CanFetch(card));

@@ -11,15 +11,13 @@ namespace SBEPIS.Capturllection
 		public StorableGroupDefinition definition;
 		public List<Storable> inventory = new();
 		
-		private Vector3 size;
-		
 		public override bool hasNoCards => inventory.Count == 0;
 		public override bool hasAllCards => inventory.Count == definition.maxStorables && inventory.All(storable => storable.hasAllCards);
 		
 		public override bool hasAllCardsEmpty => inventory.All(storable => storable.hasAllCardsEmpty);
 		public override bool hasAllCardsFull => inventory.All(storable => storable.hasAllCardsFull);
 
-		public override Vector3 Tick(float deltaTime, Vector3 direction) => definition.ruleset.Tick(inventory, deltaTime, direction);
+		public override void Tick(float deltaTime, Vector3 direction) => definition.ruleset.Tick(inventory, deltaTime, direction);
 		public override void LayoutTarget(DequeStorable card, CardTarget target) => inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		
 		public override bool CanFetch(DequeStorable card) => definition.ruleset.CanFetchFrom(inventory, card);
@@ -44,6 +42,8 @@ namespace SBEPIS.Capturllection
 					ejectedItem = null;
 			}
 			
+			maxPossibleSize = definition.ruleset.GetMaxPossibleSizeOf(inventory);
+			
 			return (card, container);
 		}
 		
@@ -57,6 +57,8 @@ namespace SBEPIS.Capturllection
 			
 			int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterFetch(inventory, storable, fetchIndex);
 			inventory.Insert(restoreIndex, storable);
+			
+			maxPossibleSize = definition.ruleset.GetMaxPossibleSizeOf(inventory);
 			
 			return item;
 		}
@@ -86,6 +88,8 @@ namespace SBEPIS.Capturllection
 				if (cards.Count == 0)
 					break;
 			}
+
+			maxPossibleSize = definition.ruleset.GetMaxPossibleSizeOf(inventory);
 		}
 		
 		public override IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent)
