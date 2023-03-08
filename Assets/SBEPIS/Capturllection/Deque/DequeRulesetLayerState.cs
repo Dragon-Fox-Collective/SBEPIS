@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	public abstract class DequeRulesetLayerState : DequeRulesetState
+	[Serializable]
+	public class DequeRulesetLayerState : DequeRulesetState
 	{
-		
+		public List<DequeRulesetState> states = new();
 	}
 }

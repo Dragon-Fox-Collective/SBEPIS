@@ -3,9 +3,8 @@ using System;
 namespace SBEPIS.Capturllection.Deques
 {
 	[Serializable]
-	public class CycloneState : DequeRulesetState
+	public class ArrayState : DequeRulesetState
 	{
 		public float time;
-		public Storable topStorable;
 	}
 }

@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection.Deques
 {
-	public class StackDeque : DequeBase
+	public class StackDeque : DequeBase<NoState>
 	{
 		public float overlap = 0.05f;
 		
-		public override void Tick(List<Storable> inventory, float deltaTime, Vector3 direction)
+		public override void Tick(List<Storable> inventory, NoState state, float deltaTime, Vector3 direction)
 		{
 			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
 			Vector3 absDirection = direction.Select(Mathf.Abs);
@@ -37,11 +37,11 @@ namespace SBEPIS.Capturllection.Deques
 			return ExtensionMethods.Max(maxSize, sumSize);
 		}
 		
-		public override bool CanFetchFrom(List<Storable> inventory, DequeStorable card) => inventory[0].CanFetch(card);
+		public override bool CanFetchFrom(List<Storable> inventory, NoState state, DequeStorable card) => inventory[0].CanFetch(card);
 		
-		public override int GetIndexToStoreInto(List<Storable> inventory) => inventory.Count - 1;
-		public override int GetIndexToFlushBetween(List<Storable> inventory, Storable storable) => storable.hasAllCardsEmpty ? inventory.Count : 0;
-		public override int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, Storable storable, int originalIndex) => 0;
-		public override int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, Storable storable, int originalIndex) => inventory.Count;
+		public override int GetIndexToStoreInto(List<Storable> inventory, NoState state) => inventory.Count - 1;
+		public override int GetIndexToFlushBetween(List<Storable> inventory, NoState state, Storable storable) => storable.hasAllCardsEmpty ? inventory.Count : 0;
+		public override int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, NoState state, Storable storable, int originalIndex) => 0;
+		public override int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, NoState state, Storable storable, int originalIndex) => inventory.Count;
 	}
 }

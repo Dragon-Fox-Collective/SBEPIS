@@ -18,6 +18,7 @@ namespace SBEPIS.Capturllection
 				childGameObject.name = definition.dequeName;
 				StorableGroup group = childGameObject.AddComponent<StorableGroup>();
 				group.definition = definition;
+				group.state = definition.ruleset.GetNewState();
 				return group;
 			}
 			else
