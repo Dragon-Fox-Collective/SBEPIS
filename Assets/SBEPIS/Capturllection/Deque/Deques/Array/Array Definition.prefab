@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dequeration: {fileID: 11400000, guid: 33ff5f83d3d2e504486f59f56da0319f, type: 2}
-  cardDistance: 0.1
-  cardRotation: {x: 0, y: 0, z: 0, w: 1}
-  wobbleHeight: 0.1
-  wobbleTimeOffset: 1
+  overlap: 0.05
+  wobbleAmplitude: 0.1
+  wobbleTimeFactor: 1
+  wobbleSpaceFactor: 5

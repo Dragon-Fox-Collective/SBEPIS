@@ -1,66 +1,61 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection.Deques
 {
-	public class CycloneDeque : DequeBase
+	public class CycloneDeque : DequeBase<CycloneState>
 	{
-		public float radius = 0.1f;
-		public Quaternion cardRotation = Quaternion.identity;
+		public float innerRadius = 0.1f;
 		public float speed = 20;
-
-		private float time;
-		private DequeStorable topCard;
-
-		public override void Tick(List<DequeStorable> cards, float delta)
+		
+		public override void Tick(List<Storable> inventory, CycloneState state, float deltaTime, Vector3 direction)
 		{
-			time += delta;
-			UpdateTopCard(cards);
-		}
-
-		private void UpdateTopCard(List<DequeStorable> cards)
-		{
-			float cardAngle = time * speed;
-			float deltaAngle = 360f / cards.Count;
-			foreach (DequeStorable card in cards)
+			state.time += deltaTime;
+			
+			if (inventory.Count == 0)
+				state.topStorable = null;
+			
+			float cardAngle = state.time * speed;
+			float deltaAngle = 360f / inventory.Count;
+			foreach (Storable storable in inventory)
 			{
+				storable.Tick(deltaTime / inventory.Count, Vector3.down);
+				Vector3 size = storable.maxPossibleSize;
+				
 				float modAngle = cardAngle.ModAround(360);
 				if (Mathf.Abs(modAngle) < deltaAngle / 2)
-					topCard = card;
+					state.topStorable = storable;
+
+				storable.position = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * (innerRadius + size.y / 2);
+				storable.rotation = Quaternion.Euler(0, 0, 180f + cardAngle) * Quaternion.identity;
 				
 				cardAngle += deltaAngle;
 			}
 		}
-
-		public override void LayoutTargets(List<DequeStorable> cards, Dictionary<DequeStorable, CardTarget> targets)
+		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory)
 		{
-			float cardAngle = time * speed;
-			float deltaAngle = 360f / targets.Count;
-			foreach ((DequeStorable card, CardTarget target) in InOrder(cards, targets))
-			{
-				target.transform.localPosition = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * radius;
-				target.transform.localRotation = Quaternion.Euler(0, 0, cardAngle) * cardRotation;
-
-				cardAngle += deltaAngle;
-			}
+			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
+			Vector3 maxSize = sizes.Aggregate(ExtensionMethods.Max);
+			Vector3 sumSize = new(
+				(innerRadius + maxSize.y) * 2,
+				(innerRadius + maxSize.y) * 2,
+				0);
+			return ExtensionMethods.Max(maxSize, sumSize);
 		}
 
-		public override bool CanFetch(List<DequeStorable> cards, DequeStorable card) => card == topCard;
+		public override bool CanFetchFrom(List<Storable> inventory, CycloneState state, DequeStorable card) => state.topStorable.CanFetch(card);
 
-		public override int GetIndexToStoreInto(List<DequeStorable> cards)
+		public override int GetIndexToStoreInto(List<Storable> inventory, CycloneState state)
 		{
-			if (topCard && cards.Contains(topCard))
-				return cards.IndexOf(topCard);
+			if (inventory.Contains(state.topStorable))
+				return inventory.IndexOf(state.topStorable);
 			
-			int index = cards.FindIndex(HasEmptyContainer);
-			return index == -1 ? 0 : index;
+			int index = inventory.FindIndex(storable => !storable.hasAllCardsFull);
+			return index is -1 ? 0 : index;
 		}
-
-		public override int GetIndexToInsertCardBetween(List<DequeStorable> cards, DequeStorable card)
-		{
-			int index = cards.FindIndex(DoesntHaveEmptyContainer);
-			return index == -1 ? cards.Count - 1 : index;
-		}
+		public override int GetIndexToFlushBetween(List<Storable> inventory, CycloneState state, Storable storable) => inventory.Contains(state.topStorable) ? inventory.IndexOf(state.topStorable) : inventory.Count;
+		public override int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, CycloneState state, Storable storable, int originalIndex) => originalIndex;
+		public override int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, CycloneState state, Storable storable, int originalIndex) => originalIndex;
 	}
 }

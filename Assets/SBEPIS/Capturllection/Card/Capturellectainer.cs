@@ -22,6 +22,7 @@ namespace SBEPIS.Capturllection
 		public bool canFetch => fetchPredicates.All(predicate => predicate.Invoke(this));
 		public Capturllectable capturedItem { get; private set; }
 		public bool hasCapturedItem => capturedItem;
+		public bool isEmpty => !hasCapturedItem;
 
 		private string originalName;
 		

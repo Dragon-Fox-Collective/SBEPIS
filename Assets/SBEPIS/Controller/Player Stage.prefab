@@ -751,7 +751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardTargetPrefab: {fileID: 914007334191890185, guid: 1c8bc15bcd83611459142f20ba433cd1, type: 3}
   cardZ: -0.05
-  fetchableCardY: 0.1
+  fetchableCardZ: -0.03
 --- !u!65 &277508201454612873
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2693,7 +2693,6 @@ GameObject:
   - component: {fileID: 2069586595830321789}
   - component: {fileID: 6234797776867132548}
   - component: {fileID: 644252844828260369}
-  - component: {fileID: 4143261443762292299}
   m_Layer: 8
   m_Name: Deque Attach Target
   m_TagString: Untagged
@@ -2920,6 +2919,8 @@ MonoBehaviour:
   initialDeque: {fileID: 0}
   diajector: {fileID: 2162956669282852240}
   cardParent: {fileID: 4626936063428068125}
+  cardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
+  initialCardCount: 5
   tossTarget: {fileID: 1997131638894466065}
   tossHeight: 0.1
   retrievalAnimationCurve:
@@ -2946,20 +2947,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4143261443762292299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6159469505427324889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b341dd3160f51c4690f2ba6f113fd20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialCardCount: 5
-  cardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
 --- !u!1 &6376568278165176233
 GameObject:
   m_ObjectHideFlags: 0
@@ -3163,7 +3150,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 644252844828260369}
-  cardPrefab: {fileID: 8180044113546759222, guid: e8226037b0905f24f9753127b25ced23, type: 3}
 --- !u!1 &6376568278921566390
 GameObject:
   m_ObjectHideFlags: 0
@@ -4357,7 +4343,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 644252844828260369}
-  cardPrefab: {fileID: 8180044113546759222, guid: e8226037b0905f24f9753127b25ced23, type: 3}
 --- !u!1 &7927973737090238991
 GameObject:
   m_ObjectHideFlags: 0

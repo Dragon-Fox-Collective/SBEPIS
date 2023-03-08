@@ -15,6 +15,12 @@ namespace SBEPIS.Utils
 
 		public void UpdateTexture(List<Texture2D> textures)
 		{
+			if (textures == null)
+			{
+				ResetTexture();
+				return;
+			}
+			
 			Texture2D firstTexture = textures[0];
 			Texture2DArray textureArray = new(firstTexture.width, firstTexture.height, textures.Count, firstTexture.format, firstTexture.mipmapCount > 1);
 			for (int i = 0; i < textures.Count; i++)

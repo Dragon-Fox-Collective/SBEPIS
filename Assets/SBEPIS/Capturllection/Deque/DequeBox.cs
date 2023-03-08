@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
 using SBEPIS.Capturllection.DequeState;
 using UnityEngine;
 using SBEPIS.Controller;
 using SBEPIS.Physics;
-using SBEPIS.UI;
 using SBEPIS.Utils;
 
 namespace SBEPIS.Capturllection
@@ -15,8 +13,8 @@ namespace SBEPIS.Capturllection
 	{
 		public LerpTarget lowerTarget;
 		public LerpTarget upperTarget;
-		
-		public Deque definition;
+
+		public StorableGroupDefinition definition;
 		
 		public DequeOwner owner { get; set; }
 		
@@ -28,7 +26,7 @@ namespace SBEPIS.Capturllection
 		public CollisionTrigger collisionTrigger { get; private set; }
 		public CouplingPlug plug { get; private set; }
 		public DequeStateMachine state { get; private set; }
-
+		
 		private void Awake()
 		{
 			grabbable = GetComponent<Grabbable>();
@@ -41,7 +39,7 @@ namespace SBEPIS.Capturllection
 		
 		private void Start()
 		{
-			split.UpdateTexture(definition.GetBoxTextures().ToList());
+			split.UpdateTexture(definition.ruleset.GetBoxTextures().ToList());
 		}
 		
 		public void AdoptDeque(Grabber grabber, Grabbable grabbable)

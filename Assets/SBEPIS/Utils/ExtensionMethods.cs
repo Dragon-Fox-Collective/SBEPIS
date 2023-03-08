@@ -32,7 +32,11 @@ public static class ExtensionMethods
 			res -= mod;
 		return res;
 	}
-
+	
+	public static float Add(float a, float b) => a + b;
+	public static Vector3 Add(Vector3 a, Vector3 b) => a + b;
+	public static Vector3 Max(Vector3 a, Vector3 b) => new Vector3(Mathf.Max(a.x, b.x), Mathf.Max(a.y, b.y), Mathf.Max(a.z, b.z));
+	
 	public static bool IsOnLayer(this GameObject gameObject, int layerMask)
 	{
 		return ((1 << gameObject.layer) & layerMask) != 0;
@@ -69,9 +73,6 @@ public static class ExtensionMethods
 
 	public static T Pop<T>(this List<T> list)
 	{
-		if (list.Count == 0)
-			throw new InvalidOperationException($"Tried to pop an empty list");
-
 		T obj = list[0];
 		list.RemoveAt(0);
 		return obj;
@@ -135,15 +136,15 @@ public static class ExtensionMethods
 		quaternion.ToAngleAxis(out float angle, out Vector3 axis);
 		return angle * Mathf.Deg2Rad * axis;
 	}
-
+	
 	public static IEnumerable<T> Insert<T>(this IEnumerable<T> enumerable, int index, T element)
 	{
-		return enumerable.Take(index).Append(element).Concat(enumerable.TakeLast(enumerable.Count() - index));
+		return enumerable.Take(index).Append(element).Concat(enumerable.Skip(index));
 	}
 
 	public static IEnumerable<(T, TSecond)> Zip<T, TSecond>(this IEnumerable<T> first, IEnumerable<TSecond> second)
 	{
-		return first.Zip(second, (first, second) => (first, second));
+		return first.Zip(second, (firstItem, secondItem) => (firstItem, secondItem));
 	}
 
 	public static void Do<T>(this IEnumerable<T> enumerable, Action<T> action)
@@ -158,12 +159,12 @@ public static class ExtensionMethods
 		yield return vector.y;
 		yield return vector.z;
 	}
-
+	
 	public static Vector3 AsVector3(this IEnumerable<float> enumerable)
 	{
-		return new(enumerable.ElementAtOrDefault(0), enumerable.ElementAtOrDefault(1), enumerable.ElementAtOrDefault(2));
+		return new Vector3(enumerable.ElementAtOrDefault(0), enumerable.ElementAtOrDefault(1), enumerable.ElementAtOrDefault(2));
 	}
-
+	
 	public static Vector3 Select(this Vector3 vector, Func<float, float> func) => new(func.Invoke(vector.x), func.Invoke(vector.y), func.Invoke(vector.z));
 	public static Vector3 SelectIndex(this Vector3 vector, Func<int, float, float> func) => new(func.Invoke(0, vector.x), func.Invoke(1, vector.y), func.Invoke(2, vector.z));
 	public static Vector3 SelectVectorIndex(Func<int, float> func) => new(func.Invoke(0), func.Invoke(1), func.Invoke(2));
