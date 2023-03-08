@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturllection.Deques
 {
@@ -23,8 +21,8 @@ namespace SBEPIS.Capturllection.Deques
 				return Vector3.zero;
 			}
 
-			float maxYExtent = 0;
-			float maxZExtent = 0;
+			float maxYSize = 0;
+			float maxZSize = 0;
 			
 			float cardAngle = time * speed;
 			float deltaAngle = 360f / inventory.Count;
@@ -35,20 +33,19 @@ namespace SBEPIS.Capturllection.Deques
 					topStorable = storable;
 				
 				Vector3 size = storable.TickAndGetMaxSize(deltaTime * inventory.Count, Vector3.down);
-				maxYExtent = Mathf.Max(maxYExtent, size.y);
+				maxYSize = Mathf.Max(maxYSize, size.y);
+				maxZSize = Mathf.Max(maxZSize, size.z);
 				
-				storable.position = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * innerRadius;
+				storable.position = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * (innerRadius + size.y / 2);
 				storable.rotation = Quaternion.Euler(0, 0, cardAngle) * Quaternion.identity;
-
-				maxZExtent = Mathf.Max(maxZExtent, Mathf.Max(Mathf.Abs(storable..z + size.z), Mathf.Abs(storable.position.z - size.z)));
 				
 				cardAngle += deltaAngle;
 			}
 			
 			return new Vector3(
-				(innerRadius + maxYExtent) * 2,
-				(innerRadius + maxYExtent) * 2,
-				maxZExtent * 2);
+				(innerRadius + maxYSize) * 2,
+				(innerRadius + maxYSize) * 2,
+				maxZSize * 2);
 		}
 		
 		public override bool CanFetchFrom(List<Storable> inventory, DequeStorable card) => topStorable.CanFetch(card);
