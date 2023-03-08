@@ -79,6 +79,10 @@ namespace SBEPIS.Controller
 				Debug.LogError($"Tried to decouple plug from {this} when socket had no coupling");
 				return;
 			}
+			if (this.plug != plug)
+			{
+				Debug.LogError($"Tried to decouple {plug} from {this} when socket had {this.plug} instead");
+			}
 			
 			Destroy(joint);
 			
