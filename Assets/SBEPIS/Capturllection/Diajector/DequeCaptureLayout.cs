@@ -14,6 +14,7 @@ namespace SBEPIS.Capturllection
 		public float cardZ = -1;
 		[FormerlySerializedAs("fetchableCardY")]
 		public float fetchableCardZ = 0.1f;
+		public Vector3 direction = new(1, 0, 0.1f);
 		
 		private Diajector diajector;
 		private readonly Dictionary<DequeStorable, CardTarget> targets = new();
@@ -25,18 +26,19 @@ namespace SBEPIS.Capturllection
 			dequePage = GetComponentInParent<DequePage>();
 		}
 		
-		private void FixedUpdate()
+		private void Update()
 		{
-			TickAndLayoutTargets();
+			TickAndLayoutTargets(Time.deltaTime);
 		}
 		
-		private void TickAndLayoutTargets()
+		private void TickAndLayoutTargets(float deltaTime)
 		{
 			if (!diajector.isBound)
 				return;
 
 			Storable inventory = diajector.owner.inventory;
-			inventory.Tick(Time.fixedDeltaTime, new Vector3(1, 0, 0.1f).normalized);
+			inventory.Tick(deltaTime, direction.normalized);
+			inventory.DrawMaxPossibleBounds();
 
 			foreach ((DequeStorable card, CardTarget target) in targets)
 			{

@@ -100,6 +100,13 @@ namespace SBEPIS.Capturllection
 				return definition.ruleset.GetCardTextures().ToList();
 		}
 		
+		public override void DrawMaxPossibleBounds()
+		{
+			foreach (Storable storable in inventory)
+				storable.DrawMaxPossibleBounds();
+			DrawSize(maxPossibleSize, transform, Color.magenta);
+		}
+		
 		public override IEnumerator<DequeStorable> GetEnumerator() => inventory.SelectMany(storable => storable).GetEnumerator();
 	}
 }

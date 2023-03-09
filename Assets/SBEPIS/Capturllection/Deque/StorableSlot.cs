@@ -68,6 +68,11 @@ namespace SBEPIS.Capturllection
 			return (textures.Skip(indexOfThisInParent).FirstOrDefault() ?? textures.Last())?.ToList();
 		}
 		
+		public override void DrawMaxPossibleBounds()
+		{
+			DrawSize(maxPossibleSize, transform, Color.cyan);
+		}
+		
 		public override IEnumerator<DequeStorable> GetEnumerator()
 		{
 			yield return card;
