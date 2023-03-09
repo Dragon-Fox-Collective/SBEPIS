@@ -752,6 +752,7 @@ MonoBehaviour:
   cardTargetPrefab: {fileID: 914007334191890185, guid: 1c8bc15bcd83611459142f20ba433cd1, type: 3}
   cardZ: -0.05
   fetchableCardZ: -0.03
+  direction: {x: 1, y: 0, z: 0.1}
 --- !u!65 &277508201454612873
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3132,7 +3133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabMask:
     serializedVersion: 2
-    m_Bits: 513
+    m_Bits: 2561
   grabNormalCaster: {fileID: 354921643590445730}
   slipAngle: 80
   shortRangeGrabDistace: 1
@@ -4325,7 +4326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabMask:
     serializedVersion: 2
-    m_Bits: 513
+    m_Bits: 2561
   grabNormalCaster: {fileID: 4304772429932534635}
   slipAngle: 80
   shortRangeGrabDistace: 1
