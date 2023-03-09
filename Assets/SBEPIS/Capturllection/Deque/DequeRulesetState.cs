@@ -1,9 +1,13 @@
 using System;
+using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	public abstract class DequeRulesetState { }
+	public abstract class DequeRulesetState
+	{
+		public Vector3 direction;
+	}
 	
 	[Serializable]
-	public class NoState : DequeRulesetState { }
+	public class BaseState : DequeRulesetState { }
 }

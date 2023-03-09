@@ -14,34 +14,35 @@ namespace SBEPIS.Capturllection.Deques
 		public float wobbleTimeFactor = 1;
 		public float wobbleSpaceFactor = 1;
 		
-		public override void Tick(List<Storable> inventory, ArrayState state, float deltaTime, Vector3 direction)
+		public override void Tick(List<Storable> inventory, ArrayState state, float deltaTime)
 		{
 			state.time += deltaTime;
 			
 			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
-			Vector3 absDirection = direction.Select(Mathf.Abs);
+			Vector3 absDirection = state.direction.Select(Mathf.Abs);
 			float lengthSum = offsetFromEnd ?
 				-offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude :
 				offset * (inventory.Count - 1);
 			
-			Vector3 startRight = -lengthSum / 2 * direction;
+			Vector3 startRight = -lengthSum / 2 * state.direction;
 			Vector3 right = startRight;
 			foreach ((Storable storable, Vector3 size) in inventory.Zip(sizes))
 			{
-				storable.Tick(deltaTime, Quaternion.Euler(0, 0, -60) * direction);
+				storable.state.direction = Quaternion.Euler(0, 0, -60) * state.direction;
+				storable.Tick(deltaTime);
 				
 				float length = Vector3.Project(size, absDirection).magnitude;
-				right += direction * (offsetFromEnd ? length / 2 : 0);
+				right += state.direction * (offsetFromEnd ? length / 2 : 0);
 				
 				Vector3 up = Mathf.Sin(state.time * wobbleTimeFactor + (right - startRight).magnitude * wobbleSpaceFactor) * wobbleAmplitude * Vector3.up;
 				
 				storable.position = right + up;
 				storable.rotation = Quaternion.identity;
 				
-				right += direction * (offset + (offsetFromEnd ? length / 2 : 0));
+				right += state.direction * (offset + (offsetFromEnd ? length / 2 : 0));
 			}
 		}
-		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory)
+		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, ArrayState state)
 		{
 			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
 			Vector3 maxSize = sizes.Aggregate(ExtensionMethods.Max);
