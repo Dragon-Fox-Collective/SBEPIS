@@ -6,33 +6,34 @@ using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturllection.Deques
 {
-	public class StackDeque : DequeBase<NoState>
+	public class StackDeque : DequeBase<BaseState>
 	{
 		public bool offsetFromEnd = false;
 		[FormerlySerializedAs("overlap")]
 		public float offset = 0.05f;
 		
-		public override void Tick(List<Storable> inventory, NoState state, float deltaTime, Vector3 direction)
+		public override void Tick(List<Storable> inventory, BaseState state, float deltaTime)
 		{
 			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
-			Vector3 absDirection = direction.Select(Mathf.Abs);
+			Vector3 absDirection = state.direction.Select(Mathf.Abs);
 			float lengthSum = (offsetFromEnd ? -1 : 1) * offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude;
 			
-			Vector3 right = -lengthSum / 2 * direction;
+			Vector3 right = -lengthSum / 2 * state.direction;
 			foreach ((Storable storable, Vector3 size) in inventory.Zip(sizes))
 			{
-				storable.Tick(deltaTime, Quaternion.Euler(0, 0, -60) * direction);
+				storable.state.direction = Quaternion.Euler(0, 0, -60) * state.direction;
+				storable.Tick(deltaTime);
 				
 				float length = Vector3.Project(size, absDirection).magnitude;
-				right += direction * length / 2;
+				right += state.direction * length / 2;
 				
 				storable.position = right;
 				storable.rotation = Quaternion.identity;
 				
-				right += direction * (offsetFromEnd ? length / 2 - offset : offset);
+				right += state.direction * (offsetFromEnd ? length / 2 - offset : offset);
 			}
 		}
-		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory)
+		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, BaseState state)
 		{
 			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
 			Vector3 maxSize = sizes.Aggregate(ExtensionMethods.Max);
@@ -40,11 +41,11 @@ namespace SBEPIS.Capturllection.Deques
 			return ExtensionMethods.Max(maxSize, sumSize);
 		}
 		
-		public override bool CanFetchFrom(List<Storable> inventory, NoState state, DequeStorable card) => inventory[0].CanFetch(card);
+		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, DequeStorable card) => inventory[0].CanFetch(card);
 		
-		public override int GetIndexToStoreInto(List<Storable> inventory, NoState state) => inventory.Count - 1;
-		public override int GetIndexToFlushBetween(List<Storable> inventory, NoState state, Storable storable) => storable.hasAllCardsEmpty ? inventory.Count : 0;
-		public override int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, NoState state, Storable storable, int originalIndex) => 0;
-		public override int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, NoState state, Storable storable, int originalIndex) => inventory.Count;
+		public override int GetIndexToStoreInto(List<Storable> inventory, BaseState state) => inventory.Count - 1;
+		public override int GetIndexToFlushBetween(List<Storable> inventory, BaseState state, Storable storable) => storable.hasAllCardsEmpty ? inventory.Count : 0;
+		public override int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => 0;
+		public override int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => inventory.Count;
 	}
 }

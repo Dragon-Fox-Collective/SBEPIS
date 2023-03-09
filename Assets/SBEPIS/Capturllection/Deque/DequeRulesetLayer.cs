@@ -10,8 +10,8 @@ namespace SBEPIS.Capturllection
 		
 		public override string dequeName => rulesets.Aggregate("", (name, ruleset) => name + ruleset.dequeName);
 		
-		public override void Tick(List<Storable> inventory, DequeRulesetLayerState state, float deltaTime, Vector3 direction) => rulesets.Zip(state.states).Reverse().Do(zip => zip.Item1.Tick(inventory, zip.Item2, deltaTime, direction));
-		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory) => rulesets[0].GetMaxPossibleSizeOf(inventory);
+		public override void Tick(List<Storable> inventory, DequeRulesetLayerState state, float deltaTime) => rulesets.Zip(state.states).Reverse().Do(zip => zip.Item1.Tick(inventory, zip.Item2, deltaTime));
+		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, DequeRulesetLayerState state) => rulesets[0].GetMaxPossibleSizeOf(inventory, state);
 		
 		public override bool CanFetchFrom(List<Storable> inventory, DequeRulesetLayerState state, DequeStorable card) => rulesets.Zip(state.states).Reverse().Any(zip => zip.Item1.CanFetchFrom(inventory, zip.Item2, card));
 		

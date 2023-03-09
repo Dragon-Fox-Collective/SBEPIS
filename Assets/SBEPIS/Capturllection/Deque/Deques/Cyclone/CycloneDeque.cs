@@ -9,7 +9,7 @@ namespace SBEPIS.Capturllection.Deques
 		public float innerRadius = 0.1f;
 		public float speed = 20;
 		
-		public override void Tick(List<Storable> inventory, CycloneState state, float deltaTime, Vector3 direction)
+		public override void Tick(List<Storable> inventory, CycloneState state, float deltaTime)
 		{
 			state.time += deltaTime;
 			
@@ -20,7 +20,8 @@ namespace SBEPIS.Capturllection.Deques
 			float deltaAngle = 360f / inventory.Count;
 			foreach (Storable storable in inventory)
 			{
-				storable.Tick(deltaTime / inventory.Count, Quaternion.Euler(0, 0, -90) * direction);
+				storable.state.direction = Quaternion.Euler(0, 0, -90) * state.direction;
+				storable.Tick(deltaTime / inventory.Count);
 				Vector3 size = storable.maxPossibleSize;
 				
 				float modAngle = cardAngle.ModAround(360);
@@ -33,7 +34,7 @@ namespace SBEPIS.Capturllection.Deques
 				cardAngle += deltaAngle;
 			}
 		}
-		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory)
+		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, CycloneState state)
 		{
 			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
 			Vector3 maxSize = sizes.Aggregate(ExtensionMethods.Max);
