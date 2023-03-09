@@ -35,7 +35,8 @@ public static class ExtensionMethods
 	
 	public static float Add(float a, float b) => a + b;
 	public static Vector3 Add(Vector3 a, Vector3 b) => a + b;
-	public static Vector3 Max(Vector3 a, Vector3 b) => new Vector3(Mathf.Max(a.x, b.x), Mathf.Max(a.y, b.y), Mathf.Max(a.z, b.z));
+	public static Vector3 Max(Vector3 a, Vector3 b) => new(Mathf.Max(a.x, b.x), Mathf.Max(a.y, b.y), Mathf.Max(a.z, b.z));
+	public static Vector3 Multiply(Vector3 a, Vector3 b) => new(a.x * b.x, a.y * b.y, a.z * b.z);
 	
 	public static bool IsOnLayer(this GameObject gameObject, int layerMask)
 	{

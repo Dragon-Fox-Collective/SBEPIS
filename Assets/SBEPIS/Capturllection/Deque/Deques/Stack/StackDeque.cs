@@ -13,6 +13,7 @@ namespace SBEPIS.Capturllection.Deques
 		{
 			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
 			Vector3 absDirection = direction.Select(Mathf.Abs);
+			print($"{transform.GetSiblingIndex()} {absDirection} {sizes[0]} {Vector3.Project(sizes[0], absDirection)}");
 			float lengthSum = -overlap * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude;
 			
 			Vector3 right = -lengthSum / 2 * direction;

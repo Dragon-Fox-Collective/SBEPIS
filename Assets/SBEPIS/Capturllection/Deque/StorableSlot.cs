@@ -17,11 +17,8 @@ namespace SBEPIS.Capturllection
 				if (card)
 				{
 					card.state.hasBeenAssembled = false;
-
-					Bounds bounds = card.GetComponentInChildren<Renderer>().bounds;
-					foreach (Renderer render in card.GetComponentsInChildren<Renderer>())
-						bounds.Encapsulate(render.bounds);
-					_maxPossibleSize = bounds.size;
+					
+					_maxPossibleSize = ExtensionMethods.Multiply(card.bounds.localBounds.size, card.bounds.transform.localScale);
 				}
 				else
 				{

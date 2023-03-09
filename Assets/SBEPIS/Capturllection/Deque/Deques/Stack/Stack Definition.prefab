@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-5833340545114159082
 MonoBehaviour:
@@ -45,5 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dequeration: {fileID: 11400000, guid: e7b948e2168a8a34b87b120c16dc8ef2, type: 2}
-  separatingDistance: 0.1
-  cardRotation: {x: 0, y: 0, z: 0, w: 1}
+  overlap: 0.02
