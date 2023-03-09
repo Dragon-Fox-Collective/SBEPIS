@@ -1,18 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturllection.Deques
 {
 	public class QueueDeque : DequeBase<NoState>
 	{
-		public float overlap = 0.05f;
+		public bool offsetFromEnd = false;
+		[FormerlySerializedAs("overlap")]
+		public float offset = 0.05f;
 		
 		public override void Tick(List<Storable> inventory, NoState state, float deltaTime, Vector3 direction)
 		{
 			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
 			Vector3 absDirection = direction.Select(Mathf.Abs);
-			float lengthSum = -overlap * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude;
+			float lengthSum = (offsetFromEnd ? -1 : 1) * offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude;
 			
 			Vector3 right = -lengthSum / 2 * direction;
 			foreach ((Storable storable, Vector3 size) in inventory.Zip(sizes))
@@ -25,14 +28,14 @@ namespace SBEPIS.Capturllection.Deques
 				storable.position = right;
 				storable.rotation = Quaternion.identity;
 				
-				right += direction * (length / 2 - overlap);
+				right += direction * (offsetFromEnd ? length / 2 - offset : offset);
 			}
 		}
 		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory)
 		{
 			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
 			Vector3 maxSize = sizes.Aggregate(ExtensionMethods.Max);
-			Vector3 sumSize = sizes.Aggregate(ExtensionMethods.Add) - overlap * (inventory.Count - 1) * Vector3.one;
+			Vector3 sumSize = sizes.Aggregate(ExtensionMethods.Add) + (offsetFromEnd ? -1 : 1) * offset * (inventory.Count - 1) * Vector3.one;
 			return ExtensionMethods.Max(maxSize, sumSize);
 		}
 		

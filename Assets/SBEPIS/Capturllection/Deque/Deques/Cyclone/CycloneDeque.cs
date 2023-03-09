@@ -20,7 +20,7 @@ namespace SBEPIS.Capturllection.Deques
 			float deltaAngle = 360f / inventory.Count;
 			foreach (Storable storable in inventory)
 			{
-				storable.Tick(deltaTime / inventory.Count, Vector3.down);
+				storable.Tick(deltaTime / inventory.Count, Quaternion.Euler(0, 0, -90) * direction);
 				Vector3 size = storable.maxPossibleSize;
 				
 				float modAngle = cardAngle.ModAround(360);
