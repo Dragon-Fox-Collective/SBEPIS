@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,8 +40,12 @@ namespace SBEPIS.Capturllection
 		public IEnumerable<Texture2D> GetCardTextures(DequeStorable card) => GetCardTextures(card, Enumerable.Empty<IEnumerable<Texture2D>>(), 0);
 		public abstract IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent);
 		
-		public abstract void DrawMaxPossibleBounds();
-		protected static void DrawSize(Vector3 size, Transform parent, Color color, float axisLength = 0.1f)
+		private void OnDrawGizmosSelected()
+		{
+			DrawSize(maxPossibleSize, transform, Color.magenta);
+		}
+		
+		private static void DrawSize(Vector3 size, Transform parent, Color color, float axisLength = 0.1f)
 		{
 			Vector3 extents = size / 2;
 			

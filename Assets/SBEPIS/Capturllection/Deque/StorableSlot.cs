@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -66,11 +67,6 @@ namespace SBEPIS.Capturllection
 		public override IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent)
 		{
 			return (textures.Skip(indexOfThisInParent).FirstOrDefault() ?? textures.Last())?.ToList();
-		}
-		
-		public override void DrawMaxPossibleBounds()
-		{
-			DrawSize(maxPossibleSize, transform, Color.cyan);
 		}
 		
 		public override IEnumerator<DequeStorable> GetEnumerator()
