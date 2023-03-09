@@ -37,9 +37,10 @@ namespace SBEPIS.Capturllection
 				return;
 			
 			Storable inventory = diajector.owner.inventory;
-			inventory.state.direction = (directionEndpoint.position - transform.position).normalized;
+			inventory.state.direction = transform.InverseTransformPoint(directionEndpoint.position).normalized;
 			inventory.Tick(deltaTime);
-			inventory.position = Vector3.forward * cardZ;
+			Vector3 inventorySize = inventory.maxPossibleSize;
+			inventory.position = Vector3.forward * (cardZ - inventorySize.z / 2);
 			inventory.rotation = Quaternion.identity;
 			
 			foreach ((DequeStorable card, CardTarget target) in targets)

@@ -42,14 +42,10 @@ namespace SBEPIS.Capturllection.Deques
 				right += state.direction * (offset + (offsetFromEnd ? length / 2 : 0));
 			}
 		}
-		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, ArrayState state)
+		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, ArrayState state) => GetSizeFromExistingLayout(inventory);
+		public static Vector3 GetSizeFromExistingLayout(IEnumerable<Storable> inventory)
 		{
-			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
-			Vector3 maxSize = sizes.Aggregate(ExtensionMethods.Max);
-			Vector3 sumSize = offsetFromEnd ?
-				-offset * (inventory.Count - 1) * Vector3.one + sizes.Aggregate(ExtensionMethods.Add) :
-				offset * (inventory.Count - 1) * Vector3.one;
-			return ExtensionMethods.Max(maxSize, sumSize);
+			return inventory.Select(storable => new Bounds(storable.position, storable.maxPossibleSize)).Aggregate(new Bounds(), (current, bounds) => current.Containing(bounds)).size;
 		}
 		
 		public override bool CanFetchFrom(List<Storable> inventory, ArrayState state, DequeStorable card) => inventory.Any(storable => storable.CanFetch(card));
