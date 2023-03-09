@@ -38,6 +38,8 @@ namespace SBEPIS.Capturllection
 
 			Storable inventory = diajector.owner.inventory;
 			inventory.Tick(deltaTime, direction.normalized);
+			inventory.position = Vector3.zero;
+			inventory.rotation = Quaternion.identity;
 			inventory.DrawMaxPossibleBounds();
 
 			foreach ((DequeStorable card, CardTarget target) in targets)
