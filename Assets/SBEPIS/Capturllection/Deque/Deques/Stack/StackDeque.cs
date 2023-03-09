@@ -33,13 +33,7 @@ namespace SBEPIS.Capturllection.Deques
 				right += state.direction * (offsetFromEnd ? length / 2 - offset : offset);
 			}
 		}
-		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, BaseState state)
-		{
-			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
-			Vector3 maxSize = sizes.Aggregate(ExtensionMethods.Max);
-			Vector3 sumSize = sizes.Aggregate(ExtensionMethods.Add) + (offsetFromEnd ? -1 : 1) * offset * (inventory.Count - 1) * Vector3.one;
-			return ExtensionMethods.Max(maxSize, sumSize);
-		}
+		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, BaseState state) => ArrayDeque.GetSizeFromExistingLayout(inventory);
 		
 		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, DequeStorable card) => inventory[0].CanFetch(card);
 		
