@@ -40,7 +40,6 @@ namespace SBEPIS.Capturllection
 			inventory.Tick(deltaTime, direction.normalized);
 			inventory.position = Vector3.zero;
 			inventory.rotation = Quaternion.identity;
-			inventory.DrawMaxPossibleBounds();
 
 			foreach ((DequeStorable card, CardTarget target) in targets)
 			{
