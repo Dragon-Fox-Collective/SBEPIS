@@ -20,6 +20,13 @@ namespace SBEPIS.Capturllection
 		public override int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, DequeRulesetLayerState state, Storable storable, int originalIndex) => rulesets[^1].GetIndexToInsertBetweenAfterStore(inventory, state.states[^1], storable, originalIndex);
 		public override int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, DequeRulesetLayerState state, Storable storable, int originalIndex) => rulesets[^1].GetIndexToInsertBetweenAfterFetch(inventory, state.states[^1], storable, originalIndex);
 		
+		public override DequeRulesetState GetNewState()
+		{
+			DequeRulesetLayerState state = new();
+			state.states = rulesets.Select(ruleset => ruleset.GetNewState()).ToList();
+			return state;
+		}
+		
 		public override IEnumerable<Texture2D> GetCardTextures() => rulesets.SelectMany(ruleset => ruleset.GetCardTextures());
 		public override IEnumerable<Texture2D> GetBoxTextures() => rulesets.SelectMany(ruleset => ruleset.GetBoxTextures());
 	}

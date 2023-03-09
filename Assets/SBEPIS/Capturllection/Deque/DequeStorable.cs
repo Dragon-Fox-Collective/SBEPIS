@@ -13,6 +13,7 @@ namespace SBEPIS.Capturllection
 	[RequireComponent(typeof(LerpTargetAnimator))]
 	public class DequeStorable : MonoBehaviour
 	{
+		public Renderer bounds;
 		public bool isStoringAllowed = true;
 		public readonly List<Func<bool>> storePredicates = new();
 		
