@@ -101,7 +101,14 @@ public static class ExtensionMethods
 		Array.Fill(newArray, item);
 		return newArray;
 	}
-
+	
+	public static Bounds Containing(this Bounds a, Bounds b)
+	{
+		Bounds bounds = new Bounds(a.center, a.size);
+		bounds.Encapsulate(b);
+		return bounds;
+	}
+	
 	public static T GetAttachedComponent<T>(this Collider collider) => collider ? collider.attachedRigidbody ? collider.attachedRigidbody.GetComponent<T>() : default : default;
 
 	public static void PerformOnMaterial(this IEnumerable<Renderer> renderers, Material material, Action<Material> action)

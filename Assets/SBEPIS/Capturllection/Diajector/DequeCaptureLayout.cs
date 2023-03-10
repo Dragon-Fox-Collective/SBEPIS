@@ -14,7 +14,7 @@ namespace SBEPIS.Capturllection
 		public float cardZ = -1;
 		[FormerlySerializedAs("fetchableCardY")]
 		public float fetchableCardZ = 0.1f;
-		public Vector3 direction = new(1, 0, 0.1f);
+		public Transform directionEndpoint;
 		
 		private Diajector diajector;
 		private readonly Dictionary<DequeStorable, CardTarget> targets = new();
@@ -35,19 +35,18 @@ namespace SBEPIS.Capturllection
 		{
 			if (!diajector.isBound)
 				return;
-
+			
 			Storable inventory = diajector.owner.inventory;
-			inventory.Tick(deltaTime, direction.normalized);
-			inventory.position = Vector3.zero;
+			inventory.state.direction = transform.InverseTransformPoint(directionEndpoint.position).normalized;
+			inventory.Tick(deltaTime);
+			Vector3 inventorySize = inventory.maxPossibleSize;
+			inventory.position = Vector3.forward * (cardZ - inventorySize.z / 2);
 			inventory.rotation = Quaternion.identity;
-
+			
 			foreach ((DequeStorable card, CardTarget target) in targets)
 			{
 				inventory.LayoutTarget(card, target);
-				
-				target.transform.localPosition += Vector3.forward * cardZ;
 				target.transform.localRotation *= Quaternion.Euler(0, 180, 0);
-				
 				if (inventory.CanFetch(card))
 					target.transform.localPosition += Vector3.forward * fetchableCardZ;
 			}
