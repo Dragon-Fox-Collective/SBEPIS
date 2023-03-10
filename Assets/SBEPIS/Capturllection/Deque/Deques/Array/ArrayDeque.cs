@@ -40,7 +40,7 @@ namespace SBEPIS.Capturllection.Deques
 				Vector3 up = Mathf.Sin(state.time * wobbleTimeFactor + (right - startRight).magnitude * wobbleSpaceFactor) * wobbleAmplitude * Vector3.up;
 				
 				storable.position = right + up;
-				storable.rotation = Quaternion.identity;
+				storable.rotation = GetOffsetRotation(state.direction);
 				
 				right += state.direction * (offset + (offsetFromEnd ? length / 2 : 0));
 			}
@@ -50,6 +50,7 @@ namespace SBEPIS.Capturllection.Deques
 		{
 			return inventory.Select(storable => new Bounds(storable.position, storable.maxPossibleSize)).Aggregate(new Bounds(), (current, bounds) => current.Containing(bounds)).size;
 		}
+		public static Quaternion GetOffsetRotation(Vector3 direction) => Quaternion.AngleAxis(5f, Vector3.Cross(direction, Vector3.forward));
 		
 		public override bool CanFetchFrom(List<Storable> inventory, ArrayState state, DequeStorable card) => inventory.Any(storable => storable.CanFetch(card));
 		

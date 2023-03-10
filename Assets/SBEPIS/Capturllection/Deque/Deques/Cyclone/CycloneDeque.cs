@@ -31,7 +31,7 @@ namespace SBEPIS.Capturllection.Deques
 					state.topStorable = storable;
 				
 				storable.position = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * (innerRadius + size.y / 2);
-				storable.rotation = Quaternion.Euler(0, 0, 180f + cardAngle) * Quaternion.identity;
+				storable.rotation = Quaternion.Euler(0, 0, 180f + cardAngle) * ArrayDeque.GetOffsetRotation(state.direction);
 				
 				cardAngle += anglePerCard;
 			}
