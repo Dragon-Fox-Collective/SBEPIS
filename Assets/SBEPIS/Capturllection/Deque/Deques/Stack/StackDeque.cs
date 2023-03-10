@@ -14,23 +14,28 @@ namespace SBEPIS.Capturllection.Deques
 		
 		public override void Tick(List<Storable> inventory, BaseState state, float deltaTime)
 		{
+			foreach (Storable storable in inventory)
+			{
+				storable.state.direction = Quaternion.Euler(0, 0, -60) * state.direction;
+				storable.Tick(deltaTime);
+			}
+			
 			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
 			Vector3 absDirection = state.direction.Select(Mathf.Abs);
-			float lengthSum = (offsetFromEnd ? -1 : 1) * offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude;
+			float lengthSum = offsetFromEnd ?
+				-offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude :
+				offset * (inventory.Count - 1);
 			
 			Vector3 right = -lengthSum / 2 * state.direction;
 			foreach ((Storable storable, Vector3 size) in inventory.Zip(sizes))
 			{
-				storable.state.direction = Quaternion.Euler(0, 0, -60) * state.direction;
-				storable.Tick(deltaTime);
-				
 				float length = Vector3.Project(size, absDirection).magnitude;
-				right += state.direction * length / 2;
+				right += state.direction * (offsetFromEnd ? length / 2 : 0);
 				
 				storable.position = right;
 				storable.rotation = Quaternion.identity;
 				
-				right += state.direction * (offsetFromEnd ? length / 2 - offset : offset);
+				right += state.direction * (offset + (offsetFromEnd ? length / 2 : 0));
 			}
 		}
 		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, BaseState state) => ArrayDeque.GetSizeFromExistingLayout(inventory);

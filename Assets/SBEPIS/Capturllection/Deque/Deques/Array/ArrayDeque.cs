@@ -18,6 +18,12 @@ namespace SBEPIS.Capturllection.Deques
 		{
 			state.time += deltaTime;
 			
+			foreach (Storable storable in inventory)
+			{
+				storable.state.direction = Quaternion.Euler(0, 0, -60) * state.direction;
+				storable.Tick(deltaTime);
+			}
+			
 			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
 			Vector3 absDirection = state.direction.Select(Mathf.Abs);
 			float lengthSum = offsetFromEnd ?
@@ -28,9 +34,6 @@ namespace SBEPIS.Capturllection.Deques
 			Vector3 right = startRight;
 			foreach ((Storable storable, Vector3 size) in inventory.Zip(sizes))
 			{
-				storable.state.direction = Quaternion.Euler(0, 0, -60) * state.direction;
-				storable.Tick(deltaTime);
-				
 				float length = Vector3.Project(size, absDirection).magnitude;
 				right += state.direction * (offsetFromEnd ? length / 2 : 0);
 				

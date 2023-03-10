@@ -13,6 +13,12 @@ namespace SBEPIS.Capturllection.Deques
 		{
 			state.time += deltaTime;
 			
+			foreach (Storable storable in inventory)
+			{
+				storable.state.direction = Quaternion.Euler(0, 0, -90) * state.direction;
+				storable.Tick(deltaTime / inventory.Count);
+			}
+			
 			if (inventory.Count == 0)
 				state.topStorable = null;
 			
@@ -20,8 +26,6 @@ namespace SBEPIS.Capturllection.Deques
 			float deltaAngle = 360f / inventory.Count;
 			foreach (Storable storable in inventory)
 			{
-				storable.state.direction = Quaternion.Euler(0, 0, -90) * state.direction;
-				storable.Tick(deltaTime / inventory.Count);
 				Vector3 size = storable.maxPossibleSize;
 				
 				float modAngle = cardAngle.ModAround(360);
