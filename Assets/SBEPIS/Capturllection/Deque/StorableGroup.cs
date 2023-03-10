@@ -11,6 +11,8 @@ namespace SBEPIS.Capturllection
 		
 		public override Vector3 maxPossibleSize => definition.ruleset.GetMaxPossibleSizeOf(inventory, state);
 		
+		public override int inventoryCount => inventory.Count;
+		
 		public override bool hasNoCards => inventory.Count == 0;
 		public override bool hasAllCards => inventory.Count == definition.maxStorables && inventory.All(storable => storable.hasAllCards);
 		

@@ -23,6 +23,8 @@ namespace SBEPIS.Capturllection
 
 		public abstract Vector3 maxPossibleSize { get; }
 		
+		public abstract int inventoryCount { get; }
+		
 		public abstract bool hasNoCards { get; }
 		public abstract bool hasAllCards { get; }
 		

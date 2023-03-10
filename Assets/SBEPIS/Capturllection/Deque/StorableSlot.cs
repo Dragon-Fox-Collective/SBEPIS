@@ -31,6 +31,8 @@ namespace SBEPIS.Capturllection
 		private Vector3 _maxPossibleSize;
 		public override Vector3 maxPossibleSize => _maxPossibleSize;
 		
+		public override int inventoryCount => card ? 1 : 0;
+		
 		public override bool hasNoCards => !hasAllCards;
 		public override bool hasAllCards => card;
 		
