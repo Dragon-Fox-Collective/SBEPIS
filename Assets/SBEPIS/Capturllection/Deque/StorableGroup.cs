@@ -7,10 +7,11 @@ namespace SBEPIS.Capturllection
 	public class StorableGroup : Storable
 	{
 		public StorableGroupDefinition definition;
-		public DequeRulesetState state;
 		public List<Storable> inventory = new();
 		
-		public override Vector3 maxPossibleSize => definition.ruleset.GetMaxPossibleSizeOf(inventory);
+		public override Vector3 maxPossibleSize => definition.ruleset.GetMaxPossibleSizeOf(inventory, state);
+		
+		public override int inventoryCount => inventory.Count;
 		
 		public override bool hasNoCards => inventory.Count == 0;
 		public override bool hasAllCards => inventory.Count == definition.maxStorables && inventory.All(storable => storable.hasAllCards);
@@ -18,7 +19,7 @@ namespace SBEPIS.Capturllection
 		public override bool hasAllCardsEmpty => inventory.All(storable => storable.hasAllCardsEmpty);
 		public override bool hasAllCardsFull => inventory.All(storable => storable.hasAllCardsFull);
 
-		public override void Tick(float deltaTime, Vector3 direction) => definition.ruleset.Tick(inventory, state, deltaTime, direction);
+		public override void Tick(float deltaTime) => definition.ruleset.Tick(inventory, state, deltaTime);
 		public override void LayoutTarget(DequeStorable card, CardTarget target) => inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		
 		public override bool CanFetch(DequeStorable card) => definition.ruleset.CanFetchFrom(inventory, state, card);

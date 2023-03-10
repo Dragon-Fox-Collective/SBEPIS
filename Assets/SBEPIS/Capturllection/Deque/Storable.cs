@@ -8,6 +8,8 @@ namespace SBEPIS.Capturllection
 {
 	public abstract class Storable : MonoBehaviour, IEnumerable<DequeStorable>
 	{
+		public DequeRulesetState state;
+		
 		public Vector3 position
 		{
 			get => transform.localPosition;
@@ -18,8 +20,10 @@ namespace SBEPIS.Capturllection
 			get => transform.localRotation;
 			set => transform.localRotation = value;
 		}
-		
+
 		public abstract Vector3 maxPossibleSize { get; }
+		
+		public abstract int inventoryCount { get; }
 		
 		public abstract bool hasNoCards { get; }
 		public abstract bool hasAllCards { get; }
@@ -27,7 +31,7 @@ namespace SBEPIS.Capturllection
 		public abstract bool hasAllCardsEmpty { get; }
 		public abstract bool hasAllCardsFull { get; }
 		
-		public abstract void Tick(float deltaTime, Vector3 direction);
+		public abstract void Tick(float deltaTime);
 		public abstract void LayoutTarget(DequeStorable card, CardTarget target);
 		
 		public abstract bool CanFetch(DequeStorable card);

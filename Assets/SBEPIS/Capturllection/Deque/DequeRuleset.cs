@@ -7,8 +7,8 @@ namespace SBEPIS.Capturllection
 	{
 		public abstract string dequeName { get; }
 		
-		public abstract void Tick(List<Storable> inventory, DequeRulesetState state, float deltaTime, Vector3 direction);
-		public abstract Vector3 GetMaxPossibleSizeOf(List<Storable> inventory);
+		public abstract void Tick(List<Storable> inventory, DequeRulesetState state, float deltaTime);
+		public abstract Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, DequeRulesetState state);
 		
 		public abstract bool CanFetchFrom(List<Storable> inventory, DequeRulesetState state, DequeStorable card);
 		
@@ -25,8 +25,10 @@ namespace SBEPIS.Capturllection
 
 	public abstract class DequeRuleset<T> : DequeRuleset where T : DequeRulesetState, new()
 	{
-		public override void Tick(List<Storable> inventory, DequeRulesetState state, float deltaTime, Vector3 direction) => Tick(inventory, (T)state, deltaTime, direction);
-		public abstract void Tick(List<Storable> inventory, T state, float deltaTime, Vector3 direction);
+		public override void Tick(List<Storable> inventory, DequeRulesetState state, float deltaTime) => Tick(inventory, (T)state, deltaTime);
+		public abstract void Tick(List<Storable> inventory, T state, float deltaTime);
+		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, DequeRulesetState state) => GetMaxPossibleSizeOf(inventory, (T)state);
+		public abstract Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, T state);
 		
 		public override bool CanFetchFrom(List<Storable> inventory, DequeRulesetState state, DequeStorable card) => CanFetchFrom(inventory, (T)state, card);
 		public abstract bool CanFetchFrom(List<Storable> inventory, T state, DequeStorable card);

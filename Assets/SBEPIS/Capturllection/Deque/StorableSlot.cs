@@ -31,13 +31,15 @@ namespace SBEPIS.Capturllection
 		private Vector3 _maxPossibleSize;
 		public override Vector3 maxPossibleSize => _maxPossibleSize;
 		
+		public override int inventoryCount => card ? 1 : 0;
+		
 		public override bool hasNoCards => !hasAllCards;
 		public override bool hasAllCards => card;
 		
 		public override bool hasAllCardsEmpty => card && card.canStoreInto;
 		public override bool hasAllCardsFull => !hasAllCardsEmpty;
 
-		public override void Tick(float deltaTime, Vector3 direction) { }
+		public override void Tick(float deltaTime) { }
 		public override void LayoutTarget(DequeStorable card, CardTarget target)
 		{
 			if (Contains(card))

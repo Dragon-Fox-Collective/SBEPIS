@@ -25,6 +25,7 @@ namespace SBEPIS.Capturllection
 			{
 				childGameObject.name = "Slot";
 				StorableSlot slot = childGameObject.AddComponent<StorableSlot>();
+				slot.state = new BaseState();
 				return slot;
 			}
 		}
