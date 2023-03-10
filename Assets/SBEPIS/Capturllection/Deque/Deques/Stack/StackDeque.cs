@@ -33,7 +33,7 @@ namespace SBEPIS.Capturllection.Deques
 				right += state.direction * (offsetFromEnd ? length / 2 : 0);
 				
 				storable.position = right;
-				storable.rotation = Quaternion.identity;
+				storable.rotation = ArrayDeque.GetOffsetRotation(state.direction);
 				
 				right += state.direction * (offset + (offsetFromEnd ? length / 2 : 0));
 			}

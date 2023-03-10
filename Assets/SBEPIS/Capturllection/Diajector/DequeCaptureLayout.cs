@@ -40,7 +40,7 @@ namespace SBEPIS.Capturllection
 			inventory.state.direction = transform.InverseTransformPoint(directionEndpoint.position).normalized;
 			inventory.Tick(deltaTime);
 			Vector3 inventorySize = inventory.maxPossibleSize;
-			inventory.position = Vector3.forward * (cardZ - inventorySize.z / 2);
+			inventory.position = transform.forward * (cardZ + inventorySize.z / 2);
 			inventory.rotation = Quaternion.identity;
 			
 			foreach ((DequeStorable card, CardTarget target) in targets)
@@ -48,7 +48,7 @@ namespace SBEPIS.Capturllection
 				inventory.LayoutTarget(card, target);
 				target.transform.localRotation *= Quaternion.Euler(0, 180, 0);
 				if (inventory.CanFetch(card))
-					target.transform.localPosition += Vector3.forward * fetchableCardZ;
+					target.transform.position += -transform.forward * fetchableCardZ;
 			}
 		}
 		
