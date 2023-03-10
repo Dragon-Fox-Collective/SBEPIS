@@ -14,11 +14,9 @@ namespace SBEPIS.Capturllection
 			set
 			{
 				_card = value;
-
+				
 				if (card)
 				{
-					card.state.hasBeenAssembled = false;
-					
 					_maxPossibleSize = ExtensionMethods.Multiply(card.bounds.localBounds.size, card.bounds.transform.localScale);
 				}
 				else
