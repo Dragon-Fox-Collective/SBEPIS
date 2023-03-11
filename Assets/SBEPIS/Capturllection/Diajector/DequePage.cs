@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturllection
 {
 	public class DequePage : MonoBehaviour
 	{
-		public UnityEvent onPreparePage = new();
+		public UnityEvent onPreparePagePre = new();
+		[FormerlySerializedAs("onPreparePage")]
+		public UnityEvent onPreparePagePost = new();
 		
 		public Diajector diajector { get; private set; }
 		
@@ -26,7 +29,7 @@ namespace SBEPIS.Capturllection
 			foreach (CardTarget target in targets)
 			{
 				DequeStorable card = Instantiate(diajector.cardPrefab);
-				card.name += $" ({target.label})";
+				card.name += $" ({target.transform.parent.name})";
 				card.owner = diajector.owner.dequeBox.owner;
 				target.card = card;
 				
@@ -63,9 +66,10 @@ namespace SBEPIS.Capturllection
 		public void StartAssembly()
 		{
 			gameObject.SetActive(true);
+			onPreparePagePre.Invoke();
 			if (cardTargets.Count == 0)
 				CreateCards(GetComponentsInChildren<CardTarget>());
-			onPreparePage.Invoke();
+			onPreparePagePost.Invoke();
 			foreach ((DequeStorable card, CardTarget target) in cardTargets)
 				card.state.isPageOpen = true;
 			diajector.coroutineOwner.StartCoroutine(SpawnCards());

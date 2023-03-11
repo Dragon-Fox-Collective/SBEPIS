@@ -11,8 +11,6 @@ namespace SBEPIS.Capturllection
 	[RequireComponent(typeof(LerpTarget))]
 	public class CardTarget : MonoBehaviour
 	{
-		public string label;
-		
 		[FormerlySerializedAs("onCardCreated")]
 		public UnityEvent<DequeStorable> onCardBound = new();
 		public UnityEvent onPrepareCard = new();
