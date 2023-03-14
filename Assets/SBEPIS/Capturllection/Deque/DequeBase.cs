@@ -6,6 +6,11 @@ namespace SBEPIS.Capturllection
 {
 	public abstract class DequeBase<T> : DequeRuleset<T> where T : DequeRulesetState, new()
 	{
+		public string dequeName;
+		public string firstPlaceDequeName;
+		public string middlePlaceDequeName;
+		public string lastPlaceDequeName;
+		
 		public Dequeration dequeration;
 		
 		[Tooltip("Layout, capture, and fetch settings")]
@@ -17,7 +22,7 @@ namespace SBEPIS.Capturllection
 		[Tooltip("Capture and fetch settings only")]
 		public DequeSettingsPageLayout lastPlaceSettingsPagePrefab;
 		
-		public override string dequeName => GetType().Name;
+		public override string GetDequeNamePart(bool isFirst, bool isLast) => isFirst && isLast ? dequeName : isFirst ? firstPlaceDequeName : isLast ? lastPlaceDequeName : middlePlaceDequeName;
 		
 		public override IEnumerable<DequeSettingsPageLayout> GetNewSettingsPageLayouts(bool isFirst, bool isLast)
 		{

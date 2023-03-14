@@ -1,15 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
 	public class DequeRulesetLayer : DequeRuleset<DequeRulesetLayerState>
 	{
 		public List<DequeRuleset> rulesets;
-		
-		public override string dequeName => rulesets.Aggregate("", (name, ruleset) => name + ruleset.dequeName);
 		
 		public override void Tick(List<Storable> inventory, DequeRulesetLayerState state, float deltaTime) => rulesets.Zip(state.states).Reverse().Do(zip => zip.Item1.Tick(inventory, zip.Item2, deltaTime));
 		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, DequeRulesetLayerState state) => rulesets[0].GetMaxPossibleSizeOf(inventory, state.states[0]);
@@ -28,10 +25,10 @@ namespace SBEPIS.Capturllection
 			return state;
 		}
 		
-		public override IEnumerable<DequeSettingsPageLayout> GetNewSettingsPageLayouts(bool isFirst, bool isLast)
-		{
-			return rulesets.Enumerate().SelectMany(zip => zip.item.GetNewSettingsPageLayouts(zip.index == 0 && isFirst, zip.index == rulesets.Count - 1 && isLast));
-		}
+		public override string GetDequeNamePart(bool isFirst, bool isLast) => rulesets.Enumerate().Aggregate("", (current, zip) => current + zip.item.GetDequeNamePart(isFirst && zip.index == 0, isLast && zip.index == rulesets.Count - 1));
+		
+		public override IEnumerable<DequeSettingsPageLayout> GetNewSettingsPageLayouts(bool isFirst, bool isLast) =>
+			rulesets.Enumerate().SelectMany(zip => zip.item.GetNewSettingsPageLayouts(isFirst && zip.index == 0, isLast && zip.index == rulesets.Count - 1));
 		
 		public override IEnumerable<Texture2D> GetCardTextures() => rulesets.SelectMany(ruleset => ruleset.GetCardTextures());
 		public override IEnumerable<Texture2D> GetBoxTextures() => rulesets.SelectMany(ruleset => ruleset.GetBoxTextures());
