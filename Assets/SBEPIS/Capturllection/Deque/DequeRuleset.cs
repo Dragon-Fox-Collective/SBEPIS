@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
@@ -18,6 +19,8 @@ namespace SBEPIS.Capturllection
 		public abstract int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex);
 		
 		public abstract DequeRulesetState GetNewState();
+		
+		public abstract IEnumerable<DequeSettingsPageLayout> GetNewSettingsPageLayouts(bool isFirst, bool isLast);
 		
 		public abstract IEnumerable<Texture2D> GetCardTextures();
 		public abstract IEnumerable<Texture2D> GetBoxTextures();

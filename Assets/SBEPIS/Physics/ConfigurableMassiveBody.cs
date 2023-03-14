@@ -29,7 +29,7 @@ namespace SBEPIS.Physics
 
 		public override Vector3 GetGravity(Vector3 centerOfMass)
 		{
-			Vector3 delta = centerOfMass.AsEnumerable().Zip(uses, (x, use) => use ? -x : 0).AsVector3();
+			Vector3 delta = centerOfMass.AsEnumerable().Zip(uses, (x, use) => use ? -x : 0).ToVector3();
 			return gravityCurve.Evaluate(delta.magnitude) * delta.normalized;
 		}
 	}
