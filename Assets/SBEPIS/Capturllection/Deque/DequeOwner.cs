@@ -110,11 +110,23 @@ namespace SBEPIS.Capturllection
 			}
 			savedInventory.Clear();
 			
-			foreach (DequeSettingsPageLayout layout in dequeBox.definition.GetNewSettingsPageLayouts())
+			List<DequeSettingsPageLayout> layouts = dequeBox.definition.GetNewSettingsPageLayouts().ToList();
+			foreach ((int i, DequeSettingsPageLayout layout) in layouts.Enumerate())
 			{
 				DequeSettingsPage page = Instantiate(dequeSettingsPagePrefab, diajector.mainPage.transform.parent);
 				layout.transform.SetParent(page.settingsParent);
+				
+				if (i == 0) Destroy(page.prevButton.transform.parent.gameObject);
+				if (i == layouts.Count - 1) Destroy(page.prevButton.transform.parent.gameObject);
+				
 				dequeSettingsPages.Add(page);
+			}
+			for (int i = 0; i < dequeSettingsPages.Count; i++)
+			{
+				DequeSettingsPage page = dequeSettingsPages[i];
+				page.backButton.onGrab.AddListener(diajector.ChangePageMethod(diajector.mainPage));
+				if (i > 0) page.prevButton.onGrab.AddListener(diajector.ChangePageMethod(dequeSettingsPages[i - 1].page));
+				if (i < dequeSettingsPages.Count - 1) page.prevButton.onGrab.AddListener(diajector.ChangePageMethod(dequeSettingsPages[i + 1].page));
 			}
 			
 			diajector.UpdateCardTexture();
