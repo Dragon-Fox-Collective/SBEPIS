@@ -20,12 +20,12 @@ namespace SBEPIS.Capturllection
 		public DequeStorable card { get; set; }
 		
 		public LerpTarget lerpTarget { get; private set; }
-		public DequePage page { get; private set; }
+		public DiajectorPage page { get; private set; }
 
 		public void Awake()
 		{
 			lerpTarget = GetComponent<LerpTarget>();
-			page = GetComponentInParent<DequePage>();
+			page = GetComponentInParent<DiajectorPage>();
 		}
 
 		public void DropTargettingCard()

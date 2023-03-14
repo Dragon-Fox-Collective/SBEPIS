@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
@@ -25,6 +26,11 @@ namespace SBEPIS.Capturllection
 			DequeRulesetLayerState state = new();
 			state.states = rulesets.Select(ruleset => ruleset.GetNewState()).ToList();
 			return state;
+		}
+		
+		public override IEnumerable<DequeSettingsPageLayout> GetNewSettingsPageLayouts(bool isFirst, bool isLast)
+		{
+			return rulesets.Enumerate().SelectMany(zip => zip.item.GetNewSettingsPageLayouts(zip.index == 0 && isFirst, zip.index == rulesets.Count - 1 && isLast));
 		}
 		
 		public override IEnumerable<Texture2D> GetCardTextures() => rulesets.SelectMany(ruleset => ruleset.GetCardTextures());

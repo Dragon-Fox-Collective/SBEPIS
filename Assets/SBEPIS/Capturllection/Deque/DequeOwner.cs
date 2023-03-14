@@ -18,6 +18,8 @@ namespace SBEPIS.Capturllection
 		
 		public DequeStorable cardPrefab;
 		public int initialCardCount = 5;
+
+		public DequeSettingsPage dequeSettingsPagePrefab;
 		
 		public Transform tossTarget;
 		[Tooltip("Height above the hand the deque should toss through, must be non-negative")]
@@ -34,6 +36,8 @@ namespace SBEPIS.Capturllection
 		
 		private List<DequeStorable> savedInventory;
 		public Storable inventory { get; private set; }
+		private List<DequeSettingsPage> dequeSettingsPages = new();
+		public DequeSettingsPage firstDequeSettingsPage => dequeSettingsPages.Count > 0 ? dequeSettingsPages[0] : null;
 		
 		private DequeBox _dequeBox;
 		public DequeBox dequeBox
@@ -74,6 +78,10 @@ namespace SBEPIS.Capturllection
 			
 			savedInventory = inventory.ToList();
 			Destroy(inventory.gameObject);
+			
+			foreach (DequeSettingsPage dequeSettingsPage in dequeSettingsPages)
+				Destroy(dequeSettingsPage.gameObject);
+			dequeSettingsPages.Clear();
 		}
 		
 		private void SetupNewDeque()
@@ -101,7 +109,14 @@ namespace SBEPIS.Capturllection
 				card.owner = null;
 			}
 			savedInventory.Clear();
-
+			
+			foreach (DequeSettingsPageLayout layout in dequeBox.definition.GetNewSettingsPageLayouts())
+			{
+				DequeSettingsPage page = Instantiate(dequeSettingsPagePrefab, diajector.mainPage.transform.parent);
+				layout.transform.SetParent(page.settingsParent);
+				dequeSettingsPages.Add(page);
+			}
+			
 			diajector.UpdateCardTexture();
 		}
 		

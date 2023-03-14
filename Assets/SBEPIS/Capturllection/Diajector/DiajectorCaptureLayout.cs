@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturllection
 {
-	public class DequeCaptureLayout : MonoBehaviour
+	public class DiajectorCaptureLayout : MonoBehaviour
 	{
 		public CardTarget cardTargetPrefab;
 		public float cardZ = -1;
@@ -18,12 +18,12 @@ namespace SBEPIS.Capturllection
 		
 		private Diajector diajector;
 		private readonly Dictionary<DequeStorable, CardTarget> targets = new();
-		private DequePage dequePage;
+		private DiajectorPage diajectorPage;
 		
 		private void Awake()
 		{
 			diajector = GetComponentInParent<Diajector>();
-			dequePage = GetComponentInParent<DequePage>();
+			diajectorPage = GetComponentInParent<DiajectorPage>();
 		}
 		
 		private void Update()
@@ -76,14 +76,14 @@ namespace SBEPIS.Capturllection
 		{
 			CardTarget target = HasTemporaryTarget(card) ? targets[card] : AddTemporaryTarget(card);
 			card.owner = diajector.owner;
-			dequePage.AddCard(card, target);
+			diajectorPage.AddCard(card, target);
 			diajector.owner.dequeBox.lowerTarget.onMoveFrom.Invoke(card.animator);
 			return target;
 		}
 		
 		public void RemovePermanentTargetAndCard(DequeStorable card)
 		{
-			dequePage.RemoveCard(card);
+			diajectorPage.RemoveCard(card);
 			RemoveTemporaryTarget(card);
 		}
 
