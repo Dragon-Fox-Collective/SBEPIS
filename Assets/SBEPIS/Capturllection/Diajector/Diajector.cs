@@ -5,6 +5,7 @@ using SBEPIS.Physics;
 using SBEPIS.UI;
 using SBEPIS.Utils;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
@@ -58,6 +59,8 @@ namespace SBEPIS.Capturllection
 			DisassembleCurrentPage();
 			AssembleNewPage(page);
 		}
+
+		public UnityAction ChangePageMethod(DiajectorPage page) => () => ChangePage(page);
 		
 		private void AssembleNewPage(DiajectorPage page)
 		{
