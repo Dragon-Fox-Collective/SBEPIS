@@ -2,7 +2,7 @@ using SBEPIS.Bits;
 using SBEPIS.Items;
 using UnityEngine;
 
-namespace SBEPIS.Thaumaturgy
+namespace SBEPIS.Thaumergy
 {
 	public class InstaThaumerger : MonoBehaviour
 	{
