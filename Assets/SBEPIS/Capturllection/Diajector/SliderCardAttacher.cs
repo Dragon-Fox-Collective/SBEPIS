@@ -7,7 +7,8 @@ namespace SBEPIS.Capturllection
 	[RequireComponent(typeof(CardTarget))]
 	public class SliderCardAttacher : MonoBehaviour, Slider
 	{
-		public Transform startPoint, endPoint;
+		public Transform startPoint;
+		public Transform endPoint;
 		public UnityEvent<float> onSliderValueChanged = new();
 
 		private SliderCard slider;
@@ -41,7 +42,7 @@ namespace SBEPIS.Capturllection
 			slider.target = cardTarget;
 			slider.SliderValue = _sliderValue;
 			slider.onSliderValueChanged = onSliderValueChanged;
-			card.grabbable.onDrop.AddListener((grabber, grabbable) => slider.ClampNewPosition());
+			card.grabbable.onDrop.AddListener((_, _) => slider.ClampNewPosition());
 		}
 	}
 }

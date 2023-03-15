@@ -18,6 +18,8 @@ namespace SBEPIS.Capturllection
 		
 		public DequeStorable cardPrefab;
 		public int initialCardCount = 5;
+
+		public DequeSettingsPage dequeSettingsPagePrefab;
 		
 		public Transform tossTarget;
 		[Tooltip("Height above the hand the deque should toss through, must be non-negative")]
@@ -34,6 +36,8 @@ namespace SBEPIS.Capturllection
 		
 		private List<DequeStorable> savedInventory;
 		public Storable inventory { get; private set; }
+		private List<DequeSettingsPage> dequeSettingsPages = new();
+		public DequeSettingsPage firstDequeSettingsPage => dequeSettingsPages.Count > 0 ? dequeSettingsPages[0] : null;
 		
 		private DequeBox _dequeBox;
 		public DequeBox dequeBox
@@ -74,6 +78,10 @@ namespace SBEPIS.Capturllection
 			
 			savedInventory = inventory.ToList();
 			Destroy(inventory.gameObject);
+			
+			foreach (DequeSettingsPage dequeSettingsPage in dequeSettingsPages)
+				Destroy(dequeSettingsPage.gameObject);
+			dequeSettingsPages.Clear();
 		}
 		
 		private void SetupNewDeque()
@@ -101,7 +109,27 @@ namespace SBEPIS.Capturllection
 				card.owner = null;
 			}
 			savedInventory.Clear();
-
+			
+			List<DequeSettingsPageLayout> layouts = dequeBox.definition.GetNewSettingsPageLayouts().ToList();
+			foreach ((int i, DequeSettingsPageLayout layout) in layouts.Enumerate())
+			{
+				DequeSettingsPage page = Instantiate(dequeSettingsPagePrefab, diajector.mainPage.transform.parent);
+				page.ManualAwake();
+				layout.transform.SetParent(page.settingsParent, false);
+				
+				if (i == 0) Destroy(page.prevButton.transform.parent.gameObject);
+				if (i == layouts.Count - 1) Destroy(page.nextButton.transform.parent.gameObject);
+				
+				dequeSettingsPages.Add(page);
+			}
+			for (int i = 0; i < dequeSettingsPages.Count; i++)
+			{
+				DequeSettingsPage page = dequeSettingsPages[i];
+				page.backButton.onGrab.AddListener(diajector.ChangePageMethod(diajector.mainPage));
+				if (i > 0) page.prevButton.onGrab.AddListener(diajector.ChangePageMethod(dequeSettingsPages[i - 1].page));
+				if (i < dequeSettingsPages.Count - 1) page.nextButton.onGrab.AddListener(diajector.ChangePageMethod(dequeSettingsPages[i + 1].page));
+			}
+			
 			diajector.UpdateCardTexture();
 		}
 		

@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturllection
 {
-	public class DequePageSwitcher : MonoBehaviour
+	public class DiajectorPageSwitcher : MonoBehaviour
 	{
-		public DequePage dequePage;
+		[FormerlySerializedAs("dequePage")]
+		public DiajectorPage diajectorPage;
 		
 		private Diajector diajector;
 		
@@ -15,7 +17,7 @@ namespace SBEPIS.Capturllection
 		
 		public void SwitchPage()
 		{
-			diajector.ChangePage(dequePage);
+			diajector.ChangePage(diajectorPage);
 		}
 	}
 }
