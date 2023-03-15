@@ -14,7 +14,7 @@ namespace SBEPIS.Capturllection
 		[FormerlySerializedAs("isRetrievingAllowed")]
 		public bool isFetchingAllowed = true;
 		public List<Predicate<Capturellectainer>> fetchPredicates = new();
-
+		
 		public CaptureEvent onCapture = new();
 		[FormerlySerializedAs("onRetrieve")]
 		public CaptureEvent onFetch = new();
@@ -34,7 +34,7 @@ namespace SBEPIS.Capturllection
 				Capture(item);
 			}
 			
-			fetchPredicates.Add(container => isFetchingAllowed);
+			fetchPredicates.Add(_ => isFetchingAllowed);
 		}
 
 		public void Capture(Capturllectable item)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
@@ -37,8 +38,8 @@ namespace SBEPIS.Capturllection
 		public abstract bool CanFetch(DequeStorable card);
 		public abstract bool Contains(DequeStorable card);
 		
-		public abstract (DequeStorable, Capturellectainer) Store(Capturllectable item, out Capturllectable ejectedItem);
-		public abstract Capturllectable Fetch(DequeStorable card);
+		public abstract void Store(Capturllectable item, UnityAction<DequeStorable, Capturellectainer, Capturllectable> callback);
+		public abstract void Fetch(DequeStorable card, UnityAction<Capturllectable> callback);
 		public abstract void Flush(List<DequeStorable> cards);
 		
 		public IEnumerable<Texture2D> GetCardTextures(DequeStorable card) => GetCardTextures(card, Enumerable.Empty<IEnumerable<Texture2D>>(), 0);
