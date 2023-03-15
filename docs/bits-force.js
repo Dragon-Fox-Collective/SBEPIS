@@ -24,7 +24,7 @@ const makeParents = parameters.has('makeparents');
 		if ('color' in node)
 			attrs.color = node.color;
 		
-		if ('id' in node && (makeParents || !('nodes' in node)) && ["members", "bits", "class", "items"].includes(nodeType))
+		if ('id' in node && (makeParents || !('nodes' in node)) && ['members', 'bits', 'class', 'items'].includes(nodeType))
 		{
 			//if (nodeType == "items" && !("class" in node) && !("items" in node)) node.class = "handclass";
 
@@ -34,7 +34,7 @@ const makeParents = parameters.has('makeparents');
 			 	links.push({ source: namespace(parentNode.id, parentNode.id === 'base' ? null : nodeType), target: namespace(node.id, nodeType) });
 		}
 
-		['bits', 'grists', 'members', 'items'].forEach(sourceType =>
+		['bits', 'members', 'items'].forEach(sourceType =>
 		{
 			if (sourceType in node)
 			{

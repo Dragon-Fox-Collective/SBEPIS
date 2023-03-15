@@ -9,6 +9,6 @@ namespace SBEPIS.Capturllection
 		public Quaternion rotation;
 		public float scale = 1;
 
-		public UnityEvent prePicture, postPicture;
+		public UnityEvent prePicture = new(), postPicture = new();
 	}
 }

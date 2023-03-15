@@ -1,3 +1,4 @@
+using SBEPIS.Bits;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace SBEPIS.Capturllection
 		private new Camera camera;
 
 		public static CaptureCamera instance;
-		private static readonly Dictionary<long, Texture2D> captureCodeTextures = new Dictionary<long, Texture2D>();
+		private static readonly Dictionary<BitSet, Texture2D> captureCodeTextures = new();
 
 		private void Awake()
 		{
@@ -53,10 +54,10 @@ namespace SBEPIS.Capturllection
 			return rtn;
 		}
 
-		private Texture2D TakePictureOfCode(long captchaHash)
+		private Texture2D TakePictureOfCode(BitSet bits)
 		{
 			codeBox.gameObject.SetActive(true);
-			codeBox.text = CaptureCodeUtils.UnhashCaptureHash(captchaHash);
+			codeBox.text = bits.ToCode();
 			Texture2D rtn = TakePicture();
 			codeBox.gameObject.SetActive(false);
 			return rtn;
@@ -68,9 +69,9 @@ namespace SBEPIS.Capturllection
 		/// <returns>A Texture2D of the thing</returns>
 		private Texture2D TakePicture()
 		{
-			Rect texRect = new Rect(0, 0, 256, 256);
-			Texture2D captchaTexture = new Texture2D((int)texRect.width, (int)texRect.height, TextureFormat.RGBA32, false);
-			RenderTexture renderTexture = new RenderTexture((int)texRect.width, (int)texRect.height, 32);
+			Rect texRect = new(0, 0, 256, 256);
+			Texture2D captchaTexture = new((int)texRect.width, (int)texRect.height, TextureFormat.RGBA32, false);
+			RenderTexture renderTexture = new((int)texRect.width, (int)texRect.height, 32);
 
 			camera.targetTexture = renderTexture;
 			camera.Render();
@@ -90,12 +91,12 @@ namespace SBEPIS.Capturllection
 		/// <summary>
 		/// Look up or generate a Texture2D of a captcha code string
 		/// </summary>
-		public static Texture2D GetCaptureCodeTexture(long captureHash)
+		public static Texture2D GetCaptureCodeTexture(BitSet bits)
 		{
-			if (!captureCodeTextures.ContainsKey(captureHash))
-				captureCodeTextures.Add(captureHash, instance.TakePictureOfCode(captureHash));
+			if (!captureCodeTextures.ContainsKey(bits))
+				captureCodeTextures.Add(bits, instance.TakePictureOfCode(bits));
 
-			captureCodeTextures.TryGetValue(captureHash, out Texture2D texture);
+			captureCodeTextures.TryGetValue(bits, out Texture2D texture);
 			return texture;
 		}
 	}

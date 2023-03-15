@@ -1,33 +1,30 @@
 using UnityEngine;
 
-namespace SBEPIS.Util
+public class DebugLogViewer : MonoBehaviour
 {
-	public class DebugLogViewer : MonoBehaviour
+	private string log = "";
+
+	private void OnEnable()
 	{
-		private string log = "";
+		Application.logMessageReceived += Log;
+	}
 
-		private void OnEnable()
-		{
-			Application.logMessageReceived += Log;
-		}
+	void OnDisable()
+	{
+		Application.logMessageReceived -= Log;
+	}
 
-		void OnDisable()
-		{
-			Application.logMessageReceived -= Log;
-		}
+	public void Log(string logString, string stackTrace, LogType type)
+	{
+		if (type != LogType.Log)
+			log = stackTrace + "\n" + log;
+		log = logString + "\n" + log;
+		if (log.Length > 5000)
+			log = log[..4000];
+	}
 
-		public void Log(string logString, string stackTrace, LogType type)
-		{
-			if (type != LogType.Log)
-				log = stackTrace + "\n" + log;
-			log = logString + "\n" + log;
-			if (log.Length > 5000)
-				log = log.Substring(0, 4000);
-		}
-
-		void OnGUI()
-		{
-			log = GUI.TextArea(new Rect(10, 10, Screen.width - 20, Screen.height - 20), log);
-		}
+	void OnGUI()
+	{
+		log = GUI.TextArea(new Rect(10, 10, Screen.width - 20, Screen.height - 20), log);
 	}
 }
