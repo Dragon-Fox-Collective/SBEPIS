@@ -18,7 +18,7 @@ namespace SBEPIS.Capturllection
 		
 		public abstract DequeRulesetState GetNewState();
 		
-		public abstract string GetDequeNamePart(bool isFirst, bool isLast);
+		public abstract string GetDequeNamePart(bool isFirst, bool isLast, bool isPlural);
 		
 		public abstract IEnumerable<DequeSettingsPageLayout> GetNewSettingsPageLayouts(bool isFirst, bool isLast);
 		
