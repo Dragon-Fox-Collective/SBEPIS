@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
@@ -25,40 +26,42 @@ namespace SBEPIS.Capturllection
 		public override bool CanFetch(DequeStorable card) => definition.ruleset.CanFetchFrom(inventory, state, card);
 		public override bool Contains(DequeStorable card) => inventory.Any(storable => storable.Contains(card));
 		
-		public override (DequeStorable, Capturellectainer) Store(Capturllectable item, out Capturllectable ejectedItem)
+		public override void Store(Capturllectable item, UnityAction<DequeStorable, Capturellectainer, Capturllectable> callback)
 		{
 			int storeIndex = definition.ruleset.GetIndexToStoreInto(inventory, state);
 			Storable storable = inventory[storeIndex];
 			inventory.Remove(storable);
 			
-			(DequeStorable card, Capturellectainer container) = storable.Store(item, out ejectedItem);
-			
-			int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterStore(inventory, state, storable, storeIndex);
-			inventory.Insert(restoreIndex, storable);
-			
-			if (ejectedItem && ejectedItem.TryGetComponent(out DequeStorable flushedCard))
+			storable.Store(item, (card, container, ejectedItem) =>
 			{
-				List<DequeStorable> cards = new(){ flushedCard };
-				Flush(cards, storeIndex);
-				if (cards.Count == 0)
-					ejectedItem = null;
-			}
+				int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterStore(inventory, state, storable, storeIndex);
+				inventory.Insert(restoreIndex, storable);
 			
-			return (card, container);
+				if (ejectedItem && ejectedItem.TryGetComponent(out DequeStorable flushedCard))
+				{
+					List<DequeStorable> cards = new(){ flushedCard };
+					Flush(cards, storeIndex);
+					if (cards.Count == 0)
+						ejectedItem = null;
+				}
+				
+				callback.Invoke(card, container, ejectedItem);
+			});
 		}
 		
-		public override Capturllectable Fetch(DequeStorable card)
+		public override void Fetch(DequeStorable card, UnityAction<Capturllectable> callback)
 		{
 			Storable storable = inventory.First(storable => storable.Contains(card));
 			int fetchIndex = inventory.IndexOf(storable);
 			inventory.Remove(storable);
 			
-			Capturllectable item = storable.Fetch(card);
-			
-			int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterFetch(inventory, state, storable, fetchIndex);
-			inventory.Insert(restoreIndex, storable);
-			
-			return item;
+			storable.Fetch(card, (item) =>
+			{
+				int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterFetch(inventory, state, storable, fetchIndex);
+				inventory.Insert(restoreIndex, storable);
+				
+				callback.Invoke(item);
+			});
 		}
 		
 		public override void Flush(List<DequeStorable> cards) => Flush(cards, 0);
