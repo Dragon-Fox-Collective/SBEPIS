@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	[RequireComponent(typeof(DiajectorPage))]
 	public class DequeSettingsPage : MonoBehaviour
 	{
 		public RectTransform settingsParent;
@@ -12,9 +11,9 @@ namespace SBEPIS.Capturllection
 		
 		public DiajectorPage page { get; private set; }
 		
-		private void Awake()
+		public void ManualAwake()
 		{
-			page = GetComponent<DiajectorPage>();
+			page = GetComponent<DiajectorPage>(); // awake doesnt get called before opening page :(
 		}
 	}
 }
