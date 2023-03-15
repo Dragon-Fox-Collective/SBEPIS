@@ -95,13 +95,20 @@ public static class ExtensionMethods
 		list.AddRange(items);
 	}
 
+	public static IEnumerable<(int index, T item)> Enumerate<T>(this IEnumerable<T> enumerable)
+	{
+		int i = 0;
+		foreach (T item in enumerable)
+			yield return (i++, item);
+	}
+
 	public static T[] Fill<T>(this T[] array, T item)
 	{
 		T[] newArray = new T[array.Length];
 		Array.Fill(newArray, item);
 		return newArray;
 	}
-	
+
 	public static Bounds Containing(this Bounds a, Bounds b)
 	{
 		Bounds bounds = new Bounds(a.center, a.size);
@@ -145,9 +152,15 @@ public static class ExtensionMethods
 		return angle * Mathf.Deg2Rad * axis;
 	}
 	
-	public static IEnumerable<T> Insert<T>(this IEnumerable<T> enumerable, int index, T element)
+	public static IEnumerable<T> Insert<T>(this IEnumerable<T> enumerable, int index, T newItem)
 	{
-		return enumerable.Take(index).Append(element).Concat(enumerable.Skip(index));
+		int i = 0;
+		foreach (T item in enumerable)
+		{
+			if (i++ == index)
+				yield return newItem;
+			yield return item;
+		}
 	}
 
 	public static IEnumerable<(T, TSecond)> Zip<T, TSecond>(this IEnumerable<T> first, IEnumerable<TSecond> second)
@@ -168,9 +181,17 @@ public static class ExtensionMethods
 		yield return vector.z;
 	}
 	
-	public static Vector3 AsVector3(this IEnumerable<float> enumerable)
+	public static Vector3 ToVector3(this IEnumerable<float> enumerable)
 	{
-		return new Vector3(enumerable.ElementAtOrDefault(0), enumerable.ElementAtOrDefault(1), enumerable.ElementAtOrDefault(2));
+		Vector3 vector = new();
+		int i = 0;
+		foreach (float x in enumerable)
+		{
+			vector[i++] = x;
+			if (i == 3)
+				break;
+		}
+		return vector;
 	}
 	
 	public static Vector3 Select(this Vector3 vector, Func<float, float> func) => new(func.Invoke(vector.x), func.Invoke(vector.y), func.Invoke(vector.z));

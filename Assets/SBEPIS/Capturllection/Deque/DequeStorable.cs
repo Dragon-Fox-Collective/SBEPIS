@@ -48,7 +48,7 @@ namespace SBEPIS.Capturllection
 
 		public bool canStoreInto => container && container.isEmpty;
 		
-		private List<DequeCaptureLayout> layouts = new();
+		private List<DiajectorCaptureLayout> layouts = new();
 		
 		private void Awake()
 		{
@@ -73,17 +73,17 @@ namespace SBEPIS.Capturllection
 		
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DequeCaptureLayout layout) && canStore)
+			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DiajectorCaptureLayout layout) && canStore)
 				AddLayout(layout);
 		}
 		
 		private void OnTriggerExit(Collider other)
 		{
-			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DequeCaptureLayout layout) && layout.HasTemporaryTarget(this))
+			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DiajectorCaptureLayout layout) && layout.HasTemporaryTarget(this))
 				RemoveLayout(layout);
 		}
 
-		private void AddLayout(DequeCaptureLayout layout)
+		private void AddLayout(DiajectorCaptureLayout layout)
 		{
 			layouts.Add(layout);
 			if (layouts.Count == 1)
@@ -91,7 +91,7 @@ namespace SBEPIS.Capturllection
 			layout.AddTemporaryTarget(this);
 		}
 		
-		private void RemoveLayout(DequeCaptureLayout layout)
+		private void RemoveLayout(DiajectorCaptureLayout layout)
 		{
 			layouts.Add(layout);
 			if (layouts.Count == 1)
@@ -99,9 +99,9 @@ namespace SBEPIS.Capturllection
 			layout.AddTemporaryTarget(this);
 		}
 		
-		public DequeCaptureLayout PopAllLayouts()
+		public DiajectorCaptureLayout PopAllLayouts()
 		{
-			DequeCaptureLayout lastLayout = layouts[^1];
+			DiajectorCaptureLayout lastLayout = layouts[^1];
 			while (layouts.Count > 0)
 				RemoveLayout(layouts[0]);
 			return lastLayout;

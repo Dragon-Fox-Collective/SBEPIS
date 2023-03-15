@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
 	public abstract class DequeRuleset : MonoBehaviour
 	{
-		public abstract string dequeName { get; }
-		
 		public abstract void Tick(List<Storable> inventory, DequeRulesetState state, float deltaTime);
 		public abstract Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, DequeRulesetState state);
 		
@@ -18,6 +17,10 @@ namespace SBEPIS.Capturllection
 		public abstract int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex);
 		
 		public abstract DequeRulesetState GetNewState();
+		
+		public abstract string GetDequeNamePart(bool isFirst, bool isLast, bool isPlural);
+		
+		public abstract IEnumerable<DequeSettingsPageLayout> GetNewSettingsPageLayouts(bool isFirst, bool isLast);
 		
 		public abstract IEnumerable<Texture2D> GetCardTextures();
 		public abstract IEnumerable<Texture2D> GetBoxTextures();

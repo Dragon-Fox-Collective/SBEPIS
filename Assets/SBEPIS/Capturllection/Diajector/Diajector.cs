@@ -5,6 +5,7 @@ using SBEPIS.Physics;
 using SBEPIS.UI;
 using SBEPIS.Utils;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
@@ -13,7 +14,7 @@ namespace SBEPIS.Capturllection
 		public LerpTarget upperTarget;
 		public DequeStorable cardPrefab;
 		public ElectricArc electricArcPrefab;
-		public DequePage mainPage;
+		public DiajectorPage mainPage;
 		public float cardDelay = 0.5f;
 		
 		public Rigidbody staticRigidbody;
@@ -24,21 +25,21 @@ namespace SBEPIS.Capturllection
 		
 		public DequeOwner owner { get; set; }
 
-		private DequePage currentPage;
+		private DiajectorPage currentPage;
 		
 		public bool isOpen => currentPage;
 		public bool isLayoutActive => layout && layout.isActiveAndEnabled;
 		
-		public DequeCaptureLayout layout { get; private set; }
+		public DiajectorCaptureLayout layout { get; private set; }
 		
 		private void Awake()
 		{
-			layout = GetComponentInChildren<DequeCaptureLayout>(includeInactive:true);
+			layout = GetComponentInChildren<DiajectorCaptureLayout>(includeInactive:true);
 		}
 		
+		public void StartAssembly() => StartAssembly(transform.position, transform.rotation);
 		public void StartAssembly(Vector3 position, Quaternion rotation) => StartAssembly(position, rotation, mainPage);
-		
-		public void StartAssembly(Vector3 position, Quaternion rotation, DequePage page)
+		public void StartAssembly(Vector3 position, Quaternion rotation, DiajectorPage page)
 		{
 			if (isOpen)
 			{
@@ -53,13 +54,15 @@ namespace SBEPIS.Capturllection
 			AssembleNewPage(page);
 		}
 		
-		public void ChangePage(DequePage page)
+		public void ChangePage(DiajectorPage page)
 		{
 			DisassembleCurrentPage();
 			AssembleNewPage(page);
 		}
+
+		public UnityAction ChangePageMethod(DiajectorPage page) => () => ChangePage(page);
 		
-		private void AssembleNewPage(DequePage page)
+		private void AssembleNewPage(DiajectorPage page)
 		{
 			currentPage = page;
 			currentPage.StartAssembly();
@@ -100,6 +103,12 @@ namespace SBEPIS.Capturllection
 			coroutineOwner.StopAllCoroutines();
 			ForceCloseCurrentPage();
 			gameObject.SetActive(false);
+		}
+
+		public void ForceRestart()
+		{
+			ForceClose();
+			StartAssembly();
 		}
 		
 		public bool ShouldCardBeDisplayed(DequeStorable card) => isOpen && currentPage.HasCard(card);
