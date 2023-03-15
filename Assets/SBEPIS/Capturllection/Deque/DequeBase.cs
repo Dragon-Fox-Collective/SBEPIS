@@ -28,7 +28,11 @@ namespace SBEPIS.Capturllection
 		{
 			DequeSettingsPageLayout prefab = isFirst && isLast ? settingsPagePrefab : isFirst ? firstPlaceSettingsPagePrefab : isLast ? lastPlaceSettingsPagePrefab : middlePlaceSettingsPagePrefab;
 			if (prefab)
-				yield return Instantiate(prefab);
+			{
+				DequeSettingsPageLayout layout = Instantiate(prefab);
+				layout.ruleset = this;
+				yield return layout;
+			}
 		}
 		
 		public override IEnumerable<Texture2D> GetCardTextures()

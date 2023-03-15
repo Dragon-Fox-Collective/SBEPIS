@@ -9,41 +9,40 @@ namespace SBEPIS.Capturllection
 	public class MenuActions : MonoBehaviour
 	{
 		[Header("Controls")]
-		[SerializeReference]
 		public SliderCardAttacher sensitivitySlider;
 		public float mouseSensitivityMin = 0.1f;
 		public float mouseSensitivityMax = 1;
-
+		
 		[Header("Settings readers")]
 		public MovementController movementController;
 		public LookController lookController;
-
+		
 		private PlayerSettingsSaveData settingsData;
-
+		
 		public void StartNewGame()
 		{
 			StartCoroutine(LoadNewGameScene());
 		}
-
+		
 		private IEnumerator LoadNewGameScene()
 		{
 			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Demo");
 			while (!asyncLoad.isDone)
 				yield return null;
 		}
-
+		
 		public void OpenMainMenu()
 		{
 			StartCoroutine(LoadMainMenuScene());
 		}
-
+		
 		private IEnumerator LoadMainMenuScene()
 		{
 			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main Menu");
 			while (!asyncLoad.isDone)
 				yield return null;
 		}
-
+		
 		public void QuitGame()
 		{
 #if UNITY_EDITOR
@@ -51,12 +50,12 @@ namespace SBEPIS.Capturllection
 #endif
 			Application.Quit();
 		}
-
-
+		
+		
 		private void Start()
 		{
 			settingsData = new PlayerSettingsSaveData { filename = "settings" };
-
+			
 			if (DataSaver.LoadData(ref settingsData))
 			{
 				LoadMouseSensitivity(ref settingsData);
@@ -68,7 +67,7 @@ namespace SBEPIS.Capturllection
 				//SaveEyeHeight(ref settingsData);
 			}
 		}
-
+		
 		public void LoadMouseSensitivity(ref PlayerSettingsSaveData settingsData)
 		{
 			if (settingsData.version >= 0)
@@ -76,17 +75,17 @@ namespace SBEPIS.Capturllection
 			else
 				SaveMouseSensitivity(ref settingsData);
 		}
-
+		
 		public void SaveMouseSensitivity(ref PlayerSettingsSaveData settingsData)
 		{
 			settingsData.sensitivity = lookController.sensitivity;
 		}
-
+		
 		public void ResetMouseSensitivitySlider()
 		{
 			sensitivitySlider.SliderValue = lookController.sensitivity.Map(mouseSensitivityMin, mouseSensitivityMax, 0, 1);
 		}
-
+		
 		public void ChangeMouseSensitivity(float percent)
 		{
 			lookController.sensitivity = percent.Map(0, 1, mouseSensitivityMin, mouseSensitivityMax);
