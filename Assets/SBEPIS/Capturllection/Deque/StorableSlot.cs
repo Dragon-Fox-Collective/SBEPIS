@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
@@ -46,15 +47,15 @@ namespace SBEPIS.Capturllection
 		public override bool CanFetch(DequeStorable card) => Contains(card);
 		public override bool Contains(DequeStorable card) => this.card == card;
 		
-		public override (DequeStorable, Capturellectainer) Store(Capturllectable item, out Capturllectable ejectedItem)
+		public override void Store(Capturllectable item, UnityAction<DequeStorable, Capturellectainer, Capturllectable> callback)
 		{
-			ejectedItem = card.container.Fetch();
+			Capturllectable ejectedItem = card.container.Fetch();
 			card.container.Capture(item);
-			return (card, card.container);
+			callback.Invoke(card, card.container, ejectedItem);
 		}
-		public override Capturllectable Fetch(DequeStorable card)
+		public override void Fetch(DequeStorable card, UnityAction<Capturllectable> callback)
 		{
-			return Contains(card) ? card.container.Fetch() : null;
+			callback.Invoke(Contains(card) ? card.container.Fetch() : null);
 		}
 		public override void Flush(List<DequeStorable> cards)
 		{
