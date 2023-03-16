@@ -50,7 +50,7 @@ namespace SBEPIS.Capturllection.Deques
 		{
 			return inventory.Select(storable => new Bounds(storable.position, storable.maxPossibleSize)).Aggregate(new Bounds(), (current, bounds) => current.Containing(bounds)).size;
 		}
-		public static Quaternion GetOffsetRotation(Vector3 direction) => Quaternion.AngleAxis(5f, Vector3.Cross(direction, Vector3.forward));
+		public static Quaternion GetOffsetRotation(Vector3 direction) => Quaternion.AngleAxis(-5f, Vector3.Cross(direction, Vector3.forward));
 		
 		public override bool CanFetchFrom(List<Storable> inventory, ArrayState state, DequeStorable card) => inventory.Any(storable => storable.CanFetch(card));
 		
