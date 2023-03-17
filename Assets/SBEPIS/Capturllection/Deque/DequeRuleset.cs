@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,7 +12,7 @@ namespace SBEPIS.Capturllection
 		
 		public abstract bool CanFetchFrom(List<Storable> inventory, DequeRulesetState state, DequeStorable card);
 		
-		public abstract Task<int> GetIndexToStoreInto(List<Storable> inventory, DequeRulesetState state);
+		public abstract UniTask<int> GetIndexToStoreInto(List<Storable> inventory, DequeRulesetState state);
 		public abstract int GetIndexToFlushBetween(List<Storable> inventory, DequeRulesetState state, Storable storable);
 		public abstract int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex);
 		public abstract int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex);
@@ -37,8 +37,8 @@ namespace SBEPIS.Capturllection
 		public override bool CanFetchFrom(List<Storable> inventory, DequeRulesetState state, DequeStorable card) => CanFetchFrom(inventory, (T)state, card);
 		public abstract bool CanFetchFrom(List<Storable> inventory, T state, DequeStorable card);
 		
-		public override Task<int> GetIndexToStoreInto(List<Storable> inventory, DequeRulesetState state) => GetIndexToStoreInto(inventory, (T)state);
-		public abstract Task<int> GetIndexToStoreInto(List<Storable> inventory, T state);
+		public override UniTask<int> GetIndexToStoreInto(List<Storable> inventory, DequeRulesetState state) => GetIndexToStoreInto(inventory, (T)state);
+		public abstract UniTask<int> GetIndexToStoreInto(List<Storable> inventory, T state);
 		public override int GetIndexToFlushBetween(List<Storable> inventory, DequeRulesetState state, Storable storable) => GetIndexToFlushBetween(inventory, (T)state, storable);
 		public abstract int GetIndexToFlushBetween(List<Storable> inventory, T state, Storable storable);
 		public override int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex) => GetIndexToInsertBetweenAfterStore(inventory, (T)state, storable, originalIndex);

@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using SBEPIS.Controller;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -26,12 +26,12 @@ namespace SBEPIS.Capturllection
 
 			Capturellectainer card = grabber.heldGrabbable.GetComponent<Capturellectainer>();
 			if (card && card.capturedItem)
-				RetrieveAndGrabItem(card);
+				RetrieveAndGrabItem(card).Forget();
 			else
-				CaptureAndGrabCard();
+				CaptureAndGrabCard().Forget();
 		}
 
-		public async void CaptureAndGrabCard()
+		public async UniTaskVoid CaptureAndGrabCard()
 		{
 			Grabbable itemGrabbable = grabber.heldGrabbable;
 			Capturllectable item = itemGrabbable.GetComponent<Capturllectable>();
@@ -52,7 +52,7 @@ namespace SBEPIS.Capturllection
 				grabber.Grab(cardGrabbable);
 		}
 
-		public async void RetrieveAndGrabItem(Capturellectainer container)
+		public async UniTaskVoid RetrieveAndGrabItem(Capturellectainer container)
 		{
 			if (!container.canFetch)
 				return;

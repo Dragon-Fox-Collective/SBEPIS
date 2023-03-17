@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -27,7 +27,7 @@ namespace SBEPIS.Capturllection
 		public override bool CanFetch(DequeStorable card) => definition.ruleset.CanFetchFrom(inventory, state, card);
 		public override bool Contains(DequeStorable card) => inventory.Any(storable => storable.Contains(card));
 		
-		public override async Task<(DequeStorable, Capturellectainer, Capturllectable)> Store(Capturllectable item)
+		public override async UniTask<(DequeStorable, Capturellectainer, Capturllectable)> Store(Capturllectable item)
 		{
 			int storeIndex = await definition.ruleset.GetIndexToStoreInto(inventory, state);
 			Storable storable = inventory[storeIndex];
@@ -48,7 +48,7 @@ namespace SBEPIS.Capturllection
 			return (card, container, ejectedItem);
 		}
 		
-		public override async Task<Capturllectable> Fetch(DequeStorable card)
+		public override async UniTask<Capturllectable> Fetch(DequeStorable card)
 		{
 			Storable storable = inventory.First(storable => storable.Contains(card));
 			int fetchIndex = inventory.IndexOf(storable);
