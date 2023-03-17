@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using SBEPIS.Controller;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -30,7 +31,7 @@ namespace SBEPIS.Capturllection
 				CaptureAndGrabCard();
 		}
 
-		public void CaptureAndGrabCard()
+		public async void CaptureAndGrabCard()
 		{
 			Grabbable itemGrabbable = grabber.heldGrabbable;
 			Capturllectable item = itemGrabbable.GetComponent<Capturllectable>();
@@ -38,20 +39,20 @@ namespace SBEPIS.Capturllection
 				return;
 			
 			grabber.Drop();
-			owner.inventory.Store(item, (card, container, ejectedItem) =>
-			{
-				if (ejectedItem)
-					if (owner.diajector.ShouldCardBeDisplayed(card))
-						ejectedItem.GetComponent<Rigidbody>().Move(card.transform.position, card.transform.rotation);
-					else
-						ejectedItem.GetComponent<Rigidbody>().Move(owner.dequeBox.transform.position, owner.dequeBox.transform.rotation);
-				
-				if (container.TryGetComponent(out Grabbable cardGrabbable))
-					grabber.Grab(cardGrabbable);
-			});
+			
+			(DequeStorable card, Capturellectainer container, Capturllectable ejectedItem) = await owner.inventory.Store(item);
+			
+			if (ejectedItem)
+				if (owner.diajector.ShouldCardBeDisplayed(card))
+					ejectedItem.GetComponent<Rigidbody>().Move(card.transform.position, card.transform.rotation);
+				else
+					ejectedItem.GetComponent<Rigidbody>().Move(owner.dequeBox.transform.position, owner.dequeBox.transform.rotation);
+			
+			if (container.TryGetComponent(out Grabbable cardGrabbable))
+				grabber.Grab(cardGrabbable);
 		}
 
-		public void RetrieveAndGrabItem(Capturellectainer container)
+		public async void RetrieveAndGrabItem(Capturellectainer container)
 		{
 			if (!container.canFetch)
 				return;
@@ -59,14 +60,13 @@ namespace SBEPIS.Capturllection
 				return;
 
 			grabber.Drop();
-			owner.inventory.Fetch(card, (item) =>
-			{
-				item.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
-				item.GetComponent<Rigidbody>().Move(grabber.transform.position, grabber.transform.rotation);
-				
-				if (item.TryGetComponent(out Grabbable itemGrabbable))
-					grabber.Grab(itemGrabbable);
-			});
+			
+			Capturllectable item = await owner.inventory.Fetch(card);
+			item.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
+			item.GetComponent<Rigidbody>().Move(grabber.transform.position, grabber.transform.rotation);
+			
+			if (item.TryGetComponent(out Grabbable itemGrabbable))
+				grabber.Grab(itemGrabbable);
 		}
 	}
 }
