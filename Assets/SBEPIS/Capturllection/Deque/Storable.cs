@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -39,8 +39,8 @@ namespace SBEPIS.Capturllection
 		public abstract bool CanFetch(DequeStorable card);
 		public abstract bool Contains(DequeStorable card);
 		
-		public abstract Task<(DequeStorable, Capturellectainer, Capturllectable)> Store(Capturllectable item);
-		public abstract Task<Capturllectable> Fetch(DequeStorable card);
+		public abstract UniTask<(DequeStorable, Capturellectainer, Capturllectable)> Store(Capturllectable item);
+		public abstract UniTask<Capturllectable> Fetch(DequeStorable card);
 		public abstract void Flush(List<DequeStorable> cards);
 		
 		public IEnumerable<Texture2D> GetCardTextures(DequeStorable card) => GetCardTextures(card, Enumerable.Empty<IEnumerable<Texture2D>>(), 0);

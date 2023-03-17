@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -42,10 +42,10 @@ namespace SBEPIS.Capturllection.Deques
 		
 		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, DequeStorable card) => inventory[^1].CanFetch(card);
 		
-		public override Task<int> GetIndexToStoreInto(List<Storable> inventory, BaseState state)
+		public override UniTask<int> GetIndexToStoreInto(List<Storable> inventory, BaseState state)
 		{
 			int index = inventory.FindIndex(storable => !storable.hasAllCardsEmpty);
-			return Task.FromResult(index is -1 or 0 ? inventory.Count - 1 : index - 1);
+			return UniTask.FromResult(index is -1 or 0 ? inventory.Count - 1 : index - 1);
 		}
 		public override int GetIndexToFlushBetween(List<Storable> inventory, BaseState state, Storable storable)
 		{
