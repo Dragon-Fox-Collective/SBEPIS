@@ -1,5 +1,4 @@
 using SBEPIS.Controller;
-using SBEPIS.Thaumaturgy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,10 +62,6 @@ namespace SBEPIS.Capturllection
 			
 			if (container)
 				storePredicates.Add(() => container.capturedItem);
-			
-			Punchable punchable = GetComponent<Punchable>();
-			if (punchable)
-				storePredicates.Add(() => punchable.punchedBits.isPerfectlyGeneric);
 		}
 		
 		public void SetStateGrabbed(bool grabbed) => state.isGrabbed = grabbed;

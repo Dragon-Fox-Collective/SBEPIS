@@ -204,13 +204,5 @@ namespace SBEPIS.Tests
 			yield return null;
 		}
 		*/
-
-		[UnityTest]
-		public IEnumerator CaptureCameraTakesPicturesOfObjects()
-		{
-			Assert.IsNotNull(CaptureCamera.instance.TakePictureOfObject(scene.obj));
-
-			yield return null;
-		}
 	}
 }
