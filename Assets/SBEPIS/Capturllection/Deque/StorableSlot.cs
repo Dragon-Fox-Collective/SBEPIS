@@ -58,7 +58,13 @@ namespace SBEPIS.Capturllection
 		{
 			return UniTask.FromResult(Contains(card) ? card.container.Fetch() : null);
 		}
-		public override void Flush(List<DequeStorable> cards)
+		public override UniTask Flush(List<DequeStorable> cards)
+		{
+			Load(cards);
+			return UniTask.FromResult(0);
+		}
+		
+		public override void Load(List<DequeStorable> cards)
 		{
 			if (hasAllCards || cards.Count == 0)
 				return;
