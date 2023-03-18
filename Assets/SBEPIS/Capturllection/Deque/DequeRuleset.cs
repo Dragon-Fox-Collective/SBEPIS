@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
@@ -26,7 +25,7 @@ namespace SBEPIS.Capturllection
 		public abstract IEnumerable<Texture2D> GetCardTextures();
 		public abstract IEnumerable<Texture2D> GetBoxTextures();
 	}
-
+	
 	public abstract class DequeRuleset<T> : DequeRuleset where T : DequeRulesetState, new()
 	{
 		public override void Tick(List<Storable> inventory, DequeRulesetState state, float deltaTime) => Tick(inventory, (T)state, deltaTime);
