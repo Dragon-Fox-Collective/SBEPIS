@@ -1,4 +1,3 @@
-using SBEPIS.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,7 @@ namespace SBEPIS.Capturllection
 {
 	public class Capturellectainer : MonoBehaviour
 	{
-		public Item defaultCapturedItemPrefab;
+		public Capturllectable defaultCapturedItemPrefab;
 		[FormerlySerializedAs("isRetrievingAllowed")]
 		public bool isFetchingAllowed = true;
 		public List<Predicate<Capturellectainer>> fetchPredicates = new();
@@ -30,7 +29,7 @@ namespace SBEPIS.Capturllection
 		{
 			if (defaultCapturedItemPrefab)
 			{
-				Capturllectable item = Instantiate(defaultCapturedItemPrefab.gameObject).GetComponent<Capturllectable>();
+				Capturllectable item = Instantiate(defaultCapturedItemPrefab);
 				Capture(item);
 			}
 			
@@ -50,6 +49,7 @@ namespace SBEPIS.Capturllection
 			item.gameObject.SetActive(false);
 			item.transform.SetParent(transform);
 			onCapture.Invoke(this, item);
+			item.onCapture.Invoke(this, item);
 		}
 		
 		public Capturllectable Fetch()
@@ -63,6 +63,7 @@ namespace SBEPIS.Capturllection
 			item.gameObject.SetActive(true);
 			item.transform.SetParent(null);
 			onFetch.Invoke(this, item);
+			item.onFetch.Invoke(this, item);
 			return item;
 		}
 	}

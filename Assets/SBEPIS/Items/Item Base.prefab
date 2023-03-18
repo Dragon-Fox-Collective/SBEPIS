@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5795463978175099182}
   - component: {fileID: 786914195804380724}
   - component: {fileID: 2849611249245172895}
+  - component: {fileID: 2383059661166809214}
   m_Layer: 0
   m_Name: True Base
   m_TagString: Untagged
@@ -90,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grabPoints: []
   onTouch:
     m_PersistentCalls:
       m_Calls: []
@@ -97,6 +99,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onHoldUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onUse:
     m_PersistentCalls:
       m_Calls: []
   onDrop:
@@ -154,6 +159,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customCenterOfMass: {fileID: 0}
   onGravityChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2383059661166809214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511768885155869850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5207c94596a9a68468f3a6df65480069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canCapturllect: 1
+  onCapture:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3889197873707336915}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Grabbable, SBEPIS.Controller
+        m_MethodName: Drop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onFetch:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &4752833937422572390

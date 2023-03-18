@@ -14,10 +14,10 @@ namespace SBEPIS.Bits
 		
 		[SerializeField]
 		private List<Bit> _bits;
-
+		
 		private BitList bitList;
 		public BitList bits => bitList ??= new BitList(_bits, hashCharacters);
-
+		
 		private void OnValidate()
 		{
 			hashCharactersArray = null;

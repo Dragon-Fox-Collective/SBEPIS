@@ -18,7 +18,7 @@ namespace SBEPIS.Capturllection
 		private new Camera camera;
 
 		public static CaptureCamera instance;
-		private static readonly Dictionary<BitSet, Texture2D> captureCodeTextures = new();
+		private readonly Dictionary<BitSet, Texture2D> captureCodeTextures = new();
 
 		private void Awake()
 		{
@@ -38,8 +38,8 @@ namespace SBEPIS.Capturllection
 			obj.SetActive(true);
 
 			Bounds bounds = new(obj.transform.position, Vector3.zero);
-			foreach (Renderer renderer in obj.GetComponentsInChildren<Renderer>())
-				bounds.Encapsulate(renderer.bounds);
+			foreach (Renderer objRenderer in obj.GetComponentsInChildren<Renderer>())
+				bounds.Encapsulate(objRenderer.bounds);
 			objectParent.position = stage.position + objectParent.position - bounds.center;
 			stage.localScale = Mathf.Min(stage.rect.width / 2f / bounds.size.x, stage.rect.height / bounds.size.y) * Vector3.one;
 
@@ -91,10 +91,10 @@ namespace SBEPIS.Capturllection
 		/// </summary>
 		public static Texture2D GetCaptureCodeTexture(BitSet bits)
 		{
-			if (!captureCodeTextures.ContainsKey(bits))
-				captureCodeTextures.Add(bits, instance.TakePictureOfCode(bits));
+			if (!instance.captureCodeTextures.ContainsKey(bits))
+				instance.captureCodeTextures.Add(bits, instance.TakePictureOfCode(bits));
 
-			captureCodeTextures.TryGetValue(bits, out Texture2D texture);
+			instance.captureCodeTextures.TryGetValue(bits, out Texture2D texture);
 			return texture;
 		}
 	}

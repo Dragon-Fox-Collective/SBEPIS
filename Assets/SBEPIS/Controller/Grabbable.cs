@@ -54,6 +54,12 @@ namespace SBEPIS.Controller
 			timeSinceLastDrop = 0;
 			onDrop.Invoke(grabber, this);
 		}
+
+		public void Drop()
+		{
+			if (isBeingHeld)
+				grabbingGrabber.Drop();
+		}
 	}
 
 	[Serializable]

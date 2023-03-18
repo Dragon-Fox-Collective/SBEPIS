@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -55,10 +56,11 @@ namespace SBEPIS.Capturllection.Deques
 		
 		public override bool CanFetchFrom(List<Storable> inventory, ArrayState state, DequeStorable card) => inventory.Any(storable => storable.CanFetch(card));
 		
-		public override UniTask<int> GetIndexToStoreInto(List<Storable> inventory, ArrayState state)
+		public override async UniTask<int> GetIndexToStoreInto(List<Storable> inventory, ArrayState state)
 		{
+			await UniTask.Delay(TimeSpan.FromSeconds(1), DelayType.Realtime);
 			int index = inventory.FindIndex(storable => !storable.hasAllCardsFull);
-			return UniTask.FromResult(index is -1 ? 0 : index);
+			return index is -1 ? 0 : index;
 		}
 		public override UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, ArrayState state, Storable storable) => UniTask.FromResult(inventory.Count);
 		public override UniTask<int> GetIndexToInsertBetweenAfterStore(List<Storable> inventory, ArrayState state, Storable storable, int originalIndex) => UniTask.FromResult(originalIndex);

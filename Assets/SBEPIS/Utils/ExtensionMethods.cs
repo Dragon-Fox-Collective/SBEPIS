@@ -38,6 +38,24 @@ public static class ExtensionMethods
 	public static Vector3 Max(Vector3 a, Vector3 b) => new(Mathf.Max(a.x, b.x), Mathf.Max(a.y, b.y), Mathf.Max(a.z, b.z));
 	public static Vector3 Multiply(Vector3 a, Vector3 b) => new(a.x * b.x, a.y * b.y, a.z * b.z);
 	
+	public static void SetPositionAndRotation(this Transform transform, Transform other) => transform.SetPositionAndRotation(other.position, other.rotation);
+	public static void SetLocalPositionAndRotation(this Transform transform, Transform other) => transform.SetLocalPositionAndRotation(other.localPosition, other.localRotation);
+	public static void SetLocalTransforms(this Transform transform, Transform other)
+	{
+		transform.transform.localPosition = other.localPosition;
+		transform.transform.localRotation = other.localRotation;
+		transform.transform.localScale = other.localScale;
+	}
+	public static void Replace(this Transform transform, Transform other)
+	{
+		transform.SetParent(other.parent, false);
+		transform.SetLocalTransforms(other);
+		foreach (Transform child in other)
+			child.SetParent(transform, true);
+		UnityEngine.Object.Destroy(other.gameObject);
+	}
+	
+	
 	public static bool IsOnLayer(this GameObject gameObject, int layerMask)
 	{
 		return ((1 << gameObject.layer) & layerMask) != 0;
@@ -77,17 +95,6 @@ public static class ExtensionMethods
 		T obj = list[0];
 		list.RemoveAt(0);
 		return obj;
-	}
-
-	public static void Replace(this Transform transform, Transform other)
-	{
-		transform.transform.parent = other.parent;
-		transform.transform.localPosition = other.localPosition;
-		transform.transform.localRotation = other.localRotation;
-		transform.transform.localScale = other.localScale;
-		foreach (Transform child in other)
-			child.SetParent(transform, true);
-		UnityEngine.Object.Destroy(other.gameObject);
 	}
 
 	public static void AddRange<T>(this List<T> list, params T[] items)

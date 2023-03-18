@@ -2,21 +2,22 @@ using System;
 using System.Collections;
 using NUnit.Framework;
 using SBEPIS.Bits;
-using SBEPIS.Thaumaturgy;
+using SBEPIS.Capturllection;
+using SBEPIS.Thaumergy;
 using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.TestTools;
 
 namespace SBEPIS.Tests
 {
-	public class ThaumaturgyTests
+	public class ThaumergyTests
 	{
-		private ThaumaturgyScene scene;
+		private ThaumergyScene scene;
 
 		[SetUp]
 		public void Setup()
 		{
-			scene = TestUtils.GetTestingPrefab<ThaumaturgyScene>();
+			scene = TestUtils.GetTestingPrefab<ThaumergyScene>();
 		}
 
 		[TearDown]
@@ -43,6 +44,14 @@ namespace SBEPIS.Tests
 
 			yield return null;*/
 			throw new NotImplementedException();
+		}
+		
+		[UnityTest]
+		public IEnumerator CaptureCameraTakesPicturesOfObjects()
+		{
+			Assert.IsNotNull(CaptureCamera.instance.TakePictureOfObject(scene.obj));
+
+			yield return null;
 		}
 	}
 }

@@ -38,8 +38,6 @@ namespace SBEPIS.Capturllection
 			if (!item || !item.canCapturllect)
 				return;
 			
-			grabber.Drop();
-			
 			(DequeStorable card, Capturellectainer container, Capturllectable ejectedItem) = await owner.inventory.Store(item);
 			
 			if (ejectedItem)
