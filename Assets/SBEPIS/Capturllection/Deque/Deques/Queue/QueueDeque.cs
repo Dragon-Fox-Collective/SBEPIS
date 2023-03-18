@@ -47,12 +47,12 @@ namespace SBEPIS.Capturllection.Deques
 			int index = inventory.FindIndex(storable => !storable.hasAllCardsEmpty);
 			return UniTask.FromResult(index is -1 or 0 ? inventory.Count - 1 : index - 1);
 		}
-		public override int GetIndexToFlushBetween(List<Storable> inventory, BaseState state, Storable storable)
+		public override UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, BaseState state, Storable storable)
 		{
 			int index = inventory.FindIndex(storable => !storable.hasAllCardsEmpty);
-			return index is -1 ? inventory.Count : index;
+			return UniTask.FromResult(index is -1 ? inventory.Count : index);
 		}
-		public override int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => GetIndexToFlushBetween(inventory, state, storable);
-		public override int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => GetIndexToFlushBetween(inventory, state, storable);
+		public override UniTask<int> GetIndexToInsertBetweenAfterStore(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => GetIndexToFlushBetween(inventory, state, storable);
+		public override UniTask<int> GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => GetIndexToFlushBetween(inventory, state, storable);
 	}
 }

@@ -13,9 +13,9 @@ namespace SBEPIS.Capturllection
 		public abstract bool CanFetchFrom(List<Storable> inventory, DequeRulesetState state, DequeStorable card);
 		
 		public abstract UniTask<int> GetIndexToStoreInto(List<Storable> inventory, DequeRulesetState state);
-		public abstract int GetIndexToFlushBetween(List<Storable> inventory, DequeRulesetState state, Storable storable);
-		public abstract int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex);
-		public abstract int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex);
+		public abstract UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, DequeRulesetState state, Storable storable);
+		public abstract UniTask<int> GetIndexToInsertBetweenAfterStore(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex);
+		public abstract UniTask<int> GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex);
 		
 		public abstract DequeRulesetState GetNewState();
 		
@@ -39,12 +39,12 @@ namespace SBEPIS.Capturllection
 		
 		public override UniTask<int> GetIndexToStoreInto(List<Storable> inventory, DequeRulesetState state) => GetIndexToStoreInto(inventory, (T)state);
 		public abstract UniTask<int> GetIndexToStoreInto(List<Storable> inventory, T state);
-		public override int GetIndexToFlushBetween(List<Storable> inventory, DequeRulesetState state, Storable storable) => GetIndexToFlushBetween(inventory, (T)state, storable);
-		public abstract int GetIndexToFlushBetween(List<Storable> inventory, T state, Storable storable);
-		public override int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex) => GetIndexToInsertBetweenAfterStore(inventory, (T)state, storable, originalIndex);
-		public abstract int GetIndexToInsertBetweenAfterStore(List<Storable> inventory, T state, Storable storable, int originalIndex);
-		public override int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex) => GetIndexToInsertBetweenAfterFetch(inventory, (T)state, storable, originalIndex);
-		public abstract int GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, T state, Storable storable, int originalIndex);
+		public override UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, DequeRulesetState state, Storable storable) => GetIndexToFlushBetween(inventory, (T)state, storable);
+		public abstract UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, T state, Storable storable);
+		public override UniTask<int> GetIndexToInsertBetweenAfterStore(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex) => GetIndexToInsertBetweenAfterStore(inventory, (T)state, storable, originalIndex);
+		public abstract UniTask<int> GetIndexToInsertBetweenAfterStore(List<Storable> inventory, T state, Storable storable, int originalIndex);
+		public override UniTask<int> GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex) => GetIndexToInsertBetweenAfterFetch(inventory, (T)state, storable, originalIndex);
+		public abstract UniTask<int> GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, T state, Storable storable, int originalIndex);
 		
 		public override DequeRulesetState GetNewState() => new T();
 	}

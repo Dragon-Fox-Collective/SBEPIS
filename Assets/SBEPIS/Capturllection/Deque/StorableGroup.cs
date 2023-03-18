@@ -34,13 +34,13 @@ namespace SBEPIS.Capturllection
 			inventory.Remove(storable);
 			
 			(DequeStorable card, Capturellectainer container, Capturllectable ejectedItem) = await storable.Store(item);
-			int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterStore(inventory, state, storable, storeIndex);
+			int restoreIndex = await definition.ruleset.GetIndexToInsertBetweenAfterStore(inventory, state, storable, storeIndex);
 			inventory.Insert(restoreIndex, storable);
 			
 			if (ejectedItem && ejectedItem.TryGetComponent(out DequeStorable flushedCard))
 			{
 				List<DequeStorable> cards = new(){ flushedCard };
-				Flush(cards, storeIndex);
+				await Flush(cards, storeIndex);
 				if (cards.Count == 0)
 					ejectedItem = null;
 			}
@@ -55,21 +55,21 @@ namespace SBEPIS.Capturllection
 			inventory.Remove(storable);
 			
 			Capturllectable item = await storable.Fetch(card);
-			int restoreIndex = definition.ruleset.GetIndexToInsertBetweenAfterFetch(inventory, state, storable, fetchIndex);
+			int restoreIndex = await definition.ruleset.GetIndexToInsertBetweenAfterFetch(inventory, state, storable, fetchIndex);
 			inventory.Insert(restoreIndex, storable);
 			
 			return item;
 		}
 		
-		public override void Flush(List<DequeStorable> cards) => Flush(cards, 0);
-		public void Flush(List<DequeStorable> cards, int originalIndex)
+		public override async UniTask Flush(List<DequeStorable> cards) => await Flush(cards, 0);
+		public async UniTask Flush(List<DequeStorable> cards, int originalIndex)
 		{
 			if (hasAllCards || cards.Count == 0)
 				return;
 			
 			foreach (Storable storable in inventory.Skip(originalIndex).Concat(inventory.Take(originalIndex)))
 			{
-				storable.Flush(cards);
+				await storable.Flush(cards);
 				if (cards.Count == 0)
 					break;
 			}
@@ -78,10 +78,35 @@ namespace SBEPIS.Capturllection
 			{
 				Storable storable = StorableGroupDefinition.GetNewStorable(definition.subdefinition);
 				storable.transform.SetParent(transform);
-				storable.Flush(cards);
+				await storable.Flush(cards);
 				
-				int insertIndex = definition.ruleset.GetIndexToFlushBetween(inventory, state, storable);
+				int insertIndex = await definition.ruleset.GetIndexToFlushBetween(inventory, state, storable);
 				inventory.Insert(insertIndex, storable);
+				
+				if (cards.Count == 0)
+					break;
+			}
+		}
+		
+		public override void Load(List<DequeStorable> cards)
+		{
+			if (hasAllCards || cards.Count == 0)
+				return;
+			
+			foreach (Storable storable in inventory)
+			{
+				storable.Load(cards);
+				if (cards.Count == 0)
+					break;
+			}
+			
+			while (inventory.Count < definition.maxStorables)
+			{
+				Storable storable = StorableGroupDefinition.GetNewStorable(definition.subdefinition);
+				storable.transform.SetParent(transform);
+				storable.Load(cards);
+				
+				inventory.Add(storable);
 				
 				if (cards.Count == 0)
 					break;

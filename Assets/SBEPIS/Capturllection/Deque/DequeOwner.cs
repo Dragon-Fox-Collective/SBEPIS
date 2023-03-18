@@ -100,7 +100,7 @@ namespace SBEPIS.Capturllection
 			inventory = StorableGroupDefinition.GetNewStorable(dequeBox.definition);
 			if (diajector.isLayoutActive)
 				inventory.transform.SetParent(diajector.layout.transform, false);
-			inventory.Flush(savedInventory);
+			inventory.Load(savedInventory);
 			foreach (DequeStorable card in savedInventory)
 			{
 				print($"Ejecting leftover card {card}");

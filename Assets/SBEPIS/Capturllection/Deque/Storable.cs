@@ -41,7 +41,9 @@ namespace SBEPIS.Capturllection
 		
 		public abstract UniTask<(DequeStorable, Capturellectainer, Capturllectable)> Store(Capturllectable item);
 		public abstract UniTask<Capturllectable> Fetch(DequeStorable card);
-		public abstract void Flush(List<DequeStorable> cards);
+		public abstract UniTask Flush(List<DequeStorable> cards);
+		
+		public abstract void Load(List<DequeStorable> cards);
 		
 		public IEnumerable<Texture2D> GetCardTextures(DequeStorable card) => GetCardTextures(card, Enumerable.Empty<IEnumerable<Texture2D>>(), 0);
 		public abstract IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent);
