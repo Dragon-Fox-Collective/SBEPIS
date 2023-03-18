@@ -19,19 +19,18 @@ namespace SBEPIS.Thaumergy
 		public static Item Thaumerge(TaggedBitSet bits, ItemModuleManager modules)
 		{
 			Item item = Object.Instantiate(modules.itemBase);
-			ItemModule module = item.itemModule;
 			
 			foreach (ThaumergeRule rule in Rules)
 				rule.Init();
 
 			while (true)
-				if (!IterateRules(Rules, bits, module, modules))
+				if (!IterateRules(Rules, bits, item.module, modules))
 					break;
 			
 			return item;
 		}
 		
-		private static bool IterateRules(IEnumerable<ThaumergeRule> rules, TaggedBitSet bits, ItemModule module, ItemModuleManager modules) =>
-			rules.Any(rule => rule.Apply(bits, module, modules));
+		private static bool IterateRules(IEnumerable<ThaumergeRule> rules, TaggedBitSet bits, ItemModule item, ItemModuleManager modules) =>
+			rules.Any(rule => rule.Apply(bits, item, modules));
 	}
 }

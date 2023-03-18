@@ -1,19 +1,15 @@
-using SBEPIS.Capturllection;
-using SBEPIS.Controller;
-using SBEPIS.Physics;
 using UnityEngine;
 
 namespace SBEPIS.Items
 {
-	[RequireComponent(typeof(CompoundRigidbody), typeof(Grabbable), typeof(ItemModule))]
-	[RequireComponent(typeof(GravitySum), typeof(Capturllectable))]
+	[RequireComponent(typeof(ItemModule))]
 	public class Item : MonoBehaviour
 	{
-		public ItemModule itemModule { get; private set; }
+		public ItemModule module { get; private set; }
 
 		private void Awake()
 		{
-			itemModule = GetComponent<ItemModule>();
+			module = GetComponent<ItemModule>();
 		}
 	}
 }
