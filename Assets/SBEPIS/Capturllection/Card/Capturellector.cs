@@ -24,14 +24,14 @@ namespace SBEPIS.Capturllection
 			if (!isActiveAndEnabled || !context.performed || !grabber.heldGrabbable)
 				return;
 			
-			Capturellectainer card = grabber.heldGrabbable.GetComponent<Capturellectainer>();
-			if (card && card.capturedItem)
-				RetrieveAndGrabItem(card).Forget();
+			Capturellectainer container = grabber.heldGrabbable.GetComponent<Capturellectainer>();
+			if (container && container.hasCapturedItem)
+				RetrieveAndGrabItem(container).Forget();
 			else
 				CaptureAndGrabCard().Forget();
 		}
 		
-		public async UniTaskVoid CaptureAndGrabCard()
+		private async UniTaskVoid CaptureAndGrabCard()
 		{
 			Capturllectable item = grabber.heldGrabbable.GetComponent<Capturllectable>();
 			if (!item || !item.canCapturllect)
@@ -49,7 +49,7 @@ namespace SBEPIS.Capturllection
 				grabber.Grab(cardGrabbable);
 		}
 		
-		public async UniTaskVoid RetrieveAndGrabItem(Capturellectainer container)
+		private async UniTaskVoid RetrieveAndGrabItem(Capturellectainer container)
 		{
 			if (!container.canFetch)
 				return;
