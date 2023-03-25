@@ -1,16 +1,15 @@
 using NUnit.Framework;
 using SBEPIS.Utils;
 using System.Collections;
+using SBEPIS.Tests.Scenes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.TestTools;
 
 namespace SBEPIS.Tests
 {
-	public class InteractionTests : InputTestFixture
+	public class InteractionTests : TestSceneSuite<InteractionScene>
 	{
-		private InteractionScene scene;
-
 		private Mouse mouse;
 		private InputAction grabAction;
 
@@ -18,20 +17,11 @@ namespace SBEPIS.Tests
 		{
 			base.Setup();
 
-			scene = TestUtils.GetTestingPrefab<InteractionScene>();
-
 			mouse = InputSystem.AddDevice<Mouse>();
 			grabAction = new InputAction("Grab", InputActionType.Button, "<Mouse>/leftButton");
 			grabAction.performed += scene.grabber.OnGrab;
 			grabAction.canceled += scene.grabber.OnGrab;
 			grabAction.Enable();
-		}
-
-		public override void TearDown()
-		{
-			base.TearDown();
-
-			Object.Destroy(scene.gameObject);
 		}
 
 		[UnityTest]

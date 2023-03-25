@@ -2,9 +2,8 @@ using UnityEngine;
 
 namespace SBEPIS.Tests.Scenes
 {
-	public class ThaumergyScene : MonoBehaviour
+	public class DiajectorScene : MonoBehaviour
 	{
-		public GameObject captureCardPrefab;
 		public GameObject obj;
 	}
 }

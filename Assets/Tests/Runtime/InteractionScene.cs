@@ -2,7 +2,7 @@ using SBEPIS.Controller;
 using SBEPIS.Utils;
 using UnityEngine;
 
-namespace SBEPIS.Tests
+namespace SBEPIS.Tests.Scenes
 {
 	public class InteractionScene : MonoBehaviour
 	{

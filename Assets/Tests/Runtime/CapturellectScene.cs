@@ -3,9 +3,9 @@ using SBEPIS.Controller;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace SBEPIS.Tests
+namespace SBEPIS.Tests.Scenes
 {
-	public class CapturllectScene : MonoBehaviour
+	public class CapturellectScene : MonoBehaviour
 	{
 		public Grabber grabber;
 		public DequeOwner dequeOwner;
