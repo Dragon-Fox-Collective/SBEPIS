@@ -8,13 +8,12 @@ using OculusTouchController = Unity.XR.Oculus.Input.OculusTouchController;
 using SBEPIS.Capturllection;
 using SBEPIS.Bits;
 using SBEPIS.Items;
+using SBEPIS.Tests.Scenes;
 
 namespace SBEPIS.Tests
 {
-	public class CapturllectTests : InputTestFixture
+	public class CapturellectTests : TestSceneSuite<CapturellectScene>
 	{
-		private CapturllectScene scene;
-
 		private OculusTouchController controller;
 		private InputAction grabAction;
 		private InputAction capturllectAction;
@@ -23,9 +22,7 @@ namespace SBEPIS.Tests
 		public override void Setup()
 		{
 			base.Setup();
-
-			scene = TestUtils.GetTestingPrefab<CapturllectScene>();
-
+			
 			controller = InputSystem.AddDevice<OculusTouchController>();
 			grabAction = new InputAction("Grab", InputActionType.Button, "<XRController>/gripPressed");
 			grabAction.performed += scene.grabber.OnGrab;
@@ -40,33 +37,26 @@ namespace SBEPIS.Tests
 			toggleDequeAction.canceled += scene.dequeOwner.OnToggleDeque;
 			toggleDequeAction.Enable();
 		}
-
-		public override void TearDown()
-		{
-			base.TearDown();
-
-			Object.Destroy(scene.gameObject);
-		}
-
+		
 		[UnityTest]
 		public IEnumerator CapturllectTogglesDeque()
 		{
 			bool wasActive = scene.dequeOwner.dequeBox.gameObject.activeSelf;
-
+			
 			Press(controller.primaryButton);
 			yield return new WaitForSeconds(0.5f);
-
+			
 			Assert.That(scene.dequeOwner.dequeBox.gameObject.activeSelf, Is.Not.EqualTo(wasActive));
-
+			
 			Release(controller.primaryButton);
 			yield return null;
-
+			
 			Press(controller.primaryButton);
 			yield return new WaitForSeconds(0.5f);
-
+			
 			Assert.That(scene.dequeOwner.dequeBox.gameObject.activeSelf, Is.EqualTo(wasActive));
 		}
-
+		
 		[UnityTest]
 		public IEnumerator CapturllectCapturllectsItem_WhenHoldingItem()
 		{

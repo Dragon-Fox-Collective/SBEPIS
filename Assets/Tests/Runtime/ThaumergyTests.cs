@@ -3,6 +3,7 @@ using System.Collections;
 using NUnit.Framework;
 using SBEPIS.Bits;
 using SBEPIS.Capturllection;
+using SBEPIS.Tests.Scenes;
 using SBEPIS.Thaumergy;
 using SBEPIS.Utils;
 using UnityEngine;
@@ -10,22 +11,8 @@ using UnityEngine.TestTools;
 
 namespace SBEPIS.Tests
 {
-	public class ThaumergyTests
+	public class ThaumergyTests : TestSceneSuite<ThaumergyScene>
 	{
-		private ThaumergyScene scene;
-
-		[SetUp]
-		public void Setup()
-		{
-			scene = TestUtils.GetTestingPrefab<ThaumergyScene>();
-		}
-
-		[TearDown]
-		public void Teardown()
-		{
-			UnityEngine.Object.Destroy(scene.gameObject);
-		}
-
 		[UnityTest]
 		public IEnumerator PunchingCaptureCardsMakesHoles()
 		{
