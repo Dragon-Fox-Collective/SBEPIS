@@ -5,6 +5,6 @@ namespace SBEPIS.Capturllection.CardState
 {
 	public class CardDequeElectricArcState : CardElectricArcState
 	{
-		public override Transform GetPoint(DequeStorable card) => card.owner.dequeBox.transform;
+		public override Transform GetPoint(Card card) => card.Owner.Deque.transform;
 	}
 }

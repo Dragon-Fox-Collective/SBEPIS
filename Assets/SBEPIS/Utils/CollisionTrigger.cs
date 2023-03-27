@@ -6,7 +6,7 @@ namespace SBEPIS.Utils
 {
 	public class CollisionTrigger : MonoBehaviour
 	{
-		public UnityEvent trigger;
+		public UnityEvent trigger = new();
 
 		private bool delaying;
 		private bool primed;

@@ -99,15 +99,16 @@ AnimatorStateMachine:
     m_Position: {x: 410, y: 120, z: 0}
   m_AnyStateTransitions:
   - {fileID: 4362889326517587659}
+  - {fileID: -3797592059965165991}
   m_EntryTransitions:
   - {fileID: -635283646255804622}
   m_StateMachineTransitions:
-  - first: {fileID: -8543456563395658219}
-    second:
-    - {fileID: -2113366902365817836}
   - first: {fileID: -2643030620461806182}
     second:
     - {fileID: 8640329112929632812}
+  - first: {fileID: -8543456563395658219}
+    second:
+    - {fileID: -2113366902365817836}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: -20, z: 0}
   m_EntryPosition: {x: 140, y: 30, z: 0}
@@ -658,7 +659,7 @@ AnimatorStateMachine:
   - {fileID: -603764156994178407}
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 10, y: 50, z: 0}
+  m_AnyStatePosition: {x: 430, y: 390, z: 0}
   m_EntryPosition: {x: 10, y: 150, z: 0}
   m_ExitPosition: {x: 580, y: 140, z: 0}
   m_ParentStateMachinePosition: {x: -10, y: 90, z: 0}
@@ -677,6 +678,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startNumber: 2
   endNumber: 3
+--- !u!1101 &-3797592059965165991
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: On Force Open
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -5334329906509278214}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!114 &-3787635283890968914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -827,12 +853,12 @@ AnimatorStateMachine:
   - {fileID: -3015200127457933195}
   - {fileID: -6076680187751950815}
   m_StateMachineTransitions:
-  - first: {fileID: -4082412581482214550}
-    second:
-    - {fileID: 6581803837298162704}
   - first: {fileID: 5741713102910680965}
     second:
     - {fileID: -2404063136925672498}
+  - first: {fileID: -4082412581482214550}
+    second:
+    - {fileID: 6581803837298162704}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -10, y: -50, z: 0}
   m_EntryPosition: {x: -10, y: 50, z: 0}
@@ -1138,61 +1164,67 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 1
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Is Grabbed
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Is Page Open
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Is Assembling
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Is Disassembling
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Has Been Assembled
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Is Bound
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Is In Layout Area
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Target Number
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: On Force Close
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: On Force Open
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -1803,7 +1835,7 @@ AnimatorStateMachine:
     m_Position: {x: 340, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4197676435486133271}
-    m_Position: {x: 620, y: 60, z: 0}
+    m_Position: {x: 630, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4454910052349035929}
     m_Position: {x: 340, y: -10, z: 0}
@@ -1819,7 +1851,7 @@ AnimatorStateMachine:
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 510, y: 220, z: 0}
   m_EntryPosition: {x: 0, y: 10, z: 0}
-  m_ExitPosition: {x: 640, y: -10, z: 0}
+  m_ExitPosition: {x: 650, y: -10, z: 0}
   m_ParentStateMachinePosition: {x: -20, y: -50, z: 0}
   m_DefaultState: {fileID: -1052790959239972498}
 --- !u!1101 &5859154954571568148

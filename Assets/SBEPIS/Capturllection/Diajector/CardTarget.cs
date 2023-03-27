@@ -12,12 +12,12 @@ namespace SBEPIS.Capturllection
 	public class CardTarget : MonoBehaviour
 	{
 		[FormerlySerializedAs("onCardCreated")]
-		public UnityEvent<DequeStorable> onCardBound = new();
+		public UnityEvent<Card> onCardBound = new();
 		public UnityEvent onPrepareCard = new();
 		public UnityEvent onGrab = new();
 		public UnityEvent onDrop = new();
 		
-		public DequeStorable card { get; set; }
+		public Card card { get; set; }
 		
 		public LerpTarget lerpTarget { get; private set; }
 		public DiajectorPage page { get; private set; }
@@ -30,18 +30,18 @@ namespace SBEPIS.Capturllection
 
 		public void DropTargettingCard()
 		{
-			if (card.grabbable.isBeingHeld)
-				card.grabbable.grabbingGrabber.Drop();
+			if (card.Grabbable.isBeingHeld)
+				card.Grabbable.grabbingGrabber.Drop();
 		}
 
 		public void AttachToTarget(LerpTargetAnimator animator)
 		{
-			card.state.hasBeenAssembled = true;
+			card.State.HasBeenAssembled = true;
 		}
 
 		public void DetatchFromTarget(LerpTargetAnimator animator)
 		{
-			card.state.hasBeenAssembled = false;
+			card.State.HasBeenAssembled = false;
 		}
 	}
 }

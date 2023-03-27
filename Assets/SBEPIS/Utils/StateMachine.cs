@@ -2,12 +2,14 @@ using UnityEngine;
 
 namespace SBEPIS.Utils
 {
-	public abstract class StateMachine
+	[RequireComponent(typeof(Animator))]
+	public abstract class StateMachine : MonoBehaviour
 	{
 		protected Animator state;
-		public StateMachine(Animator state)
+		
+		private void Awake()
 		{
-			this.state = state;
+			state = GetComponent<Animator>();
 		}
 	}
 }

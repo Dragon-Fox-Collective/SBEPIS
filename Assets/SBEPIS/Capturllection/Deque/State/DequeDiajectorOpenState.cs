@@ -1,29 +1,29 @@
+using SBEPIS.Physics;
+using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection.DequeState
 {
-	public class DequeDiajectorOpenState : StateMachineBehaviour
+	public class DequeDiajectorOpenState : StateMachineBehaviour<DequeBoxStateMachine>
 	{
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			DequeBox dequeBox = animator.GetComponent<DequeBox>();
-			if (dequeBox.owner.diajector.isOpen)
+			if (State.DequeOwner.diajector.IsOpen)
 				return;
 			
-			Vector3 position = dequeBox.transform.position;
-			Vector3 upDirection = dequeBox.gravitySum.upDirection;
-			Vector3 groundDelta = Vector3.ProjectOnPlane(dequeBox.owner.transform.position - position, upDirection);
+			Vector3 position = State.DequeBox.transform.position;
+			Vector3 upDirection = State.GravitySum.upDirection;
+			Vector3 groundDelta = Vector3.ProjectOnPlane(State.DequeOwner.transform.position - position, upDirection);
 			Quaternion rotation = Quaternion.LookRotation(groundDelta, upDirection);
-			dequeBox.owner.diajector.StartAssembly(position, rotation);
+			State.DequeOwner.diajector.StartAssembly(position, rotation);
 		}
-
+		
 		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			DequeBox dequeBox = animator.GetComponent<DequeBox>();
-			if (!dequeBox.owner)
+			if (!State.DequeOwner)
 				return;
 			
-			dequeBox.owner.diajector.StartDisassembly();
+			State.DequeOwner.diajector.StartDisassembly();
 		}
 	}
 }

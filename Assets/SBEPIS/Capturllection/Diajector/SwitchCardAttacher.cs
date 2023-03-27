@@ -35,7 +35,7 @@ namespace SBEPIS.Capturllection
 			}
 		}
 
-		public void Attach(DequeStorable card)
+		public void Attach(Card card)
 		{
 			cardTarget = GetComponent<CardTarget>(); // lol. lmao. awake isn't called before this fires
 			switchCard = card.gameObject.AddComponent<SwitchCard>();
@@ -44,7 +44,7 @@ namespace SBEPIS.Capturllection
 			switchCard.target = cardTarget;
 			switchCard.SwitchValue = _switchValue;
 			switchCard.onSwitchValueChanged = onSwitchValueChanged;
-			card.grabbable.onDrop.AddListener((_, _) => switchCard.ClampNewPosition());
+			card.Grabbable.onDrop.AddListener((_, _) => switchCard.ClampNewPosition());
 		}
 	}
 }

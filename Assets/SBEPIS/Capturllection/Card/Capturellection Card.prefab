@@ -68,6 +68,7 @@ GameObject:
   - component: {fileID: 1232492613499314681}
   - component: {fileID: 2830427335561252429}
   - component: {fileID: 6261596198841309886}
+  - component: {fileID: 6489863023038747327}
   m_Layer: 11
   m_Name: Capturellection Card
   m_TagString: Untagged
@@ -148,7 +149,7 @@ MonoBehaviour:
   baseBits:
     bits:
       bits: []
-    itemBase: {fileID: 0}
+    itemModule: {fileID: 0}
     material: {fileID: 0}
   _bits:
     _bits:
@@ -389,6 +390,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bounds: {fileID: 2560012040714765689}
   isStoringAllowed: 1
+  onSetOwner:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6489863023038747327}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.SplitTextureSetupOwnerSetter,
+          SBEPIS.Capturllection
+        m_MethodName: UpdateTexture
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &-3685217413209224028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,6 +419,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canCapturllect: 1
+  onCapture:
+    m_PersistentCalls:
+      m_Calls: []
+  onFetch:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1929706404228634041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,6 +511,18 @@ MonoBehaviour:
   thingsToEnable:
   - {fileID: 8363832178469033259}
   - {fileID: 2560012040714765689}
+--- !u!114 &6489863023038747327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275059195579274974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54152097dbb74e59bf922d036f78efc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1809637530485951540
 GameObject:
   m_ObjectHideFlags: 0

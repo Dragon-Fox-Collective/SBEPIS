@@ -21,24 +21,24 @@ namespace SBEPIS.Capturllection
 		public override bool hasAllCardsFull => inventory.All(storable => storable.hasAllCardsFull);
 
 		public override void Tick(float deltaTime) => definition.ruleset.Tick(inventory, state, deltaTime);
-		public override void LayoutTarget(DequeStorable card, CardTarget target) => inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
+		public override void LayoutTarget(Card card, CardTarget target) => inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		
-		public override bool CanFetch(DequeStorable card) => definition.ruleset.CanFetchFrom(inventory, state, card);
-		public override bool Contains(DequeStorable card) => inventory.Any(storable => storable.Contains(card));
+		public override bool CanFetch(Card card) => definition.ruleset.CanFetchFrom(inventory, state, card);
+		public override bool Contains(Card card) => inventory.Any(storable => storable.Contains(card));
 		
-		public override async UniTask<(DequeStorable, Capturellectainer, Capturllectable)> Store(Capturllectable item)
+		public override async UniTask<(Card, Capturellectainer, Capturllectable)> Store(Capturllectable item)
 		{
 			int storeIndex = await definition.ruleset.GetIndexToStoreInto(inventory, state);
 			Storable storable = inventory[storeIndex];
 			inventory.Remove(storable);
 			
-			(DequeStorable card, Capturellectainer container, Capturllectable ejectedItem) = await storable.Store(item);
+			(Card card, Capturellectainer container, Capturllectable ejectedItem) = await storable.Store(item);
 			int restoreIndex = await definition.ruleset.GetIndexToInsertBetweenAfterStore(inventory, state, storable, storeIndex);
 			inventory.Insert(restoreIndex, storable);
 			
-			if (ejectedItem && ejectedItem.TryGetComponent(out DequeStorable flushedCard))
+			if (ejectedItem && ejectedItem.TryGetComponent(out Card flushedCard))
 			{
-				List<DequeStorable> cards = new(){ flushedCard };
+				List<Card> cards = new(){ flushedCard };
 				await Flush(cards, storeIndex);
 				if (cards.Count == 0)
 					ejectedItem = null;
@@ -47,7 +47,7 @@ namespace SBEPIS.Capturllection
 			return (card, container, ejectedItem);
 		}
 		
-		public override async UniTask<Capturllectable> Fetch(DequeStorable card)
+		public override async UniTask<Capturllectable> Fetch(Card card)
 		{
 			Storable storable = inventory.First(storable => storable.Contains(card));
 			int fetchIndex = inventory.IndexOf(storable);
@@ -60,8 +60,8 @@ namespace SBEPIS.Capturllection
 			return item;
 		}
 		
-		public override async UniTask Flush(List<DequeStorable> cards) => await Flush(cards, 0);
-		public async UniTask Flush(List<DequeStorable> cards, int originalIndex)
+		public override async UniTask Flush(List<Card> cards) => await Flush(cards, 0);
+		public async UniTask Flush(List<Card> cards, int originalIndex)
 		{
 			if (hasAllCards || cards.Count == 0)
 				return;
@@ -87,7 +87,7 @@ namespace SBEPIS.Capturllection
 			}
 		}
 		
-		public override void Load(List<DequeStorable> cards)
+		public override void Load(List<Card> cards)
 		{
 			if (hasAllCards || cards.Count == 0)
 				return;
@@ -112,7 +112,7 @@ namespace SBEPIS.Capturllection
 			}
 		}
 		
-		public override IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent)
+		public override IEnumerable<Texture2D> GetCardTextures(Card card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent)
 		{
 			if (Contains(card))
 			{
@@ -125,6 +125,6 @@ namespace SBEPIS.Capturllection
 				return definition.ruleset.GetCardTextures().ToList();
 		}
 		
-		public override IEnumerator<DequeStorable> GetEnumerator() => inventory.SelectMany(storable => storable).GetEnumerator();
+		public override IEnumerator<Card> GetEnumerator() => inventory.SelectMany(storable => storable).GetEnumerator();
 	}
 }

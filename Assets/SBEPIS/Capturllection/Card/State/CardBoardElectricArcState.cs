@@ -5,6 +5,6 @@ namespace SBEPIS.Capturllection.CardState
 {
 	public class CardBoardElectricArcState : CardElectricArcState
 	{
-		public override Transform GetPoint(DequeStorable card) => card.owner.diajector.GetLerpTarget(card).transform;
+		public override Transform GetPoint(Card card) => card.Owner.diajector.GetLerpTarget(card).transform;
 	}
 }

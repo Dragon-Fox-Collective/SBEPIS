@@ -52,7 +52,7 @@ namespace SBEPIS.Capturllection.Deques
 		
 		public static float DistanceToRegularPolygonEdge(int edgeCount, float edgeLength) => edgeCount < 3 ? 0 : 0.5f * edgeLength / Mathf.Tan(Mathf.PI / edgeCount);
 		
-		public override bool CanFetchFrom(List<Storable> inventory, CycloneState state, DequeStorable card) => state.topStorable.CanFetch(card);
+		public override bool CanFetchFrom(List<Storable> inventory, CycloneState state, Card card) => state.topStorable.CanFetch(card);
 
 		public override UniTask<int> GetIndexToStoreInto(List<Storable> inventory, CycloneState state)
 		{
