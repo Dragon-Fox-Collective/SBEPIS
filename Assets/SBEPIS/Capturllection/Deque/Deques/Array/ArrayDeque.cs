@@ -54,7 +54,7 @@ namespace SBEPIS.Capturllection.Deques
 		}
 		public static Quaternion GetOffsetRotation(Vector3 direction) => Quaternion.AngleAxis(-5f, Vector3.Cross(direction, Vector3.forward));
 		
-		public override bool CanFetchFrom(List<Storable> inventory, ArrayState state, DequeStorable card) => inventory.Any(storable => storable.CanFetch(card));
+		public override bool CanFetchFrom(List<Storable> inventory, ArrayState state, Card card) => inventory.Any(storable => storable.CanFetch(card));
 		
 		public override async UniTask<int> GetIndexToStoreInto(List<Storable> inventory, ArrayState state)
 		{

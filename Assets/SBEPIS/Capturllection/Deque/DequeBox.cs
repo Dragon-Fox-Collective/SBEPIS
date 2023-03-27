@@ -1,57 +1,69 @@
-using System.Linq;
 using SBEPIS.Capturllection.DequeState;
 using UnityEngine;
-using SBEPIS.Controller;
-using SBEPIS.Physics;
-using SBEPIS.Utils;
 
 namespace SBEPIS.Capturllection
 {
-	[RequireComponent(typeof(Grabbable), typeof(GravitySum), typeof(SplitTextureSetup))]
-	[RequireComponent(typeof(CollisionTrigger), typeof(CouplingPlug), typeof(Animator))]
+	[RequireComponent(typeof(Deque), typeof(DequeBoxStateMachine))]
 	public class DequeBox : MonoBehaviour
 	{
-		public LerpTarget lowerTarget;
-		public LerpTarget upperTarget;
-
-		public StorableGroupDefinition definition;
+		public bool IsDeployed => state.IsDeployed;
 		
-		public DequeOwner owner { get; set; }
+		public DequeBoxOwner DequeBoxOwner { get; set; }
 		
-		public bool isDeployed => state.isDeployed;
-		
-		public Grabbable grabbable { get; private set; }
-		public GravitySum gravitySum { get; private set; }
-		public SplitTextureSetup split { get; private set; }
-		public CollisionTrigger collisionTrigger { get; private set; }
-		public CouplingPlug plug { get; private set; }
-		public DequeStateMachine state { get; private set; }
+		public Deque Deque { get; private set; }
+		private DequeBoxStateMachine state;
 		
 		private void Awake()
 		{
-			grabbable = GetComponent<Grabbable>();
-			gravitySum = GetComponent<GravitySum>();
-			split = GetComponent<SplitTextureSetup>();
-			collisionTrigger = GetComponent<CollisionTrigger>();
-			plug = GetComponent<CouplingPlug>();
-			state = new DequeStateMachine(GetComponent<Animator>());
+			Deque = GetComponent<Deque>();
+			state = GetComponent<DequeBoxStateMachine>();
 		}
 		
-		private void Start()
+		public void SetCoupledState()
 		{
-			split.UpdateTexture(definition.ruleset.GetBoxTextures().ToList());
+			state.IsCoupled = true;
 		}
 		
-		public void AdoptDeque(Grabber grabber, Grabbable grabbable)
+		public void SetDecoupledState()
 		{
-			Capturellector capturellector = grabber.GetComponent<Capturellector>();
-			if (!capturellector)
-				return;
-
-			DequeOwner dequeOwner = capturellector.owner;
-			dequeOwner.dequeBox = this;
+			state.IsDeployed = true;
+			state.IsCoupled = false;
+		}
+		
+		public void SetUnbindState()
+		{
+			state.IsBound = false;
+			state.IsDiajectorOpen = false;
+			state.IsDeployed = false;
+		}
+		
+		public void SetBindState()
+		{
+			state.IsBound = true;
+			state.IsDiajectorOpen = Deque.DequeOwner.diajector.IsOpen;
+			state.IsDeployed = Deque.DequeOwner.diajector.IsOpen;
+		}
+		
+		public void OpenDiajector()
+		{
+			state.IsDiajectorOpen = true;
+		}
+		
+		public void CloseDiajector()
+		{
+			state.IsDiajectorOpen = false;
+		}
+		
+		public void RetrieveDeque()
+		{
+			CloseDiajector();
+			state.IsDeployed = false;
 		}
 
-		public void SetStateGrabbed(bool isGrabbed) => state.isGrabbed = isGrabbed;
+		public void TossDeque()
+		{
+			SetDecoupledState();
+			state.Toss();
+		}
 	}
 }

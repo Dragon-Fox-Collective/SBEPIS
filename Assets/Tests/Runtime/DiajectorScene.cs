@@ -1,9 +1,14 @@
+using SBEPIS.Capturllection;
 using UnityEngine;
 
 namespace SBEPIS.Tests.Scenes
 {
 	public class DiajectorScene : MonoBehaviour
 	{
-		public GameObject obj;
+		public DequeOwner dequeOwner;
+		public Deque startingDeque;
+		public Deque changeDeque;
+		public Diajector diajector;
+		public Card card;
 	}
 }

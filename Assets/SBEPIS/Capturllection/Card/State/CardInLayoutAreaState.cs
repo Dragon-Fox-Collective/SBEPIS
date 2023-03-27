@@ -6,10 +6,10 @@ namespace SBEPIS.Capturllection.CardState
 	{
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			DequeStorable card = animator.GetComponent<DequeStorable>();
+			Card card = animator.GetComponent<Card>();
 			DiajectorCaptureLayout layout = card.PopAllLayouts();
 			CardTarget target = layout.AddPermanentTargetAndCard(card);
-			card.animator.TeleportTo(target.lerpTarget);
+			card.Animator.TeleportTo(target.lerpTarget);
 		}
 	}
 }

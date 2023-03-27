@@ -34,7 +34,7 @@ namespace SBEPIS.Controller
 				return;
 			
 			collidingPlugs.Add(newPlug);
-			newPlug.grabbable.onDrop.AddListener(Couple);
+			newPlug.Grabbable.onDrop.AddListener(Couple);
 		}
 
 		private void OnTriggerExit(Collider other)
@@ -44,7 +44,7 @@ namespace SBEPIS.Controller
 				return;
 			
 			collidingPlugs.Remove(newPlug);
-			newPlug.grabbable.onDrop.RemoveListener(Couple);
+			newPlug.Grabbable.onDrop.RemoveListener(Couple);
 		}
 
 		public void Couple(Grabber grabber, Grabbable grabbable) => Couple(grabbable.GetComponent<CouplingPlug>());
@@ -63,7 +63,7 @@ namespace SBEPIS.Controller
 			plug.transform.rotation = transform.rotation;
 			joint = gameObject.AddComponent<FixedJoint>();
 			joint.autoConfigureConnectedAnchor = false;
-			joint.connectedBody = plug.grabbable.rigidbody;
+			joint.connectedBody = plug.Grabbable.rigidbody;
 			joint.anchor = joint.connectedAnchor = Vector3.zero;
 			
 			this.plug = plug;

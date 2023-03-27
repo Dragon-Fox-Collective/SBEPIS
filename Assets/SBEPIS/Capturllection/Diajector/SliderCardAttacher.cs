@@ -33,7 +33,7 @@ namespace SBEPIS.Capturllection
 			}
 		}
 
-		public void Attach(DequeStorable card)
+		public void Attach(Card card)
 		{
 			cardTarget = GetComponent<CardTarget>(); // lol. lmao. awake isn't called before this fires
 			slider = card.gameObject.AddComponent<SliderCard>();
@@ -42,7 +42,7 @@ namespace SBEPIS.Capturllection
 			slider.target = cardTarget;
 			slider.SliderValue = _sliderValue;
 			slider.onSliderValueChanged = onSliderValueChanged;
-			card.grabbable.onDrop.AddListener((_, _) => slider.ClampNewPosition());
+			card.Grabbable.onDrop.AddListener((_, _) => slider.ClampNewPosition());
 		}
 	}
 }

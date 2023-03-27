@@ -1,213 +1,67 @@
-using System.Collections.Generic;
-using System.Linq;
-using SBEPIS.Controller;
-using SBEPIS.Utils;
+using System;
 using UnityEngine;
-using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
+using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
-	[RequireComponent(typeof(CouplingSocket), typeof(LerpTarget))]
 	public class DequeOwner : MonoBehaviour
 	{
 		[SerializeField]
-		private DequeBox initialDeque;
+		private Deque initialDeque;
 		public Diajector diajector;
 		
+		[Tooltip("Purely organizational for the hierarchy")]
 		public Transform cardParent;
-		
-		public DequeStorable cardPrefab;
-		public int initialCardCount = 5;
 
-		public DequeSettingsPage dequeSettingsPagePrefab;
-		
-		public Transform tossTarget;
-		[Tooltip("Height above the hand the deque should toss through, must be non-negative")]
-		public float tossHeight;
-		
-		public AnimationCurve retrievalAnimationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-		
-		public CouplingSocket socket { get; private set; }
-		public LerpTarget lerpTarget { get; private set; }
-		
-		public LerpTargetAnimator dequeAnimator { get; private set; }
-		
-		private bool isDequeDeployed => dequeBox && dequeBox.isDeployed;
-		
-		private List<DequeStorable> savedInventory;
-		public Storable inventory { get; private set; }
-		private List<DequeSettingsPage> dequeSettingsPages = new();
-		public DequeSettingsPage firstDequeSettingsPage => dequeSettingsPages.Count > 0 ? dequeSettingsPages[0] : null;
-		
-		private DequeBox _dequeBox;
-		public DequeBox dequeBox
+		public SetDequeOwnerEvent onSetDequeBox = new();
+		public UnsetDequeOwnerEvent onUnsetDequeBox = new();
+
+		private Deque deque;
+		public Deque Deque
 		{
-			get => _dequeBox;
+			get => deque;
 			set
 			{
-				if (_dequeBox == value)
+				if (deque == value)
 					return;
-				
-				if (_dequeBox)
-					FinishUpOldDeque();
+
+				if (deque)
+				{
+					Deque oldDeque = deque;
+					deque.DequeOwner = null;
+					deque = null;
+					onUnsetDequeBox.Invoke(this, oldDeque, value);
+					oldDeque.onUnsetDequeOwner.Invoke(this, oldDeque, value);
+				}
 				
 				if (value)
 				{
-					_dequeBox = value;
-					SetupNewDeque();
+					deque = value;
+					deque.DequeOwner = this;
+					onSetDequeBox.Invoke(this);
+					deque.onSetDequeOwner.Invoke(this);
 				}
 				else
 				{
-					UnsetDeque();
-					_dequeBox = null;
+					if (diajector.IsOpen)
+						diajector.ForceClose();
 				}
 			}
-		}
-		
-		private void FinishUpOldDeque()
-		{
-			dequeBox.owner = null;
-			dequeBox.collisionTrigger.trigger.RemoveListener(StartDiajectorAssembly);
-			dequeBox.grabbable.onUse.RemoveListener(CloseDiajector);
-			
-			Destroy(dequeAnimator);
-			
-			dequeBox.state.isBound = false;
-			dequeBox.state.isDiajectorOpen = false;
-			dequeBox.state.isDeployed = false;
-			
-			savedInventory = inventory.ToList();
-			Destroy(inventory.gameObject);
-			
-			foreach (DequeSettingsPage dequeSettingsPage in dequeSettingsPages)
-				Destroy(dequeSettingsPage.gameObject);
-			dequeSettingsPages.Clear();
-		}
-		
-		private void SetupNewDeque()
-		{
-			dequeBox.owner = this;
-			dequeBox.collisionTrigger.trigger.AddListener(StartDiajectorAssembly);
-			dequeBox.grabbable.onUse.AddListener(CloseDiajector);
-			
-			dequeAnimator = dequeBox.gameObject.AddComponent<LerpTargetAnimator>();
-			dequeAnimator.curve = retrievalAnimationCurve;
-			
-			dequeBox.state.isBound = true;
-			dequeBox.state.isDiajectorOpen = diajector.isOpen;
-			dequeBox.state.isDeployed = diajector.isOpen;
-			
-			inventory = StorableGroupDefinition.GetNewStorable(dequeBox.definition);
-			if (diajector.isLayoutActive)
-				inventory.transform.SetParent(diajector.layout.transform, false);
-			inventory.Load(savedInventory);
-			foreach (DequeStorable card in savedInventory)
-			{
-				print($"Ejecting leftover card {card}");
-				card.gameObject.SetActive(true);
-				card.transform.SetPositionAndRotation(dequeBox.transform.position, dequeBox.transform.rotation);
-				card.owner = null;
-			}
-			savedInventory.Clear();
-			
-			List<DequeSettingsPageLayout> layouts = dequeBox.definition.GetNewSettingsPageLayouts().ToList();
-			foreach ((int i, DequeSettingsPageLayout layout) in layouts.Enumerate())
-			{
-				DequeSettingsPage page = Instantiate(dequeSettingsPagePrefab, diajector.mainPage.transform.parent);
-				page.ManualAwake();
-				layout.transform.SetParent(page.settingsParent, false);
-				
-				if (i == 0) Destroy(page.prevButton.transform.parent.gameObject);
-				if (i == layouts.Count - 1) Destroy(page.nextButton.transform.parent.gameObject);
-				
-				dequeSettingsPages.Add(page);
-			}
-			for (int i = 0; i < dequeSettingsPages.Count; i++)
-			{
-				DequeSettingsPage page = dequeSettingsPages[i];
-				page.backButton.onGrab.AddListener(diajector.ChangePageMethod(diajector.mainPage));
-				if (i > 0) page.prevButton.onGrab.AddListener(diajector.ChangePageMethod(dequeSettingsPages[i - 1].page));
-				if (i < dequeSettingsPages.Count - 1) page.nextButton.onGrab.AddListener(diajector.ChangePageMethod(dequeSettingsPages[i + 1].page));
-			}
-			
-			diajector.UpdateCardTexture();
-		}
-		
-		private void UnsetDeque()
-		{
-			if (diajector.isOpen)
-				diajector.ForceClose();
 		}
 		
 		private void Awake()
 		{
-			socket = GetComponent<CouplingSocket>();
-			lerpTarget = GetComponent<LerpTarget>();
-			
-			socket.onDecouple.AddListener(DecoupleDeque);
+			Deque = initialDeque;
 		}
 		
 		private void Start()
 		{
-			diajector.owner = this;
-
-			List<DequeStorable> initialInventory = new();
-			for (int _ = 0; _ < initialCardCount; _++)
-			{
-				DequeStorable card = Instantiate(cardPrefab);
-				card.owner = this;
-				initialInventory.Add(card);
-			}
-			savedInventory = initialInventory;
-			
-			dequeBox = initialDeque;
-			if (dequeBox)
-				RetrieveDeque();
-		}
-		
-		public void OnToggleDeque(CallbackContext context)
-		{
-			if (!isActiveAndEnabled || !context.performed)
-				return;
-			if (!dequeBox)
-				return;
-			
-			if (dequeBox.grabbable.isBeingHeld)
-				CloseDiajector();
-			else if (isDequeDeployed)
-				RetrieveDeque();
-			else
-				TossDeque();
-		}
-
-		private void CloseDiajector(Grabber grabber, Grabbable grabbable) => CloseDiajector();
-		private void CloseDiajector()
-		{
-			dequeBox.state.isDiajectorOpen = false;
-		}
-		
-		private void RetrieveDeque()
-		{
-			CloseDiajector();
-			dequeBox.state.isDeployed = false;
-		}
-
-		private void TossDeque()
-		{
-			DecoupleDeque(dequeBox);
-			dequeBox.state.Toss();
-		}
-		
-		private void StartDiajectorAssembly()
-		{
-			dequeBox.state.isDiajectorOpen = true;
-		}
-
-		private static void DecoupleDeque(CouplingPlug plug, CouplingSocket socket) => DecoupleDeque(plug.GetComponent<DequeBox>());
-		private static void DecoupleDeque(DequeBox dequeBox)
-		{
-			dequeBox.state.isDeployed = true;
-			dequeBox.state.isCoupled = false;
+			diajector.DequeOwner = this;
 		}
 	}
+	
+	[Serializable]
+	public class SetDequeOwnerEvent : UnityEvent<DequeOwner> { }
+	[Serializable]
+	public class UnsetDequeOwnerEvent : UnityEvent<DequeOwner, Deque, Deque> { }
 }

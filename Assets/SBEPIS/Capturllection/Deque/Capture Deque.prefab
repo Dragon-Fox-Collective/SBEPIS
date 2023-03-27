@@ -220,6 +220,10 @@ GameObject:
   - component: {fileID: 9131961386945647344}
   - component: {fileID: 7682035672794459721}
   - component: {fileID: 3228183663557612735}
+  - component: {fileID: 76129324208710410}
+  - component: {fileID: 3305118232654807811}
+  - component: {fileID: 2020011169111571503}
+  - component: {fileID: 672836723252032607}
   m_Layer: 0
   m_Name: Capture Deque
   m_TagString: Untagged
@@ -279,9 +283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834066343270ba147b47a2957044d46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lowerTarget: {fileID: 4582897949649126844}
-  upperTarget: {fileID: 3710867468495898251}
-  definition: {fileID: 6267582008153543528}
 --- !u!114 &5737410847915139685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,7 +312,7 @@ MonoBehaviour:
   baseBits:
     bits:
       bits: []
-    itemBase: {fileID: 0}
+    itemModule: {fileID: 0}
     material: {fileID: 0}
   _bits:
     _bits:
@@ -365,9 +366,10 @@ MonoBehaviour:
   onGrab:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7617101641436224015}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeBox, SBEPIS.Capturllection
-        m_MethodName: SetStateGrabbed
+      - m_Target: {fileID: 3305118232654807811}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeState.DequeBoxStateMachine,
+          SBEPIS.Capturllection
+        m_MethodName: set_IsGrabbed
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -383,8 +385,8 @@ MonoBehaviour:
   onUse:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7617101641436224015}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.CaptureDeque, SBEPIS.Capturllection
+      - m_Target: {fileID: 672836723252032607}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.Deque, SBEPIS.Capturllection
         m_MethodName: AdoptDeque
         m_Mode: 0
         m_Arguments:
@@ -398,9 +400,10 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7617101641436224015}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeBox, SBEPIS.Capturllection
-        m_MethodName: SetStateGrabbed
+      - m_Target: {fileID: 3305118232654807811}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeState.DequeBoxStateMachine,
+          SBEPIS.Capturllection
+        m_MethodName: set_IsGrabbed
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -426,6 +429,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canCapturllect: 0
+  onCapture:
+    m_PersistentCalls:
+      m_Calls: []
+  onFetch:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6448398786241785265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,6 +514,87 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &76129324208710410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762745506201212150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be8693e40d049e6be6a5175d3ee10db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3305118232654807811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762745506201212150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf66a9c199545208b4d3e4ea4ec1f6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2020011169111571503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762745506201212150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c22911e5967d437d8aeab4a4c05456e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &672836723252032607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762745506201212150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57479a9bf8604cf390fbdfce15239575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lowerTarget: {fileID: 4582897949649126844}
+  upperTarget: {fileID: 3710867468495898251}
+  definition: {fileID: 6267582008153543528}
+  onSetDequeOwner:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7617101641436224015}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeBox, SBEPIS.Capturllection
+        m_MethodName: SetBindState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onUnsetDequeOwner:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7617101641436224015}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeBox, SBEPIS.Capturllection
+        m_MethodName: SetUnbindState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &6239174079351266277
 PrefabInstance:
   m_ObjectHideFlags: 0

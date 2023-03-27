@@ -12,7 +12,7 @@ namespace SBEPIS.Thaumergy
 		
 		private void Awake()
 		{
-			if (TryGetComponent(out DequeStorable card))
+			if (TryGetComponent(out Card card))
 				card.storePredicates.Add(() => punchedBits.isPerfectlyGeneric);
 		}
 		

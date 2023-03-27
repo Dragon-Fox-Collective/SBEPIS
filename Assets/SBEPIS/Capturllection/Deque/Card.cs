@@ -5,66 +5,63 @@ using System.Linq;
 using SBEPIS.Capturllection.CardState;
 using SBEPIS.Utils;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
-	[RequireComponent(typeof(Grabbable), typeof(SplitTextureSetup), typeof(Animator))]
-	[RequireComponent(typeof(LerpTargetAnimator))]
-	public class DequeStorable : MonoBehaviour
+	[RequireComponent(typeof(Grabbable), typeof(LerpTargetAnimator), typeof(CardStateMachine))]
+	public class Card : MonoBehaviour
 	{
 		public Renderer bounds;
 		public bool isStoringAllowed = true;
 		public readonly List<Func<bool>> storePredicates = new();
 		
-		public Grabbable grabbable { get; private set; }
-		public SplitTextureSetup split { get; private set; }
-		public CardStateMachine state { get; private set; }
-		public LerpTargetAnimator animator { get; private set; }
-		public Capturellectainer container { get; private set; }
+		public UnityEvent<DequeOwner, Card> onSetOwner = new();
+		
+		public Grabbable Grabbable { get; private set; }
+		public CardStateMachine State { get; private set; }
+		public LerpTargetAnimator Animator { get; private set; }
+		public Capturellectainer Container { get; private set; }
 
-		private DequeOwner _owner;
-		public DequeOwner owner
+		private DequeOwner owner;
+		public DequeOwner Owner
 		{
-			get => _owner;
+			get => owner;
 			set
 			{
 				if (owner == value)
 					return;
 				
-				_owner = value;
+				owner = value;
 				
-				state.isBound = owner;
+				State.IsBound = owner;
 				transform.SetParent(owner ? owner.cardParent : null);
-				if (owner && owner.dequeBox)
-				{
-					split.UpdateTexture(owner.inventory.GetCardTextures(this).ToList());
-				}
+				onSetOwner.Invoke(owner, this);
 			}
 		}
 		
 		public bool isStored => owner;
 		public bool canStore => storePredicates.All(predicate => predicate.Invoke());
-
-		public bool canStoreInto => container && container.isEmpty;
+		
+		public bool canStoreInto => Container && Container.isEmpty;
 		
 		private List<DiajectorCaptureLayout> layouts = new();
 		
 		private void Awake()
 		{
-			grabbable = GetComponent<Grabbable>();
-			split = GetComponent<SplitTextureSetup>();
-			state = new CardStateMachine(GetComponent<Animator>());
-			animator = GetComponent<LerpTargetAnimator>();
-			container = GetComponent<Capturellectainer>();
+			Grabbable = GetComponent<Grabbable>();
+			State = GetComponent<CardStateMachine>();
+			Animator = GetComponent<LerpTargetAnimator>();
+			Container = GetComponent<Capturellectainer>();
 			
 			storePredicates.Add(() => isStoringAllowed);
 			storePredicates.Add(() => !isStored);
 			
-			if (container)
-				storePredicates.Add(() => container.capturedItem);
+			if (Container)
+				storePredicates.Add(() => Container.capturedItem);
 		}
 		
-		public void SetStateGrabbed(bool grabbed) => state.isGrabbed = grabbed;
+		public void SetStateGrabbed(bool grabbed) => State.IsGrabbed = grabbed;
 		
 		private void OnTriggerEnter(Collider other)
 		{
@@ -77,12 +74,12 @@ namespace SBEPIS.Capturllection
 			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DiajectorCaptureLayout layout) && layout.HasTemporaryTarget(this))
 				RemoveLayout(layout);
 		}
-
+		
 		private void AddLayout(DiajectorCaptureLayout layout)
 		{
 			layouts.Add(layout);
 			if (layouts.Count == 1)
-				state.isInLayoutArea = true;
+				State.IsInLayoutArea = true;
 			layout.AddTemporaryTarget(this);
 		}
 		
@@ -90,7 +87,7 @@ namespace SBEPIS.Capturllection
 		{
 			layouts.Add(layout);
 			if (layouts.Count == 1)
-				state.isInLayoutArea = true;
+				State.IsInLayoutArea = true;
 			layout.AddTemporaryTarget(this);
 		}
 		

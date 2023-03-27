@@ -2085,8 +2085,8 @@ MonoBehaviour:
     m_ActionName: Gameplay/Capturllect[/Keyboard/c]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 644252844828260369}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeOwner, SBEPIS.Capturllection
+      - m_Target: {fileID: 961157736405979464}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeBoxOwner, SBEPIS.Capturllection
         m_MethodName: OnToggleDeque
         m_Mode: 0
         m_Arguments:
@@ -2447,6 +2447,9 @@ GameObject:
   - component: {fileID: 2069586595830321789}
   - component: {fileID: 6234797776867132548}
   - component: {fileID: 644252844828260369}
+  - component: {fileID: 961157736405979464}
+  - component: {fileID: 3294649532773537313}
+  - component: {fileID: 4241979126209717074}
   m_Layer: 8
   m_Name: Deque Attach Target
   m_TagString: Untagged
@@ -2608,7 +2611,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 391b0487fb54ddf46b323e459b6dabb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 644252844828260369}
 --- !u!114 &2069586595830321789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2673,9 +2675,74 @@ MonoBehaviour:
   initialDeque: {fileID: 0}
   diajector: {fileID: 2162956669282852240}
   cardParent: {fileID: 4626936063428068125}
-  cardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
-  initialCardCount: 5
-  dequeSettingsPagePrefab: {fileID: 8545667152632050241, guid: 1cce4ef865a9952458f391310621eb1b, type: 3}
+  onSetDequeBox:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3294649532773537313}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.Inventory, SBEPIS.Capturllection
+        m_MethodName: LoadInventoryIntoDeque
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4241979126209717074}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeSettingsPageCreator,
+          SBEPIS.Capturllection
+        m_MethodName: CreateSettingsPages
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onUnsetDequeBox:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3294649532773537313}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.Inventory, SBEPIS.Capturllection
+        m_MethodName: SaveInventoryFromDeque
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4241979126209717074}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeSettingsPageCreator,
+          SBEPIS.Capturllection
+        m_MethodName: DestroySettingsPages
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &961157736405979464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159469505427324889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f35fdeffeb6e44eda20c7d0a19f3bd04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   tossTarget: {fileID: 1997131638894466065}
   tossHeight: 0.1
   retrievalAnimationCurve:
@@ -2702,6 +2769,48 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3294649532773537313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159469505427324889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c96bf03dee74e79bf06f8c900a58c56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
+  initialCardCount: 5
+  onLoadIntoDeque:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8639406400778484178}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DiajectorCaptureLayout, SBEPIS.Capturllection
+        m_MethodName: set_Inventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4241979126209717074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159469505427324889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b308b9c7ef4d469bc53a8e8b9ee3b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settingsPagePrefab: {fileID: 8545667152632050241, guid: 1cce4ef865a9952458f391310621eb1b, type: 3}
 --- !u!1 &6376568278165176233
 GameObject:
   m_ObjectHideFlags: 0
@@ -2904,7 +3013,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9252a1ce5bec80d479d06804db114d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 644252844828260369}
+  dequeOwner: {fileID: 644252844828260369}
+  inventory: {fileID: 0}
 --- !u!1 &6376568278921566390
 GameObject:
   m_ObjectHideFlags: 0
@@ -4101,7 +4211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9252a1ce5bec80d479d06804db114d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 644252844828260369}
+  dequeOwner: {fileID: 644252844828260369}
+  inventory: {fileID: 0}
 --- !u!1 &7927973737090238991
 GameObject:
   m_ObjectHideFlags: 0
@@ -5095,6 +5206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c75eb39d1ce240c4a9b671778e112b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pageCreator: {fileID: 0}
 --- !u!114 &5874800355372565279 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6742789182992697164, guid: 01891944c1e5e0e4dae6b7781ba3cf25, type: 3}

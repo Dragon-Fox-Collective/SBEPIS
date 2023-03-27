@@ -9,16 +9,36 @@ namespace SBEPIS.Tests
 	public class DiajectorTests : TestSceneSuite<DiajectorScene>
 	{
 		[UnityTest]
-		public IEnumerator Test1()
+		public IEnumerator CardsChangeTexture_WhenNotChanged()
 		{
-			Assert.NotNull(scene);
+			Assert.That(scene.card.GetComponent<SplitTextureSetup>().textures, Is.EquivalentTo(scene.startingDeque.definition.ruleset.GetCardTextures()));
 			yield break;
 		}
 		
 		[UnityTest]
-		public IEnumerator Test2()
+		public IEnumerator CardsChangeTexture_WhenChangedBeforeCreation()
 		{
-			Assert.NotNull(scene.obj);
+			scene.dequeOwner.Deque = scene.changeDeque;
+			Assert.That(scene.card.GetComponent<SplitTextureSetup>().textures, Is.EquivalentTo(scene.changeDeque.definition.ruleset.GetCardTextures()));
+			yield break;
+		}
+		
+		[UnityTest]
+		public IEnumerator CardsChangeTexture_WhenChangedAfterCreation_WithDiajectorOpen()
+		{
+			scene.diajector.ForceOpen();
+			scene.dequeOwner.Deque = scene.changeDeque;
+			Assert.That(scene.card.GetComponent<SplitTextureSetup>().textures, Is.EquivalentTo(scene.changeDeque.definition.ruleset.GetCardTextures()));
+			yield break;
+		}
+		
+		[UnityTest]
+		public IEnumerator CardsChangeTexture_WhenChangedAfterCreation_WithDiajectorClosed()
+		{
+			scene.diajector.ForceOpen();
+			scene.diajector.ForceClose();
+			scene.dequeOwner.Deque = scene.changeDeque;
+			Assert.That(scene.card.GetComponent<SplitTextureSetup>().textures, Is.EquivalentTo(scene.changeDeque.definition.ruleset.GetCardTextures()));
 			yield break;
 		}
 	}

@@ -1,25 +1,24 @@
 using SBEPIS.Controller;
+using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection.DequeState
 {
-	public class DequeCoupledToHipState : StateMachineBehaviour
+	public class DequeCoupledToHipState : StateMachineBehaviour<DequeBoxStateMachine>
 	{
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			DequeBox dequeBox = animator.GetComponent<DequeBox>();
-			CouplingPlug plug = dequeBox.plug;
-			CouplingSocket socket = dequeBox.owner.socket;
+			CouplingPlug plug = State.Plug;
+			CouplingSocket socket = State.DequeBoxOwner.Socket;
 			socket.Couple(plug);
 		}
 		
 		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			DequeBox dequeBox = animator.GetComponent<DequeBox>();
-			CouplingPlug plug = dequeBox.plug;
-			CouplingSocket socket = dequeBox.plug.coupledSocket;
+			CouplingPlug plug = State.Plug;
+			CouplingSocket socket = State.Plug.CoupledSocket;
 			socket.Decouple(plug);
-			dequeBox.transform.position += dequeBox.transform.forward * 0.1f;
+			State.DequeBox.transform.position += State.DequeBox.transform.forward * 0.1f;
 		}
 	}
 }

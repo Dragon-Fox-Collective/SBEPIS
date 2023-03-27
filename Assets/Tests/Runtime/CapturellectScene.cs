@@ -8,7 +8,8 @@ namespace SBEPIS.Tests.Scenes
 	public class CapturellectScene : MonoBehaviour
 	{
 		public Grabber grabber;
-		public DequeOwner dequeOwner;
+		[FormerlySerializedAs("dequeOwner")]
+		public DequeBoxOwner dequeBoxOwner;
 		public GameObject obj;
 		public Capturellectainer emptyCard;
 		public Capturellectainer fullCard;

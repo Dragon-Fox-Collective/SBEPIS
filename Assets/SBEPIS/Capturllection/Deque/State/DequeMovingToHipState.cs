@@ -1,13 +1,13 @@
+using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturllection.DequeState
 {
-	public class DequeMovingToHipState : StateMachineBehaviour
+	public class DequeMovingToHipState : StateMachineBehaviour<DequeBoxStateMachine>
 	{
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			DequeBox dequeBox = animator.GetComponent<DequeBox>();
-			dequeBox.owner.dequeAnimator.TargetTo(dequeBox.owner.lerpTarget);
+			State.DequeBoxOwner.DequeAnimator.TargetTo(State.DequeBoxOwner.LerpTarget);
 		}
 	}
 }

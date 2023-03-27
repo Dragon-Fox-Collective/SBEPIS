@@ -7,8 +7,8 @@ namespace SBEPIS.Capturllection
 {
 	public class StorableSlot : Storable
 	{
-		private DequeStorable _card;
-		public DequeStorable card
+		private Card _card;
+		public Card card
 		{
 			get => _card;
 			set
@@ -38,44 +38,44 @@ namespace SBEPIS.Capturllection
 		public override bool hasAllCardsFull => !hasAllCardsEmpty;
 
 		public override void Tick(float deltaTime) { }
-		public override void LayoutTarget(DequeStorable card, CardTarget target)
+		public override void LayoutTarget(Card card, CardTarget target)
 		{
 			if (Contains(card))
 				target.transform.SetPositionAndRotation(transform.position, transform.rotation);
 		}
 		
-		public override bool CanFetch(DequeStorable card) => Contains(card);
-		public override bool Contains(DequeStorable card) => this.card == card;
+		public override bool CanFetch(Card card) => Contains(card);
+		public override bool Contains(Card card) => this.card == card;
 		
-		public override UniTask<(DequeStorable, Capturellectainer, Capturllectable)> Store(Capturllectable item)
+		public override UniTask<(Card, Capturellectainer, Capturllectable)> Store(Capturllectable item)
 		{
-			Capturllectable ejectedItem = card.container.Fetch();
-			card.container.Capture(item);
-			return UniTask.FromResult((card, card.container, ejectedItem));
+			Capturllectable ejectedItem = card.Container.Fetch();
+			card.Container.Capture(item);
+			return UniTask.FromResult((card, container: card.Container, ejectedItem));
 		}
-		public override UniTask<Capturllectable> Fetch(DequeStorable card)
+		public override UniTask<Capturllectable> Fetch(Card card)
 		{
-			return UniTask.FromResult(Contains(card) ? card.container.Fetch() : null);
+			return UniTask.FromResult(Contains(card) ? card.Container.Fetch() : null);
 		}
-		public override UniTask Flush(List<DequeStorable> cards)
+		public override UniTask Flush(List<Card> cards)
 		{
 			Load(cards);
 			return UniTask.FromResult(0);
 		}
 		
-		public override void Load(List<DequeStorable> cards)
+		public override void Load(List<Card> cards)
 		{
 			if (hasAllCards || cards.Count == 0)
 				return;
 			card = cards.Pop();
 		}
 		
-		public override IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent)
+		public override IEnumerable<Texture2D> GetCardTextures(Card card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent)
 		{
 			return (textures.Skip(indexOfThisInParent).FirstOrDefault() ?? textures.Last())?.ToList();
 		}
 		
-		public override IEnumerator<DequeStorable> GetEnumerator()
+		public override IEnumerator<Card> GetEnumerator()
 		{
 			yield return card;
 		}

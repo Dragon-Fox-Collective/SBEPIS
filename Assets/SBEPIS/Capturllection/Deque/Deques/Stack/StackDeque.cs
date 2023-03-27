@@ -40,7 +40,7 @@ namespace SBEPIS.Capturllection.Deques
 		}
 		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, BaseState state) => ArrayDeque.GetSizeFromExistingLayout(inventory);
 		
-		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, DequeStorable card) => inventory[0].CanFetch(card);
+		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, Card card) => inventory[0].CanFetch(card);
 		
 		public override UniTask<int> GetIndexToStoreInto(List<Storable> inventory, BaseState state) => UniTask.FromResult(inventory.Count - 1);
 		public override UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, BaseState state, Storable storable) => UniTask.FromResult(storable.hasAllCardsEmpty ? inventory.Count : 0);

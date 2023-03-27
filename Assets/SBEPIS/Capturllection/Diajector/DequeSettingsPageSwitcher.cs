@@ -4,6 +4,8 @@ namespace SBEPIS.Capturllection
 {
 	public class DequeSettingsPageSwitcher : MonoBehaviour
 	{
+		public DequeSettingsPageCreator pageCreator;
+		
 		private Diajector diajector;
 		
 		private void Start()
@@ -13,8 +15,8 @@ namespace SBEPIS.Capturllection
 		
 		public void SwitchPage()
 		{
-			if (diajector.owner.firstDequeSettingsPage)
-				diajector.ChangePage(diajector.owner.firstDequeSettingsPage.page);
+			if (pageCreator.FirstSettingsPage)
+				diajector.ChangePage(pageCreator.FirstSettingsPage.page);
 		}
 	}
 }

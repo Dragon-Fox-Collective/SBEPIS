@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using SBEPIS.Physics;
 using SBEPIS.UI;
 using SBEPIS.Utils;
@@ -12,7 +9,7 @@ namespace SBEPIS.Capturllection
 	public class Diajector : MonoBehaviour
 	{
 		public LerpTarget upperTarget;
-		public DequeStorable cardPrefab;
+		public Card cardPrefab;
 		public ElectricArc electricArcPrefab;
 		public DiajectorPage mainPage;
 		public float cardDelay = 0.5f;
@@ -21,14 +18,14 @@ namespace SBEPIS.Capturllection
 		public MonoBehaviour coroutineOwner;
 		public StrengthSettings cardStrength;
 		
-		public bool isBound => owner.dequeBox;
+		public bool IsBound => DequeOwner.Deque;
 		
-		public DequeOwner owner { get; set; }
-
+		public DequeOwner DequeOwner { get; set; }
+		
 		private DiajectorPage currentPage;
 		
-		public bool isOpen => currentPage;
-		public bool isLayoutActive => layout && layout.isActiveAndEnabled;
+		public bool IsOpen => currentPage;
+		public bool IsLayoutActive => layout && layout.isActiveAndEnabled;
 		
 		public DiajectorCaptureLayout layout { get; private set; }
 		
@@ -41,7 +38,7 @@ namespace SBEPIS.Capturllection
 		public void StartAssembly(Vector3 position, Quaternion rotation) => StartAssembly(position, rotation, mainPage);
 		public void StartAssembly(Vector3 position, Quaternion rotation, DiajectorPage page)
 		{
-			if (isOpen)
+			if (IsOpen)
 			{
 				Debug.LogError("Tried to start assembly when already assembled");
 				return;
@@ -49,8 +46,6 @@ namespace SBEPIS.Capturllection
 			
 			gameObject.SetActive(true);
 			transform.SetPositionAndRotation(position, rotation);
-			owner.inventory.transform.SetParent(layout.transform);
-			owner.inventory.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 			AssembleNewPage(page);
 		}
 		
@@ -59,7 +54,7 @@ namespace SBEPIS.Capturllection
 			DisassembleCurrentPage();
 			AssembleNewPage(page);
 		}
-
+		
 		public UnityAction ChangePageMethod(DiajectorPage page) => () => ChangePage(page);
 		
 		private void AssembleNewPage(DiajectorPage page)
@@ -67,10 +62,17 @@ namespace SBEPIS.Capturllection
 			currentPage = page;
 			currentPage.StartAssembly();
 		}
+
+		private void ForceOpenCurrentPage()
+		{
+			if (!currentPage)
+				currentPage = mainPage;
+			currentPage.ForceOpen();
+		}
 		
 		private void DisassembleCurrentPage()
 		{
-			if (!isOpen)
+			if (!IsOpen)
 			{
 				Debug.LogError("Tried to start disassembly when not assembled");
 				return;
@@ -82,7 +84,7 @@ namespace SBEPIS.Capturllection
 		
 		private void ForceCloseCurrentPage()
 		{
-			if (!isOpen)
+			if (!IsOpen)
 			{
 				Debug.LogError("Tried to start disassembly when not assembled");
 				return;
@@ -97,6 +99,13 @@ namespace SBEPIS.Capturllection
 			DisassembleCurrentPage();
 			gameObject.SetActive(false);
 		}
+
+		public void ForceOpen()
+		{
+			gameObject.SetActive(true);
+			coroutineOwner.StopAllCoroutines();
+			ForceOpenCurrentPage();
+		}
 		
 		public void ForceClose()
 		{
@@ -104,25 +113,16 @@ namespace SBEPIS.Capturllection
 			ForceCloseCurrentPage();
 			gameObject.SetActive(false);
 		}
-
+		
 		public void ForceRestart()
 		{
 			ForceClose();
 			StartAssembly();
 		}
 		
-		public bool ShouldCardBeDisplayed(DequeStorable card) => isOpen && currentPage.HasCard(card);
-
-		public void UpdateCardTexture()
-		{
-			List<Texture2D> defaultTextures = owner.dequeBox ? owner.dequeBox.definition.ruleset.GetCardTextures().ToList() : null;
-			foreach (DequeStorable card in GetComponentsInChildren<CardTarget>().Where(cardTarget => cardTarget.card).Select(cardTarget => cardTarget.card))
-				card.split.UpdateTexture(defaultTextures);
-			foreach (DequeStorable card in owner.inventory)
-				card.split.UpdateTexture(owner.inventory.GetCardTextures(card).ToList());
-		}
-
-		public LerpTarget GetLerpTarget(DequeStorable card) => currentPage ? currentPage.GetLerpTarget(card) : null;
-		public CardTarget GetCardTarget(DequeStorable card) => currentPage ? currentPage.GetCardTarget(card) : null;
+		public bool ShouldCardBeDisplayed(Card card) => IsOpen && currentPage.HasCard(card);
+		
+		public LerpTarget GetLerpTarget(Card card) => currentPage ? currentPage.GetLerpTarget(card) : null;
+		public CardTarget GetCardTarget(Card card) => currentPage ? currentPage.GetCardTarget(card) : null;
 	}
 }

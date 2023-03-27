@@ -5,65 +5,66 @@ namespace SBEPIS.Capturllection.CardState
 {
 	public class CardStateMachine : StateMachine
 	{
-		public CardStateMachine(Animator state) : base(state) {}
-		
-		private static readonly int IsGrabbed = Animator.StringToHash("Is Grabbed");
-		public bool isGrabbed
+		private static readonly int IsGrabbedKey = Animator.StringToHash("Is Grabbed");
+		public bool IsGrabbed
 		{
-			get => state.GetBool(IsGrabbed);
-			set => state.SetBool(IsGrabbed, value);
+			get => state.GetBool(IsGrabbedKey);
+			set => state.SetBool(IsGrabbedKey, value);
 		}
 		
-		private static readonly int IsPageOpen = Animator.StringToHash("Is Page Open");
-		public bool isPageOpen
+		private static readonly int IsPageOpenKey = Animator.StringToHash("Is Page Open");
+		public bool IsPageOpen
 		{
-			get => state.GetBool(IsPageOpen);
-			set => state.SetBool(IsPageOpen, value);
+			get => state.GetBool(IsPageOpenKey);
+			set => state.SetBool(IsPageOpenKey, value);
 		}
 		
-		private static readonly int IsAssembling = Animator.StringToHash("Is Assembling");
-		public bool isAssembling
+		private static readonly int IsAssemblingKey = Animator.StringToHash("Is Assembling");
+		public bool IsAssembling
 		{
-			get => state.GetBool(IsAssembling);
-			set => state.SetBool(IsAssembling, value);
+			get => state.GetBool(IsAssemblingKey);
+			set => state.SetBool(IsAssemblingKey, value);
 		}
 		
-		private static readonly int IsDisassembling = Animator.StringToHash("Is Disassembling");
-		public bool isDisassembling
+		private static readonly int IsDisassemblingKey = Animator.StringToHash("Is Disassembling");
+		public bool IsDisassembling
 		{
-			get => state.GetBool(IsDisassembling);
-			set => state.SetBool(IsDisassembling, value);
+			get => state.GetBool(IsDisassemblingKey);
+			set => state.SetBool(IsDisassemblingKey, value);
 		}
 		
-		private static readonly int HasBeenAssembled = Animator.StringToHash("Has Been Assembled");
-		public bool hasBeenAssembled
+		private static readonly int HasBeenAssembledKey = Animator.StringToHash("Has Been Assembled");
+		public bool HasBeenAssembled
 		{
-			get => state.GetBool(HasBeenAssembled);
-			set => state.SetBool(HasBeenAssembled, value);
+			get => state.GetBool(HasBeenAssembledKey);
+			set => state.SetBool(HasBeenAssembledKey, value);
 		}
 		
-		private static readonly int IsBound = Animator.StringToHash("Is Bound");
-		public bool isBound
+		private static readonly int IsBoundKey = Animator.StringToHash("Is Bound");
+		public bool IsBound
 		{
-			get => state.GetBool(IsBound);
-			set => state.SetBool(IsBound, value);
+			get => state.GetBool(IsBoundKey);
+			set => state.SetBool(IsBoundKey, value);
 		}
 		
-		private static readonly int IsInLayoutArea = Animator.StringToHash("Is In Layout Area");
-		public bool isInLayoutArea
+		private static readonly int IsInLayoutAreaKey = Animator.StringToHash("Is In Layout Area");
+		public bool IsInLayoutArea
 		{
-			get => state.GetBool(IsInLayoutArea);
-			set => state.SetBool(IsInLayoutArea, value);
+			get => state.GetBool(IsInLayoutAreaKey);
+			set => state.SetBool(IsInLayoutAreaKey, value);
 		}
 		
-		private static readonly int TargetNumber = Animator.StringToHash("Target Number");
-		public int targetNumber
+		private static readonly int TargetNumberKey = Animator.StringToHash("Target Number");
+		public int TargetNumber
 		{
-			get => state.GetInteger(TargetNumber);
-			set => state.SetInteger(TargetNumber, value);
+			get => state.GetInteger(TargetNumberKey);
+			set => state.SetInteger(TargetNumberKey, value);
 		}
 		
-		private static readonly int OnForceClose = Animator.StringToHash("On Force Close");
-		public void ForceClose() => state.SetTrigger(OnForceClose);
+		private static readonly int ForceOpenKey = Animator.StringToHash("On Force Open");
+		public void ForceOpen() => state.SetTrigger(ForceOpenKey);
+		
+		private static readonly int ForceCloseKey = Animator.StringToHash("On Force Close");
+		public void ForceClose() => state.SetTrigger(ForceCloseKey);
 	}
 }

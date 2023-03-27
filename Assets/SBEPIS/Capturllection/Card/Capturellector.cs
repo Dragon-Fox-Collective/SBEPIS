@@ -9,8 +9,9 @@ namespace SBEPIS.Capturllection
 	[RequireComponent(typeof(Grabber))]
 	public class Capturellector : MonoBehaviour
 	{
-		[FormerlySerializedAs("dequeOwner")]
-		public DequeOwner owner;
+		[FormerlySerializedAs("owner")]
+		public DequeOwner dequeOwner;
+		public Inventory inventory;
 		
 		private Grabber grabber;
 		
@@ -37,13 +38,13 @@ namespace SBEPIS.Capturllection
 			if (!item || !item.canCapturllect)
 				return;
 			
-			(DequeStorable card, Capturellectainer container, Capturllectable ejectedItem) = await owner.inventory.Store(item);
+			(Card card, Capturellectainer container, Capturllectable ejectedItem) = await inventory.Store(item);
 			
 			if (ejectedItem)
-				if (owner.diajector.ShouldCardBeDisplayed(card))
+				if (dequeOwner.diajector.ShouldCardBeDisplayed(card))
 					ejectedItem.GetComponent<Rigidbody>().Move(card.transform.position, card.transform.rotation);
 				else
-					ejectedItem.GetComponent<Rigidbody>().Move(owner.dequeBox.transform.position, owner.dequeBox.transform.rotation);
+					ejectedItem.GetComponent<Rigidbody>().Move(dequeOwner.Deque.transform.position, dequeOwner.Deque.transform.rotation);
 			
 			if (container.TryGetComponent(out Grabbable cardGrabbable))
 				grabber.Grab(cardGrabbable);
@@ -53,12 +54,12 @@ namespace SBEPIS.Capturllection
 		{
 			if (!container.canFetch)
 				return;
-			if (!container.TryGetComponent(out DequeStorable card) || !owner.inventory.CanFetch(card))
+			if (!container.TryGetComponent(out Card card) || !inventory.CanFetch(card))
 				return;
 			
 			grabber.Drop();
 			
-			Capturllectable item = await owner.inventory.Fetch(card);
+			Capturllectable item = await inventory.Fetch(card);
 			item.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
 			item.GetComponent<Rigidbody>().Move(grabber.transform.position, grabber.transform.rotation);
 			

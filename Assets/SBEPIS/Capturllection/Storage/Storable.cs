@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturllection
 {
-	public abstract class Storable : MonoBehaviour, IEnumerable<DequeStorable>
+	public abstract class Storable : MonoBehaviour, IEnumerable<Card>
 	{
 		public DequeRulesetState state;
 		
@@ -32,19 +32,19 @@ namespace SBEPIS.Capturllection
 		public abstract bool hasAllCardsFull { get; }
 		
 		public abstract void Tick(float deltaTime);
-		public abstract void LayoutTarget(DequeStorable card, CardTarget target);
+		public abstract void LayoutTarget(Card card, CardTarget target);
 		
-		public abstract bool CanFetch(DequeStorable card);
-		public abstract bool Contains(DequeStorable card);
+		public abstract bool CanFetch(Card card);
+		public abstract bool Contains(Card card);
 		
-		public abstract UniTask<(DequeStorable, Capturellectainer, Capturllectable)> Store(Capturllectable item);
-		public abstract UniTask<Capturllectable> Fetch(DequeStorable card);
-		public abstract UniTask Flush(List<DequeStorable> cards);
+		public abstract UniTask<(Card, Capturellectainer, Capturllectable)> Store(Capturllectable item);
+		public abstract UniTask<Capturllectable> Fetch(Card card);
+		public abstract UniTask Flush(List<Card> cards);
 		
-		public abstract void Load(List<DequeStorable> cards);
+		public abstract void Load(List<Card> cards);
 		
-		public IEnumerable<Texture2D> GetCardTextures(DequeStorable card) => GetCardTextures(card, Enumerable.Empty<IEnumerable<Texture2D>>(), 0);
-		public abstract IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent);
+		public IEnumerable<Texture2D> GetCardTextures(Card card) => GetCardTextures(card, Enumerable.Empty<IEnumerable<Texture2D>>(), 0);
+		public abstract IEnumerable<Texture2D> GetCardTextures(Card card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent);
 		
 		private void OnDrawGizmosSelected()
 		{
@@ -91,7 +91,7 @@ namespace SBEPIS.Capturllection
 			}
 		}
 		
-		public abstract IEnumerator<DequeStorable> GetEnumerator();
+		public abstract IEnumerator<Card> GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
 }

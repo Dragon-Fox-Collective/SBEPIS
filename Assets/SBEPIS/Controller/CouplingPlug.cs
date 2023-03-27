@@ -8,46 +8,46 @@ namespace SBEPIS.Controller
 		public CoupleEvent onCouple = new();
 		public CoupleEvent onDecouple = new();
 
-		public bool isCoupled => coupledSocket;
+		public bool IsCoupled => CoupledSocket;
 		
-		public CouplingSocket coupledSocket { get; private set; }
+		public CouplingSocket CoupledSocket { get; private set; }
 		
-		public Grabbable grabbable { get; private set; }
+		public Grabbable Grabbable { get; private set; }
 
 		private void Awake()
 		{
-			grabbable = GetComponent<Grabbable>();
+			Grabbable = GetComponent<Grabbable>();
 		}
 
 		public void GetCoupled(CouplingSocket socket)
 		{
-			if (isCoupled)
+			if (IsCoupled)
 			{
-				Debug.LogError($"Tried to couple {this} to {socket} when socket already coupled to {coupledSocket}");
+				Debug.LogError($"Tried to couple {this} to {socket} when socket already coupled to {CoupledSocket}");
 				return;
 			}
 
-			coupledSocket = socket;
+			CoupledSocket = socket;
 			
-			if (grabbable.isBeingHeld)
-				grabbable.grabbingGrabber.Drop();
-			grabbable.onGrab.AddListener(socket.Decouple);
+			if (Grabbable.isBeingHeld)
+				Grabbable.grabbingGrabber.Drop();
+			Grabbable.onGrab.AddListener(socket.Decouple);
 			
-			onCouple.Invoke(this, coupledSocket);
+			onCouple.Invoke(this, CoupledSocket);
 		}
 
 		public void GetDecoupled()
 		{
-			if (!isCoupled)
+			if (!IsCoupled)
 			{
 				Debug.LogError($"Tried to decouple plug {this} when already decoupled");
 				return;
 			}
 
-			CouplingSocket socket = coupledSocket;
-			coupledSocket = null;
+			CouplingSocket socket = CoupledSocket;
+			CoupledSocket = null;
 			
-			grabbable.onGrab.RemoveListener(socket.Decouple);
+			Grabbable.onGrab.RemoveListener(socket.Decouple);
 			
 			onDecouple.Invoke(this, socket);
 		}
