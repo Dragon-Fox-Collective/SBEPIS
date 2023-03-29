@@ -290,23 +290,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bounds: {fileID: 2560012040714765689}
-  isStoringAllowed: 1
-  onSetOwner:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6489863023038747327}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.SplitTextureSetupOwnerSetter,
-          SBEPIS.Capturllection
-        m_MethodName: UpdateTexture
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  dequeOwnerEvents:
+    onSet:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6489863023038747327}
+          m_TargetAssemblyTypeName: SBEPIS.Capturllection.SplitTextureSetupCardOwnerSetter,
+            SBEPIS.Capturllection
+          m_MethodName: UpdateTexture
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onUnset:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &1929706404228634041
 MonoBehaviour:
   m_ObjectHideFlags: 0
