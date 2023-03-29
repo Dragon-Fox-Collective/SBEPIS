@@ -11,8 +11,10 @@ namespace SBEPIS.Capturllection
 		
 		public StorableGroupDefinition definition;
 		
-		public SetDequeOwnerEvent onSetDequeOwner = new();
-		public UnsetDequeOwnerEvent onUnsetDequeOwner = new();
+		public EventPropertySlave<DequeOwner, Deque, SetDequeEvent, UnsetDequeEvent> dequeSlaveEvents = new();
+
+		public SetDequeEvent onSetDequeOwner = new();
+		public UnsetDequeEvent onUnsetDequeOwner = new();
 		
 		public DequeOwner DequeOwner { get; set; }
 		

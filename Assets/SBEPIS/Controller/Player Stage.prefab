@@ -2674,63 +2674,86 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialDeque: {fileID: 0}
   diajector: {fileID: 2162956669282852240}
-  cardParent: {fileID: 4626936063428068125}
-  onSetDequeBox:
+  dequeEvents:
+    onSet:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 644252844828260369}
+          m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeOwner, SBEPIS.Capturllection
+          m_MethodName: SetDequeOwner
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 3294649532773537313}
+          m_TargetAssemblyTypeName: SBEPIS.Capturllection.Inventory, SBEPIS.Capturllection
+          m_MethodName: LoadInventoryIntoDeque
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onUnset:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 644252844828260369}
+          m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeOwner, SBEPIS.Capturllection
+          m_MethodName: UnsetDequeOwner
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 3294649532773537313}
+          m_TargetAssemblyTypeName: SBEPIS.Capturllection.Inventory, SBEPIS.Capturllection
+          m_MethodName: SaveInventoryFromDeque
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  cardOwnerSlaveEvents:
+    onSet:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3294649532773537313}
+          m_TargetAssemblyTypeName: SBEPIS.Capturllection.Inventory, SBEPIS.Capturllection
+          m_MethodName: SetCardParent
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onUnset:
+      m_PersistentCalls:
+        m_Calls: []
+  onSetDeque:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3294649532773537313}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.Inventory, SBEPIS.Capturllection
-        m_MethodName: LoadInventoryIntoDeque
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 4241979126209717074}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeSettingsPageCreator,
-          SBEPIS.Capturllection
-        m_MethodName: CreateSettingsPages
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onUnsetDequeBox:
+      m_Calls: []
+  onUnsetDeque:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3294649532773537313}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.Inventory, SBEPIS.Capturllection
-        m_MethodName: SaveInventoryFromDeque
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 4241979126209717074}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeSettingsPageCreator,
-          SBEPIS.Capturllection
-        m_MethodName: DestroySettingsPages
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &961157736405979464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2783,13 +2806,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 7425453158614581333, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
   initialCardCount: 5
+  cardParent: {fileID: 0}
   onLoadIntoDeque:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 4241979126209717074}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeSettingsPageCreator,
+          SBEPIS.Capturllection
+        m_MethodName: CreateSettingsPages
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8639406400778484178}
         m_TargetAssemblyTypeName: SBEPIS.Capturllection.DiajectorCaptureLayout, SBEPIS.Capturllection
         m_MethodName: set_Inventory
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSaveFromDeque:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4241979126209717074}
+        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeSettingsPageCreator,
+          SBEPIS.Capturllection
+        m_MethodName: DestroySettingsPages
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
