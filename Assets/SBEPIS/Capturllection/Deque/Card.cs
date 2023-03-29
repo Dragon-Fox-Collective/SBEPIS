@@ -12,31 +12,20 @@ namespace SBEPIS.Capturllection
 	{
 		public Renderer bounds;
 		
-		public UnityEvent<DequeOwner, Card> onSetOwner = new();
+		[SerializeField]
+		private EventProperty<Card, DequeOwner, SetCardOwnerEvent, UnsetCardOwnerEvent> dequeOwnerEvents = new();
+		public DequeOwner DequeOwner
+		{
+			get => dequeOwnerEvents.Get();
+			set => dequeOwnerEvents.Set(this, value, dequeOwner => dequeOwner.cardOwnerSlaveEvents);
+		}
 		
 		public Grabbable Grabbable { get; private set; }
 		public CardStateMachine State { get; private set; }
 		public LerpTargetAnimator Animator { get; private set; }
 		public Capturellectainer Container { get; private set; }
 
-		private DequeOwner dequeOwner;
-		public DequeOwner DequeOwner
-		{
-			get => dequeOwner;
-			set
-			{
-				if (dequeOwner == value)
-					return;
-				
-				dequeOwner = value;
-				
-				State.IsBound = dequeOwner;
-				transform.SetParent(dequeOwner ? dequeOwner.cardParent : null);
-				onSetOwner.Invoke(dequeOwner, this);
-			}
-		}
-		
-		public bool IsStored => dequeOwner;
+		public bool IsStored => DequeOwner;
 		
 		public bool CanStoreInto => Container && Container.IsEmpty;
 		

@@ -116,6 +116,12 @@ namespace SBEPIS.Capturllection
 			gameObject.SetActive(false);
 		}
 		
+		public void ForceCloseIfNoDeque(DequeOwner dequeOwner, Deque oldDeque, Deque newDeque)
+		{
+			if (!newDeque && IsOpen)
+				ForceClose();
+		}
+		
 		public void ForceRestart()
 		{
 			ForceClose();

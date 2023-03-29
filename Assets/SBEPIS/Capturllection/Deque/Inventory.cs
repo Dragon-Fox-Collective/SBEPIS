@@ -9,12 +9,18 @@ namespace SBEPIS.Capturllection
 {
 	public class Inventory : MonoBehaviour, IEnumerable<Card>
 	{
-		public Card cardPrefab;
+		[SerializeField]
+		private Card cardPrefab;
 		[SerializeField]
 		private int initialCardCount = 5;
-
+		
+		[Tooltip("Purely organizational for the hierarchy")]
+		[SerializeField]
+		private Transform cardParent;
+		
 		public UnityEvent<Storable> onLoadIntoDeque = new();
-
+		public UnityEvent<List<Card>> onSaveFromDeque = new();
+		
 		private List<Card> savedInventory;
 		private Storable storable;
 		
@@ -38,20 +44,26 @@ namespace SBEPIS.Capturllection
 		{
 			savedInventory = storable.ToList();
 			Destroy(storable.gameObject);
+			onSaveFromDeque.Invoke(savedInventory);
 		}
 		
-		public void LoadInventoryIntoDeque(DequeOwner dequeOwner)
+		public void LoadInventoryIntoDeque(DequeOwner dequeOwner, Deque deque)
 		{
-			storable = StorableGroupDefinition.GetNewStorable(dequeOwner.Deque.definition);
+			storable = StorableGroupDefinition.GetNewStorable(deque.definition);
 			storable.Load(savedInventory);
 			foreach (Card card in savedInventory)
 			{
 				print($"Ejecting leftover card {card}");
 				card.gameObject.SetActive(true);
-				card.transform.SetPositionAndRotation(dequeOwner.Deque.transform.position, dequeOwner.Deque.transform.rotation);
+				card.transform.SetPositionAndRotation(deque.transform.position, deque.transform.rotation);
 			}
 			savedInventory.Clear();
 			onLoadIntoDeque.Invoke(storable);
+		}
+		
+		public void SetCardParent(Card card, DequeOwner owner)
+		{
+			card.transform.SetParent(owner ? cardParent : null);
 		}
 		
 		public bool CanFetch(Card card) => storable.CanFetch(card);

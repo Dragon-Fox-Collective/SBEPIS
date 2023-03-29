@@ -28,19 +28,20 @@ namespace SBEPIS.Tests
 		public IEnumerator CardsChangeTexture_WhenChangedAfterCreation_WithDiajectorOpen()
 		{
 			scene.diajector.ForceOpen();
+			yield return 0;
 			scene.dequeOwner.Deque = scene.changeDeque;
 			Assert.That(scene.inventory.First().GetComponent<SplitTextureSetup>().textures, Is.EquivalentTo(scene.changeDeque.definition.ruleset.GetCardTextures()));
-			yield break;
 		}
 		
 		[UnityTest]
 		public IEnumerator CardsChangeTexture_WhenChangedAfterCreation_WithDiajectorClosed()
 		{
 			scene.diajector.ForceOpen();
+			yield return 0;
 			scene.diajector.ForceClose();
+			yield return 0;
 			scene.dequeOwner.Deque = scene.changeDeque;
 			Assert.That(scene.inventory.First().GetComponent<SplitTextureSetup>().textures, Is.EquivalentTo(scene.changeDeque.definition.ruleset.GetCardTextures()));
-			yield break;
 		}
 	}
 }
