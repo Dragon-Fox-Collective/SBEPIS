@@ -26,7 +26,7 @@ namespace SBEPIS.Capturllection
 				return;
 			
 			Capturellectainer container = grabber.heldGrabbable.GetComponent<Capturellectainer>();
-			if (container && container.hasCapturedItem)
+			if (container && container.HasCapturedItem)
 				RetrieveAndGrabItem(container).Forget();
 			else
 				CaptureAndGrabCard().Forget();
@@ -34,11 +34,10 @@ namespace SBEPIS.Capturllection
 		
 		private async UniTaskVoid CaptureAndGrabCard()
 		{
-			Capturllectable item = grabber.heldGrabbable.GetComponent<Capturllectable>();
-			if (!item || !item.canCapturllect)
+			if (!grabber.heldGrabbable.TryGetComponent(out Capturellectable item))
 				return;
 			
-			(Card card, Capturellectainer container, Capturllectable ejectedItem) = await inventory.Store(item);
+			(Card card, Capturellectainer container, Capturellectable ejectedItem) = await inventory.Store(item);
 			
 			if (ejectedItem)
 				if (dequeOwner.diajector.ShouldCardBeDisplayed(card))
@@ -52,14 +51,12 @@ namespace SBEPIS.Capturllection
 		
 		private async UniTaskVoid RetrieveAndGrabItem(Capturellectainer container)
 		{
-			if (!container.canFetch)
-				return;
 			if (!container.TryGetComponent(out Card card) || !inventory.CanFetch(card))
 				return;
 			
 			grabber.Drop();
 			
-			Capturllectable item = await inventory.Fetch(card);
+			Capturellectable item = await inventory.Fetch(card);
 			item.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
 			item.GetComponent<Rigidbody>().Move(grabber.transform.position, grabber.transform.rotation);
 			

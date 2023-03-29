@@ -1,7 +1,5 @@
 using SBEPIS.Controller;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using SBEPIS.Capturllection.CardState;
 using SBEPIS.Utils;
 using UnityEngine;
@@ -13,8 +11,6 @@ namespace SBEPIS.Capturllection
 	public class Card : MonoBehaviour
 	{
 		public Renderer bounds;
-		public bool isStoringAllowed = true;
-		public readonly List<Func<bool>> storePredicates = new();
 		
 		public UnityEvent<DequeOwner, Card> onSetOwner = new();
 		
@@ -23,27 +19,26 @@ namespace SBEPIS.Capturllection
 		public LerpTargetAnimator Animator { get; private set; }
 		public Capturellectainer Container { get; private set; }
 
-		private DequeOwner owner;
-		public DequeOwner Owner
+		private DequeOwner dequeOwner;
+		public DequeOwner DequeOwner
 		{
-			get => owner;
+			get => dequeOwner;
 			set
 			{
-				if (owner == value)
+				if (dequeOwner == value)
 					return;
 				
-				owner = value;
+				dequeOwner = value;
 				
-				State.IsBound = owner;
-				transform.SetParent(owner ? owner.cardParent : null);
-				onSetOwner.Invoke(owner, this);
+				State.IsBound = dequeOwner;
+				transform.SetParent(dequeOwner ? dequeOwner.cardParent : null);
+				onSetOwner.Invoke(dequeOwner, this);
 			}
 		}
 		
-		public bool isStored => owner;
-		public bool canStore => storePredicates.All(predicate => predicate.Invoke());
+		public bool IsStored => dequeOwner;
 		
-		public bool canStoreInto => Container && Container.isEmpty;
+		public bool CanStoreInto => Container && Container.IsEmpty;
 		
 		private List<DiajectorCaptureLayout> layouts = new();
 		
@@ -53,19 +48,11 @@ namespace SBEPIS.Capturllection
 			State = GetComponent<CardStateMachine>();
 			Animator = GetComponent<LerpTargetAnimator>();
 			Container = GetComponent<Capturellectainer>();
-			
-			storePredicates.Add(() => isStoringAllowed);
-			storePredicates.Add(() => !isStored);
-			
-			if (Container)
-				storePredicates.Add(() => Container.capturedItem);
 		}
-		
-		public void SetStateGrabbed(bool grabbed) => State.IsGrabbed = grabbed;
 		
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DiajectorCaptureLayout layout) && canStore)
+			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DiajectorCaptureLayout layout) && !IsStored)
 				AddLayout(layout);
 		}
 		

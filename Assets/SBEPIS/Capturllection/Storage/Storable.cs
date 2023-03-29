@@ -37,8 +37,8 @@ namespace SBEPIS.Capturllection
 		public abstract bool CanFetch(Card card);
 		public abstract bool Contains(Card card);
 		
-		public abstract UniTask<(Card, Capturellectainer, Capturllectable)> Store(Capturllectable item);
-		public abstract UniTask<Capturllectable> Fetch(Card card);
+		public abstract UniTask<(Card, Capturellectainer, Capturellectable)> Store(Capturellectable item);
+		public abstract UniTask<Capturellectable> Fetch(Card card);
 		public abstract UniTask Flush(List<Card> cards);
 		
 		public abstract void Load(List<Card> cards);

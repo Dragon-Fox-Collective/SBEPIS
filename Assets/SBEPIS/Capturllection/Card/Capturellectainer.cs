@@ -9,41 +9,35 @@ namespace SBEPIS.Capturllection
 {
 	public class Capturellectainer : MonoBehaviour
 	{
-		public Capturllectable defaultCapturedItemPrefab;
-		[FormerlySerializedAs("isRetrievingAllowed")]
-		public bool isFetchingAllowed = true;
-		public List<Predicate<Capturellectainer>> fetchPredicates = new();
+		public Capturellectable defaultCapturedItemPrefab;
 		
 		public CaptureEvent onCapture = new();
 		[FormerlySerializedAs("onRetrieve")]
 		public CaptureEvent onFetch = new();
 		
-		public bool canFetch => fetchPredicates.All(predicate => predicate.Invoke(this));
-		public Capturllectable capturedItem { get; private set; }
-		public bool hasCapturedItem => capturedItem;
-		public bool isEmpty => !hasCapturedItem;
-
+		public Capturellectable CapturedItem { get; private set; }
+		public bool HasCapturedItem => CapturedItem;
+		public bool IsEmpty => !HasCapturedItem;
+		
 		private string originalName;
 		
 		private void Awake()
 		{
 			if (defaultCapturedItemPrefab)
 			{
-				Capturllectable item = Instantiate(defaultCapturedItemPrefab);
+				Capturellectable item = Instantiate(defaultCapturedItemPrefab);
 				Capture(item);
 			}
-			
-			fetchPredicates.Add(_ => isFetchingAllowed);
 		}
-
-		public void Capture(Capturllectable item)
+		
+		public void Capture(Capturellectable item)
 		{
 			if (!item)
 				return;
-			if (hasCapturedItem)
+			if (HasCapturedItem)
 				Fetch();
 			
-			capturedItem = item;
+			CapturedItem = item;
 			originalName = name;
 			name += $" ({item})";
 			item.gameObject.SetActive(false);
@@ -52,13 +46,13 @@ namespace SBEPIS.Capturllection
 			item.onCapture.Invoke(this, item);
 		}
 		
-		public Capturllectable Fetch()
+		public Capturellectable Fetch()
 		{
-			if (!hasCapturedItem)
+			if (!HasCapturedItem)
 				return null;
 			
-			Capturllectable item = capturedItem;
-			capturedItem = null;
+			Capturellectable item = CapturedItem;
+			CapturedItem = null;
 			name = originalName;
 			item.gameObject.SetActive(true);
 			item.transform.SetParent(null);
@@ -69,5 +63,5 @@ namespace SBEPIS.Capturllection
 	}
 	
 	[Serializable]
-	public class CaptureEvent : UnityEvent<Capturellectainer, Capturllectable> { }
+	public class CaptureEvent : UnityEvent<Capturellectainer, Capturellectable> { }
 }

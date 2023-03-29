@@ -60,7 +60,7 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator CapturllectCapturllectsItem_WhenHoldingItem()
 		{
-			Assert.IsNull(scene.emptyCard.capturedItem);
+			Assert.IsNull(scene.emptyCard.CapturedItem);
 			Assert.IsTrue(scene.obj.activeInHierarchy);
 
 			scene.grabber.transform.position = scene.obj.transform.position;
@@ -75,14 +75,14 @@ namespace SBEPIS.Tests
 			Release(controller.primaryButton);
 			yield return null;
 
-			Assert.AreEqual(scene.obj, scene.emptyCard.capturedItem);
+			Assert.AreEqual(scene.obj, scene.emptyCard.CapturedItem);
 			Assert.IsFalse(scene.obj.activeInHierarchy);
 		}
 
 		[UnityTest]
 		public IEnumerator CapturllectFetchesItem_WhenHoldingCard()
 		{
-			Capturllectable capturedItem = scene.fullCard.capturedItem;
+			Capturellectable capturedItem = scene.fullCard.CapturedItem;
 			Assert.IsNotNull(capturedItem);
 			Assert.IsFalse(capturedItem.gameObject.activeInHierarchy);
 
@@ -98,7 +98,7 @@ namespace SBEPIS.Tests
 			Release(controller.primaryButton);
 			yield return null;
 
-			Assert.IsNull(scene.fullCard.capturedItem);
+			Assert.IsNull(scene.fullCard.CapturedItem);
 			Assert.IsTrue(capturedItem.gameObject.activeInHierarchy);
 		}
 

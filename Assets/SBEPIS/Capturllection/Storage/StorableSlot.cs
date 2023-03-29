@@ -34,7 +34,7 @@ namespace SBEPIS.Capturllection
 		public override bool hasNoCards => !hasAllCards;
 		public override bool hasAllCards => card;
 		
-		public override bool hasAllCardsEmpty => card && card.canStoreInto;
+		public override bool hasAllCardsEmpty => card && card.CanStoreInto;
 		public override bool hasAllCardsFull => !hasAllCardsEmpty;
 
 		public override void Tick(float deltaTime) { }
@@ -47,13 +47,13 @@ namespace SBEPIS.Capturllection
 		public override bool CanFetch(Card card) => Contains(card);
 		public override bool Contains(Card card) => this.card == card;
 		
-		public override UniTask<(Card, Capturellectainer, Capturllectable)> Store(Capturllectable item)
+		public override UniTask<(Card, Capturellectainer, Capturellectable)> Store(Capturellectable item)
 		{
-			Capturllectable ejectedItem = card.Container.Fetch();
+			Capturellectable ejectedItem = card.Container.Fetch();
 			card.Container.Capture(item);
 			return UniTask.FromResult((card, container: card.Container, ejectedItem));
 		}
-		public override UniTask<Capturllectable> Fetch(Card card)
+		public override UniTask<Capturellectable> Fetch(Card card)
 		{
 			return UniTask.FromResult(Contains(card) ? card.Container.Fetch() : null);
 		}

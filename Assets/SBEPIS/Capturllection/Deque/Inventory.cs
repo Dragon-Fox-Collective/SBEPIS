@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -6,10 +7,11 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Capturllection
 {
-	public class Inventory : MonoBehaviour
+	public class Inventory : MonoBehaviour, IEnumerable<Card>
 	{
 		public Card cardPrefab;
-		public int initialCardCount = 5;
+		[SerializeField]
+		private int initialCardCount = 5;
 
 		public UnityEvent<Storable> onLoadIntoDeque = new();
 
@@ -53,8 +55,10 @@ namespace SBEPIS.Capturllection
 		}
 		
 		public bool CanFetch(Card card) => storable.CanFetch(card);
-		public UniTask<Capturllectable> Fetch(Card card) => storable.Fetch(card);
-		public UniTask<(Card, Capturellectainer, Capturllectable)> Store(Capturllectable item) => storable.Store(item);
+		public UniTask<Capturellectable> Fetch(Card card) => storable.Fetch(card);
+		public UniTask<(Card, Capturellectainer, Capturellectable)> Store(Capturellectable item) => storable.Store(item);
 		public IEnumerable<Texture2D> GetCardTextures(Card card) => storable.GetCardTextures(card);
+		public IEnumerator<Card> GetEnumerator() => storable.GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
 }
