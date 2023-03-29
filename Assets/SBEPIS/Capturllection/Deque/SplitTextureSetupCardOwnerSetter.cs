@@ -16,7 +16,7 @@ namespace SBEPIS.Capturllection
 			split = GetComponent<SplitTextureSetup>();
 		}
 		
-		public void UpdateTexture(DequeOwner owner, Card card)
+		public void UpdateTexture(Card card, DequeOwner owner)
 		{
 			if (owner && owner.Deque)
 				split.textures = inventory.GetCardTextures(card).ToList();

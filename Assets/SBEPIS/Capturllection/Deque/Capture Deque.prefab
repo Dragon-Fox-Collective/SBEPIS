@@ -545,36 +545,37 @@ MonoBehaviour:
   lowerTarget: {fileID: 4582897949649126844}
   upperTarget: {fileID: 3710867468495898251}
   definition: {fileID: 6267582008153543528}
-  onSetDequeOwner:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7617101641436224015}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeBox, SBEPIS.Capturllection
-        m_MethodName: SetBindState
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onUnsetDequeOwner:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7617101641436224015}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeBox, SBEPIS.Capturllection
-        m_MethodName: SetUnbindState
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  dequeSlaveEvents:
+    onSet:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7617101641436224015}
+          m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeBox, SBEPIS.Capturllection
+          m_MethodName: SetBindState
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onUnset:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7617101641436224015}
+          m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeBox, SBEPIS.Capturllection
+          m_MethodName: SetUnbindState
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &6239174079351266277
 PrefabInstance:
   m_ObjectHideFlags: 0
