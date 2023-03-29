@@ -10,12 +10,6 @@ namespace SBEPIS.Thaumergy
 		public Material[] materials;
 		public Renderer[] renderers;
 		
-		private void Awake()
-		{
-			if (TryGetComponent(out Card card))
-				card.storePredicates.Add(() => punchedBits.isPerfectlyGeneric);
-		}
-		
 		private void Start()
 		{
 			Punch(punchedBits);
@@ -26,8 +20,11 @@ namespace SBEPIS.Thaumergy
 			punchedBits = bits;
 
 			for (int i = 0; i < Mathf.Min(48, BitManager.instance.bits.Count); i++)
-				foreach (Material material in materials)
-					renderers.PerformOnMaterial(material, material => material.SetFloat($"_Bit_{i + 1}", BitManager.instance.bits.BitSetHasBitAt(bits, i) ? 1 : 0));
+				foreach (Material baseMaterial in materials)
+				{
+					int i1 = i;
+					renderers.PerformOnMaterial(baseMaterial, material => material.SetFloat($"_Bit_{i1 + 1}", BitManager.instance.bits.BitSetHasBitAt(bits, i1) ? 1 : 0));
+				}
 		}
 	}
 }

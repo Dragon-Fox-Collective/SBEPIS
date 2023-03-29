@@ -3,13 +3,15 @@ using SBEPIS.UI;
 using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturllection
 {
 	public class Diajector : MonoBehaviour
 	{
 		public LerpTarget upperTarget;
-		public Card cardPrefab;
+		[FormerlySerializedAs("cardPrefab")]
+		public Card menuCardPrefab;
 		public ElectricArc electricArcPrefab;
 		public DiajectorPage mainPage;
 		public float cardDelay = 0.5f;

@@ -26,13 +26,13 @@ namespace SBEPIS.Capturllection
 		public override bool CanFetch(Card card) => definition.ruleset.CanFetchFrom(inventory, state, card);
 		public override bool Contains(Card card) => inventory.Any(storable => storable.Contains(card));
 		
-		public override async UniTask<(Card, Capturellectainer, Capturllectable)> Store(Capturllectable item)
+		public override async UniTask<(Card, Capturellectainer, Capturellectable)> Store(Capturellectable item)
 		{
 			int storeIndex = await definition.ruleset.GetIndexToStoreInto(inventory, state);
 			Storable storable = inventory[storeIndex];
 			inventory.Remove(storable);
 			
-			(Card card, Capturellectainer container, Capturllectable ejectedItem) = await storable.Store(item);
+			(Card card, Capturellectainer container, Capturellectable ejectedItem) = await storable.Store(item);
 			int restoreIndex = await definition.ruleset.GetIndexToInsertBetweenAfterStore(inventory, state, storable, storeIndex);
 			inventory.Insert(restoreIndex, storable);
 			
@@ -47,13 +47,13 @@ namespace SBEPIS.Capturllection
 			return (card, container, ejectedItem);
 		}
 		
-		public override async UniTask<Capturllectable> Fetch(Card card)
+		public override async UniTask<Capturellectable> Fetch(Card card)
 		{
 			Storable storable = inventory.First(storable => storable.Contains(card));
 			int fetchIndex = inventory.IndexOf(storable);
 			inventory.Remove(storable);
 			
-			Capturllectable item = await storable.Fetch(card);
+			Capturellectable item = await storable.Fetch(card);
 			int restoreIndex = await definition.ruleset.GetIndexToInsertBetweenAfterFetch(inventory, state, storable, fetchIndex);
 			inventory.Insert(restoreIndex, storable);
 			

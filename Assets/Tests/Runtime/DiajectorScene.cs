@@ -9,6 +9,6 @@ namespace SBEPIS.Tests.Scenes
 		public Deque startingDeque;
 		public Deque changeDeque;
 		public Diajector diajector;
-		public Card card;
+		public Inventory inventory;
 	}
 }
