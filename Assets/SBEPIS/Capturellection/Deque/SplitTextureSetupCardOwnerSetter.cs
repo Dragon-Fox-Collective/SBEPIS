@@ -7,8 +7,6 @@ namespace SBEPIS.Capturellection
 	[RequireComponent(typeof(SplitTextureSetup))]
 	public class SplitTextureSetupCardOwnerSetter : MonoBehaviour
 	{
-		public Inventory inventory;
-		
 		private SplitTextureSetup split;
 		
 		private void Awake()
@@ -16,10 +14,9 @@ namespace SBEPIS.Capturellection
 			split = GetComponent<SplitTextureSetup>();
 		}
 		
-		public void UpdateTexture(DequeStorable card, DequeOwner owner)
+		public void UpdateTextures(DequeStorable card, DequeOwner owner)
 		{
-			if (owner && owner.Deque)
-				split.textures = inventory.GetCardTextures(card).ToList();
+			split.Textures = owner.Inventory.GetCardTextures(card).ToList();
 		}
 	}
 }

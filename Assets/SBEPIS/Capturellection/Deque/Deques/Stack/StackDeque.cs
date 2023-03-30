@@ -21,7 +21,7 @@ namespace SBEPIS.Capturellection.Deques
 				storable.Tick(deltaTime);
 			}
 			
-			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
+			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
 			Vector3 absDirection = state.direction.Select(Mathf.Abs);
 			float lengthSum = offsetFromEnd ?
 				-offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude :
@@ -33,8 +33,8 @@ namespace SBEPIS.Capturellection.Deques
 				float length = Vector3.Project(size, absDirection).magnitude;
 				right += state.direction * (offsetFromEnd ? length / 2 : 0);
 				
-				storable.position = right;
-				storable.rotation = ArrayDeque.GetOffsetRotation(state.direction);
+				storable.Position = right;
+				storable.Rotation = ArrayDeque.GetOffsetRotation(state.direction);
 				
 				right += state.direction * (offset + (offsetFromEnd ? length / 2 : 0));
 			}
@@ -44,7 +44,7 @@ namespace SBEPIS.Capturellection.Deques
 		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, DequeStorable card) => inventory[0].CanFetch(card);
 		
 		public override UniTask<int> GetIndexToStoreInto(List<Storable> inventory, BaseState state) => UniTask.FromResult(inventory.Count - 1);
-		public override UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, BaseState state, Storable storable) => UniTask.FromResult(storable.hasAllCardsEmpty ? inventory.Count : 0);
+		public override UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, BaseState state, Storable storable) => UniTask.FromResult(storable.HasAllCardsEmpty ? inventory.Count : 0);
 		public override UniTask<int> GetIndexToInsertBetweenAfterStore(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => UniTask.FromResult(0);
 		public override UniTask<int> GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => UniTask.FromResult(inventory.Count);
 	}

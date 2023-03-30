@@ -27,15 +27,15 @@ namespace SBEPIS.Capturellection.Storage
 		}
 
 		private Vector3 _maxPossibleSize;
-		public override Vector3 maxPossibleSize => _maxPossibleSize;
+		public override Vector3 MaxPossibleSize => _maxPossibleSize;
 		
-		public override int inventoryCount => card ? 1 : 0;
+		public override int InventoryCount => card ? 1 : 0;
 		
-		public override bool hasNoCards => !hasAllCards;
-		public override bool hasAllCards => card;
+		public override bool HasNoCards => !HasAllCards;
+		public override bool HasAllCards => card;
 		
-		public override bool hasAllCardsEmpty => card && card.CanStoreInto;
-		public override bool hasAllCardsFull => !hasAllCardsEmpty;
+		public override bool HasAllCardsEmpty => card && card.CanStoreInto;
+		public override bool HasAllCardsFull => !HasAllCardsEmpty;
 
 		public override void Tick(float deltaTime) { }
 		public override void LayoutTarget(DequeStorable card, CardTarget target)
@@ -65,7 +65,7 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public override void Load(List<DequeStorable> cards)
 		{
-			if (hasAllCards || cards.Count == 0)
+			if (HasAllCards || cards.Count == 0)
 				return;
 			card = cards.Pop();
 		}

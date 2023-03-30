@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SBEPIS.Capturellection.Storage;
-using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -21,8 +20,13 @@ namespace SBEPIS.Capturellection
 		{
 			set
 			{
+				if (inventory)
+					inventory.transform.SetParent(null);
+				
 				inventory = value;
-				inventory.transform.SetParent(transform);
+				
+				if (inventory)
+					inventory.transform.SetParent(transform);
 			}
 		}
 		
@@ -46,11 +50,11 @@ namespace SBEPIS.Capturellection
 			if (!diajector.IsBound)
 				return;
 			
-			inventory.state.direction = transform.InverseTransformPoint(directionEndpoint.position).normalized;
+			inventory.state.direction = directionEndpoint ? transform.InverseTransformPoint(directionEndpoint.position).normalized : Vector3.zero;
 			inventory.Tick(deltaTime);
-			Vector3 inventorySize = inventory.maxPossibleSize;
-			inventory.position = transform.forward * (cardZ + inventorySize.z / 2);
-			inventory.rotation = Quaternion.identity;
+			Vector3 inventorySize = inventory.MaxPossibleSize;
+			inventory.Position = transform.forward * (cardZ + inventorySize.z / 2);
+			inventory.Rotation = Quaternion.identity;
 			
 			foreach ((DequeStorable card, CardTarget target) in targets)
 			{
@@ -85,7 +89,7 @@ namespace SBEPIS.Capturellection
 		{
 			CardTarget target = HasTemporaryTarget(card) ? targets[card] : AddTemporaryTarget(card);
 			page.AddCard(card, target);
-			diajector.DequeOwner.Deque.lowerTarget.onMoveFrom.Invoke(card.Animator);
+			diajector.dequeOwner.Deque.lowerTarget.onMoveFrom.Invoke(card.Animator);
 			return target;
 		}
 		
@@ -117,7 +121,7 @@ namespace SBEPIS.Capturellection
 				}
 				else
 				{
-					card.Animator.TeleportTo(diajector.DequeOwner.Deque.lowerTarget);
+					card.Animator.TeleportTo(diajector.dequeOwner.Deque.lowerTarget);
 				}
 			}
 		}

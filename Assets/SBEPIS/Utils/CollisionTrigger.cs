@@ -6,25 +6,24 @@ namespace SBEPIS.Utils
 {
 	public class CollisionTrigger : MonoBehaviour
 	{
+		public float primeDelay = 0.2f;
 		public UnityEvent trigger = new();
-
+		
 		private bool delaying;
 		private bool primed;
 		private float timeSinceStart;
 		
-		private const float PrimeDelay = 0.2f;
-
 		private void FixedUpdate()
 		{
 			if (delaying)
 			{
 				timeSinceStart += Time.fixedDeltaTime;
-				if (timeSinceStart > PrimeDelay)
+				if (timeSinceStart > primeDelay)
 					Prime();
 			}
 		}
 
-		private void OnCollisionEnter(Collision collision)
+		private void OnCollisionEnter()
 		{
 			if (primed)
 				Trigger();

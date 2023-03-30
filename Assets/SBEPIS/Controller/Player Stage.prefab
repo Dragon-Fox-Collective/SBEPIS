@@ -2337,6 +2337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d00b0cf08b2be42b94e48c15a25370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dequeOwner: {fileID: 644252844828260369}
   upperTarget: {fileID: 1404265936580636440}
   menuCardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
   electricArcPrefab: {fileID: 7962134878051775022, guid: bd0964b77b3f6f0459fc55699ed10fd6, type: 3}
@@ -2450,6 +2451,7 @@ GameObject:
   - component: {fileID: 961157736405979464}
   - component: {fileID: 3294649532773537313}
   - component: {fileID: 4241979126209717074}
+  - component: {fileID: 4214987674553013641}
   m_Layer: 8
   m_Name: Deque Attach Target
   m_TagString: Untagged
@@ -2677,86 +2679,14 @@ MonoBehaviour:
   dequeEvents:
     onSet:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 644252844828260369}
-          m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeOwner, SBEPIS.Capturllection
-          m_MethodName: SetDequeOwner
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 3294649532773537313}
-          m_TargetAssemblyTypeName: SBEPIS.Capturllection.Inventory, SBEPIS.Capturllection
-          m_MethodName: LoadInventoryIntoDeque
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
     onUnset:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 644252844828260369}
-          m_TargetAssemblyTypeName: SBEPIS.Capturllection.DequeOwner, SBEPIS.Capturllection
-          m_MethodName: UnsetDequeOwner
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 3294649532773537313}
-          m_TargetAssemblyTypeName: SBEPIS.Capturllection.Inventory, SBEPIS.Capturllection
-          m_MethodName: SaveInventoryFromDeque
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 2162956669282852240}
-          m_TargetAssemblyTypeName: SBEPIS.Capturllection.Diajector, SBEPIS.Capturllection
-          m_MethodName: ForceCloseIfNoDeque
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   cardOwnerSlaveEvents:
     onSet:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 3294649532773537313}
-          m_TargetAssemblyTypeName: SBEPIS.Capturllection.Inventory, SBEPIS.Capturllection
-          m_MethodName: SetCardParent
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
     onUnset:
       m_PersistentCalls:
         m_Calls: []
@@ -2798,6 +2728,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  dequeBoxEvents:
+    onSet:
+      m_PersistentCalls:
+        m_Calls: []
+    onUnset:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &3294649532773537313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2830,7 +2767,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 8639406400778484178}
-        m_TargetAssemblyTypeName: SBEPIS.Capturllection.DiajectorCaptureLayout, SBEPIS.Capturllection
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DiajectorCaptureLayout,
+          SBEPIS.Capturellection
         m_MethodName: set_Inventory
         m_Mode: 0
         m_Arguments:
@@ -2870,6 +2808,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsPagePrefab: {fileID: 8545667152632050241, guid: 1cce4ef865a9952458f391310621eb1b, type: 3}
+--- !u!114 &4214987674553013641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159469505427324889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c22911e5967d437d8aeab4a4c05456e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  primeDelay: 0.2
 --- !u!1 &6376568278165176233
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,7 +36,7 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator CaptureCameraTakesPicturesOfObjects()
 		{
-			Assert.IsNotNull(CaptureCamera.instance.TakePictureOfObject(scene.obj));
+			Assert.IsNotNull(CaptureCamera.instance.TakePictureOfObject(Scene.obj));
 
 			yield return null;
 		}

@@ -215,13 +215,11 @@ GameObject:
   - component: {fileID: 8899563152095457308}
   - component: {fileID: 8907908523576682515}
   - component: {fileID: 6448398786241785265}
-  - component: {fileID: 1557519686661420847}
   - component: {fileID: 9131961386945647344}
   - component: {fileID: 7682035672794459721}
   - component: {fileID: 3228183663557612735}
   - component: {fileID: 76129324208710410}
   - component: {fileID: 3305118232654807811}
-  - component: {fileID: 2020011169111571503}
   - component: {fileID: 672836723252032607}
   m_Layer: 0
   m_Name: Capture Deque
@@ -431,21 +429,6 @@ MonoBehaviour:
   onGravityChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1557519686661420847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7762745506201212150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 315068b87f958e54b8fa2f86710b05a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trigger:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &9131961386945647344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,18 +499,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ccf66a9c199545208b4d3e4ea4ec1f6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2020011169111571503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7762745506201212150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c22911e5967d437d8aeab4a4c05456e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &672836723252032607
