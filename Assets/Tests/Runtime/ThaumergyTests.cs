@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using NUnit.Framework;
 using SBEPIS.Bits;
-using SBEPIS.Capturllection;
+using SBEPIS.Capturellection;
 using SBEPIS.Tests.Scenes;
 using SBEPIS.Thaumergy;
 using SBEPIS.Utils;

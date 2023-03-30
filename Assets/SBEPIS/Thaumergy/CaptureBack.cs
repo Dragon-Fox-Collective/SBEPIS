@@ -2,7 +2,7 @@ using SBEPIS.Bits;
 using SBEPIS.Items;
 using UnityEngine;
 
-namespace SBEPIS.Capturllection
+namespace SBEPIS.Capturellection
 {
 	public class CaptureBack : MonoBehaviour
 	{

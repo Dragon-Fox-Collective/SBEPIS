@@ -1,4 +1,4 @@
-using SBEPIS.Capturllection;
+using SBEPIS.Capturellection;
 using UnityEngine;
 
 namespace SBEPIS.Tests.Scenes

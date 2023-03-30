@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace SBEPIS.Capturllection
+namespace SBEPIS.Capturellection
 {
 	/// <summary>
 	/// The camera that takes pictures of items and captcha codes to paste on captchalogue cards.

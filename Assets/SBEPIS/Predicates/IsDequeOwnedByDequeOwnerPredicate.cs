@@ -1,5 +1,5 @@
 using System;
-using SBEPIS.Capturllection;
+using SBEPIS.Capturellection;
 using UnityEngine;
 using UnityEngine.Serialization;
 
