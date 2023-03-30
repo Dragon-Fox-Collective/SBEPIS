@@ -1,21 +1,24 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace SBEPIS.Utils
 {
 	public class TestSceneSuite<TScene> : InputTestFixture where TScene : MonoBehaviour
 	{
-		protected TScene scene { get; private set; }
+		protected TScene Scene { get; private set; }
 		
 		[SetUp]
 		public override void Setup()
 		{
 			base.Setup();
 			
-			scene = GetTestingPrefab();
-			Assert.IsNotNull(scene);
+			Scene = GetTestingPrefab();
+			Assert.That(Scene, Is.Not.Null);
 		}
 		
 		[TearDown]
@@ -23,10 +26,17 @@ namespace SBEPIS.Utils
 		{
 			base.TearDown();
 
-			if (scene)
+			if (Scene)
 			{
-				Object.Destroy(scene.gameObject);
-				scene = null;
+				List<GameObject> leftoverGameObjects = Scene.gameObject.scene.GetRootGameObjects().Where(gameObject =>
+					gameObject &&
+					gameObject != Scene.gameObject &&
+					gameObject.name != "Code-based tests runner").ToList();
+				if (leftoverGameObjects.Count > 0)
+					Debug.LogError($"Test didn't clean itself up! Still had {leftoverGameObjects.ToDelimString()}");
+				
+				Object.Destroy(Scene.gameObject);
+				Scene = null;
 			}
 		}
 		

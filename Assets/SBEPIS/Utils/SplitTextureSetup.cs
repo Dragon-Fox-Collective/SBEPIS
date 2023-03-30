@@ -9,19 +9,18 @@ namespace SBEPIS.Utils
 		public List<Renderer> renderers;
 		public Material material;
 		
-		private static readonly int FallbackTexture = Shader.PropertyToID("_Fallback_Texture");
-		private static readonly int Textures = Shader.PropertyToID("_Textures");
-		private static readonly int NumTextures = Shader.PropertyToID("_Num_Textures");
+		private static readonly int TexturesKey = Shader.PropertyToID("_Textures");
+		private static readonly int NumTexturesKey = Shader.PropertyToID("_Num_Textures");
 		
-		private List<Texture2D> _textures;
-		public List<Texture2D> textures
+		private List<Texture2D> textures;
+		public List<Texture2D> Textures
 		{
-			get => _textures;
+			get => textures;
 			set
 			{
-				_textures = value;
+				textures = value;
 				
-				if (_textures == null)
+				if (textures == null)
 					ResetTextures();
 				else
 					UpdateTextures();
@@ -37,8 +36,8 @@ namespace SBEPIS.Utils
 			
 			renderers.PerformOnMaterial(material, material =>
 			{
-				material.SetTexture(Textures, textureArray);
-				material.SetFloat(NumTextures, textures.Count);
+				material.SetTexture(TexturesKey, textureArray);
+				material.SetFloat(NumTexturesKey, textures.Count);
 			});
 		}
 
@@ -46,7 +45,7 @@ namespace SBEPIS.Utils
 		{
 			renderers.PerformOnMaterial(material, material =>
 			{
-				material.SetFloat(NumTextures, 0);
+				material.SetFloat(NumTexturesKey, 0);
 			});
 		}
 	}

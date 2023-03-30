@@ -1,3 +1,4 @@
+using System;
 using SBEPIS.Physics;
 using SBEPIS.UI;
 using SBEPIS.Utils;
@@ -9,6 +10,8 @@ namespace SBEPIS.Capturellection
 {
 	public class Diajector : MonoBehaviour
 	{
+		public DequeOwner dequeOwner;
+		
 		public LerpTarget upperTarget;
 		[FormerlySerializedAs("cardPrefab")]
 		public DequeStorable menuCardPrefab;
@@ -20,20 +23,15 @@ namespace SBEPIS.Capturellection
 		public MonoBehaviour coroutineOwner;
 		public StrengthSettings cardStrength;
 		
-		public bool IsBound => DequeOwner.Deque;
-		
-		public DequeOwner DequeOwner { get; set; }
+		public bool IsBound => dequeOwner.Deque;
 		
 		private DiajectorPage currentPage;
 		
 		public bool IsOpen => currentPage;
-		public bool IsLayoutActive => layout && layout.isActiveAndEnabled;
-		
-		public DiajectorCaptureLayout layout { get; private set; }
 		
 		private void Awake()
 		{
-			layout = GetComponentInChildren<DiajectorCaptureLayout>(includeInactive:true);
+			dequeOwner.dequeEvents.onUnset.AddListener(ForceCloseIfNoDeque);
 		}
 		
 		public void StartAssembly() => StartAssembly(transform.position, transform.rotation);
@@ -116,7 +114,7 @@ namespace SBEPIS.Capturellection
 			gameObject.SetActive(false);
 		}
 		
-		public void ForceCloseIfNoDeque(DequeOwner dequeOwner, Deque oldDeque, Deque newDeque)
+		private void ForceCloseIfNoDeque(DequeOwner dequeOwner, Deque oldDeque, Deque newDeque)
 		{
 			if (!newDeque && IsOpen)
 				ForceClose();

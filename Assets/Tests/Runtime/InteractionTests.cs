@@ -19,45 +19,45 @@ namespace SBEPIS.Tests
 
 			mouse = InputSystem.AddDevice<Mouse>();
 			grabAction = new InputAction("Grab", InputActionType.Button, "<Mouse>/leftButton");
-			grabAction.performed += scene.grabber.OnGrab;
-			grabAction.canceled += scene.grabber.OnGrab;
+			grabAction.performed += Scene.grabber.OnGrab;
+			grabAction.canceled += Scene.grabber.OnGrab;
 			grabAction.Enable();
 		}
 
 		[UnityTest]
 		public IEnumerator GrabGrabsGrabbables()
 		{
-			scene.grabber.transform.position = scene.grabbable.transform.position;
+			Scene.grabber.transform.position = Scene.grabbable.transform.position;
 			yield return new WaitForFixedUpdate();
 
 			Press(mouse.leftButton);
 			yield return null;
 
-			Assert.AreEqual(scene.grabbable, scene.grabber.heldGrabbable);
+			Assert.AreEqual(Scene.grabbable, Scene.grabber.heldGrabbable);
 		}
 
 		[UnityTest]
 		public IEnumerator GrabLiftsGrabbables()
 		{
-			Vector3 oldPosition = scene.grabbable.transform.position;
+			Vector3 oldPosition = Scene.grabbable.transform.position;
 
-			scene.grabber.transform.position = oldPosition;
+			Scene.grabber.transform.position = oldPosition;
 			yield return new WaitForFixedUpdate();
 
 			Press(mouse.leftButton);
 			yield return null;
 
-			scene.grabber.transform.position += Vector3.up;
-			Assert.That(scene.grabbable.transform.position.y, Is.LessThanOrEqualTo(oldPosition.y));
+			Scene.grabber.transform.position += Vector3.up;
+			Assert.That(Scene.grabbable.transform.position.y, Is.LessThanOrEqualTo(oldPosition.y));
 			yield return new WaitForFixedUpdate();
 
-			Assert.That(scene.grabbable.transform.position.y, Is.GreaterThan(oldPosition.y));
+			Assert.That(Scene.grabbable.transform.position.y, Is.GreaterThan(oldPosition.y));
 		}
 
 		[UnityTest]
 		public IEnumerator ClickingActivatesPhysicsButton()
 		{
-			scene.grabber.transform.LookAt(scene.buttonMaterialChanger.transform, Vector3.up);
+			Scene.grabber.transform.LookAt(Scene.buttonMaterialChanger.transform, Vector3.up);
 
 			Press(mouse.leftButton);
 			yield return null;
@@ -65,22 +65,22 @@ namespace SBEPIS.Tests
 			Release(mouse.leftButton);
 			yield return new WaitForSeconds(0.1f);
 
-			Assert.That(scene.buttonMaterialChanger.renderer.material, Is.EqualTo(scene.buttonMaterialChanger.newMaterial));
+			Assert.That(Scene.buttonMaterialChanger.renderer.material, Is.EqualTo(Scene.buttonMaterialChanger.newMaterial));
 		}
 
 		[UnityTest]
 		public IEnumerator PhysicsActivatePhysicsButton()
 		{
-			scene.grabbable.transform.position = scene.buttonMaterialChanger.transform.position + Vector3.up;
+			Scene.grabbable.transform.position = Scene.buttonMaterialChanger.transform.position + Vector3.up;
 			yield return new WaitForSeconds(0.5f);
 
-			Assert.That(scene.buttonMaterialChanger.renderer.material, Is.EqualTo(scene.buttonMaterialChanger.newMaterial));
+			Assert.That(Scene.buttonMaterialChanger.renderer.material, Is.EqualTo(Scene.buttonMaterialChanger.newMaterial));
 		}
 
 		[UnityTest]
 		public IEnumerator ClickingActivatesPhysicsLever()
 		{
-			scene.grabber.transform.LookAt(scene.leverMaterialChanger.transform, Vector3.up);
+			Scene.grabber.transform.LookAt(Scene.leverMaterialChanger.transform, Vector3.up);
 
 			Press(mouse.leftButton);
 			yield return null;
@@ -88,16 +88,16 @@ namespace SBEPIS.Tests
 			Release(mouse.leftButton);
 			yield return new WaitForSeconds(0.1f);
 
-			Assert.That(scene.leverMaterialChanger.renderer.material, Is.EqualTo(scene.leverMaterialChanger.newMaterial));
+			Assert.That(Scene.leverMaterialChanger.renderer.material, Is.EqualTo(Scene.leverMaterialChanger.newMaterial));
 		}
 
 		[UnityTest]
 		public IEnumerator PhysicsActivatePhysicsLever()
 		{
-			scene.grabbable.transform.position = scene.leverMaterialChanger.transform.position + Vector3.up;
+			Scene.grabbable.transform.position = Scene.leverMaterialChanger.transform.position + Vector3.up;
 			yield return new WaitForSeconds(0.5f);
 
-			Assert.That(scene.leverMaterialChanger.renderer.material, Is.EqualTo(scene.leverMaterialChanger.newMaterial));
+			Assert.That(Scene.leverMaterialChanger.renderer.material, Is.EqualTo(Scene.leverMaterialChanger.newMaterial));
 		}
 	}
 }

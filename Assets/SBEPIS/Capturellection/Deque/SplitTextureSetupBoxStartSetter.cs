@@ -9,7 +9,7 @@ namespace SBEPIS.Capturellection
 	{
 		private void Start()
 		{
-			GetComponent<SplitTextureSetup>().textures = GetComponent<DequeBox>().Deque.definition.ruleset.GetBoxTextures().ToList();
+			GetComponent<SplitTextureSetup>().Textures = GetComponent<DequeBox>().Deque.definition.ruleset.GetBoxTextures().ToList();
 		}
 	}
 }

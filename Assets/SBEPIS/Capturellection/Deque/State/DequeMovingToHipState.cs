@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.DequeState
 {
-	public class DequeMovingToHipState : StateMachineBehaviour
+	public class DequeMovingToHipState : StateMachineBehaviour<DequeBoxStateMachine>
 	{
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{

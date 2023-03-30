@@ -10,26 +10,26 @@ namespace SBEPIS.Capturellection.Storage
 	{
 		public DequeRulesetState state;
 		
-		public Vector3 position
+		public Vector3 Position
 		{
 			get => transform.localPosition;
 			set => transform.localPosition = value;
 		}
-		public Quaternion rotation
+		public Quaternion Rotation
 		{
 			get => transform.localRotation;
 			set => transform.localRotation = value;
 		}
 
-		public abstract Vector3 maxPossibleSize { get; }
+		public abstract Vector3 MaxPossibleSize { get; }
 		
-		public abstract int inventoryCount { get; }
+		public abstract int InventoryCount { get; }
 		
-		public abstract bool hasNoCards { get; }
-		public abstract bool hasAllCards { get; }
+		public abstract bool HasNoCards { get; }
+		public abstract bool HasAllCards { get; }
 		
-		public abstract bool hasAllCardsEmpty { get; }
-		public abstract bool hasAllCardsFull { get; }
+		public abstract bool HasAllCardsEmpty { get; }
+		public abstract bool HasAllCardsFull { get; }
 		
 		public abstract void Tick(float deltaTime);
 		public abstract void LayoutTarget(DequeStorable card, CardTarget target);
@@ -48,7 +48,7 @@ namespace SBEPIS.Capturellection.Storage
 		
 		private void OnDrawGizmosSelected()
 		{
-			DrawSize(maxPossibleSize, transform, Color.magenta);
+			DrawSize(MaxPossibleSize, transform, Color.magenta);
 		}
 		
 		private static void DrawSize(Vector3 size, Transform parent, Color color, float axisLength = 0.1f)

@@ -17,10 +17,10 @@ namespace SBEPIS.Capturellection.Deques
 			foreach (Storable storable in inventory)
 			{
 				storable.state.direction = Quaternion.Euler(0, 0, -90) * state.direction;
-				storable.Tick(deltaTime * storable.inventoryCount);
+				storable.Tick(deltaTime * storable.InventoryCount);
 			}
 			
-			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
+			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
 			float longestEdge = sizes.Select(size => size.x).Aggregate(Mathf.Max);
 			float innerRadius = DistanceToRegularPolygonEdge(inventory.Count, longestEdge);
 			
@@ -32,15 +32,15 @@ namespace SBEPIS.Capturellection.Deques
 				if (Mathf.Abs(modAngle) < anglePerCard / 2)
 					state.topStorable = storable;
 				
-				storable.position = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * (innerRadius + size.y / 2);
-				storable.rotation = Quaternion.Euler(0, 0, 180f + cardAngle) * ArrayDeque.GetOffsetRotation(state.direction);
+				storable.Position = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * (innerRadius + size.y / 2);
+				storable.Rotation = Quaternion.Euler(0, 0, 180f + cardAngle) * ArrayDeque.GetOffsetRotation(state.direction);
 				
 				cardAngle += anglePerCard;
 			}
 		}
 		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, CycloneState state)
 		{
-			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
+			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
 			float longestEdge = sizes.Select(size => size.x).Aggregate(Mathf.Max);
 			float innerRadius = DistanceToRegularPolygonEdge(inventory.Count, longestEdge);
 			Vector3 maxSize = sizes.Aggregate(ExtensionMethods.Max);
@@ -60,7 +60,7 @@ namespace SBEPIS.Capturellection.Deques
 			if (inventory.Contains(state.topStorable))
 				return UniTask.FromResult(inventory.IndexOf(state.topStorable));
 			
-			int index = inventory.FindIndex(storable => !storable.hasAllCardsFull);
+			int index = inventory.FindIndex(storable => !storable.HasAllCardsFull);
 			return UniTask.FromResult(index is -1 ? 0 : index);
 		}
 		public override UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, CycloneState state, Storable storable) => UniTask.FromResult(inventory.Contains(state.topStorable) ? inventory.IndexOf(state.topStorable) : inventory.Count);

@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using SBEPIS.Controller;
 using SBEPIS.Utils;
 using UnityEngine;
-using UnityEngine.Events;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Capturellection
@@ -17,6 +13,8 @@ namespace SBEPIS.Capturellection
 		public float tossHeight;
 		
 		public AnimationCurve retrievalAnimationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+		
+		public EventPropertySlave<DequeBoxOwner, DequeBox, SetDequeBoxEvent, UnsetDequeBoxEvent> dequeBoxEvents = new();
 		
 		public Deque Deque => DequeOwner.Deque;
 		public DequeBox DequeBox { get; private set; }
@@ -35,6 +33,9 @@ namespace SBEPIS.Capturellection
 			Socket = GetComponent<CouplingSocket>();
 			LerpTarget = GetComponent<LerpTarget>();
 			
+			DequeOwner.dequeEvents.onSet.AddListener(SetDequeBox);
+			DequeOwner.dequeEvents.onUnset.AddListener(UnsetDequeBox);
+			
 			Socket.onDecouple.AddListener(SetDequeBoxDecoupledState);
 		}
 		
@@ -50,10 +51,10 @@ namespace SBEPIS.Capturellection
 				return;
 			if (!DequeBox)
 				return;
-			
 			if (DequeBox.TryGetComponent(out Grabbable grabbable) && grabbable.isBeingHeld)
-				DequeBox.CloseDiajector();
-			else if (IsDequeBoxDeployed)
+				return;
+			
+			if (IsDequeBoxDeployed)
 				DequeBox.RetrieveDeque();
 			else
 				DequeBox.TossDeque();
@@ -61,7 +62,7 @@ namespace SBEPIS.Capturellection
 		
 		private static void SetDequeBoxDecoupledState(CouplingPlug plug, CouplingSocket socket) => plug.GetComponent<DequeBox>().SetDecoupledState();
 		
-		public void SetDequeBox(DequeOwner dequeOwner, Deque deque)
+		private void SetDequeBox(DequeOwner dequeOwner, Deque deque)
 		{
 			DequeBox = deque.GetComponent<DequeBox>();
 			if (!DequeBox)
@@ -74,14 +75,20 @@ namespace SBEPIS.Capturellection
 			
 			DequeAnimator = DequeBox.gameObject.AddComponent<LerpTargetAnimator>();
 			DequeAnimator.curve = retrievalAnimationCurve;
+			
+			dequeBoxEvents.onSet.Invoke(this, DequeBox);
 		}
-
-		public void UnsetDequeBox(DequeOwner dequeOwner, Deque deque)
+		
+		private void UnsetDequeBox(DequeOwner dequeOwner, Deque oldDeque, Deque newDeque)
 		{
+			DequeBox oldDequeBox = DequeBox;
+			
 			DequeBox.dequeBoxOwner = null;
 			DequeBox = null;
 			
 			Destroy(DequeAnimator);
+			
+			dequeBoxEvents.onUnset.Invoke(this, oldDequeBox, DequeBox);
 		}
 	}
 }

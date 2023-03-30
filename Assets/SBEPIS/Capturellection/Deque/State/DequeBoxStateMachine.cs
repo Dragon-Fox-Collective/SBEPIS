@@ -5,21 +5,18 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.DequeState
 {
-	[RequireComponent(typeof(DequeBox), typeof(GravitySum), typeof(CollisionTrigger))]
+	[RequireComponent(typeof(DequeBox), typeof(GravitySum), typeof(Grabbable))]
 	[RequireComponent(typeof(CouplingPlug))]
 	public class DequeBoxStateMachine : StateMachine
 	{
 		public DequeBox DequeBox { get; private set; }
-		public GravitySum GravitySum { get; private set; }
 		public CouplingPlug Plug { get; private set; }
 		
-		public DequeOwner DequeOwner => DequeBox.dequeBoxOwner.DequeOwner;
 		public DequeBoxOwner DequeBoxOwner => DequeBox.dequeBoxOwner;
 				
 		private void Awake()
 		{
 			DequeBox = GetComponent<DequeBox>();
-			GravitySum = GetComponent<GravitySum>();
 			Plug = GetComponent<CouplingPlug>();
 		}
 		
@@ -50,11 +47,5 @@ namespace SBEPIS.Capturellection.DequeState
 			get => state.GetBool(IsDeployedKey);
 			set => state.SetBool(IsDeployedKey, value);
 		}
-		
-		private static readonly int TossKey = Animator.StringToHash("On Toss");
-		public void Toss() => state.SetTrigger(TossKey);
-		
-		private static readonly int TriggerDiajectorKey = Animator.StringToHash("On Trigger Diajector");
-		public void TriggerDiajector() => state.SetTrigger(TriggerDiajectorKey);
 	}
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.DequeState
 {
-	public class DequeCoupledToHipState : StateMachineBehaviour
+	public class DequeCoupledToHipState : StateMachineBehaviour<DequeBoxStateMachine>
 	{
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{

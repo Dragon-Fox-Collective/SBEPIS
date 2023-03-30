@@ -1,16 +1,17 @@
+using System;
 using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection
 {
+	[RequireComponent(typeof(Inventory))]
 	public class DequeOwner : MonoBehaviour
 	{
 		[SerializeField]
 		private Deque initialDeque;
 		public Diajector diajector;
 		
-		[SerializeField]
-		private EventProperty<DequeOwner, Deque, SetDequeEvent, UnsetDequeEvent> dequeEvents = new();
+		public EventProperty<DequeOwner, Deque, SetDequeEvent, UnsetDequeEvent> dequeEvents = new();
 		public Deque Deque
 		{
 			get => dequeEvents.Get();
@@ -19,17 +20,16 @@ namespace SBEPIS.Capturellection
 		
 		public EventPropertySlave<DequeStorable, DequeOwner, SetCardOwnerEvent, UnsetCardOwnerEvent> cardOwnerSlaveEvents = new();
 		
+		public Inventory Inventory { get; private set; }
+		
 		private void Awake()
 		{
-			Deque = initialDeque;
+			Inventory = GetComponent<Inventory>();
 		}
 		
 		private void Start()
 		{
-			diajector.DequeOwner = this;
+			Deque = initialDeque;
 		}
-		
-		public void UnsetDequeOwner(DequeOwner dequeOwner, Deque oldDeque, Deque newDeque) => oldDeque.dequeOwner = null;
-		public void SetDequeOwner(DequeOwner dequeOwner, Deque deque) => deque.dequeOwner = this;
 	}
 }

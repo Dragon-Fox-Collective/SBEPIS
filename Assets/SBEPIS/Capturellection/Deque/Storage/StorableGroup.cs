@@ -10,15 +10,15 @@ namespace SBEPIS.Capturellection.Storage
 		public StorableGroupDefinition definition;
 		public List<Storable> inventory = new();
 		
-		public override Vector3 maxPossibleSize => definition.ruleset.GetMaxPossibleSizeOf(inventory, state);
+		public override Vector3 MaxPossibleSize => definition.ruleset.GetMaxPossibleSizeOf(inventory, state);
 		
-		public override int inventoryCount => inventory.Count;
+		public override int InventoryCount => inventory.Count;
 		
-		public override bool hasNoCards => inventory.Count == 0;
-		public override bool hasAllCards => inventory.Count == definition.maxStorables && inventory.All(storable => storable.hasAllCards);
+		public override bool HasNoCards => inventory.Count == 0;
+		public override bool HasAllCards => inventory.Count == definition.maxStorables && inventory.All(storable => storable.HasAllCards);
 		
-		public override bool hasAllCardsEmpty => inventory.All(storable => storable.hasAllCardsEmpty);
-		public override bool hasAllCardsFull => inventory.All(storable => storable.hasAllCardsFull);
+		public override bool HasAllCardsEmpty => inventory.All(storable => storable.HasAllCardsEmpty);
+		public override bool HasAllCardsFull => inventory.All(storable => storable.HasAllCardsFull);
 
 		public override void Tick(float deltaTime) => definition.ruleset.Tick(inventory, state, deltaTime);
 		public override void LayoutTarget(DequeStorable card, CardTarget target) => inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
@@ -63,7 +63,7 @@ namespace SBEPIS.Capturellection.Storage
 		public override async UniTask Flush(List<DequeStorable> cards) => await Flush(cards, 0);
 		public async UniTask Flush(List<DequeStorable> cards, int originalIndex)
 		{
-			if (hasAllCards || cards.Count == 0)
+			if (HasAllCards || cards.Count == 0)
 				return;
 			
 			foreach (Storable storable in inventory.Skip(originalIndex).Concat(inventory.Take(originalIndex)))
@@ -89,7 +89,7 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public override void Load(List<DequeStorable> cards)
 		{
-			if (hasAllCards || cards.Count == 0)
+			if (HasAllCards || cards.Count == 0)
 				return;
 			
 			foreach (Storable storable in inventory)

@@ -12,8 +12,7 @@ namespace SBEPIS.Capturellection
 	{
 		public Renderer bounds;
 		
-		[SerializeField]
-		private EventProperty<DequeStorable, DequeOwner, SetCardOwnerEvent, UnsetCardOwnerEvent> dequeOwnerEvents = new();
+		public EventProperty<DequeStorable, DequeOwner, SetCardOwnerEvent, UnsetCardOwnerEvent> dequeOwnerEvents = new();
 		public DequeOwner DequeOwner
 		{
 			get => dequeOwnerEvents.Get();

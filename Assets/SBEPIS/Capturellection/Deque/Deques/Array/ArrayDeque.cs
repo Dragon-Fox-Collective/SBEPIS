@@ -27,7 +27,7 @@ namespace SBEPIS.Capturellection.Deques
 				storable.Tick(deltaTime);
 			}
 			
-			List<Vector3> sizes = inventory.Select(storable => storable.maxPossibleSize).ToList();
+			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
 			Vector3 absDirection = state.direction.Select(Mathf.Abs);
 			float lengthSum = offsetFromEnd ?
 				-offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude :
@@ -42,8 +42,8 @@ namespace SBEPIS.Capturellection.Deques
 				
 				Vector3 up = Mathf.Sin(state.time * wobbleTimeFactor + (right - startRight).magnitude * wobbleSpaceFactor) * wobbleAmplitude * Vector3.up;
 				
-				storable.position = right + up;
-				storable.rotation = GetOffsetRotation(state.direction);
+				storable.Position = right + up;
+				storable.Rotation = GetOffsetRotation(state.direction);
 				
 				right += state.direction * (offset + (offsetFromEnd ? length / 2 : 0));
 			}
@@ -51,7 +51,7 @@ namespace SBEPIS.Capturellection.Deques
 		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, ArrayState state) => GetSizeFromExistingLayout(inventory);
 		public static Vector3 GetSizeFromExistingLayout(IEnumerable<Storable> inventory)
 		{
-			return inventory.Select(storable => new Bounds(storable.position, storable.maxPossibleSize)).Aggregate(new Bounds(), (current, bounds) => current.Containing(bounds)).size;
+			return inventory.Select(storable => new Bounds(storable.Position, storable.MaxPossibleSize)).Aggregate(new Bounds(), (current, bounds) => current.Containing(bounds)).size;
 		}
 		public static Quaternion GetOffsetRotation(Vector3 direction) => Quaternion.AngleAxis(-5f, Vector3.Cross(direction, Vector3.forward));
 		
@@ -60,7 +60,7 @@ namespace SBEPIS.Capturellection.Deques
 		public override async UniTask<int> GetIndexToStoreInto(List<Storable> inventory, ArrayState state)
 		{
 			await UniTask.Delay(TimeSpan.FromSeconds(1), DelayType.Realtime);
-			int index = inventory.FindIndex(storable => !storable.hasAllCardsFull);
+			int index = inventory.FindIndex(storable => !storable.HasAllCardsFull);
 			return index is -1 ? 0 : index;
 		}
 		public override UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, ArrayState state, Storable storable) => UniTask.FromResult(inventory.Count);
