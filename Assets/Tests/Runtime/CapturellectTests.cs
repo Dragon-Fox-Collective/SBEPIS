@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.InputSystem;
 using OculusTouchController = Unity.XR.Oculus.Input.OculusTouchController;
-using SBEPIS.Capturllection;
+using SBEPIS.Capturellection;
 using SBEPIS.Bits;
 using SBEPIS.Items;
 using SBEPIS.Tests.Scenes;

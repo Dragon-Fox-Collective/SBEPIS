@@ -1,5 +1,5 @@
 using SBEPIS.Bits;
-using SBEPIS.Capturllection;
+using SBEPIS.Capturellection;
 using UnityEngine;
 
 namespace SBEPIS.Thaumergy
