@@ -4,6 +4,6 @@ namespace SBEPIS.Capturellection.CardState
 {
 	public class CardMoveToLowerDequeState : CardTargettingState
 	{
-		protected override LerpTarget GetTargetToTargetTo(DequeStorable card) => card.DequeOwner.Deque.lowerTarget;
+		protected override LerpTarget GetTargetToTargetTo(DequeStorable card) => card.Deque.lowerTarget;
 	}
 }

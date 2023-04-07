@@ -47,9 +47,6 @@ namespace SBEPIS.Capturellection
 		
 		private void TickAndLayoutTargets(float deltaTime)
 		{
-			if (!diajector.IsBound)
-				return;
-			
 			inventory.state.direction = directionEndpoint ? transform.InverseTransformPoint(directionEndpoint.position).normalized : Vector3.zero;
 			inventory.Tick(deltaTime);
 			Vector3 inventorySize = inventory.MaxPossibleSize;
@@ -89,7 +86,7 @@ namespace SBEPIS.Capturellection
 		{
 			CardTarget target = HasTemporaryTarget(card) ? targets[card] : AddTemporaryTarget(card);
 			page.AddCard(card, target);
-			diajector.dequeOwner.Deque.lowerTarget.onMoveFrom.Invoke(card.Animator);
+			diajector.deque.lowerTarget.onMoveFrom.Invoke(card.Animator);
 			return target;
 		}
 		
@@ -121,7 +118,7 @@ namespace SBEPIS.Capturellection
 				}
 				else
 				{
-					card.Animator.TeleportTo(diajector.dequeOwner.Deque.lowerTarget);
+					card.Animator.TeleportTo(diajector.deque.lowerTarget);
 				}
 			}
 		}

@@ -1,4 +1,3 @@
-using System;
 using SBEPIS.Physics;
 using SBEPIS.UI;
 using SBEPIS.Utils;
@@ -10,7 +9,7 @@ namespace SBEPIS.Capturellection
 {
 	public class Diajector : MonoBehaviour
 	{
-		public DequeOwner dequeOwner;
+		public Deque deque;
 		
 		public LerpTarget upperTarget;
 		[FormerlySerializedAs("cardPrefab")]
@@ -23,20 +22,14 @@ namespace SBEPIS.Capturellection
 		public MonoBehaviour coroutineOwner;
 		public StrengthSettings cardStrength;
 		
-		public bool IsBound => dequeOwner.Deque;
-		
 		private DiajectorPage currentPage;
 		
 		public bool IsOpen => currentPage;
-		
-		private void Awake()
-		{
-			dequeOwner.dequeEvents.onUnset.AddListener(ForceCloseIfNoDeque);
-		}
-		
-		public void StartAssembly() => StartAssembly(transform.position, transform.rotation);
+
+		private void StartAssembly() => StartAssembly(transform.position, transform.rotation);
 		public void StartAssembly(Vector3 position, Quaternion rotation) => StartAssembly(position, rotation, mainPage);
-		public void StartAssembly(Vector3 position, Quaternion rotation, DiajectorPage page)
+
+		private void StartAssembly(Vector3 position, Quaternion rotation, DiajectorPage page)
 		{
 			if (IsOpen)
 			{
@@ -55,7 +48,7 @@ namespace SBEPIS.Capturellection
 			AssembleNewPage(page);
 		}
 		
-		public UnityAction ChangePageMethod(DiajectorPage page) => () => ChangePage(page);
+		public UnityAction ChangePageAction(DiajectorPage page) => () => ChangePage(page);
 		
 		private void AssembleNewPage(DiajectorPage page)
 		{
@@ -112,12 +105,6 @@ namespace SBEPIS.Capturellection
 			coroutineOwner.StopAllCoroutines();
 			ForceCloseCurrentPage();
 			gameObject.SetActive(false);
-		}
-		
-		private void ForceCloseIfNoDeque(DequeOwner dequeOwner, Deque oldDeque, Deque newDeque)
-		{
-			if (!newDeque && IsOpen)
-				ForceClose();
 		}
 		
 		public void ForceRestart()

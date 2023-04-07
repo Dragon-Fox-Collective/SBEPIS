@@ -41,12 +41,12 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator CapturllectTogglesDeque()
 		{
-			bool wasActive = Scene.dequeBoxOwner.Deque.gameObject.activeSelf;
+			bool wasActive = Scene.dequeBoxOwner.DequeBox.Deque.gameObject.activeSelf;
 			
 			Press(controller.primaryButton);
 			yield return new WaitForSeconds(0.5f);
 			
-			Assert.That(Scene.dequeBoxOwner.Deque.gameObject.activeSelf, Is.Not.EqualTo(wasActive));
+			Assert.That(Scene.dequeBoxOwner.DequeBox.Deque.gameObject.activeSelf, Is.Not.EqualTo(wasActive));
 			
 			Release(controller.primaryButton);
 			yield return null;
@@ -54,7 +54,7 @@ namespace SBEPIS.Tests
 			Press(controller.primaryButton);
 			yield return new WaitForSeconds(0.5f);
 			
-			Assert.That(Scene.dequeBoxOwner.Deque.gameObject.activeSelf, Is.EqualTo(wasActive));
+			Assert.That(Scene.dequeBoxOwner.DequeBox.Deque.gameObject.activeSelf, Is.EqualTo(wasActive));
 		}
 		
 		[UnityTest]

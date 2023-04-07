@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using SBEPIS.Controller;
 using UnityEngine;
-using UnityEngine.Serialization;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Capturellection
@@ -9,8 +8,6 @@ namespace SBEPIS.Capturellection
 	[RequireComponent(typeof(Grabber))]
 	public class Capturellector : MonoBehaviour
 	{
-		[FormerlySerializedAs("owner")]
-		public DequeOwner dequeOwner;
 		public Inventory inventory;
 		
 		private Grabber grabber;
@@ -40,10 +37,10 @@ namespace SBEPIS.Capturellection
 			(DequeStorable card, Capturellectainer container, Capturellectable ejectedItem) = await inventory.Store(item);
 			
 			if (ejectedItem)
-				if (dequeOwner.diajector.ShouldCardBeDisplayed(card))
+				if (card.Deque.diajector.ShouldCardBeDisplayed(card))
 					ejectedItem.GetComponent<Rigidbody>().Move(card.transform.position, card.transform.rotation);
 				else
-					ejectedItem.GetComponent<Rigidbody>().Move(dequeOwner.Deque.transform.position, dequeOwner.Deque.transform.rotation);
+					ejectedItem.GetComponent<Rigidbody>().Move(card.Deque.transform.position, card.Deque.transform.rotation);
 			
 			if (container.TryGetComponent(out Grabbable cardGrabbable))
 				grabber.Grab(cardGrabbable);

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection
 {
-	public class DequeSettingsPageSwitcher : MonoBehaviour
+	public class DequeSettingsPageChanger : MonoBehaviour
 	{
 		public DequeSettingsPageCreator pageCreator;
 		
@@ -13,7 +13,7 @@ namespace SBEPIS.Capturellection
 			diajector = GetComponentInParent<Diajector>();
 		}
 		
-		public void SwitchPage()
+		public void ChangePage()
 		{
 			if (pageCreator.FirstSettingsPage)
 				diajector.ChangePage(pageCreator.FirstSettingsPage.page);
