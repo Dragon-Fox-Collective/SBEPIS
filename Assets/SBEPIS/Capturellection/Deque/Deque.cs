@@ -1,10 +1,10 @@
 using SBEPIS.Capturellection.Storage;
 using UnityEngine;
-using SBEPIS.Controller;
 using SBEPIS.Utils;
 
 namespace SBEPIS.Capturellection
 {
+	[RequireComponent(typeof(Inventory))]
 	public class Deque : MonoBehaviour
 	{
 		public LerpTarget lowerTarget;
@@ -12,15 +12,13 @@ namespace SBEPIS.Capturellection
 		
 		public StorableGroupDefinition definition;
 		
-		public EventPropertySlave<DequeOwner, Deque, SetDequeEvent, UnsetDequeEvent> dequeSlaveEvents = new();
+		public Diajector diajector;
 		
-		public void AdoptDeque(Grabber grabber, Grabbable grabbable)
+		public Inventory Inventory { get; private set; }
+		
+		private void Awake()
 		{
-			Capturellector capturellector = grabber.GetComponent<Capturellector>();
-			if (!capturellector)
-				return;
-			
-			capturellector.dequeOwner.Deque = this;
+			Inventory = GetComponent<Inventory>();
 		}
 	}
 }

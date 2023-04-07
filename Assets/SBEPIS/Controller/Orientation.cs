@@ -19,9 +19,9 @@ namespace SBEPIS.Controller
 		public Rigidbody groundRigidbody => groundCollider ? groundCollider.attachedRigidbody : null;
 
 		public Vector3 relativeVelocity => groundRigidbody ? rigidbody.velocity - groundRigidbody.velocity : rigidbody.velocity;
-		public Vector3 groundVelocity => Vector3.ProjectOnPlane(relativeVelocity, gravityNormalizer.upDirection);
-		public Vector3 verticalVelocity => Vector3.Project(relativeVelocity, gravityNormalizer.upDirection);
-		public Vector3 upDirection => gravityNormalizer.upDirection;
+		public Vector3 groundVelocity => Vector3.ProjectOnPlane(relativeVelocity, gravityNormalizer.UpDirection);
+		public Vector3 verticalVelocity => Vector3.Project(relativeVelocity, gravityNormalizer.UpDirection);
+		public Vector3 upDirection => gravityNormalizer.UpDirection;
 		public bool isFalling => Vector3.Dot(verticalVelocity, upDirection) < 0;
 
 		private void Awake()

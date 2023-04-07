@@ -34,7 +34,7 @@ namespace SBEPIS.Capturellection
 				target.card = card;
 				
 				AddCard(card, target);
-				card.Animator.TeleportTo(Diajector.dequeOwner.Deque.lowerTarget);
+				card.Animator.TeleportTo(Diajector.deque.lowerTarget);
 				
 				Grabbable cardGrabbable = card.Grabbable;
 				cardGrabbable.onGrab.AddListener((_, _) => target.onGrab.Invoke());
@@ -46,14 +46,14 @@ namespace SBEPIS.Capturellection
 		public void AddCard(DequeStorable card, CardTarget target)
 		{
 			cardTargets.Add(card, target);
-			card.DequeOwner = Diajector.dequeOwner;
+			card.Deque = Diajector.deque;
 			target.onCardBound.Invoke(card);
 		}
 		
 		public void RemoveCard(DequeStorable card)
 		{
 			cardTargets.Remove(card);
-			card.DequeOwner = null;
+			card.Deque = null;
 		}
 		
 		public bool HasCard(DequeStorable card) => cardTargets.ContainsKey(card);

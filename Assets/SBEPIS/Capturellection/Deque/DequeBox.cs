@@ -1,4 +1,3 @@
-using System;
 using SBEPIS.Capturellection.DequeState;
 using SBEPIS.Physics;
 using UnityEngine;
@@ -10,12 +9,10 @@ namespace SBEPIS.Capturellection
 	{
 		public bool IsDeployed => state.IsDeployed;
 		
-		[NonSerialized]
-		public DequeBoxOwner dequeBoxOwner;
-		
 		public Deque Deque { get; private set; }
 		private DequeBoxStateMachine state;
 		public GravitySum GravitySum { get; private set; }
+		public Rigidbody Rigidbody => GravitySum.Rigidbody;
 		
 		private void Awake()
 		{
@@ -35,36 +32,25 @@ namespace SBEPIS.Capturellection
 			state.IsCoupled = false;
 		}
 		
-		public void SetUnbindState()
+		public void RetrieveDeque(DequeBoxOwner dequeBoxOwner)
 		{
-			state.IsBound = false;
+			state.lerpTarget = dequeBoxOwner.lerpTarget;
 			state.IsDeployed = false;
 		}
 		
-		public void SetBindState()
-		{
-			state.IsBound = true;
-			state.IsDeployed = dequeBoxOwner.DequeOwner.diajector.IsOpen;
-		}
-		
-		public void RetrieveDeque()
-		{
-			state.IsDeployed = false;
-		}
-		
-		public void TossDeque()
+		public void TossDeque(DequeBoxOwner dequeBoxOwner)
 		{
 			SetDecoupledState();
 			
 			Transform tossTarget = dequeBoxOwner.tossTarget;
 			float tossHeight = dequeBoxOwner.tossHeight;
 			
-			GravitySum.rigidbody.velocity = CalcTossVelocity(
+			Rigidbody.velocity = CalcTossVelocity(
 				transform,
 				tossTarget,
 				tossHeight,
 				tossTarget.up,
-				GravitySum.gravityAcceleration);
+				GravitySum.GravityAcceleration);
 		}
 		
 		private static Vector3 CalcTossVelocity(Transform box, Transform tossTarget, float tossHeight, Vector3 upDirection, float gravityAcceleration)

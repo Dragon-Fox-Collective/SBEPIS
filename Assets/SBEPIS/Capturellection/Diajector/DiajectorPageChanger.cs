@@ -3,7 +3,7 @@ using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
-	public class DiajectorPageSwitcher : MonoBehaviour
+	public class DiajectorPageChanger : MonoBehaviour
 	{
 		[FormerlySerializedAs("dequePage")]
 		public DiajectorPage diajectorPage;
@@ -15,7 +15,7 @@ namespace SBEPIS.Capturellection
 			diajector = GetComponentInParent<Diajector>();
 		}
 		
-		public void SwitchPage()
+		public void ChangePage()
 		{
 			diajector.ChangePage(diajectorPage);
 		}

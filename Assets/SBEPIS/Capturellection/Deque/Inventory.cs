@@ -8,13 +8,12 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Capturellection
 {
-	[RequireComponent(typeof(DequeOwner))]
 	public class Inventory : MonoBehaviour, IEnumerable<DequeStorable>
 	{
 		[SerializeField]
 		private DequeStorable cardPrefab;
 		[SerializeField]
-		private int initialCardCount = 5;
+		private int initialCardCount = 0;
 		
 		[Tooltip("Purely organizational for the hierarchy")]
 		[SerializeField]
@@ -22,21 +21,12 @@ namespace SBEPIS.Capturellection
 		
 		public UnityEvent<Storable> onLoadIntoDeque = new();
 		public UnityEvent<List<DequeStorable>> onSaveFromDeque = new();
-
-		private DequeOwner dequeOwner;
 		
 		private List<DequeStorable> savedInventory;
 		private Storable storable;
 		
 		private void Awake()
 		{
-			dequeOwner = GetComponent<DequeOwner>();
-			
-			dequeOwner.dequeEvents.onSet.AddListener(LoadInventoryIntoDeque);
-			dequeOwner.dequeEvents.onUnset.AddListener(SaveInventoryFromDeque);
-			dequeOwner.cardOwnerSlaveEvents.onSet.AddListener(SetCardParent);
-			dequeOwner.cardOwnerSlaveEvents.onUnset.AddListener(UnsetCardParent);
-			
 			SaveInitialInventory();
 		}
 		
@@ -51,11 +41,11 @@ namespace SBEPIS.Capturellection
 			savedInventory = initialInventory;
 		}
 		
-		private void LoadInventoryIntoDeque(DequeOwner dequeOwner, Deque deque)
+		private void LoadInventoryIntoDeque(Deque deque)
 		{
 			storable = StorableGroupDefinition.GetNewStorable(deque.definition);
 			foreach (DequeStorable card in savedInventory)
-				card.DequeOwner = dequeOwner;
+				card.Deque = deque;
 			storable.Load(savedInventory);
 			foreach (DequeStorable card in savedInventory)
 			{
@@ -67,17 +57,17 @@ namespace SBEPIS.Capturellection
 			onLoadIntoDeque.Invoke(storable);
 		}
 		
-		private void SaveInventoryFromDeque(DequeOwner dequeOwner, Deque oldDeque, Deque newDeque)
+		private void SaveInventoryFromDeque()
 		{
 			savedInventory = storable.ToList();
 			Destroy(storable.gameObject);
 			foreach (DequeStorable card in savedInventory)
-				card.DequeOwner = null;
+				card.Deque = null;
 			onSaveFromDeque.Invoke(savedInventory);
 		}
 		
-		private void SetCardParent(DequeStorable card, DequeOwner owner) => card.transform.SetParent(cardParent);
-		private static void UnsetCardParent(DequeStorable card, DequeOwner oldOwner, DequeOwner newOwner) => card.transform.SetParent(null);
+		private void SetCardParent(DequeStorable card) => card.transform.SetParent(cardParent);
+		private static void UnsetCardParent(DequeStorable card) => card.transform.SetParent(null);
 		
 		public bool CanFetch(DequeStorable card) => storable.CanFetch(card);
 		public UniTask<Capturellectable> Fetch(DequeStorable card) => storable.Fetch(card);

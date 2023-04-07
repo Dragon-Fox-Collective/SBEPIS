@@ -4,6 +4,7 @@ using SBEPIS.Capturellection.CardState;
 using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
@@ -12,19 +13,20 @@ namespace SBEPIS.Capturellection
 	{
 		public Renderer bounds;
 		
-		public EventProperty<DequeStorable, DequeOwner, SetCardOwnerEvent, UnsetCardOwnerEvent> dequeOwnerEvents = new();
-		public DequeOwner DequeOwner
+		[FormerlySerializedAs("dequeOwnerEvents")]
+		public EventProperty<DequeStorable, Deque, SetCardDequeEvent, UnsetCardDequeEvent> dequeEvents = new();
+		public Deque Deque
 		{
-			get => dequeOwnerEvents.Get();
-			set => dequeOwnerEvents.Set(this, value, dequeOwner => dequeOwner.cardOwnerSlaveEvents);
+			get => dequeEvents.Get();
+			set => dequeEvents.Set(this, value);
 		}
 		
 		public Grabbable Grabbable { get; private set; }
 		public CardStateMachine State { get; private set; }
 		public LerpTargetAnimator Animator { get; private set; }
 		public Capturellectainer Container { get; private set; }
-
-		public bool IsStored => DequeOwner;
+		
+		public bool IsStored => Deque;
 		
 		public bool CanStoreInto => Container && Container.IsEmpty;
 		

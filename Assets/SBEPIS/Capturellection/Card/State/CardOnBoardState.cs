@@ -11,11 +11,11 @@ namespace SBEPIS.Capturellection.CardState
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
 			DequeStorable card = animator.GetComponent<DequeStorable>();
-			LerpTarget target = card.DequeOwner.diajector.GetLerpTarget(card);
+			LerpTarget target = card.Deque.diajector.GetLerpTarget(card);
 			if (!target)
 				return;
-			Rigidbody staticRigidbody = card.DequeOwner.diajector.staticRigidbody;
-			StrengthSettings cardStrength = card.DequeOwner.diajector.cardStrength;
+			Rigidbody staticRigidbody = card.Deque.diajector.staticRigidbody;
+			StrengthSettings cardStrength = card.Deque.diajector.cardStrength;
 
 			targetter = staticRigidbody.gameObject.AddComponent<JointTargetter>();
 			targetter.connectedBody = card.Grabbable.rigidbody;
