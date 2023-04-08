@@ -179,6 +179,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 5494029080115591883}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.MenuActions, SBEPIS.Capturellection
+        m_MethodName: BindToPlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onHoldUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -685,6 +697,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7054821928849635976, guid: d079658734f6aa94bb1896dd4a530e22, type: 3}
+      propertyPath: deque
+      value: 
+      objectReference: {fileID: 6518269390508492605}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -704,6 +720,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0d00b0cf08b2be42b94e48c15a25370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5494029080115591883 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1807051198795474421, guid: d079658734f6aa94bb1896dd4a530e22, type: 3}
+  m_PrefabInstance: {fileID: 6137659909515337534}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a59a6bd59c0809b43b80d67cd014002e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6239174079351266277
