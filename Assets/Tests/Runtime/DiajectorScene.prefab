@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5577048720688732270}
   - component: {fileID: 4564863158678804224}
+  - component: {fileID: 8397391858781104826}
   m_Layer: 0
   m_Name: Change Deque
   m_TagString: Untagged
@@ -48,13 +49,28 @@ MonoBehaviour:
   lowerTarget: {fileID: 0}
   upperTarget: {fileID: 0}
   definition: {fileID: 7884537079957163349}
-  dequeSlaveEvents:
-    onSet:
-      m_PersistentCalls:
-        m_Calls: []
-    onUnset:
-      m_PersistentCalls:
-        m_Calls: []
+  diajector: {fileID: 0}
+--- !u!114 &8397391858781104826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983040846634135989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c96bf03dee74e79bf06f8c900a58c56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 0}
+  initialCardCount: 0
+  cardParent: {fileID: 0}
+  onLoadIntoDeque:
+    m_PersistentCalls:
+      m_Calls: []
+  onSaveFromDeque:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1135973172360287361
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,6 +81,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6271794314480888203}
   - component: {fileID: 6340200401789332604}
+  - component: {fileID: 524346349185425410}
   m_Layer: 0
   m_Name: Starting Deque
   m_TagString: Untagged
@@ -103,13 +120,28 @@ MonoBehaviour:
   lowerTarget: {fileID: 0}
   upperTarget: {fileID: 0}
   definition: {fileID: 8142921912057987492}
-  dequeSlaveEvents:
-    onSet:
-      m_PersistentCalls:
-        m_Calls: []
-    onUnset:
-      m_PersistentCalls:
-        m_Calls: []
+  diajector: {fileID: 0}
+--- !u!114 &524346349185425410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135973172360287361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c96bf03dee74e79bf06f8c900a58c56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 0}
+  initialCardCount: 0
+  cardParent: {fileID: 0}
+  onLoadIntoDeque:
+    m_PersistentCalls:
+      m_Calls: []
+  onSaveFromDeque:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2612261415007828926
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,7 +372,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1264380935127050933}
   - {fileID: 5929107739584433075}
   - {fileID: 621969940619193087}
   - {fileID: 6271794314480888203}
@@ -362,11 +393,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed3951bfcc2e4efeb9c72b359e73da00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dequeOwner: {fileID: 6470206736414841469}
   startingDeque: {fileID: 6340200401789332604}
   changeDeque: {fileID: 4564863158678804224}
   diajector: {fileID: 883780645376880982}
-  inventory: {fileID: 4393353189979642650}
+  inventory: {fileID: 0}
 --- !u!1 &6084218323592015913
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,7 +576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bounds: {fileID: 5019812363894276958}
-  dequeOwnerEvents:
+  dequeEvents:
     onSet:
       m_PersistentCalls:
         m_Calls:
@@ -638,7 +668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d00b0cf08b2be42b94e48c15a25370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dequeOwner: {fileID: 6470206736414841469}
+  deque: {fileID: 0}
   upperTarget: {fileID: 0}
   menuCardPrefab: {fileID: 2122061535575614757}
   electricArcPrefab: {fileID: 0}
@@ -867,101 +897,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &8407304455521146805
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1264380935127050933}
-  - component: {fileID: 6470206736414841469}
-  - component: {fileID: 4393353189979642650}
-  m_Layer: 0
-  m_Name: Deque Owner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1264380935127050933
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8407304455521146805}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8530244111787508002}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6470206736414841469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8407304455521146805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35f4ceabfeb07a740830c3074cf463fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialDeque: {fileID: 6340200401789332604}
-  diajector: {fileID: 883780645376880982}
-  dequeEvents:
-    onSet:
-      m_PersistentCalls:
-        m_Calls: []
-    onUnset:
-      m_PersistentCalls:
-        m_Calls: []
-  cardOwnerSlaveEvents:
-    onSet:
-      m_PersistentCalls:
-        m_Calls: []
-    onUnset:
-      m_PersistentCalls:
-        m_Calls: []
---- !u!114 &4393353189979642650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8407304455521146805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c96bf03dee74e79bf06f8c900a58c56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 2122061535575614757}
-  initialCardCount: 1
-  cardParent: {fileID: 1264380935127050933}
-  onLoadIntoDeque:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5320918488515929418}
-        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DiajectorCaptureLayout,
-          SBEPIS.Capturellection
-        m_MethodName: set_Inventory
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onSaveFromDeque:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &2330521735076377332
 PrefabInstance:
   m_ObjectHideFlags: 0
