@@ -9,8 +9,6 @@ namespace SBEPIS.Capturellection
 {
 	public class Capturellectainer : MonoBehaviour
 	{
-		public Capturellectable defaultCapturedItemPrefab;
-		
 		public CaptureEvent onCapture = new();
 		[FormerlySerializedAs("onRetrieve")]
 		public CaptureEvent onFetch = new();
@@ -20,15 +18,6 @@ namespace SBEPIS.Capturellection
 		public bool IsEmpty => !HasCapturedItem;
 		
 		private string originalName;
-		
-		private void Awake()
-		{
-			if (defaultCapturedItemPrefab)
-			{
-				Capturellectable item = Instantiate(defaultCapturedItemPrefab);
-				Capture(item);
-			}
-		}
 		
 		public void Capture(Capturellectable item)
 		{
