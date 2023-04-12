@@ -5,11 +5,11 @@ namespace SBEPIS.Utils
 	[RequireComponent(typeof(Animator))]
 	public abstract class StateMachine : MonoBehaviour
 	{
-		protected Animator state;
+		protected Animator State { get; private set; }
 		
-		private void Awake()
+		protected virtual void Awake()
 		{
-			state = GetComponent<Animator>();
+			State = GetComponent<Animator>();
 		}
 	}
 }

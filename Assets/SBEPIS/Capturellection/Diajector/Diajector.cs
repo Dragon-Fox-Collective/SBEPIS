@@ -25,10 +25,10 @@ namespace SBEPIS.Capturellection
 		private DiajectorPage currentPage;
 		
 		public bool IsOpen => currentPage;
-
+		
 		private void StartAssembly() => StartAssembly(transform.position, transform.rotation);
 		public void StartAssembly(Vector3 position, Quaternion rotation) => StartAssembly(position, rotation, mainPage);
-
+		
 		private void StartAssembly(Vector3 position, Quaternion rotation, DiajectorPage page)
 		{
 			if (IsOpen)

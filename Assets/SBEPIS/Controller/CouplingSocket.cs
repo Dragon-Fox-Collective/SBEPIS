@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using SBEPIS.Predicates;
 using UnityEngine;
@@ -91,5 +92,6 @@ namespace SBEPIS.Controller
 		}
 	}
 	
+	[Serializable]
 	public class CoupleEvent : UnityEvent<CouplingPlug, CouplingSocket> { }
 }
