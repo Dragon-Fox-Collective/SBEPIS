@@ -14,7 +14,7 @@ namespace SBEPIS.Capturellection
 			dequeBox = GetComponent<DequeBox>();
 		}
 		
-		private void OpenDiajector()
+		public void OpenDiajector()
 		{
 			Vector3 position = dequeBox.transform.position;
 			Vector3 upDirection = dequeBox.GravitySum.UpDirection;
@@ -22,6 +22,6 @@ namespace SBEPIS.Capturellection
 			Quaternion rotation = Quaternion.LookRotation(groundDelta, upDirection);
 			diajector.StartAssembly(position, rotation);
 		}
-		private void CloseDiajector() => diajector.StartDisassembly();
+		public void CloseDiajector() => diajector.StartDisassembly();
 	}
 }

@@ -17,8 +17,9 @@ namespace SBEPIS.Capturellection.DequeState
 		public CouplingPlug Plug { get; private set; }
 		public LerpTargetAnimator Animator { get; private set; }
 		
-		private void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
 			DequeBox = GetComponent<DequeBox>();
 			Plug = GetComponent<CouplingPlug>();
 			Animator = GetComponent<LerpTargetAnimator>();
@@ -27,22 +28,22 @@ namespace SBEPIS.Capturellection.DequeState
 		private static readonly int IsGrabbedKey = UnityEngine.Animator.StringToHash("Is Grabbed");
 		public bool IsGrabbed
 		{
-			get => state.GetBool(IsGrabbedKey);
-			set => state.SetBool(IsGrabbedKey, value);
+			get => State.GetBool(IsGrabbedKey);
+			set => State.SetBool(IsGrabbedKey, value);
 		}
 		
 		private static readonly int IsCoupledKey = UnityEngine.Animator.StringToHash("Is Coupled");
 		public bool IsCoupled
 		{
-			get => state.GetBool(IsCoupledKey);
-			set => state.SetBool(IsCoupledKey, value);
+			get => State.GetBool(IsCoupledKey);
+			set => State.SetBool(IsCoupledKey, value);
 		}
 		
 		private static readonly int IsDeployedKey = UnityEngine.Animator.StringToHash("Is Deployed");
 		public bool IsDeployed
 		{
-			get => state.GetBool(IsDeployedKey);
-			set => state.SetBool(IsDeployedKey, value);
+			get => State.GetBool(IsDeployedKey);
+			set => State.SetBool(IsDeployedKey, value);
 		}
 	}
 }
