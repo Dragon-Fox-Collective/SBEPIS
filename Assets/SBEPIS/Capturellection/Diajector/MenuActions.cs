@@ -12,7 +12,8 @@ namespace SBEPIS.Capturellection
 		public float mouseSensitivityMin = 0.1f;
 		public float mouseSensitivityMax = 1;
 
-		private MenuActionsPlayerData playerData;
+		private LookController lookController;
+		
 		private PlayerSettingsSaveData settingsData;
 		
 		public void StartNewGame()
@@ -20,7 +21,7 @@ namespace SBEPIS.Capturellection
 			StartCoroutine(LoadNewGameScene());
 		}
 		
-		private IEnumerator LoadNewGameScene()
+		private static IEnumerator LoadNewGameScene()
 		{
 			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Demo");
 			while (!asyncLoad.isDone)
@@ -32,7 +33,7 @@ namespace SBEPIS.Capturellection
 			StartCoroutine(LoadMainMenuScene());
 		}
 		
-		private IEnumerator LoadMainMenuScene()
+		private static IEnumerator LoadMainMenuScene()
 		{
 			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main Menu");
 			while (!asyncLoad.isDone)
@@ -50,9 +51,9 @@ namespace SBEPIS.Capturellection
 		
 		public void BindToPlayer(Grabber grabber, Grabbable grabbable)
 		{
-			if (!grabber.TryGetComponent(out MenuActionsPlayerData newPlayerData))
+			if (!grabber.TryGetComponent(out PlayerReference player))
 				return;
-			playerData = newPlayerData;
+			lookController = player.GetComponent<LookController>();
 			ReloadData();
 		}
 		
@@ -77,21 +78,21 @@ namespace SBEPIS.Capturellection
 		private void LoadMouseSensitivity(ref PlayerSettingsSaveData settingsData)
 		{
 			if (settingsData.version >= 0)
-				playerData.lookController.sensitivity = settingsData.sensitivity;
+				lookController.sensitivity = settingsData.sensitivity;
 			else
 				SaveMouseSensitivity(ref settingsData);
 		}
 		private void SaveMouseSensitivity(ref PlayerSettingsSaveData settingsData)
 		{
-			settingsData.sensitivity = playerData.lookController.sensitivity;
+			settingsData.sensitivity = lookController.sensitivity;
 		}
 		public void ResetMouseSensitivitySlider()
 		{
-			sensitivitySlider.SliderValue = playerData.lookController.sensitivity.Map(mouseSensitivityMin, mouseSensitivityMax, 0, 1);
+			sensitivitySlider.SliderValue = lookController.sensitivity.Map(mouseSensitivityMin, mouseSensitivityMax, 0, 1);
 		}
 		public void ChangeMouseSensitivity(float percent)
 		{
-			playerData.lookController.sensitivity = percent.Map(0, 1, mouseSensitivityMin, mouseSensitivityMax);
+			lookController.sensitivity = percent.Map(0, 1, mouseSensitivityMin, mouseSensitivityMax);
 			SaveMouseSensitivity(ref settingsData);
 			DataSaver.SaveData(settingsData);
 		}

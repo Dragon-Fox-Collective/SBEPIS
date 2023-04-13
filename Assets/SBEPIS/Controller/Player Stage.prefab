@@ -2126,6 +2126,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   predicates:
   - {fileID: 2388537933035161586}
+  onCouple:
+    m_PersistentCalls:
+      m_Calls: []
+  onDecouple:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2388537933035161586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2320,7 +2326,7 @@ GameObject:
   - component: {fileID: 6376568278754761722}
   - component: {fileID: 6376568278754761723}
   - component: {fileID: 2824848723725198686}
-  - component: {fileID: 9053084484290510768}
+  - component: {fileID: 6844988662924280731}
   m_Layer: 7
   m_Name: Right Hand
   m_TagString: Untagged
@@ -2407,7 +2413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
---- !u!114 &9053084484290510768
+--- !u!114 &6844988662924280731
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2416,10 +2422,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6376568278754761727}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5df06affc3f743aeb2e01513c8507416, type: 3}
+  m_Script: {fileID: 11500000, guid: 3eba7adbddd6429aa7c1a9de13010387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookController: {fileID: 8432642417375942626}
+  reference: {fileID: 0}
 --- !u!1 &6376568278921566390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2598,6 +2604,13 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!114 &6470668690988925192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2906,6 +2919,7 @@ GameObject:
   - component: {fileID: 218406820163240569}
   - component: {fileID: 9042183274841322284}
   - component: {fileID: 4704795409870569521}
+  - component: {fileID: 804595815282090642}
   m_Layer: 8
   m_Name: Player Body
   m_TagString: Untagged
@@ -3115,6 +3129,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 50
+--- !u!114 &804595815282090642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376568280094680652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef81ad8afb8540f682b2874301daab08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6433262757480330092
 GameObject:
   m_ObjectHideFlags: 0
@@ -3429,7 +3455,7 @@ GameObject:
   - component: {fileID: 8141195637632158654}
   - component: {fileID: 6271847251800222012}
   - component: {fileID: 1494821562862204379}
-  - component: {fileID: 6602373148949315171}
+  - component: {fileID: 4874602448725965669}
   m_Layer: 7
   m_Name: Left Hand
   m_TagString: Untagged
@@ -3516,7 +3542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
---- !u!114 &6602373148949315171
+--- !u!114 &4874602448725965669
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3525,10 +3551,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7760733025619479071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5df06affc3f743aeb2e01513c8507416, type: 3}
+  m_Script: {fileID: 11500000, guid: 3eba7adbddd6429aa7c1a9de13010387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookController: {fileID: 8432642417375942626}
+  reference: {fileID: 0}
 --- !u!1 &8377499382241885776
 GameObject:
   m_ObjectHideFlags: 0
