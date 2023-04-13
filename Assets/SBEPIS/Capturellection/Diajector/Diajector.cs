@@ -21,15 +21,18 @@ namespace SBEPIS.Capturellection
 		public Rigidbody staticRigidbody;
 		public MonoBehaviour coroutineOwner;
 		public StrengthSettings cardStrength;
-		
+
+		public UnityEvent<Diajector> onOpen = new();
+		public UnityEvent<Diajector> onClose = new();
+
 		private DiajectorPage currentPage;
 		
 		public bool IsOpen => currentPage;
 		
-		private void StartAssembly() => StartAssembly(transform.position, transform.rotation);
-		public void StartAssembly(Vector3 position, Quaternion rotation) => StartAssembly(position, rotation, mainPage);
+		private void StartAssembly() => StartAssembly(null, transform.position, transform.rotation);
+		public void StartAssembly(DiajectorCloser closer, Vector3 position, Quaternion rotation) => StartAssembly(closer, position, rotation, mainPage);
 		
-		private void StartAssembly(Vector3 position, Quaternion rotation, DiajectorPage page)
+		private void StartAssembly(DiajectorCloser closer, Vector3 position, Quaternion rotation, DiajectorPage page)
 		{
 			if (IsOpen)
 			{
@@ -37,9 +40,13 @@ namespace SBEPIS.Capturellection
 				return;
 			}
 			
+			if (closer)
+				closer.CloseOldDiajector(this);
+			
 			gameObject.SetActive(true);
 			transform.SetPositionAndRotation(position, rotation);
 			AssembleNewPage(page);
+			onOpen.Invoke(this);
 		}
 		
 		public void ChangePage(DiajectorPage page)
@@ -91,6 +98,7 @@ namespace SBEPIS.Capturellection
 		{
 			DisassembleCurrentPage();
 			gameObject.SetActive(false);
+			onClose.Invoke(this);
 		}
 
 		public void ForceOpen()
