@@ -1,3 +1,4 @@
+using System;
 using SBEPIS.Controller;
 using SBEPIS.Utils;
 using System.Collections;
@@ -51,9 +52,9 @@ namespace SBEPIS.Capturellection
 		
 		public void BindToPlayer(Grabber grabber, Grabbable grabbable)
 		{
-			if (!grabber.TryGetComponent(out PlayerReference player))
+			if (!grabber.TryGetComponent(out PlayerReference playerReference))
 				return;
-			lookController = player.GetComponent<LookController>();
+			lookController = playerReference.GetReferencedComponent<LookController>();
 			ReloadData();
 		}
 		

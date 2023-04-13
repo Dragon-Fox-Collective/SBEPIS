@@ -21,7 +21,7 @@ namespace SBEPIS.Capturellection
 		{
 			if (!grabber.TryGetComponent(out PlayerReference playerReference))
 				return;
-			DiajectorCloser newCloser = playerReference.GetComponent<DiajectorCloser>();
+			DiajectorCloser newCloser = playerReference.GetReferencedComponent<DiajectorCloser>();
 			closer = newCloser;
 		}
 		

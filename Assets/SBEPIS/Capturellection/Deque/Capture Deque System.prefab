@@ -406,6 +406,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 8861645846908499660}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBoxDiajectorOpener,
+          SBEPIS.Capturellection
+        m_MethodName: BindToPlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onHoldUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -720,6 +733,12 @@ MonoBehaviour:
   staticRigidbody: {fileID: 3798306875382306503}
   coroutineOwner: {fileID: 8856617430227243949}
   cardStrength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
+  onOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  onClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4363340472973568722
 GameObject:
   m_ObjectHideFlags: 0
