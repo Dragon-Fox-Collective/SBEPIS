@@ -22,7 +22,7 @@ namespace SBEPIS.Capturellection
 		public UnityEvent<Storable> onLoadIntoDeque = new();
 		public UnityEvent<List<DequeStorable>> onSaveFromDeque = new();
 		
-		private List<DequeStorable> savedInventory;
+		private List<DequeStorable> savedInventory = new();
 		private Storable storable;
 		
 		private void Awake()
@@ -32,13 +32,11 @@ namespace SBEPIS.Capturellection
 		
 		private void SaveInitialInventory()
 		{
-			List<DequeStorable> initialInventory = new();
 			for (int _ = 0; _ < initialCardCount; _++)
 			{
 				DequeStorable card = Instantiate(cardPrefab);
-				initialInventory.Add(card);
+				savedInventory.Add(card);
 			}
-			savedInventory = initialInventory;
 		}
 		
 		private void LoadInventoryIntoDeque(Deque deque)

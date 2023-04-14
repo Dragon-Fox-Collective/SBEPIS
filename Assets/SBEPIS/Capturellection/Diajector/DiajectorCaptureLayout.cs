@@ -64,8 +64,8 @@ namespace SBEPIS.Capturellection
 		
 		public CardTarget AddTemporaryTarget(DequeStorable card)
 		{
-			if (targets.ContainsKey(card))
-				throw new ArgumentException($"Tried to add a target of {card} to {this} but {targets[card]} already exists");
+			if (targets.TryGetValue(card, out CardTarget target))
+				throw new ArgumentException($"Tried to add a target of {card} to {this} but {target} already exists");
 			
 			CardTarget newTarget = Instantiate(cardTargetPrefab, transform);
 			newTarget.Card = card;
