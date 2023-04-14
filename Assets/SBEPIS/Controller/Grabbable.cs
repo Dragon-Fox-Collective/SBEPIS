@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,48 +16,35 @@ namespace SBEPIS.Controller
 		public ItemEvent onDrop = new();
 		public ItemEvent onStopTouch = new();
 		
-		public Grabber grabbingGrabber { get; private set; }
-		public new Rigidbody rigidbody { get; private set; }
-		public bool isBeingHeld { get; private set; }
+		public readonly List<Grabber> grabbingGrabbers = new();
+		public Rigidbody Rigidbody { get; private set; }
+		public bool IsBeingHeld => grabbingGrabbers.Count != 0;
 		
-		private const float DropCooldown = 0.2f;
-		private float timeSinceLastDrop = DropCooldown;
-		public bool canGrab => timeSinceLastDrop >= DropCooldown;
-
 		private void Awake()
 		{
-			rigidbody = GetComponent<Rigidbody>();
+			Rigidbody = GetComponent<Rigidbody>();
 		}
-
-		private void FixedUpdate()
+		
+		public void OnGrabbed(Grabber grabber)
 		{
-			timeSinceLastDrop += Time.fixedDeltaTime;
-		}
-
-		public void GetGrabbed(Grabber grabber)
-		{
-			grabbingGrabber = grabber;
-			isBeingHeld = true;
+			grabbingGrabbers.Add(grabber);
 			onGrab.Invoke(grabber, this);
 		}
-
+		
 		public void HoldUpdate(Grabber grabber)
 		{
 			onHoldUpdate.Invoke(grabber, this);
 		}
-
-		public void GetDropped(Grabber grabber)
+		
+		public void OnDropped(Grabber grabber)
 		{
-			grabbingGrabber = null;
-			isBeingHeld = false;
-			timeSinceLastDrop = 0;
+			grabbingGrabbers.Remove(grabber);
 			onDrop.Invoke(grabber, this);
 		}
-
+		
 		public void Drop()
 		{
-			if (isBeingHeld)
-				grabbingGrabber.Drop();
+			grabbingGrabbers.ForEach(grabber => grabber.Drop());
 		}
 	}
 

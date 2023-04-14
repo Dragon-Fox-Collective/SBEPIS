@@ -11,7 +11,7 @@ namespace SBEPIS.Tests
 		public void OpeningDiajector_OpensDiajector()
 		{
 			Scene.diajector1.StartAssembly(Scene.closer, Vector3.zero, Quaternion.identity);
-			Assert.That(Scene.diajector1.IsOpen, Is.True);
+			Assert.That(Scene.diajector1.IsOpen);
 		}
 		
 		[Test]
@@ -19,7 +19,7 @@ namespace SBEPIS.Tests
 		{
 			Scene.diajector1.StartAssembly(Scene.closer, Vector3.zero, Quaternion.identity);
 			Scene.diajector2.StartAssembly(Scene.closer, Vector3.zero, Quaternion.identity);
-			Assert.That(Scene.diajector1.IsOpen, Is.False);
+			Assert.That(!Scene.diajector1.IsOpen);
 		}
 	}
 }

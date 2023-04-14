@@ -29,8 +29,7 @@ namespace SBEPIS.Controller
 
 			CoupledSocket = socket;
 			
-			if (Grabbable.isBeingHeld)
-				Grabbable.grabbingGrabber.Drop();
+			Grabbable.Drop();
 			Grabbable.onGrab.AddListener(socket.Decouple);
 			
 			onCouple.Invoke(this, CoupledSocket);

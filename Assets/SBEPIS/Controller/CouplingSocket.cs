@@ -63,7 +63,7 @@ namespace SBEPIS.Controller
 			plug.transform.rotation = transform.rotation;
 			joint = gameObject.AddComponent<FixedJoint>();
 			joint.autoConfigureConnectedAnchor = false;
-			joint.connectedBody = plug.Grabbable.rigidbody;
+			joint.connectedBody = plug.Grabbable.Rigidbody;
 			joint.anchor = joint.connectedAnchor = Vector3.zero;
 			
 			this.plug = plug;

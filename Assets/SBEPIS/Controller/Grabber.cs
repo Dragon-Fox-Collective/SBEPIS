@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Controller
@@ -19,41 +18,41 @@ namespace SBEPIS.Controller
 
 		public Orientation playerOrientation;
 
-		public bool canGrab { get; set; } = true;
+		public bool CanGrab { get; set; } = true;
 
 		private bool overrideShortRangeGrab;
 		private Vector3 overrideShortRangeGrabCasterPosition;
 		private Vector3 overrideShortRangeGrabCasterForward;
 		private float overrideShortRangeGrabDistance;
 
-		public bool isHoldingSomething => heldCollider;
-		public Collider heldCollider { get; private set; }
-		public Grabbable heldGrabbable { get; private set; }
-		public GrabPoint heldGrabPoint { get; private set; }
+		public bool IsHoldingSomething => HeldCollider;
+		public Collider HeldCollider { get; private set; }
+		public Grabbable HeldGrabbable { get; private set; }
+		public GrabPoint HeldGrabPoint { get; private set; }
 		private FixedJoint heldGrabbableJoint;
 		private Vector3 heldPureColliderNormal;
 
 		private readonly RaycastHit[] grabNormalHits = new RaycastHit[16];
 
-		public new Rigidbody rigidbody { get; private set; }
+		public Rigidbody Rigidbody { get; private set; }
 
 		private readonly List<Collider> collidingColliders = new();
 
 		private bool isHoldingGrab;
 
-		private bool isSlipping => heldPureColliderNormal != Vector3.zero && Vector3.Angle(heldPureColliderNormal, playerOrientation.upDirection) > slipAngle;
+		private bool IsSlipping => heldPureColliderNormal != Vector3.zero && Vector3.Angle(heldPureColliderNormal, playerOrientation.upDirection) > slipAngle;
 
 		private void Awake()
 		{
-			rigidbody = GetComponent<Rigidbody>();
+			Rigidbody = GetComponent<Rigidbody>();
 		}
 
 		private void Update()
 		{
 			ClearInvalidCollisions();
 			UpdateGrabAttempt();
-			if (heldGrabbable)
-				heldGrabbable.HoldUpdate(this);
+			if (HeldGrabbable)
+				HeldGrabbable.HoldUpdate(this);
 		}
 
 		public void OnGrab(CallbackContext context)
@@ -68,7 +67,7 @@ namespace SBEPIS.Controller
 				return;
 
 			if (isHoldingGrab)
-				if (isHoldingSomething && (!heldCollider.gameObject.activeInHierarchy || isSlipping))
+				if (IsHoldingSomething && (!HeldCollider.gameObject.activeInHierarchy || IsSlipping))
 					Drop();
 				else
 					Grab();
@@ -78,7 +77,7 @@ namespace SBEPIS.Controller
 
 		public void Grab()
 		{
-			if (!canGrab || isHoldingSomething)
+			if (!CanGrab || IsHoldingSomething)
 				return;
 			
 			if (collidingColliders.Any(collidingCollider => Grab(collidingCollider)))
@@ -89,7 +88,7 @@ namespace SBEPIS.Controller
 
 		public bool Grab(Collider collider)
 		{
-			if (!collider || isHoldingSomething)
+			if (!collider || IsHoldingSomething)
 				return false;
 			
 			Grabbable grabbable = collider.GetAttachedComponent<Grabbable>();
@@ -105,7 +104,7 @@ namespace SBEPIS.Controller
 			else
 				heldPureColliderNormal = Vector3.zero;
 
-			heldCollider = collider;
+			HeldCollider = collider;
 
 			heldGrabbableJoint = gameObject.AddComponent<FixedJoint>();
 			if (collider.attachedRigidbody)
@@ -116,34 +115,34 @@ namespace SBEPIS.Controller
 
 		public bool Grab(Grabbable grabbable)
 		{
-			if (!grabbable || isHoldingSomething || !grabbable.canGrab)
+			if (!grabbable || IsHoldingSomething)
 				return false;
 			
 			print($"Grabbing {grabbable}");
-
+			
 			heldPureColliderNormal = Vector3.zero;
-			heldGrabbable = grabbable;
-
+			HeldGrabbable = grabbable;
+			
 			if (grabbable.grabPoints.Count > 0)
 				BindToGrabPoint(grabbable, grabbable.grabPoints[0]);
 			else
-				heldCollider = grabbable.rigidbody.GetComponentInChildren<Collider>();
-
+				HeldCollider = grabbable.Rigidbody.GetComponentInChildren<Collider>();
+			
 			heldGrabbableJoint = gameObject.AddComponent<FixedJoint>();
-			heldGrabbableJoint.connectedBody = grabbable.rigidbody;
+			heldGrabbableJoint.connectedBody = grabbable.Rigidbody;
 			heldGrabbableJoint.autoConfigureConnectedAnchor = false;
 			heldGrabbableJoint.anchor = transform.InverseTransformPoint(grabbable.transform.position);
 			heldGrabbableJoint.connectedAnchor = Vector3.zero;
-
-			grabbable.GetGrabbed(this);
-
+			
+			grabbable.OnGrabbed(this);
+			
 			return true;
 		}
 
 		private void BindToGrabPoint(Grabbable grabbable, GrabPoint grabPoint)
 		{
-			heldGrabPoint = grabPoint;
-			heldCollider = grabPoint.colliderToGrab;
+			HeldGrabPoint = grabPoint;
+			HeldCollider = grabPoint.colliderToGrab;
 			grabbable.transform.SetPositionAndRotation(
 				transform.TransformPoint(grabPoint.transform.InverseTransformPoint(grabbable.transform.position)),
 				transform.TransformRotation(grabPoint.transform.InverseTransformRotation(grabbable.transform.rotation)));
@@ -160,24 +159,25 @@ namespace SBEPIS.Controller
 
 		public void Drop()
 		{
-			if (!isHoldingSomething)
+			if (!IsHoldingSomething)
 				return;
 			
-			print($"Dropping {(heldGrabbable ? heldGrabbable : heldCollider)}");
+			print($"Dropping {(HeldGrabbable ? HeldGrabbable : HeldCollider)}");
 
-			Collider droppedCollider = heldCollider;
-			Grabbable droppedGrabbable = heldGrabbable;
-			heldCollider = null;
-			heldGrabbable = null;
-			heldGrabPoint = null;
+			Collider droppedCollider = HeldCollider;
+			Grabbable droppedGrabbable = HeldGrabbable;
+			HeldCollider = null;
+			HeldGrabbable = null;
+			HeldGrabPoint = null;
 			
 			Destroy(heldGrabbableJoint);
 			heldGrabbableJoint = null;
 
 			if (droppedCollider.attachedRigidbody)
-				droppedCollider.attachedRigidbody.AddForce(Vector3.up * 0.01f);
+				droppedCollider.attachedRigidbody.Move(transform.position, transform.rotation);
+
 			if (droppedGrabbable)
-				droppedGrabbable.GetDropped(this);
+				droppedGrabbable.OnDropped(this);
 		}
 
 		private bool CastShortRangeGrab(out RaycastHit hit)
@@ -205,7 +205,7 @@ namespace SBEPIS.Controller
 		public void ResetShortRangeGrabOverride()
 		{
 			overrideShortRangeGrab = false;
-			canGrab = true;
+			CanGrab = true;
 		}
 
 		private void OnTriggerEnter(Collider other)
@@ -258,12 +258,12 @@ namespace SBEPIS.Controller
 			if (!context.performed)
 				return;
 			
-			if (isHoldingSomething)
+			if (IsHoldingSomething)
 				UseHeldItem();
 			else
 			{
 				Grab();
-				if (isHoldingSomething)
+				if (IsHoldingSomething)
 				{
 					UseHeldItem();
 					Drop();
@@ -273,10 +273,10 @@ namespace SBEPIS.Controller
 
 		public void UseHeldItem()
 		{
-			if (!heldGrabbable)
+			if (!HeldGrabbable)
 				return;
 
-			heldGrabbable.onUse.Invoke(this, heldGrabbable);
+			HeldGrabbable.onUse.Invoke(this, HeldGrabbable);
 		}
 	}
 

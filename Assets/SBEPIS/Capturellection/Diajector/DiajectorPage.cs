@@ -31,7 +31,7 @@ namespace SBEPIS.Capturellection
 			{
 				DequeStorable card = Instantiate(Diajector.menuCardPrefab);
 				card.name += $" ({target.transform.parent.name})";
-				target.card = card;
+				target.Card = card;
 				
 				AddCard(card, target);
 				card.Animator.TeleportTo(Diajector.deque.lowerTarget);
@@ -58,7 +58,7 @@ namespace SBEPIS.Capturellection
 		
 		public bool HasCard(DequeStorable card) => cardTargets.ContainsKey(card);
 		public CardTarget GetCardTarget(DequeStorable card) => cardTargets.ContainsKey(card) ? cardTargets[card] : null;
-		public LerpTarget GetLerpTarget(DequeStorable card) => cardTargets.ContainsKey(card) ? GetCardTarget(card).lerpTarget : null;
+		public LerpTarget GetLerpTarget(DequeStorable card) => cardTargets.ContainsKey(card) ? GetCardTarget(card).LerpTarget : null;
 		
 		public void StartAssembly()
 		{

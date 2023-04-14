@@ -18,7 +18,7 @@ namespace SBEPIS.Capturellection.CardState
 			StrengthSettings cardStrength = card.Deque.diajector.cardStrength;
 
 			targetter = staticRigidbody.gameObject.AddComponent<JointTargetter>();
-			targetter.connectedBody = card.Grabbable.rigidbody;
+			targetter.connectedBody = card.Grabbable.Rigidbody;
 			targetter.target = target.transform;
 			targetter.strength = cardStrength;
 		}
