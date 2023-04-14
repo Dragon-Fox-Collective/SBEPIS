@@ -633,7 +633,20 @@ MonoBehaviour:
   cardParent: {fileID: 7586382662599050666}
   onLoadIntoDeque:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8758272400139746450}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DiajectorCaptureLayout,
+          SBEPIS.Capturellection
+        m_MethodName: set_Inventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onSaveFromDeque:
     m_PersistentCalls:
       m_Calls: []

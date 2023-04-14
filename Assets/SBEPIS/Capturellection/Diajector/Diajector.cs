@@ -60,7 +60,7 @@ namespace SBEPIS.Capturellection
 		private void AssembleNewPage(DiajectorPage page)
 		{
 			currentPage = page;
-			currentPage.StartAssembly();
+			currentPage.StartAssembly(this);
 		}
 
 		private void ForceOpenCurrentPage()
