@@ -17,31 +17,28 @@ namespace SBEPIS.Capturellection
 		public UnityEvent onGrab = new();
 		public UnityEvent onDrop = new();
 		
-		public DequeStorable card { get; set; }
+		public DequeStorable Card { get; set; }
 		
-		public LerpTarget lerpTarget { get; private set; }
-		public DiajectorPage page { get; private set; }
+		public LerpTarget LerpTarget { get; private set; }
 
 		public void Awake()
 		{
-			lerpTarget = GetComponent<LerpTarget>();
-			page = GetComponentInParent<DiajectorPage>();
+			LerpTarget = GetComponent<LerpTarget>();
 		}
 
 		public void DropTargettingCard()
 		{
-			if (card.Grabbable.isBeingHeld)
-				card.Grabbable.grabbingGrabber.Drop();
+			Card.Grabbable.Drop();
 		}
 
 		public void AttachToTarget(LerpTargetAnimator animator)
 		{
-			card.State.HasBeenAssembled = true;
+			Card.State.HasBeenAssembled = true;
 		}
 
 		public void DetatchFromTarget(LerpTargetAnimator animator)
 		{
-			card.State.HasBeenAssembled = false;
+			Card.State.HasBeenAssembled = false;
 		}
 	}
 }

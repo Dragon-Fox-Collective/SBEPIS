@@ -9,7 +9,7 @@ namespace SBEPIS.Capturellection.CardState
 			DequeStorable card = animator.GetComponent<DequeStorable>();
 			DiajectorCaptureLayout layout = card.PopAllLayouts();
 			CardTarget target = layout.AddPermanentTargetAndCard(card);
-			card.Animator.TeleportTo(target.lerpTarget);
+			card.Animator.TeleportTo(target.LerpTarget);
 		}
 	}
 }

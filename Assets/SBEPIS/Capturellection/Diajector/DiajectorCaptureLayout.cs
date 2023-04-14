@@ -68,7 +68,7 @@ namespace SBEPIS.Capturellection
 				throw new ArgumentException($"Tried to add a target of {card} to {this} but {targets[card]} already exists");
 			
 			CardTarget newTarget = Instantiate(cardTargetPrefab, transform);
-			newTarget.card = card;
+			newTarget.Card = card;
 			targets.Add(card, newTarget);
 			return newTarget;
 		}
@@ -111,9 +111,9 @@ namespace SBEPIS.Capturellection
 			foreach (DequeStorable card in inventory.Where(card => !targets.ContainsKey(card)))
 			{
 				CardTarget target = AddPermanentTargetAndCard(card);
-				if (card.Grabbable.isBeingHeld)
+				if (card.Grabbable.IsBeingHeld)
 				{
-					card.Animator.SetPausedAt(target.lerpTarget);
+					card.Animator.SetPausedAt(target.LerpTarget);
 					target.onGrab.Invoke();
 				}
 				else

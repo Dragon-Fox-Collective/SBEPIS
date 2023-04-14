@@ -35,7 +35,7 @@ namespace SBEPIS.Capturellection
 				return;
 			if (!DequeBox)
 				return;
-			if (DequeBox.TryGetComponent(out Grabbable grabbable) && grabbable.isBeingHeld)
+			if (DequeBox.TryGetComponent(out Grabbable grabbable) && grabbable.IsBeingHeld)
 				return;
 			
 			if (IsDequeBoxDeployed)

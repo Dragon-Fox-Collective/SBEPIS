@@ -19,10 +19,10 @@ namespace SBEPIS.Capturellection
 		
 		public void OnCapture(CallbackContext context)
 		{
-			if (!isActiveAndEnabled || !context.performed || !grabber.heldGrabbable)
+			if (!isActiveAndEnabled || !context.performed || !grabber.HeldGrabbable)
 				return;
 			
-			Capturellectainer container = grabber.heldGrabbable.GetComponent<Capturellectainer>();
+			Capturellectainer container = grabber.HeldGrabbable.GetComponent<Capturellectainer>();
 			if (container && container.HasCapturedItem)
 				RetrieveAndGrabItem(container).Forget();
 			else
@@ -31,7 +31,7 @@ namespace SBEPIS.Capturellection
 		
 		private async UniTaskVoid CaptureAndGrabCard()
 		{
-			if (!grabber.heldGrabbable.TryGetComponent(out Capturellectable item))
+			if (!grabber.HeldGrabbable.TryGetComponent(out Capturellectable item))
 				return;
 			
 			(DequeStorable card, Capturellectainer container, Capturellectable ejectedItem) = await inventory.Store(item);

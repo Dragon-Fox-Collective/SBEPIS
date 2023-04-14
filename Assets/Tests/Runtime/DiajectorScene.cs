@@ -1,7 +1,5 @@
 using SBEPIS.Capturellection;
-using SBEPIS.Controller;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Tests.Scenes
 {
