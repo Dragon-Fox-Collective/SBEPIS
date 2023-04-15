@@ -7,34 +7,18 @@ namespace SBEPIS.Capturellection.Storage
 {
 	public class StorableSlot : Storable
 	{
-		private DequeStorable _card;
-		public DequeStorable card
-		{
-			get => _card;
-			set
-			{
-				_card = value;
-				
-				if (card)
-				{
-					_maxPossibleSize = ExtensionMethods.Multiply(card.bounds.localBounds.size, card.bounds.transform.localScale);
-				}
-				else
-				{
-					_maxPossibleSize = Vector3.zero;
-				}
-			}
-		}
-
-		private Vector3 _maxPossibleSize;
-		public override Vector3 MaxPossibleSize => _maxPossibleSize;
+		private DequeStorable card;
+		private Capturellectainer container;
+		
+		private Vector3 maxPossibleSize;
+		public override Vector3 MaxPossibleSize => maxPossibleSize;
 		
 		public override int InventoryCount => card ? 1 : 0;
 		
 		public override bool HasNoCards => !HasAllCards;
 		public override bool HasAllCards => card;
 		
-		public override bool HasAllCardsEmpty => card && card.CanStoreInto;
+		public override bool HasAllCardsEmpty => container && container.IsEmpty;
 		public override bool HasAllCardsFull => !HasAllCardsEmpty;
 
 		public override void Tick(float deltaTime) { }
@@ -49,13 +33,13 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public override UniTask<(DequeStorable, Capturellectainer, Capturellectable)> Store(Capturellectable item)
 		{
-			Capturellectable ejectedItem = card.Container.Fetch();
-			card.Container.Capture(item);
-			return UniTask.FromResult((card, container: card.Container, ejectedItem));
+			Capturellectable ejectedItem = container.Fetch();
+			container.Capture(item);
+			return UniTask.FromResult((card, container, ejectedItem));
 		}
 		public override UniTask<Capturellectable> Fetch(DequeStorable card)
 		{
-			return UniTask.FromResult(Contains(card) ? card.Container.Fetch() : null);
+			return UniTask.FromResult(Contains(card) ? container.Fetch() : null);
 		}
 		public override UniTask Flush(List<DequeStorable> cards)
 		{
@@ -68,12 +52,11 @@ namespace SBEPIS.Capturellection.Storage
 			if (HasAllCards || cards.Count == 0)
 				return;
 			card = cards.Pop();
+			container = card.GetComponent<Capturellectainer>();
+			maxPossibleSize = ExtensionMethods.Multiply(card.bounds.localBounds.size, card.bounds.transform.localScale);
 		}
 		
-		public override IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent)
-		{
-			return (textures.Skip(indexOfThisInParent).FirstOrDefault() ?? textures.Last())?.ToList();
-		}
+		public override IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent) => textures.ElementAtOrLast(indexOfThisInParent);
 		
 		public override IEnumerator<DequeStorable> GetEnumerator()
 		{

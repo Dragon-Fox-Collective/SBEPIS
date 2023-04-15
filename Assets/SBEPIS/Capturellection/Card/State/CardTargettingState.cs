@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.CardState
 {
-	public abstract class CardTargettingState : StateMachineBehaviour
+	public abstract class CardTargettingState : StateMachineBehaviour<DequeStorableStateMachine>
 	{
 		public int startNumber;
 		public int endNumber;

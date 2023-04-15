@@ -169,7 +169,21 @@ public static class ExtensionMethods
 			yield return item;
 		}
 	}
-
+	
+	public static T ElementAtOrLast<T>(this IEnumerable<T> enumerable, int index)
+	{
+		T last = default;
+		int i = 0;
+		foreach (T item in enumerable)
+		{
+			last = item;
+			if (i == index)
+				return last;
+			i++;
+		}
+		return last;
+	}
+	
 	public static IEnumerable<(T, TSecond)> Zip<T, TSecond>(this IEnumerable<T> first, IEnumerable<TSecond> second)
 	{
 		return first.Zip(second, (firstItem, secondItem) => (firstItem, secondItem));

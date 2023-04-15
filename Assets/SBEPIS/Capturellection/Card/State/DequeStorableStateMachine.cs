@@ -3,8 +3,19 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.CardState
 {
-	public class CardStateMachine : StateMachine
+	[RequireComponent(typeof(DequeStorable))]
+	public class DequeStorableStateMachine : StateMachine
 	{
+		public DequeStorable Card { get; private set; }
+		public DequeStorableCaptureLayoutAdder LayoutAdder { get; private set; }
+		
+		protected override void Awake()
+		{
+			base.Awake();
+			Card = GetComponent<DequeStorable>();
+			LayoutAdder = GetComponent<DequeStorableCaptureLayoutAdder>();
+		}
+		
 		private static readonly int IsGrabbedKey = Animator.StringToHash("Is Grabbed");
 		public bool IsGrabbed
 		{
