@@ -20,6 +20,7 @@ namespace SBEPIS.Capturellection
 			get => dequeEvents.Get();
 			set => dequeEvents.Set(this, value);
 		}
+		public Inventory Inventory { get; private set; }
 		
 		public Grabbable Grabbable { get; private set; }
 		public DequeStorableStateMachine State { get; private set; }

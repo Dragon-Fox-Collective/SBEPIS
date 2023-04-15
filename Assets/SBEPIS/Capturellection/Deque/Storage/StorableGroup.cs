@@ -111,6 +111,18 @@ namespace SBEPIS.Capturellection.Storage
 					break;
 			}
 		}
+		public override void Save(List<DequeStorable> cards)
+		{
+			if (HasNoCards)
+				return;
+
+			foreach (Storable storable in inventory.ToList())
+			{
+				storable.Save(cards);
+				inventory.Remove(storable);
+				Destroy(storable);
+			}
+		}
 		
 		public override IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent)
 		{

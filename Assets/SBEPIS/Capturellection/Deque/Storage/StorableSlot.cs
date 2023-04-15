@@ -55,6 +55,15 @@ namespace SBEPIS.Capturellection.Storage
 			container = card.GetComponent<Capturellectainer>();
 			maxPossibleSize = ExtensionMethods.Multiply(card.bounds.localBounds.size, card.bounds.transform.localScale);
 		}
+		public override void Save(List<DequeStorable> cards)
+		{
+			if (HasNoCards)
+				return;
+			cards.Add(card);
+			card = null;
+			container = null;
+			maxPossibleSize = Vector3.zero;
+		}
 		
 		public override IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent) => textures.ElementAtOrLast(indexOfThisInParent);
 		

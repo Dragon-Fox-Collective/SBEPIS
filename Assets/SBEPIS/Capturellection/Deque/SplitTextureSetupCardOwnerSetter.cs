@@ -16,7 +16,7 @@ namespace SBEPIS.Capturellection
 		
 		public void UpdateTextures(DequeStorable card, Deque deque)
 		{
-			split.Textures = deque.Inventory.GetCardTextures(card).ToList();
+			split.Textures = card.GetTextures();
 		}
 	}
 }
