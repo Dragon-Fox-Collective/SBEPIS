@@ -9,18 +9,17 @@ using UnityEngine.Serialization;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(Grabbable), typeof(LerpTargetAnimator), typeof(DequeStorableStateMachine))]
-	public class DequeStorable : MonoBehaviour
+	public class DequeElement : MonoBehaviour
 	{
 		public Renderer bounds;
 		
 		[FormerlySerializedAs("dequeOwnerEvents")]
-		public EventProperty<DequeStorable, Deque, SetCardDequeEvent, UnsetCardDequeEvent> dequeEvents = new();
+		public EventProperty<DequeElement, Deque, SetCardDequeEvent, UnsetCardDequeEvent> dequeEvents = new();
 		public Deque Deque
 		{
 			get => dequeEvents.Get();
 			set => dequeEvents.Set(this, value);
 		}
-		public Inventory Inventory { get; private set; }
 		
 		public Grabbable Grabbable { get; private set; }
 		public DequeStorableStateMachine State { get; private set; }

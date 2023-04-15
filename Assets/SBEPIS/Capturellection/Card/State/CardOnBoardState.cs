@@ -10,7 +10,7 @@ namespace SBEPIS.Capturellection.CardState
 		
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			DequeStorable card = animator.GetComponent<DequeStorable>();
+			DequeElement card = animator.GetComponent<DequeElement>();
 			LerpTarget target = card.Deque.diajector.GetLerpTarget(card);
 			if (!target)
 				return;

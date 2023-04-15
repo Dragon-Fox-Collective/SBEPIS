@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
 {
-	public abstract class Storable : MonoBehaviour, IEnumerable<DequeStorable>
+	public abstract class Storable : MonoBehaviour, IEnumerable<InventoryStorable>
 	{
 		public DequeRulesetState state;
 		
@@ -32,20 +32,20 @@ namespace SBEPIS.Capturellection.Storage
 		public abstract bool HasAllCardsFull { get; }
 		
 		public abstract void Tick(float deltaTime);
-		public abstract void LayoutTarget(DequeStorable card, CardTarget target);
+		public abstract void LayoutTarget(InventoryStorable card, CardTarget target);
 		
-		public abstract bool CanFetch(DequeStorable card);
-		public abstract bool Contains(DequeStorable card);
+		public abstract bool CanFetch(InventoryStorable card);
+		public abstract bool Contains(InventoryStorable card);
 		
-		public abstract UniTask<(DequeStorable, Capturellectainer, Capturellectable)> Store(Capturellectable item);
-		public abstract UniTask<Capturellectable> Fetch(DequeStorable card);
-		public abstract UniTask Flush(List<DequeStorable> cards);
+		public abstract UniTask<(InventoryStorable, Capturellectainer, Capturellectable)> Store(Capturellectable item);
+		public abstract UniTask<Capturellectable> Fetch(InventoryStorable card);
+		public abstract UniTask Flush(List<InventoryStorable> cards);
 		
-		public abstract void Load(List<DequeStorable> cards);
-		public abstract void Save(List<DequeStorable> cards);
+		public abstract void Load(List<InventoryStorable> cards);
+		public abstract void Save(List<InventoryStorable> cards);
 		
-		public IEnumerable<Texture2D> GetCardTextures(DequeStorable card) => GetCardTextures(card, Enumerable.Empty<IEnumerable<Texture2D>>(), 0);
-		public abstract IEnumerable<Texture2D> GetCardTextures(DequeStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent);
+		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card) => GetCardTextures(card, Enumerable.Empty<IEnumerable<Texture2D>>(), 0);
+		public abstract IEnumerable<Texture2D> GetCardTextures(InventoryStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent);
 		
 		private void OnDrawGizmosSelected()
 		{
@@ -92,7 +92,7 @@ namespace SBEPIS.Capturellection.Storage
 			}
 		}
 		
-		public abstract IEnumerator<DequeStorable> GetEnumerator();
+		public abstract IEnumerator<InventoryStorable> GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
 }

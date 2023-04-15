@@ -13,7 +13,7 @@ namespace SBEPIS.Capturellection
 		
 		public LerpTarget upperTarget;
 		[FormerlySerializedAs("cardPrefab")]
-		public DequeStorable menuCardPrefab;
+		public DequeElement menuCardPrefab;
 		public ElectricArc electricArcPrefab;
 		public DiajectorPage mainPage;
 		public float cardDelay = 0.5f;
@@ -121,9 +121,9 @@ namespace SBEPIS.Capturellection
 			StartAssembly();
 		}
 		
-		public bool ShouldCardBeDisplayed(DequeStorable card) => IsOpen && currentPage.HasCard(card);
+		public bool ShouldCardBeDisplayed(DequeElement card) => IsOpen && currentPage.HasCard(card);
 		
-		public LerpTarget GetLerpTarget(DequeStorable card) => currentPage ? currentPage.GetLerpTarget(card) : null;
-		public CardTarget GetCardTarget(DequeStorable card) => currentPage ? currentPage.GetCardTarget(card) : null;
+		public LerpTarget GetLerpTarget(DequeElement card) => currentPage ? currentPage.GetLerpTarget(card) : null;
+		public CardTarget GetCardTarget(DequeElement card) => currentPage ? currentPage.GetCardTarget(card) : null;
 	}
 }

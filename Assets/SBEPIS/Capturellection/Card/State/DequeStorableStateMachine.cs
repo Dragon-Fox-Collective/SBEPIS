@@ -6,16 +6,16 @@ namespace SBEPIS.Capturellection.CardState
 {
 	public class DequeStorableStateMachine : StateMachine
 	{
-		public DequeStorable Card { get; private set; }
+		public DequeElement Card { get; private set; }
 		
 		[MaybeNull]
-		public DequeStorableCaptureLayoutAdder LayoutAdder { get; private set; }
+		public InventoryStorableCaptureLayoutAdder LayoutAdder { get; private set; }
 		
 		protected override void Awake()
 		{
 			base.Awake();
-			Card = GetComponent<DequeStorable>();
-			LayoutAdder = GetComponent<DequeStorableCaptureLayoutAdder>();
+			Card = GetComponent<DequeElement>();
+			LayoutAdder = GetComponent<InventoryStorableCaptureLayoutAdder>();
 		}
 		
 		private static readonly int IsGrabbedKey = Animator.StringToHash("Is Grabbed");

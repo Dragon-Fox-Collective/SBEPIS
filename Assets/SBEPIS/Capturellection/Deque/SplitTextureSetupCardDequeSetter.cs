@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(SplitTextureSetup))]
-	public class SplitTextureSetupCardOwnerSetter : MonoBehaviour
+	public class SplitTextureSetupCardDequeSetter : MonoBehaviour
 	{
 		private SplitTextureSetup split;
 		
@@ -14,9 +14,9 @@ namespace SBEPIS.Capturellection
 			split = GetComponent<SplitTextureSetup>();
 		}
 		
-		public void UpdateTextures(DequeStorable card, Deque deque)
+		public void UpdateTextures(DequeElement card, Deque deque)
 		{
-			split.Textures = card.GetTextures();
+			split.Textures = deque.definition.ruleset.GetCardTextures().ToList();
 		}
 	}
 }
