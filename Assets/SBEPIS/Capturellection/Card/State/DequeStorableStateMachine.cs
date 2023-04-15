@@ -1,12 +1,14 @@
+using System.Diagnostics.CodeAnalysis;
 using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection.CardState
 {
-	[RequireComponent(typeof(DequeStorable))]
 	public class DequeStorableStateMachine : StateMachine
 	{
 		public DequeStorable Card { get; private set; }
+		
+		[MaybeNull]
 		public DequeStorableCaptureLayoutAdder LayoutAdder { get; private set; }
 		
 		protected override void Awake()

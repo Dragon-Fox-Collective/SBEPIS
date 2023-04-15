@@ -20,7 +20,7 @@ namespace SBEPIS.Capturellection.Storage
 			get => transform.localRotation;
 			set => transform.localRotation = value;
 		}
-
+		
 		public abstract Vector3 MaxPossibleSize { get; }
 		
 		public abstract int InventoryCount { get; }
