@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -51,6 +52,8 @@ namespace SBEPIS.Utils
 		
 		public void TeleportTo(LerpTarget target)
 		{
+			if (!target)
+				throw new NullReferenceException($"Tried to teleport {this} to null");
 			TargetTo(target);
 			End();
 		}

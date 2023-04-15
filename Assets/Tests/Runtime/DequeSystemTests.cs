@@ -34,7 +34,7 @@ namespace SBEPIS.Tests
 			Scene.grabber.Grab(Scene.dequeBoxGrabbable);
 			Scene.grabber.transform.position = Scene.dropPoint.position;
 			Scene.grabber.Drop();
-			yield return new WaitForSeconds(2);
+			yield return new WaitUntilOrTimeout(() => Scene.diajector.IsOpen, 3);
 			Assert.That(Scene.diajector.IsOpen);
 		}
 	}

@@ -29,7 +29,7 @@ namespace SBEPIS.Capturellection
 				target.Card = card;
 				
 				AddCard(card, target);
-				card.Deque = deque; // TODO: Do the same for Inventory!!
+				card.Deque = deque;
 				card.Animator.TeleportTo(startTarget);
 				
 				Grabbable cardGrabbable = card.Grabbable;
@@ -61,7 +61,7 @@ namespace SBEPIS.Capturellection
 			gameObject.SetActive(true);
 			onPreparePagePre.Invoke();
 			if (!hasCreatedCards)
-				CreateCards(GetComponentsInChildren<CardTarget>(), diajector.deque, diajector.menuCardPrefab, diajector.deque.lowerTarget);
+				CreateCards(GetComponentsInChildren<CardTarget>(), diajector.deque, diajector.menuCardPrefab, diajector.startTarget);
 			onPreparePagePost.Invoke();
 			foreach ((DequeElement card, CardTarget _) in cardTargets)
 				card.State.IsPageOpen = true;

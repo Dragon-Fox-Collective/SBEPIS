@@ -46,13 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deque: {fileID: 0}
+  startTarget: {fileID: 4630195799673596264}
   upperTarget: {fileID: 0}
   menuCardPrefab: {fileID: 0}
   electricArcPrefab: {fileID: 0}
   mainPage: {fileID: 1925028643529587989}
   cardDelay: 0.5
   staticRigidbody: {fileID: 0}
-  coroutineOwner: {fileID: 2358302415122347802}
+  coroutineOwner: {fileID: 8295484903790907486}
   cardStrength: {fileID: 0}
   onOpen:
     m_PersistentCalls:
@@ -200,6 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deque: {fileID: 0}
+  startTarget: {fileID: 86506948660060993}
   upperTarget: {fileID: 0}
   menuCardPrefab: {fileID: 0}
   electricArcPrefab: {fileID: 0}
@@ -224,6 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2530399851239381026}
   - component: {fileID: 7435457740539413066}
+  - component: {fileID: 86506948660060993}
   m_Layer: 0
   m_Name: Anchor 2
   m_TagString: Untagged
@@ -258,6 +261,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac27194efeebc44f84a0fa4deec42b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &86506948660060993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2849093910085721219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ace458ca0e0b6d43a89f69a86cf528c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onMoveFrom:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveFromTravelUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveToTravelUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveTo:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4374270888245357037
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +344,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4702764601111522372}
-  - component: {fileID: 2358302415122347802}
+  - component: {fileID: 8295484903790907486}
+  - component: {fileID: 4630195799673596264}
   m_Layer: 0
   m_Name: Anchor 1
   m_TagString: Untagged
@@ -340,7 +368,7 @@ Transform:
   m_Father: {fileID: 6736053937047874086}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2358302415122347802
+--- !u!114 &8295484903790907486
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -352,6 +380,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac27194efeebc44f84a0fa4deec42b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4630195799673596264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6536274760097169459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ace458ca0e0b6d43a89f69a86cf528c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onMoveFrom:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveFromTravelUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveToTravelUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveTo:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8881595145818337090
 GameObject:
   m_ObjectHideFlags: 0
