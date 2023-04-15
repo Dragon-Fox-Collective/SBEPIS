@@ -1,25 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using SBEPIS.Capturellection.Storage;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
 	public class Inventory : MonoBehaviour, IEnumerable<DequeStorable>
 	{
-		[SerializeField]
-		private Deque deque;
-		[SerializeField]
-		private DequeStorable cardPrefab;
-		[SerializeField]
-		private int initialCardCount = 0;
+		public Deque deque;
+		[FormerlySerializedAs("cardPrefab")]
+		public DequeStorable initialCardPrefab;
+		public int initialCardCount = 0;
 		
 		[Tooltip("Purely organizational for the hierarchy")]
-		[SerializeField]
-		private Transform cardParent;
+		public Transform cardParent;
 		
 		public UnityEvent<Inventory> onLoadIntoDeque = new();
 		public UnityEvent<Inventory, List<DequeStorable>> onSaveFromDeque = new();
@@ -30,28 +27,27 @@ namespace SBEPIS.Capturellection
 		private void Awake()
 		{
 			SaveInitialInventory();
+			LoadInventoryIntoDeque(deque.definition, deque.transform);
 		}
 		
 		private void SaveInitialInventory()
 		{
 			for (int _ = 0; _ < initialCardCount; _++)
 			{
-				DequeStorable card = Instantiate(cardPrefab);
+				DequeStorable card = Instantiate(initialCardPrefab);
 				savedInventory.Add(card);
 			}
 		}
 		
-		private void LoadInventoryIntoDeque(Deque deque)
+		private void LoadInventoryIntoDeque(StorableGroupDefinition definition, Transform ejectTransform)
 		{
-			storable = StorableGroupDefinition.GetNewStorable(deque.definition);
-			foreach (DequeStorable card in savedInventory)
-				card.Deque = deque;
-			storable.Load(savedInventory);
+			storable = StorableGroupDefinition.GetNewStorable(definition);
+			Load(savedInventory);
 			foreach (DequeStorable card in savedInventory)
 			{
 				print($"Ejecting leftover card {card}");
 				card.gameObject.SetActive(true);
-				card.transform.SetPositionAndRotation(deque.transform.position, deque.transform.rotation);
+				card.transform.SetPositionAndRotation(ejectTransform.position, ejectTransform.rotation);
 			}
 			savedInventory.Clear();
 			onLoadIntoDeque.Invoke(this);
@@ -59,15 +55,21 @@ namespace SBEPIS.Capturellection
 		
 		private void SaveInventoryFromDeque()
 		{
-			savedInventory = storable.ToList();
+			savedInventory = Save();
 			Destroy(storable.gameObject);
-			foreach (DequeStorable card in savedInventory)
-				card.Deque = null;
 			onSaveFromDeque.Invoke(this, savedInventory);
 		}
-		
-		private void SetCardParent(DequeStorable card) => card.transform.SetParent(cardParent);
-		private static void UnsetCardParent(DequeStorable card) => card.transform.SetParent(null);
+
+		private void SetupCard(DequeStorable card)
+		{
+			card.Deque = deque;
+			card.transform.parent = cardParent;
+		}
+		private static void TearDownCard(DequeStorable card)
+		{
+			card.Deque = null;
+			card.transform.parent = null;
+		}
 		
 		public void SetStorableParent(Transform transform) => storable.transform.SetParent(transform);
 		
@@ -90,12 +92,30 @@ namespace SBEPIS.Capturellection
 		public void Tick(float deltaTime) => storable.Tick(deltaTime);
 		public void LayoutTarget(DequeStorable card, CardTarget target) => storable.LayoutTarget(card, target);
 		public bool CanFetch(DequeStorable card) => storable.CanFetch(card);
-		public UniTask<Capturellectable> Fetch(DequeStorable card) => storable.Fetch(card);
+		public UniTask<Capturellectable> Fetch(DequeStorable card)
+		{
+			TearDownCard(card);
+			return storable.Fetch(card);
+		}
 		public async UniTask<(DequeStorable, Capturellectainer, Capturellectable)> Store(Capturellectable item)
 		{
 			(DequeStorable card, Capturellectainer container, Capturellectable ejectedItem) = await storable.Store(item);
-			card.Deque = deque;
+			SetupCard(card);
 			return (card, container, ejectedItem);
+		}
+		private void Load(List<DequeStorable> cards)
+		{
+			foreach (DequeStorable card in cards)
+				SetupCard(card);
+			storable.Load(cards);
+		}
+		private List<DequeStorable> Save()
+		{
+			List<DequeStorable> cards = new();
+			storable.Save(cards);
+			foreach (DequeStorable card in cards)
+				TearDownCard(card);
+			return cards;
 		}
 		public IEnumerable<Texture2D> GetCardTextures(DequeStorable card) => storable.GetCardTextures(card);
 		public IEnumerator<DequeStorable> GetEnumerator() => storable.GetEnumerator();
