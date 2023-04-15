@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SBEPIS.Capturellection.Storage;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -15,21 +14,7 @@ namespace SBEPIS.Capturellection
 		public float fetchableCardZ = 0.1f;
 		public Transform directionEndpoint;
 
-		private Storable inventory;
-		public Storable Inventory
-		{
-			set
-			{
-				if (inventory)
-					inventory.transform.SetParent(null);
-				
-				inventory = value;
-				
-				if (inventory)
-					inventory.transform.SetParent(transform);
-			}
-		}
-		
+		private Inventory inventory;
 		private Diajector diajector;
 		private readonly Dictionary<DequeStorable, CardTarget> targets = new();
 		private DiajectorPage page;
@@ -45,9 +30,15 @@ namespace SBEPIS.Capturellection
 			TickAndLayoutTargets(Time.deltaTime);
 		}
 		
+		public void SetStorableParent(Inventory inventory)
+		{
+			this.inventory = inventory;
+			inventory.SetStorableParent(transform);
+		}
+		
 		private void TickAndLayoutTargets(float deltaTime)
 		{
-			inventory.state.direction = directionEndpoint ? transform.InverseTransformPoint(directionEndpoint.position).normalized : Vector3.zero;
+			inventory.Direction = directionEndpoint ? transform.InverseTransformPoint(directionEndpoint.position).normalized : Vector3.zero;
 			inventory.Tick(deltaTime);
 			Vector3 inventorySize = inventory.MaxPossibleSize;
 			inventory.Position = transform.forward * (cardZ + inventorySize.z / 2);

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.DequeState
 {
-	[RequireComponent(typeof(DequeBox), typeof(GravitySum), typeof(Grabbable))]
+	[RequireComponent(typeof(GravitySum), typeof(Grabbable))]
 	[RequireComponent(typeof(CouplingPlug), typeof(LerpTargetAnimator))]
 	public class DequeBoxStateMachine : StateMachine
 	{

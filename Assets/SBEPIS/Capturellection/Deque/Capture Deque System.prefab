@@ -628,6 +628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c96bf03dee74e79bf06f8c900a58c56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deque: {fileID: 6518269390508492605}
   cardPrefab: {fileID: 7425453158614581333, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
   initialCardCount: 0
   cardParent: {fileID: 7586382662599050666}
@@ -637,7 +638,7 @@ MonoBehaviour:
       - m_Target: {fileID: 8758272400139746450}
         m_TargetAssemblyTypeName: SBEPIS.Capturellection.DiajectorCaptureLayout,
           SBEPIS.Capturellection
-        m_MethodName: set_Inventory
+        m_MethodName: SetStorableParent
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

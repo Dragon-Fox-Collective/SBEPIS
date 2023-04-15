@@ -11,6 +11,8 @@ namespace SBEPIS.Capturellection
 	public class Inventory : MonoBehaviour, IEnumerable<DequeStorable>
 	{
 		[SerializeField]
+		private Deque deque;
+		[SerializeField]
 		private DequeStorable cardPrefab;
 		[SerializeField]
 		private int initialCardCount = 0;
@@ -19,8 +21,8 @@ namespace SBEPIS.Capturellection
 		[SerializeField]
 		private Transform cardParent;
 		
-		public UnityEvent<Storable> onLoadIntoDeque = new();
-		public UnityEvent<List<DequeStorable>> onSaveFromDeque = new();
+		public UnityEvent<Inventory> onLoadIntoDeque = new();
+		public UnityEvent<Inventory, List<DequeStorable>> onSaveFromDeque = new();
 		
 		private List<DequeStorable> savedInventory = new();
 		private Storable storable;
@@ -52,7 +54,7 @@ namespace SBEPIS.Capturellection
 				card.transform.SetPositionAndRotation(deque.transform.position, deque.transform.rotation);
 			}
 			savedInventory.Clear();
-			onLoadIntoDeque.Invoke(storable);
+			onLoadIntoDeque.Invoke(this);
 		}
 		
 		private void SaveInventoryFromDeque()
@@ -61,15 +63,40 @@ namespace SBEPIS.Capturellection
 			Destroy(storable.gameObject);
 			foreach (DequeStorable card in savedInventory)
 				card.Deque = null;
-			onSaveFromDeque.Invoke(savedInventory);
+			onSaveFromDeque.Invoke(this, savedInventory);
 		}
 		
 		private void SetCardParent(DequeStorable card) => card.transform.SetParent(cardParent);
 		private static void UnsetCardParent(DequeStorable card) => card.transform.SetParent(null);
 		
+		public void SetStorableParent(Transform transform) => storable.transform.SetParent(transform);
+		
+		public Vector3 Direction
+		{
+			get => storable.state.direction;
+			set => storable.state.direction = value;
+		}
+		public Vector3 Position
+		{
+			get => storable.Position;
+			set => storable.Position = value;
+		}
+		public Quaternion Rotation
+		{
+			get => storable.Rotation;
+			set => storable.Rotation = value;
+		}
+		public Vector3 MaxPossibleSize => storable.MaxPossibleSize;
+		public void Tick(float deltaTime) => storable.Tick(deltaTime);
+		public void LayoutTarget(DequeStorable card, CardTarget target) => storable.LayoutTarget(card, target);
 		public bool CanFetch(DequeStorable card) => storable.CanFetch(card);
 		public UniTask<Capturellectable> Fetch(DequeStorable card) => storable.Fetch(card);
-		public UniTask<(DequeStorable, Capturellectainer, Capturellectable)> Store(Capturellectable item) => storable.Store(item);
+		public async UniTask<(DequeStorable, Capturellectainer, Capturellectable)> Store(Capturellectable item)
+		{
+			(DequeStorable card, Capturellectainer container, Capturellectable ejectedItem) = await storable.Store(item);
+			card.Deque = deque;
+			return (card, container, ejectedItem);
+		}
 		public IEnumerable<Texture2D> GetCardTextures(DequeStorable card) => storable.GetCardTextures(card);
 		public IEnumerator<DequeStorable> GetEnumerator() => storable.GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
