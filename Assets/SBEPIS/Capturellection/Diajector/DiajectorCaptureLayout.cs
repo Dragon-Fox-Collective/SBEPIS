@@ -76,7 +76,7 @@ namespace SBEPIS.Capturellection
 		{
 			CardTarget target = HasTemporaryTarget(card) ? targets[card] : AddTemporaryTarget(card);
 			page.AddCard(card.DequeElement, target);
-			diajector.deque.lowerTarget.onMoveFrom.Invoke(card.DequeElement.Animator);
+			diajector.startTarget.onMoveFrom.Invoke(card.DequeElement.Animator);
 			return target;
 		}
 		
@@ -108,7 +108,7 @@ namespace SBEPIS.Capturellection
 				}
 				else
 				{
-					card.DequeElement.Animator.TeleportTo(diajector.deque.lowerTarget);
+					card.DequeElement.Animator.TeleportTo(diajector.startTarget);
 				}
 			}
 		}

@@ -10,7 +10,7 @@ namespace SBEPIS.Capturellection
 	public class Diajector : MonoBehaviour
 	{
 		public Deque deque;
-		
+		public LerpTarget startTarget;
 		public LerpTarget upperTarget;
 		[FormerlySerializedAs("cardPrefab")]
 		public DequeElement menuCardPrefab;

@@ -710,7 +710,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7290926607632935990
 Transform:
   m_ObjectHideFlags: 0
@@ -740,6 +740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deque: {fileID: 6518269390508492605}
+  startTarget: {fileID: 4582897949649126844}
   upperTarget: {fileID: 2094737243974216280}
   menuCardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
   electricArcPrefab: {fileID: 7962134878051775022, guid: bd0964b77b3f6f0459fc55699ed10fd6, type: 3}
@@ -911,7 +912,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1720828029914221003
 Transform:
   m_ObjectHideFlags: 0
@@ -1391,7 +1392,7 @@ Transform:
   - {fileID: 2401147341451707404}
   - {fileID: 1720828029914221003}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8745008019380363946
 GameObject:
