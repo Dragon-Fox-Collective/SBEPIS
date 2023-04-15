@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a005382acfc953b439367455b564cfda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 5325411556947556854}
   cardTargetPrefab: {fileID: 914007334191890185, guid: 1c8bc15bcd83611459142f20ba433cd1, type: 3}
   cardZ: 0.1
   fetchableCardZ: 0.05
@@ -629,7 +630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deque: {fileID: 6518269390508492605}
-  cardPrefab: {fileID: 7425453158614581333, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
+  initialCardPrefab: {fileID: 6379177909321711626, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
   initialCardCount: 0
   cardParent: {fileID: 7586382662599050666}
   onLoadIntoDeque:
@@ -638,7 +639,7 @@ MonoBehaviour:
       - m_Target: {fileID: 8758272400139746450}
         m_TargetAssemblyTypeName: SBEPIS.Capturellection.DiajectorCaptureLayout,
           SBEPIS.Capturellection
-        m_MethodName: SetStorableParent
+        m_MethodName: SetInventoryStorableParent
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

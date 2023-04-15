@@ -11,7 +11,8 @@ namespace SBEPIS.Capturellection.CardState
 			if (!State.LayoutAdder)
 				throw new NullReferenceException($"DequeStorable {State.Card} doesn't have a LayoutAdder but reached its state");
 			DiajectorCaptureLayout layout = State.LayoutAdder.PopAllLayouts();
-			CardTarget target = layout.AddPermanentTargetAndCard(State.Card);
+			layout.inventory.Flush(State.LayoutAdder.Card);
+			CardTarget target = layout.AddPermanentTargetAndCard(State.LayoutAdder.Card);
 			State.Card.Animator.TeleportTo(target.LerpTarget);
 		}
 	}

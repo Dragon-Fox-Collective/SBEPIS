@@ -9,7 +9,7 @@ namespace SBEPIS.Capturellection.CardState
 		
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			DequeStorable card = animator.GetComponent<DequeStorable>();
+			DequeElement card = animator.GetComponent<DequeElement>();
 			arc = Instantiate(card.Deque.diajector.electricArcPrefab, GetPoint(card));
 			arc.otherPoint = card.transform;
 		}
@@ -19,6 +19,6 @@ namespace SBEPIS.Capturellection.CardState
 			Destroy(arc);
 		}
 
-		public abstract Transform GetPoint(DequeStorable card);
+		public abstract Transform GetPoint(DequeElement card);
 	}
 }

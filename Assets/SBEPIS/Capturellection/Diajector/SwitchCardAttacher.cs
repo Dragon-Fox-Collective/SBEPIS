@@ -35,7 +35,7 @@ namespace SBEPIS.Capturellection
 			}
 		}
 
-		public void Attach(DequeStorable card)
+		public void Attach(DequeElement card)
 		{
 			cardTarget = GetComponent<CardTarget>(); // lol. lmao. awake isn't called before this fires
 			switchCard = card.gameObject.AddComponent<SwitchCard>();

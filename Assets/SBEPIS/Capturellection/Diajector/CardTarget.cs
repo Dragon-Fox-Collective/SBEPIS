@@ -12,12 +12,12 @@ namespace SBEPIS.Capturellection
 	public class CardTarget : MonoBehaviour
 	{
 		[FormerlySerializedAs("onCardCreated")]
-		public UnityEvent<DequeStorable> onCardBound = new();
+		public UnityEvent<DequeElement> onCardBound = new();
 		public UnityEvent onPrepareCard = new();
 		public UnityEvent onGrab = new();
 		public UnityEvent onDrop = new();
 		
-		public DequeStorable Card { get; set; }
+		public DequeElement Card { get; set; }
 		
 		public LerpTarget LerpTarget { get; private set; }
 

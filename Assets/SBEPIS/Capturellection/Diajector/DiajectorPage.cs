@@ -18,13 +18,13 @@ namespace SBEPIS.Capturellection
 		
 		private bool hasCreatedCards = false;
 		
-		private readonly Dictionary<DequeStorable, CardTarget> cardTargets = new();
+		private readonly Dictionary<DequeElement, CardTarget> cardTargets = new();
 		
-		private void CreateCards(IEnumerable<CardTarget> targets, Deque deque, DequeStorable menuCardPrefab, LerpTarget startTarget)
+		private void CreateCards(IEnumerable<CardTarget> targets, Deque deque, DequeElement menuCardPrefab, LerpTarget startTarget)
 		{
 			foreach (CardTarget target in targets)
 			{
-				DequeStorable card = Instantiate(menuCardPrefab);
+				DequeElement card = Instantiate(menuCardPrefab);
 				card.name += $" ({target.transform.parent.name})";
 				target.Card = card;
 				
@@ -39,21 +39,21 @@ namespace SBEPIS.Capturellection
 			hasCreatedCards = true;
 		}
 		
-		public void AddCard(DequeStorable card, CardTarget target)
+		public void AddCard(DequeElement card, CardTarget target)
 		{
 			cardTargets.Add(card, target);
 			target.onCardBound.Invoke(card);
 		}
 		
-		public void RemoveCard(DequeStorable card)
+		public void RemoveCard(DequeElement card)
 		{
 			cardTargets.Remove(card);
 			card.Deque = null;
 		}
 		
-		public bool HasCard(DequeStorable card) => cardTargets.ContainsKey(card);
-		public CardTarget GetCardTarget(DequeStorable card) => cardTargets.ContainsKey(card) ? cardTargets[card] : null;
-		public LerpTarget GetLerpTarget(DequeStorable card) => cardTargets.ContainsKey(card) ? GetCardTarget(card).LerpTarget : null;
+		public bool HasCard(DequeElement card) => cardTargets.ContainsKey(card);
+		public CardTarget GetCardTarget(DequeElement card) => cardTargets.ContainsKey(card) ? cardTargets[card] : null;
+		public LerpTarget GetLerpTarget(DequeElement card) => cardTargets.ContainsKey(card) ? GetCardTarget(card).LerpTarget : null;
 		
 		public void StartAssembly(Diajector diajector)
 		{
@@ -63,7 +63,7 @@ namespace SBEPIS.Capturellection
 			if (!hasCreatedCards)
 				CreateCards(GetComponentsInChildren<CardTarget>(), diajector.deque, diajector.menuCardPrefab, diajector.deque.lowerTarget);
 			onPreparePagePost.Invoke();
-			foreach ((DequeStorable card, CardTarget _) in cardTargets)
+			foreach ((DequeElement card, CardTarget _) in cardTargets)
 				card.State.IsPageOpen = true;
 			diajector.coroutineOwner.StartCoroutine(SpawnCards());
 		}
@@ -74,7 +74,7 @@ namespace SBEPIS.Capturellection
 			yield return 0;
 			yield return 0;
 			
-			foreach ((DequeStorable card, CardTarget target) in cardTargets)
+			foreach ((DequeElement card, CardTarget target) in cardTargets)
 			{
 				target.onPrepareCard.Invoke();
 				card.State.IsAssembling = true;
@@ -85,7 +85,7 @@ namespace SBEPIS.Capturellection
 		
 		public void StartDisassembly()
 		{
-			foreach ((DequeStorable card, CardTarget _) in cardTargets)
+			foreach ((DequeElement card, CardTarget _) in cardTargets)
 				card.State.IsPageOpen = false;
 			diajector.coroutineOwner.StartCoroutine(DespawnCards());
 			gameObject.SetActive(false);
@@ -93,7 +93,7 @@ namespace SBEPIS.Capturellection
 		
 		private IEnumerator DespawnCards()
 		{
-			foreach ((DequeStorable card, CardTarget _) in cardTargets)
+			foreach ((DequeElement card, CardTarget _) in cardTargets)
 			{
 				card.State.IsAssembling = false;
 				card.State.IsDisassembling = true;
@@ -105,7 +105,7 @@ namespace SBEPIS.Capturellection
 		{
 			gameObject.SetActive(true);
 			
-			foreach ((DequeStorable card, CardTarget _) in cardTargets)
+			foreach ((DequeElement card, CardTarget _) in cardTargets)
 			{
 				card.State.IsAssembling = false;
 				card.State.IsDisassembling = false;
@@ -116,7 +116,7 @@ namespace SBEPIS.Capturellection
 		
 		public void ForceClose()
 		{
-			foreach ((DequeStorable card, CardTarget _) in cardTargets)
+			foreach ((DequeElement card, CardTarget _) in cardTargets)
 			{
 				card.State.IsAssembling = false;
 				card.State.IsDisassembling = false;
@@ -131,7 +131,7 @@ namespace SBEPIS.Capturellection
 			if (isActiveAndEnabled)
 				diajector.ForceRestart();
 			
-			foreach ((DequeStorable card, CardTarget _) in cardTargets)
+			foreach ((DequeElement card, CardTarget _) in cardTargets)
 				Destroy(card);
 		}
 	}

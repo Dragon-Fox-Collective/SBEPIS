@@ -9,7 +9,7 @@ namespace SBEPIS.Capturellection.Storage
 		public abstract void Tick(List<Storable> inventory, DequeRulesetState state, float deltaTime);
 		public abstract Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, DequeRulesetState state);
 		
-		public abstract bool CanFetchFrom(List<Storable> inventory, DequeRulesetState state, DequeStorable card);
+		public abstract bool CanFetchFrom(List<Storable> inventory, DequeRulesetState state, InventoryStorable card);
 		
 		public abstract UniTask<int> GetIndexToStoreInto(List<Storable> inventory, DequeRulesetState state);
 		public abstract UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, DequeRulesetState state, Storable storable);
@@ -33,8 +33,8 @@ namespace SBEPIS.Capturellection.Storage
 		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, DequeRulesetState state) => GetMaxPossibleSizeOf(inventory, (T)state);
 		public abstract Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, T state);
 		
-		public override bool CanFetchFrom(List<Storable> inventory, DequeRulesetState state, DequeStorable card) => CanFetchFrom(inventory, (T)state, card);
-		public abstract bool CanFetchFrom(List<Storable> inventory, T state, DequeStorable card);
+		public override bool CanFetchFrom(List<Storable> inventory, DequeRulesetState state, InventoryStorable card) => CanFetchFrom(inventory, (T)state, card);
+		public abstract bool CanFetchFrom(List<Storable> inventory, T state, InventoryStorable card);
 		
 		public override UniTask<int> GetIndexToStoreInto(List<Storable> inventory, DequeRulesetState state) => GetIndexToStoreInto(inventory, (T)state);
 		public abstract UniTask<int> GetIndexToStoreInto(List<Storable> inventory, T state);

@@ -10,7 +10,7 @@ namespace SBEPIS.Capturellection.CardState
 
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			DequeStorable card = animator.GetComponent<DequeStorable>();
+			DequeElement card = animator.GetComponent<DequeElement>();
 			card.State.TargetNumber = startNumber;
 			
 			LerpTarget target = GetTargetToTargetTo(card);
@@ -19,10 +19,10 @@ namespace SBEPIS.Capturellection.CardState
 
 		private void SetEndNumber(LerpTargetAnimator animator)
 		{
-			DequeStorable card = animator.GetComponent<DequeStorable>();
+			DequeElement card = animator.GetComponent<DequeElement>();
 			card.State.TargetNumber = endNumber;
 		}
 
-		protected abstract LerpTarget GetTargetToTargetTo(DequeStorable card);
+		protected abstract LerpTarget GetTargetToTargetTo(DequeElement card);
 	}
 }

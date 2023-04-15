@@ -12,7 +12,7 @@ namespace SBEPIS.Capturellection.Storage
 		public override void Tick(List<Storable> inventory, DequeRulesetLayerState state, float deltaTime) => rulesets.Zip(state.states).Reverse().ForEach(zip => zip.Item1.Tick(inventory, zip.Item2, deltaTime));
 		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, DequeRulesetLayerState state) => rulesets[0].GetMaxPossibleSizeOf(inventory, state.states[0]);
 		
-		public override bool CanFetchFrom(List<Storable> inventory, DequeRulesetLayerState state, DequeStorable card) => rulesets.Zip(state.states).Reverse().Any(zip => zip.Item1.CanFetchFrom(inventory, zip.Item2, card));
+		public override bool CanFetchFrom(List<Storable> inventory, DequeRulesetLayerState state, InventoryStorable card) => rulesets.Zip(state.states).Reverse().Any(zip => zip.Item1.CanFetchFrom(inventory, zip.Item2, card));
 		
 		public override UniTask<int> GetIndexToStoreInto(List<Storable> inventory, DequeRulesetLayerState state) => rulesets[^1].GetIndexToStoreInto(inventory, state.states[^1]);
 		public override UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, DequeRulesetLayerState state, Storable storable) => rulesets[^1].GetIndexToFlushBetween(inventory, state.states[^1], storable);
