@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using KBCore.Refs;
 using SBEPIS.Utils;
 using UnityEngine;
 
@@ -6,17 +7,16 @@ namespace SBEPIS.Capturellection.CardState
 {
 	public class DequeStorableStateMachine : StateMachine
 	{
-		public DequeElement Card { get; private set; }
+		[SerializeField, Self]
+		private DequeElement card;
+		public DequeElement Card => card;
 		
+		[SerializeField, Self(Flag.Optional)]
+		private InventoryStorableCaptureLayoutAdder layoutAdder;
 		[MaybeNull]
-		public InventoryStorableCaptureLayoutAdder LayoutAdder { get; private set; }
+		public InventoryStorableCaptureLayoutAdder LayoutAdder => layoutAdder;
 		
-		protected override void Awake()
-		{
-			base.Awake();
-			Card = GetComponent<DequeElement>();
-			LayoutAdder = GetComponent<InventoryStorableCaptureLayoutAdder>();
-		}
+		private void OnValidate() => this.ValidateRefs();
 		
 		private static readonly int IsGrabbedKey = Animator.StringToHash("Is Grabbed");
 		public bool IsGrabbed

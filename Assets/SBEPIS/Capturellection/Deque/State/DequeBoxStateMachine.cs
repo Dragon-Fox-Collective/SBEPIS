@@ -1,4 +1,5 @@
 using System;
+using KBCore.Refs;
 using SBEPIS.Controller;
 using SBEPIS.Physics;
 using SBEPIS.Utils;
@@ -13,17 +14,19 @@ namespace SBEPIS.Capturellection.DequeState
 		[NonSerialized]
 		public LerpTarget lerpTarget;
 		
-		public DequeBox DequeBox { get; private set; }
-		public CouplingPlug Plug { get; private set; }
-		public LerpTargetAnimator Animator { get; private set; }
+		[SerializeField, HideInInspector, Self]
+		private DequeBox dequeBox;
+		public DequeBox DequeBox => dequeBox;
 		
-		protected override void Awake()
-		{
-			base.Awake();
-			DequeBox = GetComponent<DequeBox>();
-			Plug = GetComponent<CouplingPlug>();
-			Animator = GetComponent<LerpTargetAnimator>();
-		}
+		[SerializeField, HideInInspector, Self]
+		private CouplingPlug plug;
+		public CouplingPlug Plug => plug;
+		
+		[SerializeField, HideInInspector, Self]
+		private LerpTargetAnimator animator;
+		public LerpTargetAnimator Animator => animator;
+		
+		private void OnValidate() => this.ValidateRefs();
 		
 		private static readonly int IsGrabbedKey = UnityEngine.Animator.StringToHash("Is Grabbed");
 		public bool IsGrabbed
