@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using SBEPIS.Physics;
 using SBEPIS.UI;
 using SBEPIS.Utils;
@@ -30,9 +31,9 @@ namespace SBEPIS.Capturellection
 		public bool IsOpen => currentPage;
 		
 		private void StartAssembly() => StartAssembly(null, transform.position, transform.rotation);
-		public void StartAssembly(DiajectorCloser closer, Vector3 position, Quaternion rotation) => StartAssembly(closer, position, rotation, mainPage);
+		public void StartAssembly([MaybeNull] DiajectorCloser closer, Vector3 position, Quaternion rotation) => StartAssembly(closer, position, rotation, mainPage);
 		
-		private void StartAssembly(DiajectorCloser closer, Vector3 position, Quaternion rotation, DiajectorPage page)
+		private void StartAssembly([MaybeNull] DiajectorCloser closer, Vector3 position, Quaternion rotation, DiajectorPage page)
 		{
 			if (IsOpen)
 			{

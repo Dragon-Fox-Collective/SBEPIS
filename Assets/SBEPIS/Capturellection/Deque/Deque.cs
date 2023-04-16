@@ -1,16 +1,14 @@
+using KBCore.Refs;
 using SBEPIS.Capturellection.Storage;
 using UnityEngine;
-using SBEPIS.Utils;
 
 namespace SBEPIS.Capturellection
 {
 	public class Deque : MonoBehaviour
 	{
-		public LerpTarget lowerTarget;
-		public LerpTarget upperTarget;
+		[SerializeField, Anywhere] private StorableGroupDefinition definition;
+		public StorableGroupDefinition Definition => definition;
 		
-		public StorableGroupDefinition definition;
-		
-		public Diajector diajector;
+		private void OnValidate() => this.ValidateRefs();
 	}
 }

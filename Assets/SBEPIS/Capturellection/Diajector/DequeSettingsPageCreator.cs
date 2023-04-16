@@ -22,7 +22,7 @@ namespace SBEPIS.Capturellection
 		
 		public void CreateSettingsPages()
 		{
-			List<DequeSettingsPageLayout> layouts = deque.definition.GetNewSettingsPageLayouts().ToList();
+			List<DequeSettingsPageLayout> layouts = deque.Definition.GetNewSettingsPageLayouts().ToList();
 			foreach ((int i, DequeSettingsPageLayout layout) in layouts.Enumerate())
 			{
 				DequeSettingsPage page = Instantiate(settingsPagePrefab, diajector.mainPage.transform.parent);

@@ -59,7 +59,7 @@ namespace SBEPIS.Capturellection.Storage
 				return;
 			card = cards.Pop();
 			container = card.GetComponent<CaptureContainer>();
-			maxPossibleSize = card.DequeElement.bounds ? ExtensionMethods.Multiply(card.DequeElement.bounds.localBounds.size, card.DequeElement.bounds.transform.localScale) : Vector3.zero;
+			maxPossibleSize = card.DequeElement.Size;
 		}
 		public override void Save(List<InventoryStorable> cards)
 		{

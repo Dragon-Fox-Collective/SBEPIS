@@ -14,6 +14,7 @@ namespace SBEPIS.Tests.Scenes
 		[Anywhere] public Grabbable dequeBoxGrabbable;
 		[Anywhere] public CollisionTrigger dequeBoxTrigger;
 		[Anywhere] public Transform dropPoint;
+		[Anywhere] public Inventory inventory;
 		
 		private void OnValidate() => this.ValidateRefs();
 	}

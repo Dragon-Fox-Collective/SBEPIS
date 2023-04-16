@@ -44,7 +44,7 @@ namespace SBEPIS.Capturellection
 			Action<Vector3, Quaternion> move = ejectedItem.TryGetComponent(out Rigidbody ejectedItemRigidbody) ?
 				ejectedItemRigidbody.Move :
 				ejectedItem.transform.SetPositionAndRotation;
-			if (card.DequeElement.Deque.diajector.ShouldCardBeDisplayed(card.DequeElement))
+			if (card.DequeElement.ShouldBeDisplayed)
 				move(card.transform.position, card.transform.rotation);
 			else
 				move(card.DequeElement.Deque.transform.position, card.DequeElement.Deque.transform.rotation);

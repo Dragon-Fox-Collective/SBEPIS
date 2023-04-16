@@ -10,6 +10,8 @@ namespace SBEPIS.Capturellection.CardState
 		[SerializeField, Self]
 		private DequeElement card;
 		public DequeElement Card => card;
+
+		public DequeBox DequeBox => Card.Deque.GetComponent<DequeBox>();
 		
 		[SerializeField, Self(Flag.Optional)]
 		private InventoryStorableCaptureLayoutAdder layoutAdder;

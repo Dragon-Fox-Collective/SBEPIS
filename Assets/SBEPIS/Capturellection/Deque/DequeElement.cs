@@ -1,3 +1,4 @@
+using System;
 using SBEPIS.Controller;
 using System.Collections.Generic;
 using KBCore.Refs;
@@ -12,21 +13,17 @@ namespace SBEPIS.Capturellection
 	[RequireComponent(typeof(Grabbable), typeof(LerpTargetAnimator), typeof(DequeElementStateMachine))]
 	public class DequeElement : MonoBehaviour
 	{
-		[SerializeField, Self]
-		private Grabbable grabbable;
+		[SerializeField, Self] private Grabbable grabbable;
 		public Grabbable Grabbable => grabbable;
-		
-		[SerializeField, Self]
-		private DequeElementStateMachine state;
+		[SerializeField, Self] private DequeElementStateMachine state;
 		public DequeElementStateMachine State => state;
-		
-		[SerializeField, Self]
-		private LerpTargetAnimator animator;
+		[SerializeField, Self] private LerpTargetAnimator animator;
 		public LerpTargetAnimator Animator => animator;
 		
-		private void OnValidate() => this.ValidateRefs();
+		[SerializeField, Anywhere(Flag.Optional)] private Renderer bounds;
+		public Vector3 Size => bounds ? ExtensionMethods.Multiply(bounds.localBounds.size, bounds.transform.localScale) : Vector3.zero;
 		
-		public Renderer bounds;
+		private void OnValidate() => this.ValidateRefs();
 		
 		[FormerlySerializedAs("dequeOwnerEvents")]
 		public EventProperty<DequeElement, Deque, SetCardDequeEvent, UnsetCardDequeEvent> dequeEvents = new();
@@ -37,5 +34,20 @@ namespace SBEPIS.Capturellection
 		}
 		
 		public bool IsStored => Deque;
+		
+		private Diajector diajector;
+		public Diajector Diajector
+		{
+			get => diajector;
+			set
+			{
+				if (diajector == value)
+					return;
+				if (diajector && value)
+					throw new InvalidOperationException($"Tried to replace the diajector on {this} before it was nulled");
+				diajector = value;
+			}
+		}
+		public bool ShouldBeDisplayed => diajector.ShouldCardBeDisplayed(this);
 	}
 }

@@ -7,8 +7,7 @@ namespace SBEPIS.Capturellection
 	[RequireComponent(typeof(DequeElement))]
 	public class InventoryStorable : MonoBehaviour
 	{
-		[SerializeField, Self]
-		private DequeElement dequeElement;
+		[SerializeField, Self] private DequeElement dequeElement;
 		public DequeElement DequeElement => dequeElement;
 		
 		private void OnValidate() => this.ValidateRefs();
