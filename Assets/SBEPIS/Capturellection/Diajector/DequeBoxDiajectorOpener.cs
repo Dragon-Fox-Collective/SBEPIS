@@ -1,70 +1,38 @@
-using System;
+using KBCore.Refs;
 using SBEPIS.Controller;
-using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection
 {
-	[RequireComponent(typeof(DequeBoxOwner))]
+	[RequireComponent(typeof(DequeBox))]
 	public class DequeBoxDiajectorOpener : MonoBehaviour
 	{
-		public float primeDelay = 0.2f;
+		[SerializeField, Self]
+		private DequeBox dequeBox;
 		
-		private DequeBoxOwner dequeBoxOwner;
+		private void OnValidate() => this.ValidateRefs();
 		
-		private CollisionTrigger collisionTrigger;
-		private Grabbable grabbable;
+		public Diajector diajector;
 		
-		private void Awake()
+		private DiajectorCloser closer;
+		
+		public void BindToPlayer(Grabber grabber, Grabbable grabbable)
 		{
-			dequeBoxOwner = GetComponent<DequeBoxOwner>();
-			
-			dequeBoxOwner.dequeBoxEvents.onSet.AddListener(Bind);
-			dequeBoxOwner.dequeBoxEvents.onUnset.AddListener(Unbind);
+			if (!grabber.TryGetComponent(out PlayerReference playerReference))
+				return;
+			DiajectorCloser newCloser = playerReference.GetReferencedComponent<DiajectorCloser>();
+			closer = newCloser;
 		}
 		
-		public void Bind(DequeBoxOwner dequeBoxOwner, DequeBox dequeBox)
+		public void OpenDiajector()
 		{
-			if (grabbable)
-				throw new InvalidOperationException($"{dequeBox} tried to bind to {this} but was already bound with {grabbable.GetComponent<DequeBox>()}");
-			
-			if (!dequeBox.TryGetComponent(out grabbable))
-				throw new InvalidOperationException($"{dequeBox} tried to bind to {this} but had no grabbbable");
-			
-			collisionTrigger = dequeBox.gameObject.AddComponent<CollisionTrigger>();
-			collisionTrigger.primeDelay = primeDelay;
-			collisionTrigger.trigger.AddListener(OpenDiajector);
-			
-			grabbable.onUse.AddListener(CloseDiajector);
-			grabbable.onDrop.AddListener(StartPrime);
-			grabbable.onGrab.AddListener(CancelPrime);
-		}
-		
-		public void Unbind(DequeBoxOwner dequeBoxOwner, DequeBox oldDequeBox, DequeBox newDequeBox)
-		{
-			if (!grabbable)
-				throw new InvalidOperationException($"{oldDequeBox} tried to unbind from {this} but was already unbound");
-			
-			Destroy(collisionTrigger);
-			collisionTrigger = null;
-			
-			grabbable.onUse.RemoveListener(CloseDiajector);
-			grabbable.onDrop.RemoveListener(StartPrime);
-			grabbable.onGrab.RemoveListener(CancelPrime);
-			grabbable = null;
-		}
-		
-		private void StartPrime(Grabber grabber, Grabbable grabbable) => collisionTrigger.StartPrime();
-		private void CancelPrime(Grabber grabber, Grabbable grabbable) => collisionTrigger.CancelPrime();
-
-		private void OpenDiajector()
-		{
-			Vector3 position = dequeBoxOwner.DequeBox.transform.position;
-			Vector3 upDirection = dequeBoxOwner.DequeBox.GravitySum.upDirection;
-			Vector3 groundDelta = Vector3.ProjectOnPlane(dequeBoxOwner.transform.position - position, upDirection);
+			Vector3 position = dequeBox.transform.position;
+			Vector3 upDirection = dequeBox.GravitySum.UpDirection;
+			Vector3 groundDelta = Vector3.ProjectOnPlane(-dequeBox.Rigidbody.velocity, upDirection);
 			Quaternion rotation = Quaternion.LookRotation(groundDelta, upDirection);
-			dequeBoxOwner.DequeOwner.diajector.StartAssembly(position, rotation);
+			diajector.StartAssembly(closer, position, rotation);
 		}
-		private void CloseDiajector(Grabber grabber, Grabbable grabbable) => dequeBoxOwner.DequeOwner.diajector.StartDisassembly();
+		
+		public void CloseDiajector() => diajector.StartDisassembly();
 	}
 }

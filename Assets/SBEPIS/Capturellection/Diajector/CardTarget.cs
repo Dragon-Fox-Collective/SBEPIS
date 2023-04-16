@@ -1,4 +1,5 @@
 using System;
+using KBCore.Refs;
 using SBEPIS.Physics;
 using SBEPIS.UI;
 using SBEPIS.Utils;
@@ -11,37 +12,33 @@ namespace SBEPIS.Capturellection
 	[RequireComponent(typeof(LerpTarget))]
 	public class CardTarget : MonoBehaviour
 	{
+		[SerializeField, Self]
+		private LerpTarget lerpTarget;
+		public LerpTarget LerpTarget => lerpTarget;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		[FormerlySerializedAs("onCardCreated")]
-		public UnityEvent<DequeStorable> onCardBound = new();
+		public UnityEvent<DequeElement> onCardBound = new();
 		public UnityEvent onPrepareCard = new();
 		public UnityEvent onGrab = new();
 		public UnityEvent onDrop = new();
 		
-		public DequeStorable card { get; set; }
-		
-		public LerpTarget lerpTarget { get; private set; }
-		public DiajectorPage page { get; private set; }
-
-		public void Awake()
-		{
-			lerpTarget = GetComponent<LerpTarget>();
-			page = GetComponentInParent<DiajectorPage>();
-		}
+		public DequeElement Card { get; set; }
 
 		public void DropTargettingCard()
 		{
-			if (card.Grabbable.isBeingHeld)
-				card.Grabbable.grabbingGrabber.Drop();
+			Card.Grabbable.Drop();
 		}
 
 		public void AttachToTarget(LerpTargetAnimator animator)
 		{
-			card.State.HasBeenAssembled = true;
+			Card.State.HasBeenAssembled = true;
 		}
 
 		public void DetatchFromTarget(LerpTargetAnimator animator)
 		{
-			card.State.HasBeenAssembled = false;
+			Card.State.HasBeenAssembled = false;
 		}
 	}
 }

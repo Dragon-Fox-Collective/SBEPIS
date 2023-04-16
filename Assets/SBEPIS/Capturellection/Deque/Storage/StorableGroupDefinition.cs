@@ -1,25 +1,29 @@
 using System.Collections.Generic;
-using System.Linq;
+using KBCore.Refs;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace SBEPIS.Capturellection.Storage
 {
 	public class StorableGroupDefinition : MonoBehaviour
 	{
-		public DequeRuleset ruleset;
-		public int maxStorables;
-		public StorableGroupDefinition subdefinition;
+		[SerializeField, Anywhere] private DequeRuleset ruleset;
+		public DequeRuleset Ruleset => ruleset;
+		[SerializeField] private int maxStorables;
+		public int MaxStorables => maxStorables;
+		[SerializeField, Anywhere(Flag.Optional)] private StorableGroupDefinition subdefinition;
+		public StorableGroupDefinition Subdefinition => subdefinition;
 		
-		public string dequeName => ruleset.GetDequeNamePart(true, true, false) + (subdefinition ? " of " + subdefinition.dequeNamePlural : "");
-		public string dequeNamePlural => ruleset.GetDequeNamePart(true, true, true) + (subdefinition ? " of " + subdefinition.dequeNamePlural : "");
+		private void OnValidate() => this.ValidateRefs();
+		
+		public string DequeName => ruleset.GetDequeNamePart(true, true, false) + (subdefinition ? " of " + subdefinition.DequeNamePlural : "");
+		public string DequeNamePlural => ruleset.GetDequeNamePart(true, true, true) + (subdefinition ? " of " + subdefinition.DequeNamePlural : "");
 		
 		public static Storable GetNewStorable(StorableGroupDefinition definition)
 		{
 			GameObject childGameObject = new();
 			if (definition)
 			{
-				childGameObject.name = definition.dequeName;
+				childGameObject.name = definition.DequeName;
 				StorableGroup group = childGameObject.AddComponent<StorableGroup>();
 				group.definition = definition;
 				group.state = definition.ruleset.GetNewState();
@@ -38,7 +42,7 @@ namespace SBEPIS.Capturellection.Storage
 		{
 			foreach (DequeSettingsPageLayout layout in ruleset.GetNewSettingsPageLayouts(true, true))
 			{
-				layout.title.text = dequeName;
+				layout.title.text = DequeName;
 				yield return layout;
 			}
 			

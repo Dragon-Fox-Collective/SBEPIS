@@ -14,27 +14,23 @@ namespace SBEPIS.Capturellection
 		[FormerlySerializedAs("onPreparePage")]
 		public UnityEvent onPreparePagePost = new();
 		
-		public Diajector Diajector { get; private set; }
+		private Diajector diajector;
 		
 		private bool hasCreatedCards = false;
 		
-		private readonly Dictionary<DequeStorable, CardTarget> cardTargets = new();
+		private readonly Dictionary<DequeElement, CardTarget> cardTargets = new();
 		
-		private void Awake()
-		{
-			Diajector = GetComponentInParent<Diajector>();
-		}
-		
-		private void CreateCards(IEnumerable<CardTarget> targets)
+		private void CreateCards(IEnumerable<CardTarget> targets, Deque deque, DequeElement menuCardPrefab, LerpTarget startTarget)
 		{
 			foreach (CardTarget target in targets)
 			{
-				DequeStorable card = Instantiate(Diajector.menuCardPrefab);
+				DequeElement card = Instantiate(menuCardPrefab);
 				card.name += $" ({target.transform.parent.name})";
-				target.card = card;
+				target.Card = card;
 				
 				AddCard(card, target);
-				card.Animator.TeleportTo(Diajector.dequeOwner.Deque.lowerTarget);
+				card.Deque = deque;
+				card.Animator.TeleportTo(startTarget);
 				
 				Grabbable cardGrabbable = card.Grabbable;
 				cardGrabbable.onGrab.AddListener((_, _) => target.onGrab.Invoke());
@@ -43,33 +39,34 @@ namespace SBEPIS.Capturellection
 			hasCreatedCards = true;
 		}
 		
-		public void AddCard(DequeStorable card, CardTarget target)
+		public void AddCard(DequeElement card, CardTarget target)
 		{
 			cardTargets.Add(card, target);
-			card.DequeOwner = Diajector.dequeOwner;
 			target.onCardBound.Invoke(card);
+			card.Diajector = diajector;
 		}
 		
-		public void RemoveCard(DequeStorable card)
+		public void RemoveCard(DequeElement card)
 		{
 			cardTargets.Remove(card);
-			card.DequeOwner = null;
+			card.Diajector = null;
 		}
 		
-		public bool HasCard(DequeStorable card) => cardTargets.ContainsKey(card);
-		public CardTarget GetCardTarget(DequeStorable card) => cardTargets.ContainsKey(card) ? cardTargets[card] : null;
-		public LerpTarget GetLerpTarget(DequeStorable card) => cardTargets.ContainsKey(card) ? GetCardTarget(card).lerpTarget : null;
+		public bool HasCard(DequeElement card) => cardTargets.ContainsKey(card);
+		public CardTarget GetCardTarget(DequeElement card) => cardTargets.ContainsKey(card) ? cardTargets[card] : null;
+		public LerpTarget GetLerpTarget(DequeElement card) => cardTargets.ContainsKey(card) ? GetCardTarget(card).LerpTarget : null;
 		
-		public void StartAssembly()
+		public void StartAssembly(Diajector diajector)
 		{
+			this.diajector = diajector;
 			gameObject.SetActive(true);
 			onPreparePagePre.Invoke();
 			if (!hasCreatedCards)
-				CreateCards(GetComponentsInChildren<CardTarget>());
+				CreateCards(GetComponentsInChildren<CardTarget>(), diajector.deque, diajector.menuCardPrefab, diajector.startTarget);
 			onPreparePagePost.Invoke();
-			foreach ((DequeStorable card, CardTarget _) in cardTargets)
+			foreach ((DequeElement card, CardTarget _) in cardTargets)
 				card.State.IsPageOpen = true;
-			Diajector.coroutineOwner.StartCoroutine(SpawnCards());
+			diajector.coroutineOwner.StartCoroutine(SpawnCards());
 		}
 		
 		private IEnumerator SpawnCards()
@@ -78,30 +75,30 @@ namespace SBEPIS.Capturellection
 			yield return 0;
 			yield return 0;
 			
-			foreach ((DequeStorable card, CardTarget target) in cardTargets)
+			foreach ((DequeElement card, CardTarget target) in cardTargets)
 			{
 				target.onPrepareCard.Invoke();
 				card.State.IsAssembling = true;
 				card.State.IsDisassembling = false;
-				yield return new WaitForSeconds(Diajector.cardDelay);
+				yield return new WaitForSeconds(diajector.cardDelay);
 			}
 		}
 		
 		public void StartDisassembly()
 		{
-			foreach ((DequeStorable card, CardTarget _) in cardTargets)
+			foreach ((DequeElement card, CardTarget _) in cardTargets)
 				card.State.IsPageOpen = false;
-			Diajector.coroutineOwner.StartCoroutine(DespawnCards());
+			diajector.coroutineOwner.StartCoroutine(DespawnCards());
 			gameObject.SetActive(false);
 		}
 		
 		private IEnumerator DespawnCards()
 		{
-			foreach ((DequeStorable card, CardTarget _) in cardTargets)
+			foreach ((DequeElement card, CardTarget _) in cardTargets)
 			{
 				card.State.IsAssembling = false;
 				card.State.IsDisassembling = true;
-				yield return new WaitForSeconds(Diajector.cardDelay);
+				yield return new WaitForSeconds(diajector.cardDelay);
 			}
 		}
 		
@@ -109,7 +106,7 @@ namespace SBEPIS.Capturellection
 		{
 			gameObject.SetActive(true);
 			
-			foreach ((DequeStorable card, CardTarget _) in cardTargets)
+			foreach ((DequeElement card, CardTarget _) in cardTargets)
 			{
 				card.State.IsAssembling = false;
 				card.State.IsDisassembling = false;
@@ -120,7 +117,7 @@ namespace SBEPIS.Capturellection
 		
 		public void ForceClose()
 		{
-			foreach ((DequeStorable card, CardTarget _) in cardTargets)
+			foreach ((DequeElement card, CardTarget _) in cardTargets)
 			{
 				card.State.IsAssembling = false;
 				card.State.IsDisassembling = false;
@@ -133,12 +130,10 @@ namespace SBEPIS.Capturellection
 		private void OnDestroy()
 		{
 			if (isActiveAndEnabled)
-				Diajector.ForceRestart();
+				diajector.ForceRestart();
 			
-			foreach ((DequeStorable card, CardTarget _) in cardTargets)
-			{
+			foreach ((DequeElement card, CardTarget _) in cardTargets)
 				Destroy(card);
-			}
 		}
 	}
 }

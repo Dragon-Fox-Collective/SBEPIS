@@ -1,89 +1,133 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
+using KBCore.Refs;
 using SBEPIS.Capturellection.Storage;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
-	[RequireComponent(typeof(DequeOwner))]
-	public class Inventory : MonoBehaviour, IEnumerable<DequeStorable>
+	public class Inventory : MonoBehaviour, IEnumerable<InventoryStorable>
 	{
-		[SerializeField]
-		private DequeStorable cardPrefab;
-		[SerializeField]
-		private int initialCardCount = 5;
+		[SerializeField, Anywhere] public Deque deque;
+		[FormerlySerializedAs("cardPrefab")]
+		[SerializeField, Anywhere] private InventoryStorable initialCardPrefab;
+		[SerializeField] public int initialCardCount = 0;
 		
 		[Tooltip("Purely organizational for the hierarchy")]
-		[SerializeField]
-		private Transform cardParent;
+		[SerializeField, Anywhere] private Transform cardParent;
+		public Transform CardParent => cardParent;
 		
-		public UnityEvent<Storable> onLoadIntoDeque = new();
-		public UnityEvent<List<DequeStorable>> onSaveFromDeque = new();
-
-		private DequeOwner dequeOwner;
+		public UnityEvent<Inventory> onLoadIntoDeque = new();
+		public UnityEvent<Inventory, List<InventoryStorable>> onSaveFromDeque = new();
 		
-		private List<DequeStorable> savedInventory;
+		private List<InventoryStorable> savedInventory = new();
 		private Storable storable;
 		
 		private void Awake()
 		{
-			dequeOwner = GetComponent<DequeOwner>();
-			
-			dequeOwner.dequeEvents.onSet.AddListener(LoadInventoryIntoDeque);
-			dequeOwner.dequeEvents.onUnset.AddListener(SaveInventoryFromDeque);
-			dequeOwner.cardOwnerSlaveEvents.onSet.AddListener(SetCardParent);
-			dequeOwner.cardOwnerSlaveEvents.onUnset.AddListener(UnsetCardParent);
-			
 			SaveInitialInventory();
+			LoadInventoryIntoDeque(deque.Definition, deque.transform);
 		}
 		
 		private void SaveInitialInventory()
 		{
-			List<DequeStorable> initialInventory = new();
 			for (int _ = 0; _ < initialCardCount; _++)
 			{
-				DequeStorable card = Instantiate(cardPrefab);
-				initialInventory.Add(card);
+				InventoryStorable card = Instantiate(initialCardPrefab);
+				savedInventory.Add(card);
 			}
-			savedInventory = initialInventory;
 		}
 		
-		private void LoadInventoryIntoDeque(DequeOwner dequeOwner, Deque deque)
+		private void LoadInventoryIntoDeque(StorableGroupDefinition definition, Transform ejectTransform)
 		{
-			storable = StorableGroupDefinition.GetNewStorable(deque.definition);
-			foreach (DequeStorable card in savedInventory)
-				card.DequeOwner = dequeOwner;
-			storable.Load(savedInventory);
-			foreach (DequeStorable card in savedInventory)
+			storable = StorableGroupDefinition.GetNewStorable(definition);
+			Load(savedInventory);
+			foreach (InventoryStorable card in savedInventory)
 			{
 				print($"Ejecting leftover card {card}");
 				card.gameObject.SetActive(true);
-				card.transform.SetPositionAndRotation(deque.transform.position, deque.transform.rotation);
+				card.transform.SetPositionAndRotation(ejectTransform.position, ejectTransform.rotation);
 			}
 			savedInventory.Clear();
-			onLoadIntoDeque.Invoke(storable);
+			onLoadIntoDeque.Invoke(this);
 		}
 		
-		private void SaveInventoryFromDeque(DequeOwner dequeOwner, Deque oldDeque, Deque newDeque)
+		private void SaveInventoryFromDeque()
 		{
-			savedInventory = storable.ToList();
+			savedInventory = Save();
 			Destroy(storable.gameObject);
-			foreach (DequeStorable card in savedInventory)
-				card.DequeOwner = null;
-			onSaveFromDeque.Invoke(savedInventory);
+			onSaveFromDeque.Invoke(this, savedInventory);
+		}
+
+		private void SetupCard(InventoryStorable card)
+		{
+			card.Inventory = this;
+			card.transform.parent = cardParent;
+		}
+		private static void TearDownCard(InventoryStorable card)
+		{
+			card.Inventory = null;
+			card.transform.parent = null;
 		}
 		
-		private void SetCardParent(DequeStorable card, DequeOwner owner) => card.transform.SetParent(cardParent);
-		private static void UnsetCardParent(DequeStorable card, DequeOwner oldOwner, DequeOwner newOwner) => card.transform.SetParent(null);
+		public void SetStorableParent(Transform transform) => storable.transform.SetParent(transform);
 		
-		public bool CanFetch(DequeStorable card) => storable.CanFetch(card);
-		public UniTask<Capturellectable> Fetch(DequeStorable card) => storable.Fetch(card);
-		public UniTask<(DequeStorable, Capturellectainer, Capturellectable)> Store(Capturellectable item) => storable.Store(item);
-		public IEnumerable<Texture2D> GetCardTextures(DequeStorable card) => storable.GetCardTextures(card);
-		public IEnumerator<DequeStorable> GetEnumerator() => storable.GetEnumerator();
+		public Vector3 Direction
+		{
+			get => storable.state.direction;
+			set => storable.state.direction = value;
+		}
+		public Vector3 Position
+		{
+			get => storable.Position;
+			set => storable.Position = value;
+		}
+		public Quaternion Rotation
+		{
+			get => storable.Rotation;
+			set => storable.Rotation = value;
+		}
+		public Vector3 MaxPossibleSize => storable.MaxPossibleSize;
+		public void Tick(float deltaTime) => storable.Tick(deltaTime);
+		public void LayoutTarget(InventoryStorable card, CardTarget target) => storable.LayoutTarget(card, target);
+		public bool CanFetch(InventoryStorable card) => storable.CanFetch(card);
+		public UniTask<Capturellectable> Fetch(InventoryStorable card)
+		{
+			TearDownCard(card);
+			return storable.Fetch(card);
+		}
+		public async UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item)
+		{
+			(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem) = await storable.Store(item);
+			SetupCard(card);
+			return (card, container, ejectedItem);
+		}
+		public UniTask Flush(List<InventoryStorable> cards)
+		{
+			foreach (InventoryStorable card in cards)
+				SetupCard(card);
+			return storable.Flush(cards);
+		}
+		public UniTask Flush(InventoryStorable card) => Flush(new List<InventoryStorable>{ card });
+		private void Load(List<InventoryStorable> cards)
+		{
+			foreach (InventoryStorable card in cards)
+				SetupCard(card);
+			storable.Load(cards);
+		}
+		private List<InventoryStorable> Save()
+		{
+			List<InventoryStorable> cards = new();
+			storable.Save(cards);
+			foreach (InventoryStorable card in cards)
+				TearDownCard(card);
+			return cards;
+		}
+		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card) => storable.GetCardTextures(card);
+		public IEnumerator<InventoryStorable> GetEnumerator() => storable.GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
 }

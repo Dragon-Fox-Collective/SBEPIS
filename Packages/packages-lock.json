@@ -16,6 +16,13 @@
       },
       "hash": "1f212c268860dc1dc260bbd60d03246908508b79"
     },
+    "com.kylewbanks.scenerefattribute": {
+      "version": "https://github.com/KyleBanks/scene-ref-attribute.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "5154e0bfc1ea1d1abd53f51f4c5533ccd85ad662"
+    },
     "com.unity.ai.navigation": {
       "version": "1.1.1",
       "depth": 0,
@@ -26,7 +33,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.burst": {
-      "version": "1.7.4",
+      "version": "1.8.4",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -35,12 +42,10 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
-      "version": "1.17.7",
+      "version": "2.0.3",
       "depth": 0,
       "source": "registry",
-      "dependencies": {
-        "com.unity.services.core": "1.0.1"
-      },
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {
@@ -60,7 +65,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.16",
+      "version": "2.0.17",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -69,7 +74,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
-      "version": "1.4.4",
+      "version": "1.5.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -84,15 +89,8 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.unity.nuget.newtonsoft-json": {
-      "version": "3.0.2",
-      "depth": 2,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.unity.probuilder": {
-      "version": "5.0.6",
+      "version": "5.0.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -103,7 +101,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
-      "version": "14.0.4",
+      "version": "14.0.7",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
@@ -114,14 +112,14 @@
       }
     },
     "com.unity.render-pipelines.universal": {
-      "version": "14.0.4",
+      "version": "14.0.7",
       "depth": 0,
       "source": "builtin",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
-        "com.unity.burst": "1.7.3",
-        "com.unity.render-pipelines.core": "14.0.4",
-        "com.unity.shadergraph": "14.0.4"
+        "com.unity.burst": "1.8.2",
+        "com.unity.render-pipelines.core": "14.0.7",
+        "com.unity.shadergraph": "14.0.7"
       }
     },
     "com.unity.searcher": {
@@ -129,17 +127,6 @@
       "depth": 2,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.services.core": {
-      "version": "1.6.0",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.nuget.newtonsoft-json": "3.0.2",
-        "com.unity.modules.androidjni": "1.0.0"
-      },
       "url": "https://packages.unity.com"
     },
     "com.unity.settings-manager": {
@@ -150,11 +137,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
-      "version": "14.0.4",
+      "version": "14.0.7",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
-        "com.unity.render-pipelines.core": "14.0.4",
+        "com.unity.render-pipelines.core": "14.0.7",
         "com.unity.searcher": "4.9.2"
       }
     },
@@ -188,7 +175,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.7.2",
+      "version": "1.7.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -232,7 +219,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.openxr": {
-      "version": "1.6.0",
+      "version": "1.7.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {

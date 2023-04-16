@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SBEPIS.Capturellection.Storage;
+using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,54 +9,41 @@ namespace SBEPIS.Capturellection
 {
 	public class DiajectorCaptureLayout : MonoBehaviour
 	{
+		[SerializeField, Parent(Flag.IncludeInactive)]
+		private Diajector diajector;
+		[SerializeField, Parent(Flag.IncludeInactive)]
+		private DiajectorPage page;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
+		public Inventory inventory;
 		public CardTarget cardTargetPrefab;
 		public float cardZ = -1;
 		[FormerlySerializedAs("fetchableCardY")]
 		public float fetchableCardZ = 0.1f;
 		public Transform directionEndpoint;
-
-		private Storable inventory;
-		public Storable Inventory
-		{
-			set
-			{
-				if (inventory)
-					inventory.transform.SetParent(null);
-				
-				inventory = value;
-				
-				if (inventory)
-					inventory.transform.SetParent(transform);
-			}
-		}
 		
-		private Diajector diajector;
-		private readonly Dictionary<DequeStorable, CardTarget> targets = new();
-		private DiajectorPage page;
-		
-		private void Awake()
-		{
-			diajector = GetComponentInParent<Diajector>();
-			page = GetComponentInParent<DiajectorPage>();
-		}
+		private readonly Dictionary<InventoryStorable, CardTarget> targets = new();
 		
 		private void Update()
 		{
 			TickAndLayoutTargets(Time.deltaTime);
 		}
 		
+		public void SetInventoryStorableParent(Inventory inventory)
+		{
+			inventory.SetStorableParent(transform);
+		}
+		
 		private void TickAndLayoutTargets(float deltaTime)
 		{
-			if (!diajector.IsBound)
-				return;
-			
-			inventory.state.direction = directionEndpoint ? transform.InverseTransformPoint(directionEndpoint.position).normalized : Vector3.zero;
+			inventory.Direction = directionEndpoint ? transform.InverseTransformPoint(directionEndpoint.position).normalized : Vector3.zero;
 			inventory.Tick(deltaTime);
 			Vector3 inventorySize = inventory.MaxPossibleSize;
 			inventory.Position = transform.forward * (cardZ + inventorySize.z / 2);
 			inventory.Rotation = Quaternion.identity;
 			
-			foreach ((DequeStorable card, CardTarget target) in targets)
+			foreach ((InventoryStorable card, CardTarget target) in targets)
 			{
 				inventory.LayoutTarget(card, target);
 				target.transform.localRotation *= Quaternion.Euler(0, 180, 0);
@@ -65,37 +52,37 @@ namespace SBEPIS.Capturellection
 			}
 		}
 		
-		public CardTarget AddTemporaryTarget(DequeStorable card)
+		public CardTarget AddTemporaryTarget(InventoryStorable card)
 		{
-			if (targets.ContainsKey(card))
-				throw new ArgumentException($"Tried to add a target of {card} to {this} but {targets[card]} already exists");
+			if (targets.TryGetValue(card, out CardTarget target))
+				throw new ArgumentException($"Tried to add a target of {card} to {this} but {target} already exists");
 			
 			CardTarget newTarget = Instantiate(cardTargetPrefab, transform);
-			newTarget.card = card;
+			newTarget.Card = card.DequeElement;
 			targets.Add(card, newTarget);
 			return newTarget;
 		}
 		
-		public void RemoveTemporaryTarget(DequeStorable card)
+		public void RemoveTemporaryTarget(InventoryStorable card)
 		{
 			CardTarget target = targets[card];
 			targets.Remove(card);
 			Destroy(target.gameObject);
 		}
 
-		public bool HasTemporaryTarget(DequeStorable card) => targets.ContainsKey(card) && !inventory.Contains(card);
+		public bool HasTemporaryTarget(InventoryStorable card) => targets.ContainsKey(card) && !inventory.Contains(card);
 
-		public CardTarget AddPermanentTargetAndCard(DequeStorable card)
+		public CardTarget AddPermanentTargetAndCard(InventoryStorable card)
 		{
 			CardTarget target = HasTemporaryTarget(card) ? targets[card] : AddTemporaryTarget(card);
-			page.AddCard(card, target);
-			diajector.dequeOwner.Deque.lowerTarget.onMoveFrom.Invoke(card.Animator);
+			page.AddCard(card.DequeElement, target);
+			diajector.startTarget.onMoveFrom.Invoke(card.DequeElement.Animator);
 			return target;
 		}
 		
-		public void RemovePermanentTargetAndCard(DequeStorable card)
+		public void RemovePermanentTargetAndCard(InventoryStorable card)
 		{
-			page.RemoveCard(card);
+			page.RemoveCard(card.DequeElement);
 			RemoveTemporaryTarget(card);
 		}
 
@@ -103,25 +90,25 @@ namespace SBEPIS.Capturellection
 		{
 			if (!inventory)
 			{
-				foreach ((DequeStorable card, CardTarget _) in targets.ToList())
+				foreach ((InventoryStorable card, CardTarget _) in targets.ToList())
 					RemovePermanentTargetAndCard(card);
 				return;
 			}
 			
-			foreach ((DequeStorable card, CardTarget _) in targets.Where(pair => !inventory.Contains(pair.Key)).ToList())
+			foreach ((InventoryStorable card, CardTarget _) in targets.Where(pair => !inventory.Contains(pair.Key)).ToList())
 				RemovePermanentTargetAndCard(card);
 			
-			foreach (DequeStorable card in inventory.Where(card => !targets.ContainsKey(card)))
+			foreach (InventoryStorable card in inventory.Where(card => !targets.ContainsKey(card)))
 			{
 				CardTarget target = AddPermanentTargetAndCard(card);
-				if (card.Grabbable.isBeingHeld)
+				if (card.DequeElement.Grabbable.IsBeingHeld)
 				{
-					card.Animator.SetPausedAt(target.lerpTarget);
+					card.DequeElement.Animator.SetPausedAt(target.LerpTarget);
 					target.onGrab.Invoke();
 				}
 				else
 				{
-					card.Animator.TeleportTo(diajector.dequeOwner.Deque.lowerTarget);
+					card.DequeElement.Animator.TeleportTo(diajector.startTarget);
 				}
 			}
 		}

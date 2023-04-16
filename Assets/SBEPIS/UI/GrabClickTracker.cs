@@ -1,3 +1,4 @@
+using KBCore.Refs;
 using SBEPIS.Controller;
 using UnityEngine;
 
@@ -6,12 +7,10 @@ namespace SBEPIS.UI
 	[RequireComponent(typeof(Grabbable))]
 	public class GrabClickTracker : ClickTracker
 	{
+		[SerializeField, Self]
 		private Grabbable grabbable;
 
-		private void Awake()
-		{
-			grabbable = GetComponent<Grabbable>();
-		}
+		private void OnValidate() => this.ValidateRefs();
 
 		private void OnEnable()
 		{
