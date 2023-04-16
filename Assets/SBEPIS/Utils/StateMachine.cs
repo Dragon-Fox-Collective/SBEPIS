@@ -1,13 +1,13 @@
+using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Utils
 {
-	public abstract class StateMachine
+	[RequireComponent(typeof(Animator))]
+	public abstract class StateMachine : MonoBehaviour
 	{
-		protected Animator state;
-		public StateMachine(Animator state)
-		{
-			this.state = state;
-		}
+		[SerializeField, Self]
+		private Animator state;
+		protected Animator State => state;
 	}
 }

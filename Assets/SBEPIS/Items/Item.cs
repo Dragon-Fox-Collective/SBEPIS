@@ -1,24 +1,15 @@
-using SBEPIS.Capturllection;
-using System;
-using SBEPIS.Controller;
-using SBEPIS.Physics;
+using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Items
 {
-	[RequireComponent(typeof(CompoundRigidbody), typeof(Grabbable), typeof(ItemBase))]
-	[RequireComponent(typeof(GravitySum), typeof(Capturllectable))]
+	[RequireComponent(typeof(ItemModule))]
 	public class Item : MonoBehaviour
 	{
-		public new CompoundRigidbody rigidbody { get; private set; }
-		public ItemBase itemBase { get; private set; }
-		public Capturllectable capturllectable { get; private set; }
-
-		private void Awake()
-		{
-			rigidbody = GetComponent<CompoundRigidbody>();
-			itemBase = GetComponent<ItemBase>();
-			capturllectable = GetComponent<Capturllectable>();
-		}
+		[SerializeField, Self]
+		private ItemModule module;
+		public ItemModule Module => module;
+		
+		private void OnValidate() => this.ValidateRefs();
 	}
 }
