@@ -12,7 +12,7 @@ namespace SBEPIS.Capturellection.CardState
 		
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			arc = Instantiate(State.Card.Diajector.electricArcPrefab, Point);
+			arc = Instantiate(State.ElectricArcPrefab, Point);
 			arc.otherPoint = State.Card.transform;
 		}
 		

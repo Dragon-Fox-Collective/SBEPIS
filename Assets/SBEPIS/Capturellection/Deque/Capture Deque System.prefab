@@ -289,12 +289,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834066343270ba147b47a2957044d46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lowerTarget: {fileID: 4582897949649126844}
-  upperTarget: {fileID: 3710867468495898251}
   deque: {fileID: 6518269390508492605}
   state: {fileID: 247446822995151989}
   gravitySum: {fileID: 2407877750667227432}
   rigidbody: {fileID: 6008107129270263796}
+  lowerTarget: {fileID: 4582897949649126844}
+  upperTarget: {fileID: 3710867468495898251}
 --- !u!114 &1152362718473556953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -731,22 +731,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d00b0cf08b2be42b94e48c15a25370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deque: {fileID: 6518269390508492605}
-  startTarget: {fileID: 4582897949649126844}
   upperTarget: {fileID: 2094737243974216280}
-  menuCardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
-  electricArcPrefab: {fileID: 7962134878051775022, guid: bd0964b77b3f6f0459fc55699ed10fd6, type: 3}
   mainPage: {fileID: 2123154491108635258}
-  cardDelay: 0.1
-  staticRigidbody: {fileID: 3798306875382306503}
-  coroutineOwner: {fileID: 8856617430227243949}
-  cardStrength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
   onOpen:
     m_PersistentCalls:
       m_Calls: []
   onClose:
     m_PersistentCalls:
       m_Calls: []
+  menuCardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
+  deque: {fileID: 6518269390508492605}
+  startTarget: {fileID: 4582897949649126844}
+  cardDelay: 0.1
+  coroutineOwner: {fileID: 8856617430227243949}
+  staticRigidbody: {fileID: 3798306875382306503}
 --- !u!1 &3973130256352618454
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,6 +879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8fb9d5b878ca534bb3ebb13730f545e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diajector: {fileID: 3804022167782729142}
   onPreparePagePre:
     m_PersistentCalls:
       m_Calls: []
@@ -1344,6 +1343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8fb9d5b878ca534bb3ebb13730f545e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diajector: {fileID: 3804022167782729142}
   onPreparePagePre:
     m_PersistentCalls:
       m_Calls: []
@@ -1809,6 +1809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deque: {fileID: 6518269390508492605}
   diajector: {fileID: 3804022167782729142}
+  backPage: {fileID: 2123154491108635258}
   settingsPagePrefab: {fileID: 8545667152632050241, guid: 1cce4ef865a9952458f391310621eb1b, type: 3}
 --- !u!114 &6911213214757733983 stripped
 MonoBehaviour:

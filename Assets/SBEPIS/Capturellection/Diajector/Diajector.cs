@@ -1,30 +1,35 @@
 using System.Diagnostics.CodeAnalysis;
-using SBEPIS.Physics;
-using SBEPIS.UI;
+using KBCore.Refs;
 using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
 	public class Diajector : MonoBehaviour
 	{
-		public Deque deque;
-		public LerpTarget startTarget;
-		public LerpTarget upperTarget;
-		[FormerlySerializedAs("cardPrefab")]
-		public DequeElement menuCardPrefab;
-		public ElectricArc electricArcPrefab;
-		public DiajectorPage mainPage;
-		public float cardDelay = 0.5f;
+		[SerializeField, Anywhere] private LerpTarget upperTarget;
+		public LerpTarget UpperTarget => upperTarget;
+		[SerializeField, Anywhere] private DiajectorPage mainPage;
 		
-		public Rigidbody staticRigidbody;
-		public MonoBehaviour coroutineOwner;
-		public StrengthSettings cardStrength;
-
 		public UnityEvent<Diajector> onOpen = new();
 		public UnityEvent<Diajector> onClose = new();
+
+		[Header("Parameters required only for page and menu card creation")]
+		[SerializeField, Anywhere] private DequeElement menuCardPrefab;
+		public DequeElement MenuCardPrefab => menuCardPrefab;
+		[SerializeField, Anywhere] private Deque deque;
+		public Deque Deque => deque;
+		[SerializeField, Anywhere] private LerpTarget startTarget;
+		public LerpTarget StartTarget => startTarget;
+		[SerializeField] private float cardDelay = 0.5f;
+		public float CardDelay => cardDelay;
+		[SerializeField, Anywhere] private MonoBehaviour coroutineOwner;
+		public MonoBehaviour CoroutineOwner => coroutineOwner;
+		[SerializeField, Anywhere] private Rigidbody staticRigidbody;
+		public Rigidbody StaticRigidbody => staticRigidbody;
+		
+		private void OnValidate() => this.ValidateRefs();
 
 		private DiajectorPage currentPage;
 		
@@ -61,7 +66,7 @@ namespace SBEPIS.Capturellection
 		private void AssembleNewPage(DiajectorPage page)
 		{
 			currentPage = page;
-			currentPage.StartAssembly(this);
+			currentPage.StartAssembly();
 		}
 
 		private void ForceOpenCurrentPage()
