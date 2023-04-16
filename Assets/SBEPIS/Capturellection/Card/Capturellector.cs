@@ -12,7 +12,12 @@ namespace SBEPIS.Capturellection
 	{
 		[SerializeField, Self] private Grabber grabber;
 		
-		public Inventory Inventory { get; set; }
+		[SerializeField, Anywhere(Flag.Optional)] private Inventory inventory;
+		public Inventory Inventory
+		{
+			get => inventory;
+			set => inventory = value;
+		}
 		
 		private void OnValidate() => this.ValidateRefs();
 		
@@ -30,7 +35,7 @@ namespace SBEPIS.Capturellection
 		public async UniTask<CaptureContainer> CaptureAndGrabCard(Capturellectable item)
 		{
 			grabber.Drop();
-			(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem) = await Inventory.Store(item);
+			(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem) = await inventory.Store(item);
 			MoveEjectedItem(card, ejectedItem);
 			TryGrab(container.transform);
 			return container;
@@ -63,11 +68,11 @@ namespace SBEPIS.Capturellection
 		
 		private async UniTask<Capturellectable> RetrieveFromInventory(InventoryStorable card)
 		{
-			if (!Inventory.CanFetch(card))
+			if (!inventory.CanFetch(card))
 				return null;
 			
 			grabber.Drop();
-			Capturellectable item = await Inventory.Fetch(card);
+			Capturellectable item = await inventory.Fetch(card);
 			TryGrab(item.transform);
 			return item;
 		}
