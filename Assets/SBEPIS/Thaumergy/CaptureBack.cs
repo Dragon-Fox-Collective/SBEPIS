@@ -11,7 +11,7 @@ namespace SBEPIS.Capturellection
 		
 		public void UpdateCaptureCodeToDefault() => UpdateCaptureCode(new BitSet());
 		
-		public void UpdateCaptureCode(Capturellectainer card, Capturellectable item) => UpdateCaptureCode(item.GetComponent<ItemModule>().bits.bits);
+		public void UpdateCaptureCode(CaptureContainer card, Capturellectable item) => UpdateCaptureCode(item.GetComponent<ItemModule>().bits.bits);
 		
 		public void UpdateCaptureCode(BitSet bits)
 		{

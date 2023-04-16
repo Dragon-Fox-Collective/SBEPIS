@@ -1,8 +1,6 @@
-using System;
 using KBCore.Refs;
 using SBEPIS.Utils;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {

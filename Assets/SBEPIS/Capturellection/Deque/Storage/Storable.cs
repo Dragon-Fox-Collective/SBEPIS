@@ -37,7 +37,7 @@ namespace SBEPIS.Capturellection.Storage
 		public abstract bool CanFetch(InventoryStorable card);
 		public abstract bool Contains(InventoryStorable card);
 		
-		public abstract UniTask<(InventoryStorable, Capturellectainer, Capturellectable)> Store(Capturellectable item);
+		public abstract UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item);
 		public abstract UniTask<Capturellectable> Fetch(InventoryStorable card);
 		public abstract UniTask Flush(List<InventoryStorable> cards);
 		

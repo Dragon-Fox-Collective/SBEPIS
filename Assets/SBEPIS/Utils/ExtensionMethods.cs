@@ -79,7 +79,9 @@ public static class ExtensionMethods
 		rigidbody.isKinematic = false;
 		rigidbody.detectCollisions = true;
 	}
-
+	
+	public static bool TryGetComponentInChildren<T>(this Component thisComponent, out T component) where T : Component => component = thisComponent.GetComponentInChildren<T>();
+	
 	public static string Join<T>(this string delimiter, IEnumerable<T> enumerable)
 	{
 		return string.Join(delimiter, enumerable);

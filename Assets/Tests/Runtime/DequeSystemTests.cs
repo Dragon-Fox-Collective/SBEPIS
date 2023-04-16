@@ -7,7 +7,7 @@ using UnityEngine.TestTools;
 
 namespace SBEPIS.Tests
 {
-	public class DequeSystemTest : TestSceneSuite<DequeSystemScene>
+	public class DequeSystemTests : TestSceneSuite<DequeSystemScene>
 	{
 		[Test]
 		public void GrabbingDeque_GrabsDeque()

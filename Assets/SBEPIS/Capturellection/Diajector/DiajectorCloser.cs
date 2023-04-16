@@ -13,7 +13,7 @@ namespace SBEPIS.Capturellection
 			
 			if (diajector && diajector.IsOpen)
 				diajector.StartDisassembly();
-
+			
 			diajector = newDiajector;
 		}
 	}
