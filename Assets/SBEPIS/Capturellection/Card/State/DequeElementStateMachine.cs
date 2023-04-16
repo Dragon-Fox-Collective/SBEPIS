@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using KBCore.Refs;
+using SBEPIS.Physics;
+using SBEPIS.UI;
 using SBEPIS.Utils;
 using UnityEngine;
 
@@ -7,16 +9,15 @@ namespace SBEPIS.Capturellection.CardState
 {
 	public class DequeElementStateMachine : StateMachine
 	{
-		[SerializeField, Self]
-		private DequeElement card;
+		[SerializeField, Self] private DequeElement card;
 		public DequeElement Card => card;
-
 		public DequeBox DequeBox => Card.Deque.GetComponent<DequeBox>();
-		
-		[SerializeField, Self(Flag.Optional)]
-		private InventoryStorableCaptureLayoutAdder layoutAdder;
-		[MaybeNull]
-		public InventoryStorableCaptureLayoutAdder LayoutAdder => layoutAdder;
+		[SerializeField, Self(Flag.Optional)] private InventoryStorableCaptureLayoutAdder layoutAdder;
+		[MaybeNull] public InventoryStorableCaptureLayoutAdder LayoutAdder => layoutAdder;
+		[SerializeField, Anywhere] private StrengthSettings cardStrength;
+		public StrengthSettings CardStrength => cardStrength;
+		[SerializeField, Anywhere] private ElectricArc electricArcPrefab;
+		public ElectricArc ElectricArcPrefab => electricArcPrefab;
 		
 		private void OnValidate() => this.ValidateRefs();
 		

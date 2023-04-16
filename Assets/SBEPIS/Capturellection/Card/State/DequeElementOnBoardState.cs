@@ -13,13 +13,11 @@ namespace SBEPIS.Capturellection.CardState
 			LerpTarget target = State.Card.Diajector.GetLerpTarget(State.Card);
 			if (!target)
 				return;
-			Rigidbody staticRigidbody = State.Card.Diajector.staticRigidbody;
-			StrengthSettings cardStrength = State.Card.Diajector.cardStrength;
 			
-			targetter = staticRigidbody.gameObject.AddComponent<JointTargetter>();
+			targetter = State.Card.Diajector.StaticRigidbody.gameObject.AddComponent<JointTargetter>();
 			targetter.connectedBody = State.Card.Grabbable.Rigidbody;
 			targetter.target = target.transform;
-			targetter.strength = cardStrength;
+			targetter.strength = State.CardStrength;
 		}
 		
 		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

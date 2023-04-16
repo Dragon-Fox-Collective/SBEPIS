@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection
 {
 	public class DequeSettingsPageCreator : MonoBehaviour
 	{
-		public Deque deque;
-		public Diajector diajector;
-		public DequeSettingsPage settingsPagePrefab;
+		[SerializeField, Anywhere] private Deque deque;
+		[SerializeField, Anywhere] private Diajector diajector;
+		[SerializeField, Anywhere] private DiajectorPage backPage;
+		[SerializeField, Anywhere] private DequeSettingsPage settingsPagePrefab;
+		
+		private void OnValidate() => this.ValidateRefs();
 		
 		private List<DequeSettingsPage> settingsPages = new();
 		
@@ -25,7 +29,7 @@ namespace SBEPIS.Capturellection
 			List<DequeSettingsPageLayout> layouts = deque.Definition.GetNewSettingsPageLayouts().ToList();
 			foreach ((int i, DequeSettingsPageLayout layout) in layouts.Enumerate())
 			{
-				DequeSettingsPage page = Instantiate(settingsPagePrefab, diajector.mainPage.transform.parent);
+				DequeSettingsPage page = Instantiate(settingsPagePrefab, backPage.transform.parent);
 				layout.transform.SetParent(page.settingsParent, false);
 				
 				if (i == 0) Destroy(page.prevButton.transform.parent.gameObject);
@@ -36,7 +40,7 @@ namespace SBEPIS.Capturellection
 			for (int i = 0; i < settingsPages.Count; i++)
 			{
 				DequeSettingsPage page = settingsPages[i];
-				page.backButton.onGrab.AddListener(diajector.ChangePageAction(diajector.mainPage));
+				page.backButton.onGrab.AddListener(diajector.ChangePageAction(backPage));
 				if (i > 0) page.prevButton.onGrab.AddListener(diajector.ChangePageAction(settingsPages[i - 1].Page));
 				if (i < settingsPages.Count - 1) page.nextButton.onGrab.AddListener(diajector.ChangePageAction(settingsPages[i + 1].Page));
 			}
