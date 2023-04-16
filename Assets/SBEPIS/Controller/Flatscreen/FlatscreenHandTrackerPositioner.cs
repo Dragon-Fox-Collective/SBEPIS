@@ -58,7 +58,7 @@ namespace SBEPIS.Controller.Flatscreen
 				transform.rotation,
 				transform.position + transform.right * offset,
 				transform.forward,
-				playerOrientation.upDirection,
+				playerOrientation.UpDirection,
 				raycastDistance);
 		}
 

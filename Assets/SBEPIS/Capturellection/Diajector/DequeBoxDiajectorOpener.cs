@@ -1,3 +1,4 @@
+using KBCore.Refs;
 using SBEPIS.Controller;
 using UnityEngine;
 
@@ -6,17 +7,15 @@ namespace SBEPIS.Capturellection
 	[RequireComponent(typeof(DequeBox))]
 	public class DequeBoxDiajectorOpener : MonoBehaviour
 	{
-		public Diajector diajector;
-		
+		[SerializeField, Self]
 		private DequeBox dequeBox;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
+		public Diajector diajector;
 		
 		private DiajectorCloser closer;
 		
-		private void Awake()
-		{
-			dequeBox = GetComponent<DequeBox>();
-		}
-
 		public void BindToPlayer(Grabber grabber, Grabbable grabbable)
 		{
 			if (!grabber.TryGetComponent(out PlayerReference playerReference))

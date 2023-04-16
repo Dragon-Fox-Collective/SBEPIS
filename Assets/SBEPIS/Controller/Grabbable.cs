@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,22 +9,23 @@ namespace SBEPIS.Controller
 	[RequireComponent(typeof(Rigidbody))]
 	public class Grabbable : MonoBehaviour
 	{
+		[SerializeField, Self]
+		private new Rigidbody rigidbody;
+		public Rigidbody Rigidbody => rigidbody;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		public List<GrabPoint> grabPoints = new();
-		public ItemEvent onTouch = new();
-		public ItemEvent onGrab = new();
-		public ItemEvent onHoldUpdate = new();
-		public ItemEvent onUse = new();
-		public ItemEvent onDrop = new();
-		public ItemEvent onStopTouch = new();
+		public GrabEvent onTouch = new();
+		public GrabEvent onGrab = new();
+		public GrabEvent onHoldUpdate = new();
+		public GrabEvent onUse = new();
+		public GrabEvent onDrop = new();
+		public GrabEvent onStopTouch = new();
 		
-		public readonly List<Grabber> grabbingGrabbers = new();
-		public Rigidbody Rigidbody { get; private set; }
+		private List<Grabber> grabbingGrabbers = new();
+		
 		public bool IsBeingHeld => grabbingGrabbers.Count != 0;
-		
-		private void Awake()
-		{
-			Rigidbody = GetComponent<Rigidbody>();
-		}
 		
 		public void OnGrabbed(Grabber grabber)
 		{
@@ -47,7 +49,4 @@ namespace SBEPIS.Controller
 			grabbingGrabbers.ForEach(grabber => grabber.Drop());
 		}
 	}
-
-	[Serializable]
-	public class ItemEvent : UnityEvent<Grabber, Grabbable> { }
 }

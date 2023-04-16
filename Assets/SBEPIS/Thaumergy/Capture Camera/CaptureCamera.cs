@@ -1,5 +1,6 @@
 using SBEPIS.Bits;
 using System.Collections.Generic;
+using KBCore.Refs;
 using TMPro;
 using UnityEngine;
 
@@ -11,11 +12,14 @@ namespace SBEPIS.Capturellection
 	[RequireComponent(typeof(Camera))]
 	public class CaptureCamera : MonoBehaviour
 	{
+		[SerializeField, Self]
+		private new Camera camera;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		public TextMeshProUGUI codeBox;
 		public Transform objectParent;
 		public RectTransform stage;
-
-		private new Camera camera;
 
 		public static CaptureCamera instance;
 		private readonly Dictionary<BitSet, Texture2D> captureCodeTextures = new();

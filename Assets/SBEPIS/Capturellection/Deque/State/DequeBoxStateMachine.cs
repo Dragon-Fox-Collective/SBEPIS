@@ -11,23 +11,23 @@ namespace SBEPIS.Capturellection.DequeState
 	[RequireComponent(typeof(CouplingPlug), typeof(LerpTargetAnimator))]
 	public class DequeBoxStateMachine : StateMachine
 	{
-		[NonSerialized]
-		public LerpTarget lerpTarget;
-		
-		[SerializeField, HideInInspector, Self]
+		[SerializeField, Self]
 		private DequeBox dequeBox;
 		public DequeBox DequeBox => dequeBox;
 		
-		[SerializeField, HideInInspector, Self]
+		[SerializeField, Self]
 		private CouplingPlug plug;
 		public CouplingPlug Plug => plug;
 		
-		[SerializeField, HideInInspector, Self]
+		[SerializeField, Self]
 		private LerpTargetAnimator animator;
 		public LerpTargetAnimator Animator => animator;
 		
 		private void OnValidate() => this.ValidateRefs();
 		
+		[NonSerialized]
+		public LerpTarget lerpTarget;
+
 		private static readonly int IsGrabbedKey = UnityEngine.Animator.StringToHash("Is Grabbed");
 		public bool IsGrabbed
 		{

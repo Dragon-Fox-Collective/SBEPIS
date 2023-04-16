@@ -4,25 +4,24 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.CardState
 {
-	public class CardOnBoardState : StateMachineBehaviour
+	public class DequeElementOnBoardState : StateMachineBehaviour<DequeElementStateMachine>
 	{
 		private JointTargetter targetter;
 		
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			DequeElement card = animator.GetComponent<DequeElement>();
-			LerpTarget target = card.Deque.diajector.GetLerpTarget(card);
+			LerpTarget target = State.Card.Deque.diajector.GetLerpTarget(State.Card);
 			if (!target)
 				return;
-			Rigidbody staticRigidbody = card.Deque.diajector.staticRigidbody;
-			StrengthSettings cardStrength = card.Deque.diajector.cardStrength;
-
+			Rigidbody staticRigidbody = State.Card.Deque.diajector.staticRigidbody;
+			StrengthSettings cardStrength = State.Card.Deque.diajector.cardStrength;
+			
 			targetter = staticRigidbody.gameObject.AddComponent<JointTargetter>();
-			targetter.connectedBody = card.Grabbable.Rigidbody;
+			targetter.connectedBody = State.Card.Grabbable.Rigidbody;
 			targetter.target = target.transform;
 			targetter.strength = cardStrength;
 		}
-
+		
 		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
 			if (targetter)

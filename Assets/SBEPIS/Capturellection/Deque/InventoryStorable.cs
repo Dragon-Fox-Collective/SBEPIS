@@ -1,4 +1,5 @@
 using System;
+using KBCore.Refs;
 using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,7 +9,11 @@ namespace SBEPIS.Capturellection
 	[RequireComponent(typeof(DequeElement))]
 	public class InventoryStorable : MonoBehaviour
 	{
-		public DequeElement DequeElement { get; private set; }
+		[SerializeField, Self]
+		private DequeElement dequeElement;
+		public DequeElement DequeElement => dequeElement;
+		
+		private void OnValidate() => this.ValidateRefs();
 		
 		public EventProperty<InventoryStorable, Inventory, SetCardInventoryEvent, UnsetCardInventoryEvent> inventoryEvents = new();
 		public Inventory Inventory
@@ -16,12 +21,11 @@ namespace SBEPIS.Capturellection
 			get => inventoryEvents.Get();
 			set => inventoryEvents.Set(this, value);
 		}
-
+		
 		private void Awake()
 		{
-			DequeElement = GetComponent<DequeElement>();
-			inventoryEvents.onSet.AddListener((_, inventory) => DequeElement.Deque = inventory.deque);
-			inventoryEvents.onUnset.AddListener((_, _, _) => DequeElement.Deque = null);
+			inventoryEvents.onSet.AddListener((_, inventory) => dequeElement.Deque = inventory.deque);
+			inventoryEvents.onUnset.AddListener((_, _, _) => dequeElement.Deque = null);
 		}
 	}
 }

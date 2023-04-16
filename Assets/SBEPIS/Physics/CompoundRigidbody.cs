@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Physics
@@ -8,31 +6,29 @@ namespace SBEPIS.Physics
 	[RequireComponent(typeof(Rigidbody))]
 	public class CompoundRigidbody : MonoBehaviour
 	{
-		public new Rigidbody rigidbody { get; private set; }
-
-		public Vector3 worldCenterOfMass => transform.position + rigidbody.centerOfMass;
-
-		private void Awake()
-		{
-			rigidbody = GetComponent<Rigidbody>();
-		}
-
+		[SerializeField, Self]
+		private new Rigidbody rigidbody;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
+		public Vector3 WorldCenterOfMass => transform.position + rigidbody.centerOfMass;
+		
 		private void Start()
 		{
 			Recalculate();
 		}
-
+		
 		private void Recalculate()
 		{
 			RigidbodyPiece[] pieces = GetComponentsInChildren<RigidbodyPiece>();
 			if (pieces.Length == 0)
 				return;
-
+			
 			rigidbody.centerOfMass = Vector3.zero;
 			rigidbody.mass = 0;
 			rigidbody.inertiaTensor = Vector3.one;
 			Matrix4x4 inertiaTensor = new();
-
+			
 			foreach (RigidbodyPiece piece in pieces)
 			{
 				if (piece.gameObject.activeInHierarchy)
@@ -42,7 +38,7 @@ namespace SBEPIS.Physics
 				}
 			}
 			rigidbody.centerOfMass /= rigidbody.mass;
-
+			
 			foreach (RigidbodyPiece piece in pieces)
 			{
 				// Parallel axis theorem??
@@ -53,13 +49,13 @@ namespace SBEPIS.Physics
 				Matrix4x4 worldTensor = pieceTransform * piece.localInertiaTensor * pieceTransform.transpose;
 				Matrix4x4 inverseTransform = Matrix4x4.Rotate(transform.rotation.Inverse());
 				Matrix4x4 localTensor = inverseTransform * worldTensor * inverseTransform.transpose;
-				Vector3 displacement = worldCenterOfMass - piece.worldCenter;
+				Vector3 displacement = WorldCenterOfMass - piece.worldCenter;
 				Matrix4x4 parallelTensor = localTensor.Plus(Matrix4x4.identity.Times(displacement.InnerSquared()).Minus(displacement.OuterSquared()).Times(piece.mass));
 				inertiaTensor = inertiaTensor.Plus(parallelTensor);
 			}
 			rigidbody.inertiaTensor = inertiaTensor.Diagonalize(out Quaternion inertiaTensorRotation);
 			rigidbody.inertiaTensorRotation = inertiaTensorRotation;
-
+			
 			rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
 		}
 	}

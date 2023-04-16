@@ -1,4 +1,4 @@
-using System.Linq;
+using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Physics
@@ -6,16 +6,14 @@ namespace SBEPIS.Physics
 	[RequireComponent(typeof(BoxCollider))]
 	public class MassiveBox : MassiveBody
 	{
+		[SerializeField, Self]
+		private BoxCollider box;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		public float gravity = 10;
 		public float falloffDistance = 1;
-
-		private BoxCollider box;
-
-		private void Awake()
-		{
-			box = GetComponent<BoxCollider>();
-		}
-
+		
 		public override Vector3 GetPriority(Vector3 centerOfMass)
 		{
 			Vector3 localCenterOfMass = centerOfMass - box.center;
@@ -25,15 +23,10 @@ namespace SBEPIS.Physics
 				GetPriorityFalloff(localCenterOfMass.z, box.size.z / 2, falloffDistance)
 			);
 		}
+		
+		public static float GetPriorityFalloff(float x, float radius, float falloffDistance) =>
+			falloffDistance > 0 ? Mathf.Clamp(Mathf.Abs(x).Map(radius, radius - falloffDistance, 0, 1), 0, 1) : Mathf.Abs(x) < radius ? 1 : 0;
 
-		public static float GetPriorityFalloff(float x, float radius, float falloffDistance)
-		{
-			return falloffDistance > 0 ? Mathf.Clamp(Mathf.Abs(x).Map(radius, radius - falloffDistance, 0, 1), 0, 1) : Mathf.Abs(x) < radius ? 1 : 0;
-		}
-
-		public override Vector3 GetGravity(Vector3 centerOfMass)
-		{
-			return gravity * Vector3.down;
-		}
+		public override Vector3 GetGravity(Vector3 centerOfMass) => gravity * Vector3.down;
 	}
 }

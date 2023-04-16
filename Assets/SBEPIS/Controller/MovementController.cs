@@ -1,3 +1,4 @@
+using KBCore.Refs;
 using UnityEngine;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
@@ -6,8 +7,15 @@ namespace SBEPIS.Controller
 	[RequireComponent(typeof(Rigidbody), typeof(Orientation))]
 	public class MovementController : MonoBehaviour
 	{
+		[SerializeField, Self]
+		private new Rigidbody rigidbody;
+		[SerializeField, Self]
+		private Orientation orientation;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		public Transform moveAimer;
-
+		
 		public SphereCollider footballCollider;
 		public ConfigurableJoint footballJoint;
 
@@ -16,18 +24,10 @@ namespace SBEPIS.Controller
 		public float airAcceleration = 1;
 		public float sprintFactor = 2;
 		public float sprintControlThreshold = 0.9f;
-
-		private new Rigidbody rigidbody;
-		private Orientation orientation;
+		
 		private Vector3 controlsTarget;
 		private bool isTryingToSprint;
 		private bool isSprinting;
-
-		private void Awake()
-		{
-			rigidbody = GetComponent<Rigidbody>();
-			orientation = GetComponent<Orientation>();
-		}
 
 		private void FixedUpdate()
 		{
@@ -37,7 +37,7 @@ namespace SBEPIS.Controller
 		private void MoveTick()
 		{
 			UpdateSprinting();
-			Accelerate(orientation.relativeVelocity, orientation.upDirection);
+			Accelerate(orientation.RelativeVelocity, orientation.UpDirection);
 		}
 
 		private void UpdateSprinting()
@@ -52,7 +52,7 @@ namespace SBEPIS.Controller
 		{
 			Vector3 accelerationControl = moveAimer.right * controlsTarget.x + Vector3.Cross(moveAimer.right, upDirection) * controlsTarget.z;
 			AccelerateGround(upDirection, accelerationControl);
-			if (accelerationControl != Vector3.zero && !orientation.isGrounded)
+			if (accelerationControl != Vector3.zero && !orientation.IsGrounded)
 				AccelerateAir(currentVelocity, accelerationControl);
 		}
 

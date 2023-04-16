@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using KBCore.Refs;
 using UnityEngine;
+using UnityEngine.Events;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Controller
@@ -9,6 +11,12 @@ namespace SBEPIS.Controller
 	[RequireComponent(typeof(Rigidbody))]
 	public class Grabber : MonoBehaviour
 	{
+		[SerializeField, Self]
+		private new Rigidbody rigidbody;
+		public Rigidbody Rigidbody => rigidbody;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		public LayerMask grabMask = 1;
 		[Tooltip("Should be within the hand collision box, far enough that you wouldn't reasonably be able to clip into it")]
 		public Transform grabNormalCaster;
@@ -18,35 +26,31 @@ namespace SBEPIS.Controller
 
 		public Orientation playerOrientation;
 
-		public bool CanGrab { get; set; } = true;
+		public GrabEvent onGrab = new();
+		public ColliderGrabEvent onGrabCollider = new();
+		public GrabEvent onDrop = new();
+		public ColliderGrabEvent onDropCollider = new();
 
+		public bool CanGrab { get; set; } = true;
+		
 		private bool overrideShortRangeGrab;
 		private Vector3 overrideShortRangeGrabCasterPosition;
 		private Vector3 overrideShortRangeGrabCasterForward;
 		private float overrideShortRangeGrabDistance;
-
+		
 		public bool IsHoldingSomething => HeldCollider;
 		public Collider HeldCollider { get; private set; }
 		public Grabbable HeldGrabbable { get; private set; }
 		public GrabPoint HeldGrabPoint { get; private set; }
 		private FixedJoint heldGrabbableJoint;
 		private Vector3 heldPureColliderNormal;
-
+		
 		private readonly RaycastHit[] grabNormalHits = new RaycastHit[16];
-
-		public Rigidbody Rigidbody { get; private set; }
-
 		private readonly List<Collider> collidingColliders = new();
-
 		private bool isHoldingGrab;
-
-		private bool IsSlipping => heldPureColliderNormal != Vector3.zero && Vector3.Angle(heldPureColliderNormal, playerOrientation.upDirection) > slipAngle;
-
-		private void Awake()
-		{
-			Rigidbody = GetComponent<Rigidbody>();
-		}
-
+		
+		private bool IsSlipping => heldPureColliderNormal != Vector3.zero && Vector3.Angle(heldPureColliderNormal, playerOrientation.UpDirection) > slipAngle;
+		
 		private void Update()
 		{
 			ClearInvalidCollisions();
@@ -98,7 +102,7 @@ namespace SBEPIS.Controller
 			if (CastGrabNormal(out RaycastHit hit, collider))
 			{
 				heldPureColliderNormal = hit.normal;
-				if (Vector3.Angle(heldPureColliderNormal, playerOrientation.upDirection) > slipAngle)
+				if (Vector3.Angle(heldPureColliderNormal, playerOrientation.UpDirection) > slipAngle)
 					return false;
 			}
 			else
@@ -109,7 +113,9 @@ namespace SBEPIS.Controller
 			heldGrabbableJoint = gameObject.AddComponent<FixedJoint>();
 			if (collider.attachedRigidbody)
 				heldGrabbableJoint.connectedBody = collider.attachedRigidbody;
-
+			
+			onGrabCollider.Invoke(this, collider);
+			
 			return true;
 		}
 
@@ -134,6 +140,7 @@ namespace SBEPIS.Controller
 			heldGrabbableJoint.anchor = transform.InverseTransformPoint(grabbable.transform.position);
 			heldGrabbableJoint.connectedAnchor = Vector3.zero;
 			
+			onGrab.Invoke(this, grabbable);
 			grabbable.OnGrabbed(this);
 			
 			return true;
@@ -177,7 +184,14 @@ namespace SBEPIS.Controller
 				droppedCollider.attachedRigidbody.Move(transform.position, transform.rotation);
 
 			if (droppedGrabbable)
+			{
+				onDrop.Invoke(this, droppedGrabbable);
 				droppedGrabbable.OnDropped(this);
+			}
+			else
+			{
+				onDropCollider.Invoke(this, droppedCollider);
+			}
 		}
 
 		private bool CastShortRangeGrab(out RaycastHit hit)
@@ -279,6 +293,11 @@ namespace SBEPIS.Controller
 			HeldGrabbable.onUse.Invoke(this, HeldGrabbable);
 		}
 	}
+	
+	[Serializable]
+	public class GrabEvent : UnityEvent<Grabber, Grabbable> { }
+	[Serializable]
+	public class ColliderGrabEvent : UnityEvent<Grabber, Collider> { }
 
 	internal static class GrabberExtensionMethods
 	{

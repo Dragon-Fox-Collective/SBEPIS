@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,6 +9,13 @@ namespace SBEPIS.Capturellection
 {
 	public class DiajectorCaptureLayout : MonoBehaviour
 	{
+		[SerializeField, Parent(Flag.IncludeInactive)]
+		private Diajector diajector;
+		[SerializeField, Parent(Flag.IncludeInactive)]
+		private DiajectorPage page;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		public Inventory inventory;
 		public CardTarget cardTargetPrefab;
 		public float cardZ = -1;
@@ -15,15 +23,7 @@ namespace SBEPIS.Capturellection
 		public float fetchableCardZ = 0.1f;
 		public Transform directionEndpoint;
 		
-		private Diajector diajector;
 		private readonly Dictionary<InventoryStorable, CardTarget> targets = new();
-		private DiajectorPage page;
-		
-		private void Awake()
-		{
-			diajector = GetComponentInParent<Diajector>();
-			page = GetComponentInParent<DiajectorPage>();
-		}
 		
 		private void Update()
 		{

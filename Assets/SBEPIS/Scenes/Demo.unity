@@ -212,6 +212,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea1a4d90d21dd14b8651bbf1e452792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grabbable: {fileID: 295505928}
+  onCouple:
+    m_PersistentCalls:
+      m_Calls: []
+  onDecouple:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &295505928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 295505929}
   grabPoints: []
   onTouch:
     m_PersistentCalls:
@@ -368,6 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0726fbf18d1fc479e36108d1fb2217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 295505929}
   customCenterOfMass: {fileID: 0}
   onGravityChanged:
     m_PersistentCalls:
@@ -855,6 +864,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c014f2f194ed48445b9a564b12c83253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 3090586411226163948}
+  joint: {fileID: 1886572431}
   axis: 1
   onProgressChanged:
     m_PersistentCalls:
@@ -1165,6 +1176,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   predicates: []
+  onCouple:
+    m_PersistentCalls:
+      m_Calls: []
+  onDecouple:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!136 &821918977777387451
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1413,6 +1430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 3090586411226163948}
   grabPoints: []
   onTouch:
     m_PersistentCalls:
@@ -1459,6 +1477,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  grabbable: {fileID: 3090586411226163954}
 --- !u!1001 &4396269816362331904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1744,6 +1763,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c014f2f194ed48445b9a564b12c83253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 5258952183561622470}
+  joint: {fileID: 5258952183561622469}
   axis: 5
   onProgressChanged:
     m_PersistentCalls:
@@ -1831,6 +1852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 5258952183561622470}
   grabPoints: []
   onTouch:
     m_PersistentCalls:
@@ -1877,6 +1899,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  grabbable: {fileID: 5258952183561622473}
 --- !u!4 &5258952183561622490
 Transform:
   m_ObjectHideFlags: 0

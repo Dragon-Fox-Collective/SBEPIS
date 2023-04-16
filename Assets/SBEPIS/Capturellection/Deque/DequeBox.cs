@@ -1,3 +1,4 @@
+using KBCore.Refs;
 using SBEPIS.Capturellection.DequeState;
 using SBEPIS.Physics;
 using UnityEngine;
@@ -5,21 +6,27 @@ using UnityEngine;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(Deque), typeof(DequeBoxStateMachine), typeof(GravitySum))]
+	[RequireComponent(typeof(Rigidbody))]
 	public class DequeBox : MonoBehaviour
 	{
-		public bool IsDeployed => state.IsDeployed;
+		[SerializeField, Self]
+		private Deque deque;
+		public Deque Deque => deque;
 		
-		public Deque Deque { get; private set; }
+		[SerializeField, Self]
 		private DequeBoxStateMachine state;
-		public GravitySum GravitySum { get; private set; }
-		public Rigidbody Rigidbody => GravitySum.Rigidbody;
 		
-		private void Awake()
-		{
-			Deque = GetComponent<Deque>();
-			state = GetComponent<DequeBoxStateMachine>();
-			GravitySum = GetComponent<GravitySum>();
-		}
+		[SerializeField, Self]
+		private GravitySum gravitySum;
+		public GravitySum GravitySum => gravitySum;
+		
+		[SerializeField, Self]
+		private new Rigidbody rigidbody;
+		public Rigidbody Rigidbody => rigidbody;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
+		public bool IsDeployed => state.IsDeployed;
 		
 		public void SetCoupledState()
 		{

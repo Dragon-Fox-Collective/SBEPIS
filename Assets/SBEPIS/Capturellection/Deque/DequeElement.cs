@@ -1,5 +1,6 @@
 using SBEPIS.Controller;
 using System.Collections.Generic;
+using KBCore.Refs;
 using SBEPIS.Capturellection.CardState;
 using SBEPIS.Utils;
 using UnityEngine;
@@ -8,9 +9,23 @@ using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
-	[RequireComponent(typeof(Grabbable), typeof(LerpTargetAnimator), typeof(DequeStorableStateMachine))]
+	[RequireComponent(typeof(Grabbable), typeof(LerpTargetAnimator), typeof(DequeElementStateMachine))]
 	public class DequeElement : MonoBehaviour
 	{
+		[SerializeField, Self]
+		private Grabbable grabbable;
+		public Grabbable Grabbable => grabbable;
+		
+		[SerializeField, Self]
+		private DequeElementStateMachine state;
+		public DequeElementStateMachine State => state;
+		
+		[SerializeField, Self]
+		private LerpTargetAnimator animator;
+		public LerpTargetAnimator Animator => animator;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		public Renderer bounds;
 		
 		[FormerlySerializedAs("dequeOwnerEvents")]
@@ -21,17 +36,6 @@ namespace SBEPIS.Capturellection
 			set => dequeEvents.Set(this, value);
 		}
 		
-		public Grabbable Grabbable { get; private set; }
-		public DequeStorableStateMachine State { get; private set; }
-		public LerpTargetAnimator Animator { get; private set; }
-		
 		public bool IsStored => Deque;
-		
-		private void Awake()
-		{
-			Grabbable = GetComponent<Grabbable>();
-			State = GetComponent<DequeStorableStateMachine>();
-			Animator = GetComponent<LerpTargetAnimator>();
-		}
 	}
 }

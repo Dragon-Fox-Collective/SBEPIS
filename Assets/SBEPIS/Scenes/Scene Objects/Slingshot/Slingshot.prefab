@@ -215,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0726fbf18d1fc479e36108d1fb2217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 7501391308667899697}
   customCenterOfMass: {fileID: 0}
   onGravityChanged:
     m_PersistentCalls:
@@ -231,6 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 213c591ce1b782b408e796be28ba4245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 7501391308667899697}
   speed: 1000
   acceleration: 200
 --- !u!1 &7501391308668993303
@@ -485,6 +487,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c014f2f194ed48445b9a564b12c83253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 7501391308668993294}
+  joint: {fileID: 7501391308668993293}
   axis: 1
   onProgressChanged:
     m_PersistentCalls:
@@ -560,6 +564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 7501391308668993294}
   grabPoints: []
   onTouch:
     m_PersistentCalls:
@@ -606,6 +611,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  grabbable: {fileID: 7501391308668993298}
 --- !u!1 &7501391309281179930
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,6 +679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   priority: 1
+  box: {fileID: 7501391309281179925}
   gravity: 10
   falloffDistance: 0.5
 --- !u!1 &7501391309815477902

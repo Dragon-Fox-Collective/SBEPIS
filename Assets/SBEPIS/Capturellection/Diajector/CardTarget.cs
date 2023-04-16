@@ -1,4 +1,5 @@
 using System;
+using KBCore.Refs;
 using SBEPIS.Physics;
 using SBEPIS.UI;
 using SBEPIS.Utils;
@@ -11,6 +12,12 @@ namespace SBEPIS.Capturellection
 	[RequireComponent(typeof(LerpTarget))]
 	public class CardTarget : MonoBehaviour
 	{
+		[SerializeField, Self]
+		private LerpTarget lerpTarget;
+		public LerpTarget LerpTarget => lerpTarget;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		[FormerlySerializedAs("onCardCreated")]
 		public UnityEvent<DequeElement> onCardBound = new();
 		public UnityEvent onPrepareCard = new();
@@ -18,13 +25,6 @@ namespace SBEPIS.Capturellection
 		public UnityEvent onDrop = new();
 		
 		public DequeElement Card { get; set; }
-		
-		public LerpTarget LerpTarget { get; private set; }
-
-		public void Awake()
-		{
-			LerpTarget = GetComponent<LerpTarget>();
-		}
 
 		public void DropTargettingCard()
 		{
