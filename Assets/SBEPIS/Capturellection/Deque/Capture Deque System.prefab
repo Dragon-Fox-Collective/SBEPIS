@@ -96,6 +96,8 @@ MonoBehaviour:
   cardZ: 0.1
   fetchableCardZ: 0.05
   directionEndpoint: {fileID: 6706503680397027589}
+  diajector: {fileID: 3804022167782729142}
+  page: {fileID: 2123154491108635258}
 --- !u!65 &988289687342380233
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -287,6 +289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834066343270ba147b47a2957044d46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deque: {fileID: 6518269390508492605}
+  state: {fileID: 247446822995151989}
+  gravitySum: {fileID: 2407877750667227432}
 --- !u!114 &1152362718473556953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,6 +462,7 @@ MonoBehaviour:
   onStopTouch:
     m_PersistentCalls:
       m_Calls: []
+  rigidbody: {fileID: 6008107129270263796}
 --- !u!114 &2407877750667227432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,6 +510,7 @@ MonoBehaviour:
   onDecouple:
     m_PersistentCalls:
       m_Calls: []
+  grabbable: {fileID: 2560211704205842190}
 --- !u!114 &8240858955068512668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,6 +705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diajector: {fileID: 3804022167782729142}
+  dequeBox: {fileID: 2881546114347202315}
 --- !u!1 &2872801326167708617
 GameObject:
   m_ObjectHideFlags: 0
@@ -1703,6 +1711,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4245529917105709533, guid: 01891944c1e5e0e4dae6b7781ba3cf25, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1213611669831940373}
+    - targetCorrespondingSourceObject: {fileID: 4245529917105709533, guid: 01891944c1e5e0e4dae6b7781ba3cf25, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7849016398532569234}
   m_SourcePrefab: {fileID: 100100000, guid: 01891944c1e5e0e4dae6b7781ba3cf25, type: 3}
 --- !u!1 &4076208681704726734 stripped
 GameObject:
@@ -1721,7 +1732,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c75eb39d1ce240c4a9b671778e112b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pageCreator: {fileID: 0}
+  pageCreator: {fileID: 7849016398532569234}
+  diajector: {fileID: 3804022167782729142}
+--- !u!114 &7849016398532569234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4076208681704726734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b308b9c7ef4d469bc53a8e8b9ee3b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deque: {fileID: 6518269390508492605}
+  diajector: {fileID: 3804022167782729142}
+  settingsPagePrefab: {fileID: 8545667152632050241, guid: 1cce4ef865a9952458f391310621eb1b, type: 3}
 --- !u!114 &6911213214757733983 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6742789182992697164, guid: 01891944c1e5e0e4dae6b7781ba3cf25, type: 3}
@@ -1928,6 +1955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diajectorPage: {fileID: 2123154491108635258}
+  diajector: {fileID: 3804022167782729142}
 --- !u!114 &6785495166176015399 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6742789182992697164, guid: 01891944c1e5e0e4dae6b7781ba3cf25, type: 3}
@@ -2767,3 +2795,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diajectorPage: {fileID: 5149185297147846576}
+  diajector: {fileID: 3804022167782729142}

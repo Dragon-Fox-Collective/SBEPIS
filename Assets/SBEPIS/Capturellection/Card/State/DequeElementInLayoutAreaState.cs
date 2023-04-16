@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.CardState
 {
-	public class CardInLayoutAreaState : StateMachineBehaviour<DequeStorableStateMachine>
+	public class DequeElementInLayoutAreaState : StateMachineBehaviour<DequeElementStateMachine>
 	{
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{

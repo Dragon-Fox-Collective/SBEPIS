@@ -14,9 +14,9 @@ namespace SBEPIS.Capturellection
 		[Tooltip("Height above the hand the deque should toss through, must be non-negative")]
 		public float tossHeight;
 		
-		public DequeBox DequeBox { get; private set; }
+		private DequeBox dequeBox;
 		
-		private bool IsDequeBoxDeployed => DequeBox && DequeBox.IsDeployed;
+		private bool IsDequeBoxDeployed => dequeBox && dequeBox.IsDeployed;
 		
 		private void Awake()
 		{
@@ -25,32 +25,32 @@ namespace SBEPIS.Capturellection
 		
 		private void Start()
 		{
-			if (DequeBox)
-				DequeBox.RetrieveDeque(this);
+			if (dequeBox)
+				dequeBox.RetrieveDeque(this);
 		}
 		
 		public void OnToggleDeque(CallbackContext context)
 		{
 			if (!isActiveAndEnabled || !context.performed)
 				return;
-			if (!DequeBox)
+			if (!dequeBox)
 				return;
-			if (DequeBox.TryGetComponent(out Grabbable grabbable) && grabbable.IsBeingHeld)
+			if (dequeBox.TryGetComponent(out Grabbable grabbable) && grabbable.IsBeingHeld)
 				return;
 			
 			if (IsDequeBoxDeployed)
-				DequeBox.RetrieveDeque(this);
+				dequeBox.RetrieveDeque(this);
 			else
-				DequeBox.TossDeque(this);
+				dequeBox.TossDeque(this);
 		}
 		
 		private static void SetDequeBoxDecoupledState(CouplingPlug plug, CouplingSocket socket) => plug.GetComponent<DequeBox>().SetDecoupledState();
 		
 		public void SetDequeBox(Grabber grabber, Grabbable grabbable)
 		{
-			if (!grabbable.TryGetComponent(out DequeBox dequeBox))
+			if (!grabbable.TryGetComponent(out DequeBox newDequeBox))
 				return;
-			DequeBox = dequeBox;
+			dequeBox = newDequeBox;
 		}
 	}
 }

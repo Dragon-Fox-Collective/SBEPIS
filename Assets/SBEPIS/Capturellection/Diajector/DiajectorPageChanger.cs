@@ -1,3 +1,4 @@
+using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,12 +9,10 @@ namespace SBEPIS.Capturellection
 		[FormerlySerializedAs("dequePage")]
 		public DiajectorPage diajectorPage;
 		
+		[SerializeField, Parent(Flag.IncludeInactive)]
 		private Diajector diajector;
 		
-		private void Start()
-		{
-			diajector = GetComponentInParent<Diajector>();
-		}
+		private void OnValidate() => this.ValidateRefs();
 		
 		public void ChangePage()
 		{

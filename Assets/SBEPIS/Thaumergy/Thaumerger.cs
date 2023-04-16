@@ -24,7 +24,7 @@ namespace SBEPIS.Thaumergy
 				rule.Init();
 
 			while (true)
-				if (!IterateRules(Rules, bits, item.module, modules))
+				if (!IterateRules(Rules, bits, item.Module, modules))
 					break;
 			
 			return item;

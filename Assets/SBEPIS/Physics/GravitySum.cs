@@ -2,27 +2,27 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using KBCore.Refs;
 using UnityEngine.Events;
 
 namespace SBEPIS.Physics
 {
 	public class GravitySum : MonoBehaviour
 	{
+		[SerializeField, Self(Flag.Optional)]
+		private new Rigidbody rigidbody;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		public Transform customCenterOfMass;
 		public UnityEvent<Vector3> onGravityChanged = new();
-
+		
 		public Vector3 UpDirection { get; private set; } = Vector3.up;
 		public float GravityAcceleration { get; private set; } = 0;
-		public Rigidbody Rigidbody { get; private set; }
 		public Vector3 WorldCenterOfMass { get; private set; }
-
+		
 		private readonly List<MassiveBody> massiveBodies = new();
-
-		private void Awake()
-		{
-			Rigidbody = GetComponent<Rigidbody>();
-		}
-
+		
 		private void FixedUpdate()
 		{
 			UpdateGravity();
@@ -31,7 +31,7 @@ namespace SBEPIS.Physics
 
 		private void UpdateGravity()
 		{
-			WorldCenterOfMass = customCenterOfMass ? customCenterOfMass.position : Rigidbody ? Rigidbody.worldCenterOfMass : transform.position;
+			WorldCenterOfMass = customCenterOfMass ? customCenterOfMass.position : rigidbody ? rigidbody.worldCenterOfMass : transform.position;
 			Vector3 gravity = massiveBodies.Count == 0 ? Vector3.zero : massiveBodies
 				.Distinct()
 				.GroupBy(body => body.priority)
@@ -60,8 +60,8 @@ namespace SBEPIS.Physics
 
 		private void ApplyGravity()
 		{
-			if (Rigidbody && !Rigidbody.isKinematic)
-				Rigidbody.velocity += -GravityAcceleration * Time.fixedDeltaTime * UpDirection;
+			if (rigidbody && !rigidbody.isKinematic)
+				rigidbody.velocity += -GravityAcceleration * Time.fixedDeltaTime * UpDirection;
 		}
 
 		public void Accumulate(MassiveBody body)

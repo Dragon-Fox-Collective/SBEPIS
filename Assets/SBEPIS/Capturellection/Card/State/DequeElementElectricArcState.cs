@@ -1,24 +1,24 @@
 using SBEPIS.UI;
+using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection.CardState
 {
-	public abstract class CardElectricArcState : StateMachineBehaviour
+	public abstract class DequeElementElectricArcState : StateMachineBehaviour<DequeElementStateMachine>
 	{
 		private ElectricArc arc;
 		
+		protected abstract Transform Point { get; }
+		
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			DequeElement card = animator.GetComponent<DequeElement>();
-			arc = Instantiate(card.Deque.diajector.electricArcPrefab, GetPoint(card));
-			arc.otherPoint = card.transform;
+			arc = Instantiate(State.Card.Deque.diajector.electricArcPrefab, Point);
+			arc.otherPoint = State.Card.transform;
 		}
-
+		
 		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
 			Destroy(arc);
 		}
-
-		public abstract Transform GetPoint(DequeElement card);
 	}
 }

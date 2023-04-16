@@ -6,7 +6,7 @@ namespace SBEPIS.Utils
 	[RequireComponent(typeof(Animator))]
 	public abstract class StateMachine : MonoBehaviour
 	{
-		[SerializeField, HideInInspector, Self]
+		[SerializeField, Self]
 		private Animator state;
 		protected Animator State => state;
 	}

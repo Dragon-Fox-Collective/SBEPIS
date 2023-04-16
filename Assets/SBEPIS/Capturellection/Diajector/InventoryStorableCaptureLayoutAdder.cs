@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection
@@ -6,23 +7,23 @@ namespace SBEPIS.Capturellection
 	[RequireComponent(typeof(InventoryStorable))]
 	public class InventoryStorableCaptureLayoutAdder : MonoBehaviour
 	{
-		public InventoryStorable Card { get; private set; }
-		private List<DiajectorCaptureLayout> layouts = new();
+		[SerializeField, Self]
+		private InventoryStorable card;
+		public InventoryStorable Card => card;
 		
-		private void Awake()
-		{
-			Card = GetComponent<InventoryStorable>();
-		}
+		private void OnValidate() => this.ValidateRefs();
+		
+		private List<DiajectorCaptureLayout> layouts = new();
 		
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DiajectorCaptureLayout layout) && !Card.DequeElement.IsStored)
+			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DiajectorCaptureLayout layout) && !card.DequeElement.IsStored)
 				AddLayout(layout);
 		}
 		
 		private void OnTriggerExit(Collider other)
 		{
-			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DiajectorCaptureLayout layout) && layout.HasTemporaryTarget(Card))
+			if (other.attachedRigidbody && other.attachedRigidbody.TryGetComponent(out DiajectorCaptureLayout layout) && layout.HasTemporaryTarget(card))
 				RemoveLayout(layout);
 		}
 		
@@ -30,16 +31,16 @@ namespace SBEPIS.Capturellection
 		{
 			layouts.Add(layout);
 			if (layouts.Count == 1)
-				Card.DequeElement.State.IsInLayoutArea = true;
-			layout.AddTemporaryTarget(Card);
+				card.DequeElement.State.IsInLayoutArea = true;
+			layout.AddTemporaryTarget(card);
 		}
 		
 		private void RemoveLayout(DiajectorCaptureLayout layout)
 		{
 			layouts.Add(layout);
 			if (layouts.Count == 1)
-				Card.DequeElement.State.IsInLayoutArea = true;
-			layout.AddTemporaryTarget(Card);
+				card.DequeElement.State.IsInLayoutArea = true;
+			layout.AddTemporaryTarget(card);
 		}
 		
 		public DiajectorCaptureLayout PopAllLayouts()

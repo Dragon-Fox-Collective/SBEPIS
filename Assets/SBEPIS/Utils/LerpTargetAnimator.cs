@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,13 +9,16 @@ namespace SBEPIS.Utils
 {
 	public class LerpTargetAnimator : MonoBehaviour
 	{
-		public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-
+		[SerializeField, Self(Flag.Optional)]
 		private new Rigidbody rigidbody;
-
-		private float time;
 		
-		public LerpTarget currentTarget { get; private set; }
+		private void OnValidate() => this.ValidateRefs();
+		
+		public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+		
+		private float time;
+
+		private LerpTarget currentTarget;
 		private LerpTarget pausedAtTarget;
 		private LerpTarget prevTarget;
 		private Vector3 startPosition;
@@ -22,15 +26,11 @@ namespace SBEPIS.Utils
 
 		private Dictionary<LerpTarget, List<UnityAction<LerpTargetAnimator>>> onMoveToActions = new();
 		private UnityAction<LerpTargetAnimator>[] tempOnMoveToActions;
-
-		private void Awake()
-		{
-			rigidbody = GetComponent<Rigidbody>();
-		}
 		
 		public void TargetTo(LerpTarget target, params UnityAction<LerpTargetAnimator>[] tempActions)
 		{
-			rigidbody.Disable();
+			if (rigidbody)
+				rigidbody.Disable();
 			currentTarget = target;
 			SetStartPositionAndRotation(transform.position, transform.rotation);
 			time = 0;
@@ -66,15 +66,16 @@ namespace SBEPIS.Utils
 		private void End()
 		{
 			transform.SetPositionAndRotation(currentTarget.transform.position, currentTarget.transform.rotation);
-			rigidbody.Enable();
+			if (rigidbody)
+				rigidbody.Enable();
 			LerpTarget oldTarget = pausedAtTarget = currentTarget;
 			currentTarget = null;
 			
 			oldTarget.onMoveTo.Invoke(this);
 			foreach (UnityAction<LerpTargetAnimator> action in tempOnMoveToActions.ToList())
 				action.Invoke(this);
-			if (onMoveToActions.ContainsKey(oldTarget))
-				foreach (UnityAction<LerpTargetAnimator> action in onMoveToActions[oldTarget].ToList())
+			if (onMoveToActions.TryGetValue(oldTarget, out List<UnityAction<LerpTargetAnimator>> actions))
+				foreach (UnityAction<LerpTargetAnimator> action in actions.ToList())
 					action.Invoke(this);
 		}
 		
@@ -108,7 +109,7 @@ namespace SBEPIS.Utils
 			
 			onMoveToActions[target].Add(func);
 		}
-
+		
 		public void RemoveListenerOnMoveTo(LerpTarget target, UnityAction<LerpTargetAnimator> func)
 		{
 			if (!onMoveToActions.ContainsKey(target))

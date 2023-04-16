@@ -575,6 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c73a6674eebc3b4d954d6455c75f6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &2325035966454255976
@@ -771,6 +772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c73a6674eebc3b4d954d6455c75f6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0.70710677, y: -0.00000003090862, z: 0.70710677, w: -0.00000003090862}
 --- !u!1 &2876438256614224740
@@ -2393,6 +2395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8013fae809d62549923c80a6ebd750d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 6376568278754761722}
   grabMask:
     serializedVersion: 2
     m_Bits: 2561
@@ -2400,6 +2403,30 @@ MonoBehaviour:
   slipAngle: 80
   shortRangeGrabDistace: 1
   playerOrientation: {fileID: 690210978355806070}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 961157736405979464}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBoxOwner, SBEPIS.Capturellection
+        m_MethodName: SetDequeBox
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onGrabCollider:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  onDropCollider:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2824848723725198686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2412,6 +2439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9252a1ce5bec80d479d06804db114d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grabber: {fileID: 6376568278754761723}
   inventory: {fileID: 0}
 --- !u!114 &6844988662924280731
 MonoBehaviour:
@@ -2470,6 +2498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c73a6674eebc3b4d954d6455c75f6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0.70710677, y: -0.00000003090862, z: -0.70710677, w: 0.00000003090862}
 --- !u!1 &6376568279122881045
@@ -2986,6 +3015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0726fbf18d1fc479e36108d1fb2217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 8136032471875334439}
   customCenterOfMass: {fileID: 6376568280010574378}
   onGravityChanged:
     m_PersistentCalls:
@@ -3014,6 +3044,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08cdaa4f47345a14fbfbae485548673e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 8136032471875334439}
+  orientation: {fileID: 690210978355806070}
   moveAimer: {fileID: 6376568279122881040}
   footballCollider: {fileID: 6308269547464211983}
   footballJoint: {fileID: 1746505250530069798}
@@ -3064,6 +3096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c73a6674eebc3b4d954d6455c75f6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 8136032471875334439}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &690210978355806070
@@ -3078,6 +3111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5af14854a399b4c4f83a30832897e2f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 8136032471875334439}
+  gravityNormalizer: {fileID: 882628095479484305}
   groundCheck: {fileID: 3444910119667192752}
   groundCheckMask:
     serializedVersion: 2
@@ -3094,6 +3129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c3c6fd460df174e8bbc51ef9654cd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 8136032471875334439}
   connectedBody: {fileID: 6376568278754761722}
   target: {fileID: 6376568278921566391}
   anchor: {fileID: 0}
@@ -3111,6 +3147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c3c6fd460df174e8bbc51ef9654cd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 8136032471875334439}
   connectedBody: {fileID: 8141195637632158654}
   target: {fileID: 2758302851484042462}
   anchor: {fileID: 0}
@@ -3128,6 +3165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6295ed33cf7b1140af95db75cf0d119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 8136032471875334439}
   acceleration: 50
 --- !u!114 &804595815282090642
 MonoBehaviour:
@@ -3522,6 +3560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8013fae809d62549923c80a6ebd750d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 8141195637632158654}
   grabMask:
     serializedVersion: 2
     m_Bits: 2561
@@ -3529,6 +3568,30 @@ MonoBehaviour:
   slipAngle: 80
   shortRangeGrabDistace: 1
   playerOrientation: {fileID: 690210978355806070}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 961157736405979464}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBoxOwner, SBEPIS.Capturellection
+        m_MethodName: SetDequeBox
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onGrabCollider:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  onDropCollider:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1494821562862204379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3541,6 +3604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9252a1ce5bec80d479d06804db114d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grabber: {fileID: 6271847251800222012}
   inventory: {fileID: 0}
 --- !u!114 &4874602448725965669
 MonoBehaviour:
@@ -3850,6 +3914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c73a6674eebc3b4d954d6455c75f6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &6698321374281331998

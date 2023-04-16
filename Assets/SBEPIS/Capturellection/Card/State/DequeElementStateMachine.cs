@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.CardState
 {
-	public class DequeStorableStateMachine : StateMachine
+	public class DequeElementStateMachine : StateMachine
 	{
 		[SerializeField, Self]
 		private DequeElement card;

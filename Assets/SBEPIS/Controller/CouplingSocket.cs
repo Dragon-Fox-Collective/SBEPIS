@@ -14,18 +14,10 @@ namespace SBEPIS.Controller
 		public CoupleEvent onCouple = new();
 		public CoupleEvent onDecouple = new();
 		
-		public bool isCoupled => plug;
+		public bool IsCoupled => plug;
 		
-		public CouplingPlug plug { get; private set; }
-		public FixedJoint joint { get; private set; }
-		
-		private List<CouplingPlug> collidingPlugs = new();
-		private new Rigidbody rigidbody;
-		
-		private void Awake()
-		{
-			rigidbody = GetComponent<Rigidbody>();
-		}
+		private CouplingPlug plug;
+		private FixedJoint joint;
 		
 		public void OnTriggerEnter(Collider other)
 		{
@@ -33,7 +25,6 @@ namespace SBEPIS.Controller
 			if (!newPlug)
 				return;
 			
-			collidingPlugs.Add(newPlug);
 			newPlug.Grabbable.onDrop.AddListener(Couple);
 		}
 		
@@ -43,14 +34,13 @@ namespace SBEPIS.Controller
 			if (!newPlug)
 				return;
 			
-			collidingPlugs.Remove(newPlug);
 			newPlug.Grabbable.onDrop.RemoveListener(Couple);
 		}
 		
 		public void Couple(Grabber grabber, Grabbable grabbable) => Couple(grabbable.GetComponent<CouplingPlug>());
 		public void Couple(CouplingPlug plug)
 		{
-			if (isCoupled)
+			if (IsCoupled)
 			{
 				Debug.LogError($"Tried to couple {plug} to {this} when socket already coupled to {this.plug}");
 				return;
@@ -74,7 +64,7 @@ namespace SBEPIS.Controller
 		public void Decouple(Grabber grabber, Grabbable grabbable) => Decouple(grabbable.GetComponent<CouplingPlug>());
 		public void Decouple(CouplingPlug plug)
 		{
-			if (!isCoupled)
+			if (!IsCoupled)
 			{
 				Debug.LogError($"Tried to decouple plug from {this} when socket had no coupling");
 				return;
