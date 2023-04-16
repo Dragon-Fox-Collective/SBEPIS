@@ -1,3 +1,5 @@
+using System;
+using KBCore.Refs;
 using SBEPIS.Controller;
 using SBEPIS.Physics;
 using SBEPIS.Utils;
@@ -5,47 +7,46 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.DequeState
 {
-	[RequireComponent(typeof(DequeBox), typeof(GravitySum), typeof(Grabbable))]
-	[RequireComponent(typeof(CouplingPlug))]
+	[RequireComponent(typeof(GravitySum), typeof(Grabbable))]
+	[RequireComponent(typeof(CouplingPlug), typeof(LerpTargetAnimator))]
 	public class DequeBoxStateMachine : StateMachine
 	{
-		public DequeBox DequeBox { get; private set; }
-		public CouplingPlug Plug { get; private set; }
+		[SerializeField, Self]
+		private DequeBox dequeBox;
+		public DequeBox DequeBox => dequeBox;
 		
-		public DequeBoxOwner DequeBoxOwner => DequeBox.dequeBoxOwner;
-				
-		private void Awake()
-		{
-			DequeBox = GetComponent<DequeBox>();
-			Plug = GetComponent<CouplingPlug>();
-		}
+		[SerializeField, Self]
+		private CouplingPlug plug;
+		public CouplingPlug Plug => plug;
 		
-		private static readonly int IsGrabbedKey = Animator.StringToHash("Is Grabbed");
+		[SerializeField, Self]
+		private LerpTargetAnimator animator;
+		public LerpTargetAnimator Animator => animator;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
+		[NonSerialized]
+		public LerpTarget lerpTarget;
+
+		private static readonly int IsGrabbedKey = UnityEngine.Animator.StringToHash("Is Grabbed");
 		public bool IsGrabbed
 		{
-			get => state.GetBool(IsGrabbedKey);
-			set => state.SetBool(IsGrabbedKey, value);
+			get => State.GetBool(IsGrabbedKey);
+			set => State.SetBool(IsGrabbedKey, value);
 		}
 		
-		private static readonly int IsCoupledKey = Animator.StringToHash("Is Coupled");
+		private static readonly int IsCoupledKey = UnityEngine.Animator.StringToHash("Is Coupled");
 		public bool IsCoupled
 		{
-			get => state.GetBool(IsCoupledKey);
-			set => state.SetBool(IsCoupledKey, value);
+			get => State.GetBool(IsCoupledKey);
+			set => State.SetBool(IsCoupledKey, value);
 		}
 		
-		private static readonly int IsBoundKey = Animator.StringToHash("Is Bound");
-		public bool IsBound
-		{
-			get => state.GetBool(IsBoundKey);
-			set => state.SetBool(IsBoundKey, value);
-		}
-		
-		private static readonly int IsDeployedKey = Animator.StringToHash("Is Deployed");
+		private static readonly int IsDeployedKey = UnityEngine.Animator.StringToHash("Is Deployed");
 		public bool IsDeployed
 		{
-			get => state.GetBool(IsDeployedKey);
-			set => state.SetBool(IsDeployedKey, value);
+			get => State.GetBool(IsDeployedKey);
+			set => State.SetBool(IsDeployedKey, value);
 		}
 	}
 }

@@ -1,28 +1,31 @@
-using System;
+using KBCore.Refs;
 using SBEPIS.Capturellection.DequeState;
 using SBEPIS.Physics;
+using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(Deque), typeof(DequeBoxStateMachine), typeof(GravitySum))]
+	[RequireComponent(typeof(Rigidbody))]
 	public class DequeBox : MonoBehaviour
 	{
+		[SerializeField, Self] private Deque deque;
+		public Deque Deque => deque;
+		[SerializeField, Self] private DequeBoxStateMachine state;
+		[SerializeField, Self] private GravitySum gravitySum;
+		public GravitySum GravitySum => gravitySum;
+		[SerializeField, Self] private new Rigidbody rigidbody;
+		public Rigidbody Rigidbody => rigidbody;
+		
+		[SerializeField, Anywhere] private LerpTarget lowerTarget;
+		public LerpTarget LowerTarget => lowerTarget;
+		[SerializeField, Anywhere] private LerpTarget upperTarget;
+		public LerpTarget UpperTarget => upperTarget;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		public bool IsDeployed => state.IsDeployed;
-		
-		[NonSerialized]
-		public DequeBoxOwner dequeBoxOwner;
-		
-		public Deque Deque { get; private set; }
-		private DequeBoxStateMachine state;
-		public GravitySum GravitySum { get; private set; }
-		
-		private void Awake()
-		{
-			Deque = GetComponent<Deque>();
-			state = GetComponent<DequeBoxStateMachine>();
-			GravitySum = GetComponent<GravitySum>();
-		}
 		
 		public void SetCoupledState()
 		{
@@ -35,36 +38,25 @@ namespace SBEPIS.Capturellection
 			state.IsCoupled = false;
 		}
 		
-		public void SetUnbindState()
+		public void RetrieveDeque(DequeBoxOwner dequeBoxOwner)
 		{
-			state.IsBound = false;
+			state.lerpTarget = dequeBoxOwner.lerpTarget;
 			state.IsDeployed = false;
 		}
 		
-		public void SetBindState()
-		{
-			state.IsBound = true;
-			state.IsDeployed = dequeBoxOwner.DequeOwner.diajector.IsOpen;
-		}
-		
-		public void RetrieveDeque()
-		{
-			state.IsDeployed = false;
-		}
-		
-		public void TossDeque()
+		public void TossDeque(DequeBoxOwner dequeBoxOwner)
 		{
 			SetDecoupledState();
 			
 			Transform tossTarget = dequeBoxOwner.tossTarget;
 			float tossHeight = dequeBoxOwner.tossHeight;
 			
-			GravitySum.rigidbody.velocity = CalcTossVelocity(
+			Rigidbody.velocity = CalcTossVelocity(
 				transform,
 				tossTarget,
 				tossHeight,
 				tossTarget.up,
-				GravitySum.gravityAcceleration);
+				GravitySum.GravityAcceleration);
 		}
 		
 		private static Vector3 CalcTossVelocity(Transform box, Transform tossTarget, float tossHeight, Vector3 upDirection, float gravityAcceleration)

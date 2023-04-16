@@ -79,7 +79,9 @@ public static class ExtensionMethods
 		rigidbody.isKinematic = false;
 		rigidbody.detectCollisions = true;
 	}
-
+	
+	public static bool TryGetComponentInChildren<T>(this Component thisComponent, out T component) where T : Component => component = thisComponent.GetComponentInChildren<T>();
+	
 	public static string Join<T>(this string delimiter, IEnumerable<T> enumerable)
 	{
 		return string.Join(delimiter, enumerable);
@@ -169,13 +171,27 @@ public static class ExtensionMethods
 			yield return item;
 		}
 	}
-
+	
+	public static T ElementAtOrLast<T>(this IEnumerable<T> enumerable, int index)
+	{
+		T last = default;
+		int i = 0;
+		foreach (T item in enumerable)
+		{
+			last = item;
+			if (i == index)
+				return last;
+			i++;
+		}
+		return last;
+	}
+	
 	public static IEnumerable<(T, TSecond)> Zip<T, TSecond>(this IEnumerable<T> first, IEnumerable<TSecond> second)
 	{
 		return first.Zip(second, (firstItem, secondItem) => (firstItem, secondItem));
 	}
 
-	public static void Do<T>(this IEnumerable<T> enumerable, Action<T> action)
+	public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
 	{
 		foreach (T t in enumerable)
 			action.Invoke(t);

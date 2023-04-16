@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2849611249245172895}
   - component: {fileID: 2383059661166809214}
   m_Layer: 0
-  m_Name: True Base
+  m_Name: Item Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e4f2fdaaaa2f5f4a888de724f0bfa19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 271759304162609781}
 --- !u!54 &271759304162609781
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -91,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 271759304162609781}
   grabPoints: []
   onTouch:
     m_PersistentCalls:
@@ -122,6 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad76ab59557dd44db98872af0ea05d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  module: {fileID: 786914195804380724}
 --- !u!114 &786914195804380724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +140,7 @@ MonoBehaviour:
   baseBits:
     bits:
       bits: []
-    itemBase: {fileID: 0}
+    itemModule: {fileID: 0}
     material: {fileID: 0}
   _bits:
     _bits:
@@ -157,6 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0726fbf18d1fc479e36108d1fb2217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 271759304162609781}
   customCenterOfMass: {fileID: 0}
   onGravityChanged:
     m_PersistentCalls:
@@ -173,7 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5207c94596a9a68468f3a6df65480069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canCapturllect: 1
   onCapture:
     m_PersistentCalls:
       m_Calls:

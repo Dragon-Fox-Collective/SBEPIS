@@ -1,3 +1,4 @@
+using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Physics
@@ -5,18 +6,17 @@ namespace SBEPIS.Physics
 	[RequireComponent(typeof(Rigidbody))]
 	public class MovementLerp : MonoBehaviour
 	{
+		[SerializeField, Self]
+		private new Rigidbody rigidbody;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		public Transform endPoint;
 		public float speed = 1;
-
-		private new Rigidbody rigidbody;
+		
 		private Vector3 startPos, endPos;
 		private bool resetting;
-
-		private void Awake()
-		{
-			rigidbody = GetComponent<Rigidbody>();
-		}
-
+		
 		private void Start()
 		{
 			startPos = transform.position;

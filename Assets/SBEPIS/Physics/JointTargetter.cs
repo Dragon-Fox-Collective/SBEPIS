@@ -1,3 +1,4 @@
+using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -6,6 +7,11 @@ namespace SBEPIS.Physics
 	[RequireComponent(typeof(Rigidbody))]
 	public class JointTargetter : MonoBehaviour
 	{
+		[SerializeField, Self]
+		private new Rigidbody rigidbody;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		public Rigidbody connectedBody;
 		
 		public Transform target;
@@ -27,8 +33,7 @@ namespace SBEPIS.Physics
 
 		private void Start()
 		{
-			Rigidbody thisRigidbody = GetComponent<Rigidbody>();
-			Vector3 thisInitialPosition = thisRigidbody.position;
+			Vector3 thisInitialPosition = rigidbody.position;
 			
 			initialOffset = transform.InverseTransformRotation(connectedBody.transform.rotation).Inverse();
 			
@@ -69,7 +74,7 @@ namespace SBEPIS.Physics
 			prevTargetPosition = transform.InverseTransformPoint(target.position);
 			prevTargetRotation = target.rotation;
 
-			thisRigidbody.position = thisInitialPosition;
+			rigidbody.position = thisInitialPosition;
 		}
 
 		private void FixedUpdate()

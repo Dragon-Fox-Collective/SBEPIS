@@ -1,7 +1,8 @@
+using System;
 using Cysharp.Threading.Tasks;
+using KBCore.Refs;
 using SBEPIS.Controller;
 using UnityEngine;
-using UnityEngine.Serialization;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Capturellection
@@ -9,59 +10,78 @@ namespace SBEPIS.Capturellection
 	[RequireComponent(typeof(Grabber))]
 	public class Capturellector : MonoBehaviour
 	{
-		[FormerlySerializedAs("owner")]
-		public DequeOwner dequeOwner;
-		public Inventory inventory;
+		[SerializeField, Self] private Grabber grabber;
 		
-		private Grabber grabber;
+		public Inventory Inventory { get; set; }
 		
-		private void Awake()
-		{
-			grabber = GetComponent<Grabber>();
-		}
+		private void OnValidate() => this.ValidateRefs();
 		
 		public void OnCapture(CallbackContext context)
 		{
-			if (!isActiveAndEnabled || !context.performed || !grabber.heldGrabbable)
+			if (!isActiveAndEnabled || !context.performed || !grabber.HeldGrabbable)
 				return;
 			
-			Capturellectainer container = grabber.heldGrabbable.GetComponent<Capturellectainer>();
-			if (container && container.HasCapturedItem)
+			if (grabber.HeldGrabbable.TryGetComponent(out CaptureContainer container) && container.HasCapturedItem)
 				RetrieveAndGrabItem(container).Forget();
+			else if (grabber.HeldGrabbable.TryGetComponent(out Capturellectable item))
+				CaptureAndGrabCard(item).Forget();
+		}
+		
+		public async UniTask<CaptureContainer> CaptureAndGrabCard(Capturellectable item)
+		{
+			grabber.Drop();
+			(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem) = await Inventory.Store(item);
+			MoveEjectedItem(card, ejectedItem);
+			TryGrab(container.transform);
+			return container;
+		}
+
+		private static void MoveEjectedItem(InventoryStorable card, Capturellectable ejectedItem)
+		{
+			if (!ejectedItem)
+				return;
+			
+			Action<Vector3, Quaternion> move = ejectedItem.TryGetComponent(out Rigidbody ejectedItemRigidbody) ?
+				ejectedItemRigidbody.Move :
+				ejectedItem.transform.SetPositionAndRotation;
+			if (card.DequeElement.ShouldBeDisplayed)
+				move(card.transform.position, card.transform.rotation);
 			else
-				CaptureAndGrabCard().Forget();
+				move(card.DequeElement.Deque.transform.position, card.DequeElement.Deque.transform.rotation);
 		}
 		
-		private async UniTaskVoid CaptureAndGrabCard()
+		public UniTask<Capturellectable> RetrieveAndGrabItem(CaptureContainer container) =>
+			container.TryGetComponent(out InventoryStorable card) ? RetrieveFromInventory(card) : UniTask.FromResult(RetrieveFromContainer(container));
+		
+		private Capturellectable RetrieveFromContainer(CaptureContainer container)
 		{
-			if (!grabber.heldGrabbable.TryGetComponent(out Capturellectable item))
-				return;
-			
-			(DequeStorable card, Capturellectainer container, Capturellectable ejectedItem) = await inventory.Store(item);
-			
-			if (ejectedItem)
-				if (dequeOwner.diajector.ShouldCardBeDisplayed(card))
-					ejectedItem.GetComponent<Rigidbody>().Move(card.transform.position, card.transform.rotation);
-				else
-					ejectedItem.GetComponent<Rigidbody>().Move(dequeOwner.Deque.transform.position, dequeOwner.Deque.transform.rotation);
-			
-			if (container.TryGetComponent(out Grabbable cardGrabbable))
-				grabber.Grab(cardGrabbable);
+			grabber.Drop();
+			Capturellectable item = container.Fetch();
+			TryGrab(item.transform);
+			return item;
 		}
 		
-		private async UniTaskVoid RetrieveAndGrabItem(Capturellectainer container)
+		private async UniTask<Capturellectable> RetrieveFromInventory(InventoryStorable card)
 		{
-			if (!container.TryGetComponent(out DequeStorable card) || !inventory.CanFetch(card))
-				return;
+			if (!Inventory.CanFetch(card))
+				return null;
 			
 			grabber.Drop();
-			
-			Capturellectable item = await inventory.Fetch(card);
-			item.transform.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
-			item.GetComponent<Rigidbody>().Move(grabber.transform.position, grabber.transform.rotation);
-			
+			Capturellectable item = await Inventory.Fetch(card);
+			TryGrab(item.transform);
+			return item;
+		}
+		
+		private void TryGrab(Transform item)
+		{
+			if (item.TryGetComponent(out Rigidbody itemRigidbody))
+				itemRigidbody.Move(grabber.transform.position, grabber.transform.rotation);
+			else
+				item.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
 			if (item.TryGetComponent(out Grabbable itemGrabbable))
 				grabber.Grab(itemGrabbable);
+			else if (item.TryGetComponentInChildren(out Collider itemCollider))
+				grabber.Grab(itemCollider);
 		}
 	}
 }

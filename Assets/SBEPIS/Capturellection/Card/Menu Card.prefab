@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bounds: {fileID: 2560012040714765689}
-  dequeOwnerEvents:
+  dequeEvents:
     onSet:
       m_PersistentCalls:
         m_Calls:
@@ -345,6 +345,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2830427335561252429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,7 +409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54152097dbb74e59bf922d036f78efc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
 --- !u!114 &5497308317210675182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,6 +421,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91cba428a9b44360a1bb06c630e78c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: {fileID: 1232492613499314681}
+  card: {fileID: 5650769596121791423}
+  layoutAdder: {fileID: 0}
 --- !u!1 &1809637530485951540
 GameObject:
   m_ObjectHideFlags: 0

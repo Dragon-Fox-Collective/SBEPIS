@@ -1,26 +1,14 @@
+using KBCore.Refs;
 using SBEPIS.Capturellection.Storage;
 using UnityEngine;
-using SBEPIS.Controller;
-using SBEPIS.Utils;
 
 namespace SBEPIS.Capturellection
 {
 	public class Deque : MonoBehaviour
 	{
-		public LerpTarget lowerTarget;
-		public LerpTarget upperTarget;
+		[SerializeField, Anywhere] private StorableGroupDefinition definition;
+		public StorableGroupDefinition Definition => definition;
 		
-		public StorableGroupDefinition definition;
-		
-		public EventPropertySlave<DequeOwner, Deque, SetDequeEvent, UnsetDequeEvent> dequeSlaveEvents = new();
-		
-		public void AdoptDeque(Grabber grabber, Grabbable grabbable)
-		{
-			Capturellector capturellector = grabber.GetComponent<Capturellector>();
-			if (!capturellector)
-				return;
-			
-			capturellector.dequeOwner.Deque = this;
-		}
+		private void OnValidate() => this.ValidateRefs();
 	}
 }

@@ -1,4 +1,4 @@
-using System;
+using System.Diagnostics.CodeAnalysis;
 using SBEPIS.Physics;
 using SBEPIS.UI;
 using SBEPIS.Utils;
@@ -10,11 +10,11 @@ namespace SBEPIS.Capturellection
 {
 	public class Diajector : MonoBehaviour
 	{
-		public DequeOwner dequeOwner;
-		
+		public Deque deque;
+		public LerpTarget startTarget;
 		public LerpTarget upperTarget;
 		[FormerlySerializedAs("cardPrefab")]
-		public DequeStorable menuCardPrefab;
+		public DequeElement menuCardPrefab;
 		public ElectricArc electricArcPrefab;
 		public DiajectorPage mainPage;
 		public float cardDelay = 0.5f;
@@ -22,21 +22,18 @@ namespace SBEPIS.Capturellection
 		public Rigidbody staticRigidbody;
 		public MonoBehaviour coroutineOwner;
 		public StrengthSettings cardStrength;
-		
-		public bool IsBound => dequeOwner.Deque;
-		
+
+		public UnityEvent<Diajector> onOpen = new();
+		public UnityEvent<Diajector> onClose = new();
+
 		private DiajectorPage currentPage;
 		
 		public bool IsOpen => currentPage;
 		
-		private void Awake()
-		{
-			dequeOwner.dequeEvents.onUnset.AddListener(ForceCloseIfNoDeque);
-		}
+		private void StartAssembly() => StartAssembly(null, transform.position, transform.rotation);
+		public void StartAssembly([MaybeNull] DiajectorCloser closer, Vector3 position, Quaternion rotation) => StartAssembly(closer, position, rotation, mainPage);
 		
-		public void StartAssembly() => StartAssembly(transform.position, transform.rotation);
-		public void StartAssembly(Vector3 position, Quaternion rotation) => StartAssembly(position, rotation, mainPage);
-		public void StartAssembly(Vector3 position, Quaternion rotation, DiajectorPage page)
+		private void StartAssembly([MaybeNull] DiajectorCloser closer, Vector3 position, Quaternion rotation, DiajectorPage page)
 		{
 			if (IsOpen)
 			{
@@ -44,9 +41,13 @@ namespace SBEPIS.Capturellection
 				return;
 			}
 			
+			if (closer)
+				closer.CloseOldDiajector(this);
+			
 			gameObject.SetActive(true);
 			transform.SetPositionAndRotation(position, rotation);
 			AssembleNewPage(page);
+			onOpen.Invoke(this);
 		}
 		
 		public void ChangePage(DiajectorPage page)
@@ -55,12 +56,12 @@ namespace SBEPIS.Capturellection
 			AssembleNewPage(page);
 		}
 		
-		public UnityAction ChangePageMethod(DiajectorPage page) => () => ChangePage(page);
+		public UnityAction ChangePageAction(DiajectorPage page) => () => ChangePage(page);
 		
 		private void AssembleNewPage(DiajectorPage page)
 		{
 			currentPage = page;
-			currentPage.StartAssembly();
+			currentPage.StartAssembly(this);
 		}
 
 		private void ForceOpenCurrentPage()
@@ -98,6 +99,7 @@ namespace SBEPIS.Capturellection
 		{
 			DisassembleCurrentPage();
 			gameObject.SetActive(false);
+			onClose.Invoke(this);
 		}
 
 		public void ForceOpen()
@@ -114,21 +116,15 @@ namespace SBEPIS.Capturellection
 			gameObject.SetActive(false);
 		}
 		
-		private void ForceCloseIfNoDeque(DequeOwner dequeOwner, Deque oldDeque, Deque newDeque)
-		{
-			if (!newDeque && IsOpen)
-				ForceClose();
-		}
-		
 		public void ForceRestart()
 		{
 			ForceClose();
 			StartAssembly();
 		}
 		
-		public bool ShouldCardBeDisplayed(DequeStorable card) => IsOpen && currentPage.HasCard(card);
+		public bool ShouldCardBeDisplayed(DequeElement card) => IsOpen && currentPage.HasCard(card);
 		
-		public LerpTarget GetLerpTarget(DequeStorable card) => currentPage ? currentPage.GetLerpTarget(card) : null;
-		public CardTarget GetCardTarget(DequeStorable card) => currentPage ? currentPage.GetCardTarget(card) : null;
+		public LerpTarget GetLerpTarget(DequeElement card) => currentPage ? currentPage.GetLerpTarget(card) : null;
+		public CardTarget GetCardTarget(DequeElement card) => currentPage ? currentPage.GetCardTarget(card) : null;
 	}
 }

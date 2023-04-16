@@ -38,7 +38,7 @@ namespace SBEPIS.Controller.Flatscreen
 			else
 			{
 				leftTracker.transform.SetPositionAndRotation(leftHoldPosition.position, leftHoldPosition.rotation);
-				leftGrabber.canGrab = false;
+				leftGrabber.CanGrab = false;
 			}
 		}
 
@@ -48,17 +48,17 @@ namespace SBEPIS.Controller.Flatscreen
 				tracker,
 				hand,
 				emptyHoldPosition,
-				hand.heldGrabPoint && hand.heldGrabPoint.flatscreenTarget ?
-					transform.TransformPoint(Vector3.forward * zoomAmount + Vector3.right * offset + hand.heldGrabPoint.flatscreenTarget.InverseTransformPoint(hand.heldGrabPoint.transform.position)) :
+				hand.HeldGrabPoint && hand.HeldGrabPoint.flatscreenTarget ?
+					transform.TransformPoint(Vector3.forward * zoomAmount + Vector3.right * offset + hand.HeldGrabPoint.flatscreenTarget.InverseTransformPoint(hand.HeldGrabPoint.transform.position)) :
 					transform.TransformPoint(Vector3.forward * zoomAmount + Vector3.right * offset),
-				hand.heldGrabPoint && hand.heldGrabPoint.flatscreenTarget ?
-					transform.TransformRotation(hand.heldGrabPoint.flatscreenTarget.InverseTransformRotation(hand.heldGrabPoint.transform.rotation)) :
+				hand.HeldGrabPoint && hand.HeldGrabPoint.flatscreenTarget ?
+					transform.TransformRotation(hand.HeldGrabPoint.flatscreenTarget.InverseTransformRotation(hand.HeldGrabPoint.transform.rotation)) :
 					transform.rotation,
 				transform.position + transform.forward * (raycastDistance - rightGrabber.shortRangeGrabDistace) + transform.right * offset,
 				transform.rotation,
 				transform.position + transform.right * offset,
 				transform.forward,
-				playerOrientation.upDirection,
+				playerOrientation.UpDirection,
 				raycastDistance);
 		}
 
@@ -77,7 +77,7 @@ namespace SBEPIS.Controller.Flatscreen
 		{
 			grabber.OverrideShortRangeGrab(casterPosition, casterForward, raycastDistance);
 
-			if (grabber.heldCollider)
+			if (grabber.HeldCollider)
 				tracker.SetPositionAndRotation(fullHoldPosition, fullHoldRotation);
 			else if (CastHand(out RaycastHit hit, casterPosition, casterForward, raycastDistance, grabber))
 				tracker.SetPositionAndRotation(hit.point, Quaternion.LookRotation(-hit.normal, up));
@@ -99,12 +99,12 @@ namespace SBEPIS.Controller.Flatscreen
 
 		private static bool CastHand(out RaycastHit hit, Vector3 casterPosition, Vector3 casterForward, float raycastDistance, Grabber grabber)
 		{
-			return grabber.canGrab = UnityEngine.Physics.Raycast(casterPosition, casterForward, out hit, raycastDistance - grabber.shortRangeGrabDistace, grabber.grabMask, QueryTriggerInteraction.Ignore);
+			return grabber.CanGrab = UnityEngine.Physics.Raycast(casterPosition, casterForward, out hit, raycastDistance - grabber.shortRangeGrabDistace, grabber.grabMask, QueryTriggerInteraction.Ignore);
 		}
 
 		private static bool CastShortRangeGrab(out RaycastHit hit, Vector3 casterPosition, Vector3 casterForward, float raycastDistance, Grabber grabber)
 		{
-			return grabber.canGrab = UnityEngine.Physics.Raycast(casterPosition, casterForward, out hit, raycastDistance, grabber.grabMask, QueryTriggerInteraction.Ignore);
+			return grabber.CanGrab = UnityEngine.Physics.Raycast(casterPosition, casterForward, out hit, raycastDistance, grabber.grabMask, QueryTriggerInteraction.Ignore);
 		}
 
 		private void OnDisable()
