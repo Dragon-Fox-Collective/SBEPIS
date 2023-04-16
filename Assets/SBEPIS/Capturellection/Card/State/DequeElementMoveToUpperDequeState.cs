@@ -4,6 +4,6 @@ namespace SBEPIS.Capturellection.CardState
 {
 	public class DequeElementMoveToUpperDequeState : DequeElementTargettingState
 	{
-		protected override LerpTarget TargetToTargetTo => State.Card.Deque.upperTarget;
+		protected override LerpTarget TargetToTargetTo => State.DequeBox.UpperTarget;
 	}
 }

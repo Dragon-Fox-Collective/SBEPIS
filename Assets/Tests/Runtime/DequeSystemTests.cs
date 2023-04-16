@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using NUnit.Framework;
 using SBEPIS.Utils;
 using SBEPIS.Tests.Scenes;
@@ -36,6 +37,25 @@ namespace SBEPIS.Tests
 			Scene.grabber.Drop();
 			yield return new WaitUntilOrTimeout(() => Scene.diajector.IsOpen, 3);
 			Assert.That(Scene.diajector.IsOpen);
+		}
+		
+		[Test]
+		public void NewCards_GetStored()
+		{
+			Assert.That(Scene.inventory.First().DequeElement.IsStored);
+		}
+		
+		[Test]
+		public void NewCards_HaveDeque()
+		{
+			Assert.That(Scene.inventory.First().DequeElement.Deque);
+		}
+		
+		[Test]
+		public void NewCards_HaveDiajector()
+		{
+			Scene.diajector.StartAssembly(null, Vector3.zero, Quaternion.identity);
+			Assert.That(Scene.inventory.First().DequeElement.Diajector);
 		}
 	}
 }

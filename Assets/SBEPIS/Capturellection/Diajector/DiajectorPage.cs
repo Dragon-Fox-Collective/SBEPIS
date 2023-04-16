@@ -43,12 +43,13 @@ namespace SBEPIS.Capturellection
 		{
 			cardTargets.Add(card, target);
 			target.onCardBound.Invoke(card);
+			card.Diajector = diajector;
 		}
 		
 		public void RemoveCard(DequeElement card)
 		{
 			cardTargets.Remove(card);
-			card.Deque = null;
+			card.Diajector = null;
 		}
 		
 		public bool HasCard(DequeElement card) => cardTargets.ContainsKey(card);

@@ -29,7 +29,7 @@ namespace SBEPIS.Capturellection
 		private void Awake()
 		{
 			SaveInitialInventory();
-			LoadInventoryIntoDeque(deque.definition, deque.transform);
+			LoadInventoryIntoDeque(deque.Definition, deque.transform);
 		}
 		
 		private void SaveInitialInventory()

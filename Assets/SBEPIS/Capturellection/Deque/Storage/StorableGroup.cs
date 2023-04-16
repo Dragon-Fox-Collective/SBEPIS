@@ -10,30 +10,30 @@ namespace SBEPIS.Capturellection.Storage
 		public StorableGroupDefinition definition;
 		public List<Storable> inventory = new();
 		
-		public override Vector3 MaxPossibleSize => definition.ruleset.GetMaxPossibleSizeOf(inventory, state);
+		public override Vector3 MaxPossibleSize => definition.Ruleset.GetMaxPossibleSizeOf(inventory, state);
 		
 		public override int InventoryCount => inventory.Count;
 		
 		public override bool HasNoCards => inventory.Count == 0;
-		public override bool HasAllCards => inventory.Count == definition.maxStorables && inventory.All(storable => storable.HasAllCards);
+		public override bool HasAllCards => inventory.Count == definition.MaxStorables && inventory.All(storable => storable.HasAllCards);
 		
 		public override bool HasAllCardsEmpty => inventory.All(storable => storable.HasAllCardsEmpty);
 		public override bool HasAllCardsFull => inventory.All(storable => storable.HasAllCardsFull);
 
-		public override void Tick(float deltaTime) => definition.ruleset.Tick(inventory, state, deltaTime);
+		public override void Tick(float deltaTime) => definition.Ruleset.Tick(inventory, state, deltaTime);
 		public override void LayoutTarget(InventoryStorable card, CardTarget target) => inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		
-		public override bool CanFetch(InventoryStorable card) => definition.ruleset.CanFetchFrom(inventory, state, card);
+		public override bool CanFetch(InventoryStorable card) => definition.Ruleset.CanFetchFrom(inventory, state, card);
 		public override bool Contains(InventoryStorable card) => inventory.Any(storable => storable.Contains(card));
 		
 		public override async UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item)
 		{
-			int storeIndex = await definition.ruleset.GetIndexToStoreInto(inventory, state);
+			int storeIndex = await definition.Ruleset.GetIndexToStoreInto(inventory, state);
 			Storable storable = inventory[storeIndex];
 			inventory.Remove(storable);
 			
 			(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem) = await storable.Store(item);
-			int restoreIndex = await definition.ruleset.GetIndexToInsertBetweenAfterStore(inventory, state, storable, storeIndex);
+			int restoreIndex = await definition.Ruleset.GetIndexToInsertBetweenAfterStore(inventory, state, storable, storeIndex);
 			inventory.Insert(restoreIndex, storable);
 			
 			if (ejectedItem && ejectedItem.TryGetComponent(out InventoryStorable flushedCard))
@@ -54,7 +54,7 @@ namespace SBEPIS.Capturellection.Storage
 			inventory.Remove(storable);
 			
 			Capturellectable item = await storable.Fetch(card);
-			int restoreIndex = await definition.ruleset.GetIndexToInsertBetweenAfterFetch(inventory, state, storable, fetchIndex);
+			int restoreIndex = await definition.Ruleset.GetIndexToInsertBetweenAfterFetch(inventory, state, storable, fetchIndex);
 			inventory.Insert(restoreIndex, storable);
 			
 			return item;
@@ -73,13 +73,13 @@ namespace SBEPIS.Capturellection.Storage
 					break;
 			}
 			
-			while (inventory.Count < definition.maxStorables)
+			while (inventory.Count < definition.MaxStorables)
 			{
-				Storable storable = StorableGroupDefinition.GetNewStorable(definition.subdefinition);
+				Storable storable = StorableGroupDefinition.GetNewStorable(definition.Subdefinition);
 				storable.transform.SetParent(transform);
 				await storable.Flush(cards);
 				
-				int insertIndex = await definition.ruleset.GetIndexToFlushBetween(inventory, state, storable);
+				int insertIndex = await definition.Ruleset.GetIndexToFlushBetween(inventory, state, storable);
 				inventory.Insert(insertIndex, storable);
 				
 				if (cards.Count == 0)
@@ -99,9 +99,9 @@ namespace SBEPIS.Capturellection.Storage
 					break;
 			}
 			
-			while (inventory.Count < definition.maxStorables)
+			while (inventory.Count < definition.MaxStorables)
 			{
-				Storable storable = StorableGroupDefinition.GetNewStorable(definition.subdefinition);
+				Storable storable = StorableGroupDefinition.GetNewStorable(definition.Subdefinition);
 				storable.transform.SetParent(transform);
 				storable.Load(cards);
 				
@@ -128,13 +128,13 @@ namespace SBEPIS.Capturellection.Storage
 		{
 			if (Contains(card))
 			{
-				textures = textures.Append(definition.ruleset.GetCardTextures());
+				textures = textures.Append(definition.Ruleset.GetCardTextures());
 				int index = inventory.FindIndex(storable => storable.Contains(card));
 				Storable storable = inventory[index];
 				return storable.GetCardTextures(card, textures, index);
 			}
 			else
-				return definition.ruleset.GetCardTextures().ToList();
+				return definition.Ruleset.GetCardTextures().ToList();
 		}
 		
 		public override IEnumerator<InventoryStorable> GetEnumerator() => inventory.SelectMany(storable => storable).GetEnumerator();
