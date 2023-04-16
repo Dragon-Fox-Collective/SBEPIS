@@ -1,3 +1,4 @@
+using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Controller
@@ -5,49 +6,47 @@ namespace SBEPIS.Controller
 	[RequireComponent(typeof(Grabbable))]
 	public class CouplingPlug : MonoBehaviour
 	{
+		[SerializeField, Self]
+		private Grabbable grabbable;
+		public Grabbable Grabbable => grabbable;
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		public CoupleEvent onCouple = new();
 		public CoupleEvent onDecouple = new();
-
-		public bool isCoupled => coupledSocket;
 		
-		public CouplingSocket coupledSocket { get; private set; }
+		public bool IsCoupled => CoupledSocket;
 		
-		public Grabbable grabbable { get; private set; }
-
-		private void Awake()
-		{
-			grabbable = GetComponent<Grabbable>();
-		}
-
+		public CouplingSocket CoupledSocket { get; private set; }
+		
 		public void GetCoupled(CouplingSocket socket)
 		{
-			if (isCoupled)
+			if (IsCoupled)
 			{
-				Debug.LogError($"Tried to couple {this} to {socket} when socket already coupled to {coupledSocket}");
+				Debug.LogError($"Tried to couple {this} to {socket} when socket already coupled to {CoupledSocket}");
 				return;
 			}
-
-			coupledSocket = socket;
 			
-			if (grabbable.isBeingHeld)
-				grabbable.grabbingGrabber.Drop();
-			grabbable.onGrab.AddListener(socket.Decouple);
+			CoupledSocket = socket;
 			
-			onCouple.Invoke(this, coupledSocket);
+			Grabbable.Drop();
+			Grabbable.onGrab.AddListener(socket.Decouple);
+			
+			onCouple.Invoke(this, CoupledSocket);
 		}
-
+		
 		public void GetDecoupled()
 		{
-			if (!isCoupled)
+			if (!IsCoupled)
 			{
 				Debug.LogError($"Tried to decouple plug {this} when already decoupled");
 				return;
 			}
-
-			CouplingSocket socket = coupledSocket;
-			coupledSocket = null;
 			
-			grabbable.onGrab.RemoveListener(socket.Decouple);
+			CouplingSocket socket = CoupledSocket;
+			CoupledSocket = null;
+			
+			Grabbable.onGrab.RemoveListener(socket.Decouple);
 			
 			onDecouple.Invoke(this, socket);
 		}

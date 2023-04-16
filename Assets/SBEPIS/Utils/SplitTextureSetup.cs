@@ -9,18 +9,26 @@ namespace SBEPIS.Utils
 		public List<Renderer> renderers;
 		public Material material;
 		
-		private static readonly int FallbackTexture = Shader.PropertyToID("_Fallback_Texture");
-		private static readonly int Textures = Shader.PropertyToID("_Textures");
-		private static readonly int NumTextures = Shader.PropertyToID("_Num_Textures");
-
-		public void UpdateTexture(List<Texture2D> textures)
+		private static readonly int TexturesKey = Shader.PropertyToID("_Textures");
+		private static readonly int NumTexturesKey = Shader.PropertyToID("_Num_Textures");
+		
+		private List<Texture2D> textures;
+		public List<Texture2D> Textures
 		{
-			if (textures == null)
+			get => textures;
+			set
 			{
-				ResetTexture();
-				return;
+				textures = value;
+				
+				if (textures == null)
+					ResetTextures();
+				else
+					UpdateTextures();
 			}
-			
+		}
+		
+		private void UpdateTextures()
+		{
 			Texture2D firstTexture = textures[0];
 			Texture2DArray textureArray = new(firstTexture.width, firstTexture.height, textures.Count, firstTexture.format, firstTexture.mipmapCount > 1);
 			for (int i = 0; i < textures.Count; i++)
@@ -28,16 +36,16 @@ namespace SBEPIS.Utils
 			
 			renderers.PerformOnMaterial(material, material =>
 			{
-				material.SetTexture(Textures, textureArray);
-				material.SetFloat(NumTextures, textures.Count);
+				material.SetTexture(TexturesKey, textureArray);
+				material.SetFloat(NumTexturesKey, textures.Count);
 			});
 		}
 
-		public void ResetTexture()
+		private void ResetTextures()
 		{
 			renderers.PerformOnMaterial(material, material =>
 			{
-				material.SetFloat(NumTextures, 0);
+				material.SetFloat(NumTexturesKey, 0);
 			});
 		}
 	}

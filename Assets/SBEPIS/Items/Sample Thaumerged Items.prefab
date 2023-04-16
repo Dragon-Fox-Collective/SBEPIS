@@ -37,7 +37,7 @@ Transform:
   - {fileID: 6256656595936975849}
   - {fileID: 6256656595045945234}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4396269816305964544
 PrefabInstance:
@@ -103,6 +103,10 @@ PrefabInstance:
       propertyPath: itemToAlchemize.material
       value: 
       objectReference: {fileID: 2100000, guid: 28daee0acdd746518dec26d60a670c54, type: 2}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.itemModule
+      value: 
+      objectReference: {fileID: 7356093425838162561, guid: f58e27cb6eb00ac44b2c30a4bff3c555, type: 3}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: itemToAlchemize.bits.bits.Array.size
       value: 4
@@ -284,6 +288,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 798128959294472566, guid: 293db5bbd32e1d344b4bce0563f78640, type: 3}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.itemModule
+      value: 
+      objectReference: {fileID: 798128959294472566, guid: 293db5bbd32e1d344b4bce0563f78640, type: 3}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: itemToAlchemize.bits.bits.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -367,6 +375,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: itemToAlchemize.itemBase
+      value: 
+      objectReference: {fileID: 7356093425838162561, guid: f58e27cb6eb00ac44b2c30a4bff3c555, type: 3}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.itemModule
       value: 
       objectReference: {fileID: 7356093425838162561, guid: f58e27cb6eb00ac44b2c30a4bff3c555, type: 3}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
@@ -621,6 +633,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
       propertyPath: itemToAlchemize.itemBase
+      value: 
+      objectReference: {fileID: 5653887282515755480, guid: 635905ade04ede34eb2bf934022ac813, type: 3}
+    - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}
+      propertyPath: itemToAlchemize.itemModule
       value: 
       objectReference: {fileID: 5653887282515755480, guid: 635905ade04ede34eb2bf934022ac813, type: 3}
     - target: {fileID: 7770587449493175887, guid: 6699d3e1263a164478d84ad75bcd873e, type: 3}

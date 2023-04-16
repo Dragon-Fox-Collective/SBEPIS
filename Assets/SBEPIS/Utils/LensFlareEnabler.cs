@@ -1,3 +1,4 @@
+using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,25 +7,21 @@ namespace SBEPIS.Utils
 	[RequireComponent(typeof(LensFlare))]
 	public class LensFlareEnabler : MonoBehaviour
 	{
+		[SerializeField, Self]
 		private LensFlare lensFlare;
-
+		
 		private void Awake()
 		{
 			lensFlare = GetComponent<LensFlare>();
 		}
-
+		
 		public void OnControlsChanged(PlayerInput input)
 		{
-			switch (input.currentControlScheme)
+			lensFlare.enabled = input.currentControlScheme switch
 			{
-				case "OpenXR":
-
-					break;
-
-				default:
-
-					break;
-			}
+				"OpenXR" => false,
+				_ => true
+			};
 		}
 	}
 }

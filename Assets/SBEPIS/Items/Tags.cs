@@ -1,27 +1,25 @@
+using SBEPIS.Bits.Tags;
 using SBEPIS.Items;
 using System;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Bits
 {
 	[Serializable]
-	public class Tag
+	public class TaggedBitSetFactory
 	{
-		[HideInInspector]
-		[SerializeField]
-		private string key;
+		public BitSet bits;
+		[FormerlySerializedAs("itemBase")]
+		public ItemModule itemModule;
+		public Material material;
 
-		public Tag(string key)
-		{
-			this.key = key;
-		}
-
-		public override bool Equals(object obj) => obj is Tag other && this == other;
-		public override int GetHashCode() => key.GetHashCode();
-		public static bool operator ==(Tag a, Tag b) => a?.GetType() == b?.GetType() && a?.key == b?.key;
-		public static bool operator !=(Tag a, Tag b) => a?.GetType() != b?.GetType() || a?.key != b?.key;
-
-		public override string ToString() => "Member{" + key + "}";
+		public TaggedBitSet Make() => bits.With(new Tag[]
+				{
+					itemModule ? new BaseModelTag(itemModule) : null,
+					material ? new MaterialTag(material) : null,
+				}.Where(member => member != null).ToArray());
 	}
 }
 
@@ -30,13 +28,14 @@ namespace SBEPIS.Bits.Tags
 	[Serializable]
 	public class BaseModelTag : Tag
 	{
+		[FormerlySerializedAs("_itemBase")]
 		[SerializeField]
-		private ItemBase _itemBase;
-		public ItemBase itemBase => _itemBase;
+		private ItemModule _itemModule;
+		public ItemModule itemModule => _itemModule;
 
-		public BaseModelTag(ItemBase itemBase) : base($"baseModel:{itemBase.name}")
+		public BaseModelTag(ItemModule itemModule) : base($"baseModel:{itemModule.name}")
 		{
-			_itemBase = itemBase;
+			_itemModule = itemModule;
 		}
 	}
 

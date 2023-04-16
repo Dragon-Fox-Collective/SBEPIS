@@ -10,15 +10,15 @@ namespace SBEPIS.Thaumergy
 
 		private void Start()
 		{
-			Alchemize();
-			Destroy(gameObject);
+			Item item = Alchemize();
+			item.transform.Replace(transform);
 		}
 
-		private void Alchemize()
+		private Item Alchemize()
 		{
-			Item item = Thaumerger.Thaumerge(itemToAlchemize.Make(), ItemBaseManager.instance);
+			Item item = Thaumerger.Thaumerge(itemToAlchemize.Make(), ItemModuleManager.instance);
 			item.gameObject.name = gameObject.name;
-			item.transform.SetPositionAndRotation(transform.position, transform.rotation);
+			return item;
 		}
 	}
 }
