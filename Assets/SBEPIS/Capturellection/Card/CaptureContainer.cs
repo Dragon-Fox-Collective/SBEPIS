@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
-	public class Capturellectainer : MonoBehaviour
+	public class CaptureContainer : MonoBehaviour
 	{
 		public CaptureEvent onCapture = new();
 		[FormerlySerializedAs("onRetrieve")]
@@ -28,7 +28,7 @@ namespace SBEPIS.Capturellection
 			
 			CapturedItem = item;
 			originalName = name;
-			name += $" ({item})";
+			name += $" ({item.name})";
 			item.gameObject.SetActive(false);
 			item.transform.SetParent(transform);
 			onCapture.Invoke(this, item);
@@ -52,5 +52,5 @@ namespace SBEPIS.Capturellection
 	}
 	
 	[Serializable]
-	public class CaptureEvent : UnityEvent<Capturellectainer, Capturellectable> { }
+	public class CaptureEvent : UnityEvent<CaptureContainer, Capturellectable> { }
 }

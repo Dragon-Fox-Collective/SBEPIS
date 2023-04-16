@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace SBEPIS.Capturellection.Storage
 	public class StorableSlot : Storable
 	{
 		private InventoryStorable card;
-		private Capturellectainer container;
+		private CaptureContainer container;
 		
 		private Vector3 maxPossibleSize;
 		public override Vector3 MaxPossibleSize => maxPossibleSize;
@@ -30,14 +31,20 @@ namespace SBEPIS.Capturellection.Storage
 		public override bool CanFetch(InventoryStorable card) => Contains(card);
 		public override bool Contains(InventoryStorable card) => this.card == card;
 		
-		public override UniTask<(InventoryStorable, Capturellectainer, Capturellectable)> Store(Capturellectable item)
+		public override UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item)
 		{
+			if (!container)
+				throw new NullReferenceException($"Tried to store in a card {card} that has no container");
+			
 			Capturellectable ejectedItem = container.Fetch();
 			container.Capture(item);
 			return UniTask.FromResult((card, container, ejectedItem));
 		}
 		public override UniTask<Capturellectable> Fetch(InventoryStorable card)
 		{
+			if (!container)
+				throw new NullReferenceException($"Tried to fetch from a card {this.card} that has no container");
+			
 			return UniTask.FromResult(Contains(card) ? container.Fetch() : null);
 		}
 		public override UniTask Flush(List<InventoryStorable> cards)
@@ -51,7 +58,7 @@ namespace SBEPIS.Capturellection.Storage
 			if (HasAllCards || cards.Count == 0)
 				return;
 			card = cards.Pop();
-			container = card.GetComponent<Capturellectainer>();
+			container = card.GetComponent<CaptureContainer>();
 			maxPossibleSize = card.DequeElement.bounds ? ExtensionMethods.Multiply(card.DequeElement.bounds.localBounds.size, card.DequeElement.bounds.transform.localScale) : Vector3.zero;
 		}
 		public override void Save(List<InventoryStorable> cards)

@@ -6,14 +6,12 @@ using UnityEngine;
 
 namespace SBEPIS.Tests.Scenes
 {
-	public class DequeSystemScene : MonoBehaviour
+	public class PlayerSystemScene : MonoBehaviour
 	{
+		[Anywhere] public Capturellector capturellector;
 		[Anywhere] public Grabber grabber;
-		[Anywhere] public DequeBox dequeBox;
-		[Anywhere] public Diajector diajector;
 		[Anywhere] public Grabbable dequeBoxGrabbable;
-		[Anywhere] public CollisionTrigger dequeBoxTrigger;
-		[Anywhere] public Transform dropPoint;
+		[Anywhere] public Inventory dequeBoxInventory;
 		
 		private void OnValidate() => this.ValidateRefs();
 	}

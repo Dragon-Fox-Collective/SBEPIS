@@ -2440,7 +2440,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabber: {fileID: 6376568278754761723}
-  inventory: {fileID: 0}
 --- !u!114 &6844988662924280731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2949,6 +2948,7 @@ GameObject:
   - component: {fileID: 9042183274841322284}
   - component: {fileID: 4704795409870569521}
   - component: {fileID: 804595815282090642}
+  - component: {fileID: 7786418706767070881}
   m_Layer: 8
   m_Name: Player Body
   m_TagString: Untagged
@@ -3179,6 +3179,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef81ad8afb8540f682b2874301daab08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7786418706767070881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376568280094680652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad9bade8e5c48c58809ffe633a109ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capturellectors:
+  - {fileID: 2824848723725198686}
+  - {fileID: 1494821562862204379}
 --- !u!1 &6433262757480330092
 GameObject:
   m_ObjectHideFlags: 0
@@ -3605,7 +3620,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabber: {fileID: 6271847251800222012}
-  inventory: {fileID: 0}
 --- !u!114 &4874602448725965669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4062,7 +4076,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6112518582163472336}
   m_Layer: 0
-  m_Name: Player Stage
+  m_Name: Player System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

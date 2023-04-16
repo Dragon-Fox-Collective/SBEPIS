@@ -6,11 +6,10 @@ namespace SBEPIS.Capturellection
 {
 	public class DiajectorPageChanger : MonoBehaviour
 	{
-		[FormerlySerializedAs("dequePage")]
-		public DiajectorPage diajectorPage;
+		[SerializeField, Parent(Flag.IncludeInactive)] private Diajector diajector;
 		
-		[SerializeField, Parent(Flag.IncludeInactive)]
-		private Diajector diajector;
+		[FormerlySerializedAs("dequePage")]
+		[SerializeField, Anywhere] private DiajectorPage diajectorPage;
 		
 		private void OnValidate() => this.ValidateRefs();
 		

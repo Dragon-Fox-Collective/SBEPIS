@@ -26,13 +26,13 @@ namespace SBEPIS.Capturellection.Storage
 		public override bool CanFetch(InventoryStorable card) => definition.ruleset.CanFetchFrom(inventory, state, card);
 		public override bool Contains(InventoryStorable card) => inventory.Any(storable => storable.Contains(card));
 		
-		public override async UniTask<(InventoryStorable, Capturellectainer, Capturellectable)> Store(Capturellectable item)
+		public override async UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item)
 		{
 			int storeIndex = await definition.ruleset.GetIndexToStoreInto(inventory, state);
 			Storable storable = inventory[storeIndex];
 			inventory.Remove(storable);
 			
-			(InventoryStorable card, Capturellectainer container, Capturellectable ejectedItem) = await storable.Store(item);
+			(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem) = await storable.Store(item);
 			int restoreIndex = await definition.ruleset.GetIndexToInsertBetweenAfterStore(inventory, state, storable, storeIndex);
 			inventory.Insert(restoreIndex, storable);
 			

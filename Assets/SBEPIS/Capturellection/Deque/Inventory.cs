@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using KBCore.Refs;
 using SBEPIS.Capturellection.Storage;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,13 +11,14 @@ namespace SBEPIS.Capturellection
 {
 	public class Inventory : MonoBehaviour, IEnumerable<InventoryStorable>
 	{
-		public Deque deque;
+		[SerializeField, Anywhere] public Deque deque;
 		[FormerlySerializedAs("cardPrefab")]
-		public InventoryStorable initialCardPrefab;
-		public int initialCardCount = 0;
+		[SerializeField, Anywhere] private InventoryStorable initialCardPrefab;
+		[SerializeField] public int initialCardCount = 0;
 		
 		[Tooltip("Purely organizational for the hierarchy")]
-		public Transform cardParent;
+		[SerializeField, Anywhere] private Transform cardParent;
+		public Transform CardParent => cardParent;
 		
 		public UnityEvent<Inventory> onLoadIntoDeque = new();
 		public UnityEvent<Inventory, List<InventoryStorable>> onSaveFromDeque = new();
@@ -97,9 +99,9 @@ namespace SBEPIS.Capturellection
 			TearDownCard(card);
 			return storable.Fetch(card);
 		}
-		public async UniTask<(InventoryStorable, Capturellectainer, Capturellectable)> Store(Capturellectable item)
+		public async UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item)
 		{
-			(InventoryStorable card, Capturellectainer container, Capturellectable ejectedItem) = await storable.Store(item);
+			(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem) = await storable.Store(item);
 			SetupCard(card);
 			return (card, container, ejectedItem);
 		}

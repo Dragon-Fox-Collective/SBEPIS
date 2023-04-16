@@ -37,7 +37,7 @@ namespace SBEPIS.Tests
 		public IEnumerator StoringItem_SetsCardParent() => UniTask.ToCoroutine(async () =>
 		{
 			(InventoryStorable card, _, _) = await Scene.inventory.Store(Scene.item);
-			Assert.That(card.transform.parent, Is.EqualTo(Scene.inventory.cardParent));
+			Assert.That(card.transform.parent, Is.EqualTo(Scene.inventory.CardParent));
 		});
 		
 		[UnityTest]
