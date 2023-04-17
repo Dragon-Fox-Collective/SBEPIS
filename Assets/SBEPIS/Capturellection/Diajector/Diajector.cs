@@ -13,27 +13,17 @@ namespace SBEPIS.Capturellection
 		
 		[SerializeField, Anywhere] private DiajectorPage mainPage;
 		
-		public UnityEvent<Diajector> onOpen = new();
-		public UnityEvent<Diajector> onClose = new();
-		
-		[Header("Parameters required only for page and menu card creation")]
-		[SerializeField, Anywhere] private DequeElement menuCardPrefab;
-		public DequeElement MenuCardPrefab => menuCardPrefab;
-		
-		[SerializeField, Anywhere] private Deque deque;
-		public Deque Deque => deque;
-		
-		[SerializeField, Anywhere] private LerpTarget startTarget;
-		public LerpTarget StartTarget => startTarget;
-		
-		[SerializeField] private float cardDelay = 0.5f;
-		public float CardDelay => cardDelay;
-		
 		[SerializeField, Anywhere] private MonoBehaviour coroutineOwner;
 		public MonoBehaviour CoroutineOwner => coroutineOwner;
 		
 		[SerializeField, Anywhere] private Rigidbody staticRigidbody;
 		public Rigidbody StaticRigidbody => staticRigidbody;
+		
+		[SerializeField] private float cardDelay = 0.5f;
+		public float CardDelay => cardDelay;
+		
+		public UnityEvent<Diajector> onOpen = new();
+		public UnityEvent<Diajector> onClose = new();
 		
 		private void OnValidate() => this.ValidateRefs();
 		
