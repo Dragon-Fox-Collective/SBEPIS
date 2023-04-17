@@ -9,10 +9,8 @@ namespace SBEPIS.Capturellection
 {
 	public class DiajectorCaptureLayout : MonoBehaviour
 	{
-		[SerializeField, Parent(Flag.IncludeInactive)]
-		private Diajector diajector;
-		[SerializeField, Parent(Flag.IncludeInactive)]
-		private DiajectorPage page;
+		[SerializeField, Parent(Flag.IncludeInactive)] private DiajectorPageCreator pageCreator;
+		[SerializeField, Parent(Flag.IncludeInactive)] private DiajectorPage page;
 		
 		private void OnValidate() => this.ValidateRefs();
 		
@@ -76,7 +74,7 @@ namespace SBEPIS.Capturellection
 		{
 			CardTarget target = HasTemporaryTarget(card) ? targets[card] : AddTemporaryTarget(card);
 			page.AddCard(card.DequeElement, target);
-			diajector.StartTarget.onMoveFrom.Invoke(card.DequeElement.Animator);
+			pageCreator.StartTarget.onMoveFrom.Invoke(card.DequeElement.Animator);
 			return target;
 		}
 		
@@ -108,7 +106,7 @@ namespace SBEPIS.Capturellection
 				}
 				else
 				{
-					card.DequeElement.Animator.TeleportTo(diajector.StartTarget);
+					card.DequeElement.Animator.TeleportTo(pageCreator.StartTarget);
 				}
 			}
 		}

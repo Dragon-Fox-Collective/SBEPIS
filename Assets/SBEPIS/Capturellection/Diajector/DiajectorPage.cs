@@ -1,4 +1,3 @@
-using SBEPIS.Controller;
 using System.Collections;
 using System.Collections.Generic;
 using KBCore.Refs;
@@ -12,6 +11,7 @@ namespace SBEPIS.Capturellection
 	public class DiajectorPage : MonoBehaviour
 	{
 		[SerializeField, Parent(Flag.IncludeInactive)] private Diajector diajector;
+		[SerializeField, Parent(Flag.IncludeInactive | Flag.Optional)] private DiajectorPageCreator pageCreator;
 		
 		public UnityEvent onPreparePagePre = new();
 		[FormerlySerializedAs("onPreparePage")]
@@ -22,27 +22,7 @@ namespace SBEPIS.Capturellection
 		private readonly Dictionary<DequeElement, CardTarget> cardTargets = new();
 		
 		private void OnValidate() => this.ValidateRefs();
-		
-		private static IEnumerable<(DequeElement, CardTarget)> CreateCards(IEnumerable<CardTarget> targets, Deque deque, DequeElement menuCardPrefab, LerpTarget startTarget)
-		{
-			List<(DequeElement, CardTarget)> cards = new();
-			foreach (CardTarget target in targets)
-			{
-				DequeElement card = Instantiate(menuCardPrefab);
-				cards.Add((card, target));
-				card.name += $" ({target.transform.parent.name})";
-				target.Card = card;
-				
-				card.Deque = deque;
-				card.Animator.TeleportTo(startTarget);
-				
-				Grabbable cardGrabbable = card.Grabbable;
-				cardGrabbable.onGrab.AddListener((_, _) => target.onGrab.Invoke());
-				cardGrabbable.onDrop.AddListener((_, _) => target.onDrop.Invoke());
-			}
-			return cards;
-		}
-		
+
 		public void AddCard(DequeElement card, CardTarget target)
 		{
 			cardTargets.Add(card, target);
@@ -64,17 +44,20 @@ namespace SBEPIS.Capturellection
 		{
 			gameObject.SetActive(true);
 			onPreparePagePre.Invoke();
-			
-			if (!hasCreatedCards)
-			{
-				CreateCards(GetComponentsInChildren<CardTarget>(), diajector.Deque, diajector.MenuCardPrefab, diajector.StartTarget).ForEach(AddCard);
-				hasCreatedCards = true;
-			}
-			
+			CreateCardsIfNeeded();
 			onPreparePagePost.Invoke();
 			foreach ((DequeElement card, CardTarget _) in cardTargets)
 				card.State.IsPageOpen = true;
 			diajector.CoroutineOwner.StartCoroutine(SpawnCards());
+		}
+		
+		private void CreateCardsIfNeeded()
+		{
+			if (!pageCreator || hasCreatedCards)
+				return;
+			
+			pageCreator.CreateCards(GetComponentsInChildren<CardTarget>()).ForEach(AddCard);
+			hasCreatedCards = true;
 		}
 		
 		private IEnumerator SpawnCards()

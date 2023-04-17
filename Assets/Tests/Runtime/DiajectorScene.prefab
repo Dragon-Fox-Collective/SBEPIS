@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9188486969914674013}
   - component: {fileID: 4305581042150739248}
+  - component: {fileID: 7301179865854814393}
   m_Layer: 0
   m_Name: Diajector 1
   m_TagString: Untagged
@@ -47,18 +48,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upperTarget: {fileID: 4630195799673596264}
   mainPage: {fileID: 1925028643529587989}
+  coroutineOwner: {fileID: 8295484903790907486}
+  staticRigidbody: {fileID: 2275484998634897847}
+  cardDelay: 0.5
   onOpen:
     m_PersistentCalls:
       m_Calls: []
   onClose:
     m_PersistentCalls:
       m_Calls: []
-  menuCardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
+--- !u!114 &7301179865854814393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230805072599409872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332c7de293c64c8e89fc14bb651f19d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuCardPrefab: {fileID: 7890807127277734544}
   deque: {fileID: 6524161889462331603}
   startTarget: {fileID: 4630195799673596264}
-  cardDelay: 0.5
-  coroutineOwner: {fileID: 8295484903790907486}
-  staticRigidbody: {fileID: 2275484998634897847}
 --- !u!1 &1436603654703212686
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,6 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diajector: {fileID: 4305581042150739248}
+  pageCreator: {fileID: 7301179865854814393}
   onPreparePagePre:
     m_PersistentCalls:
       m_Calls: []
@@ -202,18 +216,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upperTarget: {fileID: 86506948660060993}
   mainPage: {fileID: 2028243881898178483}
+  coroutineOwner: {fileID: 7435457740539413066}
+  staticRigidbody: {fileID: 2355950596400507062}
+  cardDelay: 0.5
   onOpen:
     m_PersistentCalls:
       m_Calls: []
   onClose:
     m_PersistentCalls:
       m_Calls: []
-  menuCardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
-  deque: {fileID: 6524161889462331603}
-  startTarget: {fileID: 86506948660060993}
-  cardDelay: 0.5
-  coroutineOwner: {fileID: 7435457740539413066}
-  staticRigidbody: {fileID: 2355950596400507062}
 --- !u!1 &2849093910085721219
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +322,200 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &3382232594218391362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4957351218962208688}
+  - component: {fileID: 7078364042485267489}
+  - component: {fileID: 3523330874222697901}
+  - component: {fileID: 8719950285680008672}
+  - component: {fileID: 4498323044499663404}
+  - component: {fileID: 3665370884316537344}
+  - component: {fileID: 7890807127277734544}
+  m_Layer: 0
+  m_Name: Card Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4957351218962208688
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3382232594218391362}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6736053937047874086}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &7078364042485267489
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3382232594218391362}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &3523330874222697901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3382232594218391362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbody: {fileID: 7078364042485267489}
+  grabPoints: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoldUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onUse:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  onStopTouch:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &8719950285680008672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3382232594218391362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49a9fd3160befad41b771e6f8ceab7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbody: {fileID: 7078364042485267489}
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!95 &4498323044499663404
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3382232594218391362}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3665370884316537344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3382232594218391362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cba428a9b44360a1bb06c630e78c6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: {fileID: 4498323044499663404}
+  card: {fileID: 7890807127277734544}
+  layoutAdder: {fileID: 0}
+  cardStrength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
+  electricArcPrefab: {fileID: 7962134878051775022, guid: bd0964b77b3f6f0459fc55699ed10fd6, type: 3}
+--- !u!114 &7890807127277734544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3382232594218391362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58aa7d8afd685e74abc59a26910d21af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabbable: {fileID: 3523330874222697901}
+  state: {fileID: 3665370884316537344}
+  animator: {fileID: 8719950285680008672}
+  bounds: {fileID: 0}
+  dequeEvents:
+    onSet:
+      m_PersistentCalls:
+        m_Calls: []
+    onUnset:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &4374270888245357037
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diajector: {fileID: 3343548529308766504}
+  pageCreator: {fileID: 0}
   onPreparePagePre:
     m_PersistentCalls:
       m_Calls: []
@@ -638,6 +844,7 @@ Transform:
   - {fileID: 2530399851239381026}
   - {fileID: 371170943519513789}
   - {fileID: 2491969490238645027}
+  - {fileID: 4957351218962208688}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
