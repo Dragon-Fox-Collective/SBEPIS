@@ -5,20 +5,11 @@ namespace SBEPIS.Capturellection.CardState
 {
 	public abstract class DequeElementTargettingState : StateMachineBehaviour<DequeElementStateMachine>
 	{
-		public int startNumber;
-		public int endNumber;
-		
-		protected abstract LerpTarget TargetToTargetTo { get; }
+		public bool reversed;
 		
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			State.Card.State.TargetNumber = startNumber;
-			State.Card.Animator.TargetTo(TargetToTargetTo, SetEndNumber);
-		}
-		
-		private void SetEndNumber(LerpTargetAnimator animator)
-		{
-			State.TargetNumber = endNumber;
+			State.Card.Animator.TargetTo(State.Card.Diajector.GetLerpTarget(State.Card, State.TargetIndex));
 		}
 	}
 }

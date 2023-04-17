@@ -13,9 +13,10 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Parent(Flag.IncludeInactive)] private Diajector diajector;
 		[SerializeField, Parent(Flag.IncludeInactive | Flag.Optional)] private DiajectorPageCreator pageCreator;
 		
-		public UnityEvent onPreparePagePre = new();
-		[FormerlySerializedAs("onPreparePage")]
-		public UnityEvent onPreparePagePost = new();
+		[FormerlySerializedAs("onPreparePagePre")]
+		public UnityEvent onPrepareCardCreation = new();
+		[FormerlySerializedAs("onPreparePagePost")]
+		public UnityEvent onPreparePage = new();
 		
 		private bool hasCreatedCards = false;
 		
@@ -42,13 +43,24 @@ namespace SBEPIS.Capturellection
 		
 		public void StartAssembly()
 		{
+			PrepareOpeningPage();
+			diajector.CoroutineOwner.StartCoroutine(SpawnCards());
+		}
+
+		private void PrepareOpeningPage()
+		{
 			gameObject.SetActive(true);
-			onPreparePagePre.Invoke();
 			CreateCardsIfNeeded();
-			onPreparePagePost.Invoke();
 			foreach ((DequeElement card, CardTarget _) in cardTargets)
 				card.State.IsPageOpen = true;
-			diajector.CoroutineOwner.StartCoroutine(SpawnCards());
+			onPreparePage.Invoke();
+		}
+		
+		private void PrepareClosingPage()
+		{
+			gameObject.SetActive(false);
+			foreach ((DequeElement card, CardTarget _) in cardTargets)
+				card.State.IsPageOpen = false;
 		}
 		
 		private void CreateCardsIfNeeded()
@@ -56,6 +68,7 @@ namespace SBEPIS.Capturellection
 			if (!pageCreator || hasCreatedCards)
 				return;
 			
+			onPrepareCardCreation.Invoke();
 			pageCreator.CreateCards(GetComponentsInChildren<CardTarget>()).ForEach(AddCard);
 			hasCreatedCards = true;
 		}
@@ -77,10 +90,8 @@ namespace SBEPIS.Capturellection
 		
 		public void StartDisassembly()
 		{
-			foreach ((DequeElement card, CardTarget _) in cardTargets)
-				card.State.IsPageOpen = false;
+			PrepareClosingPage();
 			diajector.CoroutineOwner.StartCoroutine(DespawnCards());
-			gameObject.SetActive(false);
 		}
 		
 		private IEnumerator DespawnCards()
@@ -95,8 +106,7 @@ namespace SBEPIS.Capturellection
 		
 		public void ForceOpen()
 		{
-			gameObject.SetActive(true);
-			
+			PrepareOpeningPage();
 			foreach ((DequeElement card, CardTarget _) in cardTargets)
 			{
 				card.State.IsAssembling = false;
@@ -108,14 +118,13 @@ namespace SBEPIS.Capturellection
 		
 		public void ForceClose()
 		{
+			PrepareClosingPage();
 			foreach ((DequeElement card, CardTarget _) in cardTargets)
 			{
 				card.State.IsAssembling = false;
 				card.State.IsDisassembling = false;
 				card.State.ForceClose();
 			}
-			
-			gameObject.SetActive(false);
 		}
 		
 		private void OnDestroy()
