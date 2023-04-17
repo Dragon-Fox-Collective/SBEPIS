@@ -10,9 +10,16 @@ namespace SBEPIS.Capturellection.CardState
 		protected override void OnEnter()
 		{
 			LerpTarget target = State.Card.Diajector.GetLerpTarget(State.Card);
-			if (!target || !State.Rigidbody)
+			if (!target)
 				return;
 			
+			State.Card.Animator.TeleportTo(target);
+			if (State.Rigidbody)
+				CreateTargetter(target);
+		}
+
+		private void CreateTargetter(LerpTarget target)
+		{
 			targetter = State.Card.Diajector.StaticRigidbody.gameObject.AddComponent<JointTargetter>();
 			targetter.connectedBody = State.Rigidbody;
 			targetter.target = target.transform;

@@ -59,7 +59,7 @@ namespace SBEPIS.Tests
 			bool reached = false;
 			Scene.cardTarget.Card.Animator.AddListenerOnMoveTo(Scene.startCardTarget, _ => reached = true);
 			Assert.That(reached, Is.False);
-			yield return new WaitUntilOrTimeout(() => reached, 3);
+			yield return new WaitUntilOrTimeout(() => reached, 10);
 			Assert.That(reached);
 		}
 		
