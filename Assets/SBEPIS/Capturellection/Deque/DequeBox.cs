@@ -12,16 +12,14 @@ namespace SBEPIS.Capturellection
 	{
 		[SerializeField, Self] private Deque deque;
 		public Deque Deque => deque;
+		
 		[SerializeField, Self] private DequeBoxStateMachine state;
+		
 		[SerializeField, Self] private GravitySum gravitySum;
 		public GravitySum GravitySum => gravitySum;
+		
 		[SerializeField, Self] private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;
-		
-		[SerializeField, Anywhere] private LerpTarget lowerTarget;
-		public LerpTarget LowerTarget => lowerTarget;
-		[SerializeField, Anywhere] private LerpTarget upperTarget;
-		public LerpTarget UpperTarget => upperTarget;
 		
 		private void OnValidate() => this.ValidateRefs();
 		
@@ -51,12 +49,12 @@ namespace SBEPIS.Capturellection
 			Transform tossTarget = dequeBoxOwner.tossTarget;
 			float tossHeight = dequeBoxOwner.tossHeight;
 			
-			Rigidbody.velocity = CalcTossVelocity(
+			rigidbody.velocity = CalcTossVelocity(
 				transform,
 				tossTarget,
 				tossHeight,
 				tossTarget.up,
-				GravitySum.GravityAcceleration);
+				gravitySum.GravityAcceleration);
 		}
 		
 		private static Vector3 CalcTossVelocity(Transform box, Transform tossTarget, float tossHeight, Vector3 upDirection, float gravityAcceleration)

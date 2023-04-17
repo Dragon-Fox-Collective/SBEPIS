@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using KBCore.Refs;
 using SBEPIS.Utils;
@@ -8,9 +9,6 @@ namespace SBEPIS.Capturellection
 {
 	public class Diajector : MonoBehaviour
 	{
-		[SerializeField, Anywhere] private LerpTarget upperTarget;
-		public LerpTarget UpperTarget => upperTarget;
-		
 		[SerializeField, Anywhere] private DiajectorPage mainPage;
 		
 		[SerializeField, Anywhere] private MonoBehaviour coroutineOwner;
@@ -21,6 +19,9 @@ namespace SBEPIS.Capturellection
 		
 		[SerializeField] private float cardDelay = 0.5f;
 		public float CardDelay => cardDelay;
+		
+		[Tooltip("Ordered from deque to diajector")]
+		[SerializeField] private List<LerpTarget> lerpTargets = new();
 		
 		public UnityEvent<Diajector> onOpen = new();
 		public UnityEvent<Diajector> onClose = new();
@@ -56,8 +57,6 @@ namespace SBEPIS.Capturellection
 			DisassembleCurrentPage();
 			AssembleNewPage(page);
 		}
-		
-		public UnityAction ChangePageAction(DiajectorPage page) => () => ChangePage(page);
 		
 		private void AssembleNewPage(DiajectorPage page)
 		{
@@ -126,6 +125,6 @@ namespace SBEPIS.Capturellection
 		public bool ShouldCardBeDisplayed(DequeElement card) => IsOpen && currentPage.HasCard(card);
 		
 		public LerpTarget GetLerpTarget(DequeElement card) => currentPage ? currentPage.GetLerpTarget(card) : null;
-		public CardTarget GetCardTarget(DequeElement card) => currentPage ? currentPage.GetCardTarget(card) : null;
+		public LerpTarget GetLerpTarget(DequeElement card, int index) => index >= lerpTargets.Count ? GetLerpTarget(card) : lerpTargets[index];
 	}
 }

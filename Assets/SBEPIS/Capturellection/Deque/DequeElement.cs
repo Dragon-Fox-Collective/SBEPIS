@@ -12,6 +12,7 @@ namespace SBEPIS.Capturellection
 	{
 		[SerializeField, Self] private DequeElementStateMachine state;
 		public DequeElementStateMachine State => state;
+		
 		[SerializeField, Self] private LerpTargetAnimator animator;
 		public LerpTargetAnimator Animator => animator;
 		
@@ -43,6 +44,7 @@ namespace SBEPIS.Capturellection
 				diajector = value;
 			}
 		}
+		
 		public bool ShouldBeDisplayed => diajector.ShouldCardBeDisplayed(this);
 	}
 }
