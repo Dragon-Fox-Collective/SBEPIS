@@ -17,7 +17,7 @@ namespace SBEPIS.Capturellection.CardState
 		public EnablerDisabler EnablerDisabler => enablerDisabler;
 		
 		[SerializeField, Self(Flag.Optional)] private InventoryStorableCaptureLayoutAdder layoutAdder;
-		[MaybeNull] public InventoryStorableCaptureLayoutAdder LayoutAdder => layoutAdder;
+		public InventoryStorableCaptureLayoutAdder LayoutAdder => layoutAdder;
 		
 		[SerializeField, Self(Flag.Optional)] private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;

@@ -28,6 +28,7 @@ namespace SBEPIS.Utils
 		
 		public void TargetTo(LerpTarget target, params UnityAction<LerpTargetAnimator>[] tempActions)
 		{
+			if (!target) throw new NullReferenceException($"Tried to target {this} to null");
 			if (rigidbody) rigidbody.Disable();
 			currentTarget = target;
 			SetStartPositionAndRotation(transform.position, transform.rotation);
@@ -76,10 +77,11 @@ namespace SBEPIS.Utils
 			
 			oldTarget.onMoveTo.Invoke(this);
 			foreach (UnityAction<LerpTargetAnimator> action in tempOnMoveToActions.ToList())
-				action.Invoke(this);
+				action?.Invoke(this);
+			
 			if (onMoveToActions.TryGetValue(oldTarget, out List<UnityAction<LerpTargetAnimator>> actions))
 				foreach (UnityAction<LerpTargetAnimator> action in actions.ToList())
-					action.Invoke(this);
+					action?.Invoke(this);
 		}
 		
 		private void Update()
