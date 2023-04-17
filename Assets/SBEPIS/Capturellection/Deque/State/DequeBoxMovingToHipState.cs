@@ -5,7 +5,7 @@ namespace SBEPIS.Capturellection.DequeState
 {
 	public class DequeBoxMovingToHipState : StateMachineBehaviour<DequeBoxStateMachine>
 	{
-		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		protected override void OnEnter()
 		{
 			State.Animator.TargetTo(State.lerpTarget);
 		}

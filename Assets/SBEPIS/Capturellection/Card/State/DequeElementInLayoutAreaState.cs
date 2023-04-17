@@ -6,7 +6,7 @@ namespace SBEPIS.Capturellection.CardState
 {
 	public class DequeElementInLayoutAreaState : StateMachineBehaviour<DequeElementStateMachine>
 	{
-		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		protected override void OnEnter()
 		{
 			if (!State.LayoutAdder)
 				throw new NullReferenceException($"DequeStorable {State.Card} doesn't have a LayoutAdder but reached its state");

@@ -7,10 +7,14 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.CardState
 {
+	[RequireComponent(typeof(EnablerDisabler))]
 	public class DequeElementStateMachine : StateMachine
 	{
 		[SerializeField, Self] private DequeElement card;
 		public DequeElement Card => card;
+		
+		[SerializeField, Self] private EnablerDisabler enablerDisabler;
+		public EnablerDisabler EnablerDisabler => enablerDisabler;
 		
 		[SerializeField, Self(Flag.Optional)] private InventoryStorableCaptureLayoutAdder layoutAdder;
 		[MaybeNull] public InventoryStorableCaptureLayoutAdder LayoutAdder => layoutAdder;

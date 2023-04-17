@@ -28,8 +28,7 @@ namespace SBEPIS.Utils
 		
 		public void TargetTo(LerpTarget target, params UnityAction<LerpTargetAnimator>[] tempActions)
 		{
-			if (rigidbody)
-				rigidbody.Disable();
+			if (rigidbody) rigidbody.Disable();
 			currentTarget = target;
 			SetStartPositionAndRotation(transform.position, transform.rotation);
 			time = 0;
@@ -42,7 +41,7 @@ namespace SBEPIS.Utils
 				prevTarget.onMoveFrom.Invoke(this);
 			}
 		}
-
+		
 		public void SetStartPositionAndRotation(Vector3 position, Quaternion rotation)
 		{
 			startPosition = position;
@@ -51,24 +50,29 @@ namespace SBEPIS.Utils
 		
 		public void TeleportTo(LerpTarget target)
 		{
-			if (!target)
-				throw new NullReferenceException($"Tried to teleport {this} to null");
+			if (!target) throw new NullReferenceException($"Tried to teleport {this} to null");
 			TargetTo(target);
 			End();
 		}
-
+		
 		public void SetPausedAt(LerpTarget target)
 		{
 			pausedAtTarget = target;
 		}
-
+		
+		public void Cancel()
+		{
+			if (!currentTarget) return;
+			
+			currentTarget = null;
+			if (rigidbody) rigidbody.Enable();
+		}
+		
 		private void End()
 		{
 			transform.SetPositionAndRotation(currentTarget.transform.position, currentTarget.transform.rotation);
-			if (rigidbody)
-				rigidbody.Enable();
 			LerpTarget oldTarget = pausedAtTarget = currentTarget;
-			currentTarget = null;
+			Cancel();
 			
 			oldTarget.onMoveTo.Invoke(this);
 			foreach (UnityAction<LerpTargetAnimator> action in tempOnMoveToActions.ToList())

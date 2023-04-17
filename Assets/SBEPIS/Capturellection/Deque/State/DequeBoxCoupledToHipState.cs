@@ -6,7 +6,7 @@ namespace SBEPIS.Capturellection.DequeState
 {
 	public class DequeBoxCoupledToHipState : StateMachineBehaviour<DequeBoxStateMachine>
 	{
-		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		protected override void OnExit()
 		{
 			CouplingPlug plug = State.Plug;
 			CouplingSocket socket = State.Plug.CoupledSocket;
