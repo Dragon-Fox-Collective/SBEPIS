@@ -1,6 +1,5 @@
 using SBEPIS.Physics;
 using SBEPIS.Utils;
-using UnityEngine;
 
 namespace SBEPIS.Capturellection.CardState
 {
@@ -8,7 +7,7 @@ namespace SBEPIS.Capturellection.CardState
 	{
 		private JointTargetter targetter;
 		
-		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		protected override void OnEnter()
 		{
 			LerpTarget target = State.Card.Diajector.GetLerpTarget(State.Card);
 			if (!target || !State.Rigidbody)
@@ -20,7 +19,7 @@ namespace SBEPIS.Capturellection.CardState
 			targetter.strength = State.CardStrength;
 		}
 		
-		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		protected override void OnExit()
 		{
 			if (targetter)
 				Destroy(targetter);

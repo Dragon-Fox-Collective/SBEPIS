@@ -3,13 +3,42 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.CardState
 {
-	public abstract class DequeElementTargettingState : StateMachineBehaviour<DequeElementStateMachine>
+	public class DequeElementTargettingState : StateMachineBehaviour<DequeElementStateMachine>
 	{
-		public bool reversed;
+		[SerializeField] private bool reversed;
 		
-		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		protected override void OnEnter()
 		{
-			State.Card.Animator.TargetTo(State.Card.Diajector.GetLerpTarget(State.Card, State.TargetIndex));
+			if (reversed) MoveBackward();
+			else MoveForward();
+		}
+		
+		private void MoveForward()
+		{
+			State.Card.Animator.TargetTo(State.Card.Diajector.GetLerpTarget(State.Card, State.TargetIndex + 1), State.TargetIndex < State.Card.Diajector.LerpTargetCount - 1 ? KeepMovingForward : null);
+		}
+		
+		private void KeepMovingForward(LerpTargetAnimator animator)
+		{
+			State.TargetIndex++;
+			MoveForward();
+		}
+		
+		private void MoveBackward()
+		{
+			Debug.Log($"MoveBack {State}");
+			State.Card.Animator.TargetTo(State.Card.Diajector.GetLerpTarget(State.Card, State.TargetIndex), State.TargetIndex > 0 ? KeepMovingBackward : null);
+		}
+		
+		private void KeepMovingBackward(LerpTargetAnimator animator)
+		{
+			State.TargetIndex--;
+			MoveBackward();
+		}
+		
+		protected override void OnExit()
+		{
+			State.Card.Animator.Cancel();
 		}
 	}
 }

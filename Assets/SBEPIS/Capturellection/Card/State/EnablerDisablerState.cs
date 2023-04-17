@@ -3,18 +3,16 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.CardState
 {
-	public class EnablerDisablerState : StateMachineBehaviour
+	public class EnablerDisablerState : StateMachineBehaviour<DequeElementStateMachine>
 	{
-		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		protected override void OnEnter()
 		{
-			EnablerDisabler enabler = animator.GetComponent<EnablerDisabler>();
-			enabler.Disable();
+			State.EnablerDisabler.Disable();
 		}
 		
-		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		protected override void OnExit()
 		{
-			EnablerDisabler enabler = animator.GetComponent<EnablerDisabler>();
-			enabler.Enable();
+			State.EnablerDisabler.Enable();
 		}
 	}
 }
