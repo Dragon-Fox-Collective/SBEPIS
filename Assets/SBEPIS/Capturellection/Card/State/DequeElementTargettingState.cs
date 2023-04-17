@@ -15,6 +15,7 @@ namespace SBEPIS.Capturellection.CardState
 		
 		private void MoveForward()
 		{
+			Debug.Log($"Forward {State.TargetIndex} {State.Card.Diajector.GetLerpTarget(State.Card, State.TargetIndex + 1)}");
 			State.Card.Animator.TargetTo(State.Card.Diajector.GetLerpTarget(State.Card, State.TargetIndex + 1), State.TargetIndex < State.Card.Diajector.LerpTargetCount - 1 ? KeepMovingForward : null);
 		}
 		
@@ -26,7 +27,7 @@ namespace SBEPIS.Capturellection.CardState
 		
 		private void MoveBackward()
 		{
-			Debug.Log($"MoveBack {State}");
+			Debug.Log($"Backward {State.TargetIndex} {State.Card.Diajector.GetLerpTarget(State.Card, State.TargetIndex)}");
 			State.Card.Animator.TargetTo(State.Card.Diajector.GetLerpTarget(State.Card, State.TargetIndex), State.TargetIndex > 0 ? KeepMovingBackward : null);
 		}
 		
@@ -38,6 +39,7 @@ namespace SBEPIS.Capturellection.CardState
 		
 		protected override void OnExit()
 		{
+			Debug.Log("Cancelled");
 			State.Card.Animator.Cancel();
 		}
 	}
