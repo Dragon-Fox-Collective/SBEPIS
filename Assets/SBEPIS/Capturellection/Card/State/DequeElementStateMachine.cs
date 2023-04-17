@@ -11,14 +11,21 @@ namespace SBEPIS.Capturellection.CardState
 	{
 		[SerializeField, Self] private DequeElement card;
 		public DequeElement Card => card;
+		
 		public DequeBox DequeBox => Card.Deque.GetComponent<DequeBox>();
+		
 		[SerializeField, Self(Flag.Optional)] private InventoryStorableCaptureLayoutAdder layoutAdder;
 		[MaybeNull] public InventoryStorableCaptureLayoutAdder LayoutAdder => layoutAdder;
+
+		[SerializeField, Self(Flag.Optional)] private new Rigidbody rigidbody;
+		public Rigidbody Rigidbody => rigidbody;
+		
 		[SerializeField, Anywhere] private StrengthSettings cardStrength;
 		public StrengthSettings CardStrength => cardStrength;
+		
 		[SerializeField, Anywhere] private ElectricArc electricArcPrefab;
 		public ElectricArc ElectricArcPrefab => electricArcPrefab;
-		
+
 		private void OnValidate() => this.ValidateRefs();
 		
 		private static readonly int IsGrabbedKey = Animator.StringToHash("Is Grabbed");

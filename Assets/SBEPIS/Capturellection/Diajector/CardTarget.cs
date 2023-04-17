@@ -1,5 +1,6 @@
 using System;
 using KBCore.Refs;
+using SBEPIS.Controller;
 using SBEPIS.Physics;
 using SBEPIS.UI;
 using SBEPIS.Utils;
@@ -23,12 +24,23 @@ namespace SBEPIS.Capturellection
 		public UnityEvent onPrepareCard = new();
 		public UnityEvent onGrab = new();
 		public UnityEvent onDrop = new();
-		
-		public DequeElement Card { get; set; }
+
+		private DequeElement card;
+		private Grabbable cardGrabbable;
+		public DequeElement Card
+		{
+			get => card;
+			set
+			{
+				card = value;
+				cardGrabbable = card.GetComponent<Grabbable>();
+			}
+		}
 
 		public void DropTargettingCard()
 		{
-			Card.Grabbable.Drop();
+			if (cardGrabbable)
+				cardGrabbable.Drop();
 		}
 
 		public void AttachToTarget(LerpTargetAnimator animator)

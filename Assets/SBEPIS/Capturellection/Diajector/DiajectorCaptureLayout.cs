@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using KBCore.Refs;
+using SBEPIS.Controller;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -99,7 +100,7 @@ namespace SBEPIS.Capturellection
 			foreach (InventoryStorable card in inventory.Where(card => !targets.ContainsKey(card)))
 			{
 				CardTarget target = AddPermanentTargetAndCard(card);
-				if (card.DequeElement.Grabbable.IsBeingHeld)
+				if (card.TryGetComponent(out Grabbable grabbable) && grabbable.IsBeingHeld)
 				{
 					card.DequeElement.Animator.SetPausedAt(target.LerpTarget);
 					target.onGrab.Invoke();
