@@ -10,7 +10,7 @@ namespace SBEPIS.Capturellection.CardState
 		
 		protected override void OnEnter()
 		{
-			State.TargetIndex = index >= 0 ? index : State.Card.Diajector.LerpTargetCount + index;
+			State.TargetIndex = index >= 0 ? index : State.Card.Diajector.LerpTargetCount + index - 1;
 		}
 	}
 }

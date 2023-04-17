@@ -895,10 +895,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diajector: {fileID: 3804022167782729142}
   pageCreator: {fileID: 5959904091548033328}
-  onPreparePagePre:
+  onPrepareCardCreation:
     m_PersistentCalls:
       m_Calls: []
-  onPreparePagePost:
+  onPreparePage:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &4540043566352774758
@@ -1042,6 +1042,7 @@ GameObject:
   - component: {fileID: 8549242687996600689}
   - component: {fileID: 4582897949649126844}
   - component: {fileID: 5970685025260058276}
+  - component: {fileID: 8299702633450876298}
   m_Layer: 0
   m_Name: In Deque Target
   m_TagString: Untagged
@@ -1113,7 +1114,20 @@ MonoBehaviour:
         m_CallState: 2
   onMoveTo:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8299702633450876298}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.LerpTargetCardAssemblingStateUnsetter,
+          SBEPIS.Capturellection
+        m_MethodName: UnsetIsAssemblingAndIsDisassembling
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5970685025260058276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1127,6 +1141,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherTarget: {fileID: 3710867468495898251}
+--- !u!114 &8299702633450876298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6484885594307091278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03786f22f7dd493f8ef41cc88ee66d27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6549942791269551679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,10 +1319,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diajector: {fileID: 3804022167782729142}
   pageCreator: {fileID: 5959904091548033328}
-  onPreparePagePre:
+  onPrepareCardCreation:
     m_PersistentCalls:
       m_Calls: []
-  onPreparePagePost:
+  onPreparePage:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8758272400139746450}
