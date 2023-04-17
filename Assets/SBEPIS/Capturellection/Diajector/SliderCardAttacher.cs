@@ -1,4 +1,6 @@
+using System;
 using KBCore.Refs;
+using SBEPIS.Controller;
 using SBEPIS.UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -34,13 +36,16 @@ namespace SBEPIS.Capturellection
 		
 		public void Attach(DequeElement card)
 		{
+			if (!card.TryGetComponent(out Grabbable grabbable))
+				throw new NullReferenceException($"Card {card} has no grabbable");
+			
 			slider = card.gameObject.AddComponent<SliderCard>();
 			slider.startPoint = startPoint;
 			slider.endPoint = endPoint;
 			slider.target = cardTarget;
 			slider.SliderValue = sliderValue;
 			slider.onSliderValueChanged = onSliderValueChanged;
-			card.Grabbable.onDrop.AddListener((_, _) => slider.ClampNewPosition());
+			grabbable.onDrop.AddListener((_, _) => slider.ClampNewPosition());
 		}
 	}
 }
