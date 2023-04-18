@@ -13,7 +13,6 @@ namespace SBEPIS.Capturellection.CardState
 			if (!target)
 				return;
 			
-			State.Card.Animator.TeleportTo(target);
 			if (State.Rigidbody)
 				CreateTargetter(target);
 		}

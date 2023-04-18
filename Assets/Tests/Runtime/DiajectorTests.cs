@@ -54,6 +54,7 @@ namespace SBEPIS.Tests
 		public IEnumerator ClosingDiajector_GetsCardToDeque()
 		{
 			Scene.diajector1.ForceOpen();
+			yield return 0;
 			Scene.diajector1.StartDisassembly();
 			
 			bool reached = false;
@@ -84,6 +85,32 @@ namespace SBEPIS.Tests
 			Scene.diajector1.ForceOpen();
 			Scene.diajector1.ForceRestart();
 			Assert.That(Scene.diajector1.IsOpen);
+		}
+		
+		[UnityTest]
+		public IEnumerator ForceOpeningDiajector_GetsCardToBoard()
+		{
+			Scene.diajector1Page.CreateCardsIfNeeded();
+			
+			bool reached = false;
+			Scene.cardTarget.Card.Animator.AddListenerOnMoveTo(Scene.endCardTarget, _ => reached = true);
+			Scene.diajector1.ForceOpen();
+			yield return 0;
+			Assert.That(reached);
+		}
+		
+		[UnityTest]
+		public IEnumerator ForceClosingDiajector_GetsCardToDeque()
+		{
+			Scene.diajector1Page.CreateCardsIfNeeded();
+			Scene.diajector1.ForceOpen();
+			yield return 0;
+			
+			bool reached = false;
+			Scene.cardTarget.Card.Animator.AddListenerOnMoveTo(Scene.startCardTarget, _ => reached = true);
+			Scene.diajector1.ForceClose();
+			yield return 0;
+			Assert.That(reached);
 		}
 		
 		[Test]
