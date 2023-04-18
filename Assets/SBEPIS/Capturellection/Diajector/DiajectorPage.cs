@@ -63,7 +63,7 @@ namespace SBEPIS.Capturellection
 				card.State.IsPageOpen = false;
 		}
 		
-		private void CreateCardsIfNeeded()
+		public void CreateCardsIfNeeded()
 		{
 			if (!pageCreator || hasCreatedCards)
 				return;

@@ -10,7 +10,25 @@ namespace SBEPIS.Capturellection.CardState
 		
 		protected override void OnEnter()
 		{
-			State.TargetIndex = index >= 0 ? index : State.Card.Diajector.LerpTargetCount + index - 1;
+			int finalTargetIndex = index >= 0 ? index : State.Card.Diajector.LerpTargetCount + index - 1;
+			if (finalTargetIndex > State.TargetIndex)
+				CountUp(finalTargetIndex);
+			else if (finalTargetIndex < State.TargetIndex)
+				CountDown(finalTargetIndex);
+		}
+		
+		private void CountUp(int finalTargetIndex)
+		{
+			for (; State.TargetIndex < finalTargetIndex; State.TargetIndex++)
+				State.Card.Animator.TeleportTo(State.Card.Diajector.GetLerpTarget(State.Card, State.TargetIndex + 1));
+			State.Card.Animator.TeleportTo(State.Card.Diajector.GetLerpTarget(State.Card, State.TargetIndex + 1));
+		}
+		
+		private void CountDown(int finalTargetIndex)
+		{
+			for (; State.TargetIndex > finalTargetIndex; State.TargetIndex--)
+				State.Card.Animator.TeleportTo(State.Card.Diajector.GetLerpTarget(State.Card, State.TargetIndex));
+			State.Card.Animator.TeleportTo(State.Card.Diajector.GetLerpTarget(State.Card, State.TargetIndex));
 		}
 	}
 }
