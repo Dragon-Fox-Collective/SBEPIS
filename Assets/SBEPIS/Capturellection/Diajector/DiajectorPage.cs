@@ -51,9 +51,9 @@ namespace SBEPIS.Capturellection
 		{
 			gameObject.SetActive(true);
 			CreateCardsIfNeeded();
+			onPreparePage.Invoke();
 			foreach ((DequeElement card, CardTarget _) in cardTargets)
 				card.State.IsPageOpen = true;
-			onPreparePage.Invoke();
 		}
 		
 		private void PrepareClosingPage()
