@@ -1,31 +1,33 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using SBEPIS.Physics;
-using SBEPIS.UI;
+using KBCore.Refs;
 using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
 	public class Diajector : MonoBehaviour
 	{
-		public Deque deque;
-		public LerpTarget startTarget;
-		public LerpTarget upperTarget;
-		[FormerlySerializedAs("cardPrefab")]
-		public DequeElement menuCardPrefab;
-		public ElectricArc electricArcPrefab;
-		public DiajectorPage mainPage;
-		public float cardDelay = 0.5f;
+		[SerializeField, Anywhere] private DiajectorPage mainPage;
 		
-		public Rigidbody staticRigidbody;
-		public MonoBehaviour coroutineOwner;
-		public StrengthSettings cardStrength;
-
+		[SerializeField, Anywhere] private MonoBehaviour coroutineOwner;
+		public MonoBehaviour CoroutineOwner => coroutineOwner;
+		
+		[SerializeField, Anywhere] private Rigidbody staticRigidbody;
+		public Rigidbody StaticRigidbody => staticRigidbody;
+		
+		[SerializeField] private float cardDelay = 0.5f;
+		public float CardDelay => cardDelay;
+		
+		[Tooltip("Ordered from deque to diajector")]
+		[SerializeField] private List<LerpTarget> lerpTargets = new();
+		
 		public UnityEvent<Diajector> onOpen = new();
 		public UnityEvent<Diajector> onClose = new();
-
+		
+		private void OnValidate() => this.ValidateRefs();
+		
 		private DiajectorPage currentPage;
 		
 		public bool IsOpen => currentPage;
@@ -56,14 +58,12 @@ namespace SBEPIS.Capturellection
 			AssembleNewPage(page);
 		}
 		
-		public UnityAction ChangePageAction(DiajectorPage page) => () => ChangePage(page);
-		
 		private void AssembleNewPage(DiajectorPage page)
 		{
 			currentPage = page;
-			currentPage.StartAssembly(this);
+			currentPage.StartAssembly();
 		}
-
+		
 		private void ForceOpenCurrentPage()
 		{
 			if (!currentPage)
@@ -101,7 +101,7 @@ namespace SBEPIS.Capturellection
 			gameObject.SetActive(false);
 			onClose.Invoke(this);
 		}
-
+		
 		public void ForceOpen()
 		{
 			gameObject.SetActive(true);
@@ -125,6 +125,7 @@ namespace SBEPIS.Capturellection
 		public bool ShouldCardBeDisplayed(DequeElement card) => IsOpen && currentPage.HasCard(card);
 		
 		public LerpTarget GetLerpTarget(DequeElement card) => currentPage ? currentPage.GetLerpTarget(card) : null;
-		public CardTarget GetCardTarget(DequeElement card) => currentPage ? currentPage.GetCardTarget(card) : null;
+		public LerpTarget GetLerpTarget(DequeElement card, int index) => index >= 0 && index < lerpTargets.Count ? lerpTargets[index] : index == lerpTargets.Count ? GetLerpTarget(card) : null;
+		public int LerpTargetCount => lerpTargets.Count + 1;
 	}
 }

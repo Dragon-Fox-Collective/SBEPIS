@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a005382acfc953b439367455b564cfda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diajector: {fileID: 3804022167782729142}
+  pageCreator: {fileID: 5959904091548033328}
   page: {fileID: 2123154491108635258}
   inventory: {fileID: 6903258535003904210}
   cardTargetPrefab: {fileID: 914007334191890185, guid: 1c8bc15bcd83611459142f20ba433cd1, type: 3}
@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 5208308913794962245}
   - component: {fileID: 794011591104983090}
   - component: {fileID: 8861645846908499660}
+  - component: {fileID: 5421820912069157455}
   m_Layer: 0
   m_Name: Capture Deque
   m_TagString: Untagged
@@ -253,7 +254,7 @@ Transform:
   - {fileID: 8549242687996600689}
   - {fileID: 8534325952982911961}
   - {fileID: 8006296053656010732}
-  m_Father: {fileID: 2401147341451707404}
+  m_Father: {fileID: 6318976731672604005}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &175942695251901053
@@ -289,12 +290,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834066343270ba147b47a2957044d46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lowerTarget: {fileID: 4582897949649126844}
-  upperTarget: {fileID: 3710867468495898251}
   deque: {fileID: 6518269390508492605}
   state: {fileID: 247446822995151989}
   gravitySum: {fileID: 2407877750667227432}
   rigidbody: {fileID: 6008107129270263796}
+  onToss:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 794011591104983090}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.CollisionTrigger, SBEPIS.Utils
+        m_MethodName: StartPrime
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onRetrieve:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 794011591104983090}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.CollisionTrigger, SBEPIS.Utils
+        m_MethodName: CancelPrime
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onBindToPlayer:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8861645846908499660}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBoxDiajectorOpener,
+          SBEPIS.Capturellection
+        m_MethodName: BindToPlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5494029080115591883}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.MenuActions, SBEPIS.Capturellection
+        m_MethodName: BindToPlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1931767223625537507}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeCapturellectorInventorySetter,
+          SBEPIS.Capturellection
+        m_MethodName: BindToPlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1152362718473556953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,10 +396,6 @@ MonoBehaviour:
       bits: []
     itemModule: {fileID: 0}
     material: {fileID: 0}
-  _bits:
-    _bits:
-      bits: []
-    _tags: []
   replaceObject: {fileID: 0}
   aeratedAttachmentPoint: {fileID: 0}
 --- !u!54 &6008107129270263796
@@ -404,34 +470,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 5494029080115591883}
-        m_TargetAssemblyTypeName: SBEPIS.Capturellection.MenuActions, SBEPIS.Capturellection
-        m_MethodName: BindToPlayer
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 8861645846908499660}
-        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBoxDiajectorOpener,
-          SBEPIS.Capturellection
-        m_MethodName: BindToPlayer
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1931767223625537507}
-        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeCapturellectorInventorySetter,
-          SBEPIS.Capturellection
+      - m_Target: {fileID: 2881546114347202315}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBox, SBEPIS.Capturellection
         m_MethodName: BindToPlayer
         m_Mode: 0
         m_Arguments:
@@ -525,9 +565,48 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 247446822995151989}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeState.DequeBoxStateMachine,
+          SBEPIS.Capturellection
+        m_MethodName: set_IsCoupled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onDecouple:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 247446822995151989}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeState.DequeBoxStateMachine,
+          SBEPIS.Capturellection
+        m_MethodName: set_IsCoupled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 247446822995151989}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeState.DequeBoxStateMachine,
+          SBEPIS.Capturellection
+        m_MethodName: set_IsDeployed
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &8240858955068512668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,7 +711,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
+      time: 0.3
       value: 1
       inSlope: 0
       outSlope: 0
@@ -686,6 +765,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dequeBox: {fileID: 2881546114347202315}
   diajector: {fileID: 3804022167782729142}
+--- !u!114 &5421820912069157455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745641617843763313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ad76ab59557dd44db98872af0ea05d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  module: {fileID: 4198122293244636055}
 --- !u!1 &2872801326167708617
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,6 +788,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7290926607632935990}
   - component: {fileID: 3804022167782729142}
+  - component: {fileID: 5959904091548033328}
   m_Layer: 0
   m_Name: Diajector
   m_TagString: Untagged
@@ -710,13 +803,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2872801326167708617}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4340337778197787554}
-  m_Father: {fileID: 1720828029914221003}
+  m_Father: {fileID: 6318976731672604005}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3804022167782729142
@@ -731,22 +824,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d00b0cf08b2be42b94e48c15a25370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deque: {fileID: 6518269390508492605}
-  startTarget: {fileID: 4582897949649126844}
-  upperTarget: {fileID: 2094737243974216280}
-  menuCardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
-  electricArcPrefab: {fileID: 7962134878051775022, guid: bd0964b77b3f6f0459fc55699ed10fd6, type: 3}
   mainPage: {fileID: 2123154491108635258}
-  cardDelay: 0.1
-  staticRigidbody: {fileID: 3798306875382306503}
   coroutineOwner: {fileID: 8856617430227243949}
-  cardStrength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
+  staticRigidbody: {fileID: 3798306875382306503}
+  cardDelay: 0.1
+  lerpTargets:
+  - {fileID: 4582897949649126844}
+  - {fileID: 3710867468495898251}
+  - {fileID: 2094737243974216280}
   onOpen:
     m_PersistentCalls:
       m_Calls: []
   onClose:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5959904091548033328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2872801326167708617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332c7de293c64c8e89fc14bb651f19d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuCardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
+  deque: {fileID: 6518269390508492605}
+  startTarget: {fileID: 4582897949649126844}
+  cardParent: {fileID: 7586382662599050666}
 --- !u!1 &3973130256352618454
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,7 +901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deque: {fileID: 6518269390508492605}
   initialCardPrefab: {fileID: 6379177909321711626, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
-  initialCardCount: 0
+  initialCardCount: 5
   cardParent: {fileID: 7586382662599050666}
   onLoadIntoDeque:
     m_PersistentCalls:
@@ -881,10 +988,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8fb9d5b878ca534bb3ebb13730f545e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onPreparePagePre:
+  diajector: {fileID: 3804022167782729142}
+  pageCreator: {fileID: 5959904091548033328}
+  onPrepareCardCreation:
     m_PersistentCalls:
       m_Calls: []
-  onPreparePagePost:
+  onPreparePage:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &4540043566352774758
@@ -970,40 +1079,6 @@ MonoBehaviour:
   ruleset: {fileID: 0}
   maxStorables: 128
   subdefinition: {fileID: 0}
---- !u!1 &5191498679670991961
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1720828029914221003}
-  m_Layer: 0
-  m_Name: Diajector Component
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1720828029914221003
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5191498679670991961}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1939018737668684777}
-  - {fileID: 5620259053936149180}
-  - {fileID: 7290926607632935990}
-  m_Father: {fileID: 6318976731672604005}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5374268605819546265
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,7 +1108,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1720828029914221003}
+  m_Father: {fileID: 6318976731672604005}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5494029080115591883
@@ -1051,39 +1126,6 @@ MonoBehaviour:
   sensitivitySlider: {fileID: 5197862855564449554}
   mouseSensitivityMin: 0.01
   mouseSensitivityMax: 0.7
---- !u!1 &5526712239826483371
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2401147341451707404}
-  m_Layer: 0
-  m_Name: Capture Deque Component
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2401147341451707404
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5526712239826483371}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7586382662599050666}
-  - {fileID: 9143523999061029096}
-  m_Father: {fileID: 6318976731672604005}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6484885594307091278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,8 +1137,9 @@ GameObject:
   - component: {fileID: 8549242687996600689}
   - component: {fileID: 4582897949649126844}
   - component: {fileID: 5970685025260058276}
+  - component: {fileID: 8299702633450876298}
   m_Layer: 0
-  m_Name: Lower Target
+  m_Name: In Deque Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1166,7 +1209,20 @@ MonoBehaviour:
         m_CallState: 2
   onMoveTo:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8299702633450876298}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.LerpTargetCardAssemblingStateUnsetter,
+          SBEPIS.Capturellection
+        m_MethodName: UnsetIsAssemblingAndIsDisassembling
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5970685025260058276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1180,6 +1236,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherTarget: {fileID: 3710867468495898251}
+--- !u!114 &8299702633450876298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6484885594307091278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03786f22f7dd493f8ef41cc88ee66d27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6549942791269551679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,7 +1259,7 @@ GameObject:
   - component: {fileID: 8534325952982911961}
   - component: {fileID: 3710867468495898251}
   m_Layer: 0
-  m_Name: Upper Target
+  m_Name: Above Deque Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1247,7 +1315,7 @@ GameObject:
   - component: {fileID: 2132628661781673024}
   - component: {fileID: 2094737243974216280}
   m_Layer: 0
-  m_Name: Upper Target
+  m_Name: Above Diajector Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1344,10 +1412,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8fb9d5b878ca534bb3ebb13730f545e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onPreparePagePre:
+  diajector: {fileID: 3804022167782729142}
+  pageCreator: {fileID: 5959904091548033328}
+  onPrepareCardCreation:
     m_PersistentCalls:
       m_Calls: []
-  onPreparePagePost:
+  onPreparePage:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8758272400139746450}
@@ -1387,12 +1457,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7615224927183013901}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1720828029914221003}
+  m_Father: {fileID: 6318976731672604005}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &3798306875382306503
@@ -1462,8 +1532,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2401147341451707404}
-  - {fileID: 1720828029914221003}
+  - {fileID: 5620259053936149180}
+  - {fileID: 1939018737668684777}
+  - {fileID: 7586382662599050666}
+  - {fileID: 9143523999061029096}
+  - {fileID: 7290926607632935990}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1495,7 +1568,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2401147341451707404}
+  m_Father: {fileID: 6318976731672604005}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8940583319301165920
@@ -1809,6 +1882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deque: {fileID: 6518269390508492605}
   diajector: {fileID: 3804022167782729142}
+  backPage: {fileID: 2123154491108635258}
   settingsPagePrefab: {fileID: 8545667152632050241, guid: 1cce4ef865a9952458f391310621eb1b, type: 3}
 --- !u!114 &6911213214757733983 stripped
 MonoBehaviour:

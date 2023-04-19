@@ -1,27 +1,26 @@
 using SBEPIS.Bits;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Items
 {
 	public class ItemModule : MonoBehaviour
 	{
 		public TaggedBitSetFactory baseBits;
-		[SerializeField]
-		[HideInInspector]
-		private TaggedBitSet _bits;
+		private TaggedBitSet bits;
 		private bool madeBits;
-		public TaggedBitSet bits {
+		public TaggedBitSet Bits {
 			get
 			{
 				if (!madeBits)
 				{
 					if (baseBits is not null)
-						_bits = baseBits.Make();
+						bits = baseBits.Make();
 					madeBits = true;
 				}
-				return _bits;
+				return bits;
 			}
-			set => _bits = value;
+			set => bits = value;
 		}
 		
 		public Transform replaceObject;
@@ -34,21 +33,19 @@ namespace SBEPIS.Items
 		
 		public bool BecomeItem()
 		{
-			if (!GetComponentInParent<Item>())
-			{
-				Item item = Instantiate(ItemModuleManager.instance.itemBase, transform.parent);
-				item.transform.SetPositionAndRotation(transform.position, transform.rotation);
-				transform.SetParent(item.transform, true);
-				item.name = name;
-				return true;
-			}
-			else
+			if (GetComponentInParent<Item>())
 				return false;
+			
+			Item item = Instantiate(ItemModuleManager.instance.itemBase, transform.parent);
+			item.transform.SetPositionAndRotation(transform.position, transform.rotation);
+			transform.SetParent(item.transform, true);
+			item.name = name;
+			return true;
 		}
 		
 		public override string ToString()
 		{
-			return $"{name}{{{bits}}}";
+			return $"{name}{{{Bits}}}";
 		}
 		
 		private void OnValidate()
