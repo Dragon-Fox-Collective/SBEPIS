@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using KBCore.Refs;
 using UnityEngine;
 
@@ -44,7 +45,7 @@ namespace SBEPIS.Controller
 		
 		public void Drop()
 		{
-			grabbingGrabbers.ForEach(grabber => grabber.Drop());
+			grabbingGrabbers.ToList().ForEach(grabber => grabber.Drop());
 		}
 	}
 }
