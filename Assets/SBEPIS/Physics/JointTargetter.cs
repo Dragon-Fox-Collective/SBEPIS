@@ -1,16 +1,11 @@
-using KBCore.Refs;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class JointTargetter : MonoBehaviour
 	{
-		[SerializeField, Self]
-		private new Rigidbody rigidbody;
-		
-		private void OnValidate() => this.ValidateRefs();
+		[SerializeField] private new Rigidbody rigidbody;
 		
 		public Rigidbody connectedBody;
 		
@@ -27,10 +22,15 @@ namespace SBEPIS.Physics
 		
 		private Vector3 prevTargetPosition;
 		private Quaternion prevTargetRotation;
-
+		
 		private Vector3 initialTensor;
 		private Quaternion initialTensorRotation;
-
+		
+		private void Awake()
+		{
+			rigidbody = GetComponent<Rigidbody>();
+		}
+		
 		private void Start()
 		{
 			Vector3 thisInitialPosition = rigidbody.position;
