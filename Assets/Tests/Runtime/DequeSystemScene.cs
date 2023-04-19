@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using KBCore.Refs;
 using SBEPIS.Capturellection;
 using SBEPIS.Controller;
@@ -15,7 +16,8 @@ namespace SBEPIS.Tests.Scenes
 		[Anywhere] public CollisionTrigger dequeBoxTrigger;
 		[Anywhere] public Transform dropPoint;
 		[Anywhere] public Inventory inventory;
-		
+		public List<CardTarget> cardTargets = new();
+
 		private void OnValidate() => this.ValidateRefs();
 	}
 }
