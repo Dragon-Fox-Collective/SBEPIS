@@ -1,22 +1,18 @@
 using System;
-using SBEPIS.Controller;
-using System.Collections.Generic;
 using KBCore.Refs;
 using SBEPIS.Capturellection.CardState;
 using SBEPIS.Utils;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
-	[RequireComponent(typeof(Grabbable), typeof(LerpTargetAnimator), typeof(DequeElementStateMachine))]
+	[RequireComponent(typeof(LerpTargetAnimator), typeof(DequeElementStateMachine))]
 	public class DequeElement : MonoBehaviour
 	{
-		[SerializeField, Self] private Grabbable grabbable;
-		public Grabbable Grabbable => grabbable;
 		[SerializeField, Self] private DequeElementStateMachine state;
 		public DequeElementStateMachine State => state;
+		
 		[SerializeField, Self] private LerpTargetAnimator animator;
 		public LerpTargetAnimator Animator => animator;
 		
@@ -48,6 +44,7 @@ namespace SBEPIS.Capturellection
 				diajector = value;
 			}
 		}
+		
 		public bool ShouldBeDisplayed => diajector.ShouldCardBeDisplayed(this);
 	}
 }

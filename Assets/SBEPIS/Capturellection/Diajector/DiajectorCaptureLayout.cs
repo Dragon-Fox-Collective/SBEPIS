@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using KBCore.Refs;
+using SBEPIS.Controller;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,10 +10,8 @@ namespace SBEPIS.Capturellection
 {
 	public class DiajectorCaptureLayout : MonoBehaviour
 	{
-		[SerializeField, Parent(Flag.IncludeInactive)]
-		private Diajector diajector;
-		[SerializeField, Parent(Flag.IncludeInactive)]
-		private DiajectorPage page;
+		[SerializeField, Parent(Flag.IncludeInactive)] private DiajectorPageCreator pageCreator;
+		[SerializeField, Parent(Flag.IncludeInactive)] private DiajectorPage page;
 		
 		private void OnValidate() => this.ValidateRefs();
 		
@@ -76,7 +75,7 @@ namespace SBEPIS.Capturellection
 		{
 			CardTarget target = HasTemporaryTarget(card) ? targets[card] : AddTemporaryTarget(card);
 			page.AddCard(card.DequeElement, target);
-			diajector.startTarget.onMoveFrom.Invoke(card.DequeElement.Animator);
+			pageCreator.StartTarget.onMoveFrom.Invoke(card.DequeElement.Animator);
 			return target;
 		}
 		
@@ -101,14 +100,14 @@ namespace SBEPIS.Capturellection
 			foreach (InventoryStorable card in inventory.Where(card => !targets.ContainsKey(card)))
 			{
 				CardTarget target = AddPermanentTargetAndCard(card);
-				if (card.DequeElement.Grabbable.IsBeingHeld)
+				if (card.TryGetComponent(out Grabbable grabbable) && grabbable.IsBeingHeld)
 				{
 					card.DequeElement.Animator.SetPausedAt(target.LerpTarget);
 					target.onGrab.Invoke();
 				}
 				else
 				{
-					card.DequeElement.Animator.TeleportTo(diajector.startTarget);
+					card.DequeElement.Animator.TeleportTo(pageCreator.StartTarget);
 				}
 			}
 		}

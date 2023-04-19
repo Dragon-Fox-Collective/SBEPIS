@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using SBEPIS.Capturellection;
 using SBEPIS.Utils;
 using SBEPIS.Tests.Scenes;
 using UnityEngine;
@@ -56,6 +58,24 @@ namespace SBEPIS.Tests
 		{
 			Scene.diajector.StartAssembly(null, Vector3.zero, Quaternion.identity);
 			Assert.That(Scene.inventory.First().DequeElement.Diajector);
+		}
+
+		[UnityTest]
+		public IEnumerator OpeningDiajector_LaysOutCards()
+		{
+			Assert.That(Scene.cardTargets.Count, Is.GreaterThan(0));
+			
+			Scene.diajector.StartAssembly(null, Vector3.zero, Quaternion.identity);
+			
+			Dictionary<CardTarget, bool> reached = new();
+			foreach (CardTarget cardTarget in Scene.cardTargets)
+			{
+				reached[cardTarget] = false;
+				cardTarget.Card.Animator.AddListenerOnMoveTo(cardTarget.LerpTarget, _ => reached[cardTarget] = true);
+			}
+			Assert.That(reached.Any(pair => pair.Value), Is.False);
+			yield return new WaitUntilOrTimeout(() => reached.All(pair => pair.Value), 3);
+			Assert.That(reached.All(pair => pair.Value), Is.True);
 		}
 	}
 }

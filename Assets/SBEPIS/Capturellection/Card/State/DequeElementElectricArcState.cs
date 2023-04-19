@@ -10,13 +10,13 @@ namespace SBEPIS.Capturellection.CardState
 		
 		protected abstract Transform Point { get; }
 		
-		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		protected override void OnEnter()
 		{
-			arc = Instantiate(State.Card.Diajector.electricArcPrefab, Point);
+			arc = Instantiate(State.ElectricArcPrefab, Point);
 			arc.otherPoint = State.Card.transform;
 		}
 		
-		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		protected override void OnExit()
 		{
 			Destroy(arc);
 		}

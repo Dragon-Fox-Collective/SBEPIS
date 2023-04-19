@@ -19,7 +19,7 @@ namespace SBEPIS.Controller
 		
 		public CouplingSocket CoupledSocket { get; private set; }
 		
-		public void GetCoupled(CouplingSocket socket)
+		public void OnCoupled(CouplingSocket socket)
 		{
 			if (IsCoupled)
 			{
@@ -35,7 +35,7 @@ namespace SBEPIS.Controller
 			onCouple.Invoke(this, CoupledSocket);
 		}
 		
-		public void GetDecoupled()
+		public void OnDecoupled()
 		{
 			if (!IsCoupled)
 			{

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7933075258843950224}
   - component: {fileID: 914007334191890185}
   - component: {fileID: 8562261679961323365}
+  - component: {fileID: 7378872995284408966}
   m_Layer: 6
   m_Name: Card Target
   m_TagString: Untagged
@@ -50,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa61bd48a892d2948a3bb8455d3da060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label: 
+  lerpTarget: {fileID: 8562261679961323365}
   onCardBound:
     m_PersistentCalls:
       m_Calls: []
@@ -111,3 +112,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7378872995284408966}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.LerpTargetCardAssemblingStateUnsetter,
+          SBEPIS.Capturellection
+        m_MethodName: UnsetIsAssemblingAndIsDisassembling
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7378872995284408966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7770716162754255256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03786f22f7dd493f8ef41cc88ee66d27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
