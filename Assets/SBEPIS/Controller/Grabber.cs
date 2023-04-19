@@ -25,12 +25,13 @@ namespace SBEPIS.Controller
 		public float shortRangeGrabDistace = 1;
 
 		public Orientation playerOrientation;
-
+		
 		public GrabEvent onGrab = new();
 		public ColliderGrabEvent onGrabCollider = new();
+		public GrabEvent onUse = new();
 		public GrabEvent onDrop = new();
 		public ColliderGrabEvent onDropCollider = new();
-
+		
 		public bool CanGrab { get; set; } = true;
 		
 		private bool overrideShortRangeGrab;
@@ -289,7 +290,8 @@ namespace SBEPIS.Controller
 		{
 			if (!HeldGrabbable)
 				return;
-
+			
+			onUse.Invoke(this, HeldGrabbable);
 			HeldGrabbable.onUse.Invoke(this, HeldGrabbable);
 		}
 	}

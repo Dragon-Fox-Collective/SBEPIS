@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 5208308913794962245}
   - component: {fileID: 794011591104983090}
   - component: {fileID: 8861645846908499660}
+  - component: {fileID: 5421820912069157455}
   m_Layer: 0
   m_Name: Capture Deque
   m_TagString: Untagged
@@ -293,6 +294,36 @@ MonoBehaviour:
   state: {fileID: 247446822995151989}
   gravitySum: {fileID: 2407877750667227432}
   rigidbody: {fileID: 6008107129270263796}
+  onToss:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 794011591104983090}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.CollisionTrigger, SBEPIS.Utils
+        m_MethodName: StartPrime
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onRetrieve:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 794011591104983090}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.CollisionTrigger, SBEPIS.Utils
+        m_MethodName: CancelPrime
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1152362718473556953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,10 +355,6 @@ MonoBehaviour:
       bits: []
     itemModule: {fileID: 0}
     material: {fileID: 0}
-  _bits:
-    _bits:
-      bits: []
-    _tags: []
   replaceObject: {fileID: 0}
   aeratedAttachmentPoint: {fileID: 0}
 --- !u!54 &6008107129270263796
@@ -523,9 +550,48 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 247446822995151989}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeState.DequeBoxStateMachine,
+          SBEPIS.Capturellection
+        m_MethodName: set_IsCoupled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onDecouple:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 247446822995151989}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeState.DequeBoxStateMachine,
+          SBEPIS.Capturellection
+        m_MethodName: set_IsCoupled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 247446822995151989}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeState.DequeBoxStateMachine,
+          SBEPIS.Capturellection
+        m_MethodName: set_IsDeployed
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &8240858955068512668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,7 +696,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.5
+      time: 0.3
       value: 1
       inSlope: 0
       outSlope: 0
@@ -684,6 +750,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dequeBox: {fileID: 2881546114347202315}
   diajector: {fileID: 3804022167782729142}
+--- !u!114 &5421820912069157455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745641617843763313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ad76ab59557dd44db98872af0ea05d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  module: {fileID: 4198122293244636055}
 --- !u!1 &2872801326167708617
 GameObject:
   m_ObjectHideFlags: 0

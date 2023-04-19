@@ -1,3 +1,4 @@
+using KBCore.Refs;
 using SBEPIS.Controller;
 using SBEPIS.Utils;
 using UnityEngine;
@@ -7,20 +8,27 @@ namespace SBEPIS.Capturellection
 {
 	public class DequeBoxOwner : MonoBehaviour
 	{
-		public LerpTarget lerpTarget;
-		public CouplingSocket socket;
+		[SerializeField, Self] private LerpTarget lerpTarget;
+		public LerpTarget LerpTarget => lerpTarget;
 		
-		public Transform tossTarget;
-		[Tooltip("Height above the hand the deque should toss through, must be non-negative")]
-		public float tossHeight;
+		[SerializeField, Self] private CouplingSocket socket;
+		public CouplingSocket Socket => socket;
+		
+		[SerializeField, Anywhere] private Transform tossTarget;
+		public Transform TossTarget => tossTarget;
+		
+		[Tooltip("Height above the hand the deque should toss through")]
+		[SerializeField] private float tossHeight;
+		public float TossHeight => tossHeight;
 		
 		private DequeBox dequeBox;
 		
 		private bool IsDequeBoxDeployed => dequeBox && dequeBox.IsDeployed;
 		
-		private void Awake()
+		private void OnValidate()
 		{
-			socket.onDecouple.AddListener(SetDequeBoxDecoupledState);
+			this.ValidateRefs();
+			tossHeight = Mathf.Max(tossHeight, 0);
 		}
 		
 		private void Start()
@@ -44,12 +52,11 @@ namespace SBEPIS.Capturellection
 				dequeBox.TossDeque(this);
 		}
 		
-		private static void SetDequeBoxDecoupledState(CouplingPlug plug, CouplingSocket socket) => plug.GetComponent<DequeBox>().SetDecoupledState();
-		
 		public void SetDequeBox(Grabber grabber, Grabbable grabbable)
 		{
 			if (!grabbable.TryGetComponent(out DequeBox newDequeBox))
 				return;
+			
 			dequeBox = newDequeBox;
 		}
 	}
