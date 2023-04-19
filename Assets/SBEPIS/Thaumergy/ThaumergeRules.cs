@@ -32,7 +32,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 	{
 		public override bool ApplyOnce(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
-			if (item.bits.tags.Any(member => member is BaseModelTag))
+			if (item.Bits.tags.Any(member => member is BaseModelTag))
 				return false;
 
 			if (bits.tags.FirstOrDefault(member => member is BaseModelTag) is not BaseModelTag tag)
@@ -43,8 +43,8 @@ namespace SBEPIS.Bits.ThaumergeRules
 			module.transform.Replace(item.replaceObject);
 			item.replaceObject = module.replaceObject;
 
-			item.bits |= module.bits.bits;
-			item.bits += tag;
+			item.Bits |= module.Bits.bits;
+			item.Bits += tag;
 
 			return true;
 		}
@@ -72,7 +72,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 	{
 		public override bool Apply(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
-			if (bits.bits == item.bits.bits)
+			if (bits.bits == item.Bits.bits)
 				return false;
 			
 			ItemModule modulePrefab = GetModulePrefabFromScore(bits, item, modules);
@@ -92,9 +92,9 @@ namespace SBEPIS.Bits.ThaumergeRules
 			int moduleScore = int.MinValue;
 			foreach (ItemModule newModule in modules.modules)
 			{
-				if (bits.Has(newModule.bits.bits) && !item.bits.Has(newModule.bits.bits))
+				if (bits.Has(newModule.Bits.bits) && !item.Bits.Has(newModule.Bits.bits))
 				{
-					int newModuleScore = BitSet.GetUniquenessScore(item.bits.bits, newModule.bits.bits);
+					int newModuleScore = BitSet.GetUniquenessScore(item.Bits.bits, newModule.Bits.bits);
 					if (newModuleScore > moduleScore)
 					{
 						module = newModule;
@@ -109,7 +109,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 		{
 			module.transform.Replace(item.replaceObject);
 			item.replaceObject = module.replaceObject;
-			item.bits |= module.bits.bits;
+			item.Bits |= module.Bits.bits;
 		}
 	}
 
@@ -117,7 +117,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 	{
 		public override bool ApplyOnce(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
-			if (item.bits.tags.Any(member => member is MaterialTag))
+			if (item.Bits.tags.Any(member => member is MaterialTag))
 				return false;
 
 			if (bits.tags.FirstOrDefault(member => member is MaterialTag) is not MaterialTag tag)
@@ -126,7 +126,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 			foreach (Renderer renderer in item.GetComponentsInChildren<Renderer>())
 				renderer.materials = new Material[renderer.materials.Length].Fill(tag.material);
 
-			item.bits += tag;
+			item.Bits += tag;
 
 			return true;
 		}

@@ -630,7 +630,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
+      time: 0.5
       value: 1
       inSlope: 0
       outSlope: 0
@@ -733,7 +733,7 @@ MonoBehaviour:
   mainPage: {fileID: 2123154491108635258}
   coroutineOwner: {fileID: 8856617430227243949}
   staticRigidbody: {fileID: 3798306875382306503}
-  cardDelay: 0.5
+  cardDelay: 0.1
   lerpTargets:
   - {fileID: 4582897949649126844}
   - {fileID: 3710867468495898251}
@@ -759,6 +759,7 @@ MonoBehaviour:
   menuCardPrefab: {fileID: 5650769596121791423, guid: e8226037b0905f24f9753127b25ced23, type: 3}
   deque: {fileID: 6518269390508492605}
   startTarget: {fileID: 4582897949649126844}
+  cardParent: {fileID: 7586382662599050666}
 --- !u!1 &3973130256352618454
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,7 +807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deque: {fileID: 6518269390508492605}
   initialCardPrefab: {fileID: 6379177909321711626, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
-  initialCardCount: 0
+  initialCardCount: 5
   cardParent: {fileID: 7586382662599050666}
   onLoadIntoDeque:
     m_PersistentCalls:
