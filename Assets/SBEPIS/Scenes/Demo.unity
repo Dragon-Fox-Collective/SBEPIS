@@ -1029,6 +1029,17 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &1985586932 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8222451062069067144, guid: b9a30b8fd17d2db4688da177850115d5, type: 3}
+  m_PrefabInstance: {fileID: 6188312308437721278}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 834066343270ba147b47a2957044d46c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2004553913
 GameObject:
   m_ObjectHideFlags: 0
@@ -2238,6 +2249,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 961157736405979464, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
+      propertyPath: dequeBox
+      value: 
+      objectReference: {fileID: 1985586932}
     - target: {fileID: 6112518582163472336, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: m_RootOrder
       value: 0
