@@ -50,10 +50,8 @@ namespace SBEPIS.Capturellection
 		}
 		
 		
-		public void BindToPlayer(Grabber grabber, Grabbable grabbable)
+		public void BindToPlayer(PlayerReference playerReference)
 		{
-			if (!grabber.TryGetComponent(out PlayerReference playerReference))
-				return;
 			lookController = playerReference.GetReferencedComponent<LookController>();
 			ReloadData();
 		}

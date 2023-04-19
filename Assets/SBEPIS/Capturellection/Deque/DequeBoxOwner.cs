@@ -6,6 +6,7 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Capturellection
 {
+	[RequireComponent(typeof(PlayerReference))]
 	public class DequeBoxOwner : MonoBehaviour
 	{
 		[SerializeField, Self] private LerpTarget lerpTarget;
@@ -13,6 +14,8 @@ namespace SBEPIS.Capturellection
 		
 		[SerializeField, Self] private CouplingSocket socket;
 		public CouplingSocket Socket => socket;
+
+		[SerializeField, Self] private PlayerReference playerReference;
 		
 		[SerializeField, Anywhere] private Transform tossTarget;
 		public Transform TossTarget => tossTarget;
@@ -22,7 +25,7 @@ namespace SBEPIS.Capturellection
 		public float TossHeight => tossHeight;
 		
 		[SerializeField, Anywhere(Flag.Optional)] private DequeBox dequeBox;
-		
+
 		private bool IsDequeBoxDeployed => dequeBox && dequeBox.IsDeployed;
 		
 		private void OnValidate()
@@ -34,7 +37,10 @@ namespace SBEPIS.Capturellection
 		private void Start()
 		{
 			if (dequeBox)
+			{
+				dequeBox.BindToPlayer(playerReference);
 				dequeBox.RetrieveDeque(this);
+			}
 		}
 		
 		public void OnToggleDeque(CallbackContext context)
