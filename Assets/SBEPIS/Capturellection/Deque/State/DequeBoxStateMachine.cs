@@ -1,4 +1,3 @@
-using System;
 using KBCore.Refs;
 using SBEPIS.Controller;
 using SBEPIS.Physics;
@@ -25,9 +24,9 @@ namespace SBEPIS.Capturellection.DequeState
 		
 		private void OnValidate() => this.ValidateRefs();
 		
-		[NonSerialized]
-		public LerpTarget lerpTarget;
-
+		public LerpTarget OwnerLerpTarget { get; set; }
+		public CouplingSocket OwnerSocket { get; set; }
+		
 		private static readonly int IsGrabbedKey = UnityEngine.Animator.StringToHash("Is Grabbed");
 		public bool IsGrabbed
 		{

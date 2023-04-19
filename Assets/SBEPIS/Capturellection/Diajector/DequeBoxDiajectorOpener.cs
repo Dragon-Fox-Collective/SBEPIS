@@ -15,24 +15,35 @@ namespace SBEPIS.Capturellection
 		public Diajector diajector;
 		
 		private DiajectorCloser closer;
+		private Transform playerTransform;
 		
 		public void BindToPlayer(Grabber grabber, Grabbable grabbable)
 		{
 			if (!grabber.TryGetComponent(out PlayerReference playerReference))
 				return;
-			DiajectorCloser newCloser = playerReference.GetReferencedComponent<DiajectorCloser>();
-			closer = newCloser;
+			
+			closer = playerReference.GetReferencedComponent<DiajectorCloser>();
+			playerTransform = closer.transform;
 		}
 		
 		public void OpenDiajector()
 		{
+			if (diajector.IsOpen)
+				return;
+			
 			Vector3 position = dequeBox.transform.position;
 			Vector3 upDirection = dequeBox.GravitySum.UpDirection;
-			Vector3 groundDelta = Vector3.ProjectOnPlane(-dequeBox.Rigidbody.velocity, upDirection);
+			Vector3 groundDelta = Vector3.ProjectOnPlane(closer ? playerTransform.position - position : -dequeBox.Rigidbody.velocity, upDirection);
 			Quaternion rotation = Quaternion.LookRotation(groundDelta, upDirection);
 			diajector.StartAssembly(closer, position, rotation);
 		}
-		
-		public void CloseDiajector() => diajector.StartDisassembly();
+
+		public void CloseDiajector()
+		{
+			if (!diajector.IsOpen)
+				return;
+			
+			diajector.StartDisassembly();
+		}
 	}
 }

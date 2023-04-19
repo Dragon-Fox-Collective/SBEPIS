@@ -1,8 +1,8 @@
 using KBCore.Refs;
 using SBEPIS.Capturellection.DequeState;
 using SBEPIS.Physics;
-using SBEPIS.Utils;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Capturellection
 {
@@ -23,38 +23,29 @@ namespace SBEPIS.Capturellection
 		
 		private void OnValidate() => this.ValidateRefs();
 		
+		public UnityEvent onToss = new();
+		public UnityEvent onRetrieve = new();
+		
 		public bool IsDeployed => state.IsDeployed;
-		
-		public void SetCoupledState()
-		{
-			state.IsCoupled = true;
-		}
-		
-		public void SetDecoupledState()
-		{
-			state.IsDeployed = true;
-			state.IsCoupled = false;
-		}
 		
 		public void RetrieveDeque(DequeBoxOwner dequeBoxOwner)
 		{
-			state.lerpTarget = dequeBoxOwner.lerpTarget;
+			state.OwnerLerpTarget = dequeBoxOwner.LerpTarget;
+			state.OwnerSocket = dequeBoxOwner.Socket;
 			state.IsDeployed = false;
+			onRetrieve.Invoke();
 		}
 		
 		public void TossDeque(DequeBoxOwner dequeBoxOwner)
 		{
-			SetDecoupledState();
-			
-			Transform tossTarget = dequeBoxOwner.tossTarget;
-			float tossHeight = dequeBoxOwner.tossHeight;
-			
-			rigidbody.velocity = CalcTossVelocity(
+			state.OwnerSocket.Decouple(state.Plug);
+			rigidbody.velocity += CalcTossVelocity(
 				transform,
-				tossTarget,
-				tossHeight,
-				tossTarget.up,
+				dequeBoxOwner.TossTarget,
+				dequeBoxOwner.TossHeight,
+				dequeBoxOwner.TossTarget.up,
 				gravitySum.GravityAcceleration);
+			onToss.Invoke();
 		}
 		
 		private static Vector3 CalcTossVelocity(Transform box, Transform tossTarget, float tossHeight, Vector3 upDirection, float gravityAcceleration)

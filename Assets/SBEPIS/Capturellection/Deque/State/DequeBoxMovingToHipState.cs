@@ -7,7 +7,7 @@ namespace SBEPIS.Capturellection.DequeState
 	{
 		protected override void OnEnter()
 		{
-			State.Animator.TargetTo(State.lerpTarget);
+			State.Animator.TargetTo(State.OwnerLerpTarget);
 		}
 	}
 }
