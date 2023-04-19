@@ -17,11 +17,8 @@ namespace SBEPIS.Capturellection
 		private DiajectorCloser closer;
 		private Transform playerTransform;
 		
-		public void BindToPlayer(Grabber grabber, Grabbable grabbable)
+		public void BindToPlayer(PlayerReference playerReference)
 		{
-			if (!grabber.TryGetComponent(out PlayerReference playerReference))
-				return;
-			
 			closer = playerReference.GetReferencedComponent<DiajectorCloser>();
 			playerTransform = closer.transform;
 		}
