@@ -11,6 +11,7 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Anywhere] private DequeElement menuCardPrefab;
 		[SerializeField, Anywhere] private Deque deque;
 		[SerializeField, Anywhere] private LerpTarget startTarget;
+		[SerializeField, Anywhere] private Transform cardParent;
 		public LerpTarget StartTarget => startTarget;
 		
 		private void OnValidate() => this.ValidateRefs();
@@ -20,7 +21,7 @@ namespace SBEPIS.Capturellection
 			List<(DequeElement, CardTarget)> cards = new();
 			foreach (CardTarget target in targets)
 			{
-				DequeElement card = Instantiate(menuCardPrefab);
+				DequeElement card = Instantiate(menuCardPrefab, cardParent);
 				cards.Add((card, target));
 				card.name += $" ({target.transform.parent.name})";
 				target.Card = card;

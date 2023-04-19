@@ -13,7 +13,7 @@ namespace SBEPIS.Physics
 		
 		public Transform anchor;
 		public float anchorDistance = 0.5f;
-
+		
 		public StrengthSettings strength;
 
 		private ConfigurableJoint joint;
