@@ -21,7 +21,7 @@ namespace SBEPIS.Capturellection
 		[SerializeField] private float tossHeight;
 		public float TossHeight => tossHeight;
 		
-		private DequeBox dequeBox;
+		[SerializeField, Anywhere(Flag.Optional)] private DequeBox dequeBox;
 		
 		private bool IsDequeBoxDeployed => dequeBox && dequeBox.IsDeployed;
 		
