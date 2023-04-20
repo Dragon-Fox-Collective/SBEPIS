@@ -6,13 +6,10 @@ using UnityEngine;
 namespace SBEPIS.Controller
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class Grabbable : MonoBehaviour
+	public class Grabbable : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self]
-		private new Rigidbody rigidbody;
+		[SerializeField, Self] private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public List<GrabPoint> grabPoints = new();
 		public GrabEvent onTouch = new();

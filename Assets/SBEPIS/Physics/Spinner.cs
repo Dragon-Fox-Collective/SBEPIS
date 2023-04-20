@@ -4,12 +4,9 @@ using UnityEngine;
 namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class Spinner : MonoBehaviour
+	public class Spinner : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self]
-		private new Rigidbody rigidbody;
-		
-		private void OnValidate() => this.ValidateRefs();
+		[SerializeField, Self] private new Rigidbody rigidbody;
 		
 		public float speed;
 		

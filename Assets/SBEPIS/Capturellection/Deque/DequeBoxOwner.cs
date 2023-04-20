@@ -7,7 +7,7 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(PlayerReference))]
-	public class DequeBoxOwner : MonoBehaviour
+	public class DequeBoxOwner : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self] private LerpTarget lerpTarget;
 		public LerpTarget LerpTarget => lerpTarget;
@@ -28,9 +28,9 @@ namespace SBEPIS.Capturellection
 
 		private bool IsDequeBoxDeployed => dequeBox && dequeBox.IsDeployed;
 		
-		private void OnValidate()
+		protected override void OnValidate()
 		{
-			this.ValidateRefs();
+			base.OnValidate();
 			tossHeight = Mathf.Max(tossHeight, 0);
 		}
 		

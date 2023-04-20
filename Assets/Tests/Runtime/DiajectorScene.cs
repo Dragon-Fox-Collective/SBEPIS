@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SBEPIS.Tests.Scenes
 {
-	public class DiajectorScene : MonoBehaviour
+	public class DiajectorScene : ValidatedMonoBehaviour
 	{
 		[Anywhere] public DiajectorCloser closer;
 		[Anywhere] public Diajector diajector1;
@@ -14,7 +14,5 @@ namespace SBEPIS.Tests.Scenes
 		[Anywhere] public CardTarget cardTarget;
 		[Anywhere] public LerpTarget startCardTarget;
 		[Anywhere] public LerpTarget endCardTarget;
-		
-		private void OnValidate() => this.ValidateRefs();
 	}
 }

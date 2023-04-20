@@ -5,14 +5,12 @@ using UnityEngine;
 namespace SBEPIS.Controller
 {
 	[RequireComponent(typeof(Rigidbody), typeof(GravitySum))]
-	public class Orientation : MonoBehaviour
+	public class Orientation : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private new Rigidbody rigidbody;
 		[SerializeField, Self]
 		private GravitySum gravityNormalizer;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public SphereCollider groundCheck;
 		public LayerMask groundCheckMask;

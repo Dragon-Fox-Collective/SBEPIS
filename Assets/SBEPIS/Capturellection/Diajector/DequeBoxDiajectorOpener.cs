@@ -5,12 +5,10 @@ using UnityEngine;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(DequeBox))]
-	public class DequeBoxDiajectorOpener : MonoBehaviour
+	public class DequeBoxDiajectorOpener : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private DequeBox dequeBox;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public Diajector diajector;
 		

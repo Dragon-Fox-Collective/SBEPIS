@@ -9,7 +9,7 @@ namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(Deque), typeof(DequeBoxStateMachine), typeof(GravitySum))]
 	[RequireComponent(typeof(Rigidbody))]
-	public class DequeBox : MonoBehaviour
+	public class DequeBox : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self] private Deque deque;
 		public Deque Deque => deque;
@@ -21,8 +21,6 @@ namespace SBEPIS.Capturellection
 		
 		[SerializeField, Self] private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public UnityEvent onToss = new();
 		public UnityEvent onRetrieve = new();

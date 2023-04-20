@@ -4,7 +4,7 @@ using UnityEngine;
 namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class JointTargetter : MonoBehaviour
+	public class JointTargetter : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self] private new Rigidbody rigidbody;
 		
@@ -64,11 +64,6 @@ namespace SBEPIS.Physics
 		
 		private Vector3 initialTensor;
 		private Quaternion initialTensorRotation;
-
-		private void OnValidate()
-		{
-			if (!Application.isPlaying) this.ValidateRefs();
-		}
 		
 		private void Awake()
 		{

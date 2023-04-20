@@ -4,12 +4,10 @@ using UnityEngine;
 namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class MovementLerp : MonoBehaviour
+	public class MovementLerp : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private new Rigidbody rigidbody;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public Transform endPoint;
 		public float speed = 1;

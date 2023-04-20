@@ -1,8 +1,9 @@
+using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Physics
 {
-	public abstract class MassiveBody : MonoBehaviour
+	public abstract class MassiveBody : ValidatedMonoBehaviour
 	{
 		public int priority;
 		

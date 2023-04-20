@@ -3,12 +3,10 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection
 {
-	public class DequeSettingsPageChanger : MonoBehaviour
+	public class DequeSettingsPageChanger : ValidatedMonoBehaviour
 	{
 		[SerializeField, Parent(Flag.IncludeInactive)]
 		private Diajector diajector;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public DequeSettingsPageCreator pageCreator;
 		

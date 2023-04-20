@@ -4,13 +4,11 @@ using UnityEngine;
 namespace SBEPIS.Controller
 {
 	[RequireComponent(typeof(Grabbable))]
-	public class CouplingPlug : MonoBehaviour
+	public class CouplingPlug : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private Grabbable grabbable;
 		public Grabbable Grabbable => grabbable;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public CoupleEvent onCouple = new();
 		public CoupleEvent onDecouple = new();

@@ -8,12 +8,10 @@ using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
-	public class DiajectorCaptureLayout : MonoBehaviour
+	public class DiajectorCaptureLayout : ValidatedMonoBehaviour
 	{
 		[SerializeField, Parent(Flag.IncludeInactive)] private DiajectorPageCreator pageCreator;
 		[SerializeField, Parent(Flag.IncludeInactive)] private DiajectorPage page;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public Inventory inventory;
 		public CardTarget cardTargetPrefab;
