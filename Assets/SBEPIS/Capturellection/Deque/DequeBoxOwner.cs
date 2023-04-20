@@ -39,7 +39,7 @@ namespace SBEPIS.Capturellection
 			if (dequeBox)
 			{
 				dequeBox.BindToPlayer(playerReference);
-				dequeBox.RetrieveDeque(this);
+				dequeBox.Retrieve(this);
 			}
 		}
 		
@@ -53,15 +53,18 @@ namespace SBEPIS.Capturellection
 				return;
 			
 			if (IsDequeBoxDeployed)
-				dequeBox.RetrieveDeque(this);
+				dequeBox.Retrieve(this);
 			else
-				dequeBox.TossDeque(this);
+				dequeBox.Toss(this);
 		}
 		
 		public void SetDequeBox(Grabber grabber, Grabbable grabbable)
 		{
 			if (!grabbable.TryGetComponent(out DequeBox newDequeBox))
 				return;
+
+			if (dequeBox)
+				dequeBox.Unretrieve(this);
 			
 			dequeBox = newDequeBox;
 		}
