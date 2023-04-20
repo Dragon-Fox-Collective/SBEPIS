@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class QueueSettingsPageLayout : DequeSettingsPageLayout<QueueDeque>
+	public class StateSettingsPageLayout : DequeSettingsPageLayout<StateDeque>
 	{
 		public SwitchCardAttacher offsetFromEndSwitch;
 		
