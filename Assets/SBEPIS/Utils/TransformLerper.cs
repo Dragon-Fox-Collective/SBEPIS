@@ -4,12 +4,10 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Utils
 {
-	public class TransformLerper : MonoBehaviour
+	public class TransformLerper : ValidatedMonoBehaviour
     {
 	    [SerializeField, Self(Flag.Optional)]
 	    private new Rigidbody rigidbody;
-		
-	    private void OnValidate() => this.ValidateRefs();
 		
     	public float timeToComplete = 1;
     	public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);

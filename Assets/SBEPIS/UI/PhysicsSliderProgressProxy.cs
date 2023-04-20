@@ -5,12 +5,9 @@ using UnityEngine.Events;
 namespace SBEPIS.UI
 {
 	[RequireComponent(typeof(PhysicsSlider))]
-	public class PhysicsSliderProgressProxy : MonoBehaviour
+	public class PhysicsSliderProgressProxy : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self]
-		private PhysicsSlider slider;
-		
-		private void OnValidate() => this.ValidateRefs();
+		[SerializeField, Self] private PhysicsSlider slider;
 		
 		public UnityEvent<float> onInvokeProgress = new();
 		

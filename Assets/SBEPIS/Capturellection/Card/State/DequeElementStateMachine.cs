@@ -35,8 +35,6 @@ namespace SBEPIS.Capturellection.CardState
 		/// </summary>
 		public int TargetIndex { get; set; }
 		
-		private void OnValidate() => this.ValidateRefs();
-		
 		private void Awake()
 		{
 			card.dequeEvents.onSet.AddListener((_, _) => IsBound = true);

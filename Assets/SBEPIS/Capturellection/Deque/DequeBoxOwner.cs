@@ -7,7 +7,7 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(PlayerReference))]
-	public class DequeBoxOwner : MonoBehaviour
+	public class DequeBoxOwner : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self] private LerpTarget lerpTarget;
 		public LerpTarget LerpTarget => lerpTarget;
@@ -28,9 +28,9 @@ namespace SBEPIS.Capturellection
 
 		private bool IsDequeBoxDeployed => dequeBox && dequeBox.IsDeployed;
 		
-		private void OnValidate()
+		protected override void OnValidate()
 		{
-			this.ValidateRefs();
+			base.OnValidate();
 			tossHeight = Mathf.Max(tossHeight, 0);
 		}
 		
@@ -39,7 +39,7 @@ namespace SBEPIS.Capturellection
 			if (dequeBox)
 			{
 				dequeBox.BindToPlayer(playerReference);
-				dequeBox.RetrieveDeque(this);
+				dequeBox.Retrieve(this);
 			}
 		}
 		
@@ -53,15 +53,18 @@ namespace SBEPIS.Capturellection
 				return;
 			
 			if (IsDequeBoxDeployed)
-				dequeBox.RetrieveDeque(this);
+				dequeBox.Retrieve(this);
 			else
-				dequeBox.TossDeque(this);
+				dequeBox.Toss(this);
 		}
 		
 		public void SetDequeBox(Grabber grabber, Grabbable grabbable)
 		{
 			if (!grabbable.TryGetComponent(out DequeBox newDequeBox))
 				return;
+
+			if (dequeBox)
+				dequeBox.Unretrieve(this);
 			
 			dequeBox = newDequeBox;
 		}

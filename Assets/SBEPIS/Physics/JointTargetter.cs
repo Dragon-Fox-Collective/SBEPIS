@@ -1,59 +1,18 @@
+using System;
 using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class JointTargetter : MonoBehaviour
+	public class JointTargetter : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self] private new Rigidbody rigidbody;
-		
 		[SerializeField, Anywhere] private Rigidbody connectedBody;
-		public Rigidbody ConnectedBody
-		{
-			get => connectedBody;
-			set
-			{
-				connectedBody = value;
-				if (joint) UpdateJointConnectedBody();
-			}
-		}
-		
 		[SerializeField, Anywhere] private Transform target;
-		public Transform Target
-		{
-			get => target;
-			set
-			{
-				target = value;
-				if (joint) UpdateJointTarget();
-			}
-		}
-		
 		[SerializeField, Anywhere(Flag.Optional)] private Transform anchor;
-		public Transform Anchor
-		{
-			get => anchor;
-			set => anchor = value;
-		}
-		
 		[SerializeField] private float anchorDistance = 0.5f;
-		public float AnchorDistance
-		{
-			get => anchorDistance;
-			set => anchorDistance = value;
-		}
-		
 		[SerializeField, Anywhere] private StrengthSettings strength;
-		public StrengthSettings Strength
-		{
-			get => strength;
-			set
-			{
-				strength = value;
-				if (joint) UpdateJointDrive();
-			}
-		}
 		
 		private ConfigurableJoint joint;
 		
@@ -65,18 +24,24 @@ namespace SBEPIS.Physics
 		private Vector3 initialTensor;
 		private Quaternion initialTensorRotation;
 
-		private void OnValidate()
-		{
-			if (!Application.isPlaying) this.ValidateRefs();
-		}
+		private bool hasBeenConstructed = false;
 		
-		private void Awake()
+		public void Construct(Rigidbody connectedBody, Transform target, StrengthSettings strength)
 		{
-			if (!rigidbody) rigidbody = GetComponent<Rigidbody>();
+			if (hasBeenConstructed)
+				throw new InvalidOperationException($"Object {this} has already been constructed");
+			hasBeenConstructed = true;
+			
+			this.connectedBody = connectedBody;
+			this.target = target;
+			this.strength = strength;
+			this.ValidateRefs(true);
 		}
 		
 		private void Start()
 		{
+			hasBeenConstructed = true;
+			
 			Vector3 thisInitialPosition = rigidbody.position;
 			
 			joint = gameObject.AddComponent<ConfigurableJoint>();

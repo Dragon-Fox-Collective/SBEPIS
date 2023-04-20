@@ -6,12 +6,10 @@ using UnityEngine;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(SplitTextureSetup))]
-	public class SplitTextureSetupCardDequeSetter : MonoBehaviour
+	public class SplitTextureSetupCardDequeSetter : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private SplitTextureSetup split;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public void UpdateTextures(DequeElement card, Deque deque)
 		{

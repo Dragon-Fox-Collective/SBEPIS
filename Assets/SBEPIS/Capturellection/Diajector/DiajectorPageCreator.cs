@@ -6,15 +6,13 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection
 {
-	public class DiajectorPageCreator : MonoBehaviour
+	public class DiajectorPageCreator : ValidatedMonoBehaviour
 	{
 		[SerializeField, Anywhere] private DequeElement menuCardPrefab;
 		[SerializeField, Anywhere] private Deque deque;
 		[SerializeField, Anywhere] private LerpTarget startTarget;
 		[SerializeField, Anywhere] private Transform cardParent;
 		public LerpTarget StartTarget => startTarget;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public IEnumerable<(DequeElement, CardTarget)> CreateCards(IEnumerable<CardTarget> targets)
 		{

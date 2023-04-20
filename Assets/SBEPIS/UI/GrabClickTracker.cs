@@ -7,11 +7,8 @@ namespace SBEPIS.UI
 	[RequireComponent(typeof(Grabbable))]
 	public class GrabClickTracker : ClickTracker
 	{
-		[SerializeField, Self]
-		private Grabbable grabbable;
-
-		private void OnValidate() => this.ValidateRefs();
-
+		[SerializeField, Self] private Grabbable grabbable;
+		
 		private void OnEnable()
 		{
 			grabbable.onGrab.AddListener(StartTracking);

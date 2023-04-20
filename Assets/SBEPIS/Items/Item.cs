@@ -4,12 +4,9 @@ using UnityEngine;
 namespace SBEPIS.Items
 {
 	[RequireComponent(typeof(ItemModule))]
-	public class Item : MonoBehaviour
+	public class Item : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self]
-		private ItemModule module;
+		[SerializeField, Self] private ItemModule module;
 		public ItemModule Module => module;
-		
-		private void OnValidate() => this.ValidateRefs();
 	}
 }

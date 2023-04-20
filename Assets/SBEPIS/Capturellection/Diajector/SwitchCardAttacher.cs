@@ -8,12 +8,10 @@ using UnityEngine.Serialization;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(CardTarget))]
-	public class SwitchCardAttacher : MonoBehaviour
+	public class SwitchCardAttacher : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private CardTarget cardTarget;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		[FormerlySerializedAs("offPoint")]
 		public Transform falsePoint;

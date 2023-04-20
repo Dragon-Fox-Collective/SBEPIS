@@ -6,9 +6,7 @@ namespace SBEPIS.Physics
 	[RequireComponent(typeof(BoxCollider))]
 	public class MassiveBox : MassiveBody
 	{
-		[SerializeField, Self]
-		private BoxCollider box;
-		
+		[SerializeField, Self] private BoxCollider box;
 		private void OnValidate() => this.ValidateRefs();
 		
 		public float gravity = 10;

@@ -3,13 +3,10 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection
 {
-	public class DequeSettingsPage : MonoBehaviour
+	public class DequeSettingsPage : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self]
-		private DiajectorPage page;
+		[SerializeField, Self] private DiajectorPage page;
 		public DiajectorPage Page => page;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public RectTransform settingsParent;
 		public CardTarget backButton;

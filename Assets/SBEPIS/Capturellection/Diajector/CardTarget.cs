@@ -11,13 +11,10 @@ using UnityEngine.Serialization;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(LerpTarget))]
-	public class CardTarget : MonoBehaviour
+	public class CardTarget : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self]
-		private LerpTarget lerpTarget;
+		[SerializeField, Self] private LerpTarget lerpTarget;
 		public LerpTarget LerpTarget => lerpTarget;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		[FormerlySerializedAs("onCardCreated")]
 		public UnityEvent<DequeElement> onCardBound = new();

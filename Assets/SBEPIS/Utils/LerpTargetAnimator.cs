@@ -7,13 +7,11 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Utils
 {
-	public class LerpTargetAnimator : MonoBehaviour
+	public class LerpTargetAnimator : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self(Flag.Optional)] private new Rigidbody rigidbody;
 
 		[SerializeField] private AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		private float time;
 

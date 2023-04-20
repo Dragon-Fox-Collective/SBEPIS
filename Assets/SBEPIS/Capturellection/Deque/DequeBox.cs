@@ -9,7 +9,7 @@ namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(Deque), typeof(DequeBoxStateMachine), typeof(GravitySum))]
 	[RequireComponent(typeof(Rigidbody))]
-	public class DequeBox : MonoBehaviour
+	public class DequeBox : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self] private Deque deque;
 		public Deque Deque => deque;
@@ -22,15 +22,13 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Self] private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;
 		
-		private void OnValidate() => this.ValidateRefs();
-		
 		public UnityEvent onToss = new();
 		public UnityEvent onRetrieve = new();
 		public UnityEvent<PlayerReference> onBindToPlayer = new();
 		
 		public bool IsDeployed => state.IsDeployed;
 		
-		public void RetrieveDeque(DequeBoxOwner dequeBoxOwner)
+		public void Retrieve(DequeBoxOwner dequeBoxOwner)
 		{
 			state.OwnerLerpTarget = dequeBoxOwner.LerpTarget;
 			state.OwnerSocket = dequeBoxOwner.Socket;
@@ -38,7 +36,13 @@ namespace SBEPIS.Capturellection
 			onRetrieve.Invoke();
 		}
 		
-		public void TossDeque(DequeBoxOwner dequeBoxOwner)
+		public void Unretrieve(DequeBoxOwner dequeBoxOwner)
+		{
+			if (state.Plug.CoupledSocket == dequeBoxOwner.Socket)
+				dequeBoxOwner.Socket.Decouple(state.Plug);
+		}
+		
+		public void Toss(DequeBoxOwner dequeBoxOwner)
 		{
 			state.OwnerSocket.Decouple(state.Plug);
 			rigidbody.velocity += CalcTossVelocity(

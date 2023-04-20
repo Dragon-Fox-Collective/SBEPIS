@@ -1,20 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using KBCore.Refs;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace SBEPIS.Capturellection
 {
-	public class DequeSettingsPageCreator : MonoBehaviour
+	public class DequeSettingsPageCreator : ValidatedMonoBehaviour
 	{
 		[SerializeField, Anywhere] private Deque deque;
 		[SerializeField, Anywhere] private Diajector diajector;
 		[SerializeField, Anywhere] private DiajectorPage backPage;
 		[SerializeField, Anywhere] private DequeSettingsPage settingsPagePrefab;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		private List<DequeSettingsPage> settingsPages = new();
 		
@@ -41,6 +37,7 @@ namespace SBEPIS.Capturellection
 		private void CreatePage(DequeSettingsPageLayout layout, bool isFirst, bool isLast)
 		{
 			DequeSettingsPage page = Instantiate(settingsPagePrefab, backPage.transform.parent);
+			SceneRefAttributeValidator.Validate(page.Page, true);
 			layout.transform.SetParent(page.settingsParent, false);
 			
 			if (isFirst) Destroy(page.prevButton.transform.parent.gameObject);
