@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using KBCore.Refs;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace SBEPIS.Capturellection
 {
@@ -39,6 +37,7 @@ namespace SBEPIS.Capturellection
 		private void CreatePage(DequeSettingsPageLayout layout, bool isFirst, bool isLast)
 		{
 			DequeSettingsPage page = Instantiate(settingsPagePrefab, backPage.transform.parent);
+			SceneRefAttributeValidator.Validate(page.Page, true);
 			layout.transform.SetParent(page.settingsParent, false);
 			
 			if (isFirst) Destroy(page.prevButton.transform.parent.gameObject);
