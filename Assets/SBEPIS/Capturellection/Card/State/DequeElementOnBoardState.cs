@@ -21,9 +21,7 @@ namespace SBEPIS.Capturellection.CardState
 		private void CreateTargetter(LerpTarget target)
 		{
 			targetter = State.Card.Diajector.StaticRigidbody.gameObject.AddComponent<JointTargetter>();
-			targetter.ConnectedBody = State.Rigidbody;
-			targetter.Target = target.transform;
-			targetter.Strength = State.CardStrength;
+			targetter.Construct(State.Rigidbody, target.transform, State.CardStrength);
 		}
 		
 		protected override void OnExit()

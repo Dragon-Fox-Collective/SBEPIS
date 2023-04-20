@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SBEPIS.Physics
 {
-	public abstract class MassiveBody : ValidatedMonoBehaviour
+	public abstract class MassiveBody : MonoBehaviour
 	{
 		public int priority;
 		
