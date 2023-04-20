@@ -10,12 +10,10 @@ namespace SBEPIS.Capturellection
 	/// The camera that takes pictures of items and captcha codes to paste on captchalogue cards.
 	/// </summary>
 	[RequireComponent(typeof(Camera))]
-	public class CaptureCamera : MonoBehaviour
+	public class CaptureCamera : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private new Camera camera;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public TextMeshProUGUI codeBox;
 		public Transform objectParent;

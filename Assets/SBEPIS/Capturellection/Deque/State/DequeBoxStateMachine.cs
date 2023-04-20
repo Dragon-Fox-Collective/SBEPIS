@@ -22,8 +22,6 @@ namespace SBEPIS.Capturellection.DequeState
 		private LerpTargetAnimator animator;
 		public LerpTargetAnimator Animator => animator;
 		
-		private void OnValidate() => this.ValidateRefs();
-		
 		public LerpTarget OwnerLerpTarget { get; set; }
 		public CouplingSocket OwnerSocket { get; set; }
 		

@@ -7,14 +7,12 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Capturellection
 {
-	public class DequeSettingsPageCreator : MonoBehaviour
+	public class DequeSettingsPageCreator : ValidatedMonoBehaviour
 	{
 		[SerializeField, Anywhere] private Deque deque;
 		[SerializeField, Anywhere] private Diajector diajector;
 		[SerializeField, Anywhere] private DiajectorPage backPage;
 		[SerializeField, Anywhere] private DequeSettingsPage settingsPagePrefab;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		private List<DequeSettingsPage> settingsPages = new();
 		

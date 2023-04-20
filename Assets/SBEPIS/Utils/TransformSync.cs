@@ -5,12 +5,10 @@ using Pose = UnityEngine.XR.OpenXR.Input.Pose;
 
 namespace SBEPIS.Utils
 {
-	public class TransformSync : MonoBehaviour
+	public class TransformSync : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self(Flag.Optional)]
 		private new Rigidbody rigidbody;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public Vector3 positionOffset = Vector3.zero;
 		public Quaternion rotationOffset = Quaternion.identity;

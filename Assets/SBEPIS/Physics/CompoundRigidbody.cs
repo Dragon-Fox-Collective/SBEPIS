@@ -4,12 +4,10 @@ using UnityEngine;
 namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class CompoundRigidbody : MonoBehaviour
+	public class CompoundRigidbody : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private new Rigidbody rigidbody;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public Vector3 WorldCenterOfMass => transform.position + rigidbody.centerOfMass;
 		

@@ -8,7 +8,7 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(Grabber))]
-	public class Capturellector : MonoBehaviour
+	public class Capturellector : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self] private Grabber grabber;
 		
@@ -18,8 +18,6 @@ namespace SBEPIS.Capturellection
 			get => inventory;
 			set => inventory = value;
 		}
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public void OnCapture(CallbackContext context)
 		{

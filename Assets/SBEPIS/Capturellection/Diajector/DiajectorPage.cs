@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
-	public class DiajectorPage : MonoBehaviour
+	public class DiajectorPage : ValidatedMonoBehaviour
 	{
 		[SerializeField, Parent(Flag.IncludeInactive)] private Diajector diajector;
 		[SerializeField, Parent(Flag.IncludeInactive | Flag.Optional)] private DiajectorPageCreator pageCreator;
@@ -22,8 +22,6 @@ namespace SBEPIS.Capturellection
 		
 		private readonly Dictionary<DequeElement, CardTarget> cardTargets = new();
 		
-		private void OnValidate() => this.ValidateRefs();
-
 		public void AddCard(DequeElement card, CardTarget target)
 		{
 			cardTargets.Add(card, target);

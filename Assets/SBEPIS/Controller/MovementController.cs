@@ -5,14 +5,10 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 namespace SBEPIS.Controller
 {
 	[RequireComponent(typeof(Rigidbody), typeof(Orientation))]
-	public class MovementController : MonoBehaviour
+	public class MovementController : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self]
-		private new Rigidbody rigidbody;
-		[SerializeField, Self]
-		private Orientation orientation;
-		
-		private void OnValidate() => this.ValidateRefs();
+		[SerializeField, Self] private new Rigidbody rigidbody;
+		[SerializeField, Self] private Orientation orientation;
 		
 		public Transform moveAimer;
 		

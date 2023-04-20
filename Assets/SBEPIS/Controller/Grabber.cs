@@ -9,13 +9,11 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 namespace SBEPIS.Controller
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class Grabber : MonoBehaviour
+	public class Grabber : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public LayerMask grabMask = 1;
 		[Tooltip("Should be within the hand collision box, far enough that you wouldn't reasonably be able to clip into it")]

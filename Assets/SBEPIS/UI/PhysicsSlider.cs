@@ -6,7 +6,7 @@ using UnityEngine.Events;
 namespace SBEPIS.UI
 {
 	[RequireComponent(typeof(Rigidbody), typeof(ConfigurableJoint))]
-	public class PhysicsSlider : MonoBehaviour
+	public class PhysicsSlider : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private new Rigidbody rigidbody;
@@ -15,8 +15,6 @@ namespace SBEPIS.UI
 		[SerializeField, Self]
 		private ConfigurableJoint joint;
 		public ConfigurableJoint Joint => joint;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public ButtonAxis axis;
 		

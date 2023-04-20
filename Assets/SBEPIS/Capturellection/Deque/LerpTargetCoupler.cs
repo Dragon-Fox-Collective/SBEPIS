@@ -5,11 +5,9 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection
 {
-	public class LerpTargetCoupler : MonoBehaviour
+	public class LerpTargetCoupler : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self] private CouplingSocket socket;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public void Couple(LerpTargetAnimator animator)
 		{

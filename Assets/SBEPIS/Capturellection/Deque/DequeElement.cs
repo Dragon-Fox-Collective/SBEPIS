@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(LerpTargetAnimator), typeof(DequeElementStateMachine))]
-	public class DequeElement : MonoBehaviour
+	public class DequeElement : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self] private DequeElementStateMachine state;
 		public DequeElementStateMachine State => state;
@@ -18,8 +18,6 @@ namespace SBEPIS.Capturellection
 		
 		[SerializeField, Anywhere(Flag.Optional)] private Renderer bounds;
 		public Vector3 Size => bounds ? ExtensionMethods.Multiply(bounds.localBounds.size, bounds.transform.localScale) : Vector3.zero;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		[FormerlySerializedAs("dequeOwnerEvents")]
 		public EventProperty<DequeElement, Deque, SetCardDequeEvent, UnsetCardDequeEvent> dequeEvents = new();

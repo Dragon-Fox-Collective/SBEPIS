@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Capturellection
 {
-	public class Diajector : MonoBehaviour
+	public class Diajector : ValidatedMonoBehaviour
 	{
 		[SerializeField, Anywhere] private DiajectorPage mainPage;
 		
@@ -25,8 +25,6 @@ namespace SBEPIS.Capturellection
 		
 		public UnityEvent<Diajector> onOpen = new();
 		public UnityEvent<Diajector> onClose = new();
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		private DiajectorPage currentPage;
 		

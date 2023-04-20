@@ -9,8 +9,6 @@ namespace SBEPIS.Physics
 		[SerializeField, Self]
 		private BoxCollider box;
 		
-		private void OnValidate() => this.ValidateRefs();
-		
 		public float gravity = 10;
 		public float falloffDistance = 1;
 		
