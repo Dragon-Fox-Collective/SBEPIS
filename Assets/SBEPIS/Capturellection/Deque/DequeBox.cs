@@ -1,62 +1,57 @@
 using KBCore.Refs;
 using SBEPIS.Capturellection.DequeState;
+using SBEPIS.Controller;
 using SBEPIS.Physics;
-using SBEPIS.Utils;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(Deque), typeof(DequeBoxStateMachine), typeof(GravitySum))]
 	[RequireComponent(typeof(Rigidbody))]
-	public class DequeBox : MonoBehaviour
+	public class DequeBox : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self] private Deque deque;
 		public Deque Deque => deque;
+		
 		[SerializeField, Self] private DequeBoxStateMachine state;
+		
 		[SerializeField, Self] private GravitySum gravitySum;
 		public GravitySum GravitySum => gravitySum;
+		
 		[SerializeField, Self] private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;
 		
-		[SerializeField, Anywhere] private LerpTarget lowerTarget;
-		public LerpTarget LowerTarget => lowerTarget;
-		[SerializeField, Anywhere] private LerpTarget upperTarget;
-		public LerpTarget UpperTarget => upperTarget;
-		
-		private void OnValidate() => this.ValidateRefs();
+		public UnityEvent onToss = new();
+		public UnityEvent onRetrieve = new();
+		public UnityEvent<PlayerReference> onBindToPlayer = new();
 		
 		public bool IsDeployed => state.IsDeployed;
 		
-		public void SetCoupledState()
+		public void Retrieve(DequeBoxOwner dequeBoxOwner)
 		{
-			state.IsCoupled = true;
-		}
-		
-		public void SetDecoupledState()
-		{
-			state.IsDeployed = true;
-			state.IsCoupled = false;
-		}
-		
-		public void RetrieveDeque(DequeBoxOwner dequeBoxOwner)
-		{
-			state.lerpTarget = dequeBoxOwner.lerpTarget;
+			state.OwnerLerpTarget = dequeBoxOwner.LerpTarget;
+			state.OwnerSocket = dequeBoxOwner.Socket;
 			state.IsDeployed = false;
+			onRetrieve.Invoke();
 		}
 		
-		public void TossDeque(DequeBoxOwner dequeBoxOwner)
+		public void Unretrieve(DequeBoxOwner dequeBoxOwner)
 		{
-			SetDecoupledState();
-			
-			Transform tossTarget = dequeBoxOwner.tossTarget;
-			float tossHeight = dequeBoxOwner.tossHeight;
-			
-			Rigidbody.velocity = CalcTossVelocity(
+			if (state.Plug.CoupledSocket == dequeBoxOwner.Socket)
+				dequeBoxOwner.Socket.Decouple(state.Plug);
+		}
+		
+		public void Toss(DequeBoxOwner dequeBoxOwner)
+		{
+			state.OwnerSocket.Decouple(state.Plug);
+			rigidbody.velocity += CalcTossVelocity(
 				transform,
-				tossTarget,
-				tossHeight,
-				tossTarget.up,
-				GravitySum.GravityAcceleration);
+				dequeBoxOwner.TossTarget,
+				dequeBoxOwner.TossHeight,
+				dequeBoxOwner.TossTarget.up,
+				gravitySum.GravityAcceleration);
+			onToss.Invoke();
 		}
 		
 		private static Vector3 CalcTossVelocity(Transform box, Transform tossTarget, float tossHeight, Vector3 upDirection, float gravityAcceleration)
@@ -74,5 +69,18 @@ namespace SBEPIS.Capturellection
 		}
 		
 		private static float CalcTossYVelocity(float gravity, float startHeight, float peakHeight) => Mathf.Sqrt(2 * gravity * (startHeight - peakHeight));
+		
+		public void BindToPlayer(Grabber grabber, Grabbable _)
+		{
+			if (!grabber.TryGetComponent(out PlayerReference playerReference))
+				return;
+			
+			BindToPlayer(playerReference);
+		}
+		
+		public void BindToPlayer(PlayerReference playerReference)
+		{
+			onBindToPlayer.Invoke(playerReference);
+		}
 	}
 }

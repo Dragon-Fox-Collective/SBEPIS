@@ -11,8 +11,6 @@ namespace SBEPIS.UI
 		[SerializeField, Self]
 		private PhysicsButton button;
 		
-		private void OnValidate() => this.ValidateRefs();
-		
 		private void OnEnable()
 		{
 			button.onPressed.AddListener(StartTracking);

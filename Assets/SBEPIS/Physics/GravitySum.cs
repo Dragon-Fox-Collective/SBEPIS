@@ -12,8 +12,6 @@ namespace SBEPIS.Physics
 		[SerializeField, Self(Flag.Optional)]
 		private new Rigidbody rigidbody;
 		
-		private void OnValidate() => this.ValidateRefs();
-		
 		public Transform customCenterOfMass;
 		public UnityEvent<Vector3> onGravityChanged = new();
 		

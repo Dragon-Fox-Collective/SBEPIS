@@ -66,6 +66,7 @@ GameObject:
   - component: {fileID: 6261596198841309886}
   - component: {fileID: 6489863023038747327}
   - component: {fileID: 5497308317210675182}
+  - component: {fileID: 5571904183523872989}
   m_Layer: 11
   m_Name: Menu Card
   m_TagString: Untagged
@@ -148,10 +149,6 @@ MonoBehaviour:
       bits: []
     itemModule: {fileID: 0}
     material: {fileID: 0}
-  _bits:
-    _bits:
-      bits: []
-    _tags: []
   replaceObject: {fileID: 0}
   aeratedAttachmentPoint: {fileID: 0}
 --- !u!114 &436234427008818838
@@ -207,6 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68d2cc142dbbc498dc623e8257e0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 8363832178469033259}
   grabPoints:
   - {fileID: 2755212116337637129}
   onTouch:
@@ -289,6 +287,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58aa7d8afd685e74abc59a26910d21af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: {fileID: 5497308317210675182}
+  animator: {fileID: 2830427335561252429}
   bounds: {fileID: 2560012040714765689}
   dequeEvents:
     onSet:
@@ -358,6 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a9fd3160befad41b771e6f8ceab7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 8363832178469033259}
   curve:
     serializedVersion: 2
     m_Curve:
@@ -409,6 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54152097dbb74e59bf922d036f78efc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  split: {fileID: 1929706404228634041}
 --- !u!114 &5497308317210675182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,7 +425,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: {fileID: 1232492613499314681}
   card: {fileID: 5650769596121791423}
+  enablerDisabler: {fileID: 6261596198841309886}
   layoutAdder: {fileID: 0}
+  rigidbody: {fileID: 8363832178469033259}
+  cardStrength: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
+  electricArcPrefab: {fileID: 7962134878051775022, guid: bd0964b77b3f6f0459fc55699ed10fd6, type: 3}
+--- !u!114 &5571904183523872989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275059195579274974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ad76ab59557dd44db98872af0ea05d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  module: {fileID: 440917820055669988}
 --- !u!1 &1809637530485951540
 GameObject:
   m_ObjectHideFlags: 0

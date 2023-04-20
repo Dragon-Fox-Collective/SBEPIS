@@ -32,7 +32,7 @@ namespace SBEPIS.Capturellection.Storage
 			if (prefab)
 			{
 				DequeSettingsPageLayout layout = Instantiate(prefab);
-				layout.ruleset = this;
+				layout.Ruleset = this;
 				yield return layout;
 			}
 		}

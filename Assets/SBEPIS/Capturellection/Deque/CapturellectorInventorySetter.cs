@@ -6,7 +6,7 @@ namespace SBEPIS.Capturellection
 {
 	public class CapturellectorInventorySetter : MonoBehaviour
 	{
-		[SerializeField, Anywhere] private List<Capturellector> capturellectors;
+		[SerializeField] private List<Capturellector> capturellectors;
 		
 		public void SetNewInventory(Inventory newInventory)
 		{

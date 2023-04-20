@@ -6,12 +6,10 @@ using UnityEngine;
 namespace SBEPIS.Controller
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class SuicideBurn : MonoBehaviour
+	public class SuicideBurn : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private new Rigidbody rigidbody;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public float acceleration = 1;
 

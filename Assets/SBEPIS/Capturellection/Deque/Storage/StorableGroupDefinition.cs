@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
 {
-	public class StorableGroupDefinition : MonoBehaviour
+	public class StorableGroupDefinition : ValidatedMonoBehaviour
 	{
 		[SerializeField, Anywhere] private DequeRuleset ruleset;
 		public DequeRuleset Ruleset => ruleset;
@@ -12,8 +12,6 @@ namespace SBEPIS.Capturellection.Storage
 		public int MaxStorables => maxStorables;
 		[SerializeField, Anywhere(Flag.Optional)] private StorableGroupDefinition subdefinition;
 		public StorableGroupDefinition Subdefinition => subdefinition;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public string DequeName => ruleset.GetDequeNamePart(true, true, false) + (subdefinition ? " of " + subdefinition.DequeNamePlural : "");
 		public string DequeNamePlural => ruleset.GetDequeNamePart(true, true, true) + (subdefinition ? " of " + subdefinition.DequeNamePlural : "");

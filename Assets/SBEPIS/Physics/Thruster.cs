@@ -6,12 +6,10 @@ using UnityEngine;
 namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class Thruster : MonoBehaviour
+	public class Thruster : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private new Rigidbody rigidbody;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public float speed = 100;
 		public float acceleration = 50;

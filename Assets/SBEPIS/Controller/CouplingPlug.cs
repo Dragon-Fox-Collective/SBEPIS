@@ -4,13 +4,11 @@ using UnityEngine;
 namespace SBEPIS.Controller
 {
 	[RequireComponent(typeof(Grabbable))]
-	public class CouplingPlug : MonoBehaviour
+	public class CouplingPlug : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private Grabbable grabbable;
 		public Grabbable Grabbable => grabbable;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public CoupleEvent onCouple = new();
 		public CoupleEvent onDecouple = new();
@@ -19,7 +17,7 @@ namespace SBEPIS.Controller
 		
 		public CouplingSocket CoupledSocket { get; private set; }
 		
-		public void GetCoupled(CouplingSocket socket)
+		public void OnCoupled(CouplingSocket socket)
 		{
 			if (IsCoupled)
 			{
@@ -35,7 +33,7 @@ namespace SBEPIS.Controller
 			onCouple.Invoke(this, CoupledSocket);
 		}
 		
-		public void GetDecoupled()
+		public void OnDecoupled()
 		{
 			if (!IsCoupled)
 			{

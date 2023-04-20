@@ -57,7 +57,7 @@ namespace SBEPIS.Controller
 			joint.anchor = joint.connectedAnchor = Vector3.zero;
 			
 			this.plug = plug;
-			plug.GetCoupled(this);
+			plug.OnCoupled(this);
 			onCouple.Invoke(plug, this);
 		}
 		
@@ -77,7 +77,7 @@ namespace SBEPIS.Controller
 			Destroy(joint);
 			
 			this.plug = null;
-			plug.GetDecoupled();
+			plug.OnDecoupled();
 			onDecouple.Invoke(plug, this);
 		}
 	}

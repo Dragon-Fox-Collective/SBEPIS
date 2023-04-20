@@ -10,14 +10,14 @@ namespace SBEPIS.Capturellection.Storage
 		public List<DequeRulesetState> states;
 
 		private Vector3 _direction;
-		public override Vector3 direction
+		public override Vector3 Direction
 		{
 			get => _direction;
 			set
 			{
 				_direction = value;
 				foreach (DequeRulesetState state in states)
-					state.direction = value;
+					state.Direction = value;
 			}
 		}
 	}

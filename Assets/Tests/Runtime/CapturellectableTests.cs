@@ -32,7 +32,6 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator Capturellector_CapturingItem_PutsItInInventory() => UniTask.ToCoroutine(async () =>
 		{
-			Scene.capturellector.Inventory = Scene.inventory1;
 			CaptureContainer container = await Scene.capturellector.CaptureAndGrabCard(Scene.capturellectable);
 			InventoryStorable inventoryCard = Scene.inventory1.FirstOrDefault();
 			
@@ -44,7 +43,6 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator Capturellector_FetchingItem_RemovesItFromInventory() => UniTask.ToCoroutine(async () =>
 		{
-			Scene.capturellector.Inventory = Scene.inventory1;
 			CaptureContainer container = await Scene.capturellector.CaptureAndGrabCard(Scene.capturellectable);
 			Capturellectable item = await Scene.capturellector.RetrieveAndGrabItem(container);
 			
@@ -55,7 +53,6 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator Capturellector_ChangingInventories_UsesCorrectInventory() => UniTask.ToCoroutine(async () =>
 		{
-			Scene.capturellector.Inventory = Scene.inventory1;
 			Scene.capturellector.Inventory = Scene.inventory2;
 			CaptureContainer container = await Scene.capturellector.CaptureAndGrabCard(Scene.capturellectable);
 			InventoryStorable inventoryCard = Scene.inventory2.FirstOrDefault();

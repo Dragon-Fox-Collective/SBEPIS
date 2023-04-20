@@ -16,7 +16,7 @@ namespace SBEPIS.Capturellection.Deques
 			
 			foreach (Storable storable in inventory)
 			{
-				storable.state.direction = Quaternion.Euler(0, 0, -90) * state.direction;
+				storable.state.Direction = Quaternion.Euler(0, 0, -90) * state.Direction;
 				storable.Tick(deltaTime * storable.InventoryCount);
 			}
 			
@@ -33,7 +33,7 @@ namespace SBEPIS.Capturellection.Deques
 					state.topStorable = storable;
 				
 				storable.Position = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * (innerRadius + size.y / 2);
-				storable.Rotation = Quaternion.Euler(0, 0, 180f + cardAngle) * ArrayDeque.GetOffsetRotation(state.direction);
+				storable.Rotation = Quaternion.Euler(0, 0, 180f + cardAngle) * ArrayDeque.GetOffsetRotation(state.Direction);
 				
 				cardAngle += anglePerCard;
 			}
