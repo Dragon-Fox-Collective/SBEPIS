@@ -4,11 +4,9 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection
 {
-	public class Deque : MonoBehaviour
+	public class Deque : ValidatedMonoBehaviour
 	{
 		[SerializeField, Anywhere] private StorableGroupDefinition definition;
 		public StorableGroupDefinition Definition => definition;
-		
-		private void OnValidate() => this.ValidateRefs();
 	}
 }

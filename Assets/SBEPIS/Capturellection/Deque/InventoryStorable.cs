@@ -5,12 +5,10 @@ using UnityEngine;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(DequeElement))]
-	public class InventoryStorable : MonoBehaviour
+	public class InventoryStorable : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self] private DequeElement dequeElement;
 		public DequeElement DequeElement => dequeElement;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public EventProperty<InventoryStorable, Inventory, SetCardInventoryEvent, UnsetCardInventoryEvent> inventoryEvents = new();
 		public Inventory Inventory

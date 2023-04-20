@@ -8,12 +8,10 @@ using UnityEngine.Events;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(CardTarget))]
-	public class SliderCardAttacher : MonoBehaviour, Slider
+	public class SliderCardAttacher : ValidatedMonoBehaviour, Slider
 	{
 		[SerializeField, Self]
 		private CardTarget cardTarget;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public Transform startPoint;
 		public Transform endPoint;

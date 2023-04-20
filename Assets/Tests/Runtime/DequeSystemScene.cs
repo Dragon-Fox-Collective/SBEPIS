@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SBEPIS.Tests.Scenes
 {
-	public class DequeSystemScene : MonoBehaviour
+	public class DequeSystemScene : ValidatedMonoBehaviour
 	{
 		[Anywhere] public Grabber grabber;
 		[Anywhere] public DequeBox dequeBox;
@@ -17,7 +17,5 @@ namespace SBEPIS.Tests.Scenes
 		[Anywhere] public Transform dropPoint;
 		[Anywhere] public Inventory inventory;
 		public List<CardTarget> cardTargets = new();
-
-		private void OnValidate() => this.ValidateRefs();
 	}
 }
