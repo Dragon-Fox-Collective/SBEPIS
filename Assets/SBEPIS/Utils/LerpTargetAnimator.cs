@@ -7,14 +7,11 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Utils
 {
-	public class LerpTargetAnimator : MonoBehaviour
+	public class LerpTargetAnimator : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self(Flag.Optional)]
-		private new Rigidbody rigidbody;
-		
-		private void OnValidate() => this.ValidateRefs();
-		
-		public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+		[SerializeField, Self(Flag.Optional)] private new Rigidbody rigidbody;
+
+		[SerializeField] private AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 		
 		private float time;
 
@@ -29,8 +26,8 @@ namespace SBEPIS.Utils
 		
 		public void TargetTo(LerpTarget target, params UnityAction<LerpTargetAnimator>[] tempActions)
 		{
-			if (rigidbody)
-				rigidbody.Disable();
+			if (!target) throw new NullReferenceException($"Tried to target {this} to null");
+			if (rigidbody) rigidbody.Disable();
 			currentTarget = target;
 			SetStartPositionAndRotation(transform.position, transform.rotation);
 			time = 0;
@@ -43,7 +40,7 @@ namespace SBEPIS.Utils
 				prevTarget.onMoveFrom.Invoke(this);
 			}
 		}
-
+		
 		public void SetStartPositionAndRotation(Vector3 position, Quaternion rotation)
 		{
 			startPosition = position;
@@ -52,31 +49,37 @@ namespace SBEPIS.Utils
 		
 		public void TeleportTo(LerpTarget target)
 		{
-			if (!target)
-				throw new NullReferenceException($"Tried to teleport {this} to null");
+			if (!target) throw new NullReferenceException($"Tried to teleport {this} to null");
 			TargetTo(target);
 			End();
 		}
-
+		
 		public void SetPausedAt(LerpTarget target)
 		{
 			pausedAtTarget = target;
 		}
-
+		
+		public void Cancel()
+		{
+			if (!currentTarget) return;
+			
+			currentTarget = null;
+			if (rigidbody) rigidbody.Enable();
+		}
+		
 		private void End()
 		{
 			transform.SetPositionAndRotation(currentTarget.transform.position, currentTarget.transform.rotation);
-			if (rigidbody)
-				rigidbody.Enable();
 			LerpTarget oldTarget = pausedAtTarget = currentTarget;
-			currentTarget = null;
+			Cancel();
 			
 			oldTarget.onMoveTo.Invoke(this);
 			foreach (UnityAction<LerpTargetAnimator> action in tempOnMoveToActions.ToList())
-				action.Invoke(this);
+				action?.Invoke(this);
+			
 			if (onMoveToActions.TryGetValue(oldTarget, out List<UnityAction<LerpTargetAnimator>> actions))
 				foreach (UnityAction<LerpTargetAnimator> action in actions.ToList())
-					action.Invoke(this);
+					action?.Invoke(this);
 		}
 		
 		private void Update()

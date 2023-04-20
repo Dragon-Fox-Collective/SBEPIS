@@ -6,12 +6,10 @@ using UnityEngine;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(SplitTextureSetup))]
-	public class SplitTextureSetupCardInventorySetter : MonoBehaviour
+	public class SplitTextureSetupCardInventorySetter : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private SplitTextureSetup split;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public void UpdateTextures(InventoryStorable card, Inventory inventory)
 		{

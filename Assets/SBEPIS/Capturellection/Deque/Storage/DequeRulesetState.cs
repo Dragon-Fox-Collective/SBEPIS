@@ -5,7 +5,7 @@ namespace SBEPIS.Capturellection.Storage
 {
 	public abstract class DequeRulesetState
 	{
-		public virtual Vector3 direction { get; set; }
+		public virtual Vector3 Direction { get; set; }
 	}
 	
 	[Serializable]

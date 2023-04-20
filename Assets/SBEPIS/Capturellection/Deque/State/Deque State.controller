@@ -186,6 +186,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: Is Deployed
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Is Coupled
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7517961138912164264}
   m_Solo: 0
@@ -268,6 +271,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b4a44eeb0a465c81f30febdf147537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1101 &-567291200953445816
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: Is Deployed
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Is Coupled
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 7938299328078983164}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -282,19 +313,19 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Is Coupled
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Is Deployed
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 1
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -333,6 +364,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: -3720811431152909051}
   - {fileID: -2721448349801013577}
+  - {fileID: -567291200953445816}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -420,8 +452,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: -2685346668766108595}
   - {fileID: -2542688623988559249}
-  m_StateMachineBehaviours:
-  - {fileID: -1276241501898741083}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

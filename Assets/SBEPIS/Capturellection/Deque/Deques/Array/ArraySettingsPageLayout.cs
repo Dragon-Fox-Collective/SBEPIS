@@ -23,19 +23,19 @@ namespace SBEPIS.Capturellection.Deques
 		public float wobbleSpaceFactorMin = 0;
 		public float wobbleSpaceFactorMax = 10;
 		
-		public void ResetOffsetFromEndSwitch() => offsetFromEndSwitch.SwitchValue = ruleset.offsetFromEnd;
-		public void ChangeOffsetFromEnd(bool offsetFromEnd) => ruleset.offsetFromEnd = offsetFromEnd;
+		public void ResetOffsetFromEndSwitch() => offsetFromEndSwitch.SwitchValue = Ruleset.offsetFromEnd;
+		public void ChangeOffsetFromEnd(bool offsetFromEnd) => Ruleset.offsetFromEnd = offsetFromEnd;
 		
-		public void ResetOffsetSlider() => offsetSlider.SliderValue = ruleset.offset.Map(offsetMin, offsetMax, 0, 1);
-		public void ChangeOffset(float percent) => ruleset.offset = percent.Map(0, 1, offsetMin, offsetMax);
+		public void ResetOffsetSlider() => offsetSlider.SliderValue = Ruleset.offset.Map(offsetMin, offsetMax, 0, 1);
+		public void ChangeOffset(float percent) => Ruleset.offset = percent.Map(0, 1, offsetMin, offsetMax);
 		
-		public void ResetWobbleAmplitudeSlider() => wobbleAmplitudeSlider.SliderValue = ruleset.wobbleAmplitude.Map(wobbleAmplitudeMin, wobbleAmplitudeMax, 0, 1);
-		public void ChangeWobbleAmplitude(float percent) => ruleset.wobbleAmplitude = percent.Map(0, 1, wobbleAmplitudeMin, wobbleAmplitudeMax);
+		public void ResetWobbleAmplitudeSlider() => wobbleAmplitudeSlider.SliderValue = Ruleset.wobbleAmplitude.Map(wobbleAmplitudeMin, wobbleAmplitudeMax, 0, 1);
+		public void ChangeWobbleAmplitude(float percent) => Ruleset.wobbleAmplitude = percent.Map(0, 1, wobbleAmplitudeMin, wobbleAmplitudeMax);
 		
-		public void ResetWobbleTimeFactorSlider() => wobbleTimeFactorSlider.SliderValue = ruleset.wobbleTimeFactor.Map(wobbleTimeFactorMin, wobbleTimeFactorMax, 0, 1);
-		public void ChangeWobbleTimeFactor(float percent) => ruleset.wobbleTimeFactor = percent.Map(0, 1, wobbleTimeFactorMin, wobbleTimeFactorMax);
+		public void ResetWobbleTimeFactorSlider() => wobbleTimeFactorSlider.SliderValue = Ruleset.wobbleTimeFactor.Map(wobbleTimeFactorMin, wobbleTimeFactorMax, 0, 1);
+		public void ChangeWobbleTimeFactor(float percent) => Ruleset.wobbleTimeFactor = percent.Map(0, 1, wobbleTimeFactorMin, wobbleTimeFactorMax);
 		
-		public void ResetWobbleSpaceFactorSlider() => wobbleSpaceFactorSlider.SliderValue = ruleset.wobbleSpaceFactor.Map(wobbleSpaceFactorMin, wobbleSpaceFactorMax, 0, 1);
-		public void ChangeWobbleSpaceFactor(float percent) => ruleset.wobbleSpaceFactor = percent.Map(0, 1, wobbleSpaceFactorMin, wobbleSpaceFactorMax);
+		public void ResetWobbleSpaceFactorSlider() => wobbleSpaceFactorSlider.SliderValue = Ruleset.wobbleSpaceFactor.Map(wobbleSpaceFactorMin, wobbleSpaceFactorMax, 0, 1);
+		public void ChangeWobbleSpaceFactor(float percent) => Ruleset.wobbleSpaceFactor = percent.Map(0, 1, wobbleSpaceFactorMin, wobbleSpaceFactorMax);
 	}
 }

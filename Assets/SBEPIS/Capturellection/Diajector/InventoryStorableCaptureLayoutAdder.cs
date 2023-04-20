@@ -5,13 +5,10 @@ using UnityEngine;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(InventoryStorable))]
-	public class InventoryStorableCaptureLayoutAdder : MonoBehaviour
+	public class InventoryStorableCaptureLayoutAdder : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self]
-		private InventoryStorable card;
+		[SerializeField, Self] private InventoryStorable card;
 		public InventoryStorable Card => card;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		private List<DiajectorCaptureLayout> layouts = new();
 		

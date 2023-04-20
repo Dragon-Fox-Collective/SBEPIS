@@ -190,13 +190,19 @@ public static class ExtensionMethods
 	{
 		return first.Zip(second, (firstItem, secondItem) => (firstItem, secondItem));
 	}
-
+	
 	public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
 	{
 		foreach (T t in enumerable)
 			action.Invoke(t);
 	}
 
+	public static void ForEach<T1, T2>(this IEnumerable<(T1, T2)> enumerable, Action<T1, T2> action)
+	{
+		foreach ((T1 item1, T2 item2) in enumerable)
+			action.Invoke(item1, item2);
+	}
+	
 	public static IEnumerable<float> AsEnumerable(this Vector3 vector)
 	{
 		yield return vector.x;

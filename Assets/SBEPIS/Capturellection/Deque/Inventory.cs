@@ -77,8 +77,8 @@ namespace SBEPIS.Capturellection
 		
 		public Vector3 Direction
 		{
-			get => storable.state.direction;
-			set => storable.state.direction = value;
+			get => storable.state.Direction;
+			set => storable.state.Direction = value;
 		}
 		public Vector3 Position
 		{

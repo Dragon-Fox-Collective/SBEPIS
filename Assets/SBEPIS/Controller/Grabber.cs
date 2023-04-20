@@ -9,13 +9,11 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 namespace SBEPIS.Controller
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class Grabber : MonoBehaviour
+	public class Grabber : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		public LayerMask grabMask = 1;
 		[Tooltip("Should be within the hand collision box, far enough that you wouldn't reasonably be able to clip into it")]
@@ -25,12 +23,13 @@ namespace SBEPIS.Controller
 		public float shortRangeGrabDistace = 1;
 
 		public Orientation playerOrientation;
-
+		
 		public GrabEvent onGrab = new();
 		public ColliderGrabEvent onGrabCollider = new();
+		public GrabEvent onUse = new();
 		public GrabEvent onDrop = new();
 		public ColliderGrabEvent onDropCollider = new();
-
+		
 		public bool CanGrab { get; set; } = true;
 		
 		private bool overrideShortRangeGrab;
@@ -179,10 +178,7 @@ namespace SBEPIS.Controller
 			
 			Destroy(heldGrabbableJoint);
 			heldGrabbableJoint = null;
-
-			if (droppedCollider.attachedRigidbody)
-				droppedCollider.attachedRigidbody.Move(transform.position, transform.rotation);
-
+			
 			if (droppedGrabbable)
 			{
 				onDrop.Invoke(this, droppedGrabbable);
@@ -289,7 +285,8 @@ namespace SBEPIS.Controller
 		{
 			if (!HeldGrabbable)
 				return;
-
+			
+			onUse.Invoke(this, HeldGrabbable);
 			HeldGrabbable.onUse.Invoke(this, HeldGrabbable);
 		}
 	}

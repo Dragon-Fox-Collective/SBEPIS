@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 namespace SBEPIS.Tests.Scenes
 {
-	public class CapturellectableScene : MonoBehaviour
+	public class CapturellectableScene : ValidatedMonoBehaviour
 	{
 		[Anywhere] public Capturellectable capturellectable;
 		[Anywhere] public CaptureContainer container;
@@ -14,7 +14,5 @@ namespace SBEPIS.Tests.Scenes
 		[FormerlySerializedAs("inventory")]
 		[Anywhere] public Inventory inventory1;
 		[Anywhere] public Inventory inventory2;
-		
-		private void OnValidate() => this.ValidateRefs();
 	}
 }

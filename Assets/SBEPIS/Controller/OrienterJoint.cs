@@ -4,12 +4,9 @@ using UnityEngine;
 namespace SBEPIS.Controller
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class OrienterJoint : MonoBehaviour
+	public class OrienterJoint : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self]
-		private new Rigidbody rigidbody;
-		
-		private void OnValidate() => this.ValidateRefs();
+		[SerializeField, Self] private new Rigidbody rigidbody;
 		
 		public float acceleration = 1;
 		

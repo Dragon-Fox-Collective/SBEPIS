@@ -1,24 +1,46 @@
 using System.Diagnostics.CodeAnalysis;
 using KBCore.Refs;
+using SBEPIS.Physics;
+using SBEPIS.UI;
 using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection.CardState
 {
+	[RequireComponent(typeof(EnablerDisabler))]
 	public class DequeElementStateMachine : StateMachine
 	{
-		[SerializeField, Self]
-		private DequeElement card;
+		[SerializeField, Self] private DequeElement card;
 		public DequeElement Card => card;
-
-		public DequeBox DequeBox => Card.Deque.GetComponent<DequeBox>();
 		
-		[SerializeField, Self(Flag.Optional)]
-		private InventoryStorableCaptureLayoutAdder layoutAdder;
-		[MaybeNull]
+		[SerializeField, Self] private EnablerDisabler enablerDisabler;
+		public EnablerDisabler EnablerDisabler => enablerDisabler;
+		
+		[SerializeField, Self(Flag.Optional)] private InventoryStorableCaptureLayoutAdder layoutAdder;
 		public InventoryStorableCaptureLayoutAdder LayoutAdder => layoutAdder;
 		
-		private void OnValidate() => this.ValidateRefs();
+		[SerializeField, Self(Flag.Optional)] private new Rigidbody rigidbody;
+		public Rigidbody Rigidbody => rigidbody;
+		
+		[SerializeField, Anywhere] private StrengthSettings cardStrength;
+		public StrengthSettings CardStrength => cardStrength;
+		
+		[SerializeField, Anywhere] private ElectricArc electricArcPrefab;
+		public ElectricArc ElectricArcPrefab => electricArcPrefab;
+		
+		/// <summary>
+		/// When moving between two targets, this is the index of the first one on the list.
+		/// That means it's the target you're coming from if not reversed,
+		/// and the target you're going to if reversed.
+		/// </summary>
+		public int TargetIndex { get; set; }
+		
+		private void Awake()
+		{
+			card.dequeEvents.onSet.AddListener((_, _) => IsBound = true);
+			card.dequeEvents.onUnset.AddListener((_, _, _) => IsBound = false);
+			IsBound = card.IsStored;
+		}
 		
 		private static readonly int IsGrabbedKey = Animator.StringToHash("Is Grabbed");
 		public bool IsGrabbed
@@ -67,13 +89,6 @@ namespace SBEPIS.Capturellection.CardState
 		{
 			get => State.GetBool(IsInLayoutAreaKey);
 			set => State.SetBool(IsInLayoutAreaKey, value);
-		}
-		
-		private static readonly int TargetNumberKey = Animator.StringToHash("Target Number");
-		public int TargetNumber
-		{
-			get => State.GetInteger(TargetNumberKey);
-			set => State.SetInteger(TargetNumberKey, value);
 		}
 		
 		private static readonly int ForceOpenKey = Animator.StringToHash("On Force Open");

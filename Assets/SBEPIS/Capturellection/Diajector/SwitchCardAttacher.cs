@@ -1,4 +1,6 @@
+using System;
 using KBCore.Refs;
+using SBEPIS.Controller;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -6,12 +8,10 @@ using UnityEngine.Serialization;
 namespace SBEPIS.Capturellection
 {
 	[RequireComponent(typeof(CardTarget))]
-	public class SwitchCardAttacher : MonoBehaviour
+	public class SwitchCardAttacher : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private CardTarget cardTarget;
-		
-		private void OnValidate() => this.ValidateRefs();
 		
 		[FormerlySerializedAs("offPoint")]
 		public Transform falsePoint;
@@ -42,13 +42,16 @@ namespace SBEPIS.Capturellection
 		
 		public void Attach(DequeElement card)
 		{
+			if (!card.TryGetComponent(out Grabbable grabbable))
+				throw new NullReferenceException($"Card {card} has no grabbable");
+			
 			switchCard = card.gameObject.AddComponent<SwitchCard>();
 			switchCard.offPoint = falsePoint;
 			switchCard.onPoint = truePoint;
 			switchCard.target = cardTarget;
 			switchCard.SwitchValue = switchValue;
 			switchCard.onSwitchValueChanged = onSwitchValueChanged;
-			card.Grabbable.onDrop.AddListener((_, _) => switchCard.ClampNewPosition());
+			grabbable.onDrop.AddListener((_, _) => switchCard.ClampNewPosition());
 		}
 	}
 }

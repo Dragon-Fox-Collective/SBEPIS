@@ -1979,6 +1979,7 @@ GameObject:
   - component: {fileID: 2069586595830321789}
   - component: {fileID: 6234797776867132548}
   - component: {fileID: 961157736405979464}
+  - component: {fileID: 218023988001672195}
   m_Layer: 8
   m_Name: Deque Attach Target
   m_TagString: Untagged
@@ -2195,6 +2196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ab4a9070c9b4c46872cdcc46a4eaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  socket: {fileID: 343684413715036165}
 --- !u!114 &961157736405979464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2209,8 +2211,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lerpTarget: {fileID: 2069586595830321789}
   socket: {fileID: 343684413715036165}
+  playerReference: {fileID: 218023988001672195}
   tossTarget: {fileID: 1997131638894466065}
   tossHeight: 0.1
+  dequeBox: {fileID: 0}
+--- !u!114 &218023988001672195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159469505427324889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eba7adbddd6429aa7c1a9de13010387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reference: {fileID: 6376568280094680653}
 --- !u!1 &6376568278165176233
 GameObject:
   m_ObjectHideFlags: 0
@@ -2405,6 +2422,12 @@ MonoBehaviour:
   playerOrientation: {fileID: 690210978355806070}
   onGrab:
     m_PersistentCalls:
+      m_Calls: []
+  onGrabCollider:
+    m_PersistentCalls:
+      m_Calls: []
+  onUse:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 961157736405979464}
         m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBoxOwner, SBEPIS.Capturellection
@@ -2418,9 +2441,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onGrabCollider:
-    m_PersistentCalls:
-      m_Calls: []
   onDrop:
     m_PersistentCalls:
       m_Calls: []
@@ -2440,6 +2460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabber: {fileID: 6376568278754761723}
+  inventory: {fileID: 0}
 --- !u!114 &6844988662924280731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3585,6 +3606,12 @@ MonoBehaviour:
   playerOrientation: {fileID: 690210978355806070}
   onGrab:
     m_PersistentCalls:
+      m_Calls: []
+  onGrabCollider:
+    m_PersistentCalls:
+      m_Calls: []
+  onUse:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 961157736405979464}
         m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBoxOwner, SBEPIS.Capturellection
@@ -3598,9 +3625,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onGrabCollider:
-    m_PersistentCalls:
-      m_Calls: []
   onDrop:
     m_PersistentCalls:
       m_Calls: []
@@ -3620,6 +3644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabber: {fileID: 6271847251800222012}
+  inventory: {fileID: 0}
 --- !u!114 &4874602448725965669
 MonoBehaviour:
   m_ObjectHideFlags: 0
