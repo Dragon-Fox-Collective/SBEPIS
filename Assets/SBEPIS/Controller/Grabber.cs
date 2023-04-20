@@ -180,10 +180,7 @@ namespace SBEPIS.Controller
 			
 			Destroy(heldGrabbableJoint);
 			heldGrabbableJoint = null;
-
-			if (droppedCollider.attachedRigidbody)
-				droppedCollider.attachedRigidbody.Move(transform.position, transform.rotation);
-
+			
 			if (droppedGrabbable)
 			{
 				onDrop.Invoke(this, droppedGrabbable);
