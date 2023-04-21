@@ -18,14 +18,13 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, InventoryStorable card) => State && inventory.Any(storable => storable.CanFetch(card));
 		
-		public override async UniTask<int> GetIndexToStoreInto(List<Storable> inventory, BaseState state)
+		public override async UniTaskVoid Store(List<Storable> inventory, BaseState state)
 		{
 			await UniTask.WaitUntil(() => State);
-			int index = inventory.FindIndex(storable => !storable.HasAllCardsFull);
-			return index is -1 ? 0 : index;
+			return Mathf.Max(inventory.FindIndex(storable => !storable.HasAllCardsFull), 0);
 		}
-		public override UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, BaseState state, Storable storable) => UniTask.FromResult(inventory.Count);
-		public override UniTask<int> GetIndexToInsertBetweenAfterStore(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => UniTask.FromResult(originalIndex);
-		public override UniTask<int> GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => UniTask.FromResult(originalIndex);
+		public override UniTask<int> Flush(List<Storable> inventory, BaseState state, Storable storable) => UniTask.FromResult(inventory.Count);
+		public override UniTaskVoid RestoreAfterStore(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => UniTask.FromResult(originalIndex);
+		public override UniTask<int> RestoreAfterFetch(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => UniTask.FromResult(originalIndex);
 	}
 }

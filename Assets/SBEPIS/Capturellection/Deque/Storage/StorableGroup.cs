@@ -28,12 +28,12 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public override async UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item)
 		{
-			int storeIndex = await definition.Ruleset.GetIndexToStoreInto(inventory, state);
+			int storeIndex = await definition.Ruleset.Store(inventory, state);
 			Storable storable = inventory[storeIndex];
 			inventory.Remove(storable);
 			
 			(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem) = await storable.Store(item);
-			int restoreIndex = await definition.Ruleset.GetIndexToInsertBetweenAfterStore(inventory, state, storable, storeIndex);
+			int restoreIndex = await definition.Ruleset.RestoreAfterStore(inventory, state, storable, storeIndex);
 			inventory.Insert(restoreIndex, storable);
 			
 			if (ejectedItem && ejectedItem.TryGetComponent(out InventoryStorable flushedCard))
@@ -54,7 +54,7 @@ namespace SBEPIS.Capturellection.Storage
 			inventory.Remove(storable);
 			
 			Capturellectable item = await storable.Fetch(card);
-			int restoreIndex = await definition.Ruleset.GetIndexToInsertBetweenAfterFetch(inventory, state, storable, fetchIndex);
+			int restoreIndex = await definition.Ruleset.RestoreAfterFetch(inventory, state, storable, fetchIndex);
 			inventory.Insert(restoreIndex, storable);
 			
 			return item;
@@ -79,8 +79,7 @@ namespace SBEPIS.Capturellection.Storage
 				storable.transform.SetParent(transform);
 				await storable.Flush(cards);
 				
-				int insertIndex = await definition.Ruleset.GetIndexToFlushBetween(inventory, state, storable);
-				inventory.Insert(insertIndex, storable);
+				await definition.Ruleset.Flush(inventory, state, storable);
 				
 				if (cards.Count == 0)
 					break;

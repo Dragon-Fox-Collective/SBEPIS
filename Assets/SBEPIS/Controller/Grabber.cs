@@ -57,13 +57,13 @@ namespace SBEPIS.Controller
 			if (HeldGrabbable)
 				HeldGrabbable.HoldUpdate(this);
 		}
-
+		
 		public void OnGrab(CallbackContext context)
 		{
 			isHoldingGrab = context.performed;
 			UpdateGrabAttempt();
 		}
-
+		
 		public void UpdateGrabAttempt()
 		{
 			if (!isActiveAndEnabled)
@@ -77,7 +77,7 @@ namespace SBEPIS.Controller
 			else
 				Drop();
 		}
-
+		
 		public void Grab()
 		{
 			if (!CanGrab || IsHoldingSomething)
@@ -88,7 +88,7 @@ namespace SBEPIS.Controller
 			
 			ShortRangeGrab();
 		}
-
+		
 		public bool Grab(Collider collider)
 		{
 			if (!collider || IsHoldingSomething)
@@ -117,7 +117,7 @@ namespace SBEPIS.Controller
 			
 			return true;
 		}
-
+		
 		public bool Grab(Grabbable grabbable)
 		{
 			if (!grabbable || IsHoldingSomething)
