@@ -14,10 +14,10 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public override bool CanFetchFrom(List<Storable> inventory, DequeRulesetLayerState state, InventoryStorable card) => rulesets.Zip(state.states).Reverse().Any(zip => zip.Item1.CanFetchFrom(inventory, zip.Item2, card));
 		
-		public override UniTask<int> GetIndexToStoreInto(List<Storable> inventory, DequeRulesetLayerState state) => rulesets[^1].GetIndexToStoreInto(inventory, state.states[^1]);
-		public override UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, DequeRulesetLayerState state, Storable storable) => rulesets[^1].GetIndexToFlushBetween(inventory, state.states[^1], storable);
-		public override UniTask<int> GetIndexToInsertBetweenAfterStore(List<Storable> inventory, DequeRulesetLayerState state, Storable storable, int originalIndex) => rulesets[^1].GetIndexToInsertBetweenAfterStore(inventory, state.states[^1], storable, originalIndex);
-		public override UniTask<int> GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, DequeRulesetLayerState state, Storable storable, int originalIndex) => rulesets[^1].GetIndexToInsertBetweenAfterFetch(inventory, state.states[^1], storable, originalIndex);
+		public override UniTaskVoid Store(List<Storable> inventory, DequeRulesetLayerState state) => rulesets[^1].Store(inventory, state.states[^1]);
+		public override UniTask<int> Flush(List<Storable> inventory, DequeRulesetLayerState state, Storable storable) => rulesets[^1].Flush(inventory, state.states[^1], storable);
+		public override UniTaskVoid RestoreAfterStore(List<Storable> inventory, DequeRulesetLayerState state, Storable storable, int originalIndex) => rulesets[^1].RestoreAfterStore(inventory, state.states[^1], storable, originalIndex);
+		public override UniTask<int> RestoreAfterFetch(List<Storable> inventory, DequeRulesetLayerState state, Storable storable, int originalIndex) => rulesets[^1].RestoreAfterFetch(inventory, state.states[^1], storable, originalIndex);
 		
 		public override DequeRulesetState GetNewState()
 		{
