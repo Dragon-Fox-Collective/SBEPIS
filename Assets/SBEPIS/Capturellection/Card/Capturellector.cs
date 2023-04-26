@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using KBCore.Refs;
+using SBEPIS.Capturellection.Storage;
 using SBEPIS.Controller;
 using UnityEngine;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
@@ -32,10 +33,10 @@ namespace SBEPIS.Capturellection
 		
 		public async UniTask<CaptureContainer> CaptureAndGrabCard(Capturellectable item)
 		{
-			(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem) = await inventory.Store(item);
-			MoveEjectedItem(card, ejectedItem);
-			TryGrab(container.transform);
-			return container;
+			StorableStoreResult result = await inventory.Store(item);
+			MoveEjectedItem(result.card, result.ejectedItem);
+			TryGrab(result.container.transform);
+			return result.container;
 		}
 
 		private static void MoveEjectedItem(InventoryStorable card, Capturellectable ejectedItem)

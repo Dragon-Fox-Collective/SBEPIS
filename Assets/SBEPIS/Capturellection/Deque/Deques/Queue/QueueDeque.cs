@@ -1,16 +1,13 @@
 using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using SBEPIS.Capturellection.Storage;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection.Deques
 {
 	public class QueueDeque : DequeBase<BaseState>
 	{
 		public bool offsetFromEnd = false;
-		[FormerlySerializedAs("overlap")]
 		public float offset = 0.05f;
 		
 		public override void Tick(List<Storable> inventory, BaseState state, float deltaTime) => ArrayDeque.TickLinearLayout(inventory, state, deltaTime, offsetFromEnd, offset);
@@ -18,17 +15,32 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, InventoryStorable card) => inventory[^1].CanFetch(card);
 		
-		public override UniTaskVoid Store(List<Storable> inventory, BaseState state)
+		public override async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, BaseState state, Capturellectable item)
 		{
-			int index = inventory.FindIndex(storable => !storable.HasAllCardsEmpty);
-			return UniTask.FromResult(index is -1 or 0 ? inventory.Count - 1 : index - 1);
+			int index = inventory.FindIndex(invStorable => !invStorable.HasAllCardsEmpty) - 1;
+			if (index < 0) index = inventory.Count - 1;
+			Storable storable = inventory[index];
+			inventory.Remove(storable);
+			StorableStoreResult res = await storable.StoreItem(item);
+			inventory.Insert(0, storable);
+			return res.ToDequeResult(index);
 		}
-		public override UniTask<int> Flush(List<Storable> inventory, BaseState state, Storable storable)
+		
+		public override async UniTask<Capturellectable> FetchItem(List<Storable> inventory, BaseState state, InventoryStorable card)
 		{
-			int index = inventory.FindIndex(storable => !storable.HasAllCardsEmpty);
-			return UniTask.FromResult(index is -1 ? inventory.Count : index);
+			Storable storable = inventory[^1];
+			inventory.Remove(storable);
+			Capturellectable item = await storable.FetchItem(card);
+			inventory.Insert(0, storable);
+			return item;
 		}
-		public override UniTaskVoid RestoreAfterStore(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => Flush(inventory, state, storable);
-		public override UniTask<int> RestoreAfterFetch(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => Flush(inventory, state, storable);
+		
+		public override UniTask FlushCard(List<Storable> inventory, BaseState state, Storable storable)
+		{
+			int index = inventory.FindIndex(invStorable => !invStorable.HasAllCardsEmpty) - 1;
+			if (index < 0) index = inventory.Count - 1;
+			inventory.Insert(index, storable);
+			return UniTask.CompletedTask;
+		}
 	}
 }

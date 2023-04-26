@@ -97,19 +97,19 @@ namespace SBEPIS.Capturellection
 		public UniTask<Capturellectable> Fetch(InventoryStorable card)
 		{
 			TearDownCard(card);
-			return storable.Fetch(card);
+			return storable.FetchItem(card);
 		}
-		public async UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item)
+		public async UniTask<StorableStoreResult> Store(Capturellectable item)
 		{
-			(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem) = await storable.Store(item);
-			SetupCard(card);
-			return (card, container, ejectedItem);
+			StorableStoreResult res = await storable.StoreItem(item);
+			SetupCard(res.card);
+			return res;
 		}
 		public UniTask Flush(List<InventoryStorable> cards)
 		{
 			foreach (InventoryStorable card in cards)
 				SetupCard(card);
-			return storable.Flush(cards);
+			return storable.FlushCards(cards);
 		}
 		public UniTask Flush(InventoryStorable card) => Flush(new List<InventoryStorable>{ card });
 		private void Load(List<InventoryStorable> cards)

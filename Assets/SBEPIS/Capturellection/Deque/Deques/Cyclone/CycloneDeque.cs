@@ -54,10 +54,22 @@ namespace SBEPIS.Capturellection.Deques
 		public static float DistanceToRegularPolygonEdge(int edgeCount, float edgeLength) => edgeCount < 3 ? 0 : 0.5f * edgeLength / Mathf.Tan(Mathf.PI / edgeCount);
 		
 		public override bool CanFetchFrom(List<Storable> inventory, CycloneState state, InventoryStorable card) => state.topStorable.CanFetch(card);
-
-		public override UniTaskVoid Store(List<Storable> inventory, CycloneState state) => UniTask.FromResult(inventory.Contains(state.topStorable) ? inventory.IndexOf(state.topStorable) : Mathf.Max(inventory.FindIndex(storable => !storable.HasAllCardsFull), 0));
-		public override UniTask<int> Flush(List<Storable> inventory, CycloneState state, Storable storable) => UniTask.FromResult(inventory.Contains(state.topStorable) ? inventory.IndexOf(state.topStorable) : inventory.Count);
-		public override UniTaskVoid RestoreAfterStore(List<Storable> inventory, CycloneState state, Storable storable, int originalIndex) => UniTask.FromResult(originalIndex);
-		public override UniTask<int> RestoreAfterFetch(List<Storable> inventory, CycloneState state, Storable storable, int originalIndex) => UniTask.FromResult(originalIndex);
+		
+		public override async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, CycloneState state, Capturellectable item)
+		{
+			int index = inventory.IndexOf(state.topStorable);
+			if (index < 0) index = Mathf.Max(inventory.FindIndex(storable => !storable.HasAllCardsFull), 0);
+			Storable storable = inventory[index];
+			StorableStoreResult res = await storable.StoreItem(item);
+			return res.ToDequeResult(index);
+		}
+		
+		public override UniTask FlushCard(List<Storable> inventory, CycloneState state, Storable storable)
+		{
+			int index = inventory.IndexOf(state.topStorable);
+			if (index < 0) index = inventory.Count;
+			inventory.Insert(index, storable);
+			return UniTask.CompletedTask;
+		}
 	}
 }

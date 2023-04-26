@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -35,6 +36,34 @@ namespace SBEPIS.Capturellection.Storage
 				layout.Ruleset = this;
 				yield return layout;
 			}
+		}
+		
+		public override async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, T state, Capturellectable item)
+		{
+			int index = Mathf.Max(inventory.FindIndex(storable => !storable.HasAllCardsFull), 0);
+			Storable storable = inventory[index];
+			StorableStoreResult res = await storable.StoreItem(item);
+			return res.ToDequeResult(index);
+		}
+		
+		public override async UniTask<Capturellectable> FetchItem(List<Storable> inventory, T state, InventoryStorable card)
+		{
+			Storable storable = inventory.Find(storable => storable.Contains(card));
+			Capturellectable item = await storable.FetchItem(card);
+			return item;
+		}
+		
+		public override UniTask FlushCard(List<Storable> inventory, T state, Storable storable)
+		{
+			inventory.Add(storable);
+			return UniTask.CompletedTask;
+		}
+		
+		public override UniTask FetchCard(List<Storable> inventory, T state, InventoryStorable card)
+		{
+			Storable storable = inventory.Find(storable => storable.Contains(card));
+			inventory.Remove(storable);
+			return UniTask.CompletedTask;
 		}
 		
 		public override IEnumerable<Texture2D> GetCardTextures()
