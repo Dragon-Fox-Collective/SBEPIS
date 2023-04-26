@@ -37,9 +37,10 @@ namespace SBEPIS.Capturellection.Storage
 		public abstract bool CanFetch(InventoryStorable card);
 		public abstract bool Contains(InventoryStorable card);
 		
-		public abstract UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item);
-		public abstract UniTask<Capturellectable> Fetch(InventoryStorable card);
-		public abstract UniTask Flush(List<InventoryStorable> cards);
+		public abstract UniTask<StorableStoreResult> StoreItem(Capturellectable item);
+		public abstract UniTask<Capturellectable> FetchItem(InventoryStorable card);
+		public abstract UniTask FlushCards(List<InventoryStorable> cards);
+		public abstract UniTask FetchCard(InventoryStorable card);
 		
 		public abstract void Load(List<InventoryStorable> cards);
 		public abstract void Save(List<InventoryStorable> cards);
@@ -94,5 +95,21 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public abstract IEnumerator<InventoryStorable> GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+	}
+
+	public struct StorableStoreResult
+	{
+		public InventoryStorable card;
+		public CaptureContainer container;
+		public Capturellectable ejectedItem;
+
+		public StorableStoreResult(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem)
+		{
+			this.card = card;
+			this.container = container;
+			this.ejectedItem = ejectedItem;
+		}
+
+		public DequeStoreResult ToDequeResult(int flushIndex) => new(card, container, ejectedItem, flushIndex);
 	}
 }

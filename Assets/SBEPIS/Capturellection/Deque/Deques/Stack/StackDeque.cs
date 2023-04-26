@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using SBEPIS.Capturellection.Storage;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection.Deques
 {
@@ -17,9 +15,22 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, InventoryStorable card) => inventory[0].CanFetch(card);
 		
-		public override UniTaskVoid Store(List<Storable> inventory, BaseState state) => UniTask.FromResult(inventory.Count - 1);
-		public override UniTask<int> Flush(List<Storable> inventory, BaseState state, Storable storable) => UniTask.FromResult(storable.HasAllCardsEmpty ? inventory.Count : 0);
-		public override UniTaskVoid RestoreAfterStore(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => UniTask.FromResult(0);
-		public override UniTask<int> RestoreAfterFetch(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => UniTask.FromResult(inventory.Count);
+		public override async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, BaseState state, Capturellectable item)
+		{
+			Storable storable = inventory[^1];
+			inventory.Remove(storable);
+			StorableStoreResult res = await storable.StoreItem(item);
+			inventory.Insert(0, storable);
+			return res.ToDequeResult(inventory.Count - 1);
+		}
+		
+		public override async UniTask<Capturellectable> FetchItem(List<Storable> inventory, BaseState state, InventoryStorable card)
+		{
+			Storable storable = inventory[0];
+			inventory.Remove(storable);
+			Capturellectable item = await storable.FetchItem(card);
+			inventory.Add(storable);
+			return item;
+		}
 	}
 }

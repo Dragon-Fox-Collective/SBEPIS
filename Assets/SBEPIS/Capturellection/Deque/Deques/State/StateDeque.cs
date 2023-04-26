@@ -18,13 +18,10 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, InventoryStorable card) => State && inventory.Any(storable => storable.CanFetch(card));
 		
-		public override async UniTaskVoid Store(List<Storable> inventory, BaseState state)
+		public override async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, BaseState state, Capturellectable item)
 		{
 			await UniTask.WaitUntil(() => State);
-			return Mathf.Max(inventory.FindIndex(storable => !storable.HasAllCardsFull), 0);
+			return await base.StoreItem(inventory, state, item);
 		}
-		public override UniTask<int> Flush(List<Storable> inventory, BaseState state, Storable storable) => UniTask.FromResult(inventory.Count);
-		public override UniTaskVoid RestoreAfterStore(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => UniTask.FromResult(originalIndex);
-		public override UniTask<int> RestoreAfterFetch(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => UniTask.FromResult(originalIndex);
 	}
 }

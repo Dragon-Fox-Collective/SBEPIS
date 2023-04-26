@@ -26,49 +26,38 @@ namespace SBEPIS.Capturellection.Storage
 		public override bool CanFetch(InventoryStorable card) => definition.Ruleset.CanFetchFrom(inventory, state, card);
 		public override bool Contains(InventoryStorable card) => inventory.Any(storable => storable.Contains(card));
 		
-		public override async UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item)
+		public override async UniTask<StorableStoreResult> StoreItem(Capturellectable item)
 		{
-			int storeIndex = await definition.Ruleset.Store(inventory, state);
-			Storable storable = inventory[storeIndex];
-			inventory.Remove(storable);
+			DequeStoreResult res = await definition.Ruleset.StoreItem(inventory, state, item);
+			res = await definition.Ruleset.StoreItemHook(inventory, state, item, res);
 			
-			(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem) = await storable.Store(item);
-			int restoreIndex = await definition.Ruleset.RestoreAfterStore(inventory, state, storable, storeIndex);
-			inventory.Insert(restoreIndex, storable);
-			
-			if (ejectedItem && ejectedItem.TryGetComponent(out InventoryStorable flushedCard))
+			if (res.ejectedItem && res.ejectedItem.TryGetComponent(out InventoryStorable flushedCard))
 			{
 				List<InventoryStorable> cards = new(){ flushedCard };
-				await Flush(cards, storeIndex);
+				await FlushCard(cards, res.flushIndex);
 				if (cards.Count == 0)
-					ejectedItem = null;
+					res.ejectedItem = null;
 			}
 			
-			return (card, container, ejectedItem);
+			return res.ToStorableResult();
 		}
-		
-		public override async UniTask<Capturellectable> Fetch(InventoryStorable card)
+
+		public override async UniTask<Capturellectable> FetchItem(InventoryStorable card)
 		{
-			Storable storable = inventory.First(storable => storable.Contains(card));
-			int fetchIndex = inventory.IndexOf(storable);
-			inventory.Remove(storable);
-			
-			Capturellectable item = await storable.Fetch(card);
-			int restoreIndex = await definition.Ruleset.RestoreAfterFetch(inventory, state, storable, fetchIndex);
-			inventory.Insert(restoreIndex, storable);
-			
+			Capturellectable item = await definition.Ruleset.FetchItem(inventory, state, card);
+			item = await definition.Ruleset.FetchItemHook(inventory, state, card, item);
 			return item;
 		}
 		
-		public override async UniTask Flush(List<InventoryStorable> cards) => await Flush(cards, 0);
-		public async UniTask Flush(List<InventoryStorable> cards, int originalIndex)
+		public override async UniTask FlushCards(List<InventoryStorable> cards) => await FlushCard(cards, 0);
+		private async UniTask FlushCard(List<InventoryStorable> cards, int originalIndex)
 		{
 			if (HasAllCards || cards.Count == 0)
 				return;
 			
 			foreach (Storable storable in inventory.Skip(originalIndex).Concat(inventory.Take(originalIndex)))
 			{
-				await storable.Flush(cards);
+				await storable.FlushCards(cards);
 				if (cards.Count == 0)
 					break;
 			}
@@ -77,13 +66,24 @@ namespace SBEPIS.Capturellection.Storage
 			{
 				Storable storable = StorableGroupDefinition.GetNewStorable(definition.Subdefinition);
 				storable.transform.SetParent(transform);
-				await storable.Flush(cards);
+				await storable.FlushCards(cards);
 				
-				await definition.Ruleset.Flush(inventory, state, storable);
-				
+				IEnumerable<Storable> hookedStorables = await definition.Ruleset.FlushCardPreHook(inventory, state, storable);
+				foreach (Storable hookedStorable in hookedStorables)
+				{
+					await definition.Ruleset.FlushCard(inventory, state, hookedStorable);
+					await definition.Ruleset.FlushCardPostHook(inventory, state, hookedStorable);
+				}
+
 				if (cards.Count == 0)
 					break;
 			}
+		}
+		
+		public override async UniTask FetchCard(InventoryStorable card)
+		{
+			await definition.Ruleset.FetchCard(inventory, state, card);
+			await definition.Ruleset.FetchCardHook(inventory, state, card);
 		}
 		
 		public override void Load(List<InventoryStorable> cards)

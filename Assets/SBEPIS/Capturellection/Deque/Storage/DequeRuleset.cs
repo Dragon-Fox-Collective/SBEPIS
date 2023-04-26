@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -12,10 +11,18 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public abstract bool CanFetchFrom(List<Storable> inventory, DequeRulesetState state, InventoryStorable card);
 		
-		public abstract UniTaskVoid Store(List<Storable> inventory, DequeRulesetState state);
-		public abstract UniTaskVoid Flush(List<Storable> inventory, DequeRulesetState state, Storable storable);
-		public abstract UniTaskVoid RestoreAfterStore(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex);
-		public abstract UniTaskVoid RestoreAfterFetch(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex);
+		public abstract UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, DequeRulesetState state, Capturellectable item);
+		public virtual UniTask<DequeStoreResult> StoreItemHook(List<Storable> inventory, DequeRulesetState state, Capturellectable item, DequeStoreResult oldResult) => UniTask.FromResult(oldResult);
+		
+		public abstract UniTask<Capturellectable> FetchItem(List<Storable> inventory, DequeRulesetState state, InventoryStorable card);
+		public virtual UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, DequeRulesetState state, InventoryStorable card, Capturellectable oldItem) => UniTask.FromResult(oldItem);
+		
+		public abstract UniTask FlushCard(List<Storable> inventory, DequeRulesetState state, Storable storable);
+		public virtual UniTask<IEnumerable<Storable>> FlushCardPreHook(List<Storable> inventory, DequeRulesetState state, Storable storable) => UniTask.FromResult(ExtensionMethods.EnumerableOf(storable));
+		public virtual UniTask FlushCardPostHook(List<Storable> inventory, DequeRulesetState state, Storable storable) => UniTask.CompletedTask;
+		
+		public abstract UniTask FetchCard(List<Storable> inventory, DequeRulesetState state, InventoryStorable card);
+		public virtual UniTask FetchCardHook(List<Storable> inventory, DequeRulesetState state, InventoryStorable card) => UniTask.CompletedTask;
 		
 		public abstract DequeRulesetState GetNewState();
 		
@@ -37,25 +44,46 @@ namespace SBEPIS.Capturellection.Storage
 		public override bool CanFetchFrom(List<Storable> inventory, DequeRulesetState state, InventoryStorable card) => CanFetchFrom(inventory, (T)state, card);
 		public abstract bool CanFetchFrom(List<Storable> inventory, T state, InventoryStorable card);
 		
-		public override UniTaskVoid Store(List<Storable> inventory, DequeRulesetState state) => Store(inventory, (T)state);
-		public virtual UniTaskVoid Store(List<Storable> inventory, T state) => DoVoid(() => StoreSync(inventory, state));
-		public virtual void StoreSync(List<Storable> inventory, T state) => throw new InvalidOperationException("Method not overridden");
-		public override UniTaskVoid Flush(List<Storable> inventory, DequeRulesetState state, Storable storable) => Flush(inventory, (T)state, storable);
-		public virtual UniTaskVoid Flush(List<Storable> inventory, T state, Storable storable) => DoVoid(() => FlushSync(inventory, state, storable));
-		public virtual void FlushSync(List<Storable> inventory, T state, Storable storable) => throw new InvalidOperationException("Method not overridden");
-		public override UniTaskVoid RestoreAfterStore(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex) => RestoreAfterStore(inventory, (T)state, storable, originalIndex);
-		public virtual UniTaskVoid RestoreAfterStore(List<Storable> inventory, T state, Storable storable, int originalIndex) => DoVoid(() => RestoreAfterStoreSync(inventory, state, storable, originalIndex));
-		public virtual void RestoreAfterStoreSync(List<Storable> inventory, T state, Storable storable, int originalIndex) => throw new InvalidOperationException("Method not overridden");
-		public override UniTaskVoid RestoreAfterFetch(List<Storable> inventory, DequeRulesetState state, Storable storable, int originalIndex) => RestoreAfterFetch(inventory, (T)state, storable, originalIndex);
-		public virtual UniTaskVoid RestoreAfterFetch(List<Storable> inventory, T state, Storable storable, int originalIndex) => DoVoid(() => RestoreAfterFetchSync(inventory, state, storable, originalIndex));
-		public virtual void RestoreAfterFetchSync(List<Storable> inventory, T state, Storable storable, int originalIndex) => throw new InvalidOperationException("Method not overridden");
+		public override UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, DequeRulesetState state, Capturellectable item) => StoreItem(inventory, (T)state, item);
+		public abstract UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, T state, Capturellectable item);
+		public override UniTask<DequeStoreResult> StoreItemHook(List<Storable> inventory, DequeRulesetState state, Capturellectable item, DequeStoreResult oldResult) => StoreItemHook(inventory, (T)state, item, oldResult);
+		public virtual UniTask<DequeStoreResult> StoreItemHook(List<Storable> inventory, T state, Capturellectable item, DequeStoreResult oldResult) => UniTask.FromResult(oldResult);
 		
-		private static UniTaskVoid DoVoid(Action action)
-		{
-			action();
-			return new UniTaskVoid();
-		}
+		public override UniTask<Capturellectable> FetchItem(List<Storable> inventory, DequeRulesetState state, InventoryStorable card) => FetchItem(inventory, (T)state, card);
+		public abstract UniTask<Capturellectable> FetchItem(List<Storable> inventory, T state, InventoryStorable card);
+		public override UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, DequeRulesetState state, InventoryStorable card, Capturellectable oldItem) => FetchItemHook(inventory, (T)state, card, oldItem);
+		public virtual UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, T state, InventoryStorable card, Capturellectable oldItem) => UniTask.FromResult(oldItem);
+		
+		public override UniTask FlushCard(List<Storable> inventory, DequeRulesetState state, Storable storable) => FlushCard(inventory, (T)state, storable);
+		public abstract UniTask FlushCard(List<Storable> inventory, T state, Storable storable);
+		public override UniTask<IEnumerable<Storable>> FlushCardPreHook(List<Storable> inventory, DequeRulesetState state, Storable storable) => FlushCardPreHook(inventory, (T)state, storable);
+		public virtual UniTask<IEnumerable<Storable>> FlushCardPreHook(List<Storable> inventory, T state, Storable storable) => UniTask.FromResult(ExtensionMethods.EnumerableOf(storable));
+		public override UniTask FlushCardPostHook(List<Storable> inventory, DequeRulesetState state, Storable storable) => FlushCardPostHook(inventory, (T)state, storable);
+		public virtual UniTask FlushCardPostHook(List<Storable> inventory, T state, Storable storable) => UniTask.CompletedTask;
+		
+		public override UniTask FetchCard(List<Storable> inventory, DequeRulesetState state, InventoryStorable card) => FetchCard(inventory, (T)state, card);
+		public abstract UniTask FetchCard(List<Storable> inventory, T state, InventoryStorable card);
+		public override UniTask FetchCardHook(List<Storable> inventory, DequeRulesetState state, InventoryStorable card) => FetchCardHook(inventory, (T)state, card);
+		public virtual UniTask FetchCardHook(List<Storable> inventory, T state, InventoryStorable card) => UniTask.CompletedTask;
 		
 		public override DequeRulesetState GetNewState() => new T();
+	}
+	
+	public struct DequeStoreResult
+	{
+		public InventoryStorable card;
+		public CaptureContainer container;
+		public Capturellectable ejectedItem;
+		public int flushIndex;
+		
+		public DequeStoreResult(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem, int flushIndex)
+		{
+			this.card = card;
+			this.container = container;
+			this.ejectedItem = ejectedItem;
+			this.flushIndex = flushIndex;
+		}
+		
+		public StorableStoreResult ToStorableResult() => new(card, container, ejectedItem);
 	}
 }

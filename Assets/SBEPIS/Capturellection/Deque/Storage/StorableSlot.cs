@@ -31,40 +31,47 @@ namespace SBEPIS.Capturellection.Storage
 		public override bool CanFetch(InventoryStorable card) => Contains(card);
 		public override bool Contains(InventoryStorable card) => this.card == card;
 		
-		public override UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item)
+		public override UniTask<StorableStoreResult> StoreItem(Capturellectable item)
 		{
-			if (!container)
-				throw new NullReferenceException($"Tried to store in a card {card} that has no container");
+			if (!container) throw new NullReferenceException($"Tried to store in a card {card} that has no container");
 			
 			Capturellectable ejectedItem = container.Fetch();
 			container.Capture(item);
-			return UniTask.FromResult((card, container, ejectedItem));
+			return UniTask.FromResult(new StorableStoreResult(card, container, ejectedItem));
 		}
-		public override UniTask<Capturellectable> Fetch(InventoryStorable card)
+		
+		public override UniTask<Capturellectable> FetchItem(InventoryStorable card)
 		{
-			if (!container)
-				throw new NullReferenceException($"Tried to fetch from a card {this.card} that has no container");
+			if (!container) throw new NullReferenceException($"Tried to fetch from a card {this.card} that has no container");
 			
 			return UniTask.FromResult(Contains(card) ? container.Fetch() : null);
 		}
-		public override UniTask Flush(List<InventoryStorable> cards)
+		
+		public override UniTask FlushCards(List<InventoryStorable> cards)
 		{
 			Load(cards);
-			return UniTask.FromResult(0);
+			return UniTask.CompletedTask;
+		}
+		
+		public override UniTask FetchCard(InventoryStorable card)
+		{
+			if (card != this.card) return UniTask.CompletedTask;
+			this.card = null;
+			container = null;
+			maxPossibleSize = Vector3.zero;
+			return UniTask.CompletedTask;
 		}
 		
 		public override void Load(List<InventoryStorable> cards)
 		{
-			if (HasAllCards || cards.Count == 0)
-				return;
+			if (HasAllCards || cards.Count == 0) return;
 			card = cards.Pop();
 			container = card.GetComponent<CaptureContainer>();
 			maxPossibleSize = card.DequeElement.Size;
 		}
 		public override void Save(List<InventoryStorable> cards)
 		{
-			if (HasNoCards)
-				return;
+			if (HasNoCards) return;
 			cards.Add(card);
 			card = null;
 			container = null;

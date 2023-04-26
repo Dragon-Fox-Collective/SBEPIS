@@ -3,6 +3,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using NUnit.Framework;
 using SBEPIS.Capturellection;
+using SBEPIS.Capturellection.Storage;
 using SBEPIS.Utils;
 using SBEPIS.Tests.Scenes;
 using UnityEngine;
@@ -15,15 +16,15 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator StoringItem_GetsCard() => UniTask.ToCoroutine(async () =>
 		{
-			(InventoryStorable card, _, _) = await Scene.inventory.Store(Scene.item);
-			Assert.That(card, Is.Not.Null);
+			StorableStoreResult result = await Scene.inventory.Store(Scene.item);
+			Assert.That(result.card, Is.Not.Null);
 		});
 		
 		[UnityTest]
 		public IEnumerator FetchingItem_GetsOriginalItem() => UniTask.ToCoroutine(async () =>
 		{
-			(InventoryStorable card, _, _) = await Scene.inventory.Store(Scene.item);
-			Capturellectable item = await Scene.inventory.Fetch(card);
+			StorableStoreResult result = await Scene.inventory.Store(Scene.item);
+			Capturellectable item = await Scene.inventory.Fetch(result.card);
 			Assert.That(item, Is.EqualTo(Scene.item));
 		});
 
@@ -36,16 +37,16 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator StoringItem_SetsCardParent() => UniTask.ToCoroutine(async () =>
 		{
-			(InventoryStorable card, _, _) = await Scene.inventory.Store(Scene.item);
-			Assert.That(card.transform.parent, Is.EqualTo(Scene.inventory.CardParent));
+			StorableStoreResult result = await Scene.inventory.Store(Scene.item);
+			Assert.That(result.card.transform.parent, Is.EqualTo(Scene.inventory.CardParent));
 		});
 		
 		[UnityTest]
 		public IEnumerator FetchingItem_UnsetsCardParent() => UniTask.ToCoroutine(async () =>
 		{
-			(InventoryStorable card, _, _) = await Scene.inventory.Store(Scene.item);
-			await Scene.inventory.Fetch(card);
-			Assert.That(card.transform.parent, Is.Null);
+			StorableStoreResult result = await Scene.inventory.Store(Scene.item);
+			await Scene.inventory.Fetch(result.card);
+			Assert.That(result.card.transform.parent, Is.Null);
 		});
 	}
 }

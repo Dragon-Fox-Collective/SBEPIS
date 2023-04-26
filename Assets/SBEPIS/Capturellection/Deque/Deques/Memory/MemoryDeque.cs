@@ -24,40 +24,42 @@ namespace SBEPIS.Capturellection.Deques
 
 			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
 			Vector3 absDirection = state.Direction.Select(Mathf.Abs);
-			float lengthSum = offsetFromEnd ?
-				-offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude :
-				offset * (inventory.Count - 1);
+			float lengthSum = offsetXFromEnd ?
+				-offsetX * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude :
+				offsetX * (inventory.Count - 1);
 			
 			Vector3 right = -lengthSum / 2 * state.Direction;
 			foreach ((Storable storable, Vector3 size) in inventory.Zip(sizes))
 			{
 				float length = Vector3.Project(size, absDirection).magnitude;
-				right += state.Direction * (offsetFromEnd ? length / 2 : 0);
+				right += state.Direction * (offsetXFromEnd ? length / 2 : 0);
 				
 				storable.Position = right;
-				storable.Rotation = GetOffsetRotation(state.Direction);
+				storable.Rotation = ArrayDeque.GetOffsetRotation(state.Direction);
 				
-				right += state.Direction * (offset + (offsetFromEnd ? length / 2 : 0));
+				right += state.Direction * (offsetX + (offsetXFromEnd ? length / 2 : 0));
 			}
 		}
 		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, MemoryState state) => ArrayDeque.GetSizeFromExistingLayout(inventory);
 		
 		public override bool CanFetchFrom(List<Storable> inventory, MemoryState state, InventoryStorable card) => inventory.Any(storable => storable.CanFetch(card));
 		
-		public override void StoreSync(List<Storable> inventory, MemoryState state) => UniTask.FromResult(Mathf.Max(inventory.FindIndex(storable => !storable.HasAllCardsFull), 0));
-		public override void FlushSync(List<Storable> inventory, MemoryState state, Storable storable)
+		public override UniTask<IEnumerable<Storable>> FlushCardPreHook(List<Storable> inventory, MemoryState state, Storable storable)
 		{
-			(Storable, Storable) cards = (InstantiateCard(storable), InstantiateCard(storable));
-			state.backingInventory[storable] = cards;
-			inventory.Add(cards.Item1);
-			inventory.Add(cards.Item2);
+			(Storable card1, Storable card2) = (InstantiateCard(storable), InstantiateCard(storable));
+			state.backingInventory[storable] = (card1, card2);
+			return UniTask.FromResult(ExtensionMethods.EnumerableOf(card1, card2));
 		}
 		private Storable InstantiateCard(Storable storable)
 		{
 			Storable card = Instantiate(memoryCardPrefab, storable.transform.parent);
 			return card;
 		}
-		public override void RestoreAfterStoreSync(List<Storable> inventory, MemoryState state, Storable storable, int originalIndex) => UniTask.FromResult(originalIndex);
-		public override void RestoreAfterFetchSync(List<Storable> inventory, MemoryState state, Storable storable, int originalIndex) => UniTask.FromResult(originalIndex);
+		
+		public override UniTask FlushCardPostHook(List<Storable> inventory, MemoryState state, Storable storable)
+		{
+			inventory.Shuffle();
+			return UniTask.CompletedTask;
+		}
 	}
 }
