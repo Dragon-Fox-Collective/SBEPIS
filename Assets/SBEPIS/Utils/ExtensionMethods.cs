@@ -124,10 +124,16 @@ public static class ExtensionMethods
 		return value;
 	}
 	
-	public static async UniTask ForEach<T>(this IEnumerable<T> source, Func<T, UniTask> action)
+	public static async UniTask ForEach<T>(this IEnumerable<T> source, Func<T, UniTask> func)
 	{
 		foreach (T t in source)
-			await action(t);
+			await func(t);
+	}
+	
+	public static async UniTask ForEach<T1, T2>(this IEnumerable<(T1, T2)> source, Func<T1, T2, UniTask> func)
+	{
+		foreach ((T1 t1, T2 t2) in source)
+			await func(t1, t2);
 	}
 	
 	public static async UniTask<IEnumerable<TResult>> Select<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, UniTask<TResult>> action)
@@ -138,6 +144,8 @@ public static class ExtensionMethods
 			result = result.Append(await action(t));
 		return result;
 	}
+
+	public static UniTask<IEnumerable<TResult>> SelectMany<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, UniTask<IEnumerable<TResult>>> action) => source.Select(action).ContinueWith(result => result.Flatten());
 
 	public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> source) => source.SelectMany(item => item);
 	

@@ -120,13 +120,20 @@ namespace SBEPIS.Capturellection.Storage
 		{
 			if (HasNoCards)
 				return;
-
+			
 			foreach (Storable storable in inventory.ToList())
 			{
+				int initialCount = cards.Count;
+				
 				storable.Save(cards);
 				inventory.Remove(storable);
-				definition.Ruleset.SaveCardHook(inventory, state, card);
 				Destroy(storable);
+
+				for (int i = initialCount; i < cards.Count; i++)
+				{
+					InventoryStorable newCard = cards[i] = definition.Ruleset.SaveCardHook(inventory, state, cards[i]);
+					if (!newCard) cards.RemoveAt(i--);
+				}
 			}
 		}
 		
