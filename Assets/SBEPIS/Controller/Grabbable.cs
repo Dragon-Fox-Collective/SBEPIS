@@ -42,7 +42,7 @@ namespace SBEPIS.Controller
 		
 		public void Drop()
 		{
-			grabbingGrabbers.ToList().ForEach(grabber => grabber.Drop());
+			grabbingGrabbers.ToList().ForEach(grabber => grabber.DropManually());
 		}
 	}
 }

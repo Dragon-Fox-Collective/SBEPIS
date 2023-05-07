@@ -13,7 +13,7 @@ namespace SBEPIS.Tests
 		public void GrabbingDeque_ChangesCapturellectorInventory()
 		{
 			Scene.grabber.Rigidbody.MovePosition(Scene.dequeBoxGrabbable.transform.position);
-			Scene.grabber.Grab(Scene.dequeBoxGrabbable);
+			Scene.grabber.GrabManually(Scene.dequeBoxGrabbable);
 			Assert.That(Scene.capturellector.Inventory, Is.EqualTo(Scene.dequeBoxInventory));
 		}
 	}
