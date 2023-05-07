@@ -61,7 +61,7 @@ namespace SBEPIS.Capturellection.Deques
 			if (index < 0) index = Mathf.Max(inventory.FindIndex(storable => !storable.HasAllCardsFull), 0);
 			Storable storable = inventory[index];
 			StorableStoreResult res = await storable.StoreItem(item);
-			return res.ToDequeResult(index);
+			return res.ToDequeResult(index, storable);
 		}
 		
 		public override UniTask FlushCard(List<Storable> inventory, CycloneState state, Storable storable)

@@ -34,7 +34,7 @@ namespace SBEPIS.Capturellection.Storage
 			if (res.ejectedItem && res.ejectedItem.TryGetComponent(out InventoryStorable flushedCard))
 			{
 				List<InventoryStorable> cards = new(){ flushedCard };
-				await FlushCard(cards, res.flushIndex);
+				await FlushCards(cards, res.flushIndex);
 				if (cards.Count == 0)
 					res.ejectedItem = null;
 			}
@@ -49,8 +49,8 @@ namespace SBEPIS.Capturellection.Storage
 			return item;
 		}
 		
-		public override async UniTask FlushCards(List<InventoryStorable> cards) => await FlushCard(cards, 0);
-		private async UniTask FlushCard(List<InventoryStorable> cards, int originalIndex)
+		public override async UniTask FlushCards(List<InventoryStorable> cards) => await FlushCards(cards, 0);
+		private async UniTask FlushCards(List<InventoryStorable> cards, int originalIndex)
 		{
 			if (HasAllCards || cards.Count == 0)
 				return;
@@ -80,10 +80,11 @@ namespace SBEPIS.Capturellection.Storage
 			}
 		}
 		
-		public override async UniTask FetchCard(InventoryStorable card)
+		public override async UniTask<InventoryStorable> FetchCard(InventoryStorable card)
 		{
-			await definition.Ruleset.FetchCard(inventory, state, card);
-			await definition.Ruleset.FetchCardHook(inventory, state, card);
+			card = await definition.Ruleset.FetchCard(inventory, state, card);
+			card = await definition.Ruleset.FetchCardHook(inventory, state, card);
+			return card;
 		}
 		
 		public override void Load(List<InventoryStorable> cards)
@@ -104,8 +105,13 @@ namespace SBEPIS.Capturellection.Storage
 				storable.transform.SetParent(transform);
 				storable.Load(cards);
 				
-				inventory.Add(storable);
-				
+				IEnumerable<Storable> hookedStorables = definition.Ruleset.LoadCardPreHook(inventory, state, storable);
+				foreach (Storable hookedStorable in hookedStorables)
+				{
+					inventory.Add(hookedStorable);
+					definition.Ruleset.LoadCardPostHook(inventory, state, hookedStorable);
+				}
+
 				if (cards.Count == 0)
 					break;
 			}
@@ -119,6 +125,7 @@ namespace SBEPIS.Capturellection.Storage
 			{
 				storable.Save(cards);
 				inventory.Remove(storable);
+				definition.Ruleset.SaveCardHook(inventory, state, card);
 				Destroy(storable);
 			}
 		}

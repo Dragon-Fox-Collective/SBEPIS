@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace SBEPIS.Capturellection.Storage
 {
@@ -38,12 +38,18 @@ namespace SBEPIS.Capturellection.Storage
 			}
 		}
 		
+		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, T state) => GetSizeFromExistingLayout(inventory);
+		public static Vector3 GetSizeFromExistingLayout(IEnumerable<Storable> inventory) =>
+			inventory.Select(storable => new Bounds(storable.Position, storable.MaxPossibleSize)).Aggregate(new Bounds(), (current, bounds) => current.Containing(bounds)).size;
+		
+		public override bool CanFetchFrom(List<Storable> inventory, T state, InventoryStorable card) => inventory.Any(storable => storable.CanFetch(card));
+		
 		public override async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, T state, Capturellectable item)
 		{
 			int index = Mathf.Max(inventory.FindIndex(storable => !storable.HasAllCardsFull), 0);
 			Storable storable = inventory[index];
 			StorableStoreResult res = await storable.StoreItem(item);
-			return res.ToDequeResult(index);
+			return res.ToDequeResult(index, storable);
 		}
 		
 		public override async UniTask<Capturellectable> FetchItem(List<Storable> inventory, T state, InventoryStorable card)
@@ -59,11 +65,11 @@ namespace SBEPIS.Capturellection.Storage
 			return UniTask.CompletedTask;
 		}
 		
-		public override UniTask FetchCard(List<Storable> inventory, T state, InventoryStorable card)
+		public override UniTask<InventoryStorable> FetchCard(List<Storable> inventory, T state, InventoryStorable card)
 		{
 			Storable storable = inventory.Find(storable => storable.Contains(card));
 			inventory.Remove(storable);
-			return UniTask.CompletedTask;
+			return UniTask.FromResult(card);
 		}
 		
 		public override IEnumerable<Texture2D> GetCardTextures()

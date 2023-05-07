@@ -7,6 +7,6 @@ namespace SBEPIS.Capturellection.Deques
 	[Serializable]
 	public class MemoryState : DequeRulesetState
 	{
-		public Dictionary<Storable, (Storable, Storable)> backingInventory = new();
+		
 	}
 }

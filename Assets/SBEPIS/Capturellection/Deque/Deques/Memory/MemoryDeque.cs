@@ -12,7 +12,7 @@ namespace SBEPIS.Capturellection.Deques
 		public float offsetX = 0.05f;
 		public bool offsetYFromEnd = false;
 		public float offsetY = 0.05f;
-		public Storable memoryCardPrefab;
+		public ProxyCaptureContainer memoryCardPrefab;
 		
 		public override void Tick(List<Storable> inventory, MemoryState state, float deltaTime)
 		{
@@ -40,26 +40,56 @@ namespace SBEPIS.Capturellection.Deques
 				right += state.Direction * (offsetX + (offsetXFromEnd ? length / 2 : 0));
 			}
 		}
-		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, MemoryState state) => ArrayDeque.GetSizeFromExistingLayout(inventory);
 		
-		public override bool CanFetchFrom(List<Storable> inventory, MemoryState state, InventoryStorable card) => inventory.Any(storable => storable.CanFetch(card));
-		
-		public override UniTask<IEnumerable<Storable>> FlushCardPreHook(List<Storable> inventory, MemoryState state, Storable storable)
-		{
-			(Storable card1, Storable card2) = (InstantiateCard(storable), InstantiateCard(storable));
-			state.backingInventory[storable] = (card1, card2);
-			return UniTask.FromResult(ExtensionMethods.EnumerableOf(card1, card2));
-		}
-		private Storable InstantiateCard(Storable storable)
-		{
-			Storable card = Instantiate(memoryCardPrefab, storable.transform.parent);
-			return card;
-		}
-		
-		public override UniTask FlushCardPostHook(List<Storable> inventory, MemoryState state, Storable storable)
+		public override UniTask<DequeStoreResult> StoreItemHook(List<Storable> inventory, MemoryState state, Capturellectable item, DequeStoreResult oldResult)
 		{
 			inventory.Shuffle();
-			return UniTask.CompletedTask;
+			return base.StoreItemHook(inventory, state, item, oldResult);
+		}
+		
+		public override UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, MemoryState state, InventoryStorable card, Capturellectable oldItem)
+		{
+			inventory.Shuffle();
+			return base.FetchItemHook(inventory, state, card, oldItem);
+		}
+		
+		public override IEnumerable<Storable> LoadCardPreHook(List<Storable> inventory, MemoryState state, Storable storable)
+		{
+			print($"Instantiating to {storable.transform.parent}");
+			Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies = new();
+			(Storable, Storable) newStorables = (InstantiateStorable(storable, proxies), InstantiateStorable(storable, proxies));
+			return ExtensionMethods.EnumerableOf(newStorables.Item1, newStorables.Item2);
+		}
+		private Storable InstantiateStorable(Storable storable, Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies)
+		{
+			Storable newStorable = StorableGroupDefinition.GetNewStorable(storable is StorableGroup storableGroup ? storableGroup.definition : null);
+			newStorable.transform.SetParent(storable.transform.parent);
+			
+			newStorable.Load(storable.Select(card => InstantiateCard(card, proxies.GetEnsured(card))).ToList());
+			return newStorable;
+		}
+		private InventoryStorable InstantiateCard(InventoryStorable card, List<ProxyCaptureContainer> proxies)
+		{
+			ProxyCaptureContainer proxy = Instantiate(memoryCardPrefab, card.transform.parent);
+			proxy.RealContainer = card.GetComponent<CaptureContainer>();
+			proxy.OtherProxies = proxies;
+			proxies.Add(proxy);
+			
+			InventoryStorable newCard = proxy.GetComponent<InventoryStorable>();
+			newCard.Inventory = card.Inventory;
+			return newCard;
+		}
+		
+		public override void LoadCardPostHook(List<Storable> inventory, MemoryState state, Storable storable)
+		{
+			inventory.Shuffle();
+		}
+		
+		public override InventoryStorable SaveCardHook(List<Storable> inventory, MemoryState state, InventoryStorable card)
+		{
+			ProxyCaptureContainer proxy = card.GetComponent<ProxyCaptureContainer>();
+			
+			inventory.Shuffle();
 		}
 	}
 }
