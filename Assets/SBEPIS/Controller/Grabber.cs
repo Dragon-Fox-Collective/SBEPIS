@@ -15,14 +15,16 @@ namespace SBEPIS.Controller
 		private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;
 		
-		public LayerMask grabMask = 1;
+		[SerializeField] private LayerMask grabMask = 1;
+		public LayerMask GrabMask => grabMask;
 		[Tooltip("Should be within the hand collision box, far enough that you wouldn't reasonably be able to clip into it")]
-		public Transform grabNormalCaster;
+		[SerializeField, Anywhere] private Transform grabNormalCaster;
 		[Tooltip("Angle between the terrain's normal and player's up past which the grabber slips off")]
-		public float slipAngle = 80;
-		public float shortRangeGrabDistace = 1;
-
-		public Orientation playerOrientation;
+		[SerializeField] private float slipAngle = 80;
+		[SerializeField] private float shortRangeGrabDistace = 1;
+		public float ShortRangeGrabDistance = 1;
+		
+		[SerializeField, Anywhere] private Orientation playerOrientation;
 		
 		public GrabEvent onGrab = new();
 		public ColliderGrabEvent onGrabCollider = new();
@@ -68,28 +70,47 @@ namespace SBEPIS.Controller
 		{
 			if (!isActiveAndEnabled)
 				return;
-
-			if (isHoldingGrab)
-				if (IsHoldingSomething && (!HeldCollider.gameObject.activeInHierarchy || IsSlipping))
-					Drop();
-				else
-					Grab();
-			else
+			
+			if (IsHoldingSomething && (!isHoldingGrab || !HeldCollider.gameObject.activeInHierarchy || IsSlipping))
+			{
+				Debug.Log("Drop due to " + (
+					!isHoldingGrab ? "not holding grab" :
+					!HeldCollider.gameObject.activeInHierarchy ? "not active" :
+					IsSlipping ? "slipping" :
+					"something else???"));
 				Drop();
+			}
+			else if (!IsHoldingSomething && isHoldingGrab)
+			{
+				Debug.Log("Grab due to grabbing");
+				Grab();
+			}
 		}
 		
-		public void Grab()
+		public bool GrabManually(Collider collider)
+		{
+			isHoldingGrab = true;
+			return Grab(collider);
+		}
+		
+		private void Grab()
 		{
 			if (!CanGrab || IsHoldingSomething)
 				return;
 			
-			if (collidingColliders.Any(collidingCollider => Grab(collidingCollider)))
+			if (collidingColliders.Any(Grab))
 				return;
 			
 			ShortRangeGrab();
 		}
 		
-		public bool Grab(Collider collider)
+		public bool GrabManually(Grabbable grabbable)
+		{
+			isHoldingGrab = true;
+			return Grab(grabbable);
+		}
+		
+		private bool Grab(Collider collider)
 		{
 			if (!collider || IsHoldingSomething)
 				return false;
@@ -97,7 +118,7 @@ namespace SBEPIS.Controller
 			Grabbable grabbable = collider.GetAttachedComponent<Grabbable>();
 			if (grabbable)
 				return Grab(grabbable);
-
+			
 			if (CastGrabNormal(out RaycastHit hit, collider))
 			{
 				heldPureColliderNormal = hit.normal;
@@ -106,9 +127,9 @@ namespace SBEPIS.Controller
 			}
 			else
 				heldPureColliderNormal = Vector3.zero;
-
+			
 			HeldCollider = collider;
-
+			
 			heldGrabbableJoint = gameObject.AddComponent<FixedJoint>();
 			if (collider.attachedRigidbody)
 				heldGrabbableJoint.connectedBody = collider.attachedRigidbody;
@@ -118,7 +139,7 @@ namespace SBEPIS.Controller
 			return true;
 		}
 		
-		public bool Grab(Grabbable grabbable)
+		private bool Grab(Grabbable grabbable)
 		{
 			if (!grabbable || IsHoldingSomething)
 				return false;
@@ -162,14 +183,20 @@ namespace SBEPIS.Controller
 				Grab(hit.collider);
 			}
 		}
-
-		public void Drop()
+		
+		public void DropManually()
+		{
+			isHoldingGrab = false;
+			Drop();
+		}
+		
+		private void Drop()
 		{
 			if (!IsHoldingSomething)
 				return;
 			
 			print($"Dropping {(HeldGrabbable ? HeldGrabbable : HeldCollider)}");
-
+			
 			Collider droppedCollider = HeldCollider;
 			Grabbable droppedGrabbable = HeldGrabbable;
 			HeldCollider = null;

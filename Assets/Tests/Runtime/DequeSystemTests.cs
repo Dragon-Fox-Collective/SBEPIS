@@ -16,7 +16,7 @@ namespace SBEPIS.Tests
 		public void GrabbingDeque_GrabsDeque()
 		{
 			Scene.grabber.Rigidbody.MovePosition(Scene.dequeBoxGrabbable.transform.position);
-			Scene.grabber.Grab(Scene.dequeBoxGrabbable);
+			Scene.grabber.GrabManually(Scene.dequeBoxGrabbable);
 			Assert.That(Scene.grabber.HeldGrabbable, Is.EqualTo(Scene.dequeBoxGrabbable));
 		}
 		
@@ -24,21 +24,26 @@ namespace SBEPIS.Tests
 		public void DroppingDeque_StartsTrigger()
 		{
 			Scene.grabber.Rigidbody.MovePosition(Scene.dequeBoxGrabbable.transform.position);
-			Scene.grabber.Grab(Scene.dequeBoxGrabbable);
+			Scene.grabber.GrabManually(Scene.dequeBoxGrabbable);
 			Scene.grabber.Rigidbody.MovePosition(Scene.dropPoint.position);
-			Scene.grabber.Drop();
+			Scene.grabber.DropManually();
 			Assert.That(Scene.dequeBoxTrigger.IsDelaying);
 		}
 		
 		[UnityTest]
 		public IEnumerator DroppingDeque_OpensDiajector()
 		{
+			Debug.Log($"Start {Scene.dequeBox.transform.position}");
 			Scene.grabber.transform.position = Scene.dequeBoxGrabbable.transform.position;
-			Scene.grabber.Grab(Scene.dequeBoxGrabbable);
+			Scene.grabber.GrabManually(Scene.dequeBoxGrabbable);
 			Scene.grabber.transform.position = Scene.dropPoint.position;
+			Debug.Log($"Grab + Move {Scene.dequeBox.transform.position}");
 			yield return 0;
-			Scene.grabber.Drop();
+			Debug.Log($"Yield {Scene.dequeBox.transform.position}");
+			Scene.grabber.DropManually();
+			Debug.Log($"Drop {Scene.dequeBox.transform.position}");
 			yield return new WaitUntilOrTimeout(() => Scene.diajector.IsOpen, 3);
+			Debug.Log($"End {Scene.dequeBox.transform.position}");
 			Assert.That(Scene.diajector.IsOpen);
 		}
 		

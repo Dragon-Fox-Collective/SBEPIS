@@ -80,9 +80,9 @@ namespace SBEPIS.Capturellection
 			else
 				item.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
 			if (item.TryGetComponent(out Grabbable itemGrabbable))
-				grabber.Grab(itemGrabbable);
+				grabber.GrabManually(itemGrabbable);
 			else if (item.TryGetComponentInChildren(out Collider itemCollider))
-				grabber.Grab(itemCollider);
+				grabber.GrabManually(itemCollider);
 		}
 	}
 }
