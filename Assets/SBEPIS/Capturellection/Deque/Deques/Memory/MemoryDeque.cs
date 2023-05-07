@@ -87,9 +87,10 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public override InventoryStorable SaveCardHook(List<Storable> inventory, MemoryState state, InventoryStorable card)
 		{
-			ProxyCaptureContainer proxy = card.GetComponent<ProxyCaptureContainer>();
-			
 			inventory.Shuffle();
+			
+			ProxyCaptureContainer proxy = card.GetComponent<ProxyCaptureContainer>();
+			return proxy.OtherProxies[0] == proxy ? proxy.RealContainer.GetComponent<InventoryStorable>() : null;
 		}
 	}
 }
