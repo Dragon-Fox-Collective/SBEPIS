@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -9,19 +10,25 @@ namespace SBEPIS.Capturellection.Storage
 	{
 		public List<DequeRuleset> rulesets;
 		
-		public override void Tick(List<Storable> inventory, DequeRulesetLayerState state, float deltaTime) => rulesets.Zip(state.states).Reverse().ForEach(zip => zip.Item1.Tick(inventory, zip.Item2, deltaTime));
-		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, DequeRulesetLayerState state) => rulesets[0].GetMaxPossibleSizeOf(inventory, state.states[0]);
+		public override void Tick(List<Storable> inventory, DequeRulesetLayerState layerState, float deltaTime) => Zip(layerState).ForEach((ruleset, state) => ruleset.Tick(inventory, state, deltaTime));
+		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, DequeRulesetLayerState layerState) => DoOn(First, layerState, (ruleset, state) => ruleset.GetMaxPossibleSizeOf(inventory, state));
 		
-		public override bool CanFetchFrom(List<Storable> inventory, DequeRulesetLayerState state, InventoryStorable card) => rulesets.Zip(state.states).Reverse().Any(zip => zip.Item1.CanFetchFrom(inventory, zip.Item2, card));
+		public override bool CanFetchFrom(List<Storable> inventory, DequeRulesetLayerState state, InventoryStorable card) => Zip(state).Any(zip => zip.Item1.CanFetchFrom(inventory, zip.Item2, card));
 		
-		public override UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, DequeRulesetLayerState state, Capturellectable item) => rulesets[^1].StoreItem(inventory, state.states[^1], item);
-		public override UniTask<DequeStoreResult> StoreItemHook(List<Storable> inventory, DequeRulesetLayerState state, Capturellectable item, DequeStoreResult oldResult) => rulesets.Zip(state.states).Reverse().Aggregate(oldResult, (result, zip) => zip.Item1.StoreItemHook(inventory, zip.Item2, item, result));
-		public override UniTask<Capturellectable> FetchItem(List<Storable> inventory, DequeRulesetLayerState state, InventoryStorable card) => rulesets[^1].FetchItem(inventory, state.states[^1], card);
-		public override UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, DequeRulesetLayerState state, InventoryStorable card, Capturellectable oldItem) => rulesets.Zip(state.states).Reverse().Aggregate(oldItem, (result, zip) => zip.Item1.FetchItemHook(inventory, zip.Item2, card, result));
-		public override UniTask FlushCard(List<Storable> inventory, DequeRulesetLayerState state, Storable storable) => rulesets[^1].FlushCard(inventory, state.states[^1], storable);
-		public override UniTask<IEnumerable<Storable>> FlushCardPreHook(List<Storable> inventory, DequeRulesetLayerState state, Storable storable) => rulesets.Zip(state.states).Reverse().Aggregate(Enumerable.Repeat(storable, 1), (result, zip) => result.Select(res => zip.Item1.FlushCardPreHook(inventory, zip.Item2, res)).ContinueWith(res => res.Flatten()));
-		public override UniTask<InventoryStorable> FetchCard(List<Storable> inventory, DequeRulesetLayerState state, InventoryStorable card) => rulesets[^1].FetchCard(inventory, state.states[^1], card);
-		public override UniTask<InventoryStorable> FetchCardHook(List<Storable> inventory, DequeRulesetLayerState state, InventoryStorable card) => rulesets.Zip(state.states).Reverse().ForEach(zip => zip.Item1.FetchCardHook(inventory, state, card));
+		public override UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, DequeRulesetLayerState layerState, Capturellectable item) => DoOn(Last, layerState, (ruleset, state) => ruleset.StoreItem(inventory, state, item));
+		public override UniTask<DequeStoreResult> StoreItemHook(List<Storable> inventory, DequeRulesetLayerState layerState, Capturellectable item, DequeStoreResult oldResult) => Aggregate(layerState, oldResult, (result, ruleset, state) => ruleset.StoreItemHook(inventory, state, item, result));
+		public override UniTask<Capturellectable> FetchItem(List<Storable> inventory, DequeRulesetLayerState layerState, InventoryStorable card) => DoOn(Last, layerState, (ruleset, state) => ruleset.FetchItem(inventory, state, card));
+		public override UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, DequeRulesetLayerState layerState, InventoryStorable card, Capturellectable oldItem) => Aggregate(layerState, oldItem, (result, ruleset, state) => ruleset.FetchItemHook(inventory, state, card, result));
+		public override UniTask FlushCard(List<Storable> inventory, DequeRulesetLayerState layerState, Storable storable) => DoOn(Last, layerState, (ruleset, state) => ruleset.FlushCard(inventory, state, storable));
+		public override UniTask<IEnumerable<Storable>> FlushCardPreHook(List<Storable> inventory, DequeRulesetLayerState layerState, Storable storable) => Aggregate(layerState, ExtensionMethods.EnumerableOf(storable), (result, ruleset, state) => result.Select(res => ruleset.FlushCardPreHook(inventory, state, res)).ContinueWith(res => res.Flatten()));
+		public override UniTask<InventoryStorable> FetchCard(List<Storable> inventory, DequeRulesetLayerState layerState, InventoryStorable card) => DoOn(Last, layerState, (ruleset, state) => ruleset.FetchCard(inventory, state, card));
+		public override UniTask<InventoryStorable> FetchCardHook(List<Storable> inventory, DequeRulesetLayerState layerState, InventoryStorable oldCard) => Aggregate(layerState, oldCard, (result, ruleset, state) => ruleset.FetchCardHook(inventory, state, result));
+		
+		private (DequeRuleset, DequeRulesetState) First(DequeRulesetLayerState state) => (rulesets[0], state.states[0]);
+		private (DequeRuleset, DequeRulesetState) Last(DequeRulesetLayerState state) => (rulesets[^1], state.states[^1]);
+		private static T DoOn<T>(Func<DequeRulesetLayerState, (DequeRuleset, DequeRulesetState)> getter, DequeRulesetLayerState state, Func<DequeRuleset, DequeRulesetState, T> func) => func.InvokeWith(getter(state));
+		private IEnumerable<(DequeRuleset, DequeRulesetState)> Zip(DequeRulesetLayerState state) => rulesets.Zip(state.states).Reverse();
+		private UniTask<T> Aggregate<T>(DequeRulesetLayerState state, T seed, Func<T, DequeRuleset, DequeRulesetState, UniTask<T>> func) => Zip(state).Aggregate(seed, (result, zip) => func(result, zip.Item1, zip.Item2));
 		
 		public override DequeRulesetState GetNewState()
 		{
