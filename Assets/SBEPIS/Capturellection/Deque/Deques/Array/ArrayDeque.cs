@@ -48,11 +48,6 @@ namespace SBEPIS.Capturellection.Deques
 				right += state.Direction * (offset + (offsetFromEnd ? length / 2 : 0));
 			}
 		}
-		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, ArrayState state) => GetSizeFromExistingLayout(inventory);
-		public static Vector3 GetSizeFromExistingLayout(IEnumerable<Storable> inventory)
-		{
-			return inventory.Select(storable => new Bounds(storable.Position, storable.MaxPossibleSize)).Aggregate(new Bounds(), (current, bounds) => current.Containing(bounds)).size;
-		}
 		
 		public static Quaternion GetOffsetRotation(Vector3 direction) => Quaternion.AngleAxis(-5f, Vector3.Cross(direction, Vector3.forward));
 

@@ -20,8 +20,8 @@ namespace SBEPIS.Capturellection.Storage
 		public override UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, DequeRulesetLayerState state, InventoryStorable card, Capturellectable oldItem) => rulesets.Zip(state.states).Reverse().Aggregate(oldItem, (result, zip) => zip.Item1.FetchItemHook(inventory, zip.Item2, card, result));
 		public override UniTask FlushCard(List<Storable> inventory, DequeRulesetLayerState state, Storable storable) => rulesets[^1].FlushCard(inventory, state.states[^1], storable);
 		public override UniTask<IEnumerable<Storable>> FlushCardPreHook(List<Storable> inventory, DequeRulesetLayerState state, Storable storable) => rulesets.Zip(state.states).Reverse().Aggregate(Enumerable.Repeat(storable, 1), (result, zip) => result.Select(res => zip.Item1.FlushCardPreHook(inventory, zip.Item2, res)).ContinueWith(res => res.Flatten()));
-		public override UniTask FetchCard(List<Storable> inventory, DequeRulesetLayerState state, InventoryStorable card) => rulesets[^1].FetchCard(inventory, state.states[^1], card);
-		public override UniTask FetchCardHook(List<Storable> inventory, DequeRulesetLayerState state, InventoryStorable card) => rulesets.Zip(state.states).Reverse().ForEach(zip => zip.Item1.FetchCardHook(inventory, state, card));
+		public override UniTask<InventoryStorable> FetchCard(List<Storable> inventory, DequeRulesetLayerState state, InventoryStorable card) => rulesets[^1].FetchCard(inventory, state.states[^1], card);
+		public override UniTask<InventoryStorable> FetchCardHook(List<Storable> inventory, DequeRulesetLayerState state, InventoryStorable card) => rulesets.Zip(state.states).Reverse().ForEach(zip => zip.Item1.FetchCardHook(inventory, state, card));
 		
 		public override DequeRulesetState GetNewState()
 		{

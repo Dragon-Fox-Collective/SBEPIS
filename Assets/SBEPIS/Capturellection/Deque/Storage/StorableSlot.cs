@@ -53,13 +53,13 @@ namespace SBEPIS.Capturellection.Storage
 			return UniTask.CompletedTask;
 		}
 		
-		public override UniTask FetchCard(InventoryStorable card)
+		public override UniTask<InventoryStorable> FetchCard(InventoryStorable card)
 		{
-			if (card != this.card) return UniTask.CompletedTask;
+			if (card != this.card) return UniTask.FromResult(card);
 			this.card = null;
 			container = null;
 			maxPossibleSize = Vector3.zero;
-			return UniTask.CompletedTask;
+			return UniTask.FromResult(card);
 		}
 		
 		public override void Load(List<InventoryStorable> cards)

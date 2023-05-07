@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using SBEPIS.Capturellection.Storage;
-using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
@@ -11,7 +10,6 @@ namespace SBEPIS.Capturellection.Deques
 		public float offset = 0.05f;
 		
 		public override void Tick(List<Storable> inventory, BaseState state, float deltaTime) => ArrayDeque.TickLinearLayout(inventory, state, deltaTime, offsetFromEnd, offset);
-		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, BaseState state) => ArrayDeque.GetSizeFromExistingLayout(inventory);
 		
 		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, InventoryStorable card) => inventory[^1].CanFetch(card);
 		
@@ -23,7 +21,7 @@ namespace SBEPIS.Capturellection.Deques
 			inventory.Remove(storable);
 			StorableStoreResult res = await storable.StoreItem(item);
 			inventory.Insert(0, storable);
-			return res.ToDequeResult(index);
+			return res.ToDequeResult(index, storable);
 		}
 		
 		public override async UniTask<Capturellectable> FetchItem(List<Storable> inventory, BaseState state, InventoryStorable card)

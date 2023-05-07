@@ -140,6 +140,15 @@ public static class ExtensionMethods
 	public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> source) => source.SelectMany(item => item);
 	
 	public static IEnumerable<T> EnumerableOf<T>(params T[] items) => items;
+	
+	public static TValue GetEnsured<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, Func<TValue> newValueFactory)
+	{
+		if (!dictionary.ContainsKey(key))
+			dictionary.Add(key, newValueFactory());
+		return dictionary[key];
+	}
+	
+	public static TValue GetEnsured<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key) where TValue : new() => GetEnsured(dictionary, key, () => new TValue());
 
 	public static T[] Fill<T>(this T[] array, T item)
 	{

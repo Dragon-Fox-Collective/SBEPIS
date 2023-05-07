@@ -40,7 +40,7 @@ namespace SBEPIS.Capturellection.Storage
 		public abstract UniTask<StorableStoreResult> StoreItem(Capturellectable item);
 		public abstract UniTask<Capturellectable> FetchItem(InventoryStorable card);
 		public abstract UniTask FlushCards(List<InventoryStorable> cards);
-		public abstract UniTask FetchCard(InventoryStorable card);
+		public abstract UniTask<InventoryStorable> FetchCard(InventoryStorable card);
 		
 		public abstract void Load(List<InventoryStorable> cards);
 		public abstract void Save(List<InventoryStorable> cards);
@@ -110,6 +110,6 @@ namespace SBEPIS.Capturellection.Storage
 			this.ejectedItem = ejectedItem;
 		}
 
-		public DequeStoreResult ToDequeResult(int flushIndex) => new(card, container, ejectedItem, flushIndex);
+		public DequeStoreResult ToDequeResult(int flushIndex, Storable storable) => new(card, container, ejectedItem, flushIndex, storable);
 	}
 }
