@@ -5,12 +5,8 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class QueueDeque : SingleDeque<LinearLayout, LinearState>
+	public class QueueDeque : LaidOutDeque<LinearLayout, LinearState>
 	{
-		[SerializeField] private LinearLayout layout;
-		
-		public override void Tick(List<Storable> inventory, LinearState state, float deltaTime) => layout.Tick(inventory, state, deltaTime);
-		
 		public override bool CanFetchFrom(List<Storable> inventory, LinearState state, InventoryStorable card) => inventory[^1].CanFetch(card);
 		
 		public override async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, LinearState state, Capturellectable item)
@@ -40,7 +36,5 @@ namespace SBEPIS.Capturellection.Deques
 			inventory.Insert(index, storable);
 			return UniTask.CompletedTask;
 		}
-		
-		protected override LinearLayout SettingsPageLayoutData => layout;
 	}
 }

@@ -7,11 +7,11 @@ using UnityEngine;
 namespace SBEPIS.Capturellection.Deques
 {
 	[Serializable]
-	public class CycloneLayout
+	public class CycloneLayout : DequeLayoutBase
 	{
 		public float timePerCard = 1;
 		
-		public void Tick<T>(List<Storable> inventory, T state, float deltaTime) where T : DirectionState, TimeState, TopState
+		public void Tick<TState>(List<Storable> inventory, TState state, float deltaTime) where TState : DirectionState, TimeState, TopState
 		{
 			state.Time += deltaTime;
 			
@@ -34,13 +34,26 @@ namespace SBEPIS.Capturellection.Deques
 					state.TopStorable = storable;
 				
 				storable.Position = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * (innerRadius + size.y / 2);
-				storable.Rotation = Quaternion.Euler(0, 0, 180f + cardAngle) * LinearLayout.GetOffsetRotation(state.Direction);
+				storable.Rotation = Quaternion.Euler(0, 0, 180f + cardAngle) * DequeLayout.GetOffsetRotation(state.Direction);
 				
 				cardAngle += anglePerCard;
 			}
 		}
 		
-		public static float DistanceToRegularPolygonEdge(int edgeCount, float edgeLength) => edgeCount < 3 ? 0 : 0.5f * edgeLength / Mathf.Tan(Mathf.PI / edgeCount);
+		public Vector3 GetMaxPossibleSizeOf<TState>(List<Storable> inventory, TState state)
+		{
+			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
+			float longestEdge = sizes.Select(size => size.x).Aggregate(Mathf.Max);
+			float innerRadius = DistanceToRegularPolygonEdge(inventory.Count, longestEdge);
+			Vector3 maxSize = sizes.Aggregate(ExtensionMethods.Max);
+			Vector3 sumSize = new(
+				(innerRadius + maxSize.y) * 2,
+				(innerRadius + maxSize.y) * 2,
+				maxSize.z);
+			return sumSize;
+		}
+		
+		private static float DistanceToRegularPolygonEdge(int edgeCount, float edgeLength) => edgeCount < 3 ? 0 : 0.5f * edgeLength / Mathf.Tan(Mathf.PI / edgeCount);
 	}
 	
 	[Serializable]

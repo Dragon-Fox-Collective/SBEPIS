@@ -26,11 +26,8 @@ namespace SBEPIS.Capturellection.Storage
 		public DequeSettingsPageLayout<TSettingsData> lastPlaceSettingsPagePrefab;
 		
 		public abstract void Tick(List<Storable> inventory, TState state, float deltaTime);
-		
-		public virtual Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, TState state) => GetSizeFromExistingLayout(inventory);
-		private static Vector3 GetSizeFromExistingLayout(IEnumerable<Storable> inventory) =>
-			inventory.Select(storable => new Bounds(storable.Position, storable.MaxPossibleSize)).Aggregate(new Bounds(), (current, bounds) => current.Containing(bounds)).size;
-		
+		public abstract Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, TState state);
+
 		public virtual bool CanFetchFrom(List<Storable> inventory, TState state, InventoryStorable card) => inventory.Any(storable => storable.CanFetch(card));
 		
 		public virtual async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, TState state, Capturellectable item)

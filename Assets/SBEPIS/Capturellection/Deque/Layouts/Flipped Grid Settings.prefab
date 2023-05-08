@@ -13,16 +13,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 819259309248384748, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
+      propertyPath: onSliderValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3354886977915899583}
+    - target: {fileID: 819259309248384748, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onSliderValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 819259309248384748, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onSliderValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeOffset
+      value: ChangeOffsetX
       objectReference: {fileID: 0}
     - target: {fileID: 819259309248384748, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onSliderValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SBEPIS.Capturellection.Deques.StateSettingsPageLayout, SBEPIS.Capturellection.Deques
+      value: SBEPIS.Capturellection.Deques.FlippedGridSettingsPageLayout, SBEPIS.Capturellection.Layouts
       objectReference: {fileID: 0}
     - target: {fileID: 819259309248384748, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onSliderValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -41,16 +45,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
+      propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3354886977915899583}
+    - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ResetOffsetSlider
+      value: ResetOffsetXSlider
       objectReference: {fileID: 0}
     - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SBEPIS.Capturellection.Deques.StateSettingsPageLayout, SBEPIS.Capturellection.Deques
+      value: SBEPIS.Capturellection.Deques.FlippedGridSettingsPageLayout, SBEPIS.Capturellection.Layouts
       objectReference: {fileID: 0}
     - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -142,7 +150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6846042006214836021, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: m_Name
-      value: Offset
+      value: Offset X
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -154,6 +162,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5431187860142809064, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
   m_PrefabInstance: {fileID: 5245750598131761579}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4869022731313696583 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 819259309248384748, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
+  m_PrefabInstance: {fileID: 5245750598131761579}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 018fb9859844f80458b01f519d218d83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5590095138157076971
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -168,23 +187,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3403469332047266839, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
       propertyPath: m_Name
-      value: Offset From End
+      value: Offset X From End
       objectReference: {fileID: 0}
     - target: {fileID: 5705726265641856794, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
       propertyPath: onSwitchValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5705726265641856794, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
+      propertyPath: onSwitchValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3354886977915899583}
+    - target: {fileID: 5705726265641856794, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
       propertyPath: onSwitchValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5705726265641856794, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
       propertyPath: onSwitchValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeOffsetFromEnd
+      value: ChangeOffsetXFromEnd
       objectReference: {fileID: 0}
     - target: {fileID: 5705726265641856794, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
       propertyPath: onSwitchValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SBEPIS.Capturellection.Deques.StateSettingsPageLayout, SBEPIS.Capturellection.Deques
+      value: SBEPIS.Capturellection.Deques.FlippedGridSettingsPageLayout, SBEPIS.Capturellection.Layouts
       objectReference: {fileID: 0}
     - target: {fileID: 5705726265641856794, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
       propertyPath: onSwitchValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -199,16 +222,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6742789182992697164, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
+      propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3354886977915899583}
+    - target: {fileID: 6742789182992697164, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6742789182992697164, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ResetOffsetFromEndSwitch
+      value: ResetOffsetXFromEndSwitch
       objectReference: {fileID: 0}
     - target: {fileID: 6742789182992697164, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SBEPIS.Capturellection.Deques.StateSettingsPageLayout, SBEPIS.Capturellection.Deques
+      value: SBEPIS.Capturellection.Deques.FlippedGridSettingsPageLayout, SBEPIS.Capturellection.Layouts
       objectReference: {fileID: 0}
     - target: {fileID: 6742789182992697164, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -303,6 +330,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
+--- !u!114 &196696204590927601 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5705726265641856794, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
+  m_PrefabInstance: {fileID: 5590095138157076971}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 514dd5218a974c928572a3e94ab03500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3996375508811004400 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8854635079574329371, guid: 5388eef52a68dce45adbd25a1b494214, type: 3}
@@ -406,7 +444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5873276332041856545, guid: ddfd73025bf4d7c45954c5c32fa8f0dc, type: 3}
       propertyPath: m_Name
-      value: Memory Layout Settings
+      value: Flipped Grid Settings
       objectReference: {fileID: 0}
     - target: {fileID: 7015435756839868525, guid: ddfd73025bf4d7c45954c5c32fa8f0dc, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -426,6 +464,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3354886977915899583}
   m_SourcePrefab: {fileID: 100100000, guid: ddfd73025bf4d7c45954c5c32fa8f0dc, type: 3}
+--- !u!114 &2609706135979857774 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5606765256938619503, guid: ddfd73025bf4d7c45954c5c32fa8f0dc, type: 3}
+  m_PrefabInstance: {fileID: 7636049624136455425}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4069744538015036192 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5873276332041856545, guid: ddfd73025bf4d7c45954c5c32fa8f0dc, type: 3}
@@ -443,9 +492,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7bf79a453f195b4eb2850c116590f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: {fileID: 0}
-  offsetFromEndSwitch: {fileID: 0}
-  offsetSlider: {fileID: 0}
+  title: {fileID: 2609706135979857774}
+  offsetXFromEndSwitch: {fileID: 196696204590927601}
+  offsetXSlider: {fileID: 4869022731313696583}
+  offsetYFromEndSwitch: {fileID: 0}
+  offsetYSlider: {fileID: 0}
   offsetMin: 0
   offsetMax: 1
 --- !u!224 &7042464746236641546 stripped

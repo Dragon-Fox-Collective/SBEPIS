@@ -7,7 +7,7 @@ using UnityEngine;
 namespace SBEPIS.Capturellection.Deques
 {
 	[Serializable]
-	public class WobblyLayout
+	public class WobblyLayout : DequeLayoutBase
 	{
 		public bool offsetFromEnd = false;
 		public float offset = 0.05f;
@@ -15,7 +15,7 @@ namespace SBEPIS.Capturellection.Deques
 		public float wobbleTimeFactor = 1;
 		public float wobbleSpaceFactor = 1;
 		
-		public void Tick<T>(List<Storable> inventory, T state, float deltaTime) where T : DirectionState, TimeState
+		public void Tick<TState>(List<Storable> inventory, TState state, float deltaTime) where TState : DirectionState, TimeState
 		{
 			state.Time += deltaTime;
 			
@@ -41,7 +41,7 @@ namespace SBEPIS.Capturellection.Deques
 				Vector3 up = Mathf.Sin(state.Time * wobbleTimeFactor + (right - startRight).magnitude * wobbleSpaceFactor) * wobbleAmplitude * Vector3.up;
 				
 				storable.Position = right + up;
-				storable.Rotation = LinearLayout.GetOffsetRotation(state.Direction);
+				storable.Rotation = DequeLayout.GetOffsetRotation(state.Direction);
 				
 				right += state.Direction * (offset + (offsetFromEnd ? length / 2 : 0));
 			}
