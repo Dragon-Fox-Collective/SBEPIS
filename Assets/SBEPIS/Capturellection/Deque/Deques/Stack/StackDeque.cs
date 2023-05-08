@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using SBEPIS.Capturellection.Storage;
+using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class StackDeque : SingleDeque<StackDeque, BaseState>
+	public class StackDeque : SingleDeque<LinearLayout, LinearState>
 	{
-		public bool offsetFromEnd = false;
-		public float offset = 0.05f;
+		[SerializeField] private LinearLayout layout;
 		
-		public override void Tick(List<Storable> inventory, BaseState state, float deltaTime) => ArrayDeque.TickLinearLayout(inventory, state, deltaTime, offsetFromEnd, offset);
+		public override void Tick(List<Storable> inventory, LinearState state, float deltaTime) => layout.Tick(inventory, state, deltaTime);
 		
-		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, InventoryStorable card) => inventory[0].CanFetch(card);
+		public override bool CanFetchFrom(List<Storable> inventory, LinearState state, InventoryStorable card) => inventory[0].CanFetch(card);
 		
-		public override async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, BaseState state, Capturellectable item)
+		public override async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, LinearState state, Capturellectable item)
 		{
 			Storable storable = inventory[^1];
 			inventory.Remove(storable);
@@ -22,7 +22,7 @@ namespace SBEPIS.Capturellection.Deques
 			return res.ToDequeResult(inventory.Count - 1, storable);
 		}
 		
-		public override async UniTask<Capturellectable> FetchItem(List<Storable> inventory, BaseState state, InventoryStorable card)
+		public override async UniTask<Capturellectable> FetchItem(List<Storable> inventory, LinearState state, InventoryStorable card)
 		{
 			Storable storable = inventory[0];
 			inventory.Remove(storable);
@@ -30,5 +30,7 @@ namespace SBEPIS.Capturellection.Deques
 			inventory.Add(storable);
 			return item;
 		}
+		
+		protected override LinearLayout SettingsPageLayoutData => layout;
 	}
 }

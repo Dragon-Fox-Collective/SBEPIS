@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
 {
-	public abstract class SingleDeque<TSettingsDeque, TState> : MonoBehaviour, DequeRuleset<TState> where TSettingsDeque : class, DequeRuleset where TState : DequeRulesetState, new()
+	public abstract class SingleDeque<TSettingsData, TState> : MonoBehaviour, DequeRuleset<TState> where TState : DirectionState, new()
 	{
 		public string dequeNameSingluar;
 		public string dequeNamePlural;
@@ -17,13 +17,13 @@ namespace SBEPIS.Capturellection.Storage
 		public Dequeration dequeration;
 		
 		[Tooltip("Layout, capture, and fetch settings")]
-		public DequeSettingsPageLayout<TSettingsDeque> settingsPagePrefab;
+		public DequeSettingsPageLayout<TSettingsData> settingsPagePrefab;
 		[Tooltip("Layout and fetch settings only")]
-		public DequeSettingsPageLayout<TSettingsDeque> firstPlaceSettingsPagePrefab;
+		public DequeSettingsPageLayout<TSettingsData> firstPlaceSettingsPagePrefab;
 		[Tooltip("Fetch settings only")]
-		public DequeSettingsPageLayout<TSettingsDeque> middlePlaceSettingsPagePrefab;
+		public DequeSettingsPageLayout<TSettingsData> middlePlaceSettingsPagePrefab;
 		[Tooltip("Capture and fetch settings only")]
-		public DequeSettingsPageLayout<TSettingsDeque> lastPlaceSettingsPagePrefab;
+		public DequeSettingsPageLayout<TSettingsData> lastPlaceSettingsPagePrefab;
 		
 		public abstract void Tick(List<Storable> inventory, TState state, float deltaTime);
 		
@@ -71,20 +71,21 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public virtual InventoryStorable SaveCardHook(List<Storable> inventory, TState state, InventoryStorable card) => card;
 		
-		public virtual TState GetNewState() => new();
+		public TState GetNewState() => new();
 		
 		public string GetDequeNamePart(bool isFirst, bool isLast, bool isPlural) => isFirst && isLast ? isPlural ? dequeNamePlural : dequeNameSingluar : isFirst ? firstPlaceDequeName : isLast ? isPlural ? lastPlaceDequeNamePlural : lastPlaceDequeNameSingular : middlePlaceDequeName;
 		
 		public IEnumerable<DequeSettingsPageLayout> GetNewSettingsPageLayouts(bool isFirst, bool isLast)
 		{
-			DequeSettingsPageLayout<TSettingsDeque> prefab = isFirst && isLast ? settingsPagePrefab : isFirst ? firstPlaceSettingsPagePrefab : isLast ? lastPlaceSettingsPagePrefab : middlePlaceSettingsPagePrefab;
+			DequeSettingsPageLayout<TSettingsData> prefab = isFirst && isLast ? settingsPagePrefab : isFirst ? firstPlaceSettingsPagePrefab : isLast ? lastPlaceSettingsPagePrefab : middlePlaceSettingsPagePrefab;
 			if (prefab)
 			{
-				DequeSettingsPageLayout<TSettingsDeque> layout = Instantiate(prefab);
-				layout.Ruleset = (TSettingsDeque)(DequeRuleset)this;
+				DequeSettingsPageLayout<TSettingsData> layout = Instantiate(prefab);
+				layout.Object = SettingsPageLayoutData;
 				yield return layout;
 			}
 		}
+		protected abstract TSettingsData SettingsPageLayoutData { get; }
 		
 		public IEnumerable<Texture2D> GetCardTextures()
 		{

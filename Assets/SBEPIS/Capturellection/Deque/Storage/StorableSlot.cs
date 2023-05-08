@@ -85,4 +85,10 @@ namespace SBEPIS.Capturellection.Storage
 			yield return card;
 		}
 	}
+	
+	[Serializable]
+	public class SlotState : DirectionState
+	{
+		public Vector3 Direction { get; set; }
+	}
 }

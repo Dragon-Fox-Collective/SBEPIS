@@ -9,8 +9,8 @@ namespace SBEPIS.Capturellection
 		public TMP_Text title;
 	}
 	
-	public abstract class DequeSettingsPageLayout<T> : DequeSettingsPageLayout where T : DequeRuleset
+	public abstract class DequeSettingsPageLayout<T> : DequeSettingsPageLayout
 	{
-		public T Ruleset { get; set; }
+		public T Object { get; set; }
 	}
 }
