@@ -10,7 +10,7 @@ namespace SBEPIS.Capturellection.Deques
 	public class WobblyLayout : DequeLayoutBase
 	{
 		public bool offsetFromEnd = false;
-		public float offset = 0.05f;
+		public float offset = 0.1f;
 		public float wobbleAmplitude = 0.1f;
 		public float wobbleTimeFactor = 1;
 		public float wobbleSpaceFactor = 1;
