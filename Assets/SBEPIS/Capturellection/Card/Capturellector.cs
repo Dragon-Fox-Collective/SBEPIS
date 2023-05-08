@@ -59,7 +59,7 @@ namespace SBEPIS.Capturellection
 		private Capturellectable RetrieveFromContainer(CaptureContainer container)
 		{
 			Capturellectable item = container.Fetch();
-			TryGrab(item.transform);
+			if (item) TryGrab(item.transform);
 			return item;
 		}
 		
@@ -69,7 +69,7 @@ namespace SBEPIS.Capturellection
 				return null;
 			
 			Capturellectable item = await inventory.Fetch(card);
-			TryGrab(item.transform);
+			if (item) TryGrab(item.transform);
 			return item;
 		}
 		

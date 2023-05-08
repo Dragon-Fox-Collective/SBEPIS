@@ -72,19 +72,9 @@ namespace SBEPIS.Controller
 				return;
 			
 			if (IsHoldingSomething && (!isHoldingGrab || !HeldCollider.gameObject.activeInHierarchy || IsSlipping))
-			{
-				Debug.Log("Drop due to " + (
-					!isHoldingGrab ? "not holding grab" :
-					!HeldCollider.gameObject.activeInHierarchy ? "not active" :
-					IsSlipping ? "slipping" :
-					"something else???"));
 				Drop();
-			}
 			else if (!IsHoldingSomething && isHoldingGrab)
-			{
-				Debug.Log("Grab due to grabbing");
 				Grab();
-			}
 		}
 		
 		public bool GrabManually(Collider collider)
