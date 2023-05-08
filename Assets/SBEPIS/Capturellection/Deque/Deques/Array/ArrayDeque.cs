@@ -11,8 +11,6 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public override void Tick(List<Storable> inventory, WobblyState state, float deltaTime) => layout.Tick(inventory, state, deltaTime);
 		
-		public override bool CanFetchFrom(List<Storable> inventory, WobblyState state, InventoryStorable card) => inventory.Any(storable => storable.CanFetch(card));
-		
 		protected override WobblyLayout SettingsPageLayoutData => layout;
 	}
 }
