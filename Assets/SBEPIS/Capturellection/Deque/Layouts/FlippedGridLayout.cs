@@ -7,14 +7,14 @@ using UnityEngine;
 namespace SBEPIS.Capturellection.Deques
 {
 	[Serializable]
-	public class FlippedGridLayout
+	public class FlippedGridLayout : DequeLayoutBase
 	{
 		public bool offsetXFromEnd = false;
 		public float offsetX = 0.05f;
 		public bool offsetYFromEnd = false;
 		public float offsetY = 0.05f;
 		
-		public void Tick<T>(List<Storable> inventory, T state, float deltaTime) where T : DirectionState, FlippedState
+		public void Tick<TState>(List<Storable> inventory, TState state, float deltaTime) where TState : DirectionState, FlippedState
 		{
 			foreach (Storable storable in inventory)
 			{
@@ -35,7 +35,7 @@ namespace SBEPIS.Capturellection.Deques
 				right += state.Direction * (offsetXFromEnd ? length / 2 : 0);
 				
 				storable.Position = right;
-				storable.Rotation = (storable == state.FlippedStorable ? Quaternion.identity : Quaternion.Euler(0, 180, 0)) * LinearLayout.GetOffsetRotation(state.Direction);
+				storable.Rotation = (storable == state.FlippedStorable ? Quaternion.identity : Quaternion.Euler(0, 180, 0)) * DequeLayout.GetOffsetRotation(state.Direction);
 				
 				right += state.Direction * (offsetX + (offsetXFromEnd ? length / 2 : 0));
 			}

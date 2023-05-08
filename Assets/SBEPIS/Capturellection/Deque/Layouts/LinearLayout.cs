@@ -7,12 +7,12 @@ using UnityEngine;
 namespace SBEPIS.Capturellection.Deques
 {
 	[Serializable]
-	public class LinearLayout
+	public class LinearLayout : DequeLayoutBase
 	{
 		public bool offsetFromEnd = false;
 		public float offset = 0.05f;
 		
-		public void Tick(List<Storable> inventory, DirectionState state, float deltaTime)
+		public void Tick<TState>(List<Storable> inventory, TState state, float deltaTime) where TState : DirectionState
 		{
 			foreach (Storable storable in inventory)
 			{
@@ -33,13 +33,11 @@ namespace SBEPIS.Capturellection.Deques
 				right += state.Direction * (offsetFromEnd ? length / 2 : 0);
 				
 				storable.Position = right;
-				storable.Rotation = GetOffsetRotation(state.Direction);
+				storable.Rotation = DequeLayout.GetOffsetRotation(state.Direction);
 				
 				right += state.Direction * (offset + (offsetFromEnd ? length / 2 : 0));
 			}
 		}
-		
-		public static Quaternion GetOffsetRotation(Vector3 direction) => Quaternion.AngleAxis(-5f, Vector3.Cross(direction, Vector3.forward));
 	}
 	
 	[Serializable]

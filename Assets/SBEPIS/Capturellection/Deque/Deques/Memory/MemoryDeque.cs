@@ -7,12 +7,9 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class MemoryDeque : SingleDeque<FlippedGridLayout, MemoryState>
+	public class MemoryDeque : LaidOutDeque<FlippedGridLayout, MemoryState>
 	{
 		[SerializeField] private ProxyCaptureContainer memoryCardPrefab;
-		[SerializeField] private FlippedGridLayout layout;
-		
-		public override void Tick(List<Storable> inventory, MemoryState state, float deltaTime) => layout.Tick(inventory, state, deltaTime);
 		
 		public override UniTask<DequeStoreResult> StoreItemHook(List<Storable> inventory, MemoryState state, Capturellectable item, DequeStoreResult oldResult)
 		{
@@ -91,8 +88,6 @@ namespace SBEPIS.Capturellection.Deques
 			ProxyCaptureContainer proxy = card.GetComponent<ProxyCaptureContainer>();
 			return proxy.OtherProxies[0] == proxy ? proxy.RealContainer.GetComponent<InventoryStorable>() : null;
 		}
-		
-		protected override FlippedGridLayout SettingsPageLayoutData => layout;
 	}
 	
 	[Serializable]

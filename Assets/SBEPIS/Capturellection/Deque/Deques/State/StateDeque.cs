@@ -6,13 +6,9 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class StateDeque : SingleDeque<LinearLayout, LinearState>
+	public class StateDeque : LaidOutDeque<LinearLayout, LinearState>
 	{
-		[SerializeField] private LinearLayout layout;
-		
 		public bool State { get; set; }
-		
-		public override void Tick(List<Storable> inventory, LinearState state, float deltaTime) => layout.Tick(inventory, state, deltaTime);
 		
 		public override bool CanFetchFrom(List<Storable> inventory, LinearState state, InventoryStorable card) => State && inventory.Any(storable => storable.CanFetch(card));
 		
@@ -21,7 +17,5 @@ namespace SBEPIS.Capturellection.Deques
 			await UniTask.WaitUntil(() => State);
 			return await base.StoreItem(inventory, state, item);
 		}
-		
-		protected override LinearLayout SettingsPageLayoutData => layout;
 	}
 }

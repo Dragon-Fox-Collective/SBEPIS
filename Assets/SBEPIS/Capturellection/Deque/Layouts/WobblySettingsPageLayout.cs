@@ -1,6 +1,3 @@
-using SBEPIS.Utils;
-using UnityEngine;
-
 namespace SBEPIS.Capturellection.Deques
 {
 	public class WobblySettingsPageLayout : DequeSettingsPageLayout<WobblyLayout>
