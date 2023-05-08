@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class ArrayDeque : DequeBase<ArrayState>
+	public class ArrayDeque : SingleDeque<ArrayDeque, ArrayState>
 	{
 		public bool offsetFromEnd = false;
 		[FormerlySerializedAs("overlap")]

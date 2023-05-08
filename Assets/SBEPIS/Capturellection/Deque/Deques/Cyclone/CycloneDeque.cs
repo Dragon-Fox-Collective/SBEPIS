@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class CycloneDeque : DequeBase<CycloneState>
+	public class CycloneDeque : SingleDeque<CycloneDeque, CycloneState>
 	{
 		public float timePerCard = 1;
 		

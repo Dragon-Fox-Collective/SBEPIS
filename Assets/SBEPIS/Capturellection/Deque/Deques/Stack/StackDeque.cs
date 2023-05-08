@@ -4,7 +4,7 @@ using SBEPIS.Capturellection.Storage;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class StackDeque : DequeBase<BaseState>
+	public class StackDeque : SingleDeque<StackDeque, BaseState>
 	{
 		public bool offsetFromEnd = false;
 		public float offset = 0.05f;
