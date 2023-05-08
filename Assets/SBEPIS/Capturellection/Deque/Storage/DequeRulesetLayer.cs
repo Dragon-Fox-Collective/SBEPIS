@@ -30,17 +30,17 @@ namespace SBEPIS.Capturellection.Storage
 		public InventoryStorable				SaveCardHook		(List<Storable> inventory, DequeRulesetLayerState layerState, InventoryStorable oldCard)							=> Aggregate(	layerState, oldCard, (result, ruleset, state)	=> ruleset.SaveCardHook		(inventory, state, result));
 		
 		private IEnumerable<DequeRuleset> Rulesets => rulesets.Select(ruleset => ruleset.Value);
-		private (DequeRuleset, DequeRulesetState) First(DequeRulesetLayerState state) => (rulesets[0].Value, state.states[0]);
-		private (DequeRuleset, DequeRulesetState) Last(DequeRulesetLayerState state) => (rulesets[^1].Value, state.states[^1]);
-		private static T DoOn<T>(Func<DequeRulesetLayerState, (DequeRuleset, DequeRulesetState)> getter, DequeRulesetLayerState state, Func<DequeRuleset, DequeRulesetState, T> func) => func.InvokeWith(getter(state));
-		private IEnumerable<(DequeRuleset, DequeRulesetState)> Zip(DequeRulesetLayerState state) => Rulesets.Zip(state.states).Reverse();
-		private T Aggregate<T>(DequeRulesetLayerState state, T seed, Func<T, DequeRuleset, DequeRulesetState, T> func) => Zip(state).Aggregate(seed, (result, zip) => func(result, zip.Item1, zip.Item2));
-		private UniTask<T> Aggregate<T>(DequeRulesetLayerState state, T seed, Func<T, DequeRuleset, DequeRulesetState, UniTask<T>> func) => Zip(state).Aggregate(seed, (result, zip) => func(result, zip.Item1, zip.Item2));
+		private (DequeRuleset, object) First(DequeRulesetLayerState state) => (rulesets[0].Value, state.states[0]);
+		private (DequeRuleset, object) Last(DequeRulesetLayerState state) => (rulesets[^1].Value, state.states[^1]);
+		private static T DoOn<T>(Func<DequeRulesetLayerState, (DequeRuleset, object)> getter, DequeRulesetLayerState state, Func<DequeRuleset, object, T> func) => func.InvokeWith(getter(state));
+		private IEnumerable<(DequeRuleset, object)> Zip(DequeRulesetLayerState state) => Rulesets.Zip(state.states).Reverse();
+		private T Aggregate<T>(DequeRulesetLayerState state, T seed, Func<T, DequeRuleset, object, T> func) => Zip(state).Aggregate(seed, (result, zip) => func(result, zip.Item1, zip.Item2));
+		private UniTask<T> Aggregate<T>(DequeRulesetLayerState state, T seed, Func<T, DequeRuleset, object, UniTask<T>> func) => Zip(state).Aggregate(seed, (result, zip) => func(result, zip.Item1, zip.Item2));
 		
 		public DequeRulesetLayerState GetNewState()
 		{
 			DequeRulesetLayerState state = new();
-			state.states = rulesets.Select(ruleset => ruleset.Value.GetNewState()).ToList();
+			state.states = rulesets.Select(ruleset => ruleset.Value.GetNewState()).ToArray<object>();
 			return state;
 		}
 		
@@ -51,5 +51,24 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public IEnumerable<Texture2D> GetCardTextures() => Rulesets.SelectMany(ruleset => ruleset.GetCardTextures());
 		public IEnumerable<Texture2D> GetBoxTextures() => Rulesets.SelectMany(ruleset => ruleset.GetBoxTextures());
+	}
+	
+	[Serializable]
+	public class DequeRulesetLayerState : DirectionState
+	{
+		public object[] states;
+		
+		private Vector3 direction;
+		public Vector3 Direction
+		{
+			get => direction;
+			set
+			{
+				direction = value;
+				foreach (object state in states)
+					if (state is DirectionState directionState)
+						directionState.Direction = value;
+			}
+		}
 	}
 }

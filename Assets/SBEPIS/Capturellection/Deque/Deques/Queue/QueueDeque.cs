@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using SBEPIS.Capturellection.Storage;
+using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class QueueDeque : SingleDeque<QueueDeque, BaseState>
+	public class QueueDeque : SingleDeque<LinearLayout, LinearState>
 	{
-		public bool offsetFromEnd = false;
-		public float offset = 0.05f;
+		[SerializeField] private LinearLayout layout;
 		
-		public override void Tick(List<Storable> inventory, BaseState state, float deltaTime) => ArrayDeque.TickLinearLayout(inventory, state, deltaTime, offsetFromEnd, offset);
+		public override void Tick(List<Storable> inventory, LinearState state, float deltaTime) => layout.Tick(inventory, state, deltaTime);
 		
-		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, InventoryStorable card) => inventory[^1].CanFetch(card);
+		public override bool CanFetchFrom(List<Storable> inventory, LinearState state, InventoryStorable card) => inventory[^1].CanFetch(card);
 		
-		public override async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, BaseState state, Capturellectable item)
+		public override async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, LinearState state, Capturellectable item)
 		{
 			int index = inventory.FindIndex(invStorable => !invStorable.HasAllCardsEmpty) - 1;
 			if (index < 0) index = inventory.Count - 1;
@@ -24,7 +24,7 @@ namespace SBEPIS.Capturellection.Deques
 			return res.ToDequeResult(index, storable);
 		}
 		
-		public override async UniTask<Capturellectable> FetchItem(List<Storable> inventory, BaseState state, InventoryStorable card)
+		public override async UniTask<Capturellectable> FetchItem(List<Storable> inventory, LinearState state, InventoryStorable card)
 		{
 			Storable storable = inventory[^1];
 			inventory.Remove(storable);
@@ -33,12 +33,14 @@ namespace SBEPIS.Capturellection.Deques
 			return item;
 		}
 		
-		public override UniTask FlushCard(List<Storable> inventory, BaseState state, Storable storable)
+		public override UniTask FlushCard(List<Storable> inventory, LinearState state, Storable storable)
 		{
 			int index = inventory.FindIndex(invStorable => !invStorable.HasAllCardsEmpty) - 1;
 			if (index < 0) index = inventory.Count - 1;
 			inventory.Insert(index, storable);
 			return UniTask.CompletedTask;
 		}
+		
+		protected override LinearLayout SettingsPageLayoutData => layout;
 	}
 }

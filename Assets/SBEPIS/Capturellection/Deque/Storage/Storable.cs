@@ -8,7 +8,7 @@ namespace SBEPIS.Capturellection.Storage
 {
 	public abstract class Storable : MonoBehaviour, IEnumerable<InventoryStorable>
 	{
-		public DequeRulesetState state;
+		public DirectionState state;
 		
 		public Vector3 Position
 		{

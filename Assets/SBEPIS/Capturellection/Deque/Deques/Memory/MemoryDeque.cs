@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -6,45 +7,38 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class MemoryDeque : DequeBase<MemoryState>
+	public class MemoryDeque : SingleDeque<FlippedGridLayout, MemoryState>
 	{
-		public bool offsetXFromEnd = false;
-		public float offsetX = 0.05f;
-		public bool offsetYFromEnd = false;
-		public float offsetY = 0.05f;
-		public ProxyCaptureContainer memoryCardPrefab;
+		[SerializeField] private ProxyCaptureContainer memoryCardPrefab;
+		[SerializeField] private FlippedGridLayout layout;
 		
-		public override void Tick(List<Storable> inventory, MemoryState state, float deltaTime)
-		{
-			foreach (Storable storable in inventory)
-			{
-				storable.state.Direction = Quaternion.Euler(0, 0, -60) * state.Direction;
-				storable.Tick(deltaTime);
-			}
-
-			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
-			Vector3 absDirection = state.Direction.Select(Mathf.Abs);
-			float lengthSum = offsetXFromEnd ?
-				-offsetX * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude :
-				offsetX * (inventory.Count - 1);
-			
-			Vector3 right = -lengthSum / 2 * state.Direction;
-			foreach ((Storable storable, Vector3 size) in inventory.Zip(sizes))
-			{
-				float length = Vector3.Project(size, absDirection).magnitude;
-				right += state.Direction * (offsetXFromEnd ? length / 2 : 0);
-				
-				storable.Position = right;
-				storable.Rotation = ArrayDeque.GetOffsetRotation(state.Direction);
-				
-				right += state.Direction * (offsetX + (offsetXFromEnd ? length / 2 : 0));
-			}
-		}
+		public override void Tick(List<Storable> inventory, MemoryState state, float deltaTime) => layout.Tick(inventory, state, deltaTime);
 		
 		public override UniTask<DequeStoreResult> StoreItemHook(List<Storable> inventory, MemoryState state, Capturellectable item, DequeStoreResult oldResult)
 		{
 			inventory.Shuffle();
 			return base.StoreItemHook(inventory, state, item, oldResult);
+		}
+		
+		public override async UniTask<Capturellectable> FetchItem(List<Storable> inventory, MemoryState state, InventoryStorable card)
+		{
+			Storable storable = inventory.Find(storable => storable.Contains(card));
+			if (!state.FlippedStorable)
+			{
+				state.FlippedStorable = storable;
+				return null;
+			}
+			else
+			{
+				state.FlippedStorable = null;
+				if (storable == state.FlippedPair)
+				{
+					Capturellectable item = await storable.FetchItem(card);
+					return item;
+				}
+				else
+					return null;
+			}
 		}
 		
 		public override UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, MemoryState state, InventoryStorable card, Capturellectable oldItem)
@@ -58,6 +52,8 @@ namespace SBEPIS.Capturellection.Deques
 			print($"Instantiating to {storable.transform.parent}");
 			Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies = new();
 			(Storable, Storable) newStorables = (InstantiateStorable(storable, proxies), InstantiateStorable(storable, proxies));
+			state.pairs.Add(newStorables.Item1, newStorables.Item2);
+			state.pairs.Add(newStorables.Item2, newStorables.Item1);
 			return ExtensionMethods.EnumerableOf(newStorables.Item1, newStorables.Item2);
 		}
 		private Storable InstantiateStorable(Storable storable, Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies)
@@ -89,8 +85,20 @@ namespace SBEPIS.Capturellection.Deques
 		{
 			inventory.Shuffle();
 			
+			Storable storable = inventory.Find(storable => storable.Contains(card));
+			state.pairs.Remove(storable);
+			
 			ProxyCaptureContainer proxy = card.GetComponent<ProxyCaptureContainer>();
 			return proxy.OtherProxies[0] == proxy ? proxy.RealContainer.GetComponent<InventoryStorable>() : null;
 		}
+		
+		protected override FlippedGridLayout SettingsPageLayoutData => layout;
+	}
+	
+	[Serializable]
+	public class MemoryState : FlippedGridState
+	{
+		public Dictionary<Storable, Storable> pairs = new();
+		public Storable FlippedPair => FlippedStorable ? pairs[FlippedStorable] : null;
 	}
 }

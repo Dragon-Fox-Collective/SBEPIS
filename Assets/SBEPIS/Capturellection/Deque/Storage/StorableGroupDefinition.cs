@@ -31,7 +31,7 @@ namespace SBEPIS.Capturellection.Storage
 			GameObject childGameObject = new();
 			childGameObject.name = "Slot";
 			StorableSlot slot = childGameObject.AddComponent<StorableSlot>();
-			slot.state = new BaseState();
+			slot.state = new SlotState();
 			return slot;
 		}
 		
