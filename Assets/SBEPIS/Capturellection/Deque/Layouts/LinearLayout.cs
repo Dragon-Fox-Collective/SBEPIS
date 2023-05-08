@@ -10,7 +10,7 @@ namespace SBEPIS.Capturellection.Deques
 	public class LinearLayout : DequeLayoutBase
 	{
 		public bool offsetFromEnd = false;
-		public float offset = 0.05f;
+		public float offset = 0.1f;
 		
 		public void Tick<TState>(List<Storable> inventory, TState state, float deltaTime) where TState : DirectionState
 		{

@@ -10,9 +10,9 @@ namespace SBEPIS.Capturellection.Deques
 	public class FlippedGridLayout : DequeLayoutBase
 	{
 		public bool offsetXFromEnd = false;
-		public float offsetX = 0.05f;
+		public float offsetX = 0.1f;
 		public bool offsetYFromEnd = false;
-		public float offsetY = 0.05f;
+		public float offsetY = 0.1f;
 		
 		public void Tick<TState>(List<Storable> inventory, TState state, float deltaTime) where TState : DirectionState, FlippedState
 		{
