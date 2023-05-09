@@ -41,11 +41,13 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public virtual async UniTask<Capturellectable> FetchItem(List<Storable> inventory, TState state, InventoryStorable card)
 		{
-			Storable storable = inventory.Find(storable => storable.Contains(card));
+			Storable storable = StorableWithCard(inventory, card);
 			Capturellectable item = await storable.FetchItem(card);
 			return item;
 		}
 		public virtual UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, TState state, InventoryStorable card, Capturellectable oldItem) => UniTask.FromResult(oldItem);
+		
+		protected static Storable StorableWithCard(List<Storable> inventory, InventoryStorable card) => inventory.Find(storable => storable.Contains(card));
 		
 		public virtual UniTask FlushCard(List<Storable> inventory, TState state, Storable storable)
 		{
@@ -57,7 +59,7 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public virtual UniTask<InventoryStorable> FetchCard(List<Storable> inventory, TState state, InventoryStorable card)
 		{
-			Storable storable = inventory.Find(storable => storable.Contains(card));
+			Storable storable = StorableWithCard(inventory, card);
 			inventory.Remove(storable);
 			return UniTask.FromResult(card);
 		}

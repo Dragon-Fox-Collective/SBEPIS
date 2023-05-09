@@ -7,7 +7,8 @@ namespace SBEPIS.Capturellection
 	{
 		public CaptureEvent onCapture = new();
 		public CaptureEvent onFetch = new();
-		
+
+		public override Capturellectable CapturedItem => RealContainer.CapturedItem;
 		public CaptureContainer RealContainer { get; set; }
 		public List<ProxyCaptureContainer> OtherProxies { get; set; } = new();
 		
@@ -27,7 +28,6 @@ namespace SBEPIS.Capturellection
 		
 		private void CaptureProxy(Capturellectable item)
 		{
-			CapturedItem = item;
 			onCapture.Invoke(this, item);
 		}
 		
@@ -45,9 +45,7 @@ namespace SBEPIS.Capturellection
 		
 		private void FetchProxy()
 		{
-			Capturellectable item = CapturedItem;
-			CapturedItem = null;
-			onFetch.Invoke(this, item);
+			onFetch.Invoke(this, CapturedItem);
 		}
 	}
 }

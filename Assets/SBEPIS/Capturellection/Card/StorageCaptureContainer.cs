@@ -4,6 +4,9 @@ namespace SBEPIS.Capturellection
 	{
 		public CaptureEvent onCapture = new();
 		public CaptureEvent onFetch = new();
+
+		private Capturellectable capturedItem;
+		public override Capturellectable CapturedItem => capturedItem;
 		
 		private string originalName;
 		
@@ -14,7 +17,7 @@ namespace SBEPIS.Capturellection
 			if (HasCapturedItem)
 				Fetch();
 			
-			CapturedItem = item;
+			capturedItem = item;
 			originalName = name;
 			name += $" ({item.name})";
 			item.gameObject.SetActive(false);
@@ -29,7 +32,7 @@ namespace SBEPIS.Capturellection
 				return null;
 			
 			Capturellectable item = CapturedItem;
-			CapturedItem = null;
+			capturedItem = null;
 			name = originalName;
 			item.gameObject.SetActive(true);
 			item.transform.SetParent(null);

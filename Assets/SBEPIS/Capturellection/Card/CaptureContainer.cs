@@ -4,9 +4,10 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Capturellection
 {
+	// Don't try to turn this into an interface, it's used as a component in other places
 	public abstract class CaptureContainer : MonoBehaviour
 	{
-		public Capturellectable CapturedItem { get; protected set; }
+		public abstract Capturellectable CapturedItem { get; }
 		public bool HasCapturedItem => CapturedItem;
 		public bool IsEmpty => !HasCapturedItem;
 		
