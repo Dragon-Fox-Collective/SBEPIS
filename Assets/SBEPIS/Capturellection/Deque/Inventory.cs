@@ -65,12 +65,12 @@ namespace SBEPIS.Capturellection
 		private void SetupCard(InventoryStorable card)
 		{
 			card.Inventory = this;
-			card.transform.parent = cardParent;
+			card.transform.SetParent(cardParent);
 		}
 		private static void TearDownCard(InventoryStorable card)
 		{
 			card.Inventory = null;
-			card.transform.parent = null;
+			card.transform.SetParent(null);
 		}
 		
 		public void SetStorableParent(Transform transform) => storable.transform.SetParent(transform);
@@ -94,24 +94,31 @@ namespace SBEPIS.Capturellection
 		public void Tick(float deltaTime) => storable.Tick(deltaTime);
 		public void LayoutTarget(InventoryStorable card, CardTarget target) => storable.LayoutTarget(card, target);
 		public bool CanFetch(InventoryStorable card) => storable.CanFetch(card);
-		public UniTask<Capturellectable> Fetch(InventoryStorable card)
-		{
-			TearDownCard(card);
-			return storable.FetchItem(card);
-		}
-		public async UniTask<StorableStoreResult> Store(Capturellectable item)
+		public async UniTask<StorableStoreResult> StoreItem(Capturellectable item)
 		{
 			StorableStoreResult res = await storable.StoreItem(item);
-			SetupCard(res.card);
+			if (res.card) SetupCard(res.card);
 			return res;
 		}
-		public UniTask Flush(List<InventoryStorable> cards)
+		public async UniTask<Capturellectable> FetchItem(InventoryStorable card)
+		{
+			Capturellectable item = await storable.FetchItem(card);
+			if (item) TearDownCard(card);
+			return item;
+		}
+		public UniTask FlushCard(InventoryStorable card) => FlushCard(new List<InventoryStorable>{ card });
+		public UniTask FlushCard(List<InventoryStorable> cards)
 		{
 			foreach (InventoryStorable card in cards)
 				SetupCard(card);
 			return storable.FlushCards(cards);
 		}
-		public UniTask Flush(InventoryStorable card) => Flush(new List<InventoryStorable>{ card });
+		public async UniTask<InventoryStorable> FetchCard(InventoryStorable card)
+		{
+			InventoryStorable fetchedCard = await storable.FetchCard(card);
+			if (fetchedCard) TearDownCard(card);
+			return fetchedCard;
+		}
 		private void Load(List<InventoryStorable> cards)
 		{
 			foreach (InventoryStorable card in cards)

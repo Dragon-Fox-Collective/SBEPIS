@@ -16,15 +16,15 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator StoringItem_GetsCard() => UniTask.ToCoroutine(async () =>
 		{
-			StorableStoreResult result = await Scene.inventory.Store(Scene.item);
+			StorableStoreResult result = await Scene.inventory.StoreItem(Scene.item);
 			Assert.That(result.card, Is.Not.Null);
 		});
 		
 		[UnityTest]
 		public IEnumerator FetchingItem_GetsOriginalItem() => UniTask.ToCoroutine(async () =>
 		{
-			StorableStoreResult result = await Scene.inventory.Store(Scene.item);
-			Capturellectable item = await Scene.inventory.Fetch(result.card);
+			StorableStoreResult result = await Scene.inventory.StoreItem(Scene.item);
+			Capturellectable item = await Scene.inventory.FetchItem(result.card);
 			Assert.That(item, Is.EqualTo(Scene.item));
 		});
 
@@ -37,15 +37,15 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator StoringItem_SetsCardParent() => UniTask.ToCoroutine(async () =>
 		{
-			StorableStoreResult result = await Scene.inventory.Store(Scene.item);
+			StorableStoreResult result = await Scene.inventory.StoreItem(Scene.item);
 			Assert.That(result.card.transform.parent, Is.EqualTo(Scene.inventory.CardParent));
 		});
 		
 		[UnityTest]
 		public IEnumerator FetchingItem_UnsetsCardParent() => UniTask.ToCoroutine(async () =>
 		{
-			StorableStoreResult result = await Scene.inventory.Store(Scene.item);
-			await Scene.inventory.Fetch(result.card);
+			StorableStoreResult result = await Scene.inventory.StoreItem(Scene.item);
+			await Scene.inventory.FetchItem(result.card);
 			Assert.That(result.card.transform.parent, Is.Null);
 		});
 	}

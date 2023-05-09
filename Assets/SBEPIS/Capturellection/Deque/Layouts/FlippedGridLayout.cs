@@ -35,7 +35,7 @@ namespace SBEPIS.Capturellection.Deques
 				right += state.Direction * (offsetXFromEnd ? length / 2 : 0);
 				
 				storable.Position = right;
-				storable.Rotation = (storable == state.FlippedStorable ? Quaternion.identity : Quaternion.Euler(0, 180, 0)) * DequeLayout.GetOffsetRotation(state.Direction);
+				storable.Rotation = (storable != state.FlippedStorable && !storable.HasAllCardsEmpty ? Quaternion.Euler(0, 180, 0) : Quaternion.identity) * DequeLayout.GetOffsetRotation(state.Direction);
 				
 				right += state.Direction * (offsetX + (offsetXFromEnd ? length / 2 : 0));
 			}

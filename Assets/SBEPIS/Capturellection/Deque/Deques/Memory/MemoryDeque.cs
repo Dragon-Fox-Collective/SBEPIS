@@ -19,28 +19,24 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public override async UniTask<Capturellectable> FetchItem(List<Storable> inventory, MemoryState state, InventoryStorable card)
 		{
-			Storable storable = inventory.Find(storable => storable.Contains(card));
-			if (!state.FlippedStorable)
+			Storable storable = StorableWithCard(inventory, card);
+			if (!state.FlippedStorable && !storable.HasAllCardsEmpty)
 			{
 				state.FlippedStorable = storable;
+				state.wasFlippedThisAttempt = true;
 				return null;
 			}
-			else
-			{
-				state.FlippedStorable = null;
-				if (storable == state.FlippedPair)
-				{
-					Capturellectable item = await storable.FetchItem(card);
-					return item;
-				}
-				else
-					return null;
-			}
+			
+			if (storable == state.FlippedPair)
+				return await storable.FetchItem(card);
+			
+			return null;
 		}
 		
 		public override UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, MemoryState state, InventoryStorable card, Capturellectable oldItem)
 		{
-			inventory.Shuffle();
+			if (!state.wasFlippedThisAttempt) state.FlippedStorable = null;
+			state.wasFlippedThisAttempt = false;
 			return base.FetchItemHook(inventory, state, card, oldItem);
 		}
 		
@@ -93,6 +89,7 @@ namespace SBEPIS.Capturellection.Deques
 	[Serializable]
 	public class MemoryState : FlippedGridState
 	{
+		public bool wasFlippedThisAttempt;
 		public Dictionary<Storable, Storable> pairs = new();
 		public Storable FlippedPair => FlippedStorable ? pairs[FlippedStorable] : null;
 	}

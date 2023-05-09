@@ -25,7 +25,7 @@ namespace SBEPIS.Capturellection
 			if (!isActiveAndEnabled || !context.performed || !grabber.HeldGrabbable)
 				return;
 			
-			if (grabber.HeldGrabbable.TryGetComponent(out CaptureContainer container) && container.HasCapturedItem)
+			if (grabber.HeldGrabbable.TryGetComponent(out CaptureContainer container))
 				RetrieveAndGrabItem(container).Forget();
 			else if (grabber.HeldGrabbable.TryGetComponent(out Capturellectable item))
 				CaptureAndGrabCard(item).Forget();
@@ -33,7 +33,7 @@ namespace SBEPIS.Capturellection
 		
 		public async UniTask<CaptureContainer> CaptureAndGrabCard(Capturellectable item)
 		{
-			StorableStoreResult result = await inventory.Store(item);
+			StorableStoreResult result = await inventory.StoreItem(item);
 			MoveEjectedItem(result.card, result.ejectedItem);
 			TryGrab(result.container.transform);
 			return result.container;
@@ -68,7 +68,7 @@ namespace SBEPIS.Capturellection
 			if (!inventory.CanFetch(card))
 				return null;
 			
-			Capturellectable item = await inventory.Fetch(card);
+			Capturellectable item = await inventory.FetchItem(card);
 			if (item) TryGrab(item.transform);
 			return item;
 		}
