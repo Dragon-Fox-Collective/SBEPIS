@@ -58,10 +58,9 @@ namespace SBEPIS.Capturellection
 		private void SaveInventoryFromDeque()
 		{
 			savedInventory = Save();
-			Destroy(storable.gameObject);
 			onSaveFromDeque.Invoke(this, savedInventory);
 		}
-
+		
 		private void SetupCard(InventoryStorable card)
 		{
 			card.Inventory = this;
@@ -73,12 +72,10 @@ namespace SBEPIS.Capturellection
 			card.transform.SetParent(null);
 		}
 		
-		public void SetStorableParent(Transform transform) => storable.transform.SetParent(transform);
-		
 		public Vector3 Direction
 		{
-			get => storable.state.Direction;
-			set => storable.state.Direction = value;
+			get => storable.Direction;
+			set => storable.Direction = value;
 		}
 		public Vector3 Position
 		{
@@ -90,22 +87,13 @@ namespace SBEPIS.Capturellection
 			get => storable.Rotation;
 			set => storable.Rotation = value;
 		}
+		public void SetStorableParent(Transform transform) => storable.Parent = transform;
 		public Vector3 MaxPossibleSize => storable.MaxPossibleSize;
 		public void Tick(float deltaTime) => storable.Tick(deltaTime);
 		public void LayoutTarget(InventoryStorable card, CardTarget target) => storable.LayoutTarget(card, target);
 		public bool CanFetch(InventoryStorable card) => storable.CanFetch(card);
-		public async UniTask<StorableStoreResult> StoreItem(Capturellectable item)
-		{
-			StorableStoreResult res = await storable.StoreItem(item);
-			if (res.card) SetupCard(res.card);
-			return res;
-		}
-		public async UniTask<Capturellectable> FetchItem(InventoryStorable card)
-		{
-			Capturellectable item = await storable.FetchItem(card);
-			if (item) TearDownCard(card);
-			return item;
-		}
+		public UniTask<StorableStoreResult> StoreItem(Capturellectable item) => storable.StoreItem(item);
+		public UniTask<Capturellectable> FetchItem(InventoryStorable card) => storable.FetchItem(card);
 		public UniTask FlushCard(InventoryStorable card) => FlushCard(new List<InventoryStorable>{ card });
 		public UniTask FlushCard(List<InventoryStorable> cards)
 		{
@@ -119,6 +107,7 @@ namespace SBEPIS.Capturellection
 			if (fetchedCard) TearDownCard(card);
 			return fetchedCard;
 		}
+		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetRuleset, DequeInteraction<TState> action) => storable.Interact(card, targetRuleset, action);
 		private void Load(List<InventoryStorable> cards)
 		{
 			foreach (InventoryStorable card in cards)

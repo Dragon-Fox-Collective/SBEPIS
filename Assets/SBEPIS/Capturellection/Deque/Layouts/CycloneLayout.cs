@@ -17,7 +17,7 @@ namespace SBEPIS.Capturellection.Deques
 			
 			foreach (Storable storable in inventory)
 			{
-				storable.state.Direction = Quaternion.Euler(0, 0, -90) * state.Direction;
+				storable.Direction = Quaternion.Euler(0, 0, -90) * state.Direction;
 				storable.Tick(deltaTime * storable.InventoryCount);
 			}
 			
@@ -57,8 +57,9 @@ namespace SBEPIS.Capturellection.Deques
 	}
 	
 	[Serializable]
-	public class CycloneState : DirectionState, TimeState, TopState
+	public class CycloneState : InventoryState, DirectionState, TimeState, TopState
 	{
+		public List<Storable> Inventory { get; set; }
 		public Vector3 Direction { get; set; }
 		public float Time { get; set; }
 		public Storable TopStorable { get; set; }

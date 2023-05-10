@@ -6,30 +6,32 @@ namespace SBEPIS.Capturellection.Storage
 {
 	public interface DequeRuleset
 	{
-		public void Tick(List<Storable> inventory, object state, float deltaTime);
-		public Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, object state);
+		public void Tick(object state, float deltaTime);
+		public Vector3 GetMaxPossibleSizeOf(object state);
 		
-		public bool CanFetchFrom(List<Storable> inventory, object state, InventoryStorable card);
+		public bool CanFetchFrom(object state, InventoryStorable card);
 		
-		public UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, object state, Capturellectable item);
-		public UniTask<DequeStoreResult> StoreItemHook(List<Storable> inventory, object state, Capturellectable item, DequeStoreResult oldResult);
+		public UniTask<DequeStoreResult> StoreItem(object state, Capturellectable item);
+		public UniTask<DequeStoreResult> StoreItemHook(object state, Capturellectable item, DequeStoreResult oldResult);
 		
-		public UniTask<Capturellectable> FetchItem(List<Storable> inventory, object state, InventoryStorable card);
-		public UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, object state, InventoryStorable card, Capturellectable oldItem);
+		public UniTask<Capturellectable> FetchItem(object state, InventoryStorable card);
+		public UniTask<Capturellectable> FetchItemHook(object state, InventoryStorable card, Capturellectable oldItem);
 		
-		public UniTask FlushCard(List<Storable> inventory, object state, Storable storable);
-		public UniTask<IEnumerable<Storable>> FlushCardPreHook(List<Storable> inventory, object state, Storable storable);
-		public UniTask FlushCardPostHook(List<Storable> inventory, object state, Storable storable);
+		public UniTask FlushCard(object state, Storable storable);
+		public UniTask<IEnumerable<Storable>> FlushCardPreHook(object state, Storable storable);
+		public UniTask FlushCardPostHook(object state, Storable storable);
 		
-		public UniTask<InventoryStorable> FetchCard(List<Storable> inventory, object state, InventoryStorable card);
-		public UniTask<InventoryStorable> FetchCardHook(List<Storable> inventory, object state, InventoryStorable card);
+		public UniTask<InventoryStorable> FetchCard(object state, InventoryStorable card);
+		public UniTask<InventoryStorable> FetchCardHook(object state, InventoryStorable card);
 		
-		public IEnumerable<Storable> LoadCardPreHook(List<Storable> inventory, object state, Storable storable);
-		public void LoadCardPostHook(List<Storable> inventory, object state, Storable storable);
+		public UniTask Interact<TState>(object state, InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action);
 		
-		public InventoryStorable SaveCardHook(List<Storable> inventory, object state, InventoryStorable card);
+		public IEnumerable<Storable> LoadCardPreHook(object state, Storable storable);
+		public void LoadCardPostHook(object state, Storable storable);
 		
-		public DirectionState GetNewState();
+		public InventoryStorable SaveCardHook(object state, InventoryStorable card);
+		
+		public object GetNewState();
 		
 		public string GetDequeNamePart(bool isFirst, bool isLast, bool isPlural);
 		
@@ -39,60 +41,66 @@ namespace SBEPIS.Capturellection.Storage
 		public IEnumerable<Texture2D> GetBoxTextures();
 	}
 	
-	public interface DequeRuleset<TState> : DequeRuleset where TState : DirectionState
+	public interface DequeRuleset<TState> : DequeRuleset where TState : InventoryState, DirectionState
 	{
-		public void Tick(List<Storable> inventory, TState state, float deltaTime);
-		public Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, TState state);
+		public void Tick(TState state, float deltaTime);
+		public Vector3 GetMaxPossibleSizeOf(TState state);
 		
-		public bool CanFetchFrom(List<Storable> inventory, TState state, InventoryStorable card);
+		public bool CanFetchFrom(TState state, InventoryStorable card);
 		
-		public UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, TState state, Capturellectable item);
-		public UniTask<DequeStoreResult> StoreItemHook(List<Storable> inventory, TState state, Capturellectable item, DequeStoreResult oldResult);
+		public UniTask<DequeStoreResult> StoreItem(TState state, Capturellectable item);
+		public UniTask<DequeStoreResult> StoreItemHook(TState state, Capturellectable item, DequeStoreResult oldResult);
 		
-		public UniTask<Capturellectable> FetchItem(List<Storable> inventory, TState state, InventoryStorable card);
-		public UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, TState state, InventoryStorable card, Capturellectable oldItem);
+		public UniTask<Capturellectable> FetchItem(TState state, InventoryStorable card);
+		public UniTask<Capturellectable> FetchItemHook(TState state, InventoryStorable card, Capturellectable oldItem);
 		
-		public UniTask FlushCard(List<Storable> inventory, TState state, Storable storable);
-		public UniTask<IEnumerable<Storable>> FlushCardPreHook(List<Storable> inventory, TState state, Storable storable);
-		public UniTask FlushCardPostHook(List<Storable> inventory, TState state, Storable storable);
+		public UniTask FlushCard(TState state, Storable storable);
+		public UniTask<IEnumerable<Storable>> FlushCardPreHook(TState state, Storable storable);
+		public UniTask FlushCardPostHook(TState state, Storable storable);
 		
-		public UniTask<InventoryStorable> FetchCard(List<Storable> inventory, TState state, InventoryStorable card);
-		public UniTask<InventoryStorable> FetchCardHook(List<Storable> inventory, TState state, InventoryStorable card);
+		public UniTask<InventoryStorable> FetchCard(TState state, InventoryStorable card);
+		public UniTask<InventoryStorable> FetchCardHook(TState state, InventoryStorable card);
 		
-		public IEnumerable<Storable> LoadCardPreHook(List<Storable> inventory, TState state, Storable storable);
-		public void LoadCardPostHook(List<Storable> inventory, TState state, Storable storable);
+		public UniTask Interact<TIState>(TState state, InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TIState> action);
 		
-		public InventoryStorable SaveCardHook(List<Storable> inventory, TState state, InventoryStorable card);
+		public IEnumerable<Storable> LoadCardPreHook(TState state, Storable storable);
+		public void LoadCardPostHook(TState state, Storable storable);
+		
+		public InventoryStorable SaveCardHook(TState state, InventoryStorable card);
 		
 		public new TState GetNewState();
 		
 		// Explicit implementations
 		
-		void DequeRuleset.Tick(List<Storable> inventory, object state, float deltaTime) => Tick(inventory, (TState)state, deltaTime);
-		Vector3 DequeRuleset.GetMaxPossibleSizeOf(List<Storable> inventory, object state) => GetMaxPossibleSizeOf(inventory, (TState)state);
+		void DequeRuleset.Tick(object state, float deltaTime) => Tick((TState)state, deltaTime);
+		Vector3 DequeRuleset.GetMaxPossibleSizeOf(object state) => GetMaxPossibleSizeOf((TState)state);
 		
-		bool DequeRuleset.CanFetchFrom(List<Storable> inventory, object state, InventoryStorable card) => CanFetchFrom(inventory, (TState)state, card);
+		bool DequeRuleset.CanFetchFrom(object state, InventoryStorable card) => CanFetchFrom((TState)state, card);
 		
-		UniTask<DequeStoreResult> DequeRuleset.StoreItem(List<Storable> inventory, object state, Capturellectable item) => StoreItem(inventory, (TState)state, item);
-		UniTask<DequeStoreResult> DequeRuleset.StoreItemHook(List<Storable> inventory, object state, Capturellectable item, DequeStoreResult oldResult) => StoreItemHook(inventory, (TState)state, item, oldResult);
+		UniTask<DequeStoreResult> DequeRuleset.StoreItem(object state, Capturellectable item) => StoreItem((TState)state, item);
+		UniTask<DequeStoreResult> DequeRuleset.StoreItemHook(object state, Capturellectable item, DequeStoreResult oldResult) => StoreItemHook((TState)state, item, oldResult);
 		
-		UniTask<Capturellectable> DequeRuleset.FetchItem(List<Storable> inventory, object state, InventoryStorable card) => FetchItem(inventory, (TState)state, card);
-		UniTask<Capturellectable> DequeRuleset.FetchItemHook(List<Storable> inventory, object state, InventoryStorable card, Capturellectable oldItem) => FetchItemHook(inventory, (TState)state, card, oldItem);
+		UniTask<Capturellectable> DequeRuleset.FetchItem(object state, InventoryStorable card) => FetchItem((TState)state, card);
+		UniTask<Capturellectable> DequeRuleset.FetchItemHook(object state, InventoryStorable card, Capturellectable oldItem) => FetchItemHook((TState)state, card, oldItem);
 		
-		UniTask DequeRuleset.FlushCard(List<Storable> inventory, object state, Storable storable) => FlushCard(inventory, (TState)state, storable);
-		UniTask<IEnumerable<Storable>> DequeRuleset.FlushCardPreHook(List<Storable> inventory, object state, Storable storable) => FlushCardPreHook(inventory, (TState)state, storable);
-		UniTask DequeRuleset.FlushCardPostHook(List<Storable> inventory, object state, Storable storable) => FlushCardPostHook(inventory, (TState)state, storable);
+		UniTask DequeRuleset.FlushCard(object state, Storable storable) => FlushCard((TState)state, storable);
+		UniTask<IEnumerable<Storable>> DequeRuleset.FlushCardPreHook(object state, Storable storable) => FlushCardPreHook((TState)state, storable);
+		UniTask DequeRuleset.FlushCardPostHook(object state, Storable storable) => FlushCardPostHook((TState)state, storable);
 		
-		UniTask<InventoryStorable> DequeRuleset.FetchCard(List<Storable> inventory, object state, InventoryStorable card) => FetchCard(inventory, (TState)state, card);
-		UniTask<InventoryStorable> DequeRuleset.FetchCardHook(List<Storable> inventory, object state, InventoryStorable card) => FetchCardHook(inventory, (TState)state, card);
+		UniTask<InventoryStorable> DequeRuleset.FetchCard(object state, InventoryStorable card) => FetchCard((TState)state, card);
+		UniTask<InventoryStorable> DequeRuleset.FetchCardHook(object state, InventoryStorable card) => FetchCardHook((TState)state, card);
 		
-		IEnumerable<Storable> DequeRuleset.LoadCardPreHook(List<Storable> inventory, object state, Storable storable) => LoadCardPreHook(inventory, (TState)state, storable);
-		void DequeRuleset.LoadCardPostHook(List<Storable> inventory, object state, Storable storable) => LoadCardPostHook(inventory, (TState)state, storable);
+		UniTask DequeRuleset.Interact<TIState>(object state, InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TIState> action) => Interact((TState)state, card, targetDeque, action);
 		
-		InventoryStorable DequeRuleset.SaveCardHook(List<Storable> inventory, object state, InventoryStorable card) => SaveCardHook(inventory, (TState)state, card);
+		IEnumerable<Storable> DequeRuleset.LoadCardPreHook(object state, Storable storable) => LoadCardPreHook((TState)state, storable);
+		void DequeRuleset.LoadCardPostHook(object state, Storable storable) => LoadCardPostHook((TState)state, storable);
 		
-		DirectionState DequeRuleset.GetNewState() => GetNewState();
+		InventoryStorable DequeRuleset.SaveCardHook(object state, InventoryStorable card) => SaveCardHook((TState)state, card);
+		
+		object DequeRuleset.GetNewState() => GetNewState();
 	}
+	
+	public delegate UniTask DequeInteraction<in TState>(TState state, InventoryStorable card);
 	
 	public struct DequeStoreResult
 	{

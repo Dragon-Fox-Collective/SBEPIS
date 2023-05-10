@@ -52,6 +52,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1627630628583300106, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
+      propertyPath: onUse.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627630628583300106, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
+      propertyPath: onUse.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627630628583300106, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
+      propertyPath: onUse.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 7050713998186600545}
+    - target: {fileID: 1627630628583300106, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
+      propertyPath: onUse.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627630628583300106, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
+      propertyPath: onUse.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Flip
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627630628583300106, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
+      propertyPath: onUse.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SBEPIS.Capturellection.Deques.MemoryDequeCard, SBEPIS.Capturellection.Deques
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627630628583300106, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
+      propertyPath: onUse.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4095734523507371316, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
       propertyPath: m_Name
       value: Memory Card
@@ -67,6 +95,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4095734523507371316, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3011410385405918019}
+    - targetCorrespondingSourceObject: {fileID: 4095734523507371316, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7050713998186600545}
   m_SourcePrefab: {fileID: 100100000, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
 --- !u!114 &51776448385642637 stripped
 MonoBehaviour:
@@ -77,6 +108,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ea103b4ef2854b48913993f43a1da91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4519225043933425464 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6379177909321711626, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
+  m_PrefabInstance: {fileID: 7363640173974826802}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6838187581392634374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ba5a301ba91427099c9b766665c6aea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6838187581392634374 stripped
@@ -96,6 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d34fb7c1da3c61b458bb2e92f43c248b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  realContainer: {fileID: 0}
+  otherProxies: []
   onCapture:
     m_PersistentCalls:
       m_Calls:
@@ -216,6 +260,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7050713998186600545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6838187581392634374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1542605777145c2891b6a45585941bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: {fileID: 4519225043933425464}
+  proxy: {fileID: 8477240900651072022}
+  flipTracker: {fileID: 3011410385405918019}
 --- !u!114 &6880123713085819636 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -5094701846435961402, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}

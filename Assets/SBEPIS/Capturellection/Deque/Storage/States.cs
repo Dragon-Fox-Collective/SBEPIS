@@ -1,7 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
 {
+	public interface InventoryState
+	{
+		public List<Storable> Inventory { get; set; }
+	}
+	
 	public interface DirectionState
 	{
 		public Vector3 Direction { get; set; }
@@ -14,7 +20,7 @@ namespace SBEPIS.Capturellection.Storage
 	
 	public interface FlippedState
 	{
-		public Storable FlippedStorable { get; set; }
+		public List<Storable> FlippedStorables { get; }
 	}
 	
 	public interface TopState

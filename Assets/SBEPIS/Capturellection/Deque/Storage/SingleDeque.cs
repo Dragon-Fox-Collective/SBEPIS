@@ -5,70 +5,67 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
 {
-	public abstract class SingleDeque<TSettingsData, TState> : MonoBehaviour, DequeRuleset<TState> where TState : DirectionState, new()
+	public abstract class SingleDeque<TSettingsData, TState> : MonoBehaviour, DequeRuleset<TState> where TState : InventoryState, DirectionState, new()
 	{
-		public string dequeNameSingluar;
-		public string dequeNamePlural;
-		public string firstPlaceDequeName;
-		public string middlePlaceDequeName;
-		public string lastPlaceDequeNameSingular;
-		public string lastPlaceDequeNamePlural;
+		[SerializeField] private string dequeNameSingluar;
+		[SerializeField] private string dequeNamePlural;
+		[SerializeField] private string firstPlaceDequeName;
+		[SerializeField] private string middlePlaceDequeName;
+		[SerializeField] private string lastPlaceDequeNameSingular;
+		[SerializeField] private string lastPlaceDequeNamePlural;
 		
-		public Dequeration dequeration;
+		[SerializeField] private Dequeration dequeration;
 		
 		[Tooltip("Layout, capture, and fetch settings")]
-		public DequeSettingsPageLayout<TSettingsData> settingsPagePrefab;
+		[SerializeField] private DequeSettingsPageLayout<TSettingsData> settingsPagePrefab;
 		[Tooltip("Layout and fetch settings only")]
-		public DequeSettingsPageLayout<TSettingsData> firstPlaceSettingsPagePrefab;
+		[SerializeField] private DequeSettingsPageLayout<TSettingsData> firstPlaceSettingsPagePrefab;
 		[Tooltip("Fetch settings only")]
-		public DequeSettingsPageLayout<TSettingsData> middlePlaceSettingsPagePrefab;
+		[SerializeField] private DequeSettingsPageLayout<TSettingsData> middlePlaceSettingsPagePrefab;
 		[Tooltip("Capture and fetch settings only")]
-		public DequeSettingsPageLayout<TSettingsData> lastPlaceSettingsPagePrefab;
+		[SerializeField] private DequeSettingsPageLayout<TSettingsData> lastPlaceSettingsPagePrefab;
 		
-		public abstract void Tick(List<Storable> inventory, TState state, float deltaTime);
-		public abstract Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, TState state);
+		public abstract void Tick(TState state, float deltaTime);
+		public abstract Vector3 GetMaxPossibleSizeOf(TState state);
 
-		public virtual bool CanFetchFrom(List<Storable> inventory, TState state, InventoryStorable card) => inventory.Any(storable => storable.CanFetch(card));
+		public virtual bool CanFetchFrom(TState state, InventoryStorable card) => state.Inventory.Any(storable => storable.CanFetch(card));
 		
-		public virtual async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, TState state, Capturellectable item)
+		public virtual async UniTask<DequeStoreResult> StoreItem(TState state, Capturellectable item)
 		{
-			int index = Mathf.Max(inventory.FindIndex(storable => !storable.HasAllCardsFull), 0);
-			Storable storable = inventory[index];
+			int index = Mathf.Max(state.Inventory.FindIndex(storable => !storable.HasAllCardsFull), 0);
+			Storable storable = state.Inventory[index];
 			StorableStoreResult res = await storable.StoreItem(item);
 			return res.ToDequeResult(index, storable);
 		}
-		public virtual UniTask<DequeStoreResult> StoreItemHook(List<Storable> inventory, TState state, Capturellectable item, DequeStoreResult oldResult) => UniTask.FromResult(oldResult);
+		public virtual UniTask<DequeStoreResult> StoreItemHook(TState state, Capturellectable item, DequeStoreResult oldResult) => UniTask.FromResult(oldResult);
 		
-		public virtual async UniTask<Capturellectable> FetchItem(List<Storable> inventory, TState state, InventoryStorable card)
+		public virtual UniTask<Capturellectable> FetchItem(TState state, InventoryStorable card) => StorableWithCard(state, card).FetchItem(card);
+		public virtual UniTask<Capturellectable> FetchItemHook(TState state, InventoryStorable card, Capturellectable oldItem) => UniTask.FromResult(oldItem);
+		
+		protected static Storable StorableWithCard(TState state, InventoryStorable card) => state.Inventory.Find(storable => storable.Contains(card));
+		
+		public virtual UniTask FlushCard(TState state, Storable storable)
 		{
-			Storable storable = StorableWithCard(inventory, card);
-			Capturellectable item = await storable.FetchItem(card);
-			return item;
-		}
-		public virtual UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, TState state, InventoryStorable card, Capturellectable oldItem) => UniTask.FromResult(oldItem);
-		
-		protected static Storable StorableWithCard(List<Storable> inventory, InventoryStorable card) => inventory.Find(storable => storable.Contains(card));
-		
-		public virtual UniTask FlushCard(List<Storable> inventory, TState state, Storable storable)
-		{
-			inventory.Add(storable);
+			state.Inventory.Add(storable);
 			return UniTask.CompletedTask;
 		}
-		public virtual UniTask<IEnumerable<Storable>> FlushCardPreHook(List<Storable> inventory, TState state, Storable storable) => UniTask.FromResult(LoadCardPreHook(inventory, state, storable));
-		public virtual UniTask FlushCardPostHook(List<Storable> inventory, TState state, Storable storable) { LoadCardPostHook(inventory, state, storable); return UniTask.CompletedTask; }
+		public virtual UniTask<IEnumerable<Storable>> FlushCardPreHook(TState state, Storable storable) => UniTask.FromResult(LoadCardPreHook(state, storable));
+		public virtual UniTask FlushCardPostHook(TState state, Storable storable) { LoadCardPostHook(state, storable); return UniTask.CompletedTask; }
 		
-		public virtual UniTask<InventoryStorable> FetchCard(List<Storable> inventory, TState state, InventoryStorable card)
+		public virtual UniTask<InventoryStorable> FetchCard(TState state, InventoryStorable card)
 		{
-			Storable storable = StorableWithCard(inventory, card);
-			inventory.Remove(storable);
+			Storable storable = StorableWithCard(state, card);
+			state.Inventory.Remove(storable);
 			return UniTask.FromResult(card);
 		}
-		public virtual UniTask<InventoryStorable> FetchCardHook(List<Storable> inventory, TState state, InventoryStorable card) => UniTask.FromResult(SaveCardHook(inventory, state, card));
+		public virtual UniTask<InventoryStorable> FetchCardHook(TState state, InventoryStorable card) => UniTask.FromResult(SaveCardHook(state, card));
 		
-		public virtual IEnumerable<Storable> LoadCardPreHook(List<Storable> inventory, TState state, Storable storable) => ExtensionMethods.EnumerableOf(storable);
-		public virtual void LoadCardPostHook(List<Storable> inventory, TState state, Storable storable) { }
+		public UniTask Interact<TIState>(TState state, InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TIState> action) => ReferenceEquals(targetDeque, this) ? action((TIState)(object)state, card) : StorableWithCard(state, card).Interact(card, targetDeque, action);
 		
-		public virtual InventoryStorable SaveCardHook(List<Storable> inventory, TState state, InventoryStorable card) => card;
+		public virtual IEnumerable<Storable> LoadCardPreHook(TState state, Storable storable) => ExtensionMethods.EnumerableOf(storable);
+		public virtual void LoadCardPostHook(TState state, Storable storable) { }
+		
+		public virtual InventoryStorable SaveCardHook(TState state, InventoryStorable card) => card;
 		
 		public TState GetNewState() => new();
 		
