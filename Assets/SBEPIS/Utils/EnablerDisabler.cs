@@ -8,8 +8,11 @@ namespace SBEPIS.Utils
 	{
 		public List<Component> thingsToEnable;
 
+		public bool IsEnabled { get; private set; } = true;
+		
 		public void Enable()
 		{
+			IsEnabled = true;
 			foreach (Component component in thingsToEnable)
 				if (component is Behaviour behaviour)
 					behaviour.enabled = true;
@@ -20,9 +23,10 @@ namespace SBEPIS.Utils
 				else
 					throw new ArgumentException($"{component.GetType()} is not a supported type to enable");
 		}
-
+		
 		public void Disable()
 		{
+			IsEnabled = false;
 			foreach (Component component in thingsToEnable)
 				if (component is Behaviour behaviour)
 					behaviour.enabled = false;
