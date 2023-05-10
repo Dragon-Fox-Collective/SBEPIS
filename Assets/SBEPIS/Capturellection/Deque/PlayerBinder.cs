@@ -1,4 +1,3 @@
-using KBCore.Refs;
 using SBEPIS.Controller;
 using UnityEngine;
 using UnityEngine.Events;
