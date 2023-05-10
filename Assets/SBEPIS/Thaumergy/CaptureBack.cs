@@ -10,6 +10,7 @@ namespace SBEPIS.Capturellection
 		[SerializeField] private Renderer[] renderers;
 		
 		private BitSet bits;
+		private bool showing = true;
 		
 		private static readonly int Seed = Shader.PropertyToID("_Seed");
 		private static readonly int CaptureCode = Shader.PropertyToID("_Capture_Code");
@@ -23,13 +24,26 @@ namespace SBEPIS.Capturellection
 		public void UpdateCaptureCode(BitSet bits)
 		{
 			this.bits = bits;
-			ShowCode();
+			if (showing) SetMaterialCode(bits);
 		}
 		
-		public void ResetCaptureCode() => UpdateCaptureCode(default);
+		public void ResetCaptureCode()
+		{
+			bits = default;
+			SetMaterialCode(default);
+		}
 		
-		public void ShowCode() => SetMaterialCode(bits);
-		public void HideCode() => SetMaterialCode(default);
+		public void ShowCode()
+		{
+			showing = true;
+			SetMaterialCode(bits);
+		}
+		
+		public void HideCode()
+		{
+			showing = false;
+			SetMaterialCode(default);
+		}
 		
 		private void SetMaterialCode(BitSet bits) => renderers.PerformOnMaterial(captureMaterial, material => {
 			material.SetFloat(Seed, BitManager.instance.Bits.BitSetToSeed(bits));
