@@ -35,7 +35,7 @@ namespace SBEPIS.Capturellection
 		{
 			StorableStoreResult result = await inventory.StoreItem(item);
 			MoveEjectedItem(result.card, result.ejectedItem);
-			TryGrab(result.container.transform);
+			TryGrab(result.container.transform).Forget();
 			return result.container;
 		}
 
@@ -44,9 +44,9 @@ namespace SBEPIS.Capturellection
 			if (!ejectedItem)
 				return;
 			
-			Action<Vector3, Quaternion> move = ejectedItem.TryGetComponent(out Rigidbody ejectedItemRigidbody) ?
-				ejectedItemRigidbody.Move :
-				ejectedItem.transform.SetPositionAndRotation;
+			Action<Vector3, Quaternion> move = ejectedItem.TryGetComponent(out Rigidbody ejectedItemRigidbody)
+				? ejectedItemRigidbody.Move
+				: ejectedItem.transform.SetPositionAndRotation;
 			if (card.DequeElement.ShouldBeDisplayed)
 				move(card.transform.position, card.transform.rotation);
 			else
@@ -59,7 +59,7 @@ namespace SBEPIS.Capturellection
 		private Capturellectable RetrieveFromContainer(CaptureContainer container)
 		{
 			Capturellectable item = container.Fetch();
-			if (item) TryGrab(item.transform);
+			if (item) TryGrab(item.transform).Forget();
 			return item;
 		}
 		
@@ -69,20 +69,23 @@ namespace SBEPIS.Capturellection
 				return null;
 			
 			Capturellectable item = await inventory.FetchItem(card);
-			if (item) TryGrab(item.transform);
+			if (item) TryGrab(item.transform).Forget();
 			return item;
 		}
 		
-		private void TryGrab(Transform item)
+		private async UniTask TryGrab(Transform item)
 		{
 			if (item.TryGetComponent(out Rigidbody itemRigidbody))
 				itemRigidbody.Move(grabber.transform.position, grabber.transform.rotation);
 			else
 				item.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
+			
+			await UniTask.NextFrame();
+			
 			if (item.TryGetComponent(out Grabbable itemGrabbable))
-				grabber.GrabManually(itemGrabbable);
+				grabber.GrabManually(itemGrabbable, true);
 			else if (item.TryGetComponentInChildren(out Collider itemCollider))
-				grabber.GrabManually(itemCollider);
+				grabber.GrabManually(itemCollider, true);
 		}
 	}
 }

@@ -77,33 +77,33 @@ namespace SBEPIS.Controller
 				Grab();
 		}
 		
-		public bool GrabManually(Collider collider)
-		{
-			isHoldingGrab = true;
-			return Grab(collider);
-		}
-		
 		private void Grab()
 		{
 			if (!CanGrab || IsHoldingSomething)
 				return;
 			
-			if (collidingColliders.Any(Grab))
+			if (collidingColliders.Any(collider => Grab(collider)))
 				return;
 			
 			ShortRangeGrab();
 		}
 		
-		public bool GrabManually(Grabbable grabbable)
+		public bool GrabManually(Collider collider, bool dropIfHoldingSomething = false)
 		{
 			isHoldingGrab = true;
-			return Grab(grabbable);
+			return Grab(collider, dropIfHoldingSomething);
 		}
 		
-		private bool Grab(Collider collider)
+		private bool Grab(Collider collider, bool dropIfHoldingSomething = false)
 		{
-			if (!collider || IsHoldingSomething)
+			if (!collider)
 				return false;
+			
+			if (IsHoldingSomething)
+				if (dropIfHoldingSomething)
+					Drop();
+				else
+					return false;
 			
 			Grabbable grabbable = collider.GetAttachedComponent<Grabbable>();
 			if (grabbable)
@@ -129,10 +129,22 @@ namespace SBEPIS.Controller
 			return true;
 		}
 		
-		private bool Grab(Grabbable grabbable)
+		public bool GrabManually(Grabbable grabbable, bool dropIfHoldingSomething = false)
 		{
-			if (!grabbable || IsHoldingSomething)
+			isHoldingGrab = true;
+			return Grab(grabbable, dropIfHoldingSomething);
+		}
+		
+		private bool Grab(Grabbable grabbable, bool dropIfHoldingSomething = false)
+		{
+			if (!grabbable)
 				return false;
+			
+			if (IsHoldingSomething)
+				if (dropIfHoldingSomething)
+					Drop();
+				else
+					return false;
 			
 			print($"Grabbing {grabbable}");
 			
