@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
@@ -30,6 +31,11 @@ namespace SBEPIS.Capturellection
 		{
 			SaveInitialInventory();
 			LoadInventoryIntoDeque(deque.Definition, deque.transform);
+		}
+		
+		private void Update()
+		{
+			Tick(Time.deltaTime);
 		}
 		
 		private void SaveInitialInventory()
@@ -72,11 +78,6 @@ namespace SBEPIS.Capturellection
 			card.transform.SetParent(null);
 		}
 		
-		public Vector3 Direction
-		{
-			get => storable.Direction;
-			set => storable.Direction = value;
-		}
 		public Vector3 Position
 		{
 			get => storable.Position;
@@ -90,6 +91,7 @@ namespace SBEPIS.Capturellection
 		public void SetStorableParent(Transform transform) => storable.Parent = transform;
 		public Vector3 MaxPossibleSize => storable.MaxPossibleSize;
 		public void Tick(float deltaTime) => storable.Tick(deltaTime);
+		public void Layout(Vector3 direction) => storable.Layout(direction);
 		public void LayoutTarget(InventoryStorable card, CardTarget target) => storable.LayoutTarget(card, target);
 		public bool CanFetch(InventoryStorable card) => storable.CanFetch(card);
 		public UniTask<StorableStoreResult> StoreItem(Capturellectable item) => storable.StoreItem(item);

@@ -13,18 +13,27 @@ public static class ExtensionMethods
 	{
 		return (value - inputFrom) / (inputTo - inputFrom) * (outputTo - outputFrom) + outputFrom;
 	}
-
+	
 	/// <summary>
 	/// Returns positive mod of value
 	/// </summary>
 	public static float Mod(this float value, float mod)
 	{
 		float res = value % mod;
-		if (res < 0)
-			res += mod;
+		if (res < 0) res += mod;
 		return res;
 	}
-
+	
+	/// <summary>
+	/// Returns positive mod of value
+	/// </summary>
+	public static int Mod(this int value, int mod)
+	{
+		int res = value % mod;
+		if (res < 0) res += mod;
+		return res;
+	}
+	
 	/// <summary>
 	/// Returns mod of value between -mod/2 and mod/2
 	/// </summary>
@@ -118,6 +127,7 @@ public static class ExtensionMethods
 	public static bool Any(this IEnumerable<bool> source) => source.Any(b => b);
 	
 	public static TResult InvokeWith<T1, T2, TResult>(this Func<T1, T2, TResult> func, (T1, T2) args) => func(args.Item1, args.Item2);
+	public static void InvokeWith<T1, T2>(this Action<T1, T2> func, (T1, T2) args) => func(args.Item1, args.Item2);
 	
 	public static async UniTask<TAccumulate> Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, UniTask<TAccumulate>> func)
 	{
