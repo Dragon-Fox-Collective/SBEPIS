@@ -1,34 +1,35 @@
+using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace SBEPIS.Utils
 {
-	public class TransformLerper : MonoBehaviour
+	public class TransformLerper : ValidatedMonoBehaviour
     {
+	    [SerializeField, Self(Flag.Optional)]
+	    private new Rigidbody rigidbody;
+		
     	public float timeToComplete = 1;
     	public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     	public UnityEvent onEnd = new();
-    
+		
     	public Transform start;
     	public Transform target;
-    
+	    
     	private float time = 0;
-    
-    	private new Rigidbody rigidbody;
-    
+		
     	private void Awake()
     	{
     		enabled = false;
-    		rigidbody = GetComponent<Rigidbody>();
     		if (rigidbody)
     			rigidbody.Disable();
     	}
-    
+		
     	private void OnEnable()
     	{
     		time = 0;
     	}
-    
+		
     	private void Update()
     	{
     		time += Time.deltaTime / timeToComplete;
@@ -44,7 +45,7 @@ namespace SBEPIS.Utils
     			onEnd.Invoke();
     		}
     	}
-    
+		
     	public TransformLerper Chain(Transform next)
     	{
     		TransformLerper newLerper = gameObject.AddComponent<TransformLerper>();

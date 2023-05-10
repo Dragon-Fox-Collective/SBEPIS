@@ -1,10 +1,13 @@
+using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Controller
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class OrienterJoint : MonoBehaviour
+	public class OrienterJoint : ValidatedMonoBehaviour
 	{
+		[SerializeField, Self] private new Rigidbody rigidbody;
+		
 		public float acceleration = 1;
 		
 		private Vector3 velocity = Vector3.zero;
@@ -12,12 +15,6 @@ namespace SBEPIS.Controller
 		private Vector3 up = Vector3.up;
 		private float timeSinceStanding = 0;
 		private const float StandTimeTimeoutThreshold = 1;
-		private new Rigidbody rigidbody;
-
-		private void Awake()
-		{
-			rigidbody = GetComponent<Rigidbody>();
-		}
 		
 		public void Orient(Vector3 up)
 		{

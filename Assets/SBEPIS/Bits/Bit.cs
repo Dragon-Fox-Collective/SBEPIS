@@ -1,21 +1,22 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Bits
 {
 	[CreateAssetMenu]
 	public class Bit : ScriptableObject
 	{
-		[SerializeField]
-		private string _bitName;
-		public string bitName => _bitName;
+		[FormerlySerializedAs("_bitName")]
+		[SerializeField] private string bitName;
+		public string BitName => bitName;
 		
-		public override string ToString() => _bitName;
+		public override string ToString() => bitName;
 		
 		public static Bit New(string bitName)
 		{
 			Bit bit = CreateInstance<Bit>();
-			bit._bitName = bitName;
+			bit.bitName = bitName;
 			return bit;
 		}
 	}

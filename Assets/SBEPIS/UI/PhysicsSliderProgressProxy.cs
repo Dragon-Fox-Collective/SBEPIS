@@ -1,23 +1,16 @@
+using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace SBEPIS.UI
 {
 	[RequireComponent(typeof(PhysicsSlider))]
-	public class PhysicsSliderProgressProxy : MonoBehaviour
+	public class PhysicsSliderProgressProxy : ValidatedMonoBehaviour
 	{
+		[SerializeField, Self] private PhysicsSlider slider;
+		
 		public UnityEvent<float> onInvokeProgress = new();
-
-		private PhysicsSlider slider;
-
-		private void Awake()
-		{
-			slider = GetComponent<PhysicsSlider>();
-		}
-
-		public void Invoke()
-		{
-			onInvokeProgress.Invoke(slider.progress);
-		}
+		
+		public void Invoke() => onInvokeProgress.Invoke(slider.progress);
 	}
 }

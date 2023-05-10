@@ -10,47 +10,37 @@ namespace SBEPIS.Controller
 	public class CouplingSocket : MonoBehaviour
 	{
 		public List<GameObjectPredicate> predicates = new();
-
+		
 		public CoupleEvent onCouple = new();
 		public CoupleEvent onDecouple = new();
 		
-		public bool isCoupled => plug;
-
-		public CouplingPlug plug { get; private set; }
-		public FixedJoint joint { get; private set; }
-
-		private List<CouplingPlug> collidingPlugs = new();
-		private new Rigidbody rigidbody;
-
-		private void Awake()
-		{
-			rigidbody = GetComponent<Rigidbody>();
-		}
-
+		public bool IsCoupled => plug;
+		
+		private CouplingPlug plug;
+		private FixedJoint joint;
+		
 		public void OnTriggerEnter(Collider other)
 		{
 			CouplingPlug newPlug = other.GetAttachedComponent<CouplingPlug>();
 			if (!newPlug)
 				return;
 			
-			collidingPlugs.Add(newPlug);
-			newPlug.grabbable.onDrop.AddListener(Couple);
+			newPlug.Grabbable.onDrop.AddListener(Couple);
 		}
-
+		
 		private void OnTriggerExit(Collider other)
 		{
 			CouplingPlug newPlug = other.GetAttachedComponent<CouplingPlug>();
 			if (!newPlug)
 				return;
 			
-			collidingPlugs.Remove(newPlug);
-			newPlug.grabbable.onDrop.RemoveListener(Couple);
+			newPlug.Grabbable.onDrop.RemoveListener(Couple);
 		}
-
+		
 		public void Couple(Grabber grabber, Grabbable grabbable) => Couple(grabbable.GetComponent<CouplingPlug>());
 		public void Couple(CouplingPlug plug)
 		{
-			if (isCoupled)
+			if (IsCoupled)
 			{
 				Debug.LogError($"Tried to couple {plug} to {this} when socket already coupled to {this.plug}");
 				return;
@@ -58,23 +48,23 @@ namespace SBEPIS.Controller
 			
 			if (!predicates.AreTrue(plug.gameObject))
 				return;
-
+			
 			plug.transform.position = transform.position;
 			plug.transform.rotation = transform.rotation;
 			joint = gameObject.AddComponent<FixedJoint>();
 			joint.autoConfigureConnectedAnchor = false;
-			joint.connectedBody = plug.grabbable.rigidbody;
+			joint.connectedBody = plug.Grabbable.Rigidbody;
 			joint.anchor = joint.connectedAnchor = Vector3.zero;
 			
 			this.plug = plug;
-			plug.GetCoupled(this);
+			plug.OnCoupled(this);
 			onCouple.Invoke(plug, this);
 		}
-
+		
 		public void Decouple(Grabber grabber, Grabbable grabbable) => Decouple(grabbable.GetComponent<CouplingPlug>());
 		public void Decouple(CouplingPlug plug)
 		{
-			if (!isCoupled)
+			if (!IsCoupled)
 			{
 				Debug.LogError($"Tried to decouple plug from {this} when socket had no coupling");
 				return;
@@ -87,10 +77,11 @@ namespace SBEPIS.Controller
 			Destroy(joint);
 			
 			this.plug = null;
-			plug.GetDecoupled();
+			plug.OnDecoupled();
 			onDecouple.Invoke(plug, this);
 		}
 	}
-
+	
+	[Serializable]
 	public class CoupleEvent : UnityEvent<CouplingPlug, CouplingSocket> { }
 }
