@@ -62,7 +62,7 @@ namespace SBEPIS.Tests
 		[Test]
 		public void NewCards_HaveDiajector()
 		{
-			Scene.diajector.StartAssembly(null, Vector3.zero, Quaternion.identity);
+			Scene.diajector.StartAssembly(Vector3.zero, Quaternion.identity);
 			Assert.That(Scene.inventory.First().DequeElement.Diajector);
 		}
 
@@ -71,7 +71,7 @@ namespace SBEPIS.Tests
 		{
 			Assert.That(Scene.cardTargets.Count, Is.GreaterThan(0));
 			
-			Scene.diajector.StartAssembly(null, Vector3.zero, Quaternion.identity);
+			Scene.diajector.StartAssembly(Vector3.zero, Quaternion.identity);
 			
 			Dictionary<CardTarget, bool> reached = new();
 			foreach (CardTarget cardTarget in Scene.cardTargets)
