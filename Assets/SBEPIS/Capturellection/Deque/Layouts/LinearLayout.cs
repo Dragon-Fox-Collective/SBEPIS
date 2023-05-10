@@ -12,13 +12,10 @@ namespace SBEPIS.Capturellection.Deques
 		public bool offsetFromEnd = false;
 		public float offset = 0.1f;
 		
-		public void Tick<TState>(List<Storable> inventory, TState state, float deltaTime) where TState : DirectionState
+		public void Layout<TState>(List<Storable> inventory, TState state) where TState : DirectionState
 		{
 			foreach (Storable storable in inventory)
-			{
-				storable.Direction = Quaternion.Euler(0, 0, -60) * state.Direction;
-				storable.Tick(deltaTime);
-			}
+				storable.Layout(Quaternion.Euler(0, 0, -60) * state.Direction);
 			
 			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
 			Vector3 absDirection = state.Direction.Select(Mathf.Abs);

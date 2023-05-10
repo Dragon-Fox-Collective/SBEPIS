@@ -9,17 +9,23 @@ namespace SBEPIS.Capturellection.Deques
 	[Serializable]
 	public class CycloneLayout : DequeLayoutBase
 	{
-		public float timePerCard = 1;
+		public float timePerCard = 3;
 		
 		public void Tick<TState>(List<Storable> inventory, TState state, float deltaTime) where TState : DirectionState, TimeState, TopState
 		{
 			state.Time += deltaTime;
 			
+			if (inventory.Count > 0)
+				state.TopStorable = inventory[^(Mathf.FloorToInt(state.Time / timePerCard - 0.5f).Mod(inventory.Count) + 1)];
+			
 			foreach (Storable storable in inventory)
-			{
-				storable.Direction = Quaternion.Euler(0, 0, -90) * state.Direction;
 				storable.Tick(deltaTime * storable.InventoryCount);
-			}
+		}
+		
+		public void Layout<TState>(List<Storable> inventory, TState state) where TState : DirectionState, TimeState, TopState
+		{
+			foreach (Storable storable in inventory)
+				storable.Layout(Quaternion.Euler(0, 0, -90) * state.Direction);
 			
 			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
 			float longestEdge = sizes.Select(size => size.x).Aggregate(Mathf.Max);
@@ -29,10 +35,6 @@ namespace SBEPIS.Capturellection.Deques
 			float cardAngle = state.Time / timePerCard * anglePerCard;
 			foreach ((Storable storable, Vector3 size) in inventory.Zip(sizes))
 			{
-				float modAngle = cardAngle.ModAround(360);
-				if (Mathf.Abs(modAngle) < anglePerCard / 2)
-					state.TopStorable = storable;
-				
 				storable.Position = Quaternion.Euler(0, 0, cardAngle) * Vector3.up * (innerRadius + size.y / 2);
 				storable.Rotation = Quaternion.Euler(0, 0, 180f + cardAngle) * DequeLayout.GetOffsetRotation(state.Direction);
 				

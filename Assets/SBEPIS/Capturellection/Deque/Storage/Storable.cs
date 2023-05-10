@@ -10,7 +10,6 @@ namespace SBEPIS.Capturellection.Storage
 	{
 		public Vector3 Position { get; set; }
 		public Quaternion Rotation { get; set; }
-		public Vector3 Direction { get; set; }
 		public Transform Parent { get; set; }
 		
 		public Vector3 MaxPossibleSize { get; }
@@ -24,6 +23,7 @@ namespace SBEPIS.Capturellection.Storage
 		public bool HasAllCardsFull { get; }
 		
 		public void Tick(float deltaTime);
+		public void Layout(Vector3 direction);
 		public void LayoutTarget(InventoryStorable card, CardTarget target);
 		
 		public bool CanFetch(InventoryStorable card);

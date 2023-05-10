@@ -20,7 +20,6 @@ namespace SBEPIS.Capturellection.Storage
 			get => transform.localRotation;
 			set => transform.localRotation = value;
 		}
-		public Vector3 Direction { get; set; }
 		public Transform Parent
 		{
 			set => transform.SetParent(value);
@@ -38,6 +37,7 @@ namespace SBEPIS.Capturellection.Storage
 		public bool HasAllCardsFull => !HasAllCardsEmpty;
 
 		public void Tick(float deltaTime) { }
+		public void Layout(Vector3 direction) { }
 		public void LayoutTarget(InventoryStorable card, CardTarget target)
 		{
 			if (Contains(card))

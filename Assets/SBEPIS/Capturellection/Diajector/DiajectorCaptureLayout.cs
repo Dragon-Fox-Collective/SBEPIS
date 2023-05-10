@@ -24,7 +24,7 @@ namespace SBEPIS.Capturellection
 		
 		private void Update()
 		{
-			TickAndLayoutTargets(Time.deltaTime);
+			LayoutTargets();
 		}
 		
 		public void SetInventoryStorableParent(Inventory inventory)
@@ -32,10 +32,10 @@ namespace SBEPIS.Capturellection
 			inventory.SetStorableParent(transform);
 		}
 		
-		private void TickAndLayoutTargets(float deltaTime)
+		private void LayoutTargets()
 		{
-			inventory.Direction = directionEndpoint ? transform.InverseTransformPoint(directionEndpoint.position).normalized : Vector3.zero;
-			inventory.Tick(deltaTime);
+			inventory.Layout(directionEndpoint ? transform.InverseTransformPoint(directionEndpoint.position).normalized : Vector3.zero);
+			
 			Vector3 inventorySize = inventory.MaxPossibleSize;
 			inventory.Position = Vector3.back * (cardZ + inventorySize.z / 2);
 			inventory.Rotation = Quaternion.identity;

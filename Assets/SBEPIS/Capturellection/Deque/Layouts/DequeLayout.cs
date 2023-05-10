@@ -10,6 +10,7 @@ namespace SBEPIS.Capturellection.Deques
 	public interface DequeLayout
 	{
 		public void Tick(List<Storable> inventory, object state, float deltaTime);
+		public void Layout(List<Storable> inventory, object state);
 		public Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, object state);
 		
 		protected static Vector3 GetSizeFromExistingLayout(IEnumerable<Storable> inventory) =>
@@ -22,20 +23,34 @@ namespace SBEPIS.Capturellection.Deques
 	{
 		public void Tick(List<Storable> inventory, object state, float deltaTime)
 		{
-			MethodInfo method = GetType().GetMethods().FirstOrDefault(method => method.Name == "Tick" && method.IsGenericMethod);
-			if (method != null)
-				method.MakeGenericMethod(state.GetType()).Invoke(this, new[] { inventory, state, deltaTime });
-			else
+			if (!PerformMagic((Action<List<Storable>, object, float>)Tick, state, new[] { inventory, state, deltaTime }, out object _))
+				inventory.ForEach(storable => storable.Tick(deltaTime));
+		}
+		
+		public void Layout(List<Storable> inventory, object state)
+		{
+			if(!PerformMagic((Action<List<Storable>, object>)Layout, state, new[] { inventory, state }, out object _))
 				throw new NotImplementedException();
 		}
 		
-		public Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, object state)
+		public Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, object state) =>
+			PerformMagic((Func<List<Storable>, object, Vector3>)GetMaxPossibleSizeOf, state, new[] { inventory, state }, out Vector3 size)
+				? size
+				: DequeLayout.GetSizeFromExistingLayout(inventory);
+		
+		private bool PerformMagic<T>(Delegate baseMethod, object state, object[] parameters, out T methodReturn)
 		{
-			MethodInfo method = GetType().GetMethods().FirstOrDefault(method => method.Name == "GetMaxPossibleSizeOf" && method.IsGenericMethod);
+			MethodInfo method = GetType().GetMethods().FirstOrDefault(method => method.Name == baseMethod.Method.Name && method.IsGenericMethod);
 			if (method != null)
-				return (Vector3)method.MakeGenericMethod(state.GetType()).Invoke(this, new[] { inventory, state });
+			{
+				methodReturn = (T)method.MakeGenericMethod(state.GetType()).Invoke(this, parameters);
+				return true;
+			}
 			else
-				return DequeLayout.GetSizeFromExistingLayout(inventory);
+			{
+				methodReturn = default;
+				return false;
+			}
 		}
 	}
 }

@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Utils
 {
-	public class UpdateExecutor : MonoBehaviour
+	public class UpdateProxy : MonoBehaviour
 	{
 		public UnityEvent<Transform> OnUpdate = new(), OnFixedUpdate = new();
 

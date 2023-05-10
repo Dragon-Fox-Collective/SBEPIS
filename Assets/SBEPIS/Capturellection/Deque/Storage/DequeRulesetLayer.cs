@@ -12,6 +12,7 @@ namespace SBEPIS.Capturellection.Storage
 		[SerializeField, Anywhere] private InterfaceRef<DequeRuleset>[] rulesets;
 		
 		public void Tick(DequeRulesetLayerState layerState, float deltaTime) => Zip(layerState).ForEach((ruleset, state) => ruleset.Tick(state, deltaTime));
+		public void Layout(DequeRulesetLayerState layerState) => DoOn(First, layerState, (ruleset, state) => ruleset.Layout(state));
 		public Vector3 GetMaxPossibleSizeOf(DequeRulesetLayerState layerState) => DoOn(First, layerState, (ruleset, state) => ruleset.GetMaxPossibleSizeOf(state));
 		
 		public bool CanFetchFrom(DequeRulesetLayerState state, InventoryStorable card) => Zip(state).Any(zip => zip.Item1.CanFetchFrom(zip.Item2, card));
@@ -34,6 +35,7 @@ namespace SBEPIS.Capturellection.Storage
 		private (DequeRuleset, object) First(DequeRulesetLayerState state) => (rulesets[0].Value, state.states[0]);
 		private (DequeRuleset, object) Last(DequeRulesetLayerState state) => (rulesets[^1].Value, state.states[^1]);
 		private static T DoOn<T>(Func<DequeRulesetLayerState, (DequeRuleset, object)> getter, DequeRulesetLayerState state, Func<DequeRuleset, object, T> func) => func.InvokeWith(getter(state));
+		private static void DoOn(Func<DequeRulesetLayerState, (DequeRuleset, object)> getter, DequeRulesetLayerState state, Action<DequeRuleset, object> func) => func.InvokeWith(getter(state));
 		private IEnumerable<(DequeRuleset, object)> Zip(DequeRulesetLayerState state) => Rulesets.Zip(state.states).Reverse();
 		private T Aggregate<T>(DequeRulesetLayerState state, T seed, Func<T, DequeRuleset, object, T> func) => Zip(state).Aggregate(seed, (result, zip) => func(result, zip.Item1, zip.Item2));
 		private UniTask<T> Aggregate<T>(DequeRulesetLayerState state, T seed, Func<T, DequeRuleset, object, UniTask<T>> func) => Zip(state).Aggregate(seed, (result, zip) => func(result, zip.Item1, zip.Item2));
