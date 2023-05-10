@@ -11,6 +11,12 @@ namespace SBEPIS.Capturellection.Deques
 	{
 		[SerializeField] private MemoryDequeCard memoryCardPrefab;
 		
+		public override bool CanFetchFrom(MemoryState state, InventoryStorable card)
+		{
+			Storable storable = StorableWithCard(state, card);
+			return storable.CanFetch(card) && (storable.HasAllCardsEmpty || (state.FlippedStorables.Contains(storable) && state.FlippedStorables.Contains(state.pairs[storable])));
+		}
+		
 		public override UniTask<DequeStoreResult> StoreItemHook(MemoryState state, Capturellectable item, DequeStoreResult oldResult)
 		{
 			state.Inventory.Shuffle();

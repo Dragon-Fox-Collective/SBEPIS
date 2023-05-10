@@ -42,6 +42,7 @@ namespace SBEPIS.Capturellection.Storage
 		{
 			DequeRulesetLayerState state = new();
 			state.states = rulesets.Select(ruleset => ruleset.Value.GetNewState()).ToArray();
+			state.Inventory = new List<Storable>();
 			return state;
 		}
 		

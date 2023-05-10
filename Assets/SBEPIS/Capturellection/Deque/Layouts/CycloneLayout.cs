@@ -59,7 +59,7 @@ namespace SBEPIS.Capturellection.Deques
 	[Serializable]
 	public class CycloneState : InventoryState, DirectionState, TimeState, TopState
 	{
-		public List<Storable> Inventory { get; set; }
+		public List<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
 		public float Time { get; set; }
 		public Storable TopStorable { get; set; }
