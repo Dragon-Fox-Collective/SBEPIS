@@ -12,7 +12,7 @@ namespace SBEPIS.Tests
 		[Test]
 		public void OpeningDiajector_CreatesCards()
 		{
-			Scene.diajector1.StartAssembly(null, Vector3.zero, Quaternion.identity);
+			Scene.diajector1.StartAssembly(Vector3.zero, Quaternion.identity);
 			Assert.That(Scene.cardTarget.Card, Is.Not.Null);
 		}
 		
@@ -26,7 +26,7 @@ namespace SBEPIS.Tests
 		[Test]
 		public void OpeningDiajector_OpensDiajector()
 		{
-			Scene.diajector1.StartAssembly(null, Vector3.zero, Quaternion.identity);
+			Scene.diajector1.StartAssembly(Vector3.zero, Quaternion.identity);
 			Assert.That(Scene.diajector1.IsOpen);
 		}
 		
@@ -41,7 +41,7 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator OpeningDiajector_GetsCardToBoard()
 		{
-			Scene.diajector1.StartAssembly(null, Vector3.zero, Quaternion.identity);
+			Scene.diajector1.StartAssembly(Vector3.zero, Quaternion.identity);
 			
 			bool reached = false;
 			Scene.cardTarget.Card.Animator.AddListenerOnMoveTo(Scene.endCardTarget, _ => reached = true);
@@ -111,14 +111,6 @@ namespace SBEPIS.Tests
 			Scene.diajector1.ForceClose();
 			yield return 0;
 			Assert.That(reached);
-		}
-		
-		[Test]
-		public void OpeningSecondDiajector_ClosesFirstDiajector()
-		{
-			Scene.diajector1.StartAssembly(Scene.closer, Vector3.zero, Quaternion.identity);
-			Scene.diajector2.StartAssembly(Scene.closer, Vector3.zero, Quaternion.identity);
-			Assert.That(!Scene.diajector1.IsOpen);
 		}
 	}
 }
