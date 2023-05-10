@@ -1,19 +1,15 @@
+using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class Spinner : MonoBehaviour
+	public class Spinner : ValidatedMonoBehaviour
 	{
+		[SerializeField, Self] private new Rigidbody rigidbody;
+		
 		public float speed;
-
-		private new Rigidbody rigidbody;
-
-		private void Awake()
-		{
-			rigidbody = GetComponent<Rigidbody>();
-		}
-
+		
 		private void FixedUpdate()
 		{
 			rigidbody.MoveRotation(rigidbody.rotation * Quaternion.Euler(Vector3.right * speed));

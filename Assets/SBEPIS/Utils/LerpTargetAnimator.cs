@@ -1,19 +1,21 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace SBEPIS.Utils
 {
-	public class LerpTargetAnimator : MonoBehaviour
+	public class LerpTargetAnimator : ValidatedMonoBehaviour
 	{
-		public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+		[SerializeField, Self(Flag.Optional)] private new Rigidbody rigidbody;
 
-		private new Rigidbody rigidbody;
-
-		private float time;
+		[SerializeField] private AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 		
-		public LerpTarget currentTarget { get; private set; }
+		private float time;
+
+		private LerpTarget currentTarget;
 		private LerpTarget pausedAtTarget;
 		private LerpTarget prevTarget;
 		private Vector3 startPosition;
@@ -21,15 +23,11 @@ namespace SBEPIS.Utils
 
 		private Dictionary<LerpTarget, List<UnityAction<LerpTargetAnimator>>> onMoveToActions = new();
 		private UnityAction<LerpTargetAnimator>[] tempOnMoveToActions;
-
-		private void Awake()
-		{
-			rigidbody = GetComponent<Rigidbody>();
-		}
 		
 		public void TargetTo(LerpTarget target, params UnityAction<LerpTargetAnimator>[] tempActions)
 		{
-			rigidbody.Disable();
+			if (!target) throw new NullReferenceException($"Tried to target {this} to null");
+			if (rigidbody) rigidbody.Disable();
 			currentTarget = target;
 			SetStartPositionAndRotation(transform.position, transform.rotation);
 			time = 0;
@@ -42,7 +40,7 @@ namespace SBEPIS.Utils
 				prevTarget.onMoveFrom.Invoke(this);
 			}
 		}
-
+		
 		public void SetStartPositionAndRotation(Vector3 position, Quaternion rotation)
 		{
 			startPosition = position;
@@ -51,28 +49,37 @@ namespace SBEPIS.Utils
 		
 		public void TeleportTo(LerpTarget target)
 		{
+			if (!target) throw new NullReferenceException($"Tried to teleport {this} to null");
 			TargetTo(target);
 			End();
 		}
-
+		
 		public void SetPausedAt(LerpTarget target)
 		{
 			pausedAtTarget = target;
 		}
-
+		
+		public void Cancel()
+		{
+			if (!currentTarget) return;
+			
+			currentTarget = null;
+			if (rigidbody) rigidbody.Enable();
+		}
+		
 		private void End()
 		{
 			transform.SetPositionAndRotation(currentTarget.transform.position, currentTarget.transform.rotation);
-			rigidbody.Enable();
 			LerpTarget oldTarget = pausedAtTarget = currentTarget;
-			currentTarget = null;
+			Cancel();
 			
 			oldTarget.onMoveTo.Invoke(this);
 			foreach (UnityAction<LerpTargetAnimator> action in tempOnMoveToActions.ToList())
-				action.Invoke(this);
-			if (onMoveToActions.ContainsKey(oldTarget))
-				foreach (UnityAction<LerpTargetAnimator> action in onMoveToActions[oldTarget].ToList())
-					action.Invoke(this);
+				action?.Invoke(this);
+			
+			if (onMoveToActions.TryGetValue(oldTarget, out List<UnityAction<LerpTargetAnimator>> actions))
+				foreach (UnityAction<LerpTargetAnimator> action in actions.ToList())
+					action?.Invoke(this);
 		}
 		
 		private void Update()
@@ -105,7 +112,7 @@ namespace SBEPIS.Utils
 			
 			onMoveToActions[target].Add(func);
 		}
-
+		
 		public void RemoveListenerOnMoveTo(LerpTarget target, UnityAction<LerpTargetAnimator> func)
 		{
 			if (!onMoveToActions.ContainsKey(target))

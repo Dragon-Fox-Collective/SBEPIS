@@ -1,50 +1,86 @@
+using System;
+using KBCore.Refs;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class JointTargetter : MonoBehaviour
+	public class JointTargetter : ValidatedMonoBehaviour
 	{
-		public Rigidbody connectedBody;
+		[SerializeField, Self] private new Rigidbody rigidbody;
+		[SerializeField, Anywhere] private Rigidbody connectedBody;
+		[SerializeField, Anywhere] private Transform target;
+		[SerializeField, Anywhere(Flag.Optional)] private Transform anchor;
+		[SerializeField] private float anchorDistance = 0.5f;
+		[SerializeField, Anywhere] private StrengthSettings strength;
 		
-		public Transform target;
-		
-		public Transform anchor;
-		public float anchorDistance = 0.5f;
-
-		public StrengthSettings strength;
-
 		private ConfigurableJoint joint;
 		
 		private Quaternion initialOffset;
 		
 		private Vector3 prevTargetPosition;
 		private Quaternion prevTargetRotation;
-
+		
 		private Vector3 initialTensor;
 		private Quaternion initialTensorRotation;
 
+		private bool hasBeenConstructed = false;
+		
+		public void Construct(Rigidbody connectedBody, Transform target, StrengthSettings strength)
+		{
+			if (hasBeenConstructed)
+				throw new InvalidOperationException($"Object {this} has already been constructed");
+			hasBeenConstructed = true;
+			
+			this.connectedBody = connectedBody;
+			this.target = target;
+			this.strength = strength;
+			this.ValidateRefs(true);
+		}
+		
 		private void Start()
 		{
-			Rigidbody thisRigidbody = GetComponent<Rigidbody>();
-			Vector3 thisInitialPosition = thisRigidbody.position;
+			hasBeenConstructed = true;
 			
+			Vector3 thisInitialPosition = rigidbody.position;
+			
+			joint = gameObject.AddComponent<ConfigurableJoint>();
+			joint.autoConfigureConnectedAnchor = false;
+			joint.anchor = joint.connectedAnchor = Vector3.zero;
+			UpdateJointConnectedBody();
+			UpdateJointDrive();
+			UpdateJointTarget();
+			
+			rigidbody.position = thisInitialPosition;
+		}
+
+		private void UpdateJointTarget()
+		{
+			prevTargetPosition = transform.InverseTransformPoint(target.position);
+			prevTargetRotation = target.rotation;
+		}
+		
+		private void UpdateJointConnectedBody()
+		{
 			initialOffset = transform.InverseTransformRotation(connectedBody.transform.rotation).Inverse();
 			
 			initialTensor = connectedBody.inertiaTensor;
 			initialTensorRotation = connectedBody.inertiaTensorRotation;
-
+			
 			connectedBody.inertiaTensor = Vector3.one * 0.02f;
 			connectedBody.inertiaTensorRotation = Quaternion.identity;
 			
-			joint = gameObject.AddComponent<ConfigurableJoint>();
-			
 			joint.connectedBody = connectedBody;
 			
-			joint.autoConfigureConnectedAnchor = false;
-			joint.anchor = joint.connectedAnchor = Vector3.zero;
-
+			if (!connectedBody.isKinematic)
+			{
+				connectedBody.velocity = Vector3.zero;
+				connectedBody.angularVelocity = Vector3.zero;
+			}
+		}
+		
+		private void UpdateJointDrive()
+		{
 			joint.xDrive = joint.yDrive = joint.zDrive = new JointDrive
 			{
 				positionSpring = strength.linearSpeed * strength.linearSpeed,
@@ -59,17 +95,6 @@ namespace SBEPIS.Physics
 				positionDamper = 2 * strength.angularSpeed,
 				maximumForce = strength.angularMaxForce,
 			};
-
-			if (!connectedBody.isKinematic)
-			{
-				connectedBody.velocity = Vector3.zero;
-				connectedBody.angularVelocity = Vector3.zero;
-			}
-
-			prevTargetPosition = transform.InverseTransformPoint(target.position);
-			prevTargetRotation = target.rotation;
-
-			thisRigidbody.position = thisInitialPosition;
 		}
 
 		private void FixedUpdate()

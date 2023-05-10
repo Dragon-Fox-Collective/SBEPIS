@@ -1,46 +1,46 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Utils
 {
 	public class CollisionTrigger : MonoBehaviour
 	{
-		public UnityEvent trigger;
-
-		private bool delaying;
-		private bool primed;
-		private float timeSinceStart;
+		public float primeDelay = 0.2f;
+		public UnityEvent trigger = new();
 		
-		private const float PrimeDelay = 0.2f;
-
+		public bool IsDelaying { get; private set; }
+		public bool IsPrimed { get; private set; }
+		public float TimeSinceStart { get; private set; }
+		
 		private void FixedUpdate()
 		{
-			if (delaying)
+			if (IsDelaying)
 			{
-				timeSinceStart += Time.fixedDeltaTime;
-				if (timeSinceStart > PrimeDelay)
+				TimeSinceStart += Time.fixedDeltaTime;
+				if (TimeSinceStart > primeDelay)
 					Prime();
 			}
 		}
 
-		private void OnCollisionEnter(Collision collision)
+		private void OnCollisionEnter()
 		{
-			if (primed)
+			if (IsPrimed)
 				Trigger();
 		}
 
 		public void StartPrime()
 		{
-			delaying = true;
-			primed = false;
-			timeSinceStart = 0;
+			IsDelaying = true;
+			IsPrimed = false;
+			TimeSinceStart = 0;
 		}
 
 		public void Prime()
 		{
-			delaying = false;
-			primed = true;
+			IsDelaying = false;
+			IsPrimed = true;
 		}
 
 		public void Trigger()
@@ -51,8 +51,8 @@ namespace SBEPIS.Utils
 
 		public void CancelPrime()
 		{
-			delaying = false;
-			primed = false;
+			IsDelaying = false;
+			IsPrimed = false;
 		}
 	}
 }

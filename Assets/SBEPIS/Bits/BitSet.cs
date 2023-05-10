@@ -7,44 +7,36 @@ using UnityEngine;
 namespace SBEPIS.Bits
 {
 	[Serializable]
-	public class BitSet : IEnumerable<Bit>, IEquatable<BitSet>
+	public struct BitSet : IEnumerable<Bit>, IEquatable<BitSet>
 	{
-		[SerializeField]
-		protected List<Bit> bits;
-
-		public BitSet()
-		{
-			bits = new List<Bit>();
-		}
+		[SerializeField] private Bit[] bits;
+		private Bit[] Bits => bits ??= Array.Empty<Bit>();
 		
 		public BitSet(IEnumerable<Bit> bits)
 		{
-			this.bits = bits.ToList();
+			this.bits = bits.ToArray();
 		}
-
-		public override string ToString() => $"BitSet{bits.ToDelimString()}";
-		public override int GetHashCode() => bits.GetHashCode();
+		
+		public override string ToString() => $"BitSet{Bits?.ToDelimString()}";
+		public override int GetHashCode() => Bits != null ? Bits.GetHashCode() : 0;
 		public override bool Equals(object obj) => obj is BitSet other && this == other;
 		public bool Equals(BitSet other) => this == other;
-
-		public static BitSet operator |(BitSet a, BitSet b) => new(a.bits.Union(b.bits));
-		public static BitSet operator &(BitSet a, BitSet b) => new(a.bits.Intersect(b.bits));
-		public static BitSet operator ^(BitSet a, BitSet b) => new(a.bits.Except(b.bits).Union(b.bits.Except(a.bits)));
-		public static BitSet operator -(BitSet a, BitSet b) => new(a.bits.Except(b.bits));
-		public static bool operator ==(BitSet a, BitSet b) => a is not null && b is not null ? new HashSet<Bit>(a.bits).SetEquals(b.bits) : a is null && b is null;
+		
+		public static BitSet operator |(BitSet a, BitSet b) => new(a.Union(b));
+		public static BitSet operator &(BitSet a, BitSet b) => new(a.Intersect(b));
+		public static BitSet operator ^(BitSet a, BitSet b) => new(a.Except(b).Union(b.Except(a)));
+		public static BitSet operator -(BitSet a, BitSet b) => new(a.Except(b));
+		public static bool operator ==(BitSet a, BitSet b) => new HashSet<Bit>(a).SetEquals(b);
 		public static bool operator !=(BitSet a, BitSet b) => !(a == b);
-
+		
 		public static implicit operator BitSet(Bit bit) => new(new []{bit});
-
+		
 		public TaggedBitSet With(IEnumerable<Tag> tags) => new(this, tags);
 		public TaggedBitSet With(IEnumerable<Tag> a, IEnumerable<Tag> b) => With(TagAppender.Append(a, b));
-
-		public bool Has(Bit other) => bits.Contains(other);
+		
+		public bool Has(Bit other) => Bits.Contains(other);
 		public bool Has(BitSet other) => (this & other) == other;
-
-		public int Count => bits.Count;
-		public bool isPerfectlyGeneric => bits.Count == 0;
-
+		
 		public static int GetUniquenessScore(BitSet baseBits, BitSet appliedBits)
 		{
 			// For base     01110011
@@ -57,10 +49,10 @@ namespace SBEPIS.Bits
 
 			BitSet uniqueBits = (appliedBits ^ baseBits) & appliedBits;
 			BitSet commonBits = appliedBits & baseBits;
-			return uniqueBits.bits.Count - commonBits.bits.Count;
+			return uniqueBits.Bits.Length - commonBits.Bits.Length;
 		}
-
-		public IEnumerator GetEnumerator() => bits.GetEnumerator();
-		IEnumerator<Bit> IEnumerable<Bit>.GetEnumerator() => bits.GetEnumerator();
+		
+		public IEnumerator GetEnumerator() => Bits.GetEnumerator();
+		IEnumerator<Bit> IEnumerable<Bit>.GetEnumerator() => Bits.Cast<Bit>().GetEnumerator();
 	}
 }

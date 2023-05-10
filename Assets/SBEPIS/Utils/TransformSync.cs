@@ -1,21 +1,18 @@
+using KBCore.Refs;
 using UnityEngine;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 using Pose = UnityEngine.XR.OpenXR.Input.Pose;
 
 namespace SBEPIS.Utils
 {
-	public class TransformSync : MonoBehaviour
+	public class TransformSync : ValidatedMonoBehaviour
 	{
+		[SerializeField, Self(Flag.Optional)]
+		private new Rigidbody rigidbody;
+		
 		public Vector3 positionOffset = Vector3.zero;
 		public Quaternion rotationOffset = Quaternion.identity;
-
-		private new Rigidbody rigidbody;
-
-		private void Awake()
-		{
-			rigidbody = GetComponent<Rigidbody>();
-		}
-
+		
 		// ---- Main syncs
 		public void SyncLocalPosition(Vector3 localPosition)
 		{
