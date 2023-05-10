@@ -10,10 +10,11 @@ namespace SBEPIS.Bits
 	[Serializable]
 	public class TaggedBitSetFactory
 	{
-		public BitSet bits;
+		[SerializeField] private BitSet bits;
+		public BitSet Bits { get => bits; set => bits = value; }
 		[FormerlySerializedAs("itemBase")]
-		public ItemModule itemModule;
-		public Material material;
+		[SerializeField] private ItemModule itemModule;
+		[SerializeField] private Material material;
 
 		public TaggedBitSet Make() => bits.With(new Tag[]
 				{

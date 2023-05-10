@@ -1,4 +1,6 @@
+using Cysharp.Threading.Tasks;
 using KBCore.Refs;
+using SBEPIS.Capturellection.Storage;
 using SBEPIS.Utils;
 using UnityEngine;
 
@@ -22,5 +24,7 @@ namespace SBEPIS.Capturellection
 			inventoryEvents.onSet.AddListener((_, inventory) => dequeElement.Deque = inventory.deque);
 			inventoryEvents.onUnset.AddListener((_, _, _) => dequeElement.Deque = null);
 		}
+		
+		public UniTask Interact<TState>(DequeRuleset targetRuleset, DequeInteraction<TState> action) => Inventory.Interact(this, targetRuleset, action);
 	}
 }

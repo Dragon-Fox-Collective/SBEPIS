@@ -6,19 +6,48 @@ namespace SBEPIS.Capturellection
 {
 	public class CaptureBack : MonoBehaviour
 	{
-		public Material captureMaterial;
-		public Renderer[] renderers;
+		[SerializeField] private Material captureMaterial;
+		[SerializeField] private Renderer[] renderers;
 		
-		public void UpdateCaptureCodeToDefault() => UpdateCaptureCode(new BitSet());
+		private BitSet bits;
+		private bool showing = true;
 		
-		public void UpdateCaptureCode(CaptureContainer card, Capturellectable item) => UpdateCaptureCode(item.GetComponent<ItemModule>().Bits.bits);
+		private static readonly int Seed = Shader.PropertyToID("_Seed");
+		private static readonly int CaptureCode = Shader.PropertyToID("_Capture_Code");
 		
+		private void Awake()
+		{
+			ResetCaptureCode();
+		}
+		
+		public void UpdateCaptureCode(CaptureContainer card, Capturellectable item) => UpdateCaptureCode(item.GetComponent<ItemModule>().Bits.Bits);
 		public void UpdateCaptureCode(BitSet bits)
 		{
-			renderers.PerformOnMaterial(captureMaterial, material => {
-				material.SetFloat("_Seed", BitManager.instance.bits.BitSetToSeed(bits));
-				material.SetTexture("_Capture_Code", CaptureCamera.GetCaptureCodeTexture(bits));
-			});
+			this.bits = bits;
+			if (showing) SetMaterialCode(bits);
 		}
+		
+		public void ResetCaptureCode()
+		{
+			bits = default;
+			SetMaterialCode(default);
+		}
+		
+		public void ShowCode()
+		{
+			showing = true;
+			SetMaterialCode(bits);
+		}
+		
+		public void HideCode()
+		{
+			showing = false;
+			SetMaterialCode(default);
+		}
+		
+		private void SetMaterialCode(BitSet bits) => renderers.PerformOnMaterial(captureMaterial, material => {
+			material.SetFloat(Seed, BitManager.instance.Bits.BitSetToSeed(bits));
+			material.SetTexture(CaptureCode, CaptureCamera.GetCaptureCodeTexture(bits));
+		});
 	}
 }

@@ -11,7 +11,8 @@ namespace SBEPIS.Controller
 	[RequireComponent(typeof(Rigidbody))]
 	public class Grabber : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self] private new Rigidbody rigidbody;
+		[SerializeField, Self]
+		private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;
 		
 		[SerializeField] private LayerMask grabMask = 1;
@@ -71,19 +72,9 @@ namespace SBEPIS.Controller
 				return;
 			
 			if (IsHoldingSomething && (!isHoldingGrab || !HeldCollider.gameObject.activeInHierarchy || IsSlipping))
-			{
-				Debug.Log("Drop due to " + (
-					!isHoldingGrab ? "not holding grab" :
-					!HeldCollider.gameObject.activeInHierarchy ? "not active" :
-					IsSlipping ? "slipping" :
-					"something else???"));
 				Drop();
-			}
 			else if (!IsHoldingSomething && isHoldingGrab)
-			{
-				Debug.Log("Grab due to grabbing");
 				Grab();
-			}
 		}
 		
 		private void Grab()
@@ -91,22 +82,28 @@ namespace SBEPIS.Controller
 			if (!CanGrab || IsHoldingSomething)
 				return;
 			
-			if (collidingColliders.Any(Grab))
+			if (collidingColliders.Any(collider => Grab(collider)))
 				return;
 			
 			ShortRangeGrab();
 		}
 		
-		public bool GrabManually(Collider collider)
+		public bool GrabManually(Collider collider, bool dropIfHoldingSomething = false)
 		{
 			isHoldingGrab = true;
-			return Grab(collider);
+			return Grab(collider, dropIfHoldingSomething);
 		}
 		
-		private bool Grab(Collider collider)
+		private bool Grab(Collider collider, bool dropIfHoldingSomething = false)
 		{
-			if (!collider || IsHoldingSomething)
+			if (!collider)
 				return false;
+			
+			if (IsHoldingSomething)
+				if (dropIfHoldingSomething)
+					Drop();
+				else
+					return false;
 			
 			Grabbable grabbable = collider.GetAttachedComponent<Grabbable>();
 			if (grabbable)
@@ -132,16 +129,22 @@ namespace SBEPIS.Controller
 			return true;
 		}
 		
-		public bool GrabManually(Grabbable grabbable)
+		public bool GrabManually(Grabbable grabbable, bool dropIfHoldingSomething = false)
 		{
 			isHoldingGrab = true;
-			return Grab(grabbable);
+			return Grab(grabbable, dropIfHoldingSomething);
 		}
 		
-		private bool Grab(Grabbable grabbable)
+		private bool Grab(Grabbable grabbable, bool dropIfHoldingSomething = false)
 		{
-			if (!grabbable || IsHoldingSomething)
+			if (!grabbable)
 				return false;
+			
+			if (IsHoldingSomething)
+				if (dropIfHoldingSomething)
+					Drop();
+				else
+					return false;
 			
 			print($"Grabbing {grabbable}");
 			
@@ -164,7 +167,7 @@ namespace SBEPIS.Controller
 			
 			return true;
 		}
-		
+
 		private void BindToGrabPoint(Grabbable grabbable, GrabPoint grabPoint)
 		{
 			HeldGrabPoint = grabPoint;
@@ -173,7 +176,7 @@ namespace SBEPIS.Controller
 				transform.TransformPoint(grabPoint.transform.InverseTransformPoint(grabbable.transform.position)),
 				transform.TransformRotation(grabPoint.transform.InverseTransformRotation(grabbable.transform.rotation)));
 		}
-		
+
 		private void ShortRangeGrab()
 		{
 			if (CastShortRangeGrab(out RaycastHit hit))
@@ -215,21 +218,21 @@ namespace SBEPIS.Controller
 				onDropCollider.Invoke(this, droppedCollider);
 			}
 		}
-		
+
 		private bool CastShortRangeGrab(out RaycastHit hit)
 		{
 			return overrideShortRangeGrab ?
 				UnityEngine.Physics.Raycast(overrideShortRangeGrabCasterPosition, overrideShortRangeGrabCasterForward, out hit, overrideShortRangeGrabDistance, grabMask, QueryTriggerInteraction.Ignore) :
 				UnityEngine.Physics.Raycast(transform.position, transform.forward, out hit, shortRangeGrabDistace, grabMask, QueryTriggerInteraction.Ignore);
 		}
-		
+
 		private bool CastGrabNormal(out RaycastHit hit, Collider colliderToLookFor)
 		{
 			int hitCount = UnityEngine.Physics.RaycastNonAlloc(grabNormalCaster.position, grabNormalCaster.forward, grabNormalHits, shortRangeGrabDistace, grabMask, QueryTriggerInteraction.Ignore);
 			hit = grabNormalHits.Take(hitCount).FirstOrDefault(hit => hit.collider == colliderToLookFor);
 			return grabNormalHits.Take(hitCount).Any(hit => hit.collider == colliderToLookFor);
 		}
-		
+
 		public void OverrideShortRangeGrab(Vector3 casterPosition, Vector3 casterForward, float distance)
 		{
 			overrideShortRangeGrab = true;
@@ -237,25 +240,25 @@ namespace SBEPIS.Controller
 			overrideShortRangeGrabCasterForward = casterForward;
 			overrideShortRangeGrabDistance = distance;
 		}
-		
+
 		public void ResetShortRangeGrabOverride()
 		{
 			overrideShortRangeGrab = false;
 			CanGrab = true;
 		}
-		
+
 		private void OnTriggerEnter(Collider other)
 		{
 			if (other.gameObject.IsOnLayer(grabMask) && !collidingColliders.Contains(other))
 				StartCollidingWith(other);
 		}
-		
+
 		private void OnTriggerExit(Collider other)
 		{
 			if (collidingColliders.Contains(other))
 				StopCollidingWith(other);
 		}
-		
+
 		private void StartCollidingWith(Collider collider)
 		{
 			if (collider.isTrigger)
@@ -264,7 +267,7 @@ namespace SBEPIS.Controller
 			collider.SelectGrabbable(grabbable => grabbable.onTouch.Invoke(this, grabbable));
 			collidingColliders.Add(collider);
 		}
-		
+
 		private void StopCollidingWith(Collider collider)
 		{
 			if (collider.isTrigger)
@@ -273,13 +276,13 @@ namespace SBEPIS.Controller
 			collidingColliders.Remove(collider);
 			collider.SelectGrabbable(grabbable => grabbable.onStopTouch.Invoke(this, grabbable));
 		}
-		
+
 		public void ClearCollisions()
 		{
 			while (collidingColliders.Count > 0)
 				StopCollidingWith(collidingColliders[0]);
 		}
-		
+
 		public void ClearInvalidCollisions()
 		{
 			for (int i = 0; i < collidingColliders.Count; i++)
@@ -288,7 +291,7 @@ namespace SBEPIS.Controller
 				else if (!collidingColliders[i].gameObject.activeInHierarchy)
 					StopCollidingWith(collidingColliders[i--]);
 		}
-		
+
 		public void OnUse(CallbackContext context)
 		{
 			if (!context.performed)
@@ -306,7 +309,7 @@ namespace SBEPIS.Controller
 				}
 			}
 		}
-		
+
 		public void UseHeldItem()
 		{
 			if (!HeldGrabbable)
@@ -321,7 +324,7 @@ namespace SBEPIS.Controller
 	public class GrabEvent : UnityEvent<Grabber, Grabbable> { }
 	[Serializable]
 	public class ColliderGrabEvent : UnityEvent<Grabber, Collider> { }
-	
+
 	internal static class GrabberExtensionMethods
 	{
 		public static TResult SelectGrabbable<TResult>(this Collider collider, Func<Grabbable, TResult> func)
@@ -329,7 +332,7 @@ namespace SBEPIS.Controller
 			Grabbable grabbable = collider.GetAttachedComponent<Grabbable>();
 			return grabbable ? func(grabbable) : default;
 		}
-		
+
 		public static void SelectGrabbable(this Collider collider, Action<Grabbable> func)
 		{
 			Grabbable grabbable = collider.GetAttachedComponent<Grabbable>();
