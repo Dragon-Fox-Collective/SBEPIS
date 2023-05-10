@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 using SBEPIS.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Bits
 {
-	[CreateAssetMenu(fileName=nameof(BitManager))]
+	[CreateAssetMenu]
 	public class BitManager : ScriptableSingleton<BitManager>
 	{
-		[SerializeField]
-		private string _hashCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+		[SerializeField] private string _hashCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 		private char[] hashCharactersArray;
-		private char[] hashCharacters => hashCharactersArray ??= _hashCharacters.ToCharArray();
+		private char[] HashCharacters => hashCharactersArray ??= _hashCharacters.ToCharArray();
 		
-		[SerializeField]
-		private List<Bit> _bits;
+		[FormerlySerializedAs("_bits")]
+		[SerializeField] private Bit[] bits;
 		
 		private BitList bitList;
-		public BitList bits => bitList ??= new BitList(_bits, hashCharacters);
+		public BitList Bits => bitList ??= new BitList(bits, HashCharacters);
 		
 		private void OnValidate()
 		{

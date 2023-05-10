@@ -4,22 +4,28 @@ namespace SBEPIS.Capturellection
 {
 	public class CaptureFront : MonoBehaviour
 	{
-		public Material captureMaterial;
-		public Renderer[] renderers;
+		[SerializeField] private Material captureMaterial;
+		[SerializeField] private Renderer[] renderers;
+		
+		private Texture2D texture;
+		
+		private static readonly int BaseMap = Shader.PropertyToID("_Base_Map");
 		
 		public void UpdateImage(CaptureContainer card, Capturellectable item)
 		{
-			Texture2D texture = CaptureCamera.instance.TakePictureOfObject(item.gameObject);
-			renderers.PerformOnMaterial(captureMaterial, material => {
-				material.SetTexture("_Base_Map", texture);
-			});
+			texture = CaptureCamera.Instance.TakePictureOfObject(item.gameObject);
+			ShowImage();
 		}
 		
 		public void RemoveImage()
 		{
-			renderers.PerformOnMaterial(captureMaterial, material => {
-				material.SetTexture("_Base_Map", null);
-			});
+			texture = null;
+			HideImage();
 		}
+		
+		public void ShowImage() => SetMaterialTexture(texture);
+		public void HideImage() => SetMaterialTexture(null);
+		
+		private void SetMaterialTexture(Texture2D texture) => renderers.PerformOnMaterial(captureMaterial, material => material.SetTexture(BaseMap, texture));
 	}
 }

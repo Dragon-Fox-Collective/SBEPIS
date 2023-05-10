@@ -113,6 +113,9 @@ public static class ExtensionMethods
 			yield return (i++, item);
 	}
 	
+	public static bool All(this IEnumerable<bool> source) => source.All(b => b);
+	public static bool Any(this IEnumerable<bool> source) => source.Any(b => b);
+	
 	public static TResult InvokeWith<T1, T2, TResult>(this Func<T1, T2, TResult> func, (T1, T2) args) => func(args.Item1, args.Item2);
 	
 	public static async UniTask<TAccumulate> Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, UniTask<TAccumulate>> func)
