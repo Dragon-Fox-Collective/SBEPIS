@@ -58,27 +58,24 @@ namespace SBEPIS.Capturellection
 		private void SaveInventoryFromDeque()
 		{
 			savedInventory = Save();
-			Destroy(storable.gameObject);
 			onSaveFromDeque.Invoke(this, savedInventory);
 		}
-
+		
 		private void SetupCard(InventoryStorable card)
 		{
 			card.Inventory = this;
-			card.transform.parent = cardParent;
+			card.transform.SetParent(cardParent);
 		}
 		private static void TearDownCard(InventoryStorable card)
 		{
 			card.Inventory = null;
-			card.transform.parent = null;
+			card.transform.SetParent(null);
 		}
-		
-		public void SetStorableParent(Transform transform) => storable.transform.SetParent(transform);
 		
 		public Vector3 Direction
 		{
-			get => storable.state.Direction;
-			set => storable.state.Direction = value;
+			get => storable.Direction;
+			set => storable.Direction = value;
 		}
 		public Vector3 Position
 		{
@@ -90,28 +87,27 @@ namespace SBEPIS.Capturellection
 			get => storable.Rotation;
 			set => storable.Rotation = value;
 		}
+		public void SetStorableParent(Transform transform) => storable.Parent = transform;
 		public Vector3 MaxPossibleSize => storable.MaxPossibleSize;
 		public void Tick(float deltaTime) => storable.Tick(deltaTime);
 		public void LayoutTarget(InventoryStorable card, CardTarget target) => storable.LayoutTarget(card, target);
 		public bool CanFetch(InventoryStorable card) => storable.CanFetch(card);
-		public UniTask<Capturellectable> Fetch(InventoryStorable card)
-		{
-			TearDownCard(card);
-			return storable.Fetch(card);
-		}
-		public async UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item)
-		{
-			(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem) = await storable.Store(item);
-			SetupCard(card);
-			return (card, container, ejectedItem);
-		}
-		public UniTask Flush(List<InventoryStorable> cards)
+		public UniTask<StorableStoreResult> StoreItem(Capturellectable item) => storable.StoreItem(item);
+		public UniTask<Capturellectable> FetchItem(InventoryStorable card) => storable.FetchItem(card);
+		public UniTask FlushCard(InventoryStorable card) => FlushCard(new List<InventoryStorable>{ card });
+		public UniTask FlushCard(List<InventoryStorable> cards)
 		{
 			foreach (InventoryStorable card in cards)
 				SetupCard(card);
-			return storable.Flush(cards);
+			return storable.FlushCards(cards);
 		}
-		public UniTask Flush(InventoryStorable card) => Flush(new List<InventoryStorable>{ card });
+		public async UniTask<InventoryStorable> FetchCard(InventoryStorable card)
+		{
+			InventoryStorable fetchedCard = await storable.FetchCard(card);
+			if (fetchedCard) TearDownCard(card);
+			return fetchedCard;
+		}
+		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetRuleset, DequeInteraction<TState> action) => storable.Interact(card, targetRuleset, action);
 		private void Load(List<InventoryStorable> cards)
 		{
 			foreach (InventoryStorable card in cards)

@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using KBCore.Refs;
+using SBEPIS.Capturellection.Storage;
 using SBEPIS.Controller;
 using UnityEngine;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
@@ -24,7 +25,7 @@ namespace SBEPIS.Capturellection
 			if (!isActiveAndEnabled || !context.performed || !grabber.HeldGrabbable)
 				return;
 			
-			if (grabber.HeldGrabbable.TryGetComponent(out CaptureContainer container) && container.HasCapturedItem)
+			if (grabber.HeldGrabbable.TryGetComponent(out CaptureContainer container))
 				RetrieveAndGrabItem(container).Forget();
 			else if (grabber.HeldGrabbable.TryGetComponent(out Capturellectable item))
 				CaptureAndGrabCard(item).Forget();
@@ -32,10 +33,10 @@ namespace SBEPIS.Capturellection
 		
 		public async UniTask<CaptureContainer> CaptureAndGrabCard(Capturellectable item)
 		{
-			(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem) = await inventory.Store(item);
-			MoveEjectedItem(card, ejectedItem);
-			TryGrab(container.transform);
-			return container;
+			StorableStoreResult result = await inventory.StoreItem(item);
+			MoveEjectedItem(result.card, result.ejectedItem);
+			TryGrab(result.container.transform).Forget();
+			return result.container;
 		}
 
 		private static void MoveEjectedItem(InventoryStorable card, Capturellectable ejectedItem)
@@ -43,9 +44,9 @@ namespace SBEPIS.Capturellection
 			if (!ejectedItem)
 				return;
 			
-			Action<Vector3, Quaternion> move = ejectedItem.TryGetComponent(out Rigidbody ejectedItemRigidbody) ?
-				ejectedItemRigidbody.Move :
-				ejectedItem.transform.SetPositionAndRotation;
+			Action<Vector3, Quaternion> move = ejectedItem.TryGetComponent(out Rigidbody ejectedItemRigidbody)
+				? ejectedItemRigidbody.Move
+				: ejectedItem.transform.SetPositionAndRotation;
 			if (card.DequeElement.ShouldBeDisplayed)
 				move(card.transform.position, card.transform.rotation);
 			else
@@ -58,7 +59,7 @@ namespace SBEPIS.Capturellection
 		private Capturellectable RetrieveFromContainer(CaptureContainer container)
 		{
 			Capturellectable item = container.Fetch();
-			TryGrab(item.transform);
+			if (item) TryGrab(item.transform).Forget();
 			return item;
 		}
 		
@@ -67,21 +68,24 @@ namespace SBEPIS.Capturellection
 			if (!inventory.CanFetch(card))
 				return null;
 			
-			Capturellectable item = await inventory.Fetch(card);
-			TryGrab(item.transform);
+			Capturellectable item = await inventory.FetchItem(card);
+			if (item) TryGrab(item.transform).Forget();
 			return item;
 		}
 		
-		private void TryGrab(Transform item)
+		private async UniTask TryGrab(Transform item)
 		{
 			if (item.TryGetComponent(out Rigidbody itemRigidbody))
 				itemRigidbody.Move(grabber.transform.position, grabber.transform.rotation);
 			else
 				item.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
+			
+			await UniTask.NextFrame();
+			
 			if (item.TryGetComponent(out Grabbable itemGrabbable))
-				grabber.GrabManually(itemGrabbable);
+				grabber.GrabManually(itemGrabbable, true);
 			else if (item.TryGetComponentInChildren(out Collider itemCollider))
-				grabber.GrabManually(itemCollider);
+				grabber.GrabManually(itemCollider, true);
 		}
 	}
 }

@@ -1,34 +1,37 @@
-using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using SBEPIS.Capturellection.Storage;
-using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class QueueDeque : DequeBase<BaseState>
+	public class QueueDeque : LaidOutDeque<LinearLayout, LinearState>
 	{
-		public bool offsetFromEnd = false;
-		[FormerlySerializedAs("overlap")]
-		public float offset = 0.05f;
+		public override bool CanFetchFrom(LinearState state, InventoryStorable card) => state.Inventory[^1].CanFetch(card);
 		
-		public override void Tick(List<Storable> inventory, BaseState state, float deltaTime) => ArrayDeque.TickLinearLayout(inventory, state, deltaTime, offsetFromEnd, offset);
-		public override Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, BaseState state) => ArrayDeque.GetSizeFromExistingLayout(inventory);
-		
-		public override bool CanFetchFrom(List<Storable> inventory, BaseState state, InventoryStorable card) => inventory[^1].CanFetch(card);
-		
-		public override UniTask<int> GetIndexToStoreInto(List<Storable> inventory, BaseState state)
+		public override async UniTask<DequeStoreResult> StoreItem(LinearState state, Capturellectable item)
 		{
-			int index = inventory.FindIndex(storable => !storable.HasAllCardsEmpty);
-			return UniTask.FromResult(index is -1 or 0 ? inventory.Count - 1 : index - 1);
+			int index = state.Inventory.FindIndex(invStorable => !invStorable.HasAllCardsEmpty) - 1;
+			if (index < 0) index = state.Inventory.Count - 1;
+			Storable storable = state.Inventory[index];
+			state.Inventory.Remove(storable);
+			StorableStoreResult res = await storable.StoreItem(item);
+			state.Inventory.Insert(0, storable);
+			return res.ToDequeResult(index, storable);
 		}
-		public override UniTask<int> GetIndexToFlushBetween(List<Storable> inventory, BaseState state, Storable storable)
+		
+		public override UniTask<Capturellectable> FetchItem(LinearState state, InventoryStorable card)
 		{
-			int index = inventory.FindIndex(storable => !storable.HasAllCardsEmpty);
-			return UniTask.FromResult(index is -1 ? inventory.Count : index);
+			Storable storable = state.Inventory[^1];
+			state.Inventory.Remove(storable);
+			state.Inventory.Insert(0, storable);
+			return storable.FetchItem(card);
 		}
-		public override UniTask<int> GetIndexToInsertBetweenAfterStore(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => GetIndexToFlushBetween(inventory, state, storable);
-		public override UniTask<int> GetIndexToInsertBetweenAfterFetch(List<Storable> inventory, BaseState state, Storable storable, int originalIndex) => GetIndexToFlushBetween(inventory, state, storable);
+		
+		public override UniTask FlushCard(LinearState state, Storable storable)
+		{
+			int index = state.Inventory.FindIndex(invStorable => !invStorable.HasAllCardsEmpty) - 1;
+			if (index < 0) index = state.Inventory.Count - 1;
+			state.Inventory.Insert(index, storable);
+			return UniTask.CompletedTask;
+		}
 	}
 }

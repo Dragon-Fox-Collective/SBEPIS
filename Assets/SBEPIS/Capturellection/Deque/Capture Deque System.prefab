@@ -95,7 +95,7 @@ MonoBehaviour:
   page: {fileID: 2123154491108635258}
   inventory: {fileID: 6903258535003904210}
   cardTargetPrefab: {fileID: 914007334191890185, guid: 1c8bc15bcd83611459142f20ba433cd1, type: 3}
-  cardZ: 0.1
+  cardZ: 0.05
   fetchableCardZ: 0.05
   directionEndpoint: {fileID: 6706503680397027589}
 --- !u!65 &988289687342380233
@@ -365,9 +365,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onUnbindFromPlayer:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1152362718473556953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1079,7 +1076,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862e9ab1ce3640aea43d3344984b4fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ruleset: {fileID: 0}
+  ruleset:
+    _implementer: {fileID: 0}
   maxStorables: 128
   subdefinition: {fileID: 0}
 --- !u!1 &5374268605819546265
@@ -1541,7 +1539,7 @@ Transform:
   - {fileID: 9143523999061029096}
   - {fileID: 7290926607632935990}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8745008019380363946
 GameObject:

@@ -6,53 +6,42 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
 {
-	public abstract class Storable : MonoBehaviour, IEnumerable<InventoryStorable>
+	public interface Storable : IEnumerable<InventoryStorable>
 	{
-		public DequeRulesetState state;
+		public Vector3 Position { get; set; }
+		public Quaternion Rotation { get; set; }
+		public Vector3 Direction { get; set; }
+		public Transform Parent { get; set; }
 		
-		public Vector3 Position
-		{
-			get => transform.localPosition;
-			set => transform.localPosition = value;
-		}
-		public Quaternion Rotation
-		{
-			get => transform.localRotation;
-			set => transform.localRotation = value;
-		}
+		public Vector3 MaxPossibleSize { get; }
 		
-		public abstract Vector3 MaxPossibleSize { get; }
+		public int InventoryCount { get; }
 		
-		public abstract int InventoryCount { get; }
+		public bool HasNoCards { get; }
+		public bool HasAllCards { get; }
 		
-		public abstract bool HasNoCards { get; }
-		public abstract bool HasAllCards { get; }
+		public bool HasAllCardsEmpty { get; }
+		public bool HasAllCardsFull { get; }
 		
-		public abstract bool HasAllCardsEmpty { get; }
-		public abstract bool HasAllCardsFull { get; }
+		public void Tick(float deltaTime);
+		public void LayoutTarget(InventoryStorable card, CardTarget target);
 		
-		public abstract void Tick(float deltaTime);
-		public abstract void LayoutTarget(InventoryStorable card, CardTarget target);
+		public bool CanFetch(InventoryStorable card);
+		public bool Contains(InventoryStorable card);
 		
-		public abstract bool CanFetch(InventoryStorable card);
-		public abstract bool Contains(InventoryStorable card);
+		public UniTask<StorableStoreResult> StoreItem(Capturellectable item);
+		public UniTask<Capturellectable> FetchItem(InventoryStorable card);
+		public UniTask FlushCards(List<InventoryStorable> cards);
+		public UniTask<InventoryStorable> FetchCard(InventoryStorable card);
+		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action);
 		
-		public abstract UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item);
-		public abstract UniTask<Capturellectable> Fetch(InventoryStorable card);
-		public abstract UniTask Flush(List<InventoryStorable> cards);
-		
-		public abstract void Load(List<InventoryStorable> cards);
-		public abstract void Save(List<InventoryStorable> cards);
+		public void Load(List<InventoryStorable> cards);
+		public void Save(List<InventoryStorable> cards);
 		
 		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card) => GetCardTextures(card, Enumerable.Empty<IEnumerable<Texture2D>>(), 0);
-		public abstract IEnumerable<Texture2D> GetCardTextures(InventoryStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent);
+		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent);
 		
-		private void OnDrawGizmosSelected()
-		{
-			DrawSize(MaxPossibleSize, transform, Color.magenta);
-		}
-		
-		private static void DrawSize(Vector3 size, Transform parent, Color color, float axisLength = 0.1f)
+		protected static void DrawSize(Vector3 size, Transform parent, Color color, float axisLength = 0.1f)
 		{
 			Vector3 extents = size / 2;
 			
@@ -92,7 +81,22 @@ namespace SBEPIS.Capturellection.Storage
 			}
 		}
 		
-		public abstract IEnumerator<InventoryStorable> GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+	}
+
+	public struct StorableStoreResult
+	{
+		public InventoryStorable card;
+		public CaptureContainer container;
+		public Capturellectable ejectedItem;
+
+		public StorableStoreResult(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem)
+		{
+			this.card = card;
+			this.container = container;
+			this.ejectedItem = ejectedItem;
+		}
+
+		public DequeStoreResult ToDequeResult(int flushIndex, Storable storable) => new(card, container, ejectedItem, flushIndex, storable);
 	}
 }

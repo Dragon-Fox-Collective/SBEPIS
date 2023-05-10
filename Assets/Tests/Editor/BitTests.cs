@@ -55,19 +55,19 @@ namespace SBEPIS.Tests.EditMode
 		[Test]
 		public void BitsNot()
 		{
-			Assert.AreEqual(new BitSet(new[]{ Pound, Musical }), BitsList - Bits);
+			Assert.AreEqual(new BitSet(new[]{ Pound, Musical }), BitsList.Not(Bits));
 		}
-
+		
 		[Test]
 		public void BitsNumBitsInCharacter()
 		{
-			Assert.AreEqual(1, BitsList.numBitsInCharacterGeneral);
+			Assert.AreEqual(1, BitsList.NumBitsInCharacterGeneral);
 		}
 		
 		[Test]
 		public void BitsNumCharactersInCode()
 		{
-			Assert.AreEqual(4, BitsList.numCharactersInCode);
+			Assert.AreEqual(4, BitsList.NumCharactersInCode);
 		}
 		
 		[Test]

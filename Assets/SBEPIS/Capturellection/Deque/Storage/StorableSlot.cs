@@ -5,77 +5,104 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
 {
-	public class StorableSlot : Storable
+	public class StorableSlot : MonoBehaviour, Storable
 	{
 		private InventoryStorable card;
 		private CaptureContainer container;
 		
-		private Vector3 maxPossibleSize;
-		public override Vector3 MaxPossibleSize => maxPossibleSize;
+		public Vector3 Position
+		{
+			get => transform.localPosition;
+			set => transform.localPosition = value;
+		}
+		public Quaternion Rotation
+		{
+			get => transform.localRotation;
+			set => transform.localRotation = value;
+		}
+		public Vector3 Direction { get; set; }
+		public Transform Parent
+		{
+			set => transform.SetParent(value);
+			get => transform.parent;
+		}
 		
-		public override int InventoryCount => card ? 1 : 0;
+		public Vector3 MaxPossibleSize { get; private set; }
 		
-		public override bool HasNoCards => !HasAllCards;
-		public override bool HasAllCards => card;
+		public int InventoryCount => card ? 1 : 0;
 		
-		public override bool HasAllCardsEmpty => container && container.IsEmpty;
-		public override bool HasAllCardsFull => !HasAllCardsEmpty;
+		public bool HasNoCards => !HasAllCards;
+		public bool HasAllCards => card;
+		
+		public bool HasAllCardsEmpty => container && container.IsEmpty;
+		public bool HasAllCardsFull => !HasAllCardsEmpty;
 
-		public override void Tick(float deltaTime) { }
-		public override void LayoutTarget(InventoryStorable card, CardTarget target)
+		public void Tick(float deltaTime) { }
+		public void LayoutTarget(InventoryStorable card, CardTarget target)
 		{
 			if (Contains(card))
 				target.transform.SetPositionAndRotation(transform.position, transform.rotation);
 		}
 		
-		public override bool CanFetch(InventoryStorable card) => Contains(card);
-		public override bool Contains(InventoryStorable card) => this.card == card;
+		public bool CanFetch(InventoryStorable card) => Contains(card);
+		public bool Contains(InventoryStorable card) => this.card == card;
 		
-		public override UniTask<(InventoryStorable, CaptureContainer, Capturellectable)> Store(Capturellectable item)
+		public UniTask<StorableStoreResult> StoreItem(Capturellectable item)
 		{
-			if (!container)
-				throw new NullReferenceException($"Tried to store in a card {card} that has no container");
+			if (!container) throw new NullReferenceException($"Tried to store in a card {card} that has no container");
 			
 			Capturellectable ejectedItem = container.Fetch();
 			container.Capture(item);
-			return UniTask.FromResult((card, container, ejectedItem));
+			return UniTask.FromResult(new StorableStoreResult(card, container, ejectedItem));
 		}
-		public override UniTask<Capturellectable> Fetch(InventoryStorable card)
+		
+		public UniTask<Capturellectable> FetchItem(InventoryStorable card)
 		{
-			if (!container)
-				throw new NullReferenceException($"Tried to fetch from a card {this.card} that has no container");
+			if (!container) throw new NullReferenceException($"Tried to fetch from a card {this.card} that has no container");
 			
 			return UniTask.FromResult(Contains(card) ? container.Fetch() : null);
 		}
-		public override UniTask Flush(List<InventoryStorable> cards)
+		
+		public UniTask FlushCards(List<InventoryStorable> cards)
 		{
 			Load(cards);
-			return UniTask.FromResult(0);
+			return UniTask.CompletedTask;
 		}
 		
-		public override void Load(List<InventoryStorable> cards)
+		public UniTask<InventoryStorable> FetchCard(InventoryStorable card)
 		{
-			if (HasAllCards || cards.Count == 0)
-				return;
+			if (!Contains(card)) return UniTask.FromResult(card);
+			
+			this.card = null;
+			container = null;
+			MaxPossibleSize = Vector3.zero;
+			return UniTask.FromResult(card);
+		}
+		
+		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action) =>
+			throw new ArgumentException($"Interacting with {card} never hit {targetDeque}");
+		
+		public void Load(List<InventoryStorable> cards)
+		{
+			if (HasAllCards || cards.Count == 0) return;
 			card = cards.Pop();
 			container = card.GetComponent<CaptureContainer>();
-			maxPossibleSize = card.DequeElement.Size;
+			MaxPossibleSize = card.DequeElement.Size;
 		}
-		public override void Save(List<InventoryStorable> cards)
+		public void Save(List<InventoryStorable> cards)
 		{
-			if (HasNoCards)
-				return;
+			if (HasNoCards) return;
 			cards.Add(card);
-			card = null;
-			container = null;
-			maxPossibleSize = Vector3.zero;
+			Destroy(gameObject);
 		}
 		
-		public override IEnumerable<Texture2D> GetCardTextures(InventoryStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent) => textures.ElementAtOrLast(indexOfThisInParent);
+		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent) => textures.ElementAtOrLast(indexOfThisInParent);
 		
-		public override IEnumerator<InventoryStorable> GetEnumerator()
+		public IEnumerator<InventoryStorable> GetEnumerator()
 		{
 			yield return card;
 		}
+		
+		private void OnDrawGizmosSelected() => Storable.DrawSize(MaxPossibleSize, transform, Color.cyan);
 	}
 }

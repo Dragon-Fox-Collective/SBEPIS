@@ -2,7 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
+using SBEPIS.Utils;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public static class ExtensionMethods
 {
@@ -82,14 +85,14 @@ public static class ExtensionMethods
 	
 	public static bool TryGetComponentInChildren<T>(this Component thisComponent, out T component) where T : Component => component = thisComponent.GetComponentInChildren<T>();
 	
-	public static string Join<T>(this string delimiter, IEnumerable<T> enumerable)
+	public static string Join<T>(this string delimiter, IEnumerable<T> source)
 	{
-		return string.Join(delimiter, enumerable);
+		return string.Join(delimiter, source);
 	}
 
-	public static string ToDelimString<T>(this IEnumerable<T> enumerable)
+	public static string ToDelimString<T>(this IEnumerable<T> source)
 	{
-		return "[" + string.Join(", ", enumerable) +  "]";
+		return "[" + string.Join(", ", source) +  "]";
 	}
 
 	public static T Pop<T>(this List<T> list)
@@ -104,12 +107,62 @@ public static class ExtensionMethods
 		list.AddRange(items);
 	}
 
-	public static IEnumerable<(int index, T item)> Enumerate<T>(this IEnumerable<T> enumerable)
+	public static IEnumerable<(int index, T item)> Enumerate<T>(this IEnumerable<T> source)
 	{
 		int i = 0;
-		foreach (T item in enumerable)
+		foreach (T item in source)
 			yield return (i++, item);
 	}
+	
+	public static bool All(this IEnumerable<bool> source) => source.All(b => b);
+	public static bool Any(this IEnumerable<bool> source) => source.Any(b => b);
+	
+	public static TResult InvokeWith<T1, T2, TResult>(this Func<T1, T2, TResult> func, (T1, T2) args) => func(args.Item1, args.Item2);
+	
+	public static async UniTask<TAccumulate> Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, UniTask<TAccumulate>> func)
+	{
+		TAccumulate value = seed;
+		// ReSharper disable once LoopCanBeConvertedToQuery
+		foreach (TSource item in source)
+			value = await func(value, item);
+		return value;
+	}
+	
+	public static async UniTask ForEach<T>(this IEnumerable<T> source, Func<T, UniTask> func)
+	{
+		foreach (T t in source)
+			await func(t);
+	}
+	
+	public static async UniTask ForEach<T1, T2>(this IEnumerable<(T1, T2)> source, Func<T1, T2, UniTask> func)
+	{
+		foreach ((T1 t1, T2 t2) in source)
+			await func(t1, t2);
+	}
+	
+	public static async UniTask<IEnumerable<TResult>> Select<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, UniTask<TResult>> action)
+	{
+		IEnumerable<TResult> result = Enumerable.Empty<TResult>();
+		// ReSharper disable once LoopCanBeConvertedToQuery
+		foreach (TSource t in source)
+			result = result.Append(await action(t));
+		return result;
+	}
+
+	public static UniTask<IEnumerable<TResult>> SelectMany<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, UniTask<IEnumerable<TResult>>> action) => source.Select(action).ContinueWith(result => result.Flatten());
+
+	public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> source) => source.SelectMany(item => item);
+	
+	public static IEnumerable<T> EnumerableOf<T>(params T[] items) => items;
+	
+	public static TValue GetEnsured<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, Func<TValue> newValueFactory)
+	{
+		if (!dictionary.ContainsKey(key))
+			dictionary.Add(key, newValueFactory());
+		return dictionary[key];
+	}
+	
+	public static TValue GetEnsured<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key) where TValue : new() => GetEnsured(dictionary, key, () => new TValue());
 
 	public static T[] Fill<T>(this T[] array, T item)
 	{
@@ -120,7 +173,7 @@ public static class ExtensionMethods
 
 	public static Bounds Containing(this Bounds a, Bounds b)
 	{
-		Bounds bounds = new Bounds(a.center, a.size);
+		Bounds bounds = new(a.center, a.size);
 		bounds.Encapsulate(b);
 		return bounds;
 	}
@@ -191,16 +244,30 @@ public static class ExtensionMethods
 		return first.Zip(second, (firstItem, secondItem) => (firstItem, secondItem));
 	}
 	
-	public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
+	public static void Shuffle<T>(this IList<T> list)  
 	{
-		foreach (T t in enumerable)
-			action.Invoke(t);
+		for (int n = list.Count - 1; n > 1; n--)
+			list.Swap(n, Random.Range(0, n + 1));
 	}
-
-	public static void ForEach<T1, T2>(this IEnumerable<(T1, T2)> enumerable, Action<T1, T2> action)
+	
+	public static void Swap<T>(this IList<T> list, int i1, int i2) => (list[i1], list[i2]) = (list[i2], list[i1]);
+	
+	public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
 	{
-		foreach ((T1 item1, T2 item2) in enumerable)
-			action.Invoke(item1, item2);
+		foreach (T t in source)
+			action(t);
+	}
+	
+	public static void ForEach<T1, T2>(this IEnumerable<(T1, T2)> source, Action<T1, T2> action)
+	{
+		foreach ((T1 item1, T2 item2) in source)
+			action(item1, item2);
+	}
+	
+	public static IEnumerable<IEnumerable<T>> Divide<T>(this List<T> source, int count)
+	{
+		for (int i = 0; i * count < source.Count; i++)
+			yield return source.Skip(i * count).Take(count);
 	}
 	
 	public static IEnumerable<float> AsEnumerable(this Vector3 vector)
@@ -223,18 +290,23 @@ public static class ExtensionMethods
 		return vector;
 	}
 	
-	public static Vector3 Select(this Vector3 vector, Func<float, float> func) => new(func.Invoke(vector.x), func.Invoke(vector.y), func.Invoke(vector.z));
-	public static Vector3 SelectIndex(this Vector3 vector, Func<int, float, float> func) => new(func.Invoke(0, vector.x), func.Invoke(1, vector.y), func.Invoke(2, vector.z));
-	public static Vector3 SelectVectorIndex(Func<int, float> func) => new(func.Invoke(0), func.Invoke(1), func.Invoke(2));
-
+	public static Vector3 Select(this Vector3 vector, Func<float, float> func) => new(func(vector.x), func(vector.y), func(vector.z));
+	public static Vector3 SelectIndex(this Vector3 vector, Func<int, float, float> func) => new(func(0, vector.x), func(1, vector.y), func(2, vector.z));
+	public static Vector3 SelectVectorIndex(Func<int, float> func) => new(func(0), func(1), func(2));
+	
 	public static float Aggregate(this Vector3 vector, Func<float, float, float> func) => vector.Aggregate(0, func);
-	public static float Aggregate(this Vector3 vector, float seed, Func<float, float, float> func) => func.Invoke(func.Invoke(func.Invoke(seed, vector.x), vector.y), vector.z);
-
-	public static Vector3 Sum<T>(this IEnumerable<T> enumerable, Func<T, Vector3> func) => enumerable.Aggregate(Vector3.zero, (sum, x) => sum + func.Invoke(x));
-	public static Vector3 Sum(this IEnumerable<Vector3> enumerable) => enumerable.Aggregate(Vector3.zero, (sum, x) => sum + x);
-
-	public static Quaternion Select(this Quaternion quaternion, Func<float, float> func) => new(func.Invoke(quaternion.x), func.Invoke(quaternion.y), func.Invoke(quaternion.z), func.Invoke(quaternion.w));
-
+	public static float Aggregate(this Vector3 vector, float seed, Func<float, float, float> func) => func(func(func(seed, vector.x), vector.y), vector.z);
+	
+	public static Vector3 Sum<T>(this IEnumerable<T> source, Func<T, Vector3> func) => source.Aggregate(Vector3.zero, (sum, x) => sum + func(x));
+	public static Vector3 Sum(this IEnumerable<Vector3> source) => source.Aggregate(Vector3.zero, (sum, x) => sum + x);
+	
+	public static Quaternion Select(this Quaternion quaternion, Func<float, float> func) => new(func(quaternion.x), func(quaternion.y), func(quaternion.z), func(quaternion.w));
+	
+	public static Vector3x2 Select(this Vector3x2 vector, Func<Vector3, Vector3> func) => new(func(vector.x), func(vector.y));
+	public static Vector3x2 SelectIndex(this Vector3x2 vector, Func<int, Vector3, Vector3> func) => new(func(0, vector.x), func(1, vector.y));
+	public static Vector2 AggregateIndex(this Vector3x2 vector, Func<int, Vector3, float> func) => new(func(0, vector.x), func(1, vector.y));
+	public static Vector3x2 Select(this Vector3x2 vector, Func<float, float> func) => vector.Select(v => v.Select(func));
+	
 	// From PhysX
 	// indexed rotation around axis, with sine and cosine of half-angle
 	private static Quaternion IndexedRotation(int axis, float s, float c)
@@ -249,12 +321,12 @@ public static class ExtensionMethods
 	{
 		// jacobi rotation using quaternions (from an idea of Stan Melax, with fix for precision issues)
 
-		const int MAX_ITERS = 24;
+		const int maxIters = 24;
 
 		Quaternion q = Quaternion.identity;
 		Matrix4x4 d = Matrix4x4.identity;
 
-		for (int i = 0; i < MAX_ITERS; i++)
+		for (int i = 0; i < maxIters; i++)
 		{
 			Matrix4x4 axes = Matrix4x4.Rotate(q);
 			d = axes.transpose * m * axes;
@@ -277,6 +349,7 @@ public static class ExtensionMethods
 				float t = 1 / (absw + Mathf.Sqrt(w * w + 1)); // absolute value of tan phi
 				float h = 1 / Mathf.Sqrt(t * t + 1);          // absolute value of cos phi
 
+				// ReSharper disable once CompareOfFloatsByEqualityOperator
 				Debug.Assert(h != 1); // |w|<1000 guarantees this with typical IEEE754 machine eps (approx 6e-8)
 				r = IndexedRotation(a, Mathf.Sqrt((1 - h) / 2) * Mathf.Sign(w), Mathf.Sqrt((1 + h) / 2));
 			}

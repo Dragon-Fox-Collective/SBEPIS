@@ -1,12 +1,11 @@
 using SBEPIS.Bits;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Items
 {
 	public class ItemModule : MonoBehaviour
 	{
-		public TaggedBitSetFactory baseBits;
+		[SerializeField] private TaggedBitSetFactory baseBits;
 		private TaggedBitSet bits;
 		private bool madeBits;
 		public TaggedBitSet Bits {
@@ -15,12 +14,17 @@ namespace SBEPIS.Items
 				if (!madeBits)
 				{
 					if (baseBits is not null)
-						bits = baseBits.Make();
+						Bits = baseBits.Make();
 					madeBits = true;
 				}
 				return bits;
 			}
-			set => bits = value;
+			set
+			{
+				bits = value;
+				baseBits.Bits = value.Bits; // Just for the inspector
+				madeBits = true;
+			}
 		}
 		
 		public Transform replaceObject;
@@ -40,6 +44,7 @@ namespace SBEPIS.Items
 			item.transform.SetPositionAndRotation(transform.position, transform.rotation);
 			transform.SetParent(item.transform, true);
 			item.name = name;
+			item.Module.Bits = Bits;
 			return true;
 		}
 		
