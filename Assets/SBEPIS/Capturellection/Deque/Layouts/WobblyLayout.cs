@@ -27,9 +27,9 @@ namespace SBEPIS.Capturellection.Deques
 			
 			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
 			Vector3 absDirection = state.Direction.Select(Mathf.Abs);
-			float lengthSum = offsetFromEnd ?
-				-offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude :
-				offset * (inventory.Count - 1);
+			float lengthSum = offsetFromEnd
+				? offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude
+				: offset * (inventory.Count - 1);
 			
 			Vector3 startRight = -lengthSum / 2 * state.Direction;
 			Vector3 right = startRight;
@@ -51,7 +51,7 @@ namespace SBEPIS.Capturellection.Deques
 	[Serializable]
 	public class WobblyState : InventoryState, DirectionState, TimeState
 	{
-		public List<Storable> Inventory { get; set; }
+		public List<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
 		public float Time { get; set; }
 	}

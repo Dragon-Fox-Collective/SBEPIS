@@ -102,5 +102,7 @@ namespace SBEPIS.Capturellection.Storage
 		{
 			yield return card;
 		}
+		
+		private void OnDrawGizmosSelected() => Storable.DrawSize(MaxPossibleSize, transform, Color.cyan);
 	}
 }

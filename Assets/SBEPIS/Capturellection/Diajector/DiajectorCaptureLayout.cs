@@ -37,7 +37,7 @@ namespace SBEPIS.Capturellection
 			inventory.Direction = directionEndpoint ? transform.InverseTransformPoint(directionEndpoint.position).normalized : Vector3.zero;
 			inventory.Tick(deltaTime);
 			Vector3 inventorySize = inventory.MaxPossibleSize;
-			inventory.Position = transform.forward * (cardZ + inventorySize.z / 2);
+			inventory.Position = Vector3.back * (cardZ + inventorySize.z / 2);
 			inventory.Rotation = Quaternion.identity;
 			
 			foreach ((InventoryStorable card, CardTarget target) in targets)

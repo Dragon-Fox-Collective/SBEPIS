@@ -5,8 +5,8 @@ namespace SBEPIS.Capturellection.Deques
 		public SwitchCardAttacher offsetFromEndSwitch;
 		
 		public SliderCardAttacher offsetSlider;
-		public float offsetMin = 0;
-		public float offsetMax = 1;
+		public float offsetMin = -0.25f;
+		public float offsetMax = 0.25f;
 		
 		public void ResetOffsetFromEndSwitch() => offsetFromEndSwitch.SwitchValue = Object.offsetFromEnd;
 		public void ChangeOffsetFromEnd(bool offsetFromEnd) => Object.offsetFromEnd = offsetFromEnd;
