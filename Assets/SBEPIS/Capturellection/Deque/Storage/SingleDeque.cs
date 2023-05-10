@@ -26,6 +26,7 @@ namespace SBEPIS.Capturellection.Storage
 		[SerializeField] private DequeSettingsPageLayout<TSettingsData> lastPlaceSettingsPagePrefab;
 		
 		public abstract void Tick(TState state, float deltaTime);
+		public abstract void Layout(TState state);
 		public abstract Vector3 GetMaxPossibleSizeOf(TState state);
 
 		public virtual bool CanFetchFrom(TState state, InventoryStorable card) => state.Inventory.Any(storable => storable.CanFetch(card));

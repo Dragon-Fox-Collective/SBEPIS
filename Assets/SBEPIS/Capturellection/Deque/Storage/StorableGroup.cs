@@ -29,11 +29,6 @@ namespace SBEPIS.Capturellection.Storage
 			get => transform.localRotation;
 			set => transform.localRotation = value;
 		}
-		public Vector3 Direction
-		{
-			get => ((DirectionState)state).Direction;
-			set => ((DirectionState)state).Direction = value;
-		}
 		public Transform Parent
 		{
 			set => transform.SetParent(value);
@@ -51,6 +46,11 @@ namespace SBEPIS.Capturellection.Storage
 		public bool HasAllCardsFull => Inventory.All(storable => storable.HasAllCardsFull);
 		
 		public void Tick(float deltaTime) => definition.Ruleset.Tick(state, deltaTime);
+		public void Layout(Vector3 direction)
+		{
+			((DirectionState)state).Direction = direction;
+			definition.Ruleset.Layout(state);
+		}
 		public void LayoutTarget(InventoryStorable card, CardTarget target) => Inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		
 		public bool CanFetch(InventoryStorable card) => definition.Ruleset.CanFetchFrom(state, card);

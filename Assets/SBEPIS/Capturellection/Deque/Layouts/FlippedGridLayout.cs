@@ -12,13 +12,10 @@ namespace SBEPIS.Capturellection.Deques
 	{
 		public Vector2 offset = new(0.1f, 0.1f);
 		
-		public void Tick<TState>(List<Storable> inventory, TState state, float deltaTime) where TState : DirectionState, FlippedState
+		public void Layout<TState>(List<Storable> inventory, TState state) where TState : DirectionState, FlippedState
 		{
 			foreach (Storable storable in inventory)
-			{
-				storable.Direction = Quaternion.Euler(0, 0, -60) * state.Direction;
-				storable.Tick(deltaTime);
-			}
+				storable.Layout(Quaternion.Euler(0, 0, -60) * state.Direction);
 			
 			int numCardsX = Mathf.CeilToInt(Mathf.Sqrt(inventory.Count));
 			Vector2 gridCount = new(numCardsX, Mathf.Ceil((float)inventory.Count / numCardsX));
