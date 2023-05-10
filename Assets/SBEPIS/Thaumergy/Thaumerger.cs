@@ -21,7 +21,6 @@ namespace SBEPIS.Thaumergy
 			Item item = Object.Instantiate(modules.itemBase);
 			InitRules(Rules);
 			while (IterateRules(Rules, bits, item.Module, modules)) { }
-			Debug.Log($"Thaumerged {item} {item.Module.Bits}");
 			return item;
 		}
 		
