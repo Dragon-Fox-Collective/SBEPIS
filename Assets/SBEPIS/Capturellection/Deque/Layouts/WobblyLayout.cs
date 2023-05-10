@@ -20,10 +20,13 @@ namespace SBEPIS.Capturellection.Deques
 			state.Time += deltaTime;
 			
 			foreach (Storable storable in inventory)
-			{
-				storable.Direction = Quaternion.Euler(0, 0, -60) * state.Direction;
 				storable.Tick(deltaTime);
-			}
+		}
+		
+		public void Layout<TState>(List<Storable> inventory, TState state) where TState : DirectionState, TimeState
+		{
+			foreach (Storable storable in inventory)
+				storable.Layout(Quaternion.Euler(0, 0, -60) * state.Direction);
 			
 			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
 			Vector3 absDirection = state.Direction.Select(Mathf.Abs);
