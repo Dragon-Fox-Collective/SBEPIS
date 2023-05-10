@@ -2227,7 +2227,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eba7adbddd6429aa7c1a9de13010387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reference: {fileID: 6376568280094680653}
+  references:
+  - {fileID: 6376568280094680653}
+  - {fileID: 2446032473590802354}
 --- !u!1 &6376568278165176233
 GameObject:
   m_ObjectHideFlags: 0
@@ -2419,6 +2421,7 @@ MonoBehaviour:
   grabNormalCaster: {fileID: 354921643590445730}
   slipAngle: 80
   shortRangeGrabDistace: 1
+  ShortRangeGrabDistance: 1
   playerOrientation: {fileID: 690210978355806070}
   onGrab:
     m_PersistentCalls:
@@ -2428,19 +2431,7 @@ MonoBehaviour:
       m_Calls: []
   onUse:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 961157736405979464}
-        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBoxOwner, SBEPIS.Capturellection
-        m_MethodName: SetDequeBox
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onDrop:
     m_PersistentCalls:
       m_Calls: []
@@ -2473,7 +2464,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eba7adbddd6429aa7c1a9de13010387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reference: {fileID: 6376568280094680653}
+  references:
+  - {fileID: 6376568280094680653}
+  - {fileID: 2446032473590802354}
 --- !u!1 &6376568278921566390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2968,7 +2961,6 @@ GameObject:
   - component: {fileID: 218406820163240569}
   - component: {fileID: 9042183274841322284}
   - component: {fileID: 4704795409870569521}
-  - component: {fileID: 804595815282090642}
   - component: {fileID: 7786418706767070881}
   m_Layer: 8
   m_Name: Player Body
@@ -3188,18 +3180,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 8136032471875334439}
   acceleration: 50
---- !u!114 &804595815282090642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6376568280094680652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef81ad8afb8540f682b2874301daab08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7786418706767070881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3603,6 +3583,7 @@ MonoBehaviour:
   grabNormalCaster: {fileID: 4304772429932534635}
   slipAngle: 80
   shortRangeGrabDistace: 1
+  ShortRangeGrabDistance: 1
   playerOrientation: {fileID: 690210978355806070}
   onGrab:
     m_PersistentCalls:
@@ -3612,19 +3593,7 @@ MonoBehaviour:
       m_Calls: []
   onUse:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 961157736405979464}
-        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBoxOwner, SBEPIS.Capturellection
-        m_MethodName: SetDequeBox
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onDrop:
     m_PersistentCalls:
       m_Calls: []
@@ -3657,7 +3626,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eba7adbddd6429aa7c1a9de13010387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reference: {fileID: 6376568280094680653}
+  references:
+  - {fileID: 6376568280094680653}
+  - {fileID: 2446032473590802354}
 --- !u!1 &8377499382241885776
 GameObject:
   m_ObjectHideFlags: 0

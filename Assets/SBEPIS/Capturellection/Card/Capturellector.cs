@@ -35,7 +35,7 @@ namespace SBEPIS.Capturellection
 		{
 			StorableStoreResult result = await inventory.StoreItem(item);
 			MoveEjectedItem(result.card, result.ejectedItem);
-			TryGrab(result.container.transform).Forget();
+			TryGrab(result.card.transform).Forget();
 			return result.container;
 		}
 

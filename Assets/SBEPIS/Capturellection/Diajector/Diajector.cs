@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using KBCore.Refs;
 using SBEPIS.Utils;
 using UnityEngine;
@@ -30,19 +29,16 @@ namespace SBEPIS.Capturellection
 		
 		public bool IsOpen => currentPage;
 		
-		private void StartAssembly() => StartAssembly(null, transform.position, transform.rotation);
-		public void StartAssembly([MaybeNull] DiajectorCloser closer, Vector3 position, Quaternion rotation) => StartAssembly(closer, position, rotation, mainPage);
+		private void StartAssembly() => StartAssembly(transform.position, transform.rotation);
+		public void StartAssembly(Vector3 position, Quaternion rotation) => StartAssembly(position, rotation, mainPage);
 		
-		private void StartAssembly([MaybeNull] DiajectorCloser closer, Vector3 position, Quaternion rotation, DiajectorPage page)
+		private void StartAssembly(Vector3 position, Quaternion rotation, DiajectorPage page)
 		{
 			if (IsOpen)
 			{
 				Debug.LogError("Tried to start assembly when already assembled");
 				return;
 			}
-			
-			if (closer)
-				closer.CloseOldDiajector(this);
 			
 			gameObject.SetActive(true);
 			transform.SetPositionAndRotation(position, rotation);

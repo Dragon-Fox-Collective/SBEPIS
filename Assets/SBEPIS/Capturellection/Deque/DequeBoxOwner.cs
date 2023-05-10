@@ -25,7 +25,18 @@ namespace SBEPIS.Capturellection
 		public float TossHeight => tossHeight;
 		
 		[SerializeField, Anywhere(Flag.Optional)] private DequeBox dequeBox;
-
+		public DequeBox DequeBox
+		{
+			get => dequeBox;
+			set
+			{
+				if (dequeBox)
+					dequeBox.Unretrieve(this);
+				
+				dequeBox = value;
+			}
+		}
+		
 		private bool IsDequeBoxDeployed => dequeBox && dequeBox.IsDeployed;
 		
 		protected override void OnValidate()
@@ -38,7 +49,7 @@ namespace SBEPIS.Capturellection
 		{
 			if (dequeBox)
 			{
-				dequeBox.BindToPlayer(playerReference);
+				dequeBox.StartBindToPlayer(playerReference);
 				dequeBox.Retrieve(this);
 			}
 		}
@@ -56,17 +67,6 @@ namespace SBEPIS.Capturellection
 				dequeBox.Retrieve(this);
 			else
 				dequeBox.Toss(this);
-		}
-		
-		public void SetDequeBox(Grabber grabber, Grabbable grabbable)
-		{
-			if (!grabbable.TryGetComponent(out DequeBox newDequeBox))
-				return;
-
-			if (dequeBox)
-				dequeBox.Unretrieve(this);
-			
-			dequeBox = newDequeBox;
 		}
 	}
 }
