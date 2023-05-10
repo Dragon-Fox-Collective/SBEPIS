@@ -10,7 +10,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 		public virtual void Init() { }
 		public abstract bool Apply(TaggedBitSet bits, ItemModule item, ItemModuleManager modules);
 	}
-
+	
 	public abstract class DoOnceThaumaturgeRule : ThaumergeRule
 	{
 		private bool applied;
@@ -27,7 +27,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 
 		public abstract bool ApplyOnce(TaggedBitSet bits, ItemModule item, ItemModuleManager modules);
 	}
-
+	
 	public class BaseModelReplaceThaumergeRule : DoOnceThaumaturgeRule
 	{
 		public override bool ApplyOnce(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
@@ -49,11 +49,11 @@ namespace SBEPIS.Bits.ThaumergeRules
 			return true;
 		}
 	}
-
+	
 	public class AeratedAttachThaumergeRule : DoOnceThaumaturgeRule
 	{
 		private readonly Bit aerated;
-
+		
 		public AeratedAttachThaumergeRule()
 		{
 			aerated = BitManager.instance.Bits.First(bit => bit.BitName == "Aerated");
@@ -63,11 +63,11 @@ namespace SBEPIS.Bits.ThaumergeRules
 		{
 			if (!bits.Has(aerated) || !item.aeratedAttachmentPoint)
 				return false;
-
+			
 			return true;
 		}
 	}
-
+	
 	public class DefaultReplaceThaumergeRule : ThaumergeRule
 	{
 		public override bool Apply(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
@@ -85,7 +85,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 			
 			return true;
 		}
-
+		
 		private static ItemModule GetModulePrefabFromScore(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
 			ItemModule module = null;
@@ -104,7 +104,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 			}
 			return module;
 		}
-
+		
 		private static void PlaceModuleUnderItem(ItemModule item, ItemModule module)
 		{
 			module.transform.Replace(item.replaceObject);
@@ -112,22 +112,22 @@ namespace SBEPIS.Bits.ThaumergeRules
 			item.Bits |= module.Bits.Bits;
 		}
 	}
-
+	
 	public class MaterialThaumergeRule : DoOnceThaumaturgeRule
 	{
 		public override bool ApplyOnce(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
 			if (item.Bits.Tags.Any(member => member is MaterialTag))
 				return false;
-
+			
 			if (bits.Tags.FirstOrDefault(member => member is MaterialTag) is not MaterialTag tag)
 				return false;
-
+			
 			foreach (Renderer renderer in item.GetComponentsInChildren<Renderer>())
 				renderer.materials = new Material[renderer.materials.Length].Fill(tag.material);
-
+			
 			item.Bits += tag;
-
+			
 			return true;
 		}
 	}
