@@ -44,28 +44,33 @@ namespace SBEPIS.Capturellection.Deques
 		{
 			print($"Instantiating to {storable.transform.parent}");
 			Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies = new();
-			(Storable, Storable) newStorables = (InstantiateStorable(storable, proxies), InstantiateStorable(storable, proxies));
+			(Storable, Storable) newStorables = (InstantiateStorable(state, storable, proxies), InstantiateStorable(state, storable, proxies));
 			state.pairs.Add(newStorables.Item1, newStorables.Item2);
 			state.pairs.Add(newStorables.Item2, newStorables.Item1);
 			return ExtensionMethods.EnumerableOf(newStorables.Item1, newStorables.Item2);
 		}
-		private Storable InstantiateStorable(Storable storable, Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies)
+		private Storable InstantiateStorable(MemoryState state, Storable storable, Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies)
 		{
 			Storable newStorable = StorableGroupDefinition.GetNewStorable(storable is StorableGroup storableGroup ? storableGroup.definition : null);
 			newStorable.transform.SetParent(storable.transform.parent);
 			
-			newStorable.Load(storable.Select(card => InstantiateCard(card, proxies.GetEnsured(card))).ToList());
+			newStorable.Load(storable.Select(card => InstantiateCard(state, card, proxies.GetEnsured(card))).ToList());
 			return newStorable;
 		}
-		private InventoryStorable InstantiateCard(InventoryStorable card, List<ProxyCaptureContainer> proxies)
+		private InventoryStorable InstantiateCard(MemoryState state, InventoryStorable card, List<ProxyCaptureContainer> proxies)
 		{
 			ProxyCaptureContainer proxy = Instantiate(memoryCardPrefab, card.transform.parent);
-			proxy.RealContainer = card.GetComponent<CaptureContainer>();
-			proxy.OtherProxies = proxies;
+			proxy.realContainer = card.GetComponent<CaptureContainer>();
+			proxy.otherProxies = proxies;
 			proxies.Add(proxy);
 			
 			InventoryStorable newCard = proxy.GetComponent<InventoryStorable>();
 			newCard.Inventory = card.Inventory;
+			
+			FlipTracker flipTracker = newCard.GetComponent<FlipTracker>();
+			flipTracker.Flip(state, false);
+			state.flipTrackers.Add(newCard, flipTracker);
+			
 			return newCard;
 		}
 		
@@ -78,19 +83,34 @@ namespace SBEPIS.Capturellection.Deques
 		{
 			inventory.Shuffle();
 			
+			state.flipTrackers.Remove(card);
+			
 			Storable storable = inventory.Find(storable => storable.Contains(card));
 			state.pairs.Remove(storable);
 			
 			ProxyCaptureContainer proxy = card.GetComponent<ProxyCaptureContainer>();
-			return proxy.OtherProxies[0] == proxy ? proxy.RealContainer.GetComponent<InventoryStorable>() : null;
+			return proxy.otherProxies[0] == proxy ? proxy.realContainer.GetComponent<InventoryStorable>() : null;
 		}
 	}
 	
 	[Serializable]
-	public class MemoryState : FlippedGridState
+	public class MemoryState : DirectionState, FlippedState
 	{
+		public Vector3 Direction { get; set; }
+		private Storable flippedStorable;
+		public Storable FlippedStorable
+		{
+			get => flippedStorable;
+			set
+			{
+				if (flippedStorable) flippedStorable.ForEach(card => flipTrackers[card].Flip(this, false));
+				flippedStorable = value;
+				if (flippedStorable) flippedStorable.ForEach(card => flipTrackers[card].Flip(this, true));
+			}
+		}
 		public bool wasFlippedThisAttempt;
 		public Dictionary<Storable, Storable> pairs = new();
 		public Storable FlippedPair => FlippedStorable ? pairs[FlippedStorable] : null;
+		public Dictionary<InventoryStorable, FlipTracker> flipTrackers = new();
 	}
 }

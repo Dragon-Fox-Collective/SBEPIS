@@ -32,10 +32,10 @@ namespace SBEPIS.Bits.ThaumergeRules
 	{
 		public override bool ApplyOnce(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
-			if (item.Bits.tags.Any(member => member is BaseModelTag))
+			if (item.Bits.Tags.Any(member => member is BaseModelTag))
 				return false;
 
-			if (bits.tags.FirstOrDefault(member => member is BaseModelTag) is not BaseModelTag tag)
+			if (bits.Tags.FirstOrDefault(member => member is BaseModelTag) is not BaseModelTag tag)
 				return false;
 
 			ItemModule module = Object.Instantiate(tag.itemModule);
@@ -43,7 +43,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 			module.transform.Replace(item.replaceObject);
 			item.replaceObject = module.replaceObject;
 
-			item.Bits |= module.Bits.bits;
+			item.Bits |= module.Bits.Bits;
 			item.Bits += tag;
 
 			return true;
@@ -56,7 +56,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 
 		public AeratedAttachThaumergeRule()
 		{
-			aerated = BitManager.instance.bits.First(bit => bit.bitName == "Aerated");
+			aerated = BitManager.instance.Bits.First(bit => bit.BitName == "Aerated");
 		}
 		
 		public override bool ApplyOnce(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
@@ -72,7 +72,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 	{
 		public override bool Apply(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
-			if (bits.bits == item.Bits.bits)
+			if (bits.Bits == item.Bits.Bits)
 				return false;
 			
 			ItemModule modulePrefab = GetModulePrefabFromScore(bits, item, modules);
@@ -92,9 +92,9 @@ namespace SBEPIS.Bits.ThaumergeRules
 			int moduleScore = int.MinValue;
 			foreach (ItemModule newModule in modules.modules)
 			{
-				if (bits.Has(newModule.Bits.bits) && !item.Bits.Has(newModule.Bits.bits))
+				if (bits.Has(newModule.Bits.Bits) && !item.Bits.Has(newModule.Bits.Bits))
 				{
-					int newModuleScore = BitSet.GetUniquenessScore(item.Bits.bits, newModule.Bits.bits);
+					int newModuleScore = BitSet.GetUniquenessScore(item.Bits.Bits, newModule.Bits.Bits);
 					if (newModuleScore > moduleScore)
 					{
 						module = newModule;
@@ -109,7 +109,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 		{
 			module.transform.Replace(item.replaceObject);
 			item.replaceObject = module.replaceObject;
-			item.Bits |= module.Bits.bits;
+			item.Bits |= module.Bits.Bits;
 		}
 	}
 
@@ -117,10 +117,10 @@ namespace SBEPIS.Bits.ThaumergeRules
 	{
 		public override bool ApplyOnce(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
-			if (item.Bits.tags.Any(member => member is MaterialTag))
+			if (item.Bits.Tags.Any(member => member is MaterialTag))
 				return false;
 
-			if (bits.tags.FirstOrDefault(member => member is MaterialTag) is not MaterialTag tag)
+			if (bits.Tags.FirstOrDefault(member => member is MaterialTag) is not MaterialTag tag)
 				return false;
 
 			foreach (Renderer renderer in item.GetComponentsInChildren<Renderer>())

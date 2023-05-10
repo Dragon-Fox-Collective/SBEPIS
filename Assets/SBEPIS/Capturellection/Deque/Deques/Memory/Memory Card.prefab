@@ -64,6 +64,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4095734523507371316, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8477240900651072022}
+    - targetCorrespondingSourceObject: {fileID: 4095734523507371316, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3011410385405918019}
   m_SourcePrefab: {fileID: 100100000, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
 --- !u!114 &51776448385642637 stripped
 MonoBehaviour:
@@ -137,7 +140,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 51776448385642637}
         m_TargetAssemblyTypeName: SBEPIS.Capturellection.CaptureBack, SBEPIS.Thaumergy
-        m_MethodName: UpdateCaptureCodeToDefault
+        m_MethodName: ResetCaptureCode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -147,7 +150,72 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  realContainer: {fileID: 0}
+--- !u!114 &3011410385405918019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6838187581392634374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20ae73ae862b4272b0752d09d15702f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onFaceUp:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6880123713085819636}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.CaptureFront, SBEPIS.Thaumergy
+        m_MethodName: ShowImage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 51776448385642637}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.CaptureBack, SBEPIS.Thaumergy
+        m_MethodName: ShowCode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onFaceDown:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6880123713085819636}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.CaptureFront, SBEPIS.Thaumergy
+        m_MethodName: HideImage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 51776448385642637}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.CaptureBack, SBEPIS.Thaumergy
+        m_MethodName: HideCode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6880123713085819636 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -5094701846435961402, guid: be9abbdebf87cfb41bd16642a70000c4, type: 3}
