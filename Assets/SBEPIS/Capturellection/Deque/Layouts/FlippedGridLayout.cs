@@ -18,7 +18,7 @@ namespace SBEPIS.Capturellection.Deques
 		{
 			foreach (Storable storable in inventory)
 			{
-				storable.state.Direction = Quaternion.Euler(0, 0, -60) * state.Direction;
+				storable.Direction = Quaternion.Euler(0, 0, -60) * state.Direction;
 				storable.Tick(deltaTime);
 			}
 			
@@ -35,7 +35,7 @@ namespace SBEPIS.Capturellection.Deques
 				right += state.Direction * (offsetXFromEnd ? length / 2 : 0);
 				
 				storable.Position = right;
-				storable.Rotation = (storable != state.FlippedStorable && !storable.HasAllCardsEmpty ? Quaternion.Euler(0, 180, 0) : Quaternion.identity) * DequeLayout.GetOffsetRotation(state.Direction);
+				storable.Rotation = (!state.FlippedStorables.Contains(storable) && !storable.HasAllCardsEmpty ? Quaternion.Euler(0, 180, 0) : Quaternion.identity) * DequeLayout.GetOffsetRotation(state.Direction);
 				
 				right += state.Direction * (offsetX + (offsetXFromEnd ? length / 2 : 0));
 			}
@@ -43,9 +43,10 @@ namespace SBEPIS.Capturellection.Deques
 	}
 	
 	[Serializable]
-	public class FlippedGridState : DirectionState, FlippedState
+	public class FlippedGridState : InventoryState, DirectionState, FlippedState
 	{
+		public List<Storable> Inventory { get; set; }
 		public Vector3 Direction { get; set; }
-		public Storable FlippedStorable { get; set; }
+		public List<Storable> FlippedStorables { get; } = new();
 	}
 }

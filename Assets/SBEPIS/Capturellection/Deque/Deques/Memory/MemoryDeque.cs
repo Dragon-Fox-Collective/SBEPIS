@@ -9,40 +9,48 @@ namespace SBEPIS.Capturellection.Deques
 {
 	public class MemoryDeque : LaidOutDeque<FlippedGridLayout, MemoryState>
 	{
-		[SerializeField] private ProxyCaptureContainer memoryCardPrefab;
+		[SerializeField] private MemoryDequeCard memoryCardPrefab;
 		
-		public override UniTask<DequeStoreResult> StoreItemHook(List<Storable> inventory, MemoryState state, Capturellectable item, DequeStoreResult oldResult)
+		public override UniTask<DequeStoreResult> StoreItemHook(MemoryState state, Capturellectable item, DequeStoreResult oldResult)
 		{
-			inventory.Shuffle();
-			return base.StoreItemHook(inventory, state, item, oldResult);
+			state.Inventory.Shuffle();
+			return base.StoreItemHook(state, item, oldResult);
 		}
 		
-		public override async UniTask<Capturellectable> FetchItem(List<Storable> inventory, MemoryState state, InventoryStorable card)
+		public override async UniTask<Capturellectable> FetchItem(MemoryState state, InventoryStorable card)
 		{
-			Storable storable = StorableWithCard(inventory, card);
-			if (!state.FlippedStorable && !storable.HasAllCardsEmpty)
+			Storable storable = Flip(state, card);
+			if (storable != null)
 			{
-				state.FlippedStorable = storable;
-				state.wasFlippedThisAttempt = true;
-				return null;
-			}
-			
-			if (storable == state.FlippedPair)
+				state.ClearFlippedStorables();
 				return await storable.FetchItem(card);
+			}
 			
 			return null;
 		}
 		
-		public override UniTask<Capturellectable> FetchItemHook(List<Storable> inventory, MemoryState state, InventoryStorable card, Capturellectable oldItem)
+		public Storable Flip(MemoryState state, InventoryStorable card)
 		{
-			if (!state.wasFlippedThisAttempt) state.FlippedStorable = null;
-			state.wasFlippedThisAttempt = false;
-			return base.FetchItemHook(inventory, state, card, oldItem);
+			Storable storable = StorableWithCard(state, card);
+			
+			if (state.FlippedStorables.Contains(storable))
+				return state.FlippedStorables.Contains(state.pairs[storable]) ? storable : null;
+			
+			if (state.FlippedStorables.Count >= 2 && !storable.HasAllCardsEmpty)
+				state.ClearFlippedStorables();
+			
+			if (state.FlippedStorables.Count < 2 && !storable.HasAllCardsEmpty)
+			{
+				state.AddFlippedStorable(storable);
+				return null;
+			}
+			
+			return null;
 		}
 		
-		public override IEnumerable<Storable> LoadCardPreHook(List<Storable> inventory, MemoryState state, Storable storable)
+		public override IEnumerable<Storable> LoadCardPreHook(MemoryState state, Storable storable)
 		{
-			print($"Instantiating to {storable.transform.parent}");
+			print($"Instantiating to {storable.Parent}");
 			Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies = new();
 			(Storable, Storable) newStorables = (InstantiateStorable(state, storable, proxies), InstantiateStorable(state, storable, proxies));
 			state.pairs.Add(newStorables.Item1, newStorables.Item2);
@@ -51,41 +59,42 @@ namespace SBEPIS.Capturellection.Deques
 		}
 		private Storable InstantiateStorable(MemoryState state, Storable storable, Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies)
 		{
-			Storable newStorable = StorableGroupDefinition.GetNewStorable(storable is StorableGroup storableGroup ? storableGroup.definition : null);
-			newStorable.transform.SetParent(storable.transform.parent);
+			Storable newStorable = StorableGroupDefinition.GetNewStorable(storable is StorableGroup storableGroup ? storableGroup.Definition : null);
+			newStorable.Parent = storable.Parent;
 			
 			newStorable.Load(storable.Select(card => InstantiateCard(state, card, proxies.GetEnsured(card))).ToList());
 			return newStorable;
 		}
 		private InventoryStorable InstantiateCard(MemoryState state, InventoryStorable card, List<ProxyCaptureContainer> proxies)
 		{
-			ProxyCaptureContainer proxy = Instantiate(memoryCardPrefab, card.transform.parent);
-			proxy.realContainer = card.GetComponent<CaptureContainer>();
-			proxy.otherProxies = proxies;
-			proxies.Add(proxy);
+			MemoryDequeCard newCard = Instantiate(memoryCardPrefab, card.transform.parent);
 			
-			InventoryStorable newCard = proxy.GetComponent<InventoryStorable>();
-			newCard.Inventory = card.Inventory;
+			newCard.Deque = this;
 			
-			FlipTracker flipTracker = newCard.GetComponent<FlipTracker>();
-			flipTracker.Flip(state, false);
-			state.flipTrackers.Add(newCard, flipTracker);
+			newCard.Proxy.realContainer = card.GetComponent<CaptureContainer>();
+			newCard.Proxy.otherProxies = proxies;
+			proxies.Add(newCard.Proxy);
 			
-			return newCard;
+			newCard.Card.Inventory = card.Inventory;
+			
+			newCard.FlipTracker.Flip(state, false);
+			state.flipTrackers.Add(newCard.Card, newCard.FlipTracker);
+			
+			return newCard.Card;
 		}
 		
-		public override void LoadCardPostHook(List<Storable> inventory, MemoryState state, Storable storable)
+		public override void LoadCardPostHook(MemoryState state, Storable storable)
 		{
-			inventory.Shuffle();
+			state.Inventory.Shuffle();
 		}
 		
-		public override InventoryStorable SaveCardHook(List<Storable> inventory, MemoryState state, InventoryStorable card)
+		public override InventoryStorable SaveCardHook(MemoryState state, InventoryStorable card)
 		{
-			inventory.Shuffle();
+			state.Inventory.Shuffle();
 			
 			state.flipTrackers.Remove(card);
 			
-			Storable storable = inventory.Find(storable => storable.Contains(card));
+			Storable storable = state.Inventory.Find(storable => storable.Contains(card));
 			state.pairs.Remove(storable);
 			
 			ProxyCaptureContainer proxy = card.GetComponent<ProxyCaptureContainer>();
@@ -94,23 +103,24 @@ namespace SBEPIS.Capturellection.Deques
 	}
 	
 	[Serializable]
-	public class MemoryState : DirectionState, FlippedState
+	public class MemoryState : InventoryState, DirectionState, FlippedState
 	{
+		public List<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
-		private Storable flippedStorable;
-		public Storable FlippedStorable
-		{
-			get => flippedStorable;
-			set
-			{
-				if (flippedStorable) flippedStorable.ForEach(card => flipTrackers[card].Flip(this, false));
-				flippedStorable = value;
-				if (flippedStorable) flippedStorable.ForEach(card => flipTrackers[card].Flip(this, true));
-			}
-		}
-		public bool wasFlippedThisAttempt;
+		public List<Storable> FlippedStorables { get; } = new();
 		public Dictionary<Storable, Storable> pairs = new();
-		public Storable FlippedPair => FlippedStorable ? pairs[FlippedStorable] : null;
 		public Dictionary<InventoryStorable, FlipTracker> flipTrackers = new();
+		
+		public void AddFlippedStorable(Storable storable)
+		{
+			storable.ForEach(card => flipTrackers[card].Flip(this, true));
+			FlippedStorables.Add(storable);
+		}
+		
+		public void ClearFlippedStorables()
+		{
+			FlippedStorables.ForEach(storable => storable.ForEach(card => flipTrackers[card].Flip(this, false)));
+			FlippedStorables.Clear();
+		}
 	}
 }

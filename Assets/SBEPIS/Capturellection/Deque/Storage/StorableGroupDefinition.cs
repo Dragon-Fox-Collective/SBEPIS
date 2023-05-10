@@ -22,8 +22,7 @@ namespace SBEPIS.Capturellection.Storage
 			GameObject childGameObject = new();
 			childGameObject.name = definition.DequeName;
 			StorableGroup group = childGameObject.AddComponent<StorableGroup>();
-			group.definition = definition;
-			group.state = definition.Ruleset.GetNewState();
+			group.Init(definition);
 			return group;
 		}
 		private static Storable GetNewStorableSlot()
@@ -31,7 +30,6 @@ namespace SBEPIS.Capturellection.Storage
 			GameObject childGameObject = new();
 			childGameObject.name = "Slot";
 			StorableSlot slot = childGameObject.AddComponent<StorableSlot>();
-			slot.state = new SlotState();
 			return slot;
 		}
 		

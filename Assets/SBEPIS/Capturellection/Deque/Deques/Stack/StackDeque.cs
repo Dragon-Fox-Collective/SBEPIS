@@ -1,30 +1,27 @@
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using SBEPIS.Capturellection.Storage;
-using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
 	public class StackDeque : LaidOutDeque<LinearLayout, LinearState>
 	{
-		public override bool CanFetchFrom(List<Storable> inventory, LinearState state, InventoryStorable card) => inventory[0].CanFetch(card);
+		public override bool CanFetchFrom(LinearState state, InventoryStorable card) => state.Inventory[0].CanFetch(card);
 		
-		public override async UniTask<DequeStoreResult> StoreItem(List<Storable> inventory, LinearState state, Capturellectable item)
+		public override async UniTask<DequeStoreResult> StoreItem(LinearState state, Capturellectable item)
 		{
-			Storable storable = inventory[^1];
-			inventory.Remove(storable);
+			Storable storable = state.Inventory[^1];
+			state.Inventory.Remove(storable);
 			StorableStoreResult res = await storable.StoreItem(item);
-			inventory.Insert(0, storable);
-			return res.ToDequeResult(inventory.Count - 1, storable);
+			state.Inventory.Insert(0, storable);
+			return res.ToDequeResult(state.Inventory.Count - 1, storable);
 		}
 		
-		public override async UniTask<Capturellectable> FetchItem(List<Storable> inventory, LinearState state, InventoryStorable card)
+		public override UniTask<Capturellectable> FetchItem(LinearState state, InventoryStorable card)
 		{
-			Storable storable = inventory[0];
-			inventory.Remove(storable);
-			Capturellectable item = await storable.FetchItem(card);
-			inventory.Add(storable);
-			return item;
+			Storable storable = state.Inventory[0];
+			state.Inventory.Remove(storable);
+			state.Inventory.Add(storable);
+			return storable.FetchItem(card);
 		}
 	}
 }
