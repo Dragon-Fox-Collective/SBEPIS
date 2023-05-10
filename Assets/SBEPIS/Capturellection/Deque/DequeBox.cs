@@ -1,6 +1,5 @@
 using KBCore.Refs;
 using SBEPIS.Capturellection.DequeState;
-using SBEPIS.Controller;
 using SBEPIS.Physics;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,9 +21,10 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Self] private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;
 		
+		[SerializeField, Anywhere] private PlayerBinder[] startBinders;
+		
 		public UnityEvent onToss = new();
 		public UnityEvent onRetrieve = new();
-		public UnityEvent<PlayerReference> onBindToPlayer = new();
 		
 		public bool IsDeployed => state.IsDeployed;
 		
@@ -70,17 +70,10 @@ namespace SBEPIS.Capturellection
 		
 		private static float CalcTossYVelocity(float gravity, float startHeight, float peakHeight) => Mathf.Sqrt(2 * gravity * (startHeight - peakHeight));
 		
-		public void BindToPlayer(Grabber grabber, Grabbable _)
+		public void StartBindToPlayer(PlayerReference playerReference)
 		{
-			if (!grabber.TryGetComponent(out PlayerReference playerReference))
-				return;
-			
-			BindToPlayer(playerReference);
-		}
-		
-		public void BindToPlayer(PlayerReference playerReference)
-		{
-			onBindToPlayer.Invoke(playerReference);
+			foreach (PlayerBinder binder in startBinders)
+				binder.BindToPlayer(playerReference);
 		}
 	}
 }

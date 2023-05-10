@@ -215,6 +215,8 @@ GameObject:
   - component: {fileID: 9143523999061029096}
   - component: {fileID: 175942695251901053}
   - component: {fileID: 2881546114347202315}
+  - component: {fileID: 4036856985339691026}
+  - component: {fileID: 5724014870037022545}
   - component: {fileID: 1152362718473556953}
   - component: {fileID: 4198122293244636055}
   - component: {fileID: 6008107129270263796}
@@ -231,6 +233,7 @@ GameObject:
   - component: {fileID: 8861645846908499660}
   - component: {fileID: 5421820912069157455}
   - component: {fileID: 8881046798188383952}
+  - component: {fileID: 8182433870630864023}
   m_Layer: 0
   m_Name: Capture Deque
   m_TagString: Untagged
@@ -295,6 +298,9 @@ MonoBehaviour:
   state: {fileID: 247446822995151989}
   gravitySum: {fileID: 2407877750667227432}
   rigidbody: {fileID: 6008107129270263796}
+  startBinders:
+  - {fileID: 4036856985339691026}
+  - {fileID: 5724014870037022545}
   onToss:
     m_PersistentCalls:
       m_Calls:
@@ -325,9 +331,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4036856985339691026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745641617843763313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2df1344b5447b6b89cc352a038bfbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   onBindToPlayer:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5494029080115591883}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.MenuActions, SBEPIS.Capturellection
+        m_MethodName: BindToPlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8861645846908499660}
         m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBoxDiajectorOpener,
           SBEPIS.Capturellection
@@ -341,8 +371,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5494029080115591883}
-        m_TargetAssemblyTypeName: SBEPIS.Capturellection.MenuActions, SBEPIS.Capturellection
+--- !u!114 &5724014870037022545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745641617843763313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2df1344b5447b6b89cc352a038bfbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onBindToPlayer:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8182433870630864023}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBoxOwnerBinder, SBEPIS.Capturellection
         m_MethodName: BindToPlayer
         m_Mode: 0
         m_Arguments:
@@ -471,8 +516,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 2881546114347202315}
-        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBox, SBEPIS.Capturellection
+      - m_Target: {fileID: 4036856985339691026}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.PlayerBinder, SBEPIS.Capturellection
         m_MethodName: BindToPlayer
         m_Mode: 0
         m_Arguments:
@@ -488,7 +533,19 @@ MonoBehaviour:
       m_Calls: []
   onUse:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5724014870037022545}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.PlayerBinder, SBEPIS.Capturellection
+        m_MethodName: BindToPlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onDrop:
     m_PersistentCalls:
       m_Calls:
@@ -765,6 +822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dequeBox: {fileID: 2881546114347202315}
+  closeOldDiajector: 0
   diajector: {fileID: 3804022167782729142}
 --- !u!114 &5421820912069157455
 MonoBehaviour:
@@ -809,6 +867,19 @@ MonoBehaviour:
   onFetch:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8182433870630864023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745641617843763313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bdd470f51e04e778c6451775638c62e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dequeBox: {fileID: 2881546114347202315}
 --- !u!1 &2872801326167708617
 GameObject:
   m_ObjectHideFlags: 0
