@@ -60,10 +60,10 @@ namespace SBEPIS.Tests
 		}
 		
 		[Test]
-		public void NewCards_HaveDiajector()
+		public void NewCards_HavePage()
 		{
 			Scene.diajector.StartAssembly(Vector3.zero, Quaternion.identity);
-			Assert.That(Scene.inventory.First().DequeElement.Diajector);
+			Assert.That(Scene.inventory.First().DequeElement.Page);
 		}
 
 		[UnityTest]
