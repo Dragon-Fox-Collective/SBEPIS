@@ -11,14 +11,19 @@ namespace SBEPIS.Capturellection
 	public class DiajectorPage : ValidatedMonoBehaviour
 	{
 		[SerializeField, Parent(Flag.IncludeInactive)] private Diajector diajector;
+		public Diajector Diajector => diajector;
 		[SerializeField, Parent(Flag.IncludeInactive | Flag.Optional)] private DiajectorPageCreator pageCreator;
 		
 		[FormerlySerializedAs("onPreparePagePre")]
 		public UnityEvent onPrepareCardCreation = new();
+		[FormerlySerializedAs("onPreparePage")]
 		[FormerlySerializedAs("onPreparePagePost")]
-		public UnityEvent onPreparePage = new();
+		public UnityEvent onOpen = new();
+		public UnityEvent onClose = new();
 		
 		private bool hasCreatedCards = false;
+		
+		public bool IsOpen => Diajector.CurrentPage == this;
 		
 		private readonly Dictionary<DequeElement, CardTarget> cardTargets = new();
 		
@@ -26,13 +31,13 @@ namespace SBEPIS.Capturellection
 		{
 			cardTargets.Add(card, target);
 			target.onCardBound.Invoke(card);
-			card.Diajector = diajector;
+			card.Page = this;
 		}
 		
 		public void RemoveCard(DequeElement card)
 		{
 			cardTargets.Remove(card);
-			card.Diajector = null;
+			card.Page = null;
 		}
 		
 		public bool HasCard(DequeElement card) => cardTargets.ContainsKey(card);
@@ -44,21 +49,18 @@ namespace SBEPIS.Capturellection
 			PrepareOpeningPage();
 			diajector.CoroutineOwner.StartCoroutine(SpawnCards());
 		}
-
+		
 		private void PrepareOpeningPage()
 		{
 			gameObject.SetActive(true);
 			CreateCardsIfNeeded();
-			onPreparePage.Invoke();
-			foreach ((DequeElement card, CardTarget _) in cardTargets)
-				card.State.IsPageOpen = true;
+			onOpen.Invoke();
 		}
 		
 		private void PrepareClosingPage()
 		{
 			gameObject.SetActive(false);
-			foreach ((DequeElement card, CardTarget _) in cardTargets)
-				card.State.IsPageOpen = false;
+			onClose.Invoke();
 		}
 		
 		public void CreateCardsIfNeeded()
@@ -80,8 +82,7 @@ namespace SBEPIS.Capturellection
 			foreach ((DequeElement card, CardTarget target) in cardTargets)
 			{
 				target.onPrepareCard.Invoke();
-				card.State.IsAssembling = true;
-				card.State.IsDisassembling = false;
+				card.OnStartAssembling();
 				yield return new WaitForSeconds(diajector.CardDelay);
 			}
 		}
@@ -96,8 +97,7 @@ namespace SBEPIS.Capturellection
 		{
 			foreach ((DequeElement card, CardTarget _) in cardTargets)
 			{
-				card.State.IsAssembling = false;
-				card.State.IsDisassembling = true;
+				card.OnStartDisassembling();
 				yield return new WaitForSeconds(diajector.CardDelay);
 			}
 		}
@@ -106,23 +106,14 @@ namespace SBEPIS.Capturellection
 		{
 			PrepareOpeningPage();
 			foreach ((DequeElement card, CardTarget _) in cardTargets)
-			{
-				card.State.IsAssembling = false;
-				card.State.IsDisassembling = false;
-				card.State.HasBeenAssembled = true;
-				card.State.ForceOpen();
-			}
+				card.ForceOpen();
 		}
 		
 		public void ForceClose()
 		{
 			PrepareClosingPage();
 			foreach ((DequeElement card, CardTarget _) in cardTargets)
-			{
-				card.State.IsAssembling = false;
-				card.State.IsDisassembling = false;
-				card.State.ForceClose();
-			}
+				card.ForceClose();
 		}
 		
 		private void OnDestroy()

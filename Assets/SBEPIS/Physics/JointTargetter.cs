@@ -26,10 +26,10 @@ namespace SBEPIS.Physics
 
 		private bool hasBeenConstructed = false;
 		
-		public void Construct(Rigidbody connectedBody, Transform target, StrengthSettings strength)
+		public void Init(Rigidbody connectedBody, Transform target, StrengthSettings strength)
 		{
 			if (hasBeenConstructed)
-				throw new InvalidOperationException($"Object {this} has already been constructed");
+				throw new InvalidOperationException($"Object {this} has already been initialized");
 			hasBeenConstructed = true;
 			
 			this.connectedBody = connectedBody;

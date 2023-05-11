@@ -1,0 +1,303 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1000014209703748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4000010461490258}
+  - component: {fileID: 114000011262717480}
+  - component: {fileID: 114000011667559388}
+  - component: {fileID: 114000011074573758}
+  - component: {fileID: 114000012342155362}
+  m_Layer: 0
+  m_Name: ExternalBT
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4000010461490258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000014209703748}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114000011262717480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000014209703748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6d777a828a6247b594b0e8c83d051e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GraphName: ExternalBT
+  playOnStart: 1
+  updateSettings:
+    type: 0
+    timeType: 0
+    seconds: 0.1
+  debugInfiniteLoopSettings:
+    maxLoopCount: 10000
+    enableLogging: 1
+    enableBreak: 0
+  _OwnerBehaviour: {fileID: 0}
+  _ParameterContainer: {fileID: 0}
+  _Calculators: []
+  _Comments: []
+  _Groups: []
+  _DataBranchRerouteNodes:
+    _Nodes: []
+  _DataBranchies: []
+  restartOnFinish: 1
+  executionSettings:
+    type: 0
+    maxCount: 1
+  _NodeBranchies:
+    _NodeBranchies:
+    - branchID: 1976681210
+      parentNodeID: 1
+      childNodeID: 787814235
+    - branchID: 1746430907
+      parentNodeID: 787814235
+      childNodeID: 557563932
+    - branchID: 557563932
+      parentNodeID: 787814235
+      childNodeID: 1516180604
+  _RootNode:
+    _NodeGraph: {fileID: 114000011262717480}
+    _NodeID: 1
+    position:
+      serializedVersion: 2
+      x: -12
+      y: 0
+      width: 180
+      height: 42
+    showComment: 0
+    nodeComment: 
+    _Name: Root
+    _IsSettedName: 1
+    _EnablePriority: 1
+    _Priority: 0
+    _ChildNodeLink:
+      branchID: 1976681210
+  _CompositeNodes:
+    _Nodes:
+    - _NodeGraph: {fileID: 114000011262717480}
+      _NodeID: 787814235
+      position:
+        serializedVersion: 2
+        x: -72
+        y: 96
+        width: 300
+        height: 108
+      showComment: 0
+      nodeComment: 
+      _Name: Sequencer
+      _IsSettedName: 1
+      _EnablePriority: 1
+      _Priority: 1
+      _Behaviour: {fileID: 114000011667559388}
+      _DecoratorList:
+        _Objects: []
+      _ServiceList:
+        _Objects: []
+      _BreakPoint: 0
+      _ParentLink:
+        branchID: 1976681210
+      _ChildrenLink:
+        branchIDs: 1cc03b21bb6b1868
+      _SerializeVersion:
+        _Version: 1
+        _IsInitialized: 1
+        _IsVersioning: 1
+      _OldChildrenLink:
+      - branchID: 557563932
+      - branchID: 1746430907
+  _ActionNodes:
+    _Nodes:
+    - _NodeGraph: {fileID: 114000011262717480}
+      _NodeID: 557563932
+      position:
+        serializedVersion: 2
+        x: 156
+        y: 300
+        width: 300
+        height: 130
+      showComment: 1
+      nodeComment: Execute external state machine.
+      _Name: Sub State Machine Reference
+      _IsSettedName: 1
+      _EnablePriority: 1
+      _Priority: 3
+      _Behaviour: {fileID: 114000011074573758}
+      _DecoratorList:
+        _Objects: []
+      _ServiceList:
+        _Objects: []
+      _BreakPoint: 0
+      _ParentLink:
+        branchID: 1746430907
+    - _NodeGraph: {fileID: 114000011262717480}
+      _NodeID: 1516180604
+      position:
+        serializedVersion: 2
+        x: -240
+        y: 300
+        width: 300
+        height: 90
+      showComment: 1
+      nodeComment: 'Current graph and current node are displayed.
+
+
+        Wait
+        until you click NextButton.'
+      _Name: Debug Graph Action
+      _IsSettedName: 1
+      _EnablePriority: 1
+      _Priority: 2
+      _Behaviour: {fileID: 114000012342155362}
+      _DecoratorList:
+        _Objects: []
+      _ServiceList:
+        _Objects: []
+      _BreakPoint: 0
+      _ParentLink:
+        branchID: 557563932
+--- !u!114 &114000011667559388
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000014209703748}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4a8e0f1bce29453b909fd30bde3dc5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 114000011262717480}
+  _NodeID: 787814235
+  _DataSlotFieldLinks: []
+  expanded: 1
+--- !u!114 &114000011074573758
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000014209703748}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811ac99b14436964bb71de141a0550a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 114000011262717480}
+  _NodeID: 557563932
+  _DataSlotFieldLinks: []
+  expanded: 1
+  _ExternalFSM:
+    _Type: 0
+    _HierarchyType: 0
+    _Value: {fileID: 114000010884651222, guid: 63f72f34c2e32ea439204f732d6a8169, type: 3}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+    _OverrideConstraintType:
+      _AssemblyTypeName: 
+  _UseDirectlyInScene:
+    _Type: 0
+    _Value: 0
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  _UsePool:
+    _Type: 0
+    _Value: 0
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  _ArgumentList:
+    _Arguments: []
+    _IntParameters: []
+    _LongParameters: []
+    _FloatParameters: []
+    _BoolParameters: []
+    _EnumParameters: []
+    _StringParameters: []
+    _Vector2Parameters: []
+    _Vector3Parameters: []
+    _QuaternionParameters: []
+    _RectParameters: []
+    _BoundsParameters: []
+    _ColorParameters: []
+    _Vector4Parameters: []
+    _Vector2IntParameters: []
+    _Vector3IntParameters: []
+    _RectIntParameters: []
+    _BoundsIntParameters: []
+    _GameObjectParameters: []
+    _ComponentParameters: []
+    _AssetObjectParameters: []
+    _InputSlots: []
+    _OutputSlots: []
+  _SerializeVersion: 1
+  _OldExternalFSM: {fileID: 114000010884651222, guid: 63f72f34c2e32ea439204f732d6a8169,
+    type: 3}
+--- !u!114 &114000012342155362
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000014209703748}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a713db5bbfba76b41ac745c416b64b62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 114000011262717480}
+  _NodeID: 1516180604
+  _DataSlotFieldLinks: []
+  expanded: 1

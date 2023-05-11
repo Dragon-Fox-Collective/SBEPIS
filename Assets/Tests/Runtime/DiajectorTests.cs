@@ -12,36 +12,36 @@ namespace SBEPIS.Tests
 		[Test]
 		public void OpeningDiajector_CreatesCards()
 		{
-			Scene.diajector1.StartAssembly(Vector3.zero, Quaternion.identity);
+			Scene.diajector.StartAssembly(Vector3.zero, Quaternion.identity);
 			Assert.That(Scene.cardTarget.Card, Is.Not.Null);
 		}
 		
 		[Test]
 		public void ForceOpeningDiajector_CreatesCards()
 		{
-			Scene.diajector1.ForceOpen();
+			Scene.diajector.ForceOpen();
 			Assert.That(Scene.cardTarget.Card, Is.Not.Null);
 		}
 		
 		[Test]
 		public void OpeningDiajector_OpensDiajector()
 		{
-			Scene.diajector1.StartAssembly(Vector3.zero, Quaternion.identity);
-			Assert.That(Scene.diajector1.IsOpen);
+			Scene.diajector.StartAssembly(Vector3.zero, Quaternion.identity);
+			Assert.That(Scene.diajector.IsOpen);
 		}
 		
 		[Test]
 		public void ClosingDiajector_ClosesDiajector()
 		{
-			Scene.diajector1.ForceOpen();
-			Scene.diajector1.StartDisassembly();
-			Assert.That(Scene.diajector1.IsOpen, Is.False);
+			Scene.diajector.ForceOpen();
+			Scene.diajector.StartDisassembly();
+			Assert.That(Scene.diajector.IsOpen, Is.False);
 		}
 		
 		[UnityTest]
 		public IEnumerator OpeningDiajector_GetsCardToBoard()
 		{
-			Scene.diajector1.StartAssembly(Vector3.zero, Quaternion.identity);
+			Scene.diajector.StartAssembly(Vector3.zero, Quaternion.identity);
 			
 			bool reached = false;
 			Scene.cardTarget.Card.Animator.AddListenerOnMoveTo(Scene.endCardTarget, _ => reached = true);
@@ -53,9 +53,9 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator ClosingDiajector_GetsCardToDeque()
 		{
-			Scene.diajector1.ForceOpen();
+			Scene.diajector.ForceOpen();
 			yield return 0;
-			Scene.diajector1.StartDisassembly();
+			Scene.diajector.StartDisassembly();
 			
 			bool reached = false;
 			Scene.cardTarget.Card.Animator.AddListenerOnMoveTo(Scene.startCardTarget, _ => reached = true);
@@ -67,34 +67,34 @@ namespace SBEPIS.Tests
 		[Test]
 		public void ForceOpeningDiajector_OpensDiajector()
 		{
-			Scene.diajector1.ForceOpen();
-			Assert.That(Scene.diajector1.IsOpen);
+			Scene.diajector.ForceOpen();
+			Assert.That(Scene.diajector.IsOpen);
 		}
 		
 		[Test]
 		public void ForceClosingDiajector_ClosesDiajector()
 		{
-			Scene.diajector1.ForceOpen();
-			Scene.diajector1.ForceClose();
-			Assert.That(Scene.diajector1.IsOpen, Is.False);
+			Scene.diajector.ForceOpen();
+			Scene.diajector.ForceClose();
+			Assert.That(Scene.diajector.IsOpen, Is.False);
 		}
 		
 		[Test]
 		public void ForceRestartingDiajector_OpensDiajector()
 		{
-			Scene.diajector1.ForceOpen();
-			Scene.diajector1.ForceRestart();
-			Assert.That(Scene.diajector1.IsOpen);
+			Scene.diajector.ForceOpen();
+			Scene.diajector.ForceRestart();
+			Assert.That(Scene.diajector.IsOpen);
 		}
 		
 		[UnityTest]
 		public IEnumerator ForceOpeningDiajector_GetsCardToBoard()
 		{
-			Scene.diajector1Page.CreateCardsIfNeeded();
+			Scene.diajectorPage.CreateCardsIfNeeded();
 			
 			bool reached = false;
 			Scene.cardTarget.Card.Animator.AddListenerOnMoveTo(Scene.endCardTarget, _ => reached = true);
-			Scene.diajector1.ForceOpen();
+			Scene.diajector.ForceOpen();
 			yield return 0;
 			Assert.That(reached);
 		}
@@ -102,13 +102,13 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator ForceClosingDiajector_GetsCardToDeque()
 		{
-			Scene.diajector1Page.CreateCardsIfNeeded();
-			Scene.diajector1.ForceOpen();
+			Scene.diajectorPage.CreateCardsIfNeeded();
+			Scene.diajector.ForceOpen();
 			yield return 0;
 			
 			bool reached = false;
 			Scene.cardTarget.Card.Animator.AddListenerOnMoveTo(Scene.startCardTarget, _ => reached = true);
-			Scene.diajector1.ForceClose();
+			Scene.diajector.ForceClose();
 			yield return 0;
 			Assert.That(reached);
 		}

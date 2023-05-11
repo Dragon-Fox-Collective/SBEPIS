@@ -1,8 +1,10 @@
 using System;
+using Arbor;
 using KBCore.Refs;
 using SBEPIS.Capturellection.CardState;
 using SBEPIS.Utils;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
@@ -10,14 +12,27 @@ namespace SBEPIS.Capturellection
 	[RequireComponent(typeof(LerpTargetAnimator), typeof(DequeElementStateMachine))]
 	public class DequeElement : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self] private DequeElementStateMachine state;
-		public DequeElementStateMachine State => state;
-		
 		[SerializeField, Self] private LerpTargetAnimator animator;
 		public LerpTargetAnimator Animator => animator;
 		
+		[SerializeField, Anywhere] private ArborFSMInternal stateMachine;
+		
 		[SerializeField, Anywhere(Flag.Optional)] private Renderer bounds;
 		public Vector3 Size => bounds ? ExtensionMethods.Multiply(bounds.localBounds.size, bounds.transform.localScale) : Vector3.zero;
+		
+		[SerializeField, Anywhere] private InvokeTransition forceOpen;
+		public void ForceOpen()
+		{
+			OnStopAssemblingAndDisassembling();
+			HasBeenAssembled = true;
+			forceOpen.Invoke();
+		}
+		[SerializeField, Anywhere] private InvokeTransition forceClose;
+		public void ForceClose()
+		{
+			OnStopAssemblingAndDisassembling();
+			forceClose.Invoke();
+		}
 		
 		[FormerlySerializedAs("dequeOwnerEvents")]
 		public EventProperty<DequeElement, Deque, SetCardDequeEvent, UnsetCardDequeEvent> dequeEvents = new();
@@ -26,23 +41,84 @@ namespace SBEPIS.Capturellection
 			get => dequeEvents.Get();
 			set => dequeEvents.Set(this, value);
 		}
+
+		public UnityEvent onStartAssembling = new();
+		public bool IsAssembling { get; private set; }
+		public UnityEvent onStartDisassembling = new();
+		public bool IsDisassembling { get; private set; }
+		public UnityEvent onStopAssemblingAndDisassembling = new();
 		
 		public bool IsStored => Deque;
 		
-		private Diajector diajector;
-		public Diajector Diajector
+		public bool HasBeenAssembled { get; set; }
+		
+		public UnityEvent onEnterLayoutArea = new();
+		public UnityEvent onExitLayoutArea = new();
+		private bool isInLayoutArea;
+		public bool IsInLayoutArea
 		{
-			get => diajector;
+			get => isInLayoutArea;
 			set
 			{
-				if (diajector == value)
-					return;
-				if (diajector && value)
-					throw new InvalidOperationException($"Tried to replace the diajector on {this} before it was nulled");
-				diajector = value;
+				if (!isInLayoutArea && value)
+				{
+					isInLayoutArea = true;
+					onEnterLayoutArea.Invoke();
+				}
+				else if (isInLayoutArea && !value)
+				{
+					isInLayoutArea = false;
+					onExitLayoutArea.Invoke();
+				}
 			}
 		}
 		
-		public bool ShouldBeDisplayed => diajector.ShouldCardBeDisplayed(this);
+		private DiajectorPage page;
+		public DiajectorPage Page
+		{
+			get => page;
+			set
+			{
+				if (page == value)
+					return;
+				if (page && value)
+					throw new InvalidOperationException($"Tried to replace the page on {this} before it was nulled");
+				page = value;
+			}
+		}
+		public Diajector Diajector => Page.Diajector;
+		
+		public bool ShouldBeDisplayed => Diajector.ShouldCardBeDisplayed(this);
+		
+		public void OnStartAssembling()
+		{
+			if (IsAssembling)
+				return;
+			IsAssembling = true;
+			IsDisassembling = false;
+			onStartAssembling.Invoke();
+		}
+		
+		public void OnStartDisassembling()
+		{
+			if (IsDisassembling)
+				return;
+			IsAssembling = false;
+			IsDisassembling = true;
+			onStartDisassembling.Invoke();
+		}
+		
+		public void OnStopAssemblingAndDisassembling()
+		{
+			if (!IsAssembling && !IsDisassembling)
+				return;
+			IsAssembling = false;
+			IsDisassembling = false;
+			onStopAssemblingAndDisassembling.Invoke();
+		}
+		
+		public LerpTarget LerpTarget => Page.Diajector.GetLerpTarget(this);
+		public LerpTarget GetLerpTarget(int index) => Page.Diajector.GetLerpTarget(this, index);
+		public void TeleportToLerpTarget(int index) => Animator.TeleportTo(GetLerpTarget(index));
 	}
 }

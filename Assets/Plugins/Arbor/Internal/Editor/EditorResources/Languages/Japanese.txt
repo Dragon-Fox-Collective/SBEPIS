@@ -1,0 +1,239 @@
+﻿// URL Settings
+SiteURL:				https://arbor.caitsithware.com/
+DocumentURL:			https://arbor-docs.caitsithware.com/ja/index.html
+ManualURL:				https://arbor-docs.caitsithware.com/ja/manual.html
+InspectorReferenceURL:	https://arbor-docs.caitsithware.com/ja/inspector.html
+ScriptReferenceURL:		https://arbor-docs.caitsithware.com/ja/scriptreference.html
+ReleaseNotesURL:		https://arbor.caitsithware.com/category/releasenote/
+ForumURL:				https://forum-arbor.caitsithware.com/?language=ja
+ReviewURL:				https://assetstore.unity.com/packages/tools/visual-scripting/arbor-3-fsm-bt-graph-editor-112239#reviews
+TutorialURL:			https://arbor.caitsithware.com/tutorial/
+readme-en.txt:			readme-ja.txt
+CHANGELOG-en.md:		CHANGELOG-ja.md
+
+// Graph Label
+StateMachine:			ステートマシン
+BehaviourTree:			ビヘイビアツリー
+NotEditable:			編集不可
+
+// Play State
+PlayState.Stopping:			停止中
+PlayState.Playing:			再生中
+PlayState.Pausing:			一時停止
+PlayState.InactivePausing:	一時停止(非アクティブ)
+
+// Context Menu
+Create:					作成
+NodeList Selection:		ノードリスト選択
+Create State:			ステート作成
+Create Resident State:	常駐ステート作成
+Create Calculator:		演算ノード作成
+Create Comment:			コメント作成
+Create Group:			グループ作成
+Reroute:				リルート
+DeleteKeepConnection:	削除 (接続を保持)
+Cut:					切り取り
+Copy:					コピー
+Paste:					貼り付け
+Duplicate:				複製
+Delete:					削除
+Remove Component:		コンポーネントを削除
+Go to Previous State:	遷移元へ移動
+Go to Next State:		遷移先へ移動
+Go to Previous Node:	前のノードへ移動
+Go to Next Node:		次のノードへ移動
+Go to Parent Node:		親ノードへ移動
+Go to Child Node:		子ノードへ移動
+ShowDataValue:			データ値を常に表示
+Expand All:				全て展開
+Collapse All:			全て折りたたみ
+NodeComment/Normal:		ノードコメント/通常
+NodeComment/ShowAll:	ノードコメント/全て表示
+NodeComment/ShowCommentedOnly:	ノードコメント/コメント済みのみ表示
+NodeComment/HideAll:	ノードコメント/全て非表示
+DataSlot/ShowOutsideNode:	データスロット/ノード外に表示
+DataSlot/ShowInsideNode:	データスロット/ノード内に表示
+DataSlot/ShowFlexibly:		データスロット/フレキシブルに表示
+StateLink/ShowNodeTop:			StateLink/ノード上部に表示
+StateLink/ShowNodeBottom:		StateLink/ノード下部に表示
+StateLink/ShowBehaviourTop:		StateLink/挙動上部に表示
+StateLink/ShowBehaviourBottom:	StateLink/挙動下部に表示
+
+// BehaviourTree
+Create Composite:		コンポジット作成
+Create Action:			アクション作成
+Add Decorator:			デコレータ追加
+Add Service:			サービス追加
+Insert Decorator:		デコレータ挿入
+Insert Service:			サービス挿入
+Paste Decorator As New:	デコレータを新規貼り付け
+Paste Service As New:	サービスを新規貼り付け
+Paste Values:			値を貼り付け
+Paste Decorator:		デコレータ貼り付け
+Paste Service:			サービス貼り付け
+Replace Composite:		コンポジット置き換え
+Replace Action:			アクション置き換え
+Disconnect:				切断
+Disconnect All:			すべて切断
+
+// State
+Start State:			開始ステート
+Resident State:			常駐ステート
+State:					ステート
+Comment:				コメント
+Rename:					リネーム
+Show Comment:			コメント表示
+Show Comment(ShowAll):	コメント表示(全て表示中)
+Show Comment(ShowCommentedOnly):	コメント表示(コメント済みのみ表示中)
+Show Comment(HideAll):	コメント表示(全て非表示中)
+Set Start State:		開始ステートに設定
+Add Behaviour:			挙動追加
+Paste Behaviour:		挙動を貼り付け
+Insert Behaviour:		挙動挿入
+
+// Behaviour
+Move Up:					上に移動
+Move Down:					下に移動
+Edit Script:				スクリプト編集
+Highlight Script:			スクリプトを強調表示
+Edit Editor Script:			Editorスクリプト編集
+Highlight Editor Script:	Editorスクリプトを強調表示
+
+// Calculator
+Recalculate Mode:	再演算モード
+Dirty:				ダーティ
+Frame:				フレーム
+Scope:				スコープ
+Always:				常時
+
+// SidePanel
+Side Panel:				サイドパネル
+Graph:					グラフ
+Parameters:				パラメータ
+NodeList:				ノードリスト
+Minimap:				ミニマップ
+
+// Graph Setting
+Language:				言語
+Show Logo:				ロゴ表示
+Docking Open:			ドッキングして開く
+Zoom:					ズーム
+MouseWheelMode:			マウスホイールの挙動
+NodeCommentAffectsZoom:	コメントのズーム影響
+Grid:					グリッド
+Show Grid:				グリッド表示
+Snap Grid:				グリッドにスナップ
+Grid Size:				グリッドサイズ
+Grid Split Num:			グリッド分割数
+RestoreDefaultGridSettings:					デフォルトのグリッド設定に戻す
+Version:				バージョン
+
+// Live Tracking
+Live Tracking:			ライブ追跡
+Live Tracking Hierarchy: 階層のライブ追跡
+
+// Hierarchy
+Show Hierarchy Icons:	Hierarchyにアイコン表示
+
+// Break point
+Open Node At Breakpoint:	ブレークポイント時にノードを開く
+
+// View
+View:					表示
+
+// Debug
+Debug:					デバッグ
+ShowAllDataValuesAlways: 常にすべてのデータ値を表示
+ShowAllDataValues:		すべてのデータ値を表示
+HideAllDataValues:		すべてのデータ値を非表示
+BreakPoint:				ブレークポイント
+Set BreakPoints:		ブレークポイント設定
+Release BreakPoints:	ブレークポイント解除
+Release all BreakPoints: すべてのブレークポイントを解除
+Clear Count:			カウントクリア
+Transition:				遷移
+
+// Help Menu
+Help:					ヘルプ
+Asset Store:			アセットストア
+Official Site:			公式サイト
+Manual:					マニュアル
+Inspector Reference:	Inspectorリファレンス
+Script Reference:		スクリプトリファレンス
+Release Notes:			リリースノート
+Forum:					フォーラム
+
+// Update Check
+Notification:			通知
+Release:				製品版
+Patch:					パッチ
+Upgrade:				アップグレード
+Release Note:			リリースノート
+
+// Language
+Auto:					自動
+English:				英語
+Japanese:				日本語
+
+// Buttons
+OpenArborEditor:		Arbor Editorを開く
+
+// Messages
+MissingError:			関連するスクリプトが読み込めません。\nスクリプトを修正してください。
+DeleteError:			"{0}"を削除できませんでした。
+MissingDuplicateError:	関連するスクリプトが読み込めないため複製できませんでした。
+CalcParameter.NotSupportVariable:	Variableパラメータは非対応です。\nParameterを変更するには、{0}専用のスクリプトを作成してください。
+CalcParameter.NotSupportVariableList:	VariableListパラメータは非対応です。\nParameterを変更するには、{0}専用のスクリプトを作成してください。
+ParameterCondition.NoParameterField:	パラメータフィールドが作成されていません。
+ParameterCondition.NotSupportVariable:	Variableパラメータは非対応です。\nParameterを比較するには、{0}専用のスクリプトを作成してください。
+ParameterCondition.NotSupportVariableList:	VariableListパラメータは非対応です。\nParameterを比較するには、{0}専用のスクリプトを作成してください。
+ArborUpdateNotification.UpdateMessage: Arborの新しいバージョンがダウンロードできます。\n\n現在のバージョンは {0} です。\n新しいバージョンは {1} です。
+ArborUpdateNotification.UpToDateMessage: Arborは最新版です。\n\n現在のバージョンは {0} です。
+ArborUpdateNotification.UpgradeMessage: Arborのアップグレード版が新登場！\n\n現在のバージョンは {0} です。\n新しいバージョンは {1} です。
+NoGraphSelected.Message:		グラフが選択されていません。
+NoGraphSelected.CreateButton:	{0}\n作成
+FlexibleField.NotSupportType:	シリアライズがサポートされていません。
+DataSlot.NotSupportInspector:		演算スロットはArborEditorウィンドウ以外では使用できません。
+ArborEvent.InvalidRepair.ArgumentToRef:	引数 "{0}" が "ref" に変更されました。
+ArborEvent.InvalidRepair.ArgumentToOut:	引数 "{0}" が "out" に変更されました。
+ArborEvent.InvalidRepair.ReturnType:	戻り値の型が "{0}" に変更されました。
+ArborEvent.InvalidRepair.ValueType:		値の型が "{0}" に変更されました。
+ArborEvent.ChangedParameterType:		パラメータの種類が変更されています。
+ParameterBehaviours.InvalidSlotType:	パラメータの型が "{0}" に変更されました。
+ParameterBehaviours.NotFoundParameter:	パラメータ "{0}" が見つかりません。
+ParameterBehaviours.IsInGraphParameter: グラフの内部パラメータです。
+ParameterBehaviours.SetInGraphParameterMode: 内部モードに変更。
+ParameterBehaviours.IsExternalGraphParameter: グラフ外部のパラメータです。
+ParameterBehaviours.SetExternalGraphParameterMode: 外部モードに変更。
+ParameterBehaviours.SelectParameter:	パラメータを選択してください。
+ParameterContainer.SelectReferenceType:	値の型を選択してください。
+OpenReference:			{0}のリファレンスを開く。
+Apply:					適用
+Repair:					修復
+
+// WelcomeWindow
+WelcomeWindow.Documentation.Title:			ドキュメント
+WelcomeWindow.Documentation.Description:	Arborの基本的な使用方法などについてのドキュメントです。
+WelcomeWindow.OfficialSite.Title:			公式サイト
+WelcomeWindow.OfficialSite.Description:		Arborに関する概要や最新情報などが閲覧できます。
+WelcomeWindow.SupportForum.Title:			サポートフォーラム
+WelcomeWindow.SupportForum.Description:		Arborに関する質問や要望、不具合報告などはこちらにお願いします。
+WelcomeWindow.Review.Title:					レビュー
+WelcomeWindow.Review.Description:			Arborをお気に召しましたら評価/レビューもよろしくお願いします。\n※サポートが必要なご質問や不具合報告などはフォーラムにお願いします。
+WelcomeWindow.Tutorial.Title:				チュートリアル
+WelcomeWindow.Tutorial.Description:			基本的な使用方法について実践しながら学習できるチュートリアルです。
+WelcomeWindow.ReadMe.Title:					Read Me
+WelcomeWindow.ReadMe.Description:			Arbor使用に関する簡易な説明や注意点などをまとめたテキストファイルを開きます。
+WelcomeWindow.CHANGELOG.Title:				変更点のログ
+WelcomeWindow.CHANGELOG.Description:		今まで更新した各バージョンの変更点をまとめたテキストファイルを開きます。
+WelcomeWindow.DontDisplayNextVersion:		次バージョンまで自動表示しない
+WelcomeWindow.AutoOpenMode:					自動表示
+WelcomeWindow.OverwriteLocally:				ローカル設定
+None:										なし
+Changed Version:							バージョン変更時
+Opened Project:								プロジェクトを開いたとき
+
+// Others
+Screen Shot:			スクリーンショット
+Settings:				設定
+Filter:					フィルター

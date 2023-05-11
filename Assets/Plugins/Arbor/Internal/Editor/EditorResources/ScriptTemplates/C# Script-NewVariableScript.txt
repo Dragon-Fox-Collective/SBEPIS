@@ -1,0 +1,51 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using Arbor;
+
+[System.Serializable]
+public class #VARIABLENAME#
+{
+	// Declare Serialize Fields
+}
+
+[System.Serializable]
+public class Flexible#VARIABLENAME# : FlexibleField<#VARIABLENAME#>
+{
+	public Flexible#VARIABLENAME#(#VARIABLENAME# value) : base(value)
+	{
+	}
+
+	public Flexible#VARIABLENAME#(AnyParameterReference parameter) : base(parameter)
+	{
+	}
+
+	public Flexible#VARIABLENAME#(InputSlotAny slot) : base(slot)
+	{
+	}
+
+	public static explicit operator #VARIABLENAME#(Flexible#VARIABLENAME# flexible)
+	{
+		return flexible.value;
+	}
+
+	public static explicit operator Flexible#VARIABLENAME#(#VARIABLENAME# value)
+	{
+		return new Flexible#VARIABLENAME#(value);
+	}
+}
+
+[System.Serializable]
+public class InputSlot#VARIABLENAME# : InputSlot<#VARIABLENAME#>
+{
+}
+
+[System.Serializable]
+public class OutputSlot#VARIABLENAME# : OutputSlot<#VARIABLENAME#>
+{
+}
+
+[AddComponentMenu("")]
+public class #VARIABLENAME#Variable : Variable<#VARIABLENAME#>
+{
+}
