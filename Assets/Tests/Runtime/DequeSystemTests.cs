@@ -33,17 +33,12 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator DroppingDeque_OpensDiajector()
 		{
-			Debug.Log($"Start {Scene.dequeBox.transform.position}");
 			Scene.grabber.transform.position = Scene.dequeBoxGrabbable.transform.position;
 			Scene.grabber.GrabManually(Scene.dequeBoxGrabbable);
 			Scene.grabber.transform.position = Scene.dropPoint.position;
-			Debug.Log($"Grab + Move {Scene.dequeBox.transform.position}");
 			yield return 0;
-			Debug.Log($"Yield {Scene.dequeBox.transform.position}");
 			Scene.grabber.DropManually();
-			Debug.Log($"Drop {Scene.dequeBox.transform.position}");
 			yield return new WaitUntilOrTimeout(() => Scene.diajector.IsOpen, 3);
-			Debug.Log($"End {Scene.dequeBox.transform.position}");
 			Assert.That(Scene.diajector.IsOpen);
 		}
 		

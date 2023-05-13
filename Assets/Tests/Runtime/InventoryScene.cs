@@ -8,5 +8,6 @@ namespace SBEPIS.Tests.Scenes
 	{
 		[Anywhere] public Inventory inventory;
 		[Anywhere] public Capturellectable item;
+		[Anywhere] public InventoryStorable card;
 	}
 }

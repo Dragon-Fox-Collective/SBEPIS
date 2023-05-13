@@ -9,17 +9,17 @@ using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
-	[RequireComponent(typeof(LerpTargetAnimator), typeof(DequeElementStateMachine))]
+	[RequireComponent(typeof(LerpTargetAnimator))]
 	public class DequeElement : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self] private LerpTargetAnimator animator;
 		public LerpTargetAnimator Animator => animator;
-		
-		[SerializeField, Anywhere] private ArborFSMInternal stateMachine;
-		
+
 		[SerializeField, Anywhere(Flag.Optional)] private Renderer bounds;
 		public Vector3 Size => bounds ? ExtensionMethods.Multiply(bounds.localBounds.size, bounds.transform.localScale) : Vector3.zero;
 		
+		// ReSharper disable once NotAccessedField.Local
+		[SerializeField, Anywhere] private ArborFSM stateMachine;
 		[SerializeField, Anywhere] private InvokeTransition forceOpen;
 		public void ForceOpen()
 		{
@@ -42,11 +42,11 @@ namespace SBEPIS.Capturellection
 			set => dequeEvents.Set(this, value);
 		}
 
-		public UnityEvent onStartAssembling = new();
+		public UnityEvent onStartAssembling;
 		public bool IsAssembling { get; private set; }
-		public UnityEvent onStartDisassembling = new();
+		public UnityEvent onStartDisassembling;
 		public bool IsDisassembling { get; private set; }
-		public UnityEvent onStopAssemblingAndDisassembling = new();
+		public UnityEvent onStopAssemblingAndDisassembling;
 		
 		public bool IsStored => Deque;
 		
@@ -120,5 +120,7 @@ namespace SBEPIS.Capturellection
 		public LerpTarget LerpTarget => Page.Diajector.GetLerpTarget(this);
 		public LerpTarget GetLerpTarget(int index) => Page.Diajector.GetLerpTarget(this, index);
 		public void TeleportToLerpTarget(int index) => Animator.TeleportTo(GetLerpTarget(index));
+		
+		public void Foo() => print("foo");
 	}
 }

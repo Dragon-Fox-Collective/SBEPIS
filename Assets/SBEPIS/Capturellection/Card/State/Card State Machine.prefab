@@ -1,0 +1,4160 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7748607480361016497
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1648459604794306392}
+  - component: {fileID: 2718752667031301564}
+  - component: {fileID: 8162172894305228083}
+  - component: {fileID: 6434452958813866200}
+  - component: {fileID: 4989389745349342232}
+  - component: {fileID: 1995219042205571761}
+  - component: {fileID: 6565606414003745547}
+  - component: {fileID: 4643134090000307806}
+  - component: {fileID: 1596955712875079567}
+  - component: {fileID: 3680674533790682726}
+  - component: {fileID: 1268848841690987753}
+  - component: {fileID: 4186801221590171152}
+  - component: {fileID: 8901721063159071967}
+  - component: {fileID: 2693794199207021641}
+  - component: {fileID: 7536250094756814390}
+  - component: {fileID: 52273262388296571}
+  - component: {fileID: 7942255924071445717}
+  - component: {fileID: 4754779210804750320}
+  - component: {fileID: 8758270753687353896}
+  - component: {fileID: 1431355977087115560}
+  - component: {fileID: 6681239486367991404}
+  - component: {fileID: 6789354389914915816}
+  - component: {fileID: 6276171615498854428}
+  - component: {fileID: 6003122163729702462}
+  - component: {fileID: 3506699007554269408}
+  - component: {fileID: 7453717199210751692}
+  - component: {fileID: 7269884703687059230}
+  - component: {fileID: 6464810792235727479}
+  - component: {fileID: 886191740603629876}
+  - component: {fileID: 4563185185828687899}
+  - component: {fileID: 2415121505091506890}
+  - component: {fileID: 9074643334276518739}
+  - component: {fileID: 440473304119085385}
+  - component: {fileID: 5727758434468054060}
+  - component: {fileID: 1981645021240288855}
+  - component: {fileID: 7170336605728490582}
+  - component: {fileID: 1355991234602406327}
+  - component: {fileID: 5935079215059078831}
+  - component: {fileID: 7246069275072490005}
+  - component: {fileID: 7864634390564627064}
+  - component: {fileID: 989484261340961056}
+  - component: {fileID: 8506267733013189586}
+  - component: {fileID: 8443909245872349920}
+  - component: {fileID: 5599685885354954581}
+  - component: {fileID: 2627158484567532749}
+  - component: {fileID: 5180931027073457773}
+  - component: {fileID: 503948507515549032}
+  - component: {fileID: 3912398570744651488}
+  - component: {fileID: 860233605121227381}
+  - component: {fileID: 1404252402368420403}
+  - component: {fileID: 7082700884210569714}
+  - component: {fileID: 4939895225812315213}
+  - component: {fileID: 2073648684074596196}
+  - component: {fileID: 3755990251083814085}
+  - component: {fileID: 6687107640367110093}
+  - component: {fileID: 4258145730873475691}
+  - component: {fileID: 2060392124988842731}
+  - component: {fileID: 9130051215396019343}
+  - component: {fileID: 7569900406520464884}
+  - component: {fileID: 5257737099310877684}
+  - component: {fileID: 1587083481872721475}
+  - component: {fileID: 3999536372676296994}
+  - component: {fileID: 2319198014445404278}
+  - component: {fileID: 5920237829851806874}
+  - component: {fileID: 7761179653929933079}
+  - component: {fileID: 246787044219938569}
+  - component: {fileID: 3091711851561693571}
+  - component: {fileID: 3847982722882840028}
+  m_Layer: 11
+  m_Name: Card State Machine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1648459604794306392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2718752667031301564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3982f3d49853bb44283cd1fcef05a3dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GraphName: Capturellection Card
+  playOnStart: 1
+  updateSettings:
+    type: 0
+    timeType: 0
+    seconds: 0.1
+  debugInfiniteLoopSettings:
+    maxLoopCount: 10000
+    enableLogging: 1
+    enableBreak: 0
+  _OwnerBehaviour: {fileID: 0}
+  _ParameterContainer: {fileID: 0}
+  _Calculators:
+  - _NodeGraph: {fileID: 2718752667031301564}
+    _NodeID: 1498044246
+    position:
+      serializedVersion: 2
+      x: -864
+      y: -72
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Deque Element.Is Stored
+    _IsSettedName: 1
+    _Object: {fileID: 6434452958813866200}
+  _Comments: []
+  _Groups: []
+  _DataBranchRerouteNodes:
+    _Nodes: []
+  _DataBranchies:
+  - branchID: 1559595546
+    enabled: 1
+    inBehaviour: {fileID: 8162172894305228083}
+    inNodeID: 1559595546
+    outBehaviour: {fileID: 6434452958813866200}
+    outNodeID: 1498044246
+    lineBezier:
+      _StartPosition: {x: -564, y: -37.000008}
+      _StartControl: {x: -514, y: -37.000008}
+      _EndPosition: {x: -143.99998, y: 229}
+      _EndControl: {x: -193.99998, y: 229}
+    showDataValue: 0
+  - branchID: 534011718
+    enabled: 1
+    inBehaviour: {fileID: 1596955712875079567}
+    inNodeID: 1655911537
+    outBehaviour: {fileID: 6434452958813866200}
+    outNodeID: 1498044246
+    lineBezier:
+      _StartPosition: {x: -564, y: -37.000008}
+      _StartControl: {x: -514, y: -37.000008}
+      _EndPosition: {x: -143.99998, y: -107.000015}
+      _EndControl: {x: -193.99998, y: -107.000015}
+    showDataValue: 0
+  - branchID: 1655911537
+    enabled: 1
+    inBehaviour: {fileID: 2627158484567532749}
+    inNodeID: 630327709
+    outBehaviour: {fileID: 6434452958813866200}
+    outNodeID: 1498044246
+    lineBezier:
+      _StartPosition: {x: -564, y: -37.000008}
+      _StartControl: {x: -514, y: -37.000008}
+      _EndPosition: {x: -864, y: 10.999998}
+      _EndControl: {x: -914, y: 10.999998}
+    showDataValue: 0
+  _StartStateID: 630327709
+  _States:
+  - _NodeGraph: {fileID: 2718752667031301564}
+    _NodeID: 1559595546
+    position:
+      serializedVersion: 2
+      x: -144
+      y: 132
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Unbound
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 4989389745349342232}
+    - {fileID: 8162172894305228083}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 2718752667031301564}
+    _NodeID: 1655911537
+    position:
+      serializedVersion: 2
+      x: -144
+      y: -204
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Bound
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 6565606414003745547}
+    - {fileID: 1596955712875079567}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 2718752667031301564}
+    _NodeID: 630327709
+    position:
+      serializedVersion: 2
+      x: -864
+      y: -24
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Start
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 2627158484567532749}
+    _BreakPoint: 0
+  _StateLinkRerouteNodes:
+    _Nodes: []
+--- !u!114 &8162172894305228083
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eca590ca3f20c4f40a23c2320e60fead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 2718752667031301564}
+  _NodeID: 1559595546
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  _TriggerFlags:
+    _Type: 0
+    _Value: 4
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  _ConditionList:
+    _Conditions:
+    - _Type: 2
+      _LogicalCondition:
+        logicalOperation: 0
+        notOp: 0
+      _CompareType: 0
+      _ParameterIndex: 0
+    _IntParameters: []
+    _FloatParameters: []
+    _BoolParameters:
+    - value1:
+        _Type: 3
+        _Value: 0
+        _Parameter:
+          _Type: 0
+          _Container: {fileID: 0}
+          _Slot:
+            nodeGraph: {fileID: 0}
+            branchID: 0
+          id: 0
+          name: 
+        _Probability: 0
+        _Slot:
+          nodeGraph: {fileID: 2718752667031301564}
+          branchID: 1559595546
+      value2:
+        _Type: 0
+        _Value: 1
+        _Parameter:
+          _Type: 0
+          _Container: {fileID: 0}
+          _Slot:
+            nodeGraph: {fileID: 0}
+            branchID: 0
+          id: 0
+          name: 
+        _Probability: 0
+        _Slot:
+          nodeGraph: {fileID: 0}
+          branchID: 0
+  _NextState:
+    name: 
+    _StateID: 1655911537
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  _SerializeVersion: 3
+  _OldConditions: []
+  _OldTriggerFlags: 2
+--- !u!114 &6434452958813866200
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d340c6d959b0448e9510a420ddbac03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 2718752667031301564}
+  _NodeID: 1498044246
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  isStored:
+    nodeGraph: {fileID: 2718752667031301564}
+    branchIDs: 1a8af55c465fd41f7134b362
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &4989389745349342232
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3037840136442a8a15f4ae336233aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 2718752667031301564}
+  _NodeID: 1559595546
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  _StateMachine: {fileID: 1995219042205571761}
+  _PassThroughTrigger:
+    _Type: 0
+    _Value: 1
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  _ArgumentList:
+    _Arguments: []
+    _IntParameters: []
+    _LongParameters: []
+    _FloatParameters: []
+    _BoolParameters: []
+    _EnumParameters: []
+    _StringParameters: []
+    _Vector2Parameters: []
+    _Vector3Parameters: []
+    _QuaternionParameters: []
+    _RectParameters: []
+    _BoundsParameters: []
+    _ColorParameters: []
+    _Vector4Parameters: []
+    _Vector2IntParameters: []
+    _Vector3IntParameters: []
+    _RectIntParameters: []
+    _BoundsIntParameters: []
+    _GameObjectParameters: []
+    _ComponentParameters: []
+    _AssetObjectParameters: []
+    _InputSlots: []
+    _OutputSlots: []
+  _SuccessLink:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  _FailureLink:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  _SerializeVersion: 1
+  _OldPassThroughTrigger: 1
+--- !u!114 &1995219042205571761
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3982f3d49853bb44283cd1fcef05a3dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GraphName: Unbound
+  playOnStart: 0
+  updateSettings:
+    type: 2
+    timeType: 0
+    seconds: 0.1
+  debugInfiniteLoopSettings:
+    maxLoopCount: 10000
+    enableLogging: 1
+    enableBreak: 0
+  _OwnerBehaviour: {fileID: 4989389745349342232}
+  _ParameterContainer: {fileID: 0}
+  _Calculators:
+  - _NodeGraph: {fileID: 1995219042205571761}
+    _NodeID: 1752227528
+    position:
+      serializedVersion: 2
+      x: -72
+      y: -372
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Deque Element.Is In Layout Area
+    _IsSettedName: 1
+    _Object: {fileID: 5935079215059078831}
+  - _NodeGraph: {fileID: 1995219042205571761}
+    _NodeID: 726643700
+    position:
+      serializedVersion: 2
+      x: 840
+      y: -240
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Inventory Storable.Get
+    _IsSettedName: 1
+    _Object: {fileID: 7864634390564627064}
+  - _NodeGraph: {fileID: 1995219042205571761}
+    _NodeID: 1848543519
+    position:
+      serializedVersion: 2
+      x: 840
+      y: -336
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Deque Element
+    _IsSettedName: 1
+    _Object: {fileID: 989484261340961056}
+  - _NodeGraph: {fileID: 1995219042205571761}
+    _NodeID: 822959691
+    position:
+      serializedVersion: 2
+      x: 840
+      y: -288
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Component.Get Game Object
+    _IsSettedName: 1
+    _Object: {fileID: 8506267733013189586}
+  - _NodeGraph: {fileID: 1995219042205571761}
+    _NodeID: 1944859510
+    position:
+      serializedVersion: 2
+      x: 840
+      y: -180
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Layout Adder.Get
+    _IsSettedName: 1
+    _Object: {fileID: 8443909245872349920}
+  _Comments: []
+  _Groups: []
+  _DataBranchRerouteNodes:
+    _Nodes: []
+  _DataBranchies:
+  - branchID: 1559595546
+    enabled: 1
+    inBehaviour: {fileID: 1355991234602406327}
+    inNodeID: 630327709
+    outBehaviour: {fileID: 5935079215059078831}
+    outNodeID: 1752227528
+    lineBezier:
+      _StartPosition: {x: 228.00002, y: -337.00003}
+      _StartControl: {x: 278, y: -337.00003}
+      _EndPosition: {x: -71.999985, y: -289.00003}
+      _EndControl: {x: -121.999985, y: -289.00003}
+    showDataValue: 0
+  - branchID: 1655911537
+    enabled: 1
+    inBehaviour: {fileID: 7864634390564627064}
+    inNodeID: 726643700
+    outBehaviour: {fileID: 8506267733013189586}
+    outNodeID: 822959691
+    lineBezier:
+      _StartPosition: {x: 1140, y: -253}
+      _StartControl: {x: 1190, y: -253}
+      _EndPosition: {x: 839.99994, y: -205.00003}
+      _EndControl: {x: 789.99994, y: -205.00003}
+    showDataValue: 0
+  - branchID: 630327709
+    enabled: 1
+    inBehaviour: {fileID: 7246069275072490005}
+    inNodeID: 1655911537
+    outBehaviour: {fileID: 7864634390564627064}
+    outNodeID: 726643700
+    lineBezier:
+      _StartPosition: {x: 1140, y: -205.00003}
+      _StartControl: {x: 1190, y: -205.00003}
+      _EndPosition: {x: 839.99994, y: 10.999988}
+      _EndControl: {x: 789.99994, y: 10.999988}
+    showDataValue: 0
+  - branchID: 1752227528
+    enabled: 1
+    inBehaviour: {fileID: 8443909245872349920}
+    inNodeID: 1944859510
+    outBehaviour: {fileID: 8506267733013189586}
+    outNodeID: 822959691
+    lineBezier:
+      _StartPosition: {x: 1140, y: -253}
+      _StartControl: {x: 1190, y: -253}
+      _EndPosition: {x: 839.99994, y: -144.99997}
+      _EndControl: {x: 789.99994, y: -144.99997}
+    showDataValue: 0
+  - branchID: 726643700
+    enabled: 1
+    inBehaviour: {fileID: 7246069275072490005}
+    inNodeID: 1655911537
+    outBehaviour: {fileID: 8443909245872349920}
+    outNodeID: 1944859510
+    lineBezier:
+      _StartPosition: {x: 1140, y: -144.99997}
+      _StartControl: {x: 1190, y: -144.99997}
+      _EndPosition: {x: 839.99994, y: 10.999988}
+      _EndControl: {x: 789.99994, y: 10.999988}
+    showDataValue: 0
+  - branchID: 1848543519
+    enabled: 1
+    inBehaviour: {fileID: 5599685885354954581}
+    inNodeID: 919275682
+    outBehaviour: {fileID: 7864634390564627064}
+    outNodeID: 726643700
+    lineBezier:
+      _StartPosition: {x: 1140, y: -205.00003}
+      _StartControl: {x: 1190, y: -205.00003}
+      _EndPosition: {x: 839.99994, y: -84.99999}
+      _EndControl: {x: 789.99994, y: -84.99999}
+    showDataValue: 0
+  - branchID: 1240895648
+    enabled: 1
+    inBehaviour: {fileID: 8506267733013189586}
+    inNodeID: 822959691
+    outBehaviour: {fileID: 989484261340961056}
+    outNodeID: 1848543519
+    lineBezier:
+      _StartPosition: {x: 1140, y: -301.00003}
+      _StartControl: {x: 1190, y: -301.00003}
+      _EndPosition: {x: 839.99994, y: -253}
+      _EndControl: {x: 789.99994, y: -253}
+    showDataValue: 0
+  _StartStateID: 1559595546
+  _States:
+  - _NodeGraph: {fileID: 1995219042205571761}
+    _NodeID: 1559595546
+    position:
+      serializedVersion: 2
+      x: -72
+      y: 60
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: In World
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 1981645021240288855}
+    - {fileID: 7170336605728490582}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 1995219042205571761}
+    _NodeID: 534011718
+    position:
+      serializedVersion: 2
+      x: -72
+      y: -468
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Grabbed
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 5727758434468054060}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 1995219042205571761}
+    _NodeID: 1655911537
+    position:
+      serializedVersion: 2
+      x: 840
+      y: -24
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Dropped In Layout Area
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 7246069275072490005}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 1995219042205571761}
+    _NodeID: 630327709
+    position:
+      serializedVersion: 2
+      x: -72
+      y: -324
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Drop
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 1355991234602406327}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 1995219042205571761}
+    _NodeID: 919275682
+    position:
+      serializedVersion: 2
+      x: 840
+      y: -120
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Has Inventory Storable?
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 5599685885354954581}
+    _BreakPoint: 0
+  _StateLinkRerouteNodes:
+    _Nodes: []
+--- !u!114 &6565606414003745547
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3037840136442a8a15f4ae336233aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 2718752667031301564}
+  _NodeID: 1655911537
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  _StateMachine: {fileID: 4643134090000307806}
+  _PassThroughTrigger:
+    _Type: 0
+    _Value: 1
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  _ArgumentList:
+    _Arguments: []
+    _IntParameters: []
+    _LongParameters: []
+    _FloatParameters: []
+    _BoolParameters: []
+    _EnumParameters: []
+    _StringParameters: []
+    _Vector2Parameters: []
+    _Vector3Parameters: []
+    _QuaternionParameters: []
+    _RectParameters: []
+    _BoundsParameters: []
+    _ColorParameters: []
+    _Vector4Parameters: []
+    _Vector2IntParameters: []
+    _Vector3IntParameters: []
+    _RectIntParameters: []
+    _BoundsIntParameters: []
+    _GameObjectParameters: []
+    _ComponentParameters: []
+    _AssetObjectParameters: []
+    _InputSlots: []
+    _OutputSlots: []
+  _SuccessLink:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  _FailureLink:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  _SerializeVersion: 1
+  _OldPassThroughTrigger: 1
+--- !u!114 &4643134090000307806
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3982f3d49853bb44283cd1fcef05a3dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GraphName: Bound
+  playOnStart: 0
+  updateSettings:
+    type: 2
+    timeType: 0
+    seconds: 0.1
+  debugInfiniteLoopSettings:
+    maxLoopCount: 10000
+    enableLogging: 1
+    enableBreak: 0
+  _OwnerBehaviour: {fileID: 6565606414003745547}
+  _ParameterContainer: {fileID: 3847982722882840028}
+  _Calculators:
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 919275682
+    position:
+      serializedVersion: 2
+      x: 1308
+      y: 816
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Deque Element.Has Been Assembled
+    _IsSettedName: 1
+    _Object: {fileID: 1268848841690987753}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 2137491492
+    position:
+      serializedVersion: 2
+      x: 468
+      y: -816
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Grabbable.Is Being Held
+    _IsSettedName: 1
+    _Object: {fileID: 7453717199210751692}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1111907664
+    position:
+      serializedVersion: 2
+      x: 912
+      y: -672
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Deque Element.Is Page Open
+    _IsSettedName: 1
+    _Object: {fileID: 7269884703687059230}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 182639827
+    position:
+      serializedVersion: 2
+      x: 36
+      y: -552
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Deque Element.Is Assembling
+    _IsSettedName: 1
+    _Object: {fileID: 2415121505091506890}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 278955818
+    position:
+      serializedVersion: 2
+      x: -360
+      y: -324
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Deque Element.Is Disassembling
+    _IsSettedName: 1
+    _Object: {fileID: 440473304119085385}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1593487619
+    position:
+      serializedVersion: 2
+      x: 1308
+      y: -156
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Deque Element.Get Deque
+    _IsSettedName: 1
+    _Object: {fileID: 4258145730873475691}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1497171628
+    position:
+      serializedVersion: 2
+      x: 1308
+      y: -216
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Component.Get Transform
+    _IsSettedName: 1
+    _Object: {fileID: 2060392124988842731}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 471587800
+    position:
+      serializedVersion: 2
+      x: 1308
+      y: -108
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Component.Get Transform
+    _IsSettedName: 1
+    _Object: {fileID: 9130051215396019343}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1215376024
+    position:
+      serializedVersion: 2
+      x: 1308
+      y: 444
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Component.Get Transform
+    _IsSettedName: 1
+    _Object: {fileID: 5257737099310877684}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 567903791
+    position:
+      serializedVersion: 2
+      x: 708
+      y: 36
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Deque Element.Get Lerp Target
+    _IsSettedName: 1
+    _Object: {fileID: 1587083481872721475}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1689803610
+    position:
+      serializedVersion: 2
+      x: 708
+      y: 84
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Component.Get Transform
+    _IsSettedName: 1
+    _Object: {fileID: 3999536372676296994}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 664219782
+    position:
+      serializedVersion: 2
+      x: 1308
+      y: 504
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Deque Element.Get Lerp Target
+    _IsSettedName: 1
+    _Object: {fileID: 2319198014445404278}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1786119601
+    position:
+      serializedVersion: 2
+      x: 1308
+      y: 552
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Component.Get Transform
+    _IsSettedName: 1
+    _Object: {fileID: 5920237829851806874}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 760535773
+    position:
+      serializedVersion: 2
+      x: 708
+      y: -24
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Diajector.Get Static Rigidbody
+    _IsSettedName: 1
+    _Object: {fileID: 7761179653929933079}
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1882435592
+    position:
+      serializedVersion: 2
+      x: 708
+      y: -72
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Deque Element.Get Diajector
+    _IsSettedName: 1
+    _Object: {fileID: 246787044219938569}
+  _Comments:
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1400855637
+    position:
+      serializedVersion: 2
+      x: 84
+      y: 312
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Target Index
+    _IsSettedName: 1
+    comment: "When moving between two targets, targetIndex is the index of the first
+      one on the list.\r That means it's the target you're coming from if not reversed,\r
+      and the target you're going to if reversed."
+  _Groups: []
+  _DataBranchRerouteNodes:
+    _Nodes: []
+  _DataBranchies:
+  - branchID: 1559595546
+    enabled: 1
+    inBehaviour: {fileID: 4186801221590171152}
+    inNodeID: 1944859510
+    outBehaviour: {fileID: 1268848841690987753}
+    outNodeID: 919275682
+    lineBezier:
+      _StartPosition: {x: 1608, y: 851}
+      _StartControl: {x: 1658, y: 851}
+      _EndPosition: {x: 1308, y: 899}
+      _EndControl: {x: 1258, y: 899}
+    showDataValue: 0
+  - branchID: 534011718
+    enabled: 1
+    inBehaviour: {fileID: 6464810792235727479}
+    inNodeID: 1559595546
+    outBehaviour: {fileID: 7453717199210751692}
+    outNodeID: 2137491492
+    lineBezier:
+      _StartPosition: {x: 767.99994, y: -781}
+      _StartControl: {x: 817.99994, y: -781}
+      _EndPosition: {x: 467.99994, y: -733}
+      _EndControl: {x: 417.99994, y: -733}
+    showDataValue: 0
+  - branchID: 1655911537
+    enabled: 1
+    inBehaviour: {fileID: 886191740603629876}
+    inNodeID: 86323836
+    outBehaviour: {fileID: 7269884703687059230}
+    outNodeID: 1111907664
+    lineBezier:
+      _StartPosition: {x: 1212, y: -637}
+      _StartControl: {x: 1262, y: -637}
+      _EndPosition: {x: 912, y: -589}
+      _EndControl: {x: 862, y: -589}
+    showDataValue: 0
+  - branchID: 630327709
+    enabled: 1
+    inBehaviour: {fileID: 4563185185828687899}
+    inNodeID: 1208223655
+    outBehaviour: {fileID: 2415121505091506890}
+    outNodeID: 182639827
+    lineBezier:
+      _StartPosition: {x: 336, y: -517}
+      _StartControl: {x: 386, y: -517}
+      _EndPosition: {x: 35.999996, y: -469.00003}
+      _EndControl: {x: -14.000004, y: -469.00003}
+    showDataValue: 0
+  - branchID: 1752227528
+    enabled: 1
+    inBehaviour: {fileID: 9074643334276518739}
+    inNodeID: 1304539646
+    outBehaviour: {fileID: 440473304119085385}
+    outNodeID: 278955818
+    lineBezier:
+      _StartPosition: {x: -60.00006, y: -289}
+      _StartControl: {x: -10.000061, y: -289}
+      _EndPosition: {x: -360, y: -240.99998}
+      _EndControl: {x: -410, y: -240.99998}
+    showDataValue: 0
+  - branchID: 726643700
+    enabled: 1
+    inBehaviour: {fileID: 6687107640367110093}
+    inNodeID: 822959691
+    outBehaviour: {fileID: 2060392124988842731}
+    outNodeID: 1497171628
+    lineBezier:
+      _StartPosition: {x: 1608, y: -181}
+      _StartControl: {x: 1658, y: -181}
+      _EndPosition: {x: 1308, y: 9.000015}
+      _EndControl: {x: 1258, y: 9.000015}
+    showDataValue: 0
+  - branchID: 1848543519
+    enabled: 1
+    inBehaviour: {fileID: 9130051215396019343}
+    inNodeID: 471587800
+    outBehaviour: {fileID: 4258145730873475691}
+    outNodeID: 1593487619
+    lineBezier:
+      _StartPosition: {x: 1608, y: -120.99997}
+      _StartControl: {x: 1658, y: -120.99997}
+      _EndPosition: {x: 1308, y: -72.999985}
+      _EndControl: {x: 1258, y: -72.999985}
+    showDataValue: 0
+  - branchID: 822959691
+    enabled: 1
+    inBehaviour: {fileID: 6687107640367110093}
+    inNodeID: 822959691
+    outBehaviour: {fileID: 9130051215396019343}
+    outNodeID: 471587800
+    lineBezier:
+      _StartPosition: {x: 1608, y: -72.999985}
+      _StartControl: {x: 1658, y: -72.999985}
+      _EndPosition: {x: 1308, y: 9.000015}
+      _EndControl: {x: 1258, y: 9.000015}
+    showDataValue: 0
+  - branchID: 1944859510
+    enabled: 1
+    inBehaviour: {fileID: 7569900406520464884}
+    inNodeID: 1848543519
+    outBehaviour: {fileID: 5257737099310877684}
+    outNodeID: 1215376024
+    lineBezier:
+      _StartPosition: {x: 1608, y: 479.00003}
+      _StartControl: {x: 1658, y: 479.00003}
+      _EndPosition: {x: 1308, y: 669}
+      _EndControl: {x: 1258, y: 669}
+    showDataValue: 0
+  - branchID: 919275682
+    enabled: 1
+    inBehaviour: {fileID: 3999536372676296994}
+    inNodeID: 1689803610
+    outBehaviour: {fileID: 1587083481872721475}
+    outNodeID: 567903791
+    lineBezier:
+      _StartPosition: {x: 1007.99994, y: 71}
+      _StartControl: {x: 1058, y: 70.99999}
+      _EndPosition: {x: 708, y: 119}
+      _EndControl: {x: 658, y: 119}
+    showDataValue: 0
+  - branchID: 2041175501
+    enabled: 1
+    inBehaviour: {fileID: 3755990251083814085}
+    inNodeID: 726643700
+    outBehaviour: {fileID: 3999536372676296994}
+    outNodeID: 1689803610
+    lineBezier:
+      _StartPosition: {x: 1007.99994, y: 119}
+      _StartControl: {x: 1058, y: 119.00001}
+      _EndPosition: {x: 708, y: 273}
+      _EndControl: {x: 658, y: 273}
+    showDataValue: 0
+  - branchID: 1015591673
+    enabled: 1
+    inBehaviour: {fileID: 5920237829851806874}
+    inNodeID: 1786119601
+    outBehaviour: {fileID: 2319198014445404278}
+    outNodeID: 664219782
+    lineBezier:
+      _StartPosition: {x: 1608, y: 539}
+      _StartControl: {x: 1658, y: 539}
+      _EndPosition: {x: 1308, y: 587}
+      _EndControl: {x: 1258, y: 587}
+    showDataValue: 0
+  - branchID: 2137491492
+    enabled: 1
+    inBehaviour: {fileID: 7569900406520464884}
+    inNodeID: 1848543519
+    outBehaviour: {fileID: 5920237829851806874}
+    outNodeID: 1786119601
+    lineBezier:
+      _StartPosition: {x: 1608, y: 587}
+      _StartControl: {x: 1658, y: 587}
+      _EndPosition: {x: 1308, y: 669}
+      _EndControl: {x: 1258, y: 669}
+    showDataValue: 0
+  - branchID: 1111907664
+    enabled: 1
+    inBehaviour: {fileID: 3755990251083814085}
+    inNodeID: 726643700
+    outBehaviour: {fileID: 7761179653929933079}
+    outNodeID: 760535773
+    lineBezier:
+      _StartPosition: {x: 1007.99994, y: 11.00001}
+      _StartControl: {x: 1058, y: 11}
+      _EndPosition: {x: 708, y: 273}
+      _EndControl: {x: 658, y: 273}
+    showDataValue: 0
+  - branchID: 86323836
+    enabled: 1
+    inBehaviour: {fileID: 7761179653929933079}
+    inNodeID: 760535773
+    outBehaviour: {fileID: 246787044219938569}
+    outNodeID: 1882435592
+    lineBezier:
+      _StartPosition: {x: 1007.99994, y: -36.99999}
+      _StartControl: {x: 1058, y: -36.99999}
+      _EndPosition: {x: 708, y: 11.00001}
+      _EndControl: {x: 658, y: 11.00001}
+    showDataValue: 0
+  _StartStateID: 1559595546
+  _States:
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1559595546
+    position:
+      serializedVersion: 2
+      x: 468
+      y: -768
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Is Being Held?
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 6464810792235727479}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 534011718
+    position:
+      serializedVersion: 2
+      x: 84
+      y: -36
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: To Deque
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 7082700884210569714}
+    - {fileID: 52273262388296571}
+    - {fileID: 4754779210804750320}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1655911537
+    position:
+      serializedVersion: 2
+      x: -492
+      y: 228
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: In Deque
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 860233605121227381}
+    - {fileID: 5180931027073457773}
+    - {fileID: 6276171615498854428}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 630327709
+    position:
+      serializedVersion: 2
+      x: 84
+      y: 600
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: To Board
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 1404252402368420403}
+    - {fileID: 8758270753687353896}
+    - {fileID: 1431355977087115560}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1752227528
+    position:
+      serializedVersion: 2
+      x: 84
+      y: 792
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Set Target Index
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 503948507515549032}
+    - {fileID: 7942255924071445717}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 726643700
+    position:
+      serializedVersion: 2
+      x: 708
+      y: 216
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: On Board
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 3912398570744651488}
+    - {fileID: 3755990251083814085}
+    - {fileID: 6789354389914915816}
+    - {fileID: 6681239486367991404}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1848543519
+    position:
+      serializedVersion: 2
+      x: 1308
+      y: 612
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Grabbed, Page Open
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 2073648684074596196}
+    - {fileID: 7569900406520464884}
+    - {fileID: 3680674533790682726}
+    - {fileID: 7536250094756814390}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 822959691
+    position:
+      serializedVersion: 2
+      x: 1308
+      y: -48
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Grabbed, Page Closed
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 4939895225812315213}
+    - {fileID: 6687107640367110093}
+    - {fileID: 8901721063159071967}
+    - {fileID: 2693794199207021641}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1944859510
+    position:
+      serializedVersion: 2
+      x: 1308
+      y: 864
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Drop
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 4186801221590171152}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 2041175501
+    position:
+      serializedVersion: 2
+      x: -492
+      y: 156
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Force Close
+    _IsSettedName: 1
+    _Resident: 1
+    _Behaviours:
+    - {fileID: 6003122163729702462}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1015591673
+    position:
+      serializedVersion: 2
+      x: 708
+      y: 144
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Force Open
+    _IsSettedName: 1
+    _Resident: 1
+    _Behaviours:
+    - {fileID: 3506699007554269408}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 86323836
+    position:
+      serializedVersion: 2
+      x: 912
+      y: -624
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Is Page Open?
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 886191740603629876}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1208223655
+    position:
+      serializedVersion: 2
+      x: 36
+      y: -504
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Is Assembling?
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 4563185185828687899}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 4643134090000307806}
+    _NodeID: 1304539646
+    position:
+      serializedVersion: 2
+      x: -360
+      y: -276
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Is Disassembling?
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: 9074643334276518739}
+    _BreakPoint: 0
+  _StateLinkRerouteNodes:
+    _Nodes: []
+--- !u!114 &1596955712875079567
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eca590ca3f20c4f40a23c2320e60fead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 2718752667031301564}
+  _NodeID: 1655911537
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  _TriggerFlags:
+    _Type: 0
+    _Value: 4
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  _ConditionList:
+    _Conditions:
+    - _Type: 2
+      _LogicalCondition:
+        logicalOperation: 0
+        notOp: 0
+      _CompareType: 0
+      _ParameterIndex: 0
+    _IntParameters: []
+    _FloatParameters: []
+    _BoolParameters:
+    - value1:
+        _Type: 3
+        _Value: 0
+        _Parameter:
+          _Type: 0
+          _Container: {fileID: 0}
+          _Slot:
+            nodeGraph: {fileID: 0}
+            branchID: 0
+          id: 0
+          name: 
+        _Probability: 0
+        _Slot:
+          nodeGraph: {fileID: 2718752667031301564}
+          branchID: 534011718
+      value2:
+        _Type: 0
+        _Value: 0
+        _Parameter:
+          _Type: 0
+          _Container: {fileID: 0}
+          _Slot:
+            nodeGraph: {fileID: 0}
+            branchID: 0
+          id: 0
+          name: 
+        _Probability: 0
+        _Slot:
+          nodeGraph: {fileID: 0}
+          branchID: 0
+  _NextState:
+    name: 
+    _StateID: 1559595546
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  _SerializeVersion: 3
+  _OldConditions: []
+  _OldTriggerFlags: 2
+--- !u!114 &3680674533790682726
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18a783012a54420b2017db778c12035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1848543519
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  grabbable:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 534011718
+      name: Grabbable
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onGrab:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+  onDrop:
+    name: 
+    _StateID: 1944859510
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+--- !u!114 &1268848841690987753
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c8a023346a94c1cbe2ac39c5555bc6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 919275682
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  hasBeenAssembled:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: 1a8af55c
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &4186801221590171152
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f1158e3ba4fc8a0bea4e5874566d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1944859510
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  value:
+    _Type: 3
+    _Value: 0
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 1559595546
+  onTrue:
+    name: 
+    _StateID: 726643700
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+  onFalse:
+    name: 
+    _StateID: 1752227528
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+--- !u!114 &8901721063159071967
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18a783012a54420b2017db778c12035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 822959691
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  grabbable:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 534011718
+      name: Grabbable
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onGrab:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+  onDrop:
+    name: 
+    _StateID: 534011718
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+--- !u!114 &2693794199207021641
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c46bf036d43419eb76bd6065c27ce97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 822959691
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onOpenPage:
+    name: 
+    _StateID: 1848543519
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+  onClosePage:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+--- !u!114 &7536250094756814390
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c46bf036d43419eb76bd6065c27ce97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1848543519
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onOpenPage:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+  onClosePage:
+    name: 
+    _StateID: 822959691
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+--- !u!114 &52273262388296571
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18a783012a54420b2017db778c12035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 534011718
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  grabbable:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 534011718
+      name: Grabbable
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onGrab:
+    name: 
+    _StateID: 822959691
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+  onDrop:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+--- !u!114 &7942255924071445717
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a0ffa05d7023f44aacdfada32c15663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1752227528
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  _TransitionMethod:
+    _Type: 0
+    _Value: 0
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  _NextState:
+    name: 
+    _StateID: 630327709
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+  _SerializeVersion: 1
+  _OldTransitionMethod: 0
+--- !u!114 &4754779210804750320
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a41cbf6d72734c13a1205e12d885b741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 534011718
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onStartAssembly:
+    name: 
+    _StateID: 630327709
+    transitionTiming: 4
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 1, b: 0, a: 1}
+  onStartDisassembly:
+    name: 
+    _StateID: 0
+    transitionTiming: 4
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 1, b: 0, a: 1}
+  onStopAssemblyAndDisassembly:
+    name: 
+    _StateID: 1655911537
+    transitionTiming: 4
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 1, b: 0, a: 1}
+--- !u!114 &8758270753687353896
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18a783012a54420b2017db778c12035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 630327709
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  grabbable:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 534011718
+      name: Grabbable
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onGrab:
+    name: 
+    _StateID: 1848543519
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+  onDrop:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+--- !u!114 &1431355977087115560
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a41cbf6d72734c13a1205e12d885b741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 630327709
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onStartAssembly:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 1, b: 0, a: 1}
+  onStartDisassembly:
+    name: 
+    _StateID: 534011718
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 1, b: 0, a: 1}
+  onStopAssemblyAndDisassembly:
+    name: 
+    _StateID: 726643700
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 1, b: 0, a: 1}
+--- !u!114 &6681239486367991404
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a41cbf6d72734c13a1205e12d885b741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 726643700
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onStartAssembly:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 1, b: 0, a: 1}
+  onStartDisassembly:
+    name: 
+    _StateID: 534011718
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 1, b: 0, a: 1}
+  onStopAssemblyAndDisassembly:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 1, b: 0, a: 1}
+--- !u!114 &6789354389914915816
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18a783012a54420b2017db778c12035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 726643700
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  grabbable:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 534011718
+      name: Grabbable
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onGrab:
+    name: 
+    _StateID: 1848543519
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+  onDrop:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+--- !u!114 &6276171615498854428
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a41cbf6d72734c13a1205e12d885b741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1655911537
+  _DataSlotFieldLinks: []
+  expanded: 1
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onStartAssembly:
+    name: 
+    _StateID: 630327709
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 1, b: 0, a: 1}
+  onStartDisassembly:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 1, b: 0, a: 1}
+  onStopAssemblyAndDisassembly:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 1, b: 0, a: 1}
+--- !u!114 &6003122163729702462
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d83d1979daa483fa1aa52840d3a5b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 2041175501
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  onInvoke:
+    name: 
+    _StateID: 1655911537
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &3506699007554269408
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d83d1979daa483fa1aa52840d3a5b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1015591673
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  onInvoke:
+    name: 
+    _StateID: 726643700
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &7453717199210751692
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 917ceb07ad3847a6abf6dfd15817adf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 2137491492
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  grabbable:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 534011718
+      name: Grabbable
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  isBeingHeld:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: 465fd41f
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &7269884703687059230
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c1b9c0432f44e8889faabd14d8abca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1111907664
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  isPageOpen:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: 7134b362
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &6464810792235727479
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f1158e3ba4fc8a0bea4e5874566d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1559595546
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  value:
+    _Type: 3
+    _Value: 0
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 534011718
+  onTrue:
+    name: 
+    _StateID: 86323836
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 0, g: 1, b: 1, a: 1}
+  onFalse:
+    name: 
+    _StateID: 1208223655
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 0, g: 1, b: 1, a: 1}
+--- !u!114 &886191740603629876
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f1158e3ba4fc8a0bea4e5874566d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 86323836
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  value:
+    _Type: 3
+    _Value: 0
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 1655911537
+  onTrue:
+    name: 
+    _StateID: 1848543519
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 0, g: 1, b: 1, a: 1}
+  onFalse:
+    name: 
+    _StateID: 822959691
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 0, g: 1, b: 1, a: 1}
+--- !u!114 &4563185185828687899
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f1158e3ba4fc8a0bea4e5874566d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1208223655
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  value:
+    _Type: 3
+    _Value: 0
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 630327709
+  onTrue:
+    name: 
+    _StateID: 630327709
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 0, g: 1, b: 1, a: 1}
+  onFalse:
+    name: 
+    _StateID: 1304539646
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 0, g: 1, b: 1, a: 1}
+--- !u!114 &2415121505091506890
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08cec436734648a4a843b916c9b19b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 182639827
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  isAssembling:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: 9d099225
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &9074643334276518739
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f1158e3ba4fc8a0bea4e5874566d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1304539646
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  value:
+    _Type: 3
+    _Value: 0
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 1752227528
+  onTrue:
+    name: 
+    _StateID: 534011718
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 0, g: 1, b: 1, a: 1}
+  onFalse:
+    name: 
+    _StateID: 1655911537
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 0, g: 1, b: 1, a: 1}
+--- !u!114 &440473304119085385
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e983c30357d940c0a83de73770f621bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 278955818
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  isDisassembling:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: c8de7068
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &5727758434468054060
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18a783012a54420b2017db778c12035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 1995219042205571761}
+  _NodeID: 534011718
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  grabbable:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 534011718
+      name: Grabbable
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onGrab:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  onDrop:
+    name: 
+    _StateID: 630327709
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1981645021240288855
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18a783012a54420b2017db778c12035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 1995219042205571761}
+  _NodeID: 1559595546
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  grabbable:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 534011718
+      name: Grabbable
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onGrab:
+    name: 
+    _StateID: 534011718
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  onDrop:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &7170336605728490582
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2234434f030a47a0a5fa64420ca0dcaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 1995219042205571761}
+  _NodeID: 1559595546
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onEnterLayoutArea:
+    name: 
+    _StateID: 919275682
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  onExitLayoutArea:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1355991234602406327
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f1158e3ba4fc8a0bea4e5874566d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 1995219042205571761}
+  _NodeID: 630327709
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  value:
+    _Type: 3
+    _Value: 0
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 1995219042205571761}
+      branchID: 1559595546
+  onTrue:
+    name: 
+    _StateID: 919275682
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  onFalse:
+    name: 
+    _StateID: 1559595546
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &5935079215059078831
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034f02013bb465fbc24c0a6dd5c341e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 1995219042205571761}
+  _NodeID: 1752227528
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  isInLayoutArea:
+    nodeGraph: {fileID: 1995219042205571761}
+    branchIDs: 1a8af55c
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &7246069275072490005
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7b4e9d441a1475f9cf6a691f7a7fd6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 1995219042205571761}
+  _NodeID: 1655911537
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  card:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 1995219042205571761}
+      branchID: 630327709
+  layoutAdder:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 1995219042205571761}
+      branchID: 726643700
+--- !u!114 &7864634390564627064
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726b1c07b92c467e8b172c149101759c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 1995219042205571761}
+  _NodeID: 726643700
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  gameObject:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 1995219042205571761}
+      branchID: 1655911537
+  value:
+    nodeGraph: {fileID: 1995219042205571761}
+    branchIDs: 9d0992251f892e6e
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &989484261340961056
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49f6be3b3b23cc4d86f5db3a17b9429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 1995219042205571761}
+  _NodeID: 1848543519
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  _ParameterReference:
+    _Type: 0
+    _Container: {fileID: 3091711851561693571}
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+    id: 1559595546
+    name: Deque Element
+  _Output:
+    nodeGraph: {fileID: 1995219042205571761}
+    branchIDs: a090f649
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+    _Type:
+      _AssemblyTypeName: SBEPIS.Capturellection.DequeElement, SBEPIS.Capturellection
+  _IsInGraphParameter: 0
+  _SerializeVersion: 1
+--- !u!114 &8506267733013189586
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9d227c9a6a87749b67d02d97aa4a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 1995219042205571761}
+  _NodeID: 822959691
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  _Component:
+    nodeGraph: {fileID: 1995219042205571761}
+    branchID: 1240895648
+  _GameObject:
+    nodeGraph: {fileID: 1995219042205571761}
+    branchIDs: 7134b362c8de7068
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &8443909245872349920
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb1d1044267f4d93860f72d223088a4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 1995219042205571761}
+  _NodeID: 1944859510
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  gameObject:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 1995219042205571761}
+      branchID: 1752227528
+  value:
+    nodeGraph: {fileID: 1995219042205571761}
+    branchIDs: f4b34f2b
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &5599685885354954581
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30094b4caf524aad9ef824ee81a832b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 1995219042205571761}
+  _NodeID: 919275682
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  value:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 1995219042205571761}
+      branchID: 1848543519
+    _OverrideConstraintType:
+      _AssemblyTypeName: 
+  onExist:
+    name: 
+    _StateID: 1655911537
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  onNull:
+    name: 
+    _StateID: 1559595546
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &2627158484567532749
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f1158e3ba4fc8a0bea4e5874566d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 2718752667031301564}
+  _NodeID: 630327709
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  value:
+    _Type: 3
+    _Value: 0
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 2718752667031301564}
+      branchID: 1655911537
+  onTrue:
+    name: 
+    _StateID: 1655911537
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  onFalse:
+    name: 
+    _StateID: 1559595546
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &5180931027073457773
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52f8922f64f45a8a2cbe862fbe098ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1655911537
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  index:
+    _Type: 0
+    _Value: 0
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _MinRange: 0
+    _MaxRange: 0
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  currentTargetIndex:
+    _Type: 0
+    _Container: {fileID: 3847982722882840028}
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+    id: 1559595546
+    name: Target Index
+--- !u!114 &503948507515549032
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52f8922f64f45a8a2cbe862fbe098ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1752227528
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  index:
+    _Type: 0
+    _Value: -2
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _MinRange: 0
+    _MaxRange: 0
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  currentTargetIndex:
+    _Type: 0
+    _Container: {fileID: 3847982722882840028}
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+    id: 1559595546
+    name: Target Index
+--- !u!114 &3912398570744651488
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52f8922f64f45a8a2cbe862fbe098ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 726643700
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  index:
+    _Type: 0
+    _Value: -1
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _MinRange: 0
+    _MaxRange: 0
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  currentTargetIndex:
+    _Type: 0
+    _Container: {fileID: 3847982722882840028}
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+    id: 1559595546
+    name: Target Index
+--- !u!114 &860233605121227381
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6dce5cb759a4686911cf0cc930a2cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1655911537
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  enablerDisabler:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1655911537
+      name: Enabler Disabler
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+--- !u!114 &1404252402368420403
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dbe281f72398d34a83eae86c2bd85b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 630327709
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  targetIndex:
+    _Type: 0
+    _Container: {fileID: 3847982722882840028}
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+    id: 1559595546
+    name: Target Index
+  reversed:
+    _Type: 0
+    _Value: 0
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+--- !u!114 &7082700884210569714
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dbe281f72398d34a83eae86c2bd85b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 534011718
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  targetIndex:
+    _Type: 0
+    _Container: {fileID: 3847982722882840028}
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+    id: 1559595546
+    name: Target Index
+  reversed:
+    _Type: 0
+    _Value: 1
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+--- !u!114 &4939895225812315213
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c39eacfd924b0cb947ef98c7e87988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 822959691
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  animator:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 630327709
+      name: Lerp Target Animator
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  target:
+    _Type: 0
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+--- !u!114 &2073648684074596196
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c39eacfd924b0cb947ef98c7e87988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1848543519
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  animator:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 630327709
+      name: Lerp Target Animator
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  target:
+    _Type: 0
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+--- !u!114 &3755990251083814085
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa8ee557686454083c18efa05648828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 726643700
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  staticRigidbody:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 1111907664
+  target:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 2041175501
+  rigidbody:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1752227528
+      name: Rigidbody
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  strengthSettings:
+    _Type: 0
+    _Value: {fileID: 11400000, guid: 5cdfa0f9c8fcbc746a8b6f8c9315e2aa, type: 2}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+--- !u!114 &6687107640367110093
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4497c5df69ef46e19eeb65f2a32d0265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 822959691
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  startpoint:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 726643700
+  endpoint:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 822959691
+  electricArcPrefab: {fileID: 7962134878051775022, guid: bd0964b77b3f6f0459fc55699ed10fd6, type: 3}
+--- !u!114 &4258145730873475691
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b10a3a471298487cb0a06d91bdb4e2c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1593487619
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  deque:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: 1f892e6e
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &2060392124988842731
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d0886ba5df472299fa6fa2e0a188ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1497171628
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  component:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+    _OverrideConstraintType:
+      _AssemblyTypeName: 
+  transform:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: f4b34f2b
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &9130051215396019343
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d0886ba5df472299fa6fa2e0a188ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 471587800
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  component:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 1848543519
+    _OverrideConstraintType:
+      _AssemblyTypeName: 
+  transform:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: 4b5e0d31
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &7569900406520464884
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4497c5df69ef46e19eeb65f2a32d0265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1848543519
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  startpoint:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 1944859510
+  endpoint:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 2137491492
+  electricArcPrefab: {fileID: 7962134878051775022, guid: bd0964b77b3f6f0459fc55699ed10fd6, type: 3}
+--- !u!114 &5257737099310877684
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d0886ba5df472299fa6fa2e0a188ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1215376024
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  component:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+    _OverrideConstraintType:
+      _AssemblyTypeName: 
+  transform:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: 7633ec73
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &1587083481872721475
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c888b2eb39344b18ac3369ee6392072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 567903791
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  lerpTarget:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: a208cb36
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &3999536372676296994
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d0886ba5df472299fa6fa2e0a188ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1689803610
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  component:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 919275682
+    _OverrideConstraintType:
+      _AssemblyTypeName: 
+  transform:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: cddda979
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &2319198014445404278
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c888b2eb39344b18ac3369ee6392072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 664219782
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  lerpTarget:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: f9b2883c
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &5920237829851806874
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d0886ba5df472299fa6fa2e0a188ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1786119601
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  component:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 1015591673
+    _OverrideConstraintType:
+      _AssemblyTypeName: 
+  transform:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: 2488677f
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &7761179653929933079
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74589490d51b4cc7a2d837dc78c7a563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 760535773
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  diajector:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 4643134090000307806}
+      branchID: 86323836
+  staticRigidbody:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: 505d4642
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &246787044219938569
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de5ad6b9b69846658f0d4c886baea103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1882435592
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  diajector:
+    nodeGraph: {fileID: 4643134090000307806}
+    branchIDs: 7c322505
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &3091711851561693571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff7f9820050bbf468fba4b58fe18f2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Owner: {fileID: 0}
+  _Parameters:
+  - container: {fileID: 3091711851561693571}
+    id: 1559595546
+    type: 2004
+    name: Deque Element
+    _ParameterIndex: 0
+    _IsPublicSet: 1
+    _IsPublicGet: 1
+    referenceType:
+      _AssemblyTypeName: SBEPIS.Capturellection.DequeElement, SBEPIS.Capturellection
+  - container: {fileID: 3091711851561693571}
+    id: 534011718
+    type: 2004
+    name: Grabbable
+    _ParameterIndex: 1
+    _IsPublicSet: 1
+    _IsPublicGet: 1
+    referenceType:
+      _AssemblyTypeName: SBEPIS.Controller.Grabbable, SBEPIS.Controller
+  - container: {fileID: 3091711851561693571}
+    id: 1655911537
+    type: 2004
+    name: Enabler Disabler
+    _ParameterIndex: 2
+    _IsPublicSet: 1
+    _IsPublicGet: 1
+    referenceType:
+      _AssemblyTypeName: SBEPIS.Utils.EnablerDisabler, SBEPIS.Utils
+  - container: {fileID: 3091711851561693571}
+    id: 630327709
+    type: 2004
+    name: Lerp Target Animator
+    _ParameterIndex: 3
+    _IsPublicSet: 1
+    _IsPublicGet: 1
+    referenceType:
+      _AssemblyTypeName: SBEPIS.Utils.LerpTargetAnimator, SBEPIS.Utils
+  - container: {fileID: 3091711851561693571}
+    id: 1752227528
+    type: 2002
+    name: Rigidbody
+    _ParameterIndex: 4
+    _IsPublicSet: 1
+    _IsPublicGet: 1
+    referenceType:
+      _AssemblyTypeName: 
+  _SerializeVersion: 1
+  _OldParameters: []
+  _AssetObjectListParameters: []
+  _BoolParameters: 
+  _BoolListParameters: []
+  _BoundsParameters: []
+  _BoundsIntParameters: []
+  _BoundsIntListParameters: []
+  _BoundsListParameters: []
+  _ColorParameters: []
+  _ColorListParameters: []
+  _ComponentListParameters: []
+  _EnumListParameters: []
+  _FloatParameters: []
+  _FloatListParameters: []
+  _GameObjectListParameters: []
+  _IntParameters: 
+  _IntListParameters: []
+  _LongParameters: 
+  _LongListParameters: []
+  _ObjectParameters:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _QuaternionParameters: []
+  _QuaternionListParameters: []
+  _RectParameters: []
+  _RectIntParameters: []
+  _RectIntListParameters: []
+  _RectListParameters: []
+  _StringParameters: []
+  _StringListParameters: []
+  _Vector2Parameters: []
+  _Vector2IntParameters: []
+  _Vector2IntListParameters: []
+  _Vector2ListParameters: []
+  _Vector3Parameters: []
+  _Vector3IntParameters: []
+  _Vector3IntListParameters: []
+  _Vector3ListParameters: []
+  _Vector4Parameters: []
+  _Vector4ListParameters: []
+--- !u!114 &3847982722882840028
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff7f9820050bbf468fba4b58fe18f2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Owner: {fileID: 4643134090000307806}
+  _Parameters:
+  - container: {fileID: 3847982722882840028}
+    id: 1559595546
+    type: 0
+    name: Target Index
+    _ParameterIndex: 0
+    _IsPublicSet: 1
+    _IsPublicGet: 1
+    referenceType:
+      _AssemblyTypeName: 
+  _SerializeVersion: 1
+  _OldParameters: []
+  _AssetObjectListParameters: []
+  _BoolParameters: 
+  _BoolListParameters: []
+  _BoundsParameters: []
+  _BoundsIntParameters: []
+  _BoundsIntListParameters: []
+  _BoundsListParameters: []
+  _ColorParameters: []
+  _ColorListParameters: []
+  _ComponentListParameters: []
+  _EnumListParameters: []
+  _FloatParameters: []
+  _FloatListParameters: []
+  _GameObjectListParameters: []
+  _IntParameters: 00000000
+  _IntListParameters: []
+  _LongParameters: 
+  _LongListParameters: []
+  _ObjectParameters: []
+  _QuaternionParameters: []
+  _QuaternionListParameters: []
+  _RectParameters: []
+  _RectIntParameters: []
+  _RectIntListParameters: []
+  _RectListParameters: []
+  _StringParameters: []
+  _StringListParameters: []
+  _Vector2Parameters: []
+  _Vector2IntParameters: []
+  _Vector2IntListParameters: []
+  _Vector2ListParameters: []
+  _Vector3Parameters: []
+  _Vector3IntParameters: []
+  _Vector3IntListParameters: []
+  _Vector3ListParameters: []
+  _Vector4Parameters: []
+  _Vector4ListParameters: []

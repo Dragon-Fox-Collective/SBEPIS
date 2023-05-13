@@ -6,7 +6,6 @@ using SBEPIS.Capturellection;
 using SBEPIS.Capturellection.Storage;
 using SBEPIS.Utils;
 using SBEPIS.Tests.Scenes;
-using UnityEngine;
 using UnityEngine.TestTools;
 
 namespace SBEPIS.Tests
@@ -35,18 +34,18 @@ namespace SBEPIS.Tests
 		}
 		
 		[UnityTest]
-		public IEnumerator StoringItem_SetsCardParent() => UniTask.ToCoroutine(async () =>
+		public IEnumerator FlushingCard_SetsCardParent() => UniTask.ToCoroutine(async () =>
 		{
-			StorableStoreResult result = await Scene.inventory.StoreItem(Scene.item);
-			Assert.That(result.card.transform.parent, Is.EqualTo(Scene.inventory.CardParent));
+			await Scene.inventory.FlushCard(Scene.card);
+			Assert.That(Scene.card.transform.parent, Is.EqualTo(Scene.inventory.CardParent));
 		});
 		
 		[UnityTest]
-		public IEnumerator FetchingItem_UnsetsCardParent() => UniTask.ToCoroutine(async () =>
+		public IEnumerator FetchingCard_UnsetsCardParent() => UniTask.ToCoroutine(async () =>
 		{
-			StorableStoreResult result = await Scene.inventory.StoreItem(Scene.item);
-			await Scene.inventory.FetchItem(result.card);
-			Assert.That(result.card.transform.parent, Is.Null);
+			await Scene.inventory.FlushCard(Scene.card);
+			await Scene.inventory.FetchCard(Scene.card);
+			Assert.That(Scene.card.transform.parent, Is.Null);
 		});
 	}
 }
