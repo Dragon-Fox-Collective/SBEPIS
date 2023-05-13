@@ -3,17 +3,17 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.CardState
 {
-	[AddBehaviourMenu("Transition/AssemblyTransition")]
-	public class AssemblyTransition : StateBehaviour
+	[AddBehaviourMenu("Transition/DequeElementAssemblyTransition")]
+	public class DequeElementAssemblyTransition : StateBehaviour
 	{
 		[Tooltip("If true, if the grabbable is already in a state, immediately transition instead of waiting for an event")]
 		[SerializeField] private bool passIfValid = true;
 		
-		[SerializeField] private FlexibleDequeElement dequeElement = new();
+		[SerializeField] private FlexibleDequeElement dequeElement;
 		
-		[SerializeField] private StateLink onStartAssembly = new();
-		[SerializeField] private StateLink onStartDisassembly = new();
-		[SerializeField] private StateLink onStopAssemblyAndDisassembly = new();
+		[SerializeField] private StateLink onStartAssembly;
+		[SerializeField] private StateLink onStartDisassembly;
+		[SerializeField] private StateLink onStopAssemblyAndDisassembly;
 		
 		private bool addedListeners;
 		
@@ -53,8 +53,12 @@ namespace SBEPIS.Capturellection.CardState
 			dequeElement.value.onStartDisassembling.RemoveListener(OnStartDisassembly);
 			dequeElement.value.onStopAssemblingAndDisassembling.RemoveListener(OnStopAssemblyAndDisassembly);
 		}
-		
-		private void OnStartAssembly() => Transition(onStartAssembly);
+
+		private void OnStartAssembly()
+		{
+			Debug.Log("on start asseblied");
+			Transition(onStartAssembly);
+		}
 		private void OnStartDisassembly() => Transition(onStartDisassembly);
 		private void OnStopAssemblyAndDisassembly() => Transition(onStopAssemblyAndDisassembly);
 	}

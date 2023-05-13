@@ -10,6 +10,6 @@ namespace SBEPIS.Capturellection.CardState
 		[SerializeField] private FlexibleGrabbable grabbable = new();
 		[SerializeField] private OutputSlotBool isBeingHeld = new();
 		
-		public override void OnCalculate() => isBeingHeld.SetValue(grabbable.value.IsBeingHeld);
+		public override void OnCalculate() => isBeingHeld.SetValue(grabbable.value && grabbable.value.IsBeingHeld);
 	}
 }

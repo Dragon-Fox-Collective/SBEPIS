@@ -117,7 +117,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2952483521568985847}
-  - component: {fileID: 6438156067365644960}
+  - component: {fileID: 2586271959260489436}
   m_Layer: 0
   m_Name: Container
   m_TagString: Untagged
@@ -140,7 +140,7 @@ Transform:
   m_Father: {fileID: 6736053937047874086}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6438156067365644960
+--- !u!114 &2586271959260489436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 330838278681950148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6603116df82fe8549984b384b2cc2586, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ae9afed2c314cb884ab05e8831efab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onCapture:
@@ -217,7 +217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862e9ab1ce3640aea43d3344984b4fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ruleset: {fileID: 1367692581846402756}
+  ruleset:
+    _implementer: {fileID: 1367692581846402756}
   maxStorables: 1
   subdefinition: {fileID: 0}
 --- !u!1 &2678326413979916673
@@ -282,11 +283,9 @@ GameObject:
   - component: {fileID: 2975139910911768559}
   - component: {fileID: 6353891852644849072}
   - component: {fileID: 2667532004495947193}
-  - component: {fileID: 2745361069177004734}
-  - component: {fileID: 5669077807764824811}
   - component: {fileID: 788419051008883585}
   - component: {fileID: 3994685476425112954}
-  - component: {fileID: 7754378276518258743}
+  - component: {fileID: 215581998104908103}
   m_Layer: 0
   m_Name: Card Prefab
   m_TagString: Untagged
@@ -405,42 +404,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!95 &2745361069177004734
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2917339966848246512}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5669077807764824811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2917339966848246512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91cba428a9b44360a1bb06c630e78c6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: {fileID: 2745361069177004734}
-  card: {fileID: 788419051008883585}
-  layoutAdder: {fileID: 0}
 --- !u!114 &788419051008883585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,10 +416,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58aa7d8afd685e74abc59a26910d21af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabbable: {fileID: 6353891852644849072}
-  state: {fileID: 5669077807764824811}
   animator: {fileID: 2667532004495947193}
+  stateMachine: {fileID: 0}
   bounds: {fileID: 0}
+  forceOpen: {fileID: 0}
+  forceClose: {fileID: 0}
   dequeEvents:
     onSet:
       m_PersistentCalls:
@@ -464,6 +428,21 @@ MonoBehaviour:
     onUnset:
       m_PersistentCalls:
         m_Calls: []
+  onStartAssembling:
+    m_PersistentCalls:
+      m_Calls: []
+  onStartDisassembling:
+    m_PersistentCalls:
+      m_Calls: []
+  onStopAssemblingAndDisassembling:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnterLayoutArea:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitLayoutArea:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3994685476425112954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,7 +463,7 @@ MonoBehaviour:
     onUnset:
       m_PersistentCalls:
         m_Calls: []
---- !u!114 &7754378276518258743
+--- !u!114 &215581998104908103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -493,7 +472,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2917339966848246512}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6603116df82fe8549984b384b2cc2586, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ae9afed2c314cb884ab05e8831efab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onCapture:
@@ -582,11 +561,15 @@ MonoBehaviour:
   grabNormalCaster: {fileID: 0}
   slipAngle: 80
   shortRangeGrabDistace: 1
+  ShortRangeGrabDistance: 1
   playerOrientation: {fileID: 0}
   onGrab:
     m_PersistentCalls:
       m_Calls: []
   onGrabCollider:
+    m_PersistentCalls:
+      m_Calls: []
+  onUse:
     m_PersistentCalls:
       m_Calls: []
   onDrop:
@@ -661,7 +644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   capturellectable: {fileID: 5738259590014364203}
-  container: {fileID: 6438156067365644960}
+  container: {fileID: 2586271959260489436}
   capturellector: {fileID: 1421693985858063027}
   inventory1: {fileID: 4319447418722757886}
   inventory2: {fileID: 7772447588301070147}

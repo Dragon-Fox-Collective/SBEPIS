@@ -82,6 +82,7 @@ namespace SBEPIS.Capturellection
 			foreach ((DequeElement card, CardTarget target) in cardTargets)
 			{
 				target.onPrepareCard.Invoke();
+				print($"Spawning {card} {card.IsAssembling}");
 				card.OnStartAssembling();
 				yield return new WaitForSeconds(diajector.CardDelay);
 			}

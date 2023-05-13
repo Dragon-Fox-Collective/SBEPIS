@@ -47,14 +47,14 @@ namespace SBEPIS.Capturellection.CardState
 		
 		protected override void AddListeners()
 		{
-			TrueEvent.AddListener(TrueListener);
-			FalseEvent.AddListener(FalseListener);
+			TrueEvent?.AddListener(TrueListener);
+			FalseEvent?.AddListener(FalseListener);
 		}
 		
 		protected override void RemoveListeners()
 		{
-			TrueEvent.RemoveListener(TrueListener);
-			FalseEvent.RemoveListener(FalseListener);
+			TrueEvent?.RemoveListener(TrueListener);
+			FalseEvent?.RemoveListener(FalseListener);
 		}
 		
 		private void TrueListener() => Transition(TrueLink);
@@ -68,14 +68,14 @@ namespace SBEPIS.Capturellection.CardState
 		
 		protected override void AddListeners()
 		{
-			TrueEvent.AddListener(TrueListener);
-			FalseEvent.AddListener(FalseListener);
+			TrueEvent?.AddListener(TrueListener);
+			FalseEvent?.AddListener(FalseListener);
 		}
 		
 		protected override void RemoveListeners()
 		{
-			TrueEvent.RemoveListener(TrueListener);
-			FalseEvent.RemoveListener(FalseListener);
+			TrueEvent?.RemoveListener(TrueListener);
+			FalseEvent?.RemoveListener(FalseListener);
 		}
 		
 		private void TrueListener(T1 t1, T2 t2) => Transition(TrueLink);
