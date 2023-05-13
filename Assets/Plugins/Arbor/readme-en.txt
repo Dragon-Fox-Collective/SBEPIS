@@ -5,45 +5,7 @@
           support@caitsithware.com
 -----------------------------------------------------
 
-Thank you for downloading Arbor3 Trial version!
-
-# Restriction on Trial version
-
-1. DLL
-
-* Core processing can not be edited because it is made into DLL.
-* Reverse engineering is prohibited.
-
-2. Runtime restrictions
-
-* Invalidate state transition after 2 minutes from game start.
-* Display of "Arbor3 Trial" on game screen.
-* (Play on the Unity editor is available without restriction)
-
-3. Build restrictions
-
-* IL2CPP build not available.
-* UWP build not available.
-
-4. Function restrictions
-
-* [Unity2020.1 and later] Fields in some generic classes that contain data slots are not available.
-* Type restrictions that can be referenced in the type selection window (depending on the Unity version)
-
-4. Arbor Editor Window
-
-* Open Asset Store button display.
-* Zoom not available.
-* Graph capture not available.
-
-
-
-# Asset Store
-
-Purchase here!
-https://assetstore.unity.com/packages/tools/visual-scripting/arbor-3-fsm-bt-graph-editor-112239?aid=1101lGsc
-
-
+Thank you for purchasing Arbor!
 
 # Overview
 
@@ -170,3 +132,30 @@ Click here for inquiries that require individualized support:
 support@caitsithware.com
 
 
+# Update guide
+
+Please be sure to read when updating Arbor.
+
+## Update procedure
+
+1. Please be sure to make a backup of the project before the update.
+2. If you are opening an existing scene, create a new scene from “File / New Scene” in the menu.
+3. If you are opening the Arbor Editor window, close it once.
+4. Already Removed Arbor folder that have been imported.
+5. Import a new version of Arbor.
+
+## Version update guide
+
+Please refer to the following pages for the update guide for each version of Arbor.
+
+https://caitsithware.com/assets/arbor/docs/en/manual/updateguide.html
+
+
+
+# MadeWithArbor3 logo asset
+
+We have prepared a logo asset for use in the work using Arbor3.
+
+Posting is optional, but if you would like to post it, please download it from the following page and use it.
+
+https://arbor.caitsithware.com/en/madewitharbo3-logo-assets/
