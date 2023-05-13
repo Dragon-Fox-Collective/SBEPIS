@@ -5,45 +5,7 @@
           support@caitsithware.com
 -----------------------------------------------------
 
-Arbor3 Trial版をダウンロードしていただきありがとうございます！
-
-# Trial版の制限
-
-1. DLL
-
-* コアの処理はDLL化しているため編集できません。
-* リバースエンジニアリング禁止。
-
-2. ランタイム実行時の制限
-
-* ゲーム開始後2分経過で状態遷移が無効化。
-* ゲーム画面に「Arbor3 Trial」の表示。
-* (Unityエディタ上でのプレイは制限なくご利用いただけます)
-
-3. ビルドの制限
-
-* IL2CPPビルド利用不可。
-* UWPビルド利用不可。
-
-4. 機能の制限
-
-* [Unity2020.1以降]データスロットを含む一部のジェネリッククラスのフィールド使用不可。
-* 型選択ウィンドウで参照できる型の制限(Unityバージョンによって異なる)
-
-5. Arbor Editorウィンドウ
-
-* Open Asset Storeボタン表示。
-* ズーム使用不可。
-* グラフキャプチャ使用不可。
-
-
-
-# アセットストア
-
-ご購入はこちら！
-https://assetstore.unity.com/packages/tools/visual-scripting/arbor-3-fsm-bt-graph-editor-112239?aid=1101lGsc
-
-
+Arborを購入いただきありがとうございます！
 
 # 概要
 
@@ -170,3 +132,31 @@ https://forum-arbor.caitsithware.com/?language=ja
 support@caitsithware.com
 
 
+
+# アップデートガイド
+
+Arborを更新する際は必ずお読みください。
+
+## 更新手順
+
+1. 更新前に必ずプロジェクトのバックアップを取ってください。
+2. 既存のシーンを開いている場合は、メニューの「File / New Scene」からシーンを新規作成しておきます。
+3. Arbor　Editorウィンドウを開いている場合は一旦閉じておきます。
+4. 既にインポートされているArborフォルダを削除。
+5. Arborの新バージョンをインポート。
+
+## 各バージョンの更新ガイド
+
+Arborの各バージョン別の更新ガイドは以下ページを参照してください。
+
+https://caitsithware.com/assets/arbor/docs/ja/manual/updateguide.html
+
+
+
+# MadeWithArbor3ロゴアセット
+
+Arbor3利用作品に掲載する用途のロゴアセットをご用意いたしました。
+
+掲載は任意ですが、もしご厚意で掲載していただける場合は、以下ページよりダウンロードしてご利用ください。
+
+https://arbor.caitsithware.com/madewitharbo3-logo-assets/
