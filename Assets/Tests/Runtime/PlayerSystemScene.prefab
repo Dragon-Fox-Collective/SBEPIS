@@ -30,6 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5677884365655760404}
+  - {fileID: 2591355087624855575}
   - {fileID: 7278655187705163408}
   - {fileID: 2555532567808541595}
   m_Father: {fileID: 0}
@@ -49,6 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capturellector: {fileID: 4407900395375887514}
   grabber: {fileID: 4783383469353318975}
+  hipSocket: {fileID: 2223337700602583489}
+  startingDequePlug: {fileID: 7917195315810729722}
   dequeBoxGrabbable: {fileID: 1239839501208589563}
   dequeBoxInventory: {fileID: 7889801458485484327}
 --- !u!1001 &1882472744016421316
@@ -59,6 +62,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6736053937047874086}
     m_Modifications:
+    - target: {fileID: 961157736405979464, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
+      propertyPath: dequeBox
+      value: 
+      objectReference: {fileID: 6033304593312021113}
     - target: {fileID: 6112518582163472336, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -112,6 +119,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
+--- !u!114 &2223337700602583489 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 343684413715036165, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
+  m_PrefabInstance: {fileID: 1882472744016421316}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 691c267ebf506124399c4c90f464686c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4407900395375887514 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2824848723725198686, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
@@ -139,6 +157,94 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6112518582163472336, guid: d62a3c8f78416c8449a45e37d7bfa765, type: 3}
   m_PrefabInstance: {fileID: 1882472744016421316}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4542610346545941498
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6736053937047874086}
+    m_Modifications:
+    - target: {fileID: 2088772691244182509, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088772691244182509, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088772691244182509, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088772691244182509, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088772691244182509, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088772691244182509, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088772691244182509, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088772691244182509, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088772691244182509, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088772691244182509, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088772691244182509, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375511919467074174, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+      propertyPath: m_Name
+      value: Starter Deque
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+--- !u!4 &2591355087624855575 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2088772691244182509, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+  m_PrefabInstance: {fileID: 4542610346545941498}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6033304593312021113 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7831762522401862019, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+  m_PrefabInstance: {fileID: 4542610346545941498}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 834066343270ba147b47a2957044d46c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7917195315810729722 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5968711221739418880, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
+  m_PrefabInstance: {fileID: 4542610346545941498}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ea1a4d90d21dd14b8651bbf1e452792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4657992494900174216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -259,7 +365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2375511919467074174, guid: 627c80d6b0d65a846ae6d4b16494ef5f, type: 3}
       propertyPath: m_Name
-      value: Sample Capture Deque System
+      value: Sample Deque
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

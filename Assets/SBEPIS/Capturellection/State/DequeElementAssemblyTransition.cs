@@ -53,12 +53,8 @@ namespace SBEPIS.Capturellection.State
 			dequeElement.value.onStartDisassembling.RemoveListener(OnStartDisassembly);
 			dequeElement.value.onStopAssemblingAndDisassembling.RemoveListener(OnStopAssemblyAndDisassembly);
 		}
-
-		private void OnStartAssembly()
-		{
-			Debug.Log("on start asseblied");
-			Transition(onStartAssembly);
-		}
+		
+		private void OnStartAssembly() => Transition(onStartAssembly);
 		private void OnStartDisassembly() => Transition(onStartDisassembly);
 		private void OnStopAssemblyAndDisassembly() => Transition(onStopAssemblyAndDisassembly);
 	}
