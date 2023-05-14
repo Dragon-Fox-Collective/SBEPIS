@@ -6,10 +6,10 @@ namespace SBEPIS.UI
 {
 	public class ElectricArc : MonoBehaviour
 	{
-		public Transform otherPoint;
-		public int numPoints = 5;
-		public float randomnessFactor = 1f;
-		public Material arcMaterial;
+		[SerializeField] private Transform otherPoint;
+		[SerializeField] private int numPoints = 5;
+		[SerializeField] private float randomnessFactor = 1f;
+		[SerializeField] private Material arcMaterial;
 		
 		private LineRenderer line;
 		private Vector3[] points;
@@ -20,7 +20,12 @@ namespace SBEPIS.UI
 		private float time;
 		
 		private static readonly int MainTex = Shader.PropertyToID("_MainTex");
-
+		
+		public void Init(Transform otherPoint)
+		{
+			this.otherPoint = otherPoint;
+		}
+		
 		private void Awake()
 		{
 			line = gameObject.AddComponent<LineRenderer>();

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class JointTargetter : ValidatedMonoBehaviour
+	public class JointTargetter : MonoBehaviour
 	{
 		[SerializeField, Self] private new Rigidbody rigidbody;
 		[SerializeField, Anywhere] private Rigidbody connectedBody;
@@ -23,14 +23,21 @@ namespace SBEPIS.Physics
 		
 		private Vector3 initialTensor;
 		private Quaternion initialTensorRotation;
-
-		private bool hasBeenConstructed = false;
 		
-		public void Construct(Rigidbody connectedBody, Transform target, StrengthSettings strength)
+		private bool hasBeenInitialized = false;
+		
+		public void OnValidate()
 		{
-			if (hasBeenConstructed)
-				throw new InvalidOperationException($"Object {this} has already been constructed");
-			hasBeenConstructed = true;
+			if (Application.isPlaying && Time.frameCount > 0)
+				return;
+			this.ValidateRefs();
+		}
+		
+		public void Init(Rigidbody connectedBody, Transform target, StrengthSettings strength)
+		{
+			if (hasBeenInitialized)
+				throw new InvalidOperationException($"Object {this} has already been initialized");
+			hasBeenInitialized = true;
 			
 			this.connectedBody = connectedBody;
 			this.target = target;
@@ -40,7 +47,7 @@ namespace SBEPIS.Physics
 		
 		private void Start()
 		{
-			hasBeenConstructed = true;
+			hasBeenInitialized = true;
 			
 			Vector3 thisInitialPosition = rigidbody.position;
 			
@@ -53,7 +60,7 @@ namespace SBEPIS.Physics
 			
 			rigidbody.position = thisInitialPosition;
 		}
-
+		
 		private void UpdateJointTarget()
 		{
 			prevTargetPosition = transform.InverseTransformPoint(target.position);
@@ -96,7 +103,7 @@ namespace SBEPIS.Physics
 				maximumForce = strength.angularMaxForce,
 			};
 		}
-
+		
 		private void FixedUpdate()
 		{
 			UpdatePosition();
@@ -119,7 +126,7 @@ namespace SBEPIS.Physics
 
 			prevTargetPosition = targetPosition;
 		}
-
+		
 		private void UpdateRotation()
 		{
 			joint.targetRotation = transform.InverseTransformRotation(target.rotation) * initialOffset;
@@ -132,7 +139,7 @@ namespace SBEPIS.Physics
 
 			prevTargetRotation = target.rotation;
 		}
-
+		
 		private void OnDestroy()
 		{
 			if (joint)

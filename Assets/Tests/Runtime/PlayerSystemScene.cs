@@ -10,6 +10,8 @@ namespace SBEPIS.Tests.Scenes
 	{
 		[Anywhere] public Capturellector capturellector;
 		[Anywhere] public Grabber grabber;
+		[Anywhere] public CouplingSocket hipSocket;
+		[Anywhere] public CouplingPlug startingDequePlug;
 		[Anywhere] public Grabbable dequeBoxGrabbable;
 		[Anywhere] public Inventory dequeBoxInventory;
 	}

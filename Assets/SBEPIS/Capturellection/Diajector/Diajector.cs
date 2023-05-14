@@ -25,9 +25,8 @@ namespace SBEPIS.Capturellection
 		public UnityEvent<Diajector> onOpen = new();
 		public UnityEvent<Diajector> onClose = new();
 		
-		private DiajectorPage currentPage;
-		
-		public bool IsOpen => currentPage;
+		public DiajectorPage CurrentPage { get; private set; }
+		public bool IsOpen => CurrentPage;
 		
 		private void StartAssembly() => StartAssembly(transform.position, transform.rotation);
 		public void StartAssembly(Vector3 position, Quaternion rotation) => StartAssembly(position, rotation, mainPage);
@@ -54,15 +53,15 @@ namespace SBEPIS.Capturellection
 		
 		private void AssembleNewPage(DiajectorPage page)
 		{
-			currentPage = page;
-			currentPage.StartAssembly();
+			CurrentPage = page;
+			CurrentPage.StartAssembly();
 		}
 		
 		private void ForceOpenCurrentPage()
 		{
-			if (!currentPage)
-				currentPage = mainPage;
-			currentPage.ForceOpen();
+			if (!CurrentPage)
+				CurrentPage = mainPage;
+			CurrentPage.ForceOpen();
 		}
 		
 		private void DisassembleCurrentPage()
@@ -73,8 +72,8 @@ namespace SBEPIS.Capturellection
 				return;
 			}
 			
-			currentPage.StartDisassembly();
-			currentPage = null;
+			CurrentPage.StartDisassembly();
+			CurrentPage = null;
 		}
 		
 		private void ForceCloseCurrentPage()
@@ -85,8 +84,8 @@ namespace SBEPIS.Capturellection
 				return;
 			}
 			
-			currentPage.ForceClose();
-			currentPage = null;
+			CurrentPage.ForceClose();
+			CurrentPage = null;
 		}
 		
 		public void StartDisassembly()
@@ -116,9 +115,9 @@ namespace SBEPIS.Capturellection
 			StartAssembly();
 		}
 		
-		public bool ShouldCardBeDisplayed(DequeElement card) => IsOpen && currentPage.HasCard(card);
+		public bool ShouldCardBeDisplayed(DequeElement card) => IsOpen && CurrentPage.HasCard(card);
 		
-		public LerpTarget GetLerpTarget(DequeElement card) => currentPage ? currentPage.GetLerpTarget(card) : null;
+		public LerpTarget GetLerpTarget(DequeElement card) => CurrentPage ? CurrentPage.GetLerpTarget(card) : null;
 		public LerpTarget GetLerpTarget(DequeElement card, int index) => index >= 0 && index < lerpTargets.Count ? lerpTargets[index] : index == lerpTargets.Count ? GetLerpTarget(card) : null;
 		public int LerpTargetCount => lerpTargets.Count + 1;
 	}

@@ -26,7 +26,7 @@ namespace SBEPIS.Capturellection
 				
 				card.Deque = deque;
 				card.Animator.TeleportTo(startTarget);
-
+				
 				if (card.TryGetComponent(out Grabbable cardGrabbable))
 				{
 					cardGrabbable.onGrab.AddListener((_, _) => target.onGrab.Invoke());

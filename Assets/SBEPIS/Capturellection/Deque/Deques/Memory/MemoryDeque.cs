@@ -56,7 +56,6 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public override IEnumerable<Storable> LoadCardPreHook(MemoryState state, Storable storable)
 		{
-			print($"Instantiating to {storable.Parent}");
 			Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies = new();
 			(Storable, Storable) newStorables = (InstantiateStorable(state, storable, proxies), InstantiateStorable(state, storable, proxies));
 			state.pairs.Add(newStorables.Item1, newStorables.Item2);
