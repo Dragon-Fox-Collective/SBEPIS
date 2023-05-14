@@ -1,0 +1,22 @@
+using Arbor;
+using SBEPIS.Controller;
+using UnityEngine;
+using UnityEngine.Events;
+
+namespace SBEPIS.Capturellection.State
+{
+	[AddBehaviourMenu("Transition/GrabbableTransition")]
+	public class GrabbableTransition : EventTransition<Grabber, Grabbable>
+	{
+		[SerializeField] private FlexibleGrabbable grabbable;
+		
+		[SerializeField] private StateLink onGrab;
+		[SerializeField] private StateLink onDrop;
+		
+		protected override bool InitialValue => grabbable.value && grabbable.value.IsBeingHeld;
+		protected override StateLink TrueLink => onGrab;
+		protected override StateLink FalseLink => onDrop;
+		protected override UnityEvent<Grabber, Grabbable> TrueEvent => grabbable.value ? grabbable.value.onGrab : null;
+		protected override UnityEvent<Grabber, Grabbable> FalseEvent => grabbable.value ? grabbable.value.onDrop : null;
+	}
+}
