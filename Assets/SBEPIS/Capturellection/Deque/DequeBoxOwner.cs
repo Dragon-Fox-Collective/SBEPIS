@@ -31,7 +31,7 @@ namespace SBEPIS.Capturellection
 			set
 			{
 				if (dequeBox)
-					dequeBox.Unretrieve(this);
+					dequeBox.Detatch();
 				
 				dequeBox = value;
 			}

@@ -1,0 +1,713 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3122411597932336747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7051099883239295529}
+  - component: {fileID: 6644773710610671797}
+  - component: {fileID: 5153416772577202131}
+  - component: {fileID: 201206802123913621}
+  - component: {fileID: -4740663079931831219}
+  - component: {fileID: -2460291911525984745}
+  - component: {fileID: -9155524459473219143}
+  - component: {fileID: -7298832394151800834}
+  - component: {fileID: -3786562456289733510}
+  - component: {fileID: 12578514304893141}
+  - component: {fileID: 8078483780615518508}
+  - component: {fileID: -7115921932723700245}
+  - component: {fileID: -4959175655764040937}
+  m_Layer: 0
+  m_Name: Deque State Machine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7051099883239295529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3122411597932336747}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6644773710610671797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3122411597932336747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3982f3d49853bb44283cd1fcef05a3dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GraphName: Deque Box
+  playOnStart: 1
+  updateSettings:
+    type: 0
+    timeType: 0
+    seconds: 0.1
+  debugInfiniteLoopSettings:
+    maxLoopCount: 10000
+    enableLogging: 1
+    enableBreak: 0
+  _OwnerBehaviour: {fileID: 0}
+  _ParameterContainer: {fileID: 0}
+  _Calculators:
+  - _NodeGraph: {fileID: 6644773710610671797}
+    _NodeID: 726643700
+    position:
+      serializedVersion: 2
+      x: 348
+      y: 360
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Coupling Plug.Is Coupled
+    _IsSettedName: 1
+    _Object: {fileID: -7298832394151800834}
+  _Comments: []
+  _Groups: []
+  _DataBranchRerouteNodes:
+    _Nodes: []
+  _DataBranchies:
+  - branchID: 1559595546
+    enabled: 1
+    inBehaviour: {fileID: -9155524459473219143}
+    inNodeID: 1752227528
+    outBehaviour: {fileID: -7298832394151800834}
+    outNodeID: 726643700
+    lineBezier:
+      _StartPosition: {x: 648, y: 395.00006}
+      _StartControl: {x: 698, y: 395.00006}
+      _EndPosition: {x: 348, y: 443}
+      _EndControl: {x: 298, y: 443}
+    showDataValue: 0
+  - branchID: 534011718
+    enabled: 1
+    inBehaviour: {fileID: -7115921932723700245}
+    inNodeID: 630327709
+    outBehaviour: {fileID: -4959175655764040937}
+    outNodeID: 534011718
+    lineBezier:
+      _StartPosition: {x: 660, y: -241}
+      _StartControl: {x: 710, y: -241}
+      _EndPosition: {x: -552, y: -181}
+      _EndControl: {x: -602, y: -181}
+    showDataValue: 0
+  _StartStateID: 534011718
+  _States:
+  - _NodeGraph: {fileID: 6644773710610671797}
+    _NodeID: 1559595546
+    position:
+      serializedVersion: 2
+      x: -588
+      y: 348
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Coupled To Hip
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: -3786562456289733510}
+    - {fileID: -2460291911525984745}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 6644773710610671797}
+    _NodeID: 534011718
+    position:
+      serializedVersion: 2
+      x: 360
+      y: -276
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: In World
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: -4959175655764040937}
+    - {fileID: 12578514304893141}
+    - {fileID: 201206802123913621}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 6644773710610671797}
+    _NodeID: 1655911537
+    position:
+      serializedVersion: 2
+      x: 348
+      y: 252
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Grabbed
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: -4740663079931831219}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 6644773710610671797}
+    _NodeID: 630327709
+    position:
+      serializedVersion: 2
+      x: -552
+      y: -216
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Moving To Hip
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: -7115921932723700245}
+    - {fileID: 8078483780615518508}
+    _BreakPoint: 0
+  - _NodeGraph: {fileID: 6644773710610671797}
+    _NodeID: 1752227528
+    position:
+      serializedVersion: 2
+      x: 348
+      y: 408
+      width: 300
+      height: 100
+    showComment: 0
+    nodeComment: 
+    _Name: Drop
+    _IsSettedName: 1
+    _Resident: 0
+    _Behaviours:
+    - {fileID: -9155524459473219143}
+    _BreakPoint: 0
+  _StateLinkRerouteNodes:
+    _Nodes: []
+--- !u!114 &5153416772577202131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3122411597932336747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff7f9820050bbf468fba4b58fe18f2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Owner: {fileID: 0}
+  _Parameters:
+  - container: {fileID: 5153416772577202131}
+    id: 1559595546
+    type: 2004
+    name: Grabbable
+    _ParameterIndex: 0
+    _IsPublicSet: 1
+    _IsPublicGet: 1
+    referenceType:
+      _AssemblyTypeName: SBEPIS.Controller.Grabbable, SBEPIS.Controller
+  - container: {fileID: 5153416772577202131}
+    id: 534011718
+    type: 2004
+    name: Coupling Plug
+    _ParameterIndex: 1
+    _IsPublicSet: 1
+    _IsPublicGet: 1
+    referenceType:
+      _AssemblyTypeName: SBEPIS.Controller.CouplingPlug, SBEPIS.Controller
+  - container: {fileID: 5153416772577202131}
+    id: 1655911537
+    type: 2004
+    name: Lerp Target Animator
+    _ParameterIndex: 2
+    _IsPublicSet: 1
+    _IsPublicGet: 1
+    referenceType:
+      _AssemblyTypeName: SBEPIS.Utils.LerpTargetAnimator, SBEPIS.Utils
+  _SerializeVersion: 1
+  _OldParameters: []
+  _AssetObjectListParameters: []
+  _BoolParameters: 
+  _BoolListParameters: []
+  _BoundsParameters: []
+  _BoundsIntParameters: []
+  _BoundsIntListParameters: []
+  _BoundsListParameters: []
+  _ColorParameters: []
+  _ColorListParameters: []
+  _ComponentListParameters: []
+  _EnumListParameters: []
+  _FloatParameters: []
+  _FloatListParameters: []
+  _GameObjectListParameters: []
+  _IntParameters: 
+  _IntListParameters: []
+  _LongParameters: 
+  _LongListParameters: []
+  _ObjectParameters:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _QuaternionParameters: []
+  _QuaternionListParameters: []
+  _RectParameters: []
+  _RectIntParameters: []
+  _RectIntListParameters: []
+  _RectListParameters: []
+  _StringParameters: []
+  _StringListParameters: []
+  _Vector2Parameters: []
+  _Vector2IntParameters: []
+  _Vector2IntListParameters: []
+  _Vector2ListParameters: []
+  _Vector3Parameters: []
+  _Vector3IntParameters: []
+  _Vector3IntListParameters: []
+  _Vector3ListParameters: []
+  _Vector4Parameters: []
+  _Vector4ListParameters: []
+--- !u!114 &201206802123913621
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3122411597932336747}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18a783012a54420b2017db778c12035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 6644773710610671797}
+  _NodeID: 534011718
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  grabbable:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 5153416772577202131}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Grabbable
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onGrab:
+    name: 
+    _StateID: 1655911537
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  onDrop:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &-4740663079931831219
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3122411597932336747}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18a783012a54420b2017db778c12035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 6644773710610671797}
+  _NodeID: 1655911537
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  grabbable:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 5153416772577202131}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Grabbable
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onGrab:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  onDrop:
+    name: 
+    _StateID: 1752227528
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &-2460291911525984745
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3122411597932336747}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18a783012a54420b2017db778c12035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 6644773710610671797}
+  _NodeID: 1559595546
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  grabbable:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 5153416772577202131}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Grabbable
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onGrab:
+    name: 
+    _StateID: 1655911537
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  onDrop:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &-9155524459473219143
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3122411597932336747}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f1158e3ba4fc8a0bea4e5874566d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 6644773710610671797}
+  _NodeID: 1752227528
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  value:
+    _Type: 3
+    _Value: 0
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Probability: 0
+    _Slot:
+      nodeGraph: {fileID: 6644773710610671797}
+      branchID: 1559595546
+  onTrue:
+    name: 
+    _StateID: 1559595546
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  onFalse:
+    name: 
+    _StateID: 534011718
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &-7298832394151800834
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3122411597932336747}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5075d75ff9ad4faeab7d4878b2c7febf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 6644773710610671797}
+  _NodeID: 726643700
+  _DataSlotFieldLinks: []
+  expanded: 0
+  recalculateMode: 1
+  couplingPlug:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 5153416772577202131}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 534011718
+      name: Coupling Plug
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  isAssembling:
+    nodeGraph: {fileID: 6644773710610671797}
+    branchIDs: 1a8af55c
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+--- !u!114 &-3786562456289733510
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3122411597932336747}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b38ed972614771b5dde5ed5da116d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 6644773710610671797}
+  _NodeID: 1559595546
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  couplingPlug:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 5153416772577202131}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 534011718
+      name: Coupling Plug
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onCouple:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  onDecouple:
+    name: 
+    _StateID: 534011718
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &12578514304893141
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3122411597932336747}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b38ed972614771b5dde5ed5da116d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 6644773710610671797}
+  _NodeID: 534011718
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  couplingPlug:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 5153416772577202131}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 534011718
+      name: Coupling Plug
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onCouple:
+    name: 
+    _StateID: 1559595546
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  onDecouple:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &8078483780615518508
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3122411597932336747}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b38ed972614771b5dde5ed5da116d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 6644773710610671797}
+  _NodeID: 630327709
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  couplingPlug:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 5153416772577202131}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 534011718
+      name: Coupling Plug
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onCouple:
+    name: 
+    _StateID: 1559595546
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+  onDecouple:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &-7115921932723700245
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3122411597932336747}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b27f1087b742c395668f5ddeed9d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 6644773710610671797}
+  _NodeID: 630327709
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  animator:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 5153416772577202131}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1655911537
+      name: Lerp Target Animator
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  target:
+    _Type: 2
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _Slot:
+      nodeGraph: {fileID: 6644773710610671797}
+      branchID: 534011718
+--- !u!114 &-4959175655764040937
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3122411597932336747}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c15f95db32f741a19e986c9ebed24cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 6644773710610671797}
+  _NodeID: 534011718
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  lerpTarget:
+    nodeGraph: {fileID: 6644773710610671797}
+    branchIDs: 465fd41f
+    _OutputSlotBase_SerializeVersion:
+      _Version: 1
+      _IsInitialized: 1
+      _IsVersioning: 1
+  onRetrieve:
+    name: 
+    _StateID: 630327709
+    transitionTiming: 1
+    _LineColorChanged: 0
+    _LineColor: {r: 1, g: 1, b: 1, a: 1}

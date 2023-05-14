@@ -1,7 +1,7 @@
 using System;
 using Arbor;
 using KBCore.Refs;
-using SBEPIS.Capturellection.CardState;
+using SBEPIS.Capturellection.State;
 using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,9 +14,6 @@ namespace SBEPIS.Capturellection
 	{
 		[SerializeField, Self] private LerpTargetAnimator animator;
 		public LerpTargetAnimator Animator => animator;
-
-		[SerializeField, Anywhere(Flag.Optional)] private Renderer bounds;
-		public Vector3 Size => bounds ? ExtensionMethods.Multiply(bounds.localBounds.size, bounds.transform.localScale) : Vector3.zero;
 		
 		// ReSharper disable once NotAccessedField.Local
 		[SerializeField, Anywhere] private ArborFSM stateMachine;
@@ -33,6 +30,9 @@ namespace SBEPIS.Capturellection
 			OnStopAssemblingAndDisassembling();
 			forceClose.Invoke();
 		}
+		
+		[SerializeField, Anywhere(Flag.Optional)] private Renderer bounds;
+		public Vector3 Size => bounds ? ExtensionMethods.Multiply(bounds.localBounds.size, bounds.transform.localScale) : Vector3.zero;
 		
 		[FormerlySerializedAs("dequeOwnerEvents")]
 		public EventProperty<DequeElement, Deque, SetCardDequeEvent, UnsetCardDequeEvent> dequeEvents = new();
