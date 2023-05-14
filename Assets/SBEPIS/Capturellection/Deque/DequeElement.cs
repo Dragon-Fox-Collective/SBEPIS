@@ -16,18 +16,18 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Self] private LerpTargetAnimator animator;
 		public LerpTargetAnimator Animator => animator;
 		
-		[SerializeField, Anywhere] private InvokeTransition forceOpen;
+		[SerializeField, Anywhere(Flag.Optional)] private InvokeTransition forceOpen;
 		public void ForceOpen()
 		{
 			OnStopAssemblingAndDisassembling();
 			HasBeenAssembled = true;
-			forceOpen.Invoke();
+			if (forceOpen) forceOpen.Invoke();
 		}
-		[SerializeField, Anywhere] private InvokeTransition forceClose;
+		[SerializeField, Anywhere(Flag.Optional)] private InvokeTransition forceClose;
 		public void ForceClose()
 		{
 			OnStopAssemblingAndDisassembling();
-			forceClose.Invoke();
+			if (forceClose) forceClose.Invoke();
 		}
 		
 		[SerializeField, Anywhere(Flag.Optional)] private Renderer bounds;
