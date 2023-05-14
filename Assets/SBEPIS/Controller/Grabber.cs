@@ -12,8 +12,7 @@ namespace SBEPIS.Controller
 	[RequireComponent(typeof(Rigidbody))]
 	public class Grabber : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self]
-		private new Rigidbody rigidbody;
+		[SerializeField, Self] private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;
 		
 		[SerializeField] private LayerMask grabMask = 1;
@@ -23,9 +22,9 @@ namespace SBEPIS.Controller
 		[Tooltip("Angle between the terrain's normal and player's up past which the grabber slips off")]
 		[SerializeField] private float slipAngle = 80;
 		[SerializeField] private float shortRangeGrabDistace = 1;
-		public float ShortRangeGrabDistance = 1;
+		public float ShortRangeGrabDistance => shortRangeGrabDistace;
 		
-		[SerializeField, Anywhere] private Orientation playerOrientation;
+		[SerializeField, Anywhere(Flag.Optional)] private Orientation playerOrientation;
 		
 		public GrabEvent onGrab = new();
 		public ColliderGrabEvent onGrabCollider = new();
@@ -53,7 +52,7 @@ namespace SBEPIS.Controller
 		private readonly List<Collider> collidingColliders = new();
 		private bool isHoldingGrab;
 		
-		private bool IsSlipping => heldPureColliderNormal != Vector3.zero && Vector3.Angle(heldPureColliderNormal, playerOrientation.UpDirection) > slipAngle;
+		private bool IsSlipping => heldPureColliderNormal != Vector3.zero && playerOrientation && Vector3.Angle(heldPureColliderNormal, playerOrientation.UpDirection) > slipAngle;
 		
 		private void Update()
 		{
@@ -69,7 +68,7 @@ namespace SBEPIS.Controller
 			UpdateGrabAttempt();
 		}
 		
-		public void UpdateGrabAttempt()
+		private void UpdateGrabAttempt()
 		{
 			if (!isActiveAndEnabled)
 				return;
@@ -115,7 +114,7 @@ namespace SBEPIS.Controller
 			if (CastGrabNormal(out RaycastHit hit, collider))
 			{
 				heldPureColliderNormal = hit.normal;
-				if (Vector3.Angle(heldPureColliderNormal, playerOrientation.UpDirection) > slipAngle)
+				if (IsSlipping)
 					return false;
 			}
 			else

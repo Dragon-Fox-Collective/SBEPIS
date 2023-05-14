@@ -34,6 +34,11 @@ namespace SBEPIS.Utils
 		
 		private IEnumerable<GameObject> GetRootObjects() => Scene.gameObject.scene.GetRootGameObjects().Where(gameObject => gameObject.name != "Code-based tests runner");
 		
-		private static TScene GetTestingPrefab() => Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Tests/Runtime/{typeof(TScene).Name}.prefab")).GetComponent<TScene>();
+		private static TScene GetTestingPrefab()
+		{
+			GameObject obj = (GameObject) PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Tests/Runtime/{typeof(TScene).Name}.prefab"));
+			PrefabUtility.UnpackPrefabInstance(obj, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+			return obj.GetComponent<TScene>();
+		}
 	}
 }
