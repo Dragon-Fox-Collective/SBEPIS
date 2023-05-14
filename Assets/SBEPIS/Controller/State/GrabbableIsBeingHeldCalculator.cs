@@ -1,7 +1,7 @@
 using Arbor;
 using UnityEngine;
 
-namespace SBEPIS.Capturellection.State
+namespace SBEPIS.Controller.State
 {
 	[AddBehaviourMenu("Grabbable/Grabbable.IsBeingHeld")]
 	[BehaviourTitle("Grabbable.IsBeingHeld")]

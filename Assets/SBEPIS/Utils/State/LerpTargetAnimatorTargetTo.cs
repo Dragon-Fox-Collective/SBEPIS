@@ -1,8 +1,7 @@
 using Arbor;
-using SBEPIS.Utils;
 using UnityEngine;
 
-namespace SBEPIS.Capturellection.State
+namespace SBEPIS.Utils.State
 {
 	[AddBehaviourMenu("LerpTargetAnimator/TargetTo")]
 	[BehaviourTitle("TargetTo")]

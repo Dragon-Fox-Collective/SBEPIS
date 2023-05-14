@@ -1,8 +1,7 @@
-using System;
 using Arbor;
 using UnityEngine;
 
-namespace SBEPIS.Capturellection.State
+namespace SBEPIS.Utils.State
 {
 	public abstract class GetCalculator<T, TOutputSlot> : Calculator where T : Component where TOutputSlot : OutputSlot<T>, new()
 	{

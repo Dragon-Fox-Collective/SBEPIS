@@ -3,6 +3,7 @@ using Arbor;
 using KBCore.Refs;
 using SBEPIS.Capturellection.State;
 using SBEPIS.Utils;
+using SBEPIS.Utils.State;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -15,8 +16,6 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Self] private LerpTargetAnimator animator;
 		public LerpTargetAnimator Animator => animator;
 		
-		// ReSharper disable once NotAccessedField.Local
-		[SerializeField, Anywhere] private ArborFSM stateMachine;
 		[SerializeField, Anywhere] private InvokeTransition forceOpen;
 		public void ForceOpen()
 		{

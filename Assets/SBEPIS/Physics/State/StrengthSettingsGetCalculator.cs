@@ -1,8 +1,7 @@
 using System;
 using Arbor;
-using SBEPIS.Physics;
 
-namespace SBEPIS.Capturellection.State
+namespace SBEPIS.Physics.State
 {
 	//[AddBehaviourMenu("StrengthSettings/StrengthSettings.Get")]
 	//[BehaviourTitle("StrengthSettings.Get")]

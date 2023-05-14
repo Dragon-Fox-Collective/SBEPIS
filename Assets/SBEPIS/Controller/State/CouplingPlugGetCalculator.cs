@@ -1,8 +1,8 @@
 using System;
 using Arbor;
-using SBEPIS.Controller;
+using SBEPIS.Utils.State;
 
-namespace SBEPIS.Capturellection.State
+namespace SBEPIS.Controller.State
 {
 	[AddBehaviourMenu("CouplingPlug/CouplingPlug.Get")]
 	[BehaviourTitle("CouplingPlug.Get")]
