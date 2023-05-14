@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 788419051008883585}
   - component: {fileID: 3994685476425112954}
   - component: {fileID: 215581998104908103}
+  - component: {fileID: 475914697631297305}
   m_Layer: 0
   m_Name: Card Prefab
   m_TagString: Untagged
@@ -417,7 +418,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2667532004495947193}
-  stateMachine: {fileID: 0}
   forceOpen: {fileID: 0}
   forceClose: {fileID: 0}
   bounds: {fileID: 0}
@@ -481,6 +481,19 @@ MonoBehaviour:
   onFetch:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &475914697631297305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2917339966848246512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26359f9036671964494e4bc06d25f1b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thingsToEnable: []
 --- !u!1 &4219428236578335190
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,10 +571,9 @@ MonoBehaviour:
   grabMask:
     serializedVersion: 2
     m_Bits: 1
-  grabNormalCaster: {fileID: 0}
+  grabNormalCaster: {fileID: 2763448466389927496}
   slipAngle: 80
   shortRangeGrabDistace: 1
-  ShortRangeGrabDistance: 1
   playerOrientation: {fileID: 0}
   onGrab:
     m_PersistentCalls:
