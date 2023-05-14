@@ -1,0 +1,21 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using Arbor;
+using Arbor.BehaviourTree;
+
+[AddComponentMenu("")]
+public class #SCRIPTNAME# : Decorator {
+	protected override void OnAwake() {
+	}
+
+	protected override void OnStart() {
+	}
+
+	protected override bool OnConditionCheck() {
+		return true;
+	}
+
+	protected override void OnEnd() {
+	}
+}
