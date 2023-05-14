@@ -1,7 +1,7 @@
 using Arbor;
 using UnityEngine;
 
-namespace SBEPIS.Capturellection.State
+namespace SBEPIS.Utils.State
 {
 	[AddBehaviourMenu("Component/Component.GetTransform")]
 	[BehaviourTitle("Component.GetTransform")]

@@ -1,11 +1,12 @@
 using Arbor;
+using SBEPIS.State;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace SBEPIS.Capturellection.State
 {
-	[AddBehaviourMenu("Transition/PageTransition")]
-	public class PageTransition : EventTransition
+	[AddBehaviourMenu("Transition/DequeElementPageTransition")]
+	public class DequeElementPageTransition : EventTransition
 	{
 		[SerializeField] private FlexibleDequeElement dequeElement = new();
 		

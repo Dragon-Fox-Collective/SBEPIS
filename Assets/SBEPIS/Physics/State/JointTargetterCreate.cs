@@ -1,11 +1,11 @@
 using Arbor;
-using SBEPIS.Physics;
 using UnityEngine;
 
-namespace SBEPIS.Capturellection.State
+namespace SBEPIS.Physics.State
 {
-	[AddBehaviourMenu("JointTargetter/CreateJointTargetter")]
-	public class CreateJointTargetter : StateBehaviour
+	[AddBehaviourMenu("JointTargetter/JointTargetter.Create")]
+	[BehaviourTitle("JointTargetter.Create")]
+	public class JointTargetterCreate : StateBehaviour
 	{
 		[SerializeField] private FlexibleRigidbody staticRigidbody;
 		[SerializeField] private FlexibleTransform target;

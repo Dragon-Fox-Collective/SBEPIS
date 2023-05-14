@@ -1,10 +1,11 @@
 using Arbor;
 using UnityEngine;
 
-namespace SBEPIS.Capturellection.State
+namespace SBEPIS.Utils.State
 {
-	[AddBehaviourMenu("LerpTargetAnimator/SetAnimatorPausedAt")]
-	public class SetAnimatorPausedAt : StateBehaviour
+	[AddBehaviourMenu("LerpTargetAnimator/SetPausedAt")]
+	[BehaviourTitle("SetPausedAt")]
+	public class LerpTargetAnimatorSetPausedAt : StateBehaviour
 	{
 		[SerializeField] private FlexibleLerpTargetAnimator animator = new();
 		[SerializeField] private FlexibleLerpTarget target = new();

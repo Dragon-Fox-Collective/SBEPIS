@@ -1,9 +1,9 @@
 using Arbor;
-using SBEPIS.Controller;
+using SBEPIS.State;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace SBEPIS.Capturellection.State
+namespace SBEPIS.Controller.State
 {
 	[AddBehaviourMenu("Transition/CouplingPlugTransition")]
 	public class CouplingPlugTransition : EventTransition<CouplingPlug, CouplingSocket>

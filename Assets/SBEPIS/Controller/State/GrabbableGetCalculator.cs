@@ -1,9 +1,10 @@
 using System;
 using Arbor;
 using SBEPIS.Controller;
+using SBEPIS.Utils.State;
 using UnityEngine;
 
-namespace SBEPIS.Capturellection.State
+namespace SBEPIS.Controller.State
 {
 	[AddBehaviourMenu("Grabbable/Grabbable.Get")]
 	[BehaviourTitle("Grabbable.Get")]

@@ -2,7 +2,7 @@ using Arbor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace SBEPIS.Capturellection.State
+namespace SBEPIS.Utils.State
 {
 	[AddBehaviourMenu("Transition/InvokeTransition")]
 	public class InvokeTransition : StateBehaviour

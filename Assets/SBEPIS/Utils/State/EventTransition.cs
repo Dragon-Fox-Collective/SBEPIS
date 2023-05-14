@@ -2,7 +2,7 @@ using Arbor;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace SBEPIS.Capturellection.State
+namespace SBEPIS.State
 {
 	public abstract class EventTransitionBase : StateBehaviour
 	{
