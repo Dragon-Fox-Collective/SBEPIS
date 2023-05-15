@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using KBCore.Refs;
 using SBEPIS.Capturellection.Storage;
 using UnityEngine;
 
@@ -9,7 +10,9 @@ namespace SBEPIS.Capturellection.Deques
 {
 	public class MemoryDeque : LaidOutDeque<FlippedGridLayout, MemoryState>
 	{
-		[SerializeField] private MemoryDequeCard memoryCardPrefab;
+		[SerializeField, Anywhere] private GameObject memoryCardPrefab;
+		
+		private void OnValidate() => this.ValidateRefs();
 		
 		public override bool CanFetchFrom(MemoryState state, InventoryStorable card)
 		{
@@ -72,7 +75,8 @@ namespace SBEPIS.Capturellection.Deques
 		}
 		private InventoryStorable InstantiateCard(MemoryState state, InventoryStorable card, List<ProxyCaptureContainer> proxies)
 		{
-			MemoryDequeCard newCard = Instantiate(memoryCardPrefab, card.transform.parent);
+			MemoryDequeCard newCard = Instantiate(memoryCardPrefab).GetComponentInChildren<MemoryDequeCard>();
+			newCard.Card.DequeElement.SetParent(card.DequeElement.Parent);
 			
 			newCard.Deque = this;
 			
