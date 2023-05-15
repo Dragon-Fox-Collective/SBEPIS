@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
@@ -10,11 +9,11 @@ using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
-	public class Inventory : MonoBehaviour, IEnumerable<InventoryStorable>
+	public class Inventory : ValidatedMonoBehaviour, IEnumerable<InventoryStorable>
 	{
 		[SerializeField, Anywhere] public Deque deque;
 		[FormerlySerializedAs("cardPrefab")]
-		[SerializeField, Anywhere] private InventoryStorable initialCardPrefab;
+		[SerializeField, Anywhere] private GameObject initialCardPrefab;
 		[SerializeField] public int initialCardCount = 0;
 		
 		[Tooltip("Purely organizational for the hierarchy")]
@@ -42,7 +41,7 @@ namespace SBEPIS.Capturellection
 		{
 			for (int _ = 0; _ < initialCardCount; _++)
 			{
-				InventoryStorable card = Instantiate(initialCardPrefab);
+				InventoryStorable card = Instantiate(initialCardPrefab).GetComponentInChildren<InventoryStorable>();
 				savedInventory.Add(card);
 			}
 		}
@@ -70,12 +69,12 @@ namespace SBEPIS.Capturellection
 		private void SetupCard(InventoryStorable card)
 		{
 			card.Inventory = this;
-			card.transform.SetParent(cardParent);
+			card.DequeElement.SetParent(cardParent);
 		}
 		private static void TearDownCard(InventoryStorable card)
 		{
 			card.Inventory = null;
-			card.transform.SetParent(null);
+			card.DequeElement.SetParent(null);
 		}
 		
 		public Vector3 Position

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using KBCore.Refs;
-using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
@@ -42,11 +41,9 @@ namespace SBEPIS.Controller
 		public bool IsHoldingSomething => HeldCollider;
 		public Collider HeldCollider { get; private set; }
 		public Grabbable HeldGrabbable { get; private set; }
-		private EnablerDisabler HeldEnablerDisabler { get; set; }
 		public GrabPoint HeldGrabPoint { get; private set; }
 		private FixedJoint heldGrabbableJoint;
 		private Vector3 heldPureColliderNormal;
-		private bool HeldObjectIsEnabled => HeldCollider.gameObject.activeInHierarchy || (HeldEnablerDisabler && !HeldEnablerDisabler.IsEnabled);
 		
 		private readonly RaycastHit[] grabNormalHits = new RaycastHit[16];
 		private readonly List<Collider> collidingColliders = new();
@@ -73,7 +70,7 @@ namespace SBEPIS.Controller
 			if (!isActiveAndEnabled)
 				return;
 			
-			if (IsHoldingSomething && (!isHoldingGrab || !HeldObjectIsEnabled || IsSlipping))
+			if (IsHoldingSomething && (!isHoldingGrab || !HeldCollider.gameObject.activeInHierarchy || IsSlipping))
 				Drop();
 			else if (!IsHoldingSomething && isHoldingGrab)
 				Grab();
@@ -139,8 +136,7 @@ namespace SBEPIS.Controller
 		
 		private bool GrabGrabbable(Grabbable grabbable, bool dropIfHoldingSomething = false)
 		{
-			EnablerDisabler enablerDisabler = grabbable.GetComponent<EnablerDisabler>();
-			if (!grabbable || !grabbable.gameObject.activeInHierarchy || (enablerDisabler && !enablerDisabler.IsEnabled))
+			if (!grabbable || !grabbable.gameObject.activeInHierarchy)
 				return false;
 			
 			if (IsHoldingSomething)
@@ -153,7 +149,6 @@ namespace SBEPIS.Controller
 			
 			heldPureColliderNormal = Vector3.zero;
 			HeldGrabbable = grabbable;
-			HeldEnablerDisabler = enablerDisabler;
 			
 			if (grabbable.grabPoints.Count > 0)
 				BindToGrabPoint(grabbable, grabbable.grabPoints[0]);
@@ -208,7 +203,6 @@ namespace SBEPIS.Controller
 			HeldCollider = null;
 			HeldGrabbable = null;
 			HeldGrabPoint = null;
-			HeldEnablerDisabler = null;
 			
 			Destroy(heldGrabbableJoint);
 			heldGrabbableJoint = null;
