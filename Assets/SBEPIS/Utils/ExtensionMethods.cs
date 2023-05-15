@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -45,6 +44,7 @@ public static class ExtensionMethods
 		return res;
 	}
 	
+	public static int Add(int a, int b) => a + b;
 	public static float Add(float a, float b) => a + b;
 	public static Vector3 Add(Vector3 a, Vector3 b) => a + b;
 	public static Vector3 Max(Vector3 a, Vector3 b) => new(Mathf.Max(a.x, b.x), Mathf.Max(a.y, b.y), Mathf.Max(a.z, b.z));
