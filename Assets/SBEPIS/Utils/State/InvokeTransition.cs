@@ -1,6 +1,5 @@
 using Arbor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Utils.State
 {

@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deque: {fileID: 8511617775110510954}
-  initialCardPrefab: {fileID: 4418727771289004705}
+  initialCardPrefab: {fileID: 9009455766106517512}
   initialCardCount: 1
   cardParent: {fileID: 965652591840090261}
   onLoadIntoDeque:
@@ -336,10 +336,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8526975283153893638}
-  bounds: {fileID: 0}
-  stateMachine: {fileID: 0}
   forceOpen: {fileID: 0}
   forceClose: {fileID: 0}
+  bounds: {fileID: 0}
+  root: {fileID: 6966081987156282174}
   dequeEvents:
     onSet:
       m_PersistentCalls:
@@ -413,7 +413,6 @@ GameObject:
   - component: {fileID: 324499168283240521}
   - component: {fileID: 4927816535117055549}
   - component: {fileID: 3432423719606989426}
-  - component: {fileID: 7318418757093996923}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -486,10 +485,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6775014094651019551}
-  bounds: {fileID: 0}
-  stateMachine: {fileID: 0}
   forceOpen: {fileID: 0}
   forceClose: {fileID: 0}
+  bounds: {fileID: 0}
+  root: {fileID: 8958338873870790448}
   dequeEvents:
     onSet:
       m_PersistentCalls:
@@ -550,18 +549,6 @@ MonoBehaviour:
   onFetch:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7318418757093996923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9103559798110815622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 277a6ed122ee4e2bbf7adda2c5abb471, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6795541712309865472
 PrefabInstance:
   m_ObjectHideFlags: 0

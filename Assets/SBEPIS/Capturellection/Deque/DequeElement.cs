@@ -1,7 +1,5 @@
 using System;
-using Arbor;
 using KBCore.Refs;
-using SBEPIS.Capturellection.State;
 using SBEPIS.Utils;
 using SBEPIS.Utils.State;
 using UnityEngine;
@@ -16,14 +14,14 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Self] private LerpTargetAnimator animator;
 		public LerpTargetAnimator Animator => animator;
 		
-		[SerializeField, Anywhere(Flag.Optional)] private InvokeTransition forceOpen;
+		[SerializeField, Anywhere(Flag.Optional)] private InvokeTransitionReference forceOpen;
 		public void ForceOpen()
 		{
 			OnStopAssemblingAndDisassembling();
 			HasBeenAssembled = true;
 			if (forceOpen) forceOpen.Invoke();
 		}
-		[SerializeField, Anywhere(Flag.Optional)] private InvokeTransition forceClose;
+		[SerializeField, Anywhere(Flag.Optional)] private InvokeTransitionReference forceClose;
 		public void ForceClose()
 		{
 			OnStopAssemblingAndDisassembling();
@@ -33,6 +31,8 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Anywhere(Flag.Optional)] private Renderer bounds;
 		public Vector3 Size => bounds ? ExtensionMethods.Multiply(bounds.localBounds.size, bounds.transform.localScale) : Vector3.zero;
 		
+		[SerializeField, Anywhere] private Transform root;
+		
 		[FormerlySerializedAs("dequeOwnerEvents")]
 		public EventProperty<DequeElement, Deque, SetCardDequeEvent, UnsetCardDequeEvent> dequeEvents = new();
 		public Deque Deque
@@ -40,7 +40,7 @@ namespace SBEPIS.Capturellection
 			get => dequeEvents.Get();
 			set => dequeEvents.Set(this, value);
 		}
-
+		
 		public UnityEvent onStartAssembling;
 		public bool IsAssembling { get; private set; }
 		public UnityEvent onStartDisassembling;
@@ -121,5 +121,8 @@ namespace SBEPIS.Capturellection
 		public void TeleportToLerpTarget(int index) => Animator.TeleportTo(GetLerpTarget(index));
 		
 		public void Foo() => print("foo");
+		
+		public void SetParent(Transform parent) => root.SetParent(parent);
+		public Transform Parent => root.parent;
 	}
 }

@@ -8,7 +8,7 @@ namespace SBEPIS.Capturellection
 {
 	public class DiajectorPageCreator : ValidatedMonoBehaviour
 	{
-		[SerializeField, Anywhere] private DequeElement menuCardPrefab;
+		[SerializeField, Anywhere] private GameObject menuCardPrefab;
 		[SerializeField, Anywhere] private Deque deque;
 		[SerializeField, Anywhere] private LerpTarget startTarget;
 		[SerializeField, Anywhere] private Transform cardParent;
@@ -19,7 +19,8 @@ namespace SBEPIS.Capturellection
 			List<(DequeElement, CardTarget)> cards = new();
 			foreach (CardTarget target in targets)
 			{
-				DequeElement card = Instantiate(menuCardPrefab, cardParent);
+				DequeElement card = Instantiate(menuCardPrefab).GetComponentInChildren<DequeElement>();
+				card.SetParent(cardParent);
 				cards.Add((card, target));
 				card.name += $" ({target.transform.parent.name})";
 				target.Card = card;
