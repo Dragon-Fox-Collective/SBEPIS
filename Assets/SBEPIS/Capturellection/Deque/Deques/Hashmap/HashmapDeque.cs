@@ -10,6 +10,14 @@ namespace SBEPIS.Capturellection.Deques
 	{
 		[SerializeField] private HashFunction hashFunction;
 		
+		private string currentKey;
+		
+		public override bool CanFetchFrom(LinearState state, InventoryStorable card)
+		{
+			int index = hashFunction.Hash(currentKey, state.Inventory.Count);
+			return state.Inventory[index].CanFetch(card);
+		}
+		
 		public override async UniTask<DequeStoreResult> StoreItem(LinearState state, Capturellectable item)
 		{
 			int index = hashFunction.Hash(BitManager.instance.Bits.BitSetToCode(item.GetComponentInParent<Item>().Module.Bits.Bits), state.Inventory.Count);
