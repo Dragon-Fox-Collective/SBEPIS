@@ -1,45 +1,45 @@
-using System;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using SBEPIS.Bits;
 using SBEPIS.Capturellection.Storage;
-using SBEPIS.Items;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class HashmapDeque : LaidOutDeque<LinearLayout, TextState>
+	public class HashmapDeque : LaidOutDeque<LinearLayout, LinearState>
 	{
 		[SerializeField] private GameObject keyboardPrefab;
 		[SerializeField] private HashFunction hashFunction;
 		
-		public override void SetupPage(TextState state, DiajectorPage page)
+		private Keyboard keyboard;
+		
+		public override void SetupPage(LinearState state, DiajectorPage page)
 		{
-			Keyboard keyboard = Instantiate(keyboardPrefab, page.transform).GetComponentInChildren<Keyboard>();
-			state.Text = keyboard.Text;
-			keyboard.onType.AddListener(text => state.Text = text);
+			keyboard = Instantiate(keyboardPrefab, page.transform).GetComponentInChildren<Keyboard>();
 		}
 		
-		public override bool CanFetchFrom(TextState state, InventoryStorable card)
+		public override bool CanFetchFrom(LinearState state, InventoryStorable card)
 		{
-			int index = hashFunction.Hash(state.Text, state.Inventory.Count);
+			if (keyboard.Text.Length == 0)
+				return false;
+			
+			int index = hashFunction.Hash(keyboard.Text, state.Inventory.Count);
 			return state.Inventory[index].CanFetch(card);
 		}
 		
-		public override async UniTask<DequeStoreResult> StoreItem(TextState state, Capturellectable item)
+		public override async UniTask<DequeStoreResult> StoreItem(LinearState state, Capturellectable item)
 		{
-			int index = hashFunction.Hash(state.Text, state.Inventory.Count);
+			int index = hashFunction.Hash(keyboard.Text, state.Inventory.Count);
 			Storable storable = state.Inventory[index];
 			StorableStoreResult res = await storable.StoreItem(item);
+			
+			keyboard.Text = "";
+			
 			return res.ToDequeResult(index, storable);
 		}
-	}
-	
-	[Serializable]
-	public class TextState : InventoryState, DirectionState
-	{
-		public List<Storable> Inventory { get; set; } = new();
-		public Vector3 Direction { get; set; }
-		public string Text { get; set; }
+		
+		public override UniTask<Capturellectable> FetchItem(LinearState state, InventoryStorable card)
+		{
+			keyboard.Text = "";
+			return base.FetchItem(state, card);
+		}
 	}
 }
