@@ -10,7 +10,7 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public int Hash(string str, int inventoryCount) => Hash(str) % inventoryCount;
 		
-		private int Hash(string str) => str.Where(char.IsLetter).Select(char.ToLower).Select(Hash).Aggregate(ExtensionMethods.Add);
+		private int Hash(string str) => str.Where(char.IsLetter).Select(char.ToLower).Select(Hash).Aggregate(0, ExtensionMethods.Add);
 		
 		private int Hash(char ch)
 		{

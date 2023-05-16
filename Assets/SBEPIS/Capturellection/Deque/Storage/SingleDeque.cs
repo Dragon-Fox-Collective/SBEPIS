@@ -25,6 +25,8 @@ namespace SBEPIS.Capturellection.Storage
 		[Tooltip("Capture and fetch settings only")]
 		[SerializeField] private DequeSettingsPageLayout<TSettingsData> lastPlaceSettingsPagePrefab;
 		
+		public virtual void SetupPage(TState state, DiajectorPage page) { }
+		
 		public abstract void Tick(TState state, float deltaTime);
 		public abstract void Layout(TState state);
 		public abstract Vector3 GetMaxPossibleSizeOf(TState state);

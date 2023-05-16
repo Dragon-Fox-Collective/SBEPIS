@@ -11,6 +11,8 @@ namespace SBEPIS.Capturellection.Storage
 	{
 		[SerializeField, Anywhere] private InterfaceRef<DequeRuleset>[] rulesets;
 		
+		public void SetupPage(DequeRulesetLayerState layerState, DiajectorPage page) => Zip(layerState).ForEach((ruleset, state) => ruleset.SetupPage(state, page));
+		
 		public void Tick(DequeRulesetLayerState layerState, float deltaTime) => Zip(layerState).ForEach((ruleset, state) => ruleset.Tick(state, deltaTime));
 		public void Layout(DequeRulesetLayerState layerState) => DoOn(First, layerState, (ruleset, state) => ruleset.Layout(state));
 		public Vector3 GetMaxPossibleSizeOf(DequeRulesetLayerState layerState) => DoOn(First, layerState, (ruleset, state) => ruleset.GetMaxPossibleSizeOf(state));

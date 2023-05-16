@@ -13,13 +13,7 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Self] private LerpTarget lerpTarget;
 		public LerpTarget LerpTarget => lerpTarget;
 		
-		[FormerlySerializedAs("onCardCreated")]
-		public UnityEvent<DequeElement> onCardBound = new();
-		public UnityEvent onPrepareCard = new();
-		public UnityEvent onGrab = new();
-		public UnityEvent onDrop = new();
-		
-		private DequeElement card;
+		[SerializeField, Self(Flag.Optional)] private DequeElement card;
 		private Grabbable cardGrabbable;
 		public DequeElement Card
 		{
@@ -31,16 +25,28 @@ namespace SBEPIS.Capturellection
 			}
 		}
 		
+		[FormerlySerializedAs("onCardCreated")]
+		public UnityEvent<DequeElement> onCardBound = new();
+		public UnityEvent onPrepareCard = new();
+		public UnityEvent onGrab = new();
+		public UnityEvent onDrop = new();
+
+		public bool HasBeenAssembled
+		{
+			get => Card.HasBeenAssembled;
+			set => Card.HasBeenAssembled = value;
+		}
+		
 		public void DropTargettingCard()
 		{
 			if (cardGrabbable)
 				cardGrabbable.Drop();
 		}
 		
-		public bool HasBeenAssembled
+		public void StopAssemblingAndDisassemblingCard()
 		{
-			get => Card.HasBeenAssembled;
-			set => Card.HasBeenAssembled = value;
+			if (card)
+				card.OnStopAssemblingAndDisassembling();
 		}
 	}
 }

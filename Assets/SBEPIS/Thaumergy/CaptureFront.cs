@@ -14,7 +14,7 @@ namespace SBEPIS.Capturellection
 		
 		public void UpdateImage(CaptureContainer card, Capturellectable item)
 		{
-			texture = CaptureCamera.Instance.TakePictureOfObject(item.gameObject);
+			texture = CaptureCamera.GetObjectTexture(item.gameObject);
 			if (showing) SetMaterialTexture(texture);
 		}
 		

@@ -1,4 +1,3 @@
-using SBEPIS.Bits;
 using System.Collections.Generic;
 using KBCore.Refs;
 using TMPro;
@@ -17,9 +16,9 @@ namespace SBEPIS.Capturellection
 		public TextMeshProUGUI codeBox;
 		public Transform objectParent;
 		public RectTransform stage;
-
+		
 		private static CaptureCamera instance;
-		public static CaptureCamera Instance
+		private static CaptureCamera Instance
 		{
 			get
 			{
@@ -27,9 +26,9 @@ namespace SBEPIS.Capturellection
 				return instance;
 			}
 		}
-		private readonly Dictionary<BitSet, Texture2D> captureCodeTextures = new();
+		private readonly Dictionary<string, Texture2D> stringTextures = new();
 		
-		public Texture2D TakePictureOfObject(GameObject obj)
+		private Texture2D TakePictureOfObject(GameObject obj)
 		{
 			Transform oldParent = obj.transform.parent;
 			bool wasActive = obj.activeSelf;
@@ -52,10 +51,10 @@ namespace SBEPIS.Capturellection
 			return rtn;
 		}
 		
-		private Texture2D TakePictureOfCode(BitSet bits)
+		private Texture2D TakePictureOfCode(string str)
 		{
 			codeBox.gameObject.SetActive(true);
-			codeBox.text = BitManager.instance.Bits.BitSetToCode(bits);
+			codeBox.text = str;
 			Texture2D rtn = TakePicture();
 			codeBox.gameObject.SetActive(false);
 			return rtn;
@@ -86,16 +85,15 @@ namespace SBEPIS.Capturellection
 			return captchaTexture;
 		}
 		
-		/// <summary>
-		/// Look up or generate a Texture2D of a captcha code string
-		/// </summary>
-		public static Texture2D GetCaptureCodeTexture(BitSet bits)
+		public static Texture2D GetStringTexture(string str)
 		{
-			if (!Instance.captureCodeTextures.ContainsKey(bits))
-				Instance.captureCodeTextures.Add(bits, Instance.TakePictureOfCode(bits));
+			if (!Instance.stringTextures.ContainsKey(str))
+				Instance.stringTextures.Add(str, Instance.TakePictureOfCode(str));
 			
-			Instance.captureCodeTextures.TryGetValue(bits, out Texture2D texture);
+			Instance.stringTextures.TryGetValue(str, out Texture2D texture);
 			return texture;
 		}
+		
+		public static Texture2D GetObjectTexture(GameObject obj) => Instance.TakePictureOfObject(obj);
 	}
 }
