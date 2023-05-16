@@ -13,21 +13,23 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public UnityEvent<string> onType = new();
 		
-		public string Text { get; private set; } = "";
+		private string text;
+		public string Text
+		{
+			get => text;
+			set
+			{
+				text = value;
+				textDisplay.text = text.Length > 0 ? text : noTextDisplayString;
+				onType.Invoke(text);
+			}
+		}
 		
 		private void Awake()
 		{
-			textDisplay.text = Text;
-			
+			Text = "";
 			foreach (Key key in keys)
-				key.CardTarget.onGrab.AddListener(TypeKey(key));
+				key.CardTarget.onGrab.AddListener(() => Text = key.Handle(Text));
 		}
-		
-		private UnityAction TypeKey(Key key) => () =>
-		{
-			Text += key.Ch;
-			textDisplay.text = Text.Length > 0 ? Text : noTextDisplayString;
-			onType.Invoke(Text);
-		};
 	}
 }
