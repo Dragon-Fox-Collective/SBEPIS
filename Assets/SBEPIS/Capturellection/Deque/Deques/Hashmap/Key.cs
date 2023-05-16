@@ -1,7 +1,6 @@
 using KBCore.Refs;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection.Deques
 {
@@ -15,6 +14,7 @@ namespace SBEPIS.Capturellection.Deques
 		[SerializeField] private Material cardFaceMaterial;
 		
 		[SerializeField] private string displayText = "";
+		public string DisplayText => displayText;
 		
 		[SerializeField] private float textureScale = 1;
 		
