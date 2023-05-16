@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
 {
-	public abstract class LaidOutDeque<TSettings, TLayout, TState> : SingleDeque<TState> where TSettings : LayoutSettings<TLayout> where TLayout : DequeLayout where TState : InventoryState, DirectionState, new()
+	public abstract class LaidOutDeque<TSettings, TLayout, TState> : SingleDeque<TState> where TSettings : LayoutSettings<TLayout>, new() where TLayout : DequeLayout where TState : InventoryState, DirectionState, new()
 	{
-		[SerializeField] private TSettings settings;
+		[SerializeField] private TSettings settings = new();
 		protected TSettings Settings => settings;
 		
 		public override void Tick(TState state, float deltaTime) => settings.Layout.Tick(state.Inventory, state, deltaTime);
