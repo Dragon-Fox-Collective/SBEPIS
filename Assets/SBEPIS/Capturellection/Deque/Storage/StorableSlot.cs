@@ -35,7 +35,9 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public bool HasAllCardsEmpty => container && container.IsEmpty;
 		public bool HasAllCardsFull => !HasAllCardsEmpty;
-
+		
+		public void SetupPage(DiajectorPage page) { }
+		
 		public void Tick(float deltaTime) { }
 		public void Layout(Vector3 direction) { }
 		public void LayoutTarget(InventoryStorable card, CardTarget target)

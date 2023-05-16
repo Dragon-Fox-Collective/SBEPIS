@@ -51,11 +51,17 @@ namespace SBEPIS.Capturellection.Deques
 		}
 	}
 	
-	[Serializable]
 	public class WobblyState : InventoryState, DirectionState, TimeState
 	{
 		public List<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
 		public float Time { get; set; }
+	}
+	
+	[Serializable]
+	public class WobblySettings : LayoutSettings<WobblyLayout>
+	{
+		[SerializeField] private WobblyLayout layout;
+		public WobblyLayout Layout => layout;
 	}
 }

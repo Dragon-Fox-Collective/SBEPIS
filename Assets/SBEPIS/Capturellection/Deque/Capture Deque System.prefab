@@ -1419,7 +1419,19 @@ MonoBehaviour:
   pageCreator: {fileID: 5959904091548033328}
   onPrepareCardCreation:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6903258535003904210}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.Inventory, SBEPIS.Capturellection
+        m_MethodName: SetupPage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onOpen:
     m_PersistentCalls:
       m_Calls:
@@ -1544,7 +1556,7 @@ Transform:
   - {fileID: 9143523999061029096}
   - {fileID: 7290926607632935990}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8745008019380363946
 GameObject:

@@ -58,12 +58,18 @@ namespace SBEPIS.Capturellection.Deques
 		private static float DistanceToRegularPolygonEdge(int edgeCount, float edgeLength) => edgeCount < 3 ? 0 : 0.5f * edgeLength / Mathf.Tan(Mathf.PI / edgeCount);
 	}
 	
-	[Serializable]
 	public class CycloneState : InventoryState, DirectionState, TimeState, TopState
 	{
 		public List<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
 		public float Time { get; set; }
 		public Storable TopStorable { get; set; }
+	}
+	
+	[Serializable]
+	public class CycloneSettings : LayoutSettings<CycloneLayout>
+	{
+		[SerializeField] private CycloneLayout layout;
+		public CycloneLayout Layout => layout;
 	}
 }
