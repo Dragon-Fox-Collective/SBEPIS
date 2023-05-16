@@ -5,7 +5,7 @@ using System.Reflection;
 using SBEPIS.Capturellection.Storage;
 using UnityEngine;
 
-namespace SBEPIS.Capturellection.Deques
+namespace SBEPIS.Capturellection
 {
 	public interface DequeLayout
 	{

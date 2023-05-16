@@ -3,14 +3,15 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
 {
-	public abstract class LaidOutDeque<TLayout, TState> : SingleDeque<TLayout, TState> where TLayout : DequeLayout where TState : InventoryState, DirectionState, new()
+	public abstract class LaidOutDeque<TSettings, TLayout, TState> : SingleDeque<TState> where TSettings : LayoutSettings<TLayout> where TLayout : DequeLayout where TState : InventoryState, DirectionState, new()
 	{
-		[SerializeField] private TLayout layout;
+		[SerializeField] private TSettings settings;
+		protected TSettings Settings => settings;
 		
-		public override void Tick(TState state, float deltaTime) => layout.Tick(state.Inventory, state, deltaTime);
-		public override void Layout(TState state) => layout.Layout(state.Inventory, state);
-		public override Vector3 GetMaxPossibleSizeOf(TState state) => layout.GetMaxPossibleSizeOf(state.Inventory, state);
+		public override void Tick(TState state, float deltaTime) => settings.Layout.Tick(state.Inventory, state, deltaTime);
+		public override void Layout(TState state) => settings.Layout.Layout(state.Inventory, state);
+		public override Vector3 GetMaxPossibleSizeOf(TState state) => settings.Layout.GetMaxPossibleSizeOf(state.Inventory, state);
 		
-		protected override TLayout SettingsPageLayoutData => layout;
+		protected override object DequeSettings => settings;
 	}
 }
