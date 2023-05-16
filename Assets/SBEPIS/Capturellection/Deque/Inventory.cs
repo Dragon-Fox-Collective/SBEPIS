@@ -89,6 +89,7 @@ namespace SBEPIS.Capturellection
 		}
 		public void SetStorableParent(Transform transform) => storable.Parent = transform;
 		public Vector3 MaxPossibleSize => storable.MaxPossibleSize;
+		public void SetupPage(DiajectorPage page) => storable.SetupPage(page);
 		public void Tick(float deltaTime) => storable.Tick(deltaTime);
 		public void Layout(Vector3 direction) => storable.Layout(direction);
 		public void LayoutTarget(InventoryStorable card, CardTarget target) => storable.LayoutTarget(card, target);
