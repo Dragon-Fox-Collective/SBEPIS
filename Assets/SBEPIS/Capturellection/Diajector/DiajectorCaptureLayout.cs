@@ -82,7 +82,7 @@ namespace SBEPIS.Capturellection
 			page.RemoveCard(card.DequeElement);
 			RemoveTemporaryTarget(card);
 		}
-
+		
 		public void SyncCards()
 		{
 			if (!inventory)

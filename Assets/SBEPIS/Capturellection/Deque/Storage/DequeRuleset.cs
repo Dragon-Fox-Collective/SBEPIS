@@ -6,6 +6,8 @@ namespace SBEPIS.Capturellection.Storage
 {
 	public interface DequeRuleset
 	{
+		public void SetupPage(object state, DiajectorPage page);
+		
 		public void Tick(object state, float deltaTime);
 		public void Layout(object state);
 		public Vector3 GetMaxPossibleSizeOf(object state);
@@ -44,6 +46,8 @@ namespace SBEPIS.Capturellection.Storage
 	
 	public interface DequeRuleset<TState> : DequeRuleset where TState : InventoryState, DirectionState
 	{
+		public void SetupPage(TState state, DiajectorPage page);
+		
 		public void Tick(TState state, float deltaTime);
 		public void Layout(TState state);
 		public Vector3 GetMaxPossibleSizeOf(TState state);
@@ -73,6 +77,8 @@ namespace SBEPIS.Capturellection.Storage
 		public new TState GetNewState();
 		
 		// Explicit implementations
+		
+		void DequeRuleset.SetupPage(object state, DiajectorPage page) => SetupPage((TState)state, page);
 		
 		void DequeRuleset.Tick(object state, float deltaTime) => Tick((TState)state, deltaTime);
 		void DequeRuleset.Layout(object state) => Layout((TState)state);

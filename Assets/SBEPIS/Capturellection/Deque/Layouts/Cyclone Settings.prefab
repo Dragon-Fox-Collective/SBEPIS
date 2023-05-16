@@ -271,7 +271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5873276332041856545, guid: ddfd73025bf4d7c45954c5c32fa8f0dc, type: 3}
       propertyPath: m_Name
-      value: Cyclone Fetch Settings
+      value: Cyclone Settings
       objectReference: {fileID: 0}
     - target: {fileID: 7015435756839868525, guid: ddfd73025bf4d7c45954c5c32fa8f0dc, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -284,6 +284,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 257781555510255171}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5873276332041856545, guid: ddfd73025bf4d7c45954c5c32fa8f0dc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 349920230510853736}
     - targetCorrespondingSourceObject: {fileID: 5873276332041856545, guid: ddfd73025bf4d7c45954c5c32fa8f0dc, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1869733498742684371}
@@ -304,6 +307,21 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5873276332041856545, guid: ddfd73025bf4d7c45954c5c32fa8f0dc, type: 3}
   m_PrefabInstance: {fileID: 7636049624136455425}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &349920230510853736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4069744538015036192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4bd61cc7bc4438fa22d3dacd6b84a34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modules:
+  - {fileID: -1869733498742684371}
+  title: {fileID: 2609706135979857774}
 --- !u!114 &-1869733498742684371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,7 +334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f9078fcec1b449293cf35f905a2d677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: {fileID: 2609706135979857774}
   timePerCardSlider: {fileID: 4869022731313696583}
   timePerCardMin: 0.1
   timePerCardMax: 5

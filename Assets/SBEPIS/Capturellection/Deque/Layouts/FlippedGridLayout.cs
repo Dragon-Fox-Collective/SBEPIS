@@ -48,11 +48,17 @@ namespace SBEPIS.Capturellection.Deques
 		}
 	}
 	
-	[Serializable]
 	public class FlippedGridState : InventoryState, DirectionState, FlippedState
 	{
 		public List<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
 		public List<Storable> FlippedStorables { get; } = new();
+	}
+	
+	[Serializable]
+	public class FlippedGridSettings : LayoutSettings<FlippedGridLayout>
+	{
+		[SerializeField] private FlippedGridLayout layout;
+		public FlippedGridLayout Layout => layout;
 	}
 }

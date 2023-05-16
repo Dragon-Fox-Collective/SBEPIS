@@ -15,7 +15,7 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Parent(Flag.IncludeInactive | Flag.Optional)] private DiajectorPageCreator pageCreator;
 		
 		[FormerlySerializedAs("onPreparePagePre")]
-		public UnityEvent onPrepareCardCreation = new();
+		public UnityEvent<DiajectorPage> onPrepareCardCreation = new();
 		[FormerlySerializedAs("onPreparePage")]
 		[FormerlySerializedAs("onPreparePagePost")]
 		public UnityEvent onOpen = new();
@@ -68,7 +68,7 @@ namespace SBEPIS.Capturellection
 			if (!pageCreator || hasCreatedCards)
 				return;
 			
-			onPrepareCardCreation.Invoke();
+			onPrepareCardCreation.Invoke(this);
 			pageCreator.CreateCards(GetComponentsInChildren<CardTarget>()).ForEach(AddCard);
 			hasCreatedCards = true;
 		}

@@ -3,7 +3,7 @@ using SBEPIS.Capturellection.Storage;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class StackDeque : LaidOutDeque<LinearLayout, LinearState>
+	public class StackDeque : LaidOutDeque<LinearSettings, LinearLayout, LinearState>
 	{
 		public override bool CanFetchFrom(LinearState state, InventoryStorable card) => state.Inventory[0].CanFetch(card);
 		

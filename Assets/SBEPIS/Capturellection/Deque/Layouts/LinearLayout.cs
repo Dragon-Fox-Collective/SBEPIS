@@ -37,10 +37,16 @@ namespace SBEPIS.Capturellection.Deques
 		}
 	}
 	
-	[Serializable]
 	public class LinearState : InventoryState, DirectionState
 	{
 		public List<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
+	}
+	
+	[Serializable]
+	public class LinearSettings : LayoutSettings<LinearLayout>
+	{
+		[SerializeField] private LinearLayout layout;
+		public LinearLayout Layout => layout;
 	}
 }

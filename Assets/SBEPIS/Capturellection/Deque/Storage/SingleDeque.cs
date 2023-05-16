@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
 {
-	public abstract class SingleDeque<TSettingsData, TState> : MonoBehaviour, DequeRuleset<TState> where TState : InventoryState, DirectionState, new()
+	public abstract class SingleDeque<TState> : MonoBehaviour, DequeRuleset<TState> where TState : InventoryState, DirectionState, new()
 	{
 		[SerializeField] private string dequeNameSingluar;
 		[SerializeField] private string dequeNamePlural;
@@ -17,13 +17,15 @@ namespace SBEPIS.Capturellection.Storage
 		[SerializeField] private Dequeration dequeration;
 		
 		[Tooltip("Layout, capture, and fetch settings")]
-		[SerializeField] private DequeSettingsPageLayout<TSettingsData> settingsPagePrefab;
+		[SerializeField] private DequeSettingsPageLayout settingsPagePrefab;
 		[Tooltip("Layout and fetch settings only")]
-		[SerializeField] private DequeSettingsPageLayout<TSettingsData> firstPlaceSettingsPagePrefab;
+		[SerializeField] private DequeSettingsPageLayout firstPlaceSettingsPagePrefab;
 		[Tooltip("Fetch settings only")]
-		[SerializeField] private DequeSettingsPageLayout<TSettingsData> middlePlaceSettingsPagePrefab;
+		[SerializeField] private DequeSettingsPageLayout middlePlaceSettingsPagePrefab;
 		[Tooltip("Capture and fetch settings only")]
-		[SerializeField] private DequeSettingsPageLayout<TSettingsData> lastPlaceSettingsPagePrefab;
+		[SerializeField] private DequeSettingsPageLayout lastPlaceSettingsPagePrefab;
+		
+		public virtual void SetupPage(TState state, DiajectorPage page) { }
 		
 		public abstract void Tick(TState state, float deltaTime);
 		public abstract void Layout(TState state);
@@ -74,15 +76,15 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public IEnumerable<DequeSettingsPageLayout> GetNewSettingsPageLayouts(bool isFirst, bool isLast)
 		{
-			DequeSettingsPageLayout<TSettingsData> prefab = isFirst && isLast ? settingsPagePrefab : isFirst ? firstPlaceSettingsPagePrefab : isLast ? lastPlaceSettingsPagePrefab : middlePlaceSettingsPagePrefab;
+			DequeSettingsPageLayout prefab = isFirst && isLast ? settingsPagePrefab : isFirst ? firstPlaceSettingsPagePrefab : isLast ? lastPlaceSettingsPagePrefab : middlePlaceSettingsPagePrefab;
 			if (prefab)
 			{
-				DequeSettingsPageLayout<TSettingsData> layout = Instantiate(prefab);
-				layout.Object = SettingsPageLayoutData;
-				yield return layout;
+				DequeSettingsPageLayout settingsModule = Instantiate(prefab);
+				settingsModule.Settings = DequeSettings;
+				yield return settingsModule;
 			}
 		}
-		protected abstract TSettingsData SettingsPageLayoutData { get; }
+		protected abstract object DequeSettings { get; }
 		
 		public IEnumerable<Texture2D> GetCardTextures()
 		{

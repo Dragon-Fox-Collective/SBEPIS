@@ -45,6 +45,8 @@ namespace SBEPIS.Capturellection.Storage
 		public bool HasAllCardsEmpty => Inventory.All(storable => storable.HasAllCardsEmpty);
 		public bool HasAllCardsFull => Inventory.All(storable => storable.HasAllCardsFull);
 		
+		public void SetupPage(DiajectorPage page) => definition.Ruleset.SetupPage(state, page);
+		
 		public void Tick(float deltaTime) => definition.Ruleset.Tick(state, deltaTime);
 		public void Layout(Vector3 direction)
 		{

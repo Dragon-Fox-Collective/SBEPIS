@@ -4,7 +4,7 @@ using SBEPIS.Capturellection.Storage;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class StateDeque : LaidOutDeque<LinearLayout, LinearState>
+	public class StateDeque : LaidOutDeque<LinearSettings, LinearLayout, LinearState>
 	{
 		public bool State { get; set; }
 		
