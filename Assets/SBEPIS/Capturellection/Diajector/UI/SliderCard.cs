@@ -2,7 +2,7 @@ using SBEPIS.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace SBEPIS.Capturellection
+namespace SBEPIS.Capturellection.UI
 {
 	public class SliderCard : MonoBehaviour, Slider
 	{
@@ -12,17 +12,17 @@ namespace SBEPIS.Capturellection
 
 		public UnityEvent<float> onSliderValueChanged = new();
 
-		private float _sliderValue;
+		private float sliderValue;
 		public float SliderValue
 		{
-			get => _sliderValue;
+			get => sliderValue;
 			set
 			{
-				_sliderValue = value;
+				sliderValue = value;
 				target.transform.SetPositionAndRotation(
-					Vector3.LerpUnclamped(startPoint.position, endPoint.position, _sliderValue),
-					Quaternion.LerpUnclamped(startPoint.rotation, endPoint.rotation, _sliderValue));
-				onSliderValueChanged.Invoke(_sliderValue);
+					Vector3.LerpUnclamped(startPoint.position, endPoint.position, sliderValue),
+					Quaternion.LerpUnclamped(startPoint.rotation, endPoint.rotation, sliderValue));
+				onSliderValueChanged.Invoke(sliderValue);
 			}
 		}
 

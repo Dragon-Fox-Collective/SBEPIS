@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class MemoryDeque : LaidOutDeque<FlippedGridLayout, MemoryState>
+	public class MemoryDeque : LaidOutDeque<FlippedGridSettings, FlippedGridLayout, MemoryState>
 	{
 		[SerializeField, Anywhere] private GameObject memoryCardPrefab;
 		

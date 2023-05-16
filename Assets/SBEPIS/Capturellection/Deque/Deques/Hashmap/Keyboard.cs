@@ -44,8 +44,7 @@ namespace SBEPIS.Capturellection.Deques
 				key.transform.localPosition = new Vector3(
 					(chIndex - (line.Count - 1) / 2f) * spacing.x,
 					(lineIndex - (positions.Count - 1) / 2f) * -spacing.y,
-					0
-				);
+					0);
 				
 				key.CardTarget.onGrab.AddListener(() => Text = key.Handle(Text));
 			}

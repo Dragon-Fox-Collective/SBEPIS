@@ -5,16 +5,15 @@ using SBEPIS.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace SBEPIS.Capturellection
+namespace SBEPIS.Capturellection.UI
 {
 	[RequireComponent(typeof(CardTarget))]
 	public class SliderCardAttacher : ValidatedMonoBehaviour, Slider
 	{
-		[SerializeField, Self]
-		private CardTarget cardTarget;
+		[SerializeField, Self] private CardTarget cardTarget;
 		
-		public Transform startPoint;
-		public Transform endPoint;
+		[SerializeField, Anywhere] private Transform startPoint;
+		[SerializeField, Anywhere] private Transform endPoint;
 		public UnityEvent<float> onSliderValueChanged = new();
 		
 		private SliderCard slider;

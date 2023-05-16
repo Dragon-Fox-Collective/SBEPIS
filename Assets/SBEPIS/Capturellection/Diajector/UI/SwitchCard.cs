@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace SBEPIS.Capturellection
+namespace SBEPIS.Capturellection.UI
 {
 	public class SwitchCard : MonoBehaviour
 	{
@@ -11,17 +11,17 @@ namespace SBEPIS.Capturellection
 
 		public UnityEvent<bool> onSwitchValueChanged = new();
 
-		private bool _switchValue;
+		private bool switchValue;
 		public bool SwitchValue
 		{
-			get => _switchValue;
+			get => switchValue;
 			set
 			{
-				_switchValue = value;
+				switchValue = value;
 				target.transform.SetPositionAndRotation(
-					(_switchValue ? onPoint : offPoint).position,
-					(_switchValue ? onPoint : offPoint).rotation);
-				onSwitchValueChanged.Invoke(_switchValue);
+					(switchValue ? onPoint : offPoint).position,
+					(switchValue ? onPoint : offPoint).rotation);
+				onSwitchValueChanged.Invoke(switchValue);
 			}
 		}
 

@@ -5,18 +5,17 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-namespace SBEPIS.Capturellection
+namespace SBEPIS.Capturellection.UI
 {
 	[RequireComponent(typeof(CardTarget))]
 	public class SwitchCardAttacher : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self]
-		private CardTarget cardTarget;
+		[SerializeField, Self] private CardTarget cardTarget;
 		
 		[FormerlySerializedAs("offPoint")]
-		public Transform falsePoint;
+		[SerializeField, Anywhere] private Transform falsePoint;
 		[FormerlySerializedAs("onPoint")]
-		public Transform truePoint;
+		[SerializeField, Anywhere] private Transform truePoint;
 		public UnityEvent<bool> onSwitchValueChanged = new();
 		
 		private SwitchCard switchCard;

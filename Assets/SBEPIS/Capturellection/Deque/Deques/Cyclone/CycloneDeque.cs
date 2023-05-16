@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class CycloneDeque : LaidOutDeque<CycloneLayout, CycloneState>
+	public class CycloneDeque : LaidOutDeque<CycloneSettings, CycloneLayout, CycloneState>
 	{
 		public override bool CanFetchFrom(CycloneState state, InventoryStorable card) => state.TopStorable.CanFetch(card);
 		
