@@ -94,8 +94,20 @@ namespace SBEPIS.Capturellection
 		public void Layout(Vector3 direction) => storable.Layout(direction);
 		public void LayoutTarget(InventoryStorable card, CardTarget target) => storable.LayoutTarget(card, target);
 		public bool CanFetch(InventoryStorable card) => storable.CanFetch(card);
-		public UniTask<StorableStoreResult> StoreItem(Capturellectable item) => storable.StoreItem(item);
-		public UniTask<Capturellectable> FetchItem(InventoryStorable card) => storable.FetchItem(card);
+		public async UniTask<StorableStoreResult> StoreItem(Capturellectable item)
+		{
+			item.IsBeingCaptured = true;
+			StorableStoreResult result = await storable.StoreItem(item);
+			item.IsBeingCaptured = false;
+			return result;
+		}
+		public async UniTask<Capturellectable> FetchItem(InventoryStorable card)
+		{
+			card.IsBeingFetched = true;
+			Capturellectable item = await storable.FetchItem(card);
+			card.IsBeingFetched = false;
+			return item;
+		}
 		public UniTask FlushCard(InventoryStorable card) => FlushCard(new List<InventoryStorable>{ card });
 		public UniTask FlushCard(List<InventoryStorable> cards)
 		{

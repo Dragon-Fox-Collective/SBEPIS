@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using KBCore.Refs;
 using SBEPIS.Utils;
@@ -117,8 +118,7 @@ namespace SBEPIS.Capturellection
 		
 		public bool ShouldCardBeDisplayed(DequeElement card) => IsOpen && CurrentPage.HasCard(card);
 		
-		public LerpTarget GetLerpTarget(DequeElement card) => CurrentPage ? CurrentPage.GetLerpTarget(card) : null;
-		public LerpTarget GetLerpTarget(DequeElement card, int index) => index >= 0 && index < lerpTargets.Count ? lerpTargets[index] : index == lerpTargets.Count ? GetLerpTarget(card) : null;
+		public LerpTarget GetLerpTargetAtIndex(DequeElement card, int index) => index >= 0 && index < lerpTargets.Count ? lerpTargets[index] : index == lerpTargets.Count ? card.LerpTarget : throw new IndexOutOfRangeException();
 		public int LerpTargetCount => lerpTargets.Count + 1;
 	}
 }

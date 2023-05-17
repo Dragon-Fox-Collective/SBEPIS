@@ -33,6 +33,9 @@ namespace SBEPIS.Capturellection
 		
 		public async UniTask<CaptureContainer> CaptureAndGrabCard(Capturellectable item)
 		{
+			if (item.IsBeingCaptured)
+				return null;
+			
 			StorableStoreResult result = await inventory.StoreItem(item);
 			MoveEjectedItem(result.card, result.ejectedItem);
 			TryGrab(result.card.transform).Forget();
@@ -65,7 +68,7 @@ namespace SBEPIS.Capturellection
 		
 		private async UniTask<Capturellectable> RetrieveFromInventory(InventoryStorable card)
 		{
-			if (!inventory.CanFetch(card))
+			if (!inventory.CanFetch(card) || card.IsBeingFetched)
 				return null;
 			
 			Capturellectable item = await inventory.FetchItem(card);
