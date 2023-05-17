@@ -14,7 +14,7 @@ namespace SBEPIS.Capturellection.Deques
 		
 		private void OnValidate() => this.ValidateRefs();
 		
-		public override bool CanFetchFrom(MemoryState state, InventoryStorable card)
+		public override bool CanFetch(MemoryState state, InventoryStorable card)
 		{
 			Storable storable = StorableWithCard(state, card);
 			return storable.CanFetch(card) && (storable.HasAllCardsEmpty || (state.FlippedStorables.Contains(storable) && state.FlippedStorables.Contains(state.pairs[storable])));

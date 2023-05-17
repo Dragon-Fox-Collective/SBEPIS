@@ -16,7 +16,7 @@ namespace SBEPIS.Capturellection.Deques
 			keyboard = Instantiate(keyboardPrefab, page.transform).GetComponentInChildren<Keyboard>();
 		}
 		
-		public override bool CanFetchFrom(LinearState state, InventoryStorable card)
+		public override bool CanFetch(LinearState state, InventoryStorable card)
 		{
 			if (keyboard.Text.Length == 0)
 				return false;

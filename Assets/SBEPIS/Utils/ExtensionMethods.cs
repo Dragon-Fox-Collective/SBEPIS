@@ -158,9 +158,11 @@ public static class ExtensionMethods
 			result = result.Append(await action(t));
 		return result;
 	}
-
+	
 	public static UniTask<IEnumerable<TResult>> SelectMany<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, UniTask<IEnumerable<TResult>>> action) => source.Select(action).ContinueWith(result => result.Flatten());
-
+	
+	public static UniTask<IEnumerable<T>> Where<T>(this UniTask<IEnumerable<T>> source, Func<T, bool> predicate) => source.ContinueWith(result => result.Where(predicate));
+	
 	public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> source) => source.SelectMany(item => item);
 	
 	public static IEnumerable<T> EnumerableOf<T>(params T[] items) => items;
