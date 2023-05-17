@@ -117,7 +117,7 @@ namespace SBEPIS.Capturellection
 		}
 		
 		public LerpTarget LerpTarget => Page.GetLerpTarget(this);
-		public LerpTarget GetLerpTarget(int index) => Page.Diajector.GetLerpTarget(this, index);
+		public LerpTarget GetLerpTarget(int index) => Page.Diajector.GetLerpTargetAtIndex(this, index);
 		public void TeleportToLerpTarget(int index) => Animator.TeleportTo(GetLerpTarget(index));
 		
 		public void Foo() => print("foo");
