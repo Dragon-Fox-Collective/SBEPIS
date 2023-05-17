@@ -27,7 +27,7 @@ namespace SBEPIS.Capturellection
 			
 			if (grabber.HeldGrabbable.TryGetComponent(out CaptureContainer container))
 				RetrieveAndGrabItem(container).Forget();
-			else if (grabber.HeldGrabbable.TryGetComponent(out Capturellectable item))
+			else if (grabber.HeldGrabbable.TryGetComponent(out Capturellectable item) && !item.IsBeingCaptured)
 				CaptureAndGrabCard(item).Forget();
 		}
 		
