@@ -101,7 +101,13 @@ namespace SBEPIS.Capturellection
 			item.IsBeingCaptured = false;
 			return result;
 		}
-		public UniTask<Capturellectable> FetchItem(InventoryStorable card) => storable.FetchItem(card);
+		public async UniTask<Capturellectable> FetchItem(InventoryStorable card)
+		{
+			card.IsBeingFetched = true;
+			Capturellectable item = await storable.FetchItem(card);
+			card.IsBeingFetched = false;
+			return item;
+		}
 		public UniTask FlushCard(InventoryStorable card) => FlushCard(new List<InventoryStorable>{ card });
 		public UniTask FlushCard(List<InventoryStorable> cards)
 		{
