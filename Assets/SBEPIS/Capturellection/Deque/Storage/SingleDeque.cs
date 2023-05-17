@@ -31,7 +31,7 @@ namespace SBEPIS.Capturellection.Storage
 		public abstract void Layout(TState state);
 		public abstract Vector3 GetMaxPossibleSizeOf(TState state);
 
-		public virtual bool CanFetchFrom(TState state, InventoryStorable card) => state.Inventory.Any(storable => storable.CanFetch(card));
+		public virtual bool CanFetch(TState state, InventoryStorable card) => state.Inventory.Any(storable => storable.CanFetch(card));
 		
 		public virtual async UniTask<DequeStoreResult> StoreItem(TState state, Capturellectable item)
 		{

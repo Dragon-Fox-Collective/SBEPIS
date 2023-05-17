@@ -12,7 +12,7 @@ namespace SBEPIS.Capturellection.Storage
 		public void Layout(object state);
 		public Vector3 GetMaxPossibleSizeOf(object state);
 		
-		public bool CanFetchFrom(object state, InventoryStorable card);
+		public bool CanFetch(object state, InventoryStorable card);
 		
 		public UniTask<DequeStoreResult> StoreItem(object state, Capturellectable item);
 		public UniTask<DequeStoreResult> StoreItemHook(object state, Capturellectable item, DequeStoreResult oldResult);
@@ -52,7 +52,7 @@ namespace SBEPIS.Capturellection.Storage
 		public void Layout(TState state);
 		public Vector3 GetMaxPossibleSizeOf(TState state);
 		
-		public bool CanFetchFrom(TState state, InventoryStorable card);
+		public bool CanFetch(TState state, InventoryStorable card);
 		
 		public UniTask<DequeStoreResult> StoreItem(TState state, Capturellectable item);
 		public UniTask<DequeStoreResult> StoreItemHook(TState state, Capturellectable item, DequeStoreResult oldResult);
@@ -84,7 +84,7 @@ namespace SBEPIS.Capturellection.Storage
 		void DequeRuleset.Layout(object state) => Layout((TState)state);
 		Vector3 DequeRuleset.GetMaxPossibleSizeOf(object state) => GetMaxPossibleSizeOf((TState)state);
 		
-		bool DequeRuleset.CanFetchFrom(object state, InventoryStorable card) => CanFetchFrom((TState)state, card);
+		bool DequeRuleset.CanFetch(object state, InventoryStorable card) => CanFetch((TState)state, card);
 		
 		UniTask<DequeStoreResult> DequeRuleset.StoreItem(object state, Capturellectable item) => StoreItem((TState)state, item);
 		UniTask<DequeStoreResult> DequeRuleset.StoreItemHook(object state, Capturellectable item, DequeStoreResult oldResult) => StoreItemHook((TState)state, item, oldResult);

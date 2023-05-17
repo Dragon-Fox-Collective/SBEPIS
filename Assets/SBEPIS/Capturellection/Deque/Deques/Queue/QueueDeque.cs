@@ -5,7 +5,7 @@ namespace SBEPIS.Capturellection.Deques
 {
 	public class QueueDeque : LaidOutDeque<LinearSettings, LinearLayout, LinearState>
 	{
-		public override bool CanFetchFrom(LinearState state, InventoryStorable card) => state.Inventory[^1].CanFetch(card);
+		public override bool CanFetch(LinearState state, InventoryStorable card) => state.Inventory[^1].CanFetch(card);
 		
 		public override async UniTask<DequeStoreResult> StoreItem(LinearState state, Capturellectable item)
 		{

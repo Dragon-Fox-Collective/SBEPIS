@@ -55,7 +55,7 @@ namespace SBEPIS.Capturellection.Storage
 		}
 		public void LayoutTarget(InventoryStorable card, CardTarget target) => Inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		
-		public bool CanFetch(InventoryStorable card) => definition.Ruleset.CanFetchFrom(state, card);
+		public bool CanFetch(InventoryStorable card) => definition.Ruleset.CanFetch(state, card);
 		public bool Contains(InventoryStorable card) => Inventory.Any(storable => storable.Contains(card));
 		
 		public async UniTask<StorableStoreResult> StoreItem(Capturellectable item)
