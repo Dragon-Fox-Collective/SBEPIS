@@ -19,6 +19,8 @@ namespace SBEPIS.Capturellection
 			set => inventoryEvents.Set(this, value);
 		}
 		
+		public bool IsBeingFetched { get; set; }
+		
 		private void Awake()
 		{
 			inventoryEvents.onSet.AddListener((_, inventory) => dequeElement.Deque = inventory.deque);

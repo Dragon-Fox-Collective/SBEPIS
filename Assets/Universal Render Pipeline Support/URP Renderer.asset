@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-431893990846336611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
+  m_Name: FullScreenPassRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  passMaterial: {fileID: 2100000, guid: ef456fac667c68f44823eeb0db27beb0, type: 2}
+  injectionPoint: 600
+  requirements: 4
+  passIndex: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10,12 +27,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de640fe3d0db1804a85f9fc8f5cadab6, type: 3}
-  m_Name: New Universal Render Pipeline Asset_Renderer
+  m_Name: URP Renderer
   m_EditorClassIdentifier: 
   debugShaders:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
-  m_RendererFeatures: []
-  m_RendererFeatureMap: 
+  m_RendererFeatures:
+  - {fileID: -431893990846336611}
+  m_RendererFeatureMap: 9d71fa1eb49a01fa
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -61,14 +79,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da41572c2a77a84b84b8985cc63a5c3, type: 3}
+  m_Script: {fileID: 11500000, guid: f8d514cfdda54cc42bf00280e2d4c78c, type: 3}
   m_Name: GrabScreenFeature
   m_EditorClassIdentifier: 
-  m_Active: 0
-  settings:
-    TextureName: _GrabPassTransparent
-    LayerMask:
-      m_Bits: 1024
-    RenderPassEvent: 1000
-    Offset: 0
-    BlitMaterial: {fileID: 2100000, guid: 3b294d7a5e0c0cf409ad6f72d56551a9, type: 2}
+  m_Active: 1
+  bepis: 0
