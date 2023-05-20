@@ -97,7 +97,7 @@ namespace SBEPIS.Capturellection.Deques
 			state.Inventory.Shuffle();
 		}
 		
-		public override InventoryStorable SaveCardHook(MemoryState state, InventoryStorable card)
+		public override InventoryStorable SaveCardPostHook(MemoryState state, InventoryStorable card)
 		{
 			state.Inventory.Shuffle();
 			

@@ -25,12 +25,22 @@ namespace SBEPIS.Capturellection.Storage
 		[Tooltip("Capture and fetch settings only")]
 		[SerializeField] private DequeSettingsPageLayout lastPlaceSettingsPagePrefab;
 		
-		public virtual void SetupPage(TState state, DiajectorPage page) { }
+		private bool initializedPage;
+		public void InitPage(TState state, DiajectorPage page)
+		{
+			if (!initializedPage)
+			{
+				initializedPage = true;
+				InitPageOnce(state, page);
+			}
+			state.Inventory.ForEach(storable => storable.InitPage(page));
+		}
+		protected virtual void InitPageOnce(TState state, DiajectorPage page) { }
 		
-		public abstract void Tick(TState state, float deltaTime);
+		public virtual void Tick(TState state, float deltaTime) => state.Inventory.ForEach(storable => storable.Tick(deltaTime));
 		public abstract void Layout(TState state);
 		public abstract Vector3 GetMaxPossibleSizeOf(TState state);
-
+		
 		public virtual bool CanFetch(TState state, InventoryStorable card) => state.Inventory.Any(storable => storable.CanFetch(card));
 		
 		public virtual async UniTask<DequeStoreResult> StoreItem(TState state, Capturellectable item)
@@ -47,28 +57,12 @@ namespace SBEPIS.Capturellection.Storage
 		
 		protected static Storable StorableWithCard(TState state, InventoryStorable card) => state.Inventory.Find(storable => storable.Contains(card));
 		
-		public virtual UniTask FlushCard(TState state, Storable storable)
-		{
-			state.Inventory.Add(storable);
-			return UniTask.CompletedTask;
-		}
-		public virtual UniTask<IEnumerable<Storable>> FlushCardPreHook(TState state, Storable storable) => UniTask.FromResult(LoadCardPreHook(state, storable));
-		public virtual UniTask FlushCardPostHook(TState state, Storable storable) { LoadCardPostHook(state, storable); return UniTask.CompletedTask; }
-		
-		public virtual UniTask<InventoryStorable> FetchCard(TState state, InventoryStorable card)
-		{
-			Storable storable = StorableWithCard(state, card);
-			state.Inventory.Remove(storable);
-			return UniTask.FromResult(card);
-		}
-		public virtual UniTask<InventoryStorable> FetchCardHook(TState state, InventoryStorable card) => UniTask.FromResult(SaveCardHook(state, card));
-		
 		public UniTask Interact<TIState>(TState state, InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TIState> action) => ReferenceEquals(targetDeque, this) ? action((TIState)(object)state, card) : StorableWithCard(state, card).Interact(card, targetDeque, action);
 		
 		public virtual IEnumerable<Storable> LoadCardPreHook(TState state, Storable storable) => ExtensionMethods.EnumerableOf(storable);
 		public virtual void LoadCardPostHook(TState state, Storable storable) { }
 		
-		public virtual InventoryStorable SaveCardHook(TState state, InventoryStorable card) => card;
+		public virtual InventoryStorable SaveCardPostHook(TState state, InventoryStorable card) => card;
 		
 		public TState GetNewState() => new();
 		

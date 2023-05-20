@@ -11,7 +11,7 @@ namespace SBEPIS.Capturellection.Deques
 		
 		private Keyboard keyboard;
 		
-		public override void SetupPage(LinearState state, DiajectorPage page)
+		public override void InitPageOnce(LinearState state, DiajectorPage page)
 		{
 			keyboard = Instantiate(keyboardPrefab, page.transform).GetComponentInChildren<Keyboard>();
 		}

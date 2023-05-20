@@ -36,7 +36,7 @@ namespace SBEPIS.Capturellection.Storage
 		public bool HasAllCardsEmpty => container && container.IsEmpty;
 		public bool HasAllCardsFull => !HasAllCardsEmpty;
 		
-		public void SetupPage(DiajectorPage page) { }
+		public void InitPage(DiajectorPage page) { }
 		
 		public void Tick(float deltaTime) { }
 		public void Layout(Vector3 direction) { }
@@ -87,7 +87,12 @@ namespace SBEPIS.Capturellection.Storage
 		public void Load(List<InventoryStorable> cards)
 		{
 			if (HasAllCards || cards.Count == 0) return;
-			card = cards.Pop();
+			Load(cards.Pop());
+		}
+		public void Load(InventoryStorable card)
+		{
+			if (HasAllCards) throw new InvalidOperationException($"Slot {this} is already full but tried to load {card}");
+			this.card = card;
 			container = card.GetComponent<CaptureContainer>();
 			MaxPossibleSize = card.DequeElement.Size;
 		}
