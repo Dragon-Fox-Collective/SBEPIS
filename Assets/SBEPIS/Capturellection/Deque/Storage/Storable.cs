@@ -36,11 +36,12 @@ namespace SBEPIS.Capturellection.Storage
 		public UniTask<StorableStoreResult> StoreItem(Capturellectable item);
 		public UniTask<Capturellectable> FetchItem(InventoryStorable card);
 		public UniTask FlushCards(List<InventoryStorable> cards);
-		public UniTask<InventoryStorable> FetchCard(InventoryStorable card);
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action);
 		
-		public IEnumerable<InventoryStorable> Load(IEnumerable<InventoryStorable> cards);
+		public void Load(List<InventoryStorable> cards);
 		public IEnumerable<InventoryStorable> Save();
+		
+		public Storable GetNewStorableLikeThis();
 		
 		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card) => GetCardTextures(card, Enumerable.Empty<IEnumerable<Texture2D>>(), 0);
 		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent);

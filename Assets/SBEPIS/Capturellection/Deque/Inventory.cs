@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using KBCore.Refs;
 using SBEPIS.Capturellection.Storage;
@@ -109,33 +110,10 @@ namespace SBEPIS.Capturellection
 			return item;
 		}
 		public UniTask FlushCard(InventoryStorable card) => FlushCard(new List<InventoryStorable>{ card });
-		public UniTask FlushCard(List<InventoryStorable> cards)
-		{
-			foreach (InventoryStorable card in cards)
-				SetupCard(card);
-			return storable.FlushCards(cards);
-		}
-		public async UniTask<InventoryStorable> FetchCard(InventoryStorable card)
-		{
-			InventoryStorable fetchedCard = await storable.FetchCard(card);
-			if (fetchedCard) TearDownCard(card);
-			return fetchedCard;
-		}
+		public UniTask FlushCard(IEnumerable<InventoryStorable> cards) => storable.FlushCards(cards.Process(SetupCard).ToList());
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetRuleset, DequeInteraction<TState> action) => storable.Interact(card, targetRuleset, action);
-		private void Load(List<InventoryStorable> cards)
-		{
-			foreach (InventoryStorable card in cards)
-				SetupCard(card);
-			storable.Load(cards);
-		}
-		private List<InventoryStorable> Save()
-		{
-			List<InventoryStorable> cards = new();
-			storable.Save(cards);
-			foreach (InventoryStorable card in cards)
-				TearDownCard(card);
-			return cards;
-		}
+		private void Load(IEnumerable<InventoryStorable> cards) => storable.Load(cards.Process(SetupCard).ToList());
+		private List<InventoryStorable> Save() => storable.Save().Process(TearDownCard).ToList();
 		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card) => storable.GetCardTextures(card);
 		public IEnumerator<InventoryStorable> GetEnumerator() => storable.GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

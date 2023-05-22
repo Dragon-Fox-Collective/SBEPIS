@@ -22,13 +22,11 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public UniTask Interact<TState>(object state, InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action);
 		
-		public IEnumerable<InventoryStorable> LoadCardPreHook(object state, InventoryStorable card);
+		public IEnumerable<InventoryStorable> LoadCardHook(object state, InventoryStorable card);
+		public IEnumerable<InventoryStorable> SaveCardHook(object state, InventoryStorable card);
 		
-		public IEnumerable<InventoryStorable> SaveCardPostHook(object state, InventoryStorable card);
-		
-		public IEnumerable<Storable> LoadStorablePreHook(object state, Storable storable);
-		
-		public IEnumerable<Storable> SaveStorablePostHook(object state, Storable storable);
+		public IEnumerable<Storable> LoadStorableHook(object state, Storable storable);
+		public IEnumerable<Storable> SaveStorableHook(object state, Storable storable);
 		
 		public object GetNewState();
 		
@@ -58,15 +56,13 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public UniTask Interact<TIState>(TState state, InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TIState> action);
 		
-		public InventoryStorable LoadCardPostHook(TState state, InventoryStorable card);
+		public IEnumerable<InventoryStorable> LoadCardHook(TState state, InventoryStorable card);
 		
-		public InventoryStorable SaveCardPostHook(TState state, InventoryStorable card);
+		public IEnumerable<InventoryStorable> SaveCardHook(TState state, InventoryStorable card);
 		
-		public IEnumerable<Storable> LoadStorablePreHook(TState state, Storable storable);
-		public Storable LoadStorablePostHook(TState state, Storable storable);
+		public IEnumerable<Storable> LoadStorableHook(TState state, Storable storable);
 		
-		public IEnumerable<Storable> SaveStorablePreHook(TState state, Storable storable);
-		public Storable SaveStorablePostHook(TState state, Storable storable);
+		public IEnumerable<Storable> SaveStorableHook(TState state, Storable storable);
 		
 		public new TState GetNewState();
 		
@@ -88,15 +84,13 @@ namespace SBEPIS.Capturellection.Storage
 		
 		UniTask DequeRuleset.Interact<TIState>(object state, InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TIState> action) => Interact((TState)state, card, targetDeque, action);
 		
-		InventoryStorable DequeRuleset.LoadCardPostHook(object state, InventoryStorable card) => LoadCardPostHook((TState)state, card);
+		IEnumerable<InventoryStorable> DequeRuleset.LoadCardHook(object state, InventoryStorable card) => LoadCardHook((TState)state, card);
 		
-		InventoryStorable DequeRuleset.SaveCardPostHook(object state, InventoryStorable card) => SaveCardPostHook((TState)state, card);
+		IEnumerable<InventoryStorable> DequeRuleset.SaveCardHook(object state, InventoryStorable card) => SaveCardHook((TState)state, card);
 		
-		IEnumerable<Storable> DequeRuleset.LoadStorablePreHook(object state, Storable storable) => LoadStorablePreHook((TState)state, storable);
-		Storable DequeRuleset.LoadStorablePostHook(object state, Storable storable) => SaveStorablePostHook((TState)state, storable);
+		IEnumerable<Storable> DequeRuleset.LoadStorableHook(object state, Storable storable) => LoadStorableHook((TState)state, storable);
 		
-		IEnumerable<Storable> DequeRuleset.SaveStorablePreHook(object state, Storable storable) => SaveStorablePreHook((TState)state, storable);
-		Storable DequeRuleset.SaveStorablePostHook(object state, Storable storable) => SaveStorablePostHook((TState)state, storable);
+		IEnumerable<Storable> DequeRuleset.SaveStorableHook(object state, Storable storable) => SaveStorableHook((TState)state, storable);
 		
 		object DequeRuleset.GetNewState() => GetNewState();
 	}

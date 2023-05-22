@@ -57,20 +57,18 @@ namespace SBEPIS.Capturellection.Deques
 			return null;
 		}
 		
-		public override IEnumerable<Storable> LoadCardPreHook(MemoryState state, Storable storable)
+		public override IEnumerable<Storable> LoadStorableHook(MemoryState state, Storable storable)
 		{
-			Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies = new();
-			(Storable, Storable) newStorables = (InstantiateStorable(state, storable, proxies), InstantiateStorable(state, storable, proxies));
+			(Storable, Storable) newStorables = (InstantiateStorable(storable), InstantiateStorable(storable));
 			state.pairs.Add(newStorables.Item1, newStorables.Item2);
 			state.pairs.Add(newStorables.Item2, newStorables.Item1);
 			return ExtensionMethods.EnumerableOf(newStorables.Item1, newStorables.Item2);
 		}
-		private Storable InstantiateStorable(MemoryState state, Storable storable, Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies)
+		private Storable InstantiateStorable(Storable storable)
 		{
-			Storable newStorable = StorableGroupDefinition.GetNewStorable(storable is StorableGroup storableGroup ? storableGroup.Definition : null);
+			Storable newStorable = storable.GetNewStorableLikeThis();
 			newStorable.Parent = storable.Parent;
-			
-			newStorable.Load(storable.Select(card => InstantiateCard(state, card, proxies.GetEnsured(card))).ToList());
+			newStorable.Load(storable.ToList());
 			return newStorable;
 		}
 		private InventoryStorable InstantiateCard(MemoryState state, InventoryStorable card, List<ProxyCaptureContainer> proxies)
@@ -92,18 +90,12 @@ namespace SBEPIS.Capturellection.Deques
 			return newCard.Card;
 		}
 		
-		public override void LoadCardPostHook(MemoryState state, Storable storable)
-		{
-			state.Inventory.Shuffle();
-		}
-		
-		public override InventoryStorable SaveCardPostHook(MemoryState state, InventoryStorable card)
+		public override IEnumerable<Storable> SaveStorableHook(MemoryState state, Storable storable)
 		{
 			state.Inventory.Shuffle();
 			
 			state.flipTrackers.Remove(card);
 			
-			Storable storable = state.Inventory.Find(storable => storable.Contains(card));
 			state.pairs.Remove(storable);
 			
 			ProxyCaptureContainer proxy = card.GetComponent<ProxyCaptureContainer>();

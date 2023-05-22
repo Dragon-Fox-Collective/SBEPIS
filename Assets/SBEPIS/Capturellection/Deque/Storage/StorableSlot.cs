@@ -30,6 +30,8 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public int InventoryCount => card ? 1 : 0;
 		
+		public int NumEmptySlots => card ? 0 : 1;
+		
 		public bool HasNoCards => !HasAllCards;
 		public bool HasAllCards => card;
 		
@@ -71,14 +73,15 @@ namespace SBEPIS.Capturellection.Storage
 			return UniTask.CompletedTask;
 		}
 		
-		public UniTask<InventoryStorable> FetchCard(InventoryStorable card)
+		public UniTask FetchCard(InventoryStorable card)
 		{
-			if (!Contains(card)) return UniTask.FromResult(card);
+			if (!Contains(card)) return UniTask.CompletedTask;
 			
 			this.card = null;
 			container = null;
 			MaxPossibleSize = Vector3.zero;
-			return UniTask.FromResult(card);
+			
+			return UniTask.CompletedTask;
 		}
 		
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action) =>
@@ -96,12 +99,14 @@ namespace SBEPIS.Capturellection.Storage
 			container = card.GetComponent<CaptureContainer>();
 			MaxPossibleSize = card.DequeElement.Size;
 		}
-		public void Save(List<InventoryStorable> cards)
+		public IEnumerable<InventoryStorable> Save()
 		{
-			if (HasNoCards) return;
-			cards.Add(card);
+			if (HasNoCards) yield break;
+			IEnumerable<InventoryStorable> saved = ExtensionMethods.EnumerableOf(card);
 			Destroy(gameObject);
 		}
+		
+		public Storable GetNewStorableLikeThis() => StorableGroupDefinition.GetNewStorable(null);
 		
 		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent) => textures.ElementAtOrLast(indexOfThisInParent);
 		

@@ -59,10 +59,11 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public UniTask Interact<TIState>(TState state, InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TIState> action) => ReferenceEquals(targetDeque, this) ? action((TIState)(object)state, card) : StorableWithCard(state, card).Interact(card, targetDeque, action);
 		
-		public virtual IEnumerable<Storable> LoadCardPreHook(TState state, Storable storable) => ExtensionMethods.EnumerableOf(storable);
-		public virtual void LoadCardPostHook(TState state, Storable storable) { }
+		public virtual IEnumerable<InventoryStorable> LoadCardHook(TState state, InventoryStorable card) => ExtensionMethods.EnumerableOf(card);
+		public virtual IEnumerable<InventoryStorable> SaveCardHook(TState state, InventoryStorable card) => ExtensionMethods.EnumerableOf(card);
 		
-		public virtual InventoryStorable SaveCardPostHook(TState state, InventoryStorable card) => card;
+		public virtual IEnumerable<Storable> LoadStorableHook(TState state, Storable storable) => ExtensionMethods.EnumerableOf(storable);
+		public virtual IEnumerable<Storable> SaveStorableHook(TState state, Storable storable) => ExtensionMethods.EnumerableOf(storable);
 		
 		public TState GetNewState() => new();
 		

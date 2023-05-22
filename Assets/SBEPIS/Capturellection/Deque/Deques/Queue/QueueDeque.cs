@@ -25,13 +25,5 @@ namespace SBEPIS.Capturellection.Deques
 			state.Inventory.Insert(0, storable);
 			return storable.FetchItem(card);
 		}
-		
-		public override UniTask FlushCard(LinearState state, Storable storable)
-		{
-			int index = state.Inventory.FindIndex(invStorable => !invStorable.HasAllCardsEmpty) - 1;
-			if (index < 0) index = state.Inventory.Count - 1;
-			state.Inventory.Insert(index, storable);
-			return UniTask.CompletedTask;
-		}
 	}
 }

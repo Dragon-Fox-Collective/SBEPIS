@@ -29,9 +29,9 @@ namespace SBEPIS.Capturellection.Storage
 		public UniTask<InventoryStorable>		FetchCard			(LayerState layerState, InventoryStorable card)								=> DoOn(DequeForFetching(card), layerState,			(ruleset, state)							=> ruleset.FetchCard		(state, card));
 		public UniTask<InventoryStorable>		FetchCardPostHook		(LayerState layerState, InventoryStorable oldCard)							=> Aggregate(layerState, oldCard,							(result, ruleset, state)	=> ruleset.FetchCardPostHook	(state, result));
 		public UniTask							Interact<TState>	(LayerState layerState, InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action) => Zip(layerState).ForEach(	(ruleset, state)								=> ruleset.Interact			(state, card, targetDeque, action));
-		public IEnumerable<Storable>			LoadCardPreHook		(LayerState layerState, Storable storable)									=> AggregateExponential(layerState, storable,				(result, ruleset, state)			=> ruleset.LoadCardPreHook	(state, result));
+		public IEnumerable<Storable>			LoadCardPreHook		(LayerState layerState, Storable storable)									=> AggregateExponential(layerState, storable,				(result, ruleset, state)			=> ruleset.LoadCardHook	(state, result));
 		public void								LoadCardPostHook	(LayerState layerState, Storable storable)									=> Zip(layerState).ForEach(									(ruleset, state)								=> ruleset.LoadCardPostHook	(state, storable));
-		public InventoryStorable				SaveCardPostHook		(LayerState layerState, InventoryStorable oldCard)							=> Aggregate(layerState, oldCard,							(result, ruleset, state)	=> ruleset.SaveCardPostHook		(state, result));
+		public InventoryStorable				SaveCardPostHook		(LayerState layerState, InventoryStorable oldCard)							=> Aggregate(layerState, oldCard,							(result, ruleset, state)	=> ruleset.SaveCardHook		(state, result));
 		
 		private IEnumerable<DequeRuleset> Rulesets => rulesets.Select(ruleset => ruleset.Value);
 		private static T DoOn<T>(Func<LayerState, (DequeRuleset, object)> getter, LayerState state, Func<DequeRuleset, object, T> func) => func.InvokeWith(getter(state));
