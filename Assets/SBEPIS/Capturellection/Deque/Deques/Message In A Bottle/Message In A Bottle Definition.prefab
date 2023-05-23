@@ -44,18 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946e69c6c39a7fa43b46dbe0c0bc2021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dequeNameSingluar: 
-  dequeNamePlural: 
-  firstPlaceDequeName: 
-  middlePlaceDequeName: 
-  lastPlaceDequeNameSingular: 
-  lastPlaceDequeNamePlural: 
-  dequeration: {fileID: 0}
-  settingsPagePrefab: {fileID: 0}
-  firstPlaceSettingsPagePrefab: {fileID: 0}
+  dequeNameSingluar: Message In A Bottle
+  dequeNamePlural: Messages In Bottles
+  firstPlaceDequeName: Message
+  middlePlaceDequeName: bottle
+  lastPlaceDequeNameSingular: bottle
+  lastPlaceDequeNamePlural: bottles
+  dequeration: {fileID: 11400000, guid: 89aec51b151726c4da952f988ed07b11, type: 2}
+  settingsPagePrefab: {fileID: 2428469602301905387, guid: 9171874b2702f6c47bfd4c1a78c7fe75, type: 3}
+  firstPlaceSettingsPagePrefab: {fileID: 2428469602301905387, guid: 9171874b2702f6c47bfd4c1a78c7fe75, type: 3}
   middlePlaceSettingsPagePrefab: {fileID: 0}
   lastPlaceSettingsPagePrefab: {fileID: 0}
   settings:
     layout:
       offsetFromEnd: 0
       offset: 0.1
+  bottlePrefab: {fileID: 3154465535471729676, guid: 32e14be7cd243c1468da2a4b2cce32cd, type: 3}
