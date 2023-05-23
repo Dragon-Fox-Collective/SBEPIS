@@ -51,37 +51,22 @@ namespace SBEPIS.Capturellection.Storage
 		public bool CanFetch(InventoryStorable card) => Contains(card);
 		public bool Contains(InventoryStorable card) => this.card == card;
 		
-		public UniTask<StorableStoreResult> StoreItem(Capturellectable item)
+		public UniTask<StoreResult> StoreItem(Capturellectable item)
 		{
 			if (!container) throw new NullReferenceException($"Tried to store in a card {card} that has no container");
 			
 			Capturellectable ejectedItem = container.Fetch();
 			container.Capture(item);
-			return UniTask.FromResult(new StorableStoreResult(card, container, ejectedItem));
+			StoreResult res = new(card, container, ejectedItem);
+			return UniTask.FromResult(res);
 		}
 		
-		public UniTask<Capturellectable> FetchItem(InventoryStorable card)
+		public UniTask<FetchResult> FetchItem(InventoryStorable card)
 		{
 			if (!container) throw new NullReferenceException($"Tried to fetch from a card {this.card} that has no container");
-			
-			return UniTask.FromResult(Contains(card) ? container.Fetch() : null);
-		}
-		
-		public UniTask FlushCards(List<InventoryStorable> cards)
-		{
-			Load(cards);
-			return UniTask.CompletedTask;
-		}
-		
-		public UniTask FetchCard(InventoryStorable card)
-		{
-			if (!Contains(card)) return UniTask.CompletedTask;
-			
-			this.card = null;
-			container = null;
-			MaxPossibleSize = Vector3.zero;
-			
-			return UniTask.CompletedTask;
+
+			FetchResult res = new(Contains(card) ? container.Fetch() : null);
+			return UniTask.FromResult(res);
 		}
 		
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action) =>
@@ -102,7 +87,7 @@ namespace SBEPIS.Capturellection.Storage
 		public IEnumerable<InventoryStorable> Save()
 		{
 			if (HasNoCards) yield break;
-			IEnumerable<InventoryStorable> saved = ExtensionMethods.EnumerableOf(card);
+			yield return card;
 			Destroy(gameObject);
 		}
 		

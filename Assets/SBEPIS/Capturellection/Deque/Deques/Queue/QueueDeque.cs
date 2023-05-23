@@ -7,18 +7,18 @@ namespace SBEPIS.Capturellection.Deques
 	{
 		public override bool CanFetch(LinearState state, InventoryStorable card) => state.Inventory[^1].CanFetch(card);
 		
-		public override async UniTask<DequeStoreResult> StoreItem(LinearState state, Capturellectable item)
+		public override async UniTask<StoreResult> StoreItem(LinearState state, Capturellectable item)
 		{
 			int index = state.Inventory.FindIndex(invStorable => !invStorable.HasAllCardsEmpty) - 1;
 			if (index < 0) index = state.Inventory.Count - 1;
 			Storable storable = state.Inventory[index];
 			state.Inventory.Remove(storable);
-			StorableStoreResult res = await storable.StoreItem(item);
+			StoreResult res = await storable.StoreItem(item);
 			state.Inventory.Insert(0, storable);
-			return res.ToDequeResult(index, storable);
+			return res;
 		}
 		
-		public override UniTask<Capturellectable> FetchItem(LinearState state, InventoryStorable card)
+		public override UniTask<FetchResult> FetchItem(LinearState state, InventoryStorable card)
 		{
 			Storable storable = state.Inventory[^1];
 			state.Inventory.Remove(storable);

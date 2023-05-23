@@ -10,7 +10,7 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public override bool CanFetch(LinearState state, InventoryStorable card) => State && state.Inventory.Any(storable => storable.CanFetch(card));
 		
-		public override async UniTask<DequeStoreResult> StoreItem(LinearState state, Capturellectable item)
+		public override async UniTask<StoreResult> StoreItem(LinearState state, Capturellectable item)
 		{
 			await UniTask.WaitUntil(() => State);
 			return await base.StoreItem(state, item);

@@ -10,22 +10,21 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public override bool CanFetch(MessageInABottleState state, InventoryStorable card) => false;
 		
-		public override IEnumerable<Storable> LoadCardPreHook(MessageInABottleState state, Storable storable)
+		public override IEnumerable<Storable> LoadStorableHook(MessageInABottleState state, Storable storable)
 		{
 			InventoryStorable bottle = Instantiate(bottlePrefab).GetComponentInChildren<InventoryStorable>();
-			state.OriginalStorables.Add(bottle, storable);
-			
 			GameObject slotObject = new();
 			StorableSlot slot = slotObject.AddComponent<StorableSlot>();
 			slot.name = "Bottle Slot";
 			slot.Load(bottle);
+			state.originalStorables.Add(slot, storable);
 			
 			yield return slot;
 		}
 		
-		public override InventoryStorable SaveCardPostHook(MessageInABottleState state, InventoryStorable card)
+		public override IEnumerable<Storable> SaveStorableHook(MessageInABottleState state, Storable storable)
 		{
-			return state.OriginalStorables[card];
+			yield return state.originalStorables[storable];
 		}
 	}
 	
@@ -33,6 +32,6 @@ namespace SBEPIS.Capturellection.Deques
 	{
 		public List<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
-		public Dictionary<InventoryStorable, Storable> OriginalStorables { get; } = new();
+		public readonly Dictionary<Storable, Storable> originalStorables = new();
 	}
 }

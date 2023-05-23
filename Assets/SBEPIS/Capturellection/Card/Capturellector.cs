@@ -36,7 +36,7 @@ namespace SBEPIS.Capturellection
 			if (item.IsBeingCaptured)
 				return null;
 			
-			StorableStoreResult result = await inventory.StoreItem(item);
+			StoreResult result = await inventory.StoreItem(item);
 			MoveEjectedItem(result.card, result.ejectedItem);
 			TryGrab(result.card.transform).Forget();
 			return result.container;
@@ -71,9 +71,9 @@ namespace SBEPIS.Capturellection
 			if (!inventory.CanFetch(card) || card.IsBeingFetched)
 				return null;
 			
-			Capturellectable item = await inventory.FetchItem(card);
-			if (item) TryGrab(item.transform).Forget();
-			return item;
+			FetchResult res = await inventory.FetchItem(card);
+			if (res.fetchedItem) TryGrab(res.fetchedItem.transform).Forget();
+			return res.fetchedItem;
 		}
 		
 		private async UniTask TryGrab(Transform item)
