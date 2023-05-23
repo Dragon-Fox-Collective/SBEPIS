@@ -95,25 +95,23 @@ namespace SBEPIS.Capturellection
 		public void Layout(Vector3 direction) => storable.Layout(direction);
 		public void LayoutTarget(InventoryStorable card, CardTarget target) => storable.LayoutTarget(card, target);
 		public bool CanFetch(InventoryStorable card) => storable.CanFetch(card);
-		public async UniTask<StorableStoreResult> StoreItem(Capturellectable item)
+		public async UniTask<StoreResult> StoreItem(Capturellectable item)
 		{
 			item.IsBeingCaptured = true;
-			StorableStoreResult result = await storable.StoreItem(item);
+			StoreResult result = await storable.StoreItem(item);
 			item.IsBeingCaptured = false;
 			return result;
 		}
-		public async UniTask<Capturellectable> FetchItem(InventoryStorable card)
+		public async UniTask<FetchResult> FetchItem(InventoryStorable card)
 		{
 			card.IsBeingFetched = true;
-			Capturellectable item = await storable.FetchItem(card);
+			FetchResult result = await storable.FetchItem(card);
 			card.IsBeingFetched = false;
-			return item;
+			return result;
 		}
-		public UniTask FlushCard(InventoryStorable card) => FlushCard(new List<InventoryStorable>{ card });
-		public UniTask FlushCard(IEnumerable<InventoryStorable> cards) => storable.FlushCards(cards.Process(SetupCard).ToList());
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetRuleset, DequeInteraction<TState> action) => storable.Interact(card, targetRuleset, action);
-		private void Load(IEnumerable<InventoryStorable> cards) => storable.Load(cards.Process(SetupCard).ToList());
-		private List<InventoryStorable> Save() => storable.Save().Process(TearDownCard).ToList();
+		public void Load(IEnumerable<InventoryStorable> cards) => storable.Load(cards.Process(SetupCard).ToList());
+		public List<InventoryStorable> Save() => storable.Save().Process(TearDownCard).ToList();
 		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card) => storable.GetCardTextures(card);
 		public IEnumerator<InventoryStorable> GetEnumerator() => storable.GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

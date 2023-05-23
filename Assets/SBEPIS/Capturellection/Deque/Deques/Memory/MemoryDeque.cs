@@ -20,13 +20,13 @@ namespace SBEPIS.Capturellection.Deques
 			return storable.CanFetch(card) && (storable.HasAllCardsEmpty || (state.FlippedStorables.Contains(storable) && state.FlippedStorables.Contains(state.pairs[storable])));
 		}
 		
-		public override UniTask<DequeStoreResult> StoreItemHook(MemoryState state, Capturellectable item, DequeStoreResult oldResult)
+		public override UniTask<StoreResult> StoreItemHook(MemoryState state, Capturellectable item, StoreResult oldResult)
 		{
 			state.Inventory.Shuffle();
 			return base.StoreItemHook(state, item, oldResult);
 		}
 		
-		public override async UniTask<Capturellectable> FetchItem(MemoryState state, InventoryStorable card)
+		public override async UniTask<FetchResult> FetchItem(MemoryState state, InventoryStorable card)
 		{
 			Storable storable = Flip(state, card);
 			if (storable != null)
@@ -35,7 +35,7 @@ namespace SBEPIS.Capturellection.Deques
 				return await storable.FetchItem(card);
 			}
 			
-			return null;
+			return new FetchResult(null);
 		}
 		
 		public Storable Flip(MemoryState state, InventoryStorable card)
@@ -59,16 +59,18 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public override IEnumerable<Storable> LoadStorableHook(MemoryState state, Storable storable)
 		{
-			(Storable, Storable) newStorables = (InstantiateStorable(storable), InstantiateStorable(storable));
+			Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies = new();
+			(Storable, Storable) newStorables = (InstantiateStorable(state, storable, proxies), InstantiateStorable(state, storable, proxies));
 			state.pairs.Add(newStorables.Item1, newStorables.Item2);
 			state.pairs.Add(newStorables.Item2, newStorables.Item1);
 			return ExtensionMethods.EnumerableOf(newStorables.Item1, newStorables.Item2);
 		}
-		private Storable InstantiateStorable(Storable storable)
+		private Storable InstantiateStorable(MemoryState state, Storable storable, Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies)
 		{
 			Storable newStorable = storable.GetNewStorableLikeThis();
 			newStorable.Parent = storable.Parent;
-			newStorable.Load(storable.ToList());
+			newStorable.Load(storable.Select(card => InstantiateCard(state, card, proxies.GetEnsured(card))).ToList());
+			state.originalStorables.Add(newStorable, storable);
 			return newStorable;
 		}
 		private InventoryStorable InstantiateCard(MemoryState state, InventoryStorable card, List<ProxyCaptureContainer> proxies)
@@ -92,14 +94,10 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public override IEnumerable<Storable> SaveStorableHook(MemoryState state, Storable storable)
 		{
-			state.Inventory.Shuffle();
-			
-			state.flipTrackers.Remove(card);
-			
+			storable.ForEach(card => state.flipTrackers.Remove(card));
 			state.pairs.Remove(storable);
-			
-			ProxyCaptureContainer proxy = card.GetComponent<ProxyCaptureContainer>();
-			return proxy.otherProxies[0] == proxy ? proxy.realContainer.GetComponent<InventoryStorable>() : null;
+			state.originalStorables.Remove(storable, out Storable originalStorable);
+			yield return originalStorable;
 		}
 	}
 	
@@ -109,8 +107,9 @@ namespace SBEPIS.Capturellection.Deques
 		public List<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
 		public List<Storable> FlippedStorables { get; } = new();
-		public Dictionary<Storable, Storable> pairs = new();
-		public Dictionary<InventoryStorable, FlipTracker> flipTrackers = new();
+		public readonly Dictionary<Storable, Storable> pairs = new();
+		public readonly Dictionary<InventoryStorable, FlipTracker> flipTrackers = new();
+		public readonly Dictionary<Storable, Storable> originalStorables = new();
 		
 		public void AddFlippedStorable(Storable storable)
 		{

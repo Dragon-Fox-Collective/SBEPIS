@@ -18,7 +18,7 @@ namespace SBEPIS.Capturellection.State
 				throw new NullReferenceException($"{card.value} doesn't have a LayoutAdder but reached its state");
 			
 			DiajectorCaptureLayout layout = layoutAdder.value.PopAllLayouts();
-			layout.inventory.FlushCard(card.value).Forget();
+			layout.inventory.Load(ExtensionMethods.EnumerableOf(card.value));
 			CardTarget target = layout.AddPermanentTargetAndCard(card.value);
 			card.value.DequeElement.Animator.TeleportTo(target.LerpTarget);
 		}

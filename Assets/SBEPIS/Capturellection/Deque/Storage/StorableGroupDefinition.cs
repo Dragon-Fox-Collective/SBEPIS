@@ -10,6 +10,7 @@ namespace SBEPIS.Capturellection.Storage
 		public DequeRuleset Ruleset => ruleset.Value;
 		[SerializeField] private int maxStorables;
 		public int MaxStorables => maxStorables;
+		public int MaxCardsPerStorable => subdefinition ? subdefinition.MaxStorables * subdefinition.MaxCardsPerStorable : 1;
 		[SerializeField, Anywhere(Flag.Optional)] private StorableGroupDefinition subdefinition;
 		public StorableGroupDefinition Subdefinition => subdefinition;
 		

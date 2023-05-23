@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -8,7 +9,6 @@ namespace SBEPIS.Capturellection.Storage
 	public class StorableGroup : MonoBehaviour, Storable
 	{
 		[SerializeField] private StorableGroupDefinition definition;
-		public StorableGroupDefinition Definition => definition;
 		
 		private object state;
 		private List<Storable> Inventory => ((InventoryState)state).Inventory;
@@ -39,7 +39,7 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public int InventoryCount => Inventory.Count;
 		
-		public int NumEmptySlots => Inventory.Select(storable => storable.NumEmptySlots).Sum();
+		public int NumEmptySlots => Inventory.Select(storable => storable.NumEmptySlots).Sum() + (definition.MaxStorables - Inventory.Count) * definition.MaxCardsPerStorable;
 		
 		public bool HasNoCards => Inventory.Count == 0;
 		public bool HasAllCards => NumEmptySlots == 0;
@@ -60,52 +60,18 @@ namespace SBEPIS.Capturellection.Storage
 		public bool CanFetch(InventoryStorable card) => definition.Ruleset.CanFetch(state, card);
 		public bool Contains(InventoryStorable card) => Inventory.Any(storable => storable.Contains(card));
 		
-		public async UniTask<StorableStoreResult> StoreItem(Capturellectable item)
+		public async UniTask<StoreResult> StoreItem(Capturellectable item)
 		{
-			DequeStoreResult res = await definition.Ruleset.StoreItem(state, item);
+			StoreResult res = await definition.Ruleset.StoreItem(state, item);
 			res = await definition.Ruleset.StoreItemHook(state, item, res);
-			
-			if (res.ejectedItem && res.ejectedItem.TryGetComponent(out InventoryStorable flushedCard))
-			{
-				List<InventoryStorable> cards = new(){ flushedCard };
-				await FlushCards(cards, res.flushIndex);
-				if (cards.Count == 0)
-					res.ejectedItem = null;
-			}
-			
-			return res.ToStorableResult();
-		}
-
-		public async UniTask<Capturellectable> FetchItem(InventoryStorable card)
-		{
-			Capturellectable item = await definition.Ruleset.FetchItem(state, card);
-			item = await definition.Ruleset.FetchItemHook(state, card, item);
-			return item;
+			return res;
 		}
 		
-		public async UniTask FlushCards(List<InventoryStorable> cards) => await FlushCards(cards, 0);
-		private async UniTask FlushCards(List<InventoryStorable> cards, int originalIndex)
+		public async UniTask<FetchResult> FetchItem(InventoryStorable card)
 		{
-			if (!cards.Any()) return;
-			await FlushExistingCards(cards, originalIndex);
-			await FlushNewCards(cards);
-		}
-		private UniTask FlushExistingCards(List<InventoryStorable> cards, int index) => Inventory.Pivot(index).ForEach(async storable => await storable.FlushCards(cards));
-		private async UniTask FlushNewCards(List<InventoryStorable> cards)
-		{
-			while (cards.Any() && Inventory.Count < definition.MaxStorables)
-			{
-				int numCardsToTake = Mathf.Min(cards.Count, NumEmptySlots);
-				IEnumerable<InventoryStorable> newCards = cards.Take(numCardsToTake).SelectMany(card => definition.Ruleset.LoadCardHook(state, card));
-				cards.RemoveRange(0, numCardsToTake);
-				
-				Storable storable = StorableGroupDefinition.GetNewStorable(definition.Subdefinition);
-				storable.Parent = transform;
-				
-				await storable.FlushCards(newCards.ToList());
-				
-				Inventory.AddRange(definition.Ruleset.LoadStorableHook(state, storable));
-			}
+			FetchResult res = await definition.Ruleset.FetchItem(state, card);
+			res = await definition.Ruleset.FetchItemHook(state, card, res);
+			return res;
 		}
 		
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action) => definition.Ruleset.Interact(state, card, targetDeque, action);
@@ -113,23 +79,21 @@ namespace SBEPIS.Capturellection.Storage
 		public void Load(List<InventoryStorable> cards)
 		{
 			if (!cards.Any()) return;
-			LoadExistingStorables(cards);
-			LoadNewStorables(cards);
+			int numCardsToTake = Mathf.Min(cards.Count, NumEmptySlots);
+			List<InventoryStorable> newCards = cards.Take(numCardsToTake).SelectMany(card => definition.Ruleset.LoadCardHook(state, card)).ToList();
+			cards.RemoveRange(0, numCardsToTake);
+			
+			LoadExistingStorables(newCards);
+			LoadNewStorables(newCards);
 		}
 		private void LoadExistingStorables(List<InventoryStorable> cards) => Inventory.ForEach(storable => storable.Load(cards));
 		private void LoadNewStorables(List<InventoryStorable> cards)
 		{
-			while (cards.Any() && Inventory.Count < definition.MaxStorables)
+			while (cards.Any())
 			{
-				int numCardsToTake = Mathf.Min(cards.Count, NumEmptySlots);
-				IEnumerable<InventoryStorable> newCards = cards.Take(numCardsToTake).SelectMany(card => definition.Ruleset.LoadCardHook(state, card));
-				cards.RemoveRange(0, numCardsToTake);
-				
 				Storable storable = StorableGroupDefinition.GetNewStorable(definition.Subdefinition);
 				storable.Parent = transform;
-				
-				storable.Load(newCards.ToList());
-				
+				storable.Load(cards);
 				Inventory.AddRange(definition.Ruleset.LoadStorableHook(state, storable));
 			}
 		}
