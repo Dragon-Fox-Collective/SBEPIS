@@ -19,7 +19,6 @@ namespace SBEPIS.Capturellection
 		
 		[Tooltip("Purely organizational for the hierarchy")]
 		[SerializeField, Anywhere] private Transform cardParent;
-		public Transform CardParent => cardParent;
 		
 		public UnityEvent<Inventory> onLoadIntoDeque = new();
 		public UnityEvent<Inventory, List<InventoryStorable>> onSaveFromDeque = new();
@@ -50,10 +49,10 @@ namespace SBEPIS.Capturellection
 		private void LoadInventoryIntoDeque(StorableGroupDefinition definition, Transform ejectTransform)
 		{
 			storable = StorableGroupDefinition.GetNewStorable(definition);
-			Load(savedInventory);
+			Load(ref savedInventory);
 			foreach (InventoryStorable card in savedInventory)
 			{
-				print($"Ejecting leftover card {card}");
+				Debug.Log($"Ejecting leftover card {card}", this);
 				card.gameObject.SetActive(true);
 				card.transform.SetPositionAndRotation(ejectTransform.position, ejectTransform.rotation);
 			}
@@ -110,7 +109,18 @@ namespace SBEPIS.Capturellection
 			return result;
 		}
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetRuleset, DequeInteraction<TState> action) => storable.Interact(card, targetRuleset, action);
-		public void Load(IEnumerable<InventoryStorable> cards) => storable.Load(cards.Process(SetupCard).ToList());
+		public void Load(InventoryStorable card)
+		{
+			List<InventoryStorable> cards = new(){ card };
+			Load(ref cards);
+			if (cards.Count > 0) Debug.Log($"Extra card {card}");
+		}
+		public void Load(ref List<InventoryStorable> cards)
+		{
+			cards = cards.Process(SetupCard).ToList();
+			storable.Load(cards);
+			cards = cards.Process(TearDownCard).ToList();
+		}
 		public List<InventoryStorable> Save() => storable.Save().Process(TearDownCard).ToList();
 		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card) => storable.GetCardTextures(card);
 		public IEnumerator<InventoryStorable> GetEnumerator() => storable.GetEnumerator();

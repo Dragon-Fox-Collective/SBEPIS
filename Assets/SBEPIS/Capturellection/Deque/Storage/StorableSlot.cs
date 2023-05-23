@@ -7,6 +7,7 @@ namespace SBEPIS.Capturellection.Storage
 {
 	public class StorableSlot : MonoBehaviour, Storable
 	{
+		private DequeElement dequeElement;
 		private InventoryStorable card;
 		private CaptureContainer container;
 		
