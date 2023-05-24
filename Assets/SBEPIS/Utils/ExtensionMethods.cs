@@ -232,6 +232,8 @@ public static class ExtensionMethods
 			}
 	}
 	
+	public static T RandomElement<T>(this List<T> source) => source[Random.Range(0, source.Count)];
+	
 	// Note that lhs * rhs means rotating by lhs and then by rhs
 	public static Quaternion TransformRotation(this Transform from, Quaternion delta) => from.rotation * delta; // from * delta = to
 	public static Quaternion InverseTransformRotation(this Transform from, Quaternion to) => from.rotation.Inverse() * to; // delta = from-1 * to
