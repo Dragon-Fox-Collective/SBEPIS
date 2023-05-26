@@ -25,8 +25,10 @@ namespace SBEPIS.Capturellection
 			if (!isActiveAndEnabled || !context.performed || !grabber.HeldGrabbable)
 				return;
 			
-			if (grabber.HeldGrabbable.TryGetComponent(out CaptureContainer container))
-				RetrieveAndGrabItem(container).Forget();
+			if (grabber.HeldGrabbable.TryGetComponent(out InventoryStorable card))
+				RetrieveFromInventory(card).Forget();
+			else if (grabber.HeldGrabbable.TryGetComponent(out CaptureContainer container))
+				RetrieveFromContainer(container);
 			else if (grabber.HeldGrabbable.TryGetComponent(out Capturellectable item))
 				CaptureAndGrabCard(item).Forget();
 		}
@@ -56,9 +58,6 @@ namespace SBEPIS.Capturellection
 				move(card.DequeElement.Deque.transform.position, card.DequeElement.Deque.transform.rotation);
 		}
 		
-		public UniTask<Capturellectable> RetrieveAndGrabItem(CaptureContainer container) =>
-			container.TryGetComponent(out InventoryStorable card) ? RetrieveFromInventory(card) : UniTask.FromResult(RetrieveFromContainer(container));
-		
 		private Capturellectable RetrieveFromContainer(CaptureContainer container)
 		{
 			Capturellectable item = container.Fetch();
@@ -66,7 +65,7 @@ namespace SBEPIS.Capturellection
 			return item;
 		}
 		
-		private async UniTask<Capturellectable> RetrieveFromInventory(InventoryStorable card)
+		public async UniTask<Capturellectable> RetrieveFromInventory(InventoryStorable card)
 		{
 			if (!inventory.CanFetch(card) || card.IsBeingFetched)
 				return null;

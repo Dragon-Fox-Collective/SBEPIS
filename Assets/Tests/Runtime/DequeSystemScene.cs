@@ -13,7 +13,7 @@ namespace SBEPIS.Tests.Scenes
 		[Anywhere] public DequeBox dequeBox;
 		[Anywhere] public Diajector diajector;
 		[Anywhere] public Grabbable dequeBoxGrabbable;
-		[Anywhere] public CollisionTrigger dequeBoxTrigger;
+		[Anywhere] public DelayedCollisionTrigger dequeBoxTrigger;
 		[Anywhere] public Transform dropPoint;
 		[Anywhere] public Inventory inventory;
 		public List<CardTarget> cardTargets = new();

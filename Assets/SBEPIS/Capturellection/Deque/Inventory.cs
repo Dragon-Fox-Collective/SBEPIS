@@ -15,7 +15,7 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Anywhere] public Deque deque;
 		[FormerlySerializedAs("cardPrefab")]
 		[SerializeField, Anywhere] private GameObject initialCardPrefab;
-		[SerializeField] public int initialCardCount = 0;
+		[SerializeField] private int initialCardCount = 0;
 		
 		[Tooltip("Purely organizational for the hierarchy")]
 		[SerializeField, Anywhere] private Transform cardParent;
@@ -37,14 +37,7 @@ namespace SBEPIS.Capturellection
 			Tick(Time.deltaTime);
 		}
 		
-		private void SaveInitialInventory()
-		{
-			for (int _ = 0; _ < initialCardCount; _++)
-			{
-				InventoryStorable card = Instantiate(initialCardPrefab).GetComponentInChildren<InventoryStorable>();
-				savedInventory.Add(card);
-			}
-		}
+		private void SaveInitialInventory() => savedInventory.AddRange(initialCardCount, () => Instantiate(initialCardPrefab).GetComponentInChildren<InventoryStorable>());
 		
 		private void LoadInventoryIntoDeque(StorableGroupDefinition definition, Transform ejectTransform)
 		{
@@ -57,6 +50,11 @@ namespace SBEPIS.Capturellection
 				card.transform.SetPositionAndRotation(ejectTransform.position, ejectTransform.rotation);
 			}
 			savedInventory.Clear();
+			onLoadIntoDeque.Invoke(this);
+		}
+		private void UseExistingStorable(Storable existingStorable)
+		{
+			storable = existingStorable;
 			onLoadIntoDeque.Invoke(this);
 		}
 		

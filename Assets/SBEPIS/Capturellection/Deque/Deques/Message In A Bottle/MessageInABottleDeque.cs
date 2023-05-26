@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SBEPIS.Capturellection.Storage;
+using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
@@ -9,7 +10,7 @@ namespace SBEPIS.Capturellection.Deques
 	{
 		[SerializeField] private GameObject bottlePrefab;
 		
-		public override bool CanFetch(MessageInABottleState state, InventoryStorable card) => false;
+		public override bool CanFetch(MessageInABottleState state, InventoryStorable card) => true;
 		
 		public override IEnumerable<Storable> LoadStorableHook(MessageInABottleState state, Storable storable)
 		{
@@ -29,6 +30,31 @@ namespace SBEPIS.Capturellection.Deques
 			state.slots.Add(storable, slot);
 			state.bottles.Add(slot, bottleObject);
 			state.originalStorables.Add(slot, storable);
+			
+			CollisionTrigger collisionTrigger = bottle.GetComponent<CollisionTrigger>();
+			void ReplaceBottle()
+			{
+				collisionTrigger.onCollide.RemoveListener(ReplaceBottle);
+
+				DiajectorPage page = bottle.DequeElement.Page;
+				
+				bottle.DequeElement.SetParent(null);
+				bottle.Inventory = null;
+
+				int index = state.Inventory.IndexOf(slot);
+				state.Inventory.Remove(slot);
+				state.slots.Remove(storable);
+				state.bottles.Remove(slot);
+				state.originalStorables.Remove(slot);
+				Destroy(slotObject);
+				
+				state.Inventory.Insert(index, storable);
+				
+				DiajectorCaptureLayout layout = bottle.DequeElement.Page.GetComponentInChildren<DiajectorCaptureLayout>();
+				layout.SyncCards();
+				page.StartAssemblyForCards(storable.Select(card => card.DequeElement));
+			}
+			collisionTrigger.onCollide.AddListener(ReplaceBottle);
 			
 			yield return slot;
 		}

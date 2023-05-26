@@ -233,6 +233,7 @@ public static class ExtensionMethods
 	}
 	
 	public static T RandomElement<T>(this List<T> source) => source[Random.Range(0, source.Count)];
+	public static void AddRange<T>(this List<T> source, int count, Func<T> factory) => source.AddRange(Enumerable.Range(0, count).Select(_ => factory()));
 	
 	// Note that lhs * rhs means rotating by lhs and then by rhs
 	public static Quaternion TransformRotation(this Transform from, Quaternion delta) => from.rotation * delta; // from * delta = to
