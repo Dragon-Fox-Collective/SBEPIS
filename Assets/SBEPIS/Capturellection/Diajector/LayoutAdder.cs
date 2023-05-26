@@ -32,9 +32,9 @@ namespace SBEPIS.Capturellection
 		
 		private void RemoveLayout(DiajectorCaptureLayout layout)
 		{
-			layouts.Add(layout);
+			layouts.Remove(layout);
 			card.DequeElement.IsInLayoutArea = layouts.Count > 0;
-			layout.AddTemporaryTarget(card);
+			layout.RemoveTemporaryTarget(card);
 		}
 		
 		public DiajectorCaptureLayout PopAllLayouts()

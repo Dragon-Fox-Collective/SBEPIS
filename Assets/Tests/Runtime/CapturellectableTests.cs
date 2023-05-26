@@ -44,7 +44,8 @@ namespace SBEPIS.Tests
 		public IEnumerator Capturellector_FetchingItem_RemovesItFromInventory() => UniTask.ToCoroutine(async () =>
 		{
 			CaptureContainer container = await Scene.capturellector.CaptureAndGrabCard(Scene.capturellectable);
-			Capturellectable item = await Scene.capturellector.RetrieveAndGrabItem(container);
+			InventoryStorable card = container.GetComponent<InventoryStorable>();
+			Capturellectable item = await Scene.capturellector.RetrieveFromInventory(card);
 			
 			Assert.That(item, Is.Not.Null);
 			Assert.That(item, Is.EqualTo(Scene.capturellectable));

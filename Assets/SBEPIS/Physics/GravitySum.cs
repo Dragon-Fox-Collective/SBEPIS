@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using KBCore.Refs;
@@ -7,10 +6,9 @@ using UnityEngine.Events;
 
 namespace SBEPIS.Physics
 {
-	public class GravitySum : MonoBehaviour
+	public class GravitySum : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self(Flag.Optional)]
-		private new Rigidbody rigidbody;
+		[SerializeField, Self(Flag.Optional)] private new Rigidbody rigidbody;
 		
 		public Transform customCenterOfMass;
 		public UnityEvent<Vector3> onGravityChanged = new();
@@ -26,7 +24,7 @@ namespace SBEPIS.Physics
 			UpdateGravity();
 			ApplyGravity();
 		}
-
+		
 		private void UpdateGravity()
 		{
 			WorldCenterOfMass = customCenterOfMass ? customCenterOfMass.position : rigidbody ? rigidbody.worldCenterOfMass : transform.position;
@@ -55,18 +53,18 @@ namespace SBEPIS.Physics
 				}
 			}
 		}
-
+		
 		private void ApplyGravity()
 		{
 			if (rigidbody && !rigidbody.isKinematic)
 				rigidbody.velocity += -GravityAcceleration * Time.fixedDeltaTime * UpDirection;
 		}
-
+		
 		public void Accumulate(MassiveBody body)
 		{
 			massiveBodies.Add(body);
 		}
-
+		
 		public void Deaccumulate(MassiveBody body)
 		{
 			massiveBodies.Remove(body);
