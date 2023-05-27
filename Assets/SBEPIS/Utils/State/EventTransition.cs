@@ -45,16 +45,19 @@ namespace SBEPIS.State
 		protected abstract UnityEvent TrueEvent { get; }
 		protected abstract UnityEvent FalseEvent { get; }
 		
+		private UnityEvent trueEvent;
+		private UnityEvent falseEvent;
+		
 		protected override void AddListeners()
 		{
-			TrueEvent?.AddListener(TrueListener);
-			FalseEvent?.AddListener(FalseListener);
+			(trueEvent = TrueEvent)?.AddListener(TrueListener);
+			(falseEvent = FalseEvent)?.AddListener(FalseListener);
 		}
 		
 		protected override void RemoveListeners()
 		{
-			TrueEvent?.RemoveListener(TrueListener);
-			FalseEvent?.RemoveListener(FalseListener);
+			trueEvent?.RemoveListener(TrueListener);
+			falseEvent?.RemoveListener(FalseListener);
 		}
 		
 		private void TrueListener() => Transition(TrueLink);
@@ -66,16 +69,19 @@ namespace SBEPIS.State
 		protected abstract UnityEvent<T1, T2> TrueEvent { get; }
 		protected abstract UnityEvent<T1, T2> FalseEvent { get; }
 		
+		private UnityEvent<T1, T2> trueEvent;
+		private UnityEvent<T1, T2> falseEvent;
+		
 		protected override void AddListeners()
 		{
-			TrueEvent?.AddListener(TrueListener);
-			FalseEvent?.AddListener(FalseListener);
+			(trueEvent = TrueEvent)?.AddListener(TrueListener);
+			(falseEvent = FalseEvent)?.AddListener(FalseListener);
 		}
 		
 		protected override void RemoveListeners()
 		{
-			TrueEvent?.RemoveListener(TrueListener);
-			FalseEvent?.RemoveListener(FalseListener);
+			trueEvent?.RemoveListener(TrueListener);
+			falseEvent?.RemoveListener(FalseListener);
 		}
 		
 		private void TrueListener(T1 t1, T2 t2) => Transition(TrueLink);

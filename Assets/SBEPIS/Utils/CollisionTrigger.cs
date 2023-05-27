@@ -7,12 +7,13 @@ namespace SBEPIS.Utils
 	{
 		[SerializeField] private float impulseThreshold = 0f;
 		
-		public UnityEvent onCollide = new();
+		public UnityEvent<float> onCollide = new();
 		
 		private void OnCollisionEnter(Collision collision)
 		{
-			if (collision.impulse.magnitude >= impulseThreshold)
-				onCollide.Invoke();
+			float impulse = collision.impulse.magnitude;
+			if (impulse >= impulseThreshold)
+				onCollide.Invoke(impulse);
 		}
 	}
 }

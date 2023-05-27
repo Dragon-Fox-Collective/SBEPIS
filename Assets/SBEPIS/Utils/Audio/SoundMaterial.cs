@@ -4,10 +4,10 @@ using UnityEngine;
 namespace SBEPIS.Utils.Audio
 {
 	[CreateAssetMenu]
-	public class CollisionSoundMaterial : ScriptableObject
+	public class SoundMaterial : ScriptableObject
 	{
 		[SerializeField] private List<AudioClip> sounds = new();
-
+		
 		public AudioClip RandomSound => sounds.RandomElement();
 	}
 }
