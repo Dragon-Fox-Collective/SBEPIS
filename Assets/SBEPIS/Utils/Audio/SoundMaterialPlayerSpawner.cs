@@ -16,13 +16,7 @@ namespace SBEPIS.Utils.Audio
 			player.transform.position = transform.position;
 			AudioClip clip = material.RandomSound;
 			player.PlayOneShot(clip, volumeCurve.Evaluate(factor));
-			StartCoroutine(DestoryAfterTime(player.gameObject, clip.length));
-		}
-		
-		private static IEnumerator DestoryAfterTime(GameObject gameObject, float time)
-		{
-			yield return new WaitForSeconds(time);
-			Destroy(gameObject);
+			Destroy(player.gameObject, clip.length);
 		}
 	}
 }

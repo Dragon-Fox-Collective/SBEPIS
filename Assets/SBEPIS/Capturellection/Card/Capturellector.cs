@@ -39,11 +39,13 @@ namespace SBEPIS.Capturellection
 				return null;
 			
 			StoreResult result = await inventory.StoreItem(item);
+			if (!result.wasSuccessful) return null;
+			
 			MoveEjectedItem(result.card, result.ejectedItem);
-			TryGrab(result.card.transform).Forget();
+			TryGrab(result.card.transform);
 			return result.container;
 		}
-
+		
 		private static void MoveEjectedItem(InventoryStorable card, Capturellectable ejectedItem)
 		{
 			if (!ejectedItem)
@@ -61,7 +63,7 @@ namespace SBEPIS.Capturellection
 		private Capturellectable RetrieveFromContainer(CaptureContainer container)
 		{
 			Capturellectable item = container.Fetch();
-			if (item) TryGrab(item.transform).Forget();
+			if (item) TryGrab(item.transform);
 			return item;
 		}
 		
@@ -70,19 +72,16 @@ namespace SBEPIS.Capturellection
 			if (!inventory.CanFetch(card) || card.IsBeingFetched)
 				return null;
 			
-			FetchResult res = await inventory.FetchItem(card);
-			if (res.fetchedItem) TryGrab(res.fetchedItem.transform).Forget();
-			return res.fetchedItem;
+			FetchResult result = await inventory.FetchItem(card);
+			if (!result.wasSuccessful) return null;
+			
+			if (result.fetchedItem) TryGrab(result.fetchedItem.transform);
+			return result.fetchedItem;
 		}
 		
-		private async UniTask TryGrab(Transform item)
+		private void TryGrab(Transform item)
 		{
-			if (item.TryGetComponent(out Rigidbody itemRigidbody))
-				itemRigidbody.Move(grabber.transform.position, grabber.transform.rotation);
-			else
-				item.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
-			
-			await UniTask.NextFrame();
+			item.SetPositionAndRotation(grabber.transform.position, grabber.transform.rotation);
 			
 			if (item.TryGetComponent(out Grabbable itemGrabbable))
 				grabber.GrabManually(itemGrabbable, true);

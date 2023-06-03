@@ -81,14 +81,13 @@ namespace SBEPIS.Capturellection
 		
 		private IEnumerator SpawnCards(IEnumerable<(DequeElement, CardTarget)> cards)
 		{
-			// Give cards a moment to get into the In Deque state
-			yield return 0;
+			// Wait for cards to Start
 			yield return 0;
 			
 			foreach ((DequeElement card, CardTarget target) in cards)
 			{
 				target.onPrepareCard.Invoke();
-				card.OnStartAssembling();
+				card.StartAssembling();
 				yield return new WaitForSeconds(diajector.CardDelay);
 			}
 		}
@@ -103,7 +102,7 @@ namespace SBEPIS.Capturellection
 		{
 			foreach ((DequeElement card, CardTarget _) in cardTargets)
 			{
-				card.OnStartDisassembling();
+				card.StartDisassembling();
 				yield return new WaitForSeconds(diajector.CardDelay);
 			}
 		}

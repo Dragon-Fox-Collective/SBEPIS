@@ -46,7 +46,7 @@ namespace SBEPIS.Capturellection
 		public void StopAssemblingAndDisassemblingCard()
 		{
 			if (card)
-				card.OnStopAssemblingAndDisassembling();
+				card.StopAssemblingAndDisassembling();
 		}
 	}
 }
