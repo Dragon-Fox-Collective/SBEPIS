@@ -1,6 +1,5 @@
 using System;
 using Arbor;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection.State
@@ -18,7 +17,7 @@ namespace SBEPIS.Capturellection.State
 				throw new NullReferenceException($"{card.value} doesn't have a LayoutAdder but reached its state");
 			
 			DiajectorCaptureLayout layout = layoutAdder.value.PopAllLayouts();
-			layout.inventory.FlushCard(card.value).Forget();
+			layout.Inventory.Load(card.value);
 			CardTarget target = layout.AddPermanentTargetAndCard(card.value);
 			card.value.DequeElement.Animator.TeleportTo(target.LerpTarget);
 		}

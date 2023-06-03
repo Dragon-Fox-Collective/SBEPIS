@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using KBCore.Refs;
 using SBEPIS.Capturellection.Storage;
@@ -14,11 +15,10 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Anywhere] public Deque deque;
 		[FormerlySerializedAs("cardPrefab")]
 		[SerializeField, Anywhere] private GameObject initialCardPrefab;
-		[SerializeField] public int initialCardCount = 0;
+		[SerializeField] private int initialCardCount = 0;
 		
 		[Tooltip("Purely organizational for the hierarchy")]
 		[SerializeField, Anywhere] private Transform cardParent;
-		public Transform CardParent => cardParent;
 		
 		public UnityEvent<Inventory> onLoadIntoDeque = new();
 		public UnityEvent<Inventory, List<InventoryStorable>> onSaveFromDeque = new();
@@ -37,26 +37,24 @@ namespace SBEPIS.Capturellection
 			Tick(Time.deltaTime);
 		}
 		
-		private void SaveInitialInventory()
-		{
-			for (int _ = 0; _ < initialCardCount; _++)
-			{
-				InventoryStorable card = Instantiate(initialCardPrefab).GetComponentInChildren<InventoryStorable>();
-				savedInventory.Add(card);
-			}
-		}
+		private void SaveInitialInventory() => savedInventory.AddRange(initialCardCount, () => Instantiate(initialCardPrefab).GetComponentInChildren<InventoryStorable>());
 		
 		private void LoadInventoryIntoDeque(StorableGroupDefinition definition, Transform ejectTransform)
 		{
 			storable = StorableGroupDefinition.GetNewStorable(definition);
-			Load(savedInventory);
+			Load(ref savedInventory);
 			foreach (InventoryStorable card in savedInventory)
 			{
-				print($"Ejecting leftover card {card}");
+				Debug.Log($"Ejecting leftover card {card}", this);
 				card.gameObject.SetActive(true);
 				card.transform.SetPositionAndRotation(ejectTransform.position, ejectTransform.rotation);
 			}
 			savedInventory.Clear();
+			onLoadIntoDeque.Invoke(this);
+		}
+		private void UseExistingStorable(Storable existingStorable)
+		{
+			storable = existingStorable;
 			onLoadIntoDeque.Invoke(this);
 		}
 		
@@ -89,53 +87,39 @@ namespace SBEPIS.Capturellection
 		}
 		public void SetStorableParent(Transform transform) => storable.Parent = transform;
 		public Vector3 MaxPossibleSize => storable.MaxPossibleSize;
-		public void SetupPage(DiajectorPage page) => storable.SetupPage(page);
+		public void InitPage(DiajectorPage page) => storable.InitPage(page);
 		public void Tick(float deltaTime) => storable.Tick(deltaTime);
 		public void Layout(Vector3 direction) => storable.Layout(direction);
 		public void LayoutTarget(InventoryStorable card, CardTarget target) => storable.LayoutTarget(card, target);
 		public bool CanFetch(InventoryStorable card) => storable.CanFetch(card);
-		public async UniTask<StorableStoreResult> StoreItem(Capturellectable item)
+		public async UniTask<StoreResult> StoreItem(Capturellectable item)
 		{
 			item.IsBeingCaptured = true;
-			StorableStoreResult result = await storable.StoreItem(item);
+			StoreResult result = await storable.StoreItem(item);
 			item.IsBeingCaptured = false;
 			return result;
 		}
-		public async UniTask<Capturellectable> FetchItem(InventoryStorable card)
+		public async UniTask<FetchResult> FetchItem(InventoryStorable card)
 		{
 			card.IsBeingFetched = true;
-			Capturellectable item = await storable.FetchItem(card);
+			FetchResult result = await storable.FetchItem(card);
 			card.IsBeingFetched = false;
-			return item;
-		}
-		public UniTask FlushCard(InventoryStorable card) => FlushCard(new List<InventoryStorable>{ card });
-		public UniTask FlushCard(List<InventoryStorable> cards)
-		{
-			foreach (InventoryStorable card in cards)
-				SetupCard(card);
-			return storable.FlushCards(cards);
-		}
-		public async UniTask<InventoryStorable> FetchCard(InventoryStorable card)
-		{
-			InventoryStorable fetchedCard = await storable.FetchCard(card);
-			if (fetchedCard) TearDownCard(card);
-			return fetchedCard;
+			return result;
 		}
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetRuleset, DequeInteraction<TState> action) => storable.Interact(card, targetRuleset, action);
-		private void Load(List<InventoryStorable> cards)
+		public void Load(InventoryStorable card)
 		{
-			foreach (InventoryStorable card in cards)
-				SetupCard(card);
+			List<InventoryStorable> cards = new(){ card };
+			Load(ref cards);
+			if (cards.Count > 0) Debug.Log($"Extra card {card}");
+		}
+		public void Load(ref List<InventoryStorable> cards)
+		{
+			cards = cards.Process(SetupCard).ToList();
 			storable.Load(cards);
+			cards = cards.Process(TearDownCard).ToList();
 		}
-		private List<InventoryStorable> Save()
-		{
-			List<InventoryStorable> cards = new();
-			storable.Save(cards);
-			foreach (InventoryStorable card in cards)
-				TearDownCard(card);
-			return cards;
-		}
+		public List<InventoryStorable> Save() => storable.Save().Process(TearDownCard).ToList();
 		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card) => storable.GetCardTextures(card);
 		public IEnumerator<InventoryStorable> GetEnumerator() => storable.GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

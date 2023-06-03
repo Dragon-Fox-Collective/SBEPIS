@@ -11,7 +11,7 @@ namespace SBEPIS.Capturellection.Storage
 	{
 		[SerializeField, Anywhere] private InterfaceRef<DequeRuleset>[] rulesets;
 		
-		public void SetupPage(LayerState layerState, DiajectorPage page) => Zip(layerState).ForEach((ruleset, state) => ruleset.SetupPage(state, page));
+		public void InitPage(LayerState layerState, DiajectorPage page) => Zip(layerState).ForEach((ruleset, state) => ruleset.InitPage(state, page));
 		
 		public void Tick(LayerState layerState, float deltaTime) => Zip(layerState).ForEach((ruleset, state) => ruleset.Tick(state, deltaTime));
 		public void Layout(LayerState layerState) => DoOn(DequeForLayingOut, layerState, (ruleset, state) => ruleset.Layout(state));
@@ -19,19 +19,15 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public bool CanFetch(LayerState state, InventoryStorable card) => Zip(state).Any(zip => zip.Item1.CanFetch(zip.Item2, card));
 		
-		public UniTask<DequeStoreResult>		StoreItem			(LayerState layerState, Capturellectable item)								=> DoOn(DequeForStoring, layerState,						(ruleset, state)							=> ruleset.StoreItem		(state, item));
-		public UniTask<DequeStoreResult>		StoreItemHook		(LayerState layerState, Capturellectable item, DequeStoreResult oldResult)	=> Aggregate(layerState, oldResult,							(result, ruleset, state)					=> ruleset.StoreItemHook	(state, item, result));
-		public UniTask<Capturellectable>		FetchItem			(LayerState layerState, InventoryStorable card)								=> DoOn(DequeForFetching(card), layerState,			(ruleset, state)							=> ruleset.FetchItem		(state, card));
-		public UniTask<Capturellectable>		FetchItemHook		(LayerState layerState, InventoryStorable card, Capturellectable oldItem)	=> Aggregate(layerState, oldItem,							(result, ruleset, state)	=> ruleset.FetchItemHook	(state, card, result));
-		public UniTask							FlushCard			(LayerState layerState, Storable storable)									=> DoOn(DequeForStoring, layerState,						(ruleset, state)							=> ruleset.FlushCard		(state, storable));
-		public UniTask<IEnumerable<Storable>>	FlushCardPreHook	(LayerState layerState, Storable storable)									=> AggregateExponential(layerState, storable,				(result, ruleset, state)			=> ruleset.FlushCardPreHook	(state, result));
-		public UniTask							FlushCardPostHook	(LayerState layerState, Storable storable)									=> Zip(layerState).ForEach(									(ruleset, state)								=> ruleset.FlushCardPostHook(state, storable));
-		public UniTask<InventoryStorable>		FetchCard			(LayerState layerState, InventoryStorable card)								=> DoOn(DequeForFetching(card), layerState,			(ruleset, state)							=> ruleset.FetchCard		(state, card));
-		public UniTask<InventoryStorable>		FetchCardHook		(LayerState layerState, InventoryStorable oldCard)							=> Aggregate(layerState, oldCard,							(result, ruleset, state)	=> ruleset.FetchCardHook	(state, result));
+		public UniTask<StoreResult>				StoreItem			(LayerState layerState, Capturellectable item)								=> DoOn(DequeForStoring, layerState,						(ruleset, state)							=> ruleset.StoreItem		(state, item));
+		public UniTask<StoreResult>				StoreItemHook		(LayerState layerState, Capturellectable item, StoreResult oldResult)		=> Aggregate(layerState, oldResult,							(result, ruleset, state)					=> ruleset.StoreItemHook	(state, item, result));
+		public UniTask<FetchResult>				FetchItem			(LayerState layerState, InventoryStorable card)								=> DoOn(DequeForFetching(card), layerState,			(ruleset, state)							=> ruleset.FetchItem		(state, card));
+		public UniTask<FetchResult>				FetchItemHook		(LayerState layerState, InventoryStorable card, FetchResult oldResult)		=> Aggregate(layerState, oldResult,							(result, ruleset, state)					=> ruleset.FetchItemHook	(state, card, result));
 		public UniTask							Interact<TState>	(LayerState layerState, InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action) => Zip(layerState).ForEach(	(ruleset, state)								=> ruleset.Interact			(state, card, targetDeque, action));
-		public IEnumerable<Storable>			LoadCardPreHook		(LayerState layerState, Storable storable)									=> AggregateExponential(layerState, storable,				(result, ruleset, state)			=> ruleset.LoadCardPreHook	(state, result));
-		public void								LoadCardPostHook	(LayerState layerState, Storable storable)									=> Zip(layerState).ForEach(									(ruleset, state)								=> ruleset.LoadCardPostHook	(state, storable));
-		public InventoryStorable				SaveCardHook		(LayerState layerState, InventoryStorable oldCard)							=> Aggregate(layerState, oldCard,							(result, ruleset, state)	=> ruleset.SaveCardHook		(state, result));
+		public IEnumerable<InventoryStorable>	LoadCardHook		(LayerState layerState, InventoryStorable card)								=> AggregateExponential(layerState, card,					(result, ruleset, state)	=> ruleset.LoadCardHook		(state, result));
+		public IEnumerable<InventoryStorable>	SaveCardHook		(LayerState layerState, InventoryStorable card)								=> AggregateExponential(layerState, card,					(result, ruleset, state)	=> ruleset.SaveCardHook		(state, result));
+		public IEnumerable<Storable>			LoadStorableHook	(LayerState layerState, Storable storable)									=> AggregateExponential(layerState, storable,				(result, ruleset, state)			=> ruleset.LoadStorableHook	(state, result));
+		public IEnumerable<Storable>			SaveStorableHook	(LayerState layerState, Storable storable)									=> AggregateExponential(layerState, storable,				(result, ruleset, state)			=> ruleset.SaveStorableHook	(state, result));
 		
 		private IEnumerable<DequeRuleset> Rulesets => rulesets.Select(ruleset => ruleset.Value);
 		private static T DoOn<T>(Func<LayerState, (DequeRuleset, object)> getter, LayerState state, Func<DequeRuleset, object, T> func) => func.InvokeWith(getter(state));

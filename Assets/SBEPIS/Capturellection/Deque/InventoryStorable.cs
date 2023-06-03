@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using KBCore.Refs;
 using SBEPIS.Capturellection.Storage;
@@ -28,5 +29,6 @@ namespace SBEPIS.Capturellection
 		}
 		
 		public UniTask Interact<TState>(DequeRuleset targetRuleset, DequeInteraction<TState> action) => Inventory.Interact(this, targetRuleset, action);
+		public UniTask Interact<TState>(DequeRuleset targetRuleset, Action<TState, InventoryStorable> action) => Interact<TState>(targetRuleset, (state, card) => { action(state, card); return UniTask.CompletedTask; });
 	}
 }

@@ -11,7 +11,7 @@ namespace SBEPIS.Capturellection.Deques
 		
 		private Keyboard keyboard;
 		
-		public override void SetupPage(LinearState state, DiajectorPage page)
+		protected override void InitPageOnce(LinearState state, DiajectorPage page)
 		{
 			keyboard = Instantiate(keyboardPrefab, page.transform).GetComponentInChildren<Keyboard>();
 		}
@@ -25,18 +25,18 @@ namespace SBEPIS.Capturellection.Deques
 			return state.Inventory[index].CanFetch(card);
 		}
 		
-		public override async UniTask<DequeStoreResult> StoreItem(LinearState state, Capturellectable item)
+		public override async UniTask<StoreResult> StoreItem(LinearState state, Capturellectable item)
 		{
 			int index = Settings.HashFunction.Hash(keyboard.Text, state.Inventory.Count);
 			Storable storable = state.Inventory[index];
-			StorableStoreResult res = await storable.StoreItem(item);
+			StoreResult res = await storable.StoreItem(item);
 			
 			keyboard.Text = "";
 			
-			return res.ToDequeResult(index, storable);
+			return res;
 		}
 		
-		public override UniTask<Capturellectable> FetchItem(LinearState state, InventoryStorable card)
+		public override UniTask<FetchResult> FetchItem(LinearState state, InventoryStorable card)
 		{
 			keyboard.Text = "";
 			return base.FetchItem(state, card);

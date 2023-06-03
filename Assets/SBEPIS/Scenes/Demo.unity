@@ -1128,6 +1128,83 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 965315745196620338, guid: 707c494ef7faa274abca678aaceb188f, type: 3}
   m_PrefabInstance: {fileID: 965315744026688050}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1745520585
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1983634146}
+    m_Modifications:
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808903989321562147, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_Name
+      value: Message In A Bottle Definition
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+--- !u!114 &1745520586 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -2203466434372903436, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+  m_PrefabInstance: {fileID: 1745520585}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946e69c6c39a7fa43b46dbe0c0bc2021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1745520587 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+  m_PrefabInstance: {fileID: 1745520585}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1758659634 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6188312306955887756, guid: b9a30b8fd17d2db4688da177850115d5, type: 3}
@@ -1459,7 +1536,7 @@ PrefabInstance:
     - target: {fileID: 6267582008153543528, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
       propertyPath: ruleset._implementer
       value: 
-      objectReference: {fileID: 1040138582}
+      objectReference: {fileID: 1745520586}
     - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1514,6 +1591,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8006296053656010732, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1040138583}
+    - targetCorrespondingSourceObject: {fileID: 8006296053656010732, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1745520587}
     - targetCorrespondingSourceObject: {fileID: 6321857748316312077, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 20546842}

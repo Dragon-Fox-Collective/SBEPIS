@@ -16,13 +16,15 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public int InventoryCount { get; }
 		
+		public int NumEmptySlots { get; }
+		
 		public bool HasNoCards { get; }
 		public bool HasAllCards { get; }
 		
 		public bool HasAllCardsEmpty { get; }
 		public bool HasAllCardsFull { get; }
 		
-		public void SetupPage(DiajectorPage page);
+		public void InitPage(DiajectorPage page);
 		
 		public void Tick(float deltaTime);
 		public void Layout(Vector3 direction);
@@ -31,14 +33,14 @@ namespace SBEPIS.Capturellection.Storage
 		public bool CanFetch(InventoryStorable card);
 		public bool Contains(InventoryStorable card);
 		
-		public UniTask<StorableStoreResult> StoreItem(Capturellectable item);
-		public UniTask<Capturellectable> FetchItem(InventoryStorable card);
-		public UniTask FlushCards(List<InventoryStorable> cards);
-		public UniTask<InventoryStorable> FetchCard(InventoryStorable card);
+		public UniTask<StoreResult> StoreItem(Capturellectable item);
+		public UniTask<FetchResult> FetchItem(InventoryStorable card);
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action);
 		
 		public void Load(List<InventoryStorable> cards);
-		public void Save(List<InventoryStorable> cards);
+		public IEnumerable<InventoryStorable> Save();
+		
+		public Storable GetNewStorableLikeThis();
 		
 		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card) => GetCardTextures(card, Enumerable.Empty<IEnumerable<Texture2D>>(), 0);
 		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card, IEnumerable<IEnumerable<Texture2D>> textures, int indexOfThisInParent);
@@ -85,20 +87,32 @@ namespace SBEPIS.Capturellection.Storage
 		
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
-
-	public struct StorableStoreResult
+	
+	public struct StoreResult
 	{
+		public bool wasSuccessful;
 		public InventoryStorable card;
 		public CaptureContainer container;
 		public Capturellectable ejectedItem;
-
-		public StorableStoreResult(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem)
+		
+		public StoreResult(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem)
 		{
+			wasSuccessful = true;
 			this.card = card;
 			this.container = container;
 			this.ejectedItem = ejectedItem;
 		}
-
-		public DequeStoreResult ToDequeResult(int flushIndex, Storable storable) => new(card, container, ejectedItem, flushIndex, storable);
+	}
+	
+	public struct FetchResult
+	{
+		public bool wasSuccessful;
+		public Capturellectable fetchedItem;
+		
+		public FetchResult(Capturellectable fetchedItem)
+		{
+			wasSuccessful = true;
+			this.fetchedItem = fetchedItem;
+		}
 	}
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using KBCore.Refs;
 using SBEPIS.Controller;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
@@ -13,12 +12,12 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Parent(Flag.IncludeInactive)] private DiajectorPageCreator pageCreator;
 		[SerializeField, Parent(Flag.IncludeInactive)] private DiajectorPage page;
 		
-		public Inventory inventory;
-		public CardTarget cardTargetPrefab;
-		public float cardZ = -1;
-		[FormerlySerializedAs("fetchableCardY")]
-		public float fetchableCardZ = 0.1f;
-		public Transform directionEndpoint;
+		[SerializeField, Anywhere] private Inventory inventory;
+		public Inventory Inventory => inventory;
+		[SerializeField, Anywhere] private CardTarget cardTargetPrefab;
+		[SerializeField] private float cardZ = -1;
+		[SerializeField] private float fetchableCardZ = 0.1f;
+		[SerializeField, Anywhere] private Transform directionEndpoint;
 		
 		private readonly Dictionary<InventoryStorable, CardTarget> targets = new();
 		
@@ -51,24 +50,23 @@ namespace SBEPIS.Capturellection
 		
 		public CardTarget AddTemporaryTarget(InventoryStorable card)
 		{
-			if (targets.TryGetValue(card, out CardTarget target))
-				throw new ArgumentException($"Tried to add a target of {card} to {this} but {target} already exists");
+			if (targets.TryGetValue(card, out CardTarget oldTarget))
+				throw new ArgumentException($"Tried to add a target of {card} to {this} but {oldTarget} already exists");
 			
-			CardTarget newTarget = Instantiate(cardTargetPrefab, transform);
-			newTarget.Card = card.DequeElement;
-			targets.Add(card, newTarget);
-			return newTarget;
+			CardTarget target = Instantiate(cardTargetPrefab, transform);
+			target.Card = card.DequeElement;
+			targets.Add(card, target);
+			return target;
 		}
 		
 		public void RemoveTemporaryTarget(InventoryStorable card)
 		{
-			CardTarget target = targets[card];
-			targets.Remove(card);
+			targets.Remove(card, out CardTarget target);
 			Destroy(target.gameObject);
 		}
-
+		
 		public bool HasTemporaryTarget(InventoryStorable card) => targets.ContainsKey(card) && !inventory.Contains(card);
-
+		
 		public CardTarget AddPermanentTargetAndCard(InventoryStorable card)
 		{
 			CardTarget target = HasTemporaryTarget(card) ? targets[card] : AddTemporaryTarget(card);
@@ -85,29 +83,31 @@ namespace SBEPIS.Capturellection
 		
 		public void SyncCards()
 		{
-			if (!inventory)
+			if (inventory)
 			{
-				foreach ((InventoryStorable card, CardTarget _) in targets.ToList())
-					RemovePermanentTargetAndCard(card);
-				return;
+				SyncRemoveOldCards();
+				SyncAddNewCards();
 			}
-			
-			foreach ((InventoryStorable card, CardTarget _) in targets.Where(pair => !inventory.Contains(pair.Key)).ToList())
-				RemovePermanentTargetAndCard(card);
-			
-			foreach (InventoryStorable card in inventory.Where(card => !targets.ContainsKey(card)))
+			else
 			{
-				CardTarget target = AddPermanentTargetAndCard(card);
-				if (card.TryGetComponent(out Grabbable grabbable) && grabbable.IsBeingHeld)
-				{
-					card.DequeElement.Animator.SetPausedAt(target.LerpTarget);
-					target.onGrab.Invoke();
-				}
-				else
-				{
-					card.DequeElement.Animator.TeleportTo(pageCreator.StartTarget);
-				}
+				SyncRemoveAllCards();
 			}
 		}
+		private void SyncRemoveOldCards() => targets.Select(pair => pair.Key).Where(card => !inventory.Contains(card)).ToList().ForEach(RemovePermanentTargetAndCard);
+		private void SyncAddNewCards() => inventory.Where(card => !targets.ContainsKey(card)).ForEach(SyncAddNewCard);
+		private void SyncAddNewCard(InventoryStorable card)
+		{
+			CardTarget target = AddPermanentTargetAndCard(card);
+			if (card.TryGetComponent(out Grabbable grabbable) && grabbable.IsBeingHeld)
+			{
+				card.DequeElement.Animator.SetPausedAt(target.LerpTarget);
+				target.onGrab.Invoke();
+			}
+			else
+			{
+				card.DequeElement.Animator.TeleportTo(pageCreator.StartTarget);
+			}
+		}
+		private void SyncRemoveAllCards() => targets.Select(pair => pair.Key).ToList().ForEach(RemovePermanentTargetAndCard);
 	}
 }

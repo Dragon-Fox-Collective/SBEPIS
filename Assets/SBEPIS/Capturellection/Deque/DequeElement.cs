@@ -15,18 +15,7 @@ namespace SBEPIS.Capturellection
 		public LerpTargetAnimator Animator => animator;
 		
 		[SerializeField, Anywhere(Flag.Optional)] private InvokeTransitionReference forceOpen;
-		public void ForceOpen()
-		{
-			OnStopAssemblingAndDisassembling();
-			HasBeenAssembled = true;
-			if (forceOpen) forceOpen.Invoke();
-		}
 		[SerializeField, Anywhere(Flag.Optional)] private InvokeTransitionReference forceClose;
-		public void ForceClose()
-		{
-			OnStopAssemblingAndDisassembling();
-			if (forceClose) forceClose.Invoke();
-		}
 		
 		[SerializeField, Anywhere(Flag.Optional)] private Renderer bounds;
 		public Vector3 Size => bounds ? ExtensionMethods.Multiply(bounds.localBounds.size, bounds.transform.localScale) : Vector3.zero;
@@ -89,7 +78,7 @@ namespace SBEPIS.Capturellection
 		
 		public bool ShouldBeDisplayed => Diajector.ShouldCardBeDisplayed(this);
 		
-		public void OnStartAssembling()
+		public void StartAssembling()
 		{
 			if (IsAssembling)
 				return;
@@ -98,7 +87,7 @@ namespace SBEPIS.Capturellection
 			onStartAssembling.Invoke();
 		}
 		
-		public void OnStartDisassembling()
+		public void StartDisassembling()
 		{
 			if (IsDisassembling)
 				return;
@@ -107,13 +96,26 @@ namespace SBEPIS.Capturellection
 			onStartDisassembling.Invoke();
 		}
 		
-		public void OnStopAssemblingAndDisassembling()
+		public void StopAssemblingAndDisassembling()
 		{
 			if (!IsAssembling && !IsDisassembling)
 				return;
 			IsAssembling = false;
 			IsDisassembling = false;
 			onStopAssemblingAndDisassembling.Invoke();
+		}
+		
+		public void ForceOpen()
+		{
+			StopAssemblingAndDisassembling();
+			HasBeenAssembled = true;
+			if (forceOpen) forceOpen.Invoke();
+		}
+		
+		public void ForceClose()
+		{
+			StopAssemblingAndDisassembling();
+			if (forceClose) forceClose.Invoke();
 		}
 		
 		public LerpTarget LerpTarget => Page.GetLerpTarget(this);
