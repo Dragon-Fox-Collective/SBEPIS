@@ -44,9 +44,92 @@ Transform:
   - {fileID: 166860347827528291}
   - {fileID: 2501888410161595400}
   - {fileID: 2226753026330968697}
+  - {fileID: 8599286781465480083}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2370949627671979766
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6188312306955887756}
+    m_Modifications:
+    - target: {fileID: 6267582008153543528, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: ruleset._implementer
+      value: 
+      objectReference: {fileID: 4249892978088220208}
+    - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.475
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.193
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.027
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903258535003904210, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: initialCardCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7762745506201212150, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      propertyPath: m_Name
+      value: Message In A Bottle Deque
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8006296053656010732, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4868574632110209221}
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+--- !u!4 &5763303264233494810 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8006296053656010732, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+  m_PrefabInstance: {fileID: 2370949627671979766}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8599286781465480083 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6318976731672604005, guid: e1a2cbf8d078fc849acaedc7e455252f, type: 3}
+  m_PrefabInstance: {fileID: 2370949627671979766}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4372710859096962140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3622,6 +3705,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6cac2b6a5a951f46ad426d84593d82e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &6598074541452610500
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5763303264233494810}
+    m_Modifications:
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808903989321562147, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+      propertyPath: m_Name
+      value: Message In A Bottle Definition
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+--- !u!114 &4249892978088220208 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -2203466434372903436, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+  m_PrefabInstance: {fileID: 6598074541452610500}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946e69c6c39a7fa43b46dbe0c0bc2021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &4868574632110209221 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
+  m_PrefabInstance: {fileID: 6598074541452610500}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7966880284854794536
 PrefabInstance:
   m_ObjectHideFlags: 0
