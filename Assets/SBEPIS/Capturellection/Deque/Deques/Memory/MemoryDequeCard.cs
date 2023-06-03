@@ -18,11 +18,7 @@ namespace SBEPIS.Capturellection.Deques
 		
 		public void Flip()
 		{
-			card.Interact<MemoryState>(Deque, (state, card) =>
-			{
-				Deque.Flip(state, card);
-				return UniTask.CompletedTask;
-			}).Forget();
+			card.Interact<MemoryState>(Deque, (state, card) => Deque.Flip(state, card)).Forget();
 		}
 	}
 }

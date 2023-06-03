@@ -94,7 +94,7 @@ namespace SBEPIS.Physics
 				positionDamper = 2 * strength.linearSpeed,
 				maximumForce = strength.linearMaxForce,
 			};
-
+			
 			joint.rotationDriveMode = RotationDriveMode.Slerp;
 			joint.slerpDrive = new JointDrive
 			{
@@ -106,6 +106,13 @@ namespace SBEPIS.Physics
 		
 		private void FixedUpdate()
 		{
+			if (!target)
+			{
+				// Probably not best but the only way I can figure out how to deal with destroyed objects
+				Destroy(this);
+				return;
+			}
+			
 			UpdatePosition();
 			UpdateRotation();
 		}
@@ -118,25 +125,25 @@ namespace SBEPIS.Physics
 				Vector3 anchorPosition = transform.InverseTransformPoint(anchor.position);
 				targetPosition = anchorPosition + Vector3.ClampMagnitude(targetPosition - anchorPosition, anchorDistance);
 			}
-
+			
 			joint.targetPosition = targetPosition;
-
+			
 			//if (accountForTargetMovement)
 				//joint.targetVelocity = (targetPosition - prevTargetPosition) / Time.fixedDeltaTime;
-
+			
 			prevTargetPosition = targetPosition;
 		}
 		
 		private void UpdateRotation()
 		{
 			joint.targetRotation = transform.InverseTransformRotation(target.rotation) * initialOffset;
-
+			
 			/*if (accountForTargetMovement)
 			{
 				Vector3 axis = (target.rotation * prevTargetRotation.Inverse()).ToEulersAngleAxis();
 				joint.targetAngularVelocity = transform.rotation.Inverse() * (axis / Time.fixedDeltaTime);
 			}*/
-
+			
 			prevTargetRotation = target.rotation;
 		}
 		
@@ -145,7 +152,7 @@ namespace SBEPIS.Physics
 			if (joint)
 			{
 				Destroy(joint);
-
+				
 				if (connectedBody)
 				{
 					connectedBody.inertiaTensor = initialTensor;

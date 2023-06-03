@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using KBCore.Refs;
 using SBEPIS.Utils;
 using UnityEngine;
@@ -47,7 +48,7 @@ namespace SBEPIS.Capturellection
 		public void StartAssembly()
 		{
 			PrepareOpeningPage();
-			diajector.CoroutineOwner.StartCoroutine(SpawnCards());
+			diajector.CoroutineOwner.StartCoroutine(SpawnCards(cardTargets.Select(pair => (pair.Key, pair.Value))));
 		}
 		
 		private void PrepareOpeningPage()
@@ -73,16 +74,20 @@ namespace SBEPIS.Capturellection
 			hasCreatedCards = true;
 		}
 		
-		private IEnumerator SpawnCards()
+		public void StartAssemblyForCards(IEnumerable<DequeElement> cards)
 		{
-			// Give cards a moment to get into the In Deque state
-			yield return 0;
+			diajector.CoroutineOwner.StartCoroutine(SpawnCards(cards.Select(card => (card, cardTargets[card]))));
+		}
+		
+		private IEnumerator SpawnCards(IEnumerable<(DequeElement, CardTarget)> cards)
+		{
+			// Wait for cards to Start
 			yield return 0;
 			
-			foreach ((DequeElement card, CardTarget target) in cardTargets)
+			foreach ((DequeElement card, CardTarget target) in cards)
 			{
 				target.onPrepareCard.Invoke();
-				card.OnStartAssembling();
+				card.StartAssembling();
 				yield return new WaitForSeconds(diajector.CardDelay);
 			}
 		}
@@ -97,7 +102,7 @@ namespace SBEPIS.Capturellection
 		{
 			foreach ((DequeElement card, CardTarget _) in cardTargets)
 			{
-				card.OnStartDisassembling();
+				card.StartDisassembling();
 				yield return new WaitForSeconds(diajector.CardDelay);
 			}
 		}

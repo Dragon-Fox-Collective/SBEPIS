@@ -94,28 +94,16 @@ public static class ExtensionMethods
 	
 	public static bool TryGetComponentInChildren<T>(this Component thisComponent, out T component) where T : Component => component = thisComponent.GetComponentInChildren<T>();
 	
-	public static string Join<T>(this string delimiter, IEnumerable<T> source)
-	{
-		return string.Join(delimiter, source);
-	}
-
-	public static string ToDelimString<T>(this IEnumerable<T> source)
-	{
-		return "[" + string.Join(", ", source) +  "]";
-	}
-
+	public static string Join<T>(this string delimiter, IEnumerable<T> source) => string.Join(delimiter, source);
+	public static string ToDelimString<T>(this IEnumerable<T> source) => "[" + ", ".Join(source) +  "]";
+	
 	public static T Pop<T>(this List<T> list)
 	{
 		T obj = list[0];
 		list.RemoveAt(0);
 		return obj;
 	}
-
-	public static void AddRange<T>(this List<T> list, params T[] items)
-	{
-		list.AddRange(items);
-	}
-
+	
 	public static IEnumerable<(int index, T item)> Enumerate<T>(this IEnumerable<T> source)
 	{
 		int i = 0;
@@ -154,8 +142,8 @@ public static class ExtensionMethods
 	{
 		IEnumerable<TResult> result = Enumerable.Empty<TResult>();
 		// ReSharper disable once LoopCanBeConvertedToQuery
-		foreach (TSource t in source)
-			result = result.Append(await action(t));
+		foreach (TSource item in source)
+			result = result.Append(await action(item));
 		return result;
 	}
 	
@@ -165,7 +153,48 @@ public static class ExtensionMethods
 	
 	public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> source) => source.SelectMany(item => item);
 	
+	public static IEnumerable<T> EnumerableOf<T>(T item) { yield return item; }
 	public static IEnumerable<T> EnumerableOf<T>(params T[] items) => items;
+	
+	public static IEnumerable<T> Process<T>(this IEnumerable<T> source, Action<T> action)
+	{
+		foreach (T item in source)
+		{
+			action(item);
+			yield return item;
+		}
+	}
+	
+	public static IEnumerable<T> Pivot<T>(this IEnumerable<T> source, int index)
+	{
+		IEnumerable<T> first = Enumerable.Empty<T>();
+		int i = 0;
+		foreach (T item in source)
+		{
+			if (i++ < index)
+				first = first.Append(item);
+			else
+				yield return item;
+		}
+		foreach (T item in first)
+			yield return item;
+	}
+	
+	public static (IEnumerable<T>, IEnumerable<T>) Split<T>(this IEnumerable<T> source, int index)
+	{
+		IEnumerable<T> first = Enumerable.Empty<T>();
+		IEnumerable<T> last = Enumerable.Empty<T>();
+		int i = 0;
+		foreach (T item in source)
+		{
+			if (i >= index)
+				first = first.Append(item);
+			else
+				last = last.Append(item);
+			i++;
+		}
+		return (first, last);
+	}
 	
 	public static TValue GetEnsured<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, Func<TValue> newValueFactory)
 	{
@@ -202,6 +231,9 @@ public static class ExtensionMethods
 					action.Invoke(renderer.materials[i]);
 			}
 	}
+	
+	public static T RandomElement<T>(this List<T> source) => source[Random.Range(0, source.Count)];
+	public static void AddRange<T>(this List<T> source, int count, Func<T> factory) => source.AddRange(Enumerable.Range(0, count).Select(_ => factory()));
 	
 	// Note that lhs * rhs means rotating by lhs and then by rhs
 	public static Quaternion TransformRotation(this Transform from, Quaternion delta) => from.rotation * delta; // from * delta = to

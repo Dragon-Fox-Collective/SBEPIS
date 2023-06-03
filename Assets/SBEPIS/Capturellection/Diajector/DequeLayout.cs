@@ -29,7 +29,7 @@ namespace SBEPIS.Capturellection
 		
 		public void Layout(List<Storable> inventory, object state)
 		{
-			if(!PerformMagic((Action<List<Storable>, object>)Layout, state, new[] { inventory, state }, out object _))
+			if (!PerformMagic((Action<List<Storable>, object>)Layout, state, new[] { inventory, state }, out object _))
 				throw new NotImplementedException();
 		}
 		

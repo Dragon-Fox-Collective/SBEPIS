@@ -10,7 +10,7 @@ namespace SBEPIS.Capturellection
 			if (!animator.TryGetComponent(out DequeElement card))
 				return;
 			
-			card.OnStopAssemblingAndDisassembling();
+			card.StopAssemblingAndDisassembling();
 		}
 	}
 }
