@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6459963003778010534}
   - component: {fileID: 7948658887364218840}
   - component: {fileID: 5362234545853037181}
+  - component: {fileID: 917992642989549047}
   m_Layer: 0
   m_Name: Glass Shatter
   m_TagString: Untagged
@@ -5479,3 +5480,18 @@ ParticleSystemForceField:
         m_RotationOrder: 4
     m_MultiplyDragByParticleSize: 1
     m_MultiplyDragByParticleVelocity: 1
+--- !u!114 &917992642989549047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5442499352598021991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5befcc956cb084439216170c88bfb01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 5062431120384497087}
+  min: 0.7
+  max: 1.3

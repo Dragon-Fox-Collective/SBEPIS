@@ -87,15 +87,17 @@ namespace SBEPIS.Capturellection.Storage
 		
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
-
+	
 	public struct StoreResult
 	{
+		public bool wasSuccessful;
 		public InventoryStorable card;
 		public CaptureContainer container;
 		public Capturellectable ejectedItem;
 		
 		public StoreResult(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem)
 		{
+			wasSuccessful = true;
 			this.card = card;
 			this.container = container;
 			this.ejectedItem = ejectedItem;
@@ -104,10 +106,12 @@ namespace SBEPIS.Capturellection.Storage
 	
 	public struct FetchResult
 	{
+		public bool wasSuccessful;
 		public Capturellectable fetchedItem;
 		
 		public FetchResult(Capturellectable fetchedItem)
 		{
+			wasSuccessful = true;
 			this.fetchedItem = fetchedItem;
 		}
 	}

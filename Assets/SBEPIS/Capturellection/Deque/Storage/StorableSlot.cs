@@ -54,7 +54,7 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public UniTask<StoreResult> StoreItem(Capturellectable item)
 		{
-			if (!container) throw new NullReferenceException($"Tried to store in a card {card} that has no container");
+			if (!container) return UniTask.FromResult(new StoreResult());
 			
 			Capturellectable ejectedItem = container.Fetch();
 			container.Capture(item);
@@ -64,8 +64,8 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public UniTask<FetchResult> FetchItem(InventoryStorable card)
 		{
-			if (!container) throw new NullReferenceException($"Tried to fetch from a card {this.card} that has no container");
-
+			if (!container) return UniTask.FromResult(new FetchResult());
+			
 			FetchResult res = new(Contains(card) ? container.Fetch() : null);
 			return UniTask.FromResult(res);
 		}

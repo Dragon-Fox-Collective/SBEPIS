@@ -43,16 +43,10 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public virtual bool CanFetch(TState state, InventoryStorable card) => state.Inventory.Any(storable => storable.CanFetch(card));
 		
-		public virtual async UniTask<StoreResult> StoreItem(TState state, Capturellectable item)
-		{
-			int index = Mathf.Max(state.Inventory.FindIndex(storable => !storable.HasAllCardsFull), 0);
-			Storable storable = state.Inventory[index];
-			StoreResult res = await storable.StoreItem(item);
-			return res;
-		}
+		public virtual UniTask<StoreResult> StoreItem(TState state, Capturellectable item) => state.Inventory.Any() ? state.Inventory[Mathf.Max(state.Inventory.FindIndex(storable => !storable.HasAllCardsFull), 0)].StoreItem(item) : UniTask.FromResult(new StoreResult());
 		public virtual UniTask<StoreResult> StoreItemHook(TState state, Capturellectable item, StoreResult oldResult) => UniTask.FromResult(oldResult);
 		
-		public virtual UniTask<FetchResult> FetchItem(TState state, InventoryStorable card) => StorableWithCard(state, card).FetchItem(card);
+		public virtual UniTask<FetchResult> FetchItem(TState state, InventoryStorable card) => state.Inventory.Any() ? StorableWithCard(state, card).FetchItem(card) : UniTask.FromResult(new FetchResult());
 		public virtual UniTask<FetchResult> FetchItemHook(TState state, InventoryStorable card, FetchResult oldResult) => UniTask.FromResult(oldResult);
 		
 		protected static Storable StorableWithCard(TState state, InventoryStorable card) => state.Inventory.Find(storable => storable.Contains(card));
