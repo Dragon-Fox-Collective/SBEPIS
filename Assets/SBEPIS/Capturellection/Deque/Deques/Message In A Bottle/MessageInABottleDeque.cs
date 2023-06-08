@@ -45,7 +45,7 @@ namespace SBEPIS.Capturellection.Deques
 				Destroy(bottle.Root.gameObject);
 			}
 			collisionTrigger.onCollide.AddListener(ReplaceBottle);
-
+			
 			return bottle;
 		}
 		
