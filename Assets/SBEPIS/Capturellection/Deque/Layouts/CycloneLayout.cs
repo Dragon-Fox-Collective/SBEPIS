@@ -11,7 +11,7 @@ namespace SBEPIS.Capturellection.Deques
 	{
 		public float timePerCard = 3;
 		
-		public void Tick<TState>(List<Storable> inventory, TState state, float deltaTime) where TState : DirectionState, TimeState, TopState
+		public void Tick<TState>(IList<Storable> inventory, TState state, float deltaTime) where TState : DirectionState, TimeState, TopState
 		{
 			state.Time += deltaTime;
 			
@@ -22,7 +22,7 @@ namespace SBEPIS.Capturellection.Deques
 				storable.Tick(deltaTime * storable.InventoryCount);
 		}
 		
-		public void Layout<TState>(List<Storable> inventory, TState state) where TState : DirectionState, TimeState, TopState
+		public void Layout<TState>(IList<Storable> inventory, TState state) where TState : DirectionState, TimeState, TopState
 		{
 			foreach (Storable storable in inventory)
 				storable.Layout(Quaternion.Euler(0, 0, -90) * state.Direction);
@@ -42,7 +42,7 @@ namespace SBEPIS.Capturellection.Deques
 			}
 		}
 		
-		public Vector3 GetMaxPossibleSizeOf<TState>(List<Storable> inventory, TState state)
+		public Vector3 GetMaxPossibleSizeOf<TState>(IList<Storable> inventory, TState state)
 		{
 			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
 			float longestEdge = sizes.Select(size => size.x).Aggregate(Mathf.Max);
@@ -60,7 +60,7 @@ namespace SBEPIS.Capturellection.Deques
 	
 	public class CycloneState : InventoryState, DirectionState, TimeState, TopState
 	{
-		public List<Storable> Inventory { get; set; } = new();
+		public CallbackList<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
 		public float Time { get; set; }
 		public Storable TopStorable { get; set; }

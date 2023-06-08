@@ -9,32 +9,32 @@ namespace SBEPIS.Capturellection
 {
 	public interface DequeLayout
 	{
-		public void Tick(List<Storable> inventory, object state, float deltaTime);
-		public void Layout(List<Storable> inventory, object state);
-		public Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, object state);
+		public void Tick(IList<Storable> inventory, object state, float deltaTime);
+		public void Layout(IList<Storable> inventory, object state);
+		public Vector3 GetMaxPossibleSizeOf(IList<Storable> inventory, object state);
 		
 		protected static Vector3 GetSizeFromExistingLayout(IEnumerable<Storable> inventory) =>
 			inventory.Select(storable => new Bounds(storable.Position, storable.MaxPossibleSize)).Aggregate(new Bounds(), (current, bounds) => current.Containing(bounds)).size;
 		
 		protected static Quaternion GetOffsetRotation(Vector3 direction) => Quaternion.AngleAxis(-5f, Vector3.Cross(direction, Vector3.forward));
 	}
-
+	
 	public abstract class DequeLayoutBase : DequeLayout
 	{
-		public void Tick(List<Storable> inventory, object state, float deltaTime)
+		public void Tick(IList<Storable> inventory, object state, float deltaTime)
 		{
-			if (!PerformMagic((Action<List<Storable>, object, float>)Tick, state, new[] { inventory, state, deltaTime }, out object _))
+			if (!PerformMagic((Action<IList<Storable>, object, float>)Tick, state, new[] { inventory, state, deltaTime }, out object _))
 				inventory.ForEach(storable => storable.Tick(deltaTime));
 		}
 		
-		public void Layout(List<Storable> inventory, object state)
+		public void Layout(IList<Storable> inventory, object state)
 		{
-			if (!PerformMagic((Action<List<Storable>, object>)Layout, state, new[] { inventory, state }, out object _))
+			if (!PerformMagic((Action<IList<Storable>, object>)Layout, state, new[] { inventory, state }, out object _))
 				throw new NotImplementedException();
 		}
 		
-		public Vector3 GetMaxPossibleSizeOf(List<Storable> inventory, object state) =>
-			PerformMagic((Func<List<Storable>, object, Vector3>)GetMaxPossibleSizeOf, state, new[] { inventory, state }, out Vector3 size)
+		public Vector3 GetMaxPossibleSizeOf(IList<Storable> inventory, object state) =>
+			PerformMagic((Func<IList<Storable>, object, Vector3>)GetMaxPossibleSizeOf, state, new[] { inventory, state }, out Vector3 size)
 				? size
 				: DequeLayout.GetSizeFromExistingLayout(inventory);
 		

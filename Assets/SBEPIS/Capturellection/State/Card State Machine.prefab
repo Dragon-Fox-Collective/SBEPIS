@@ -148,7 +148,6 @@ GameObject:
   - component: {fileID: 3912398570744651488}
   - component: {fileID: 1404252402368420403}
   - component: {fileID: 7082700884210569714}
-  - component: {fileID: 4939895225812315213}
   - component: {fileID: 2073648684074596196}
   - component: {fileID: 3755990251083814085}
   - component: {fileID: 6687107640367110093}
@@ -168,6 +167,8 @@ GameObject:
   - component: {fileID: 364020707114290788}
   - component: {fileID: 2358295948235549609}
   - component: {fileID: 7555176431742702183}
+  - component: {fileID: 3648942577600734423}
+  - component: {fileID: 8368517237085434827}
   m_Layer: 11
   m_Name: Card State Machine
   m_TagString: Untagged
@@ -618,10 +619,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 5935079215059078831}
     outNodeID: 1752227528
     lineBezier:
-      _StartPosition: {x: 228, y: -337}
-      _StartControl: {x: 278, y: -337}
-      _EndPosition: {x: -72, y: -289}
-      _EndControl: {x: -122, y: -289}
+      _StartPosition: {x: 228, y: -337.00006}
+      _StartControl: {x: 278, y: -337.00006}
+      _EndPosition: {x: -72.00002, y: -289.00006}
+      _EndControl: {x: -122.00002, y: -289.00006}
     showDataValue: 0
   - branchID: 1655911537
     enabled: 1
@@ -630,10 +631,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 8506267733013189586}
     outNodeID: 822959691
     lineBezier:
-      _StartPosition: {x: 1140, y: -253}
-      _StartControl: {x: 1190, y: -253}
-      _EndPosition: {x: 840, y: -205}
-      _EndControl: {x: 790, y: -205}
+      _StartPosition: {x: 1140.0001, y: -253.00003}
+      _StartControl: {x: 1190.0001, y: -253.00003}
+      _EndPosition: {x: 840.0001, y: -205.00005}
+      _EndControl: {x: 790.0001, y: -205.00005}
     showDataValue: 0
   - branchID: 630327709
     enabled: 1
@@ -642,10 +643,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 7864634390564627064}
     outNodeID: 726643700
     lineBezier:
-      _StartPosition: {x: 1140, y: -205}
-      _StartControl: {x: 1190, y: -205}
-      _EndPosition: {x: 840, y: 11}
-      _EndControl: {x: 790, y: 11}
+      _StartPosition: {x: 1140.0001, y: -205.00005}
+      _StartControl: {x: 1190.0001, y: -205.00005}
+      _EndPosition: {x: 840.0001, y: 10.999971}
+      _EndControl: {x: 790.0001, y: 10.999971}
     showDataValue: 0
   - branchID: 1752227528
     enabled: 1
@@ -654,10 +655,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 8506267733013189586}
     outNodeID: 822959691
     lineBezier:
-      _StartPosition: {x: 1140, y: -253}
-      _StartControl: {x: 1190, y: -253}
-      _EndPosition: {x: 840, y: -145}
-      _EndControl: {x: 790, y: -145}
+      _StartPosition: {x: 1140.0001, y: -253.00003}
+      _StartControl: {x: 1190.0001, y: -253.00003}
+      _EndPosition: {x: 840.0001, y: -145.00005}
+      _EndControl: {x: 790.0001, y: -145.00005}
     showDataValue: 0
   - branchID: 726643700
     enabled: 1
@@ -666,10 +667,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 8443909245872349920}
     outNodeID: 1944859510
     lineBezier:
-      _StartPosition: {x: 1140, y: -145}
-      _StartControl: {x: 1190, y: -145}
-      _EndPosition: {x: 840, y: 11}
-      _EndControl: {x: 790, y: 11}
+      _StartPosition: {x: 1140.0001, y: -145.00005}
+      _StartControl: {x: 1190.0001, y: -145.00005}
+      _EndPosition: {x: 840.0001, y: 10.999971}
+      _EndControl: {x: 790.0001, y: 10.999971}
     showDataValue: 0
   - branchID: 1848543519
     enabled: 1
@@ -678,10 +679,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 7864634390564627064}
     outNodeID: 726643700
     lineBezier:
-      _StartPosition: {x: 1140, y: -205}
-      _StartControl: {x: 1190, y: -205}
-      _EndPosition: {x: 840, y: -85}
-      _EndControl: {x: 790, y: -85}
+      _StartPosition: {x: 1140.0001, y: -205.00005}
+      _StartControl: {x: 1190.0001, y: -205.00005}
+      _EndPosition: {x: 840.0001, y: -85.000046}
+      _EndControl: {x: 790.0001, y: -85.000046}
     showDataValue: 0
   - branchID: 1240895648
     enabled: 1
@@ -690,10 +691,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 989484261340961056}
     outNodeID: 1848543519
     lineBezier:
-      _StartPosition: {x: 1140, y: -301}
-      _StartControl: {x: 1190, y: -301}
-      _EndPosition: {x: 840, y: -253}
-      _EndControl: {x: 790, y: -253}
+      _StartPosition: {x: 1140.0001, y: -301.00006}
+      _StartControl: {x: 1190.0001, y: -301.00006}
+      _EndPosition: {x: 840.0001, y: -253.00003}
+      _EndControl: {x: 790.0001, y: -253.00003}
     showDataValue: 0
   _StartStateID: 1559595546
   _States:
@@ -1124,10 +1125,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 1268848841690987753}
     outNodeID: 919275682
     lineBezier:
-      _StartPosition: {x: 1608.0001, y: 851.00006}
-      _StartControl: {x: 1658.0001, y: 851.00006}
-      _EndPosition: {x: 1308.0001, y: 899.0001}
-      _EndControl: {x: 1258.0001, y: 899.0001}
+      _StartPosition: {x: 1608, y: 851.00006}
+      _StartControl: {x: 1658, y: 851.00006}
+      _EndPosition: {x: 1308, y: 899.00006}
+      _EndControl: {x: 1258, y: 899.00006}
     showDataValue: 0
   - branchID: 534011718
     enabled: 1
@@ -1136,10 +1137,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 7453717199210751692}
     outNodeID: 2137491492
     lineBezier:
-      _StartPosition: {x: 768.00006, y: -781.0001}
-      _StartControl: {x: 818.00006, y: -781.0001}
-      _EndPosition: {x: 468.00006, y: -711.0001}
-      _EndControl: {x: 418.00006, y: -711.0001}
+      _StartPosition: {x: 768, y: -781.00006}
+      _StartControl: {x: 818, y: -781.00006}
+      _EndPosition: {x: 468, y: -733}
+      _EndControl: {x: 418, y: -733}
     showDataValue: 0
   - branchID: 1655911537
     enabled: 1
@@ -1148,10 +1149,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 7269884703687059230}
     outNodeID: 1111907664
     lineBezier:
-      _StartPosition: {x: 1212.0001, y: -637.0001}
-      _StartControl: {x: 1262.0001, y: -637.0001}
-      _EndPosition: {x: 912.00006, y: -589.0001}
-      _EndControl: {x: 862.00006, y: -589.0001}
+      _StartPosition: {x: 1212, y: -637}
+      _StartControl: {x: 1262, y: -637}
+      _EndPosition: {x: 912, y: -589}
+      _EndControl: {x: 862, y: -589}
     showDataValue: 0
   - branchID: 630327709
     enabled: 1
@@ -1160,10 +1161,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 2415121505091506890}
     outNodeID: 182639827
     lineBezier:
-      _StartPosition: {x: 336.00003, y: -517.00006}
-      _StartControl: {x: 386.00003, y: -517.00006}
-      _EndPosition: {x: 36.000004, y: -469.00006}
-      _EndControl: {x: -13.999996, y: -469.00006}
+      _StartPosition: {x: 336, y: -517}
+      _StartControl: {x: 386, y: -517}
+      _EndPosition: {x: 35.999973, y: -469.00003}
+      _EndControl: {x: -14.000027, y: -469.00003}
     showDataValue: 0
   - branchID: 1752227528
     enabled: 1
@@ -1174,8 +1175,8 @@ MonoBehaviour:
     lineBezier:
       _StartPosition: {x: -60.00003, y: -289}
       _StartControl: {x: -10.0000305, y: -289}
-      _EndPosition: {x: -360.00003, y: -241.00003}
-      _EndControl: {x: -410.00003, y: -241.00003}
+      _EndPosition: {x: -360.00003, y: -241.00002}
+      _EndControl: {x: -410.00003, y: -241.00002}
     showDataValue: 0
   - branchID: 726643700
     enabled: 1
@@ -1184,10 +1185,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 2060392124988842731}
     outNodeID: 1497171628
     lineBezier:
-      _StartPosition: {x: 1608.0001, y: -181.00002}
-      _StartControl: {x: 1658.0001, y: -181.00002}
-      _EndPosition: {x: 1308.0001, y: 9.00005}
-      _EndControl: {x: 1258.0001, y: 9.00005}
+      _StartPosition: {x: 1608, y: -181}
+      _StartControl: {x: 1658, y: -181}
+      _EndPosition: {x: 1308, y: 175.00003}
+      _EndControl: {x: 1258, y: 175.00003}
     showDataValue: 0
   - branchID: 1848543519
     enabled: 1
@@ -1196,10 +1197,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 4258145730873475691}
     outNodeID: 1593487619
     lineBezier:
-      _StartPosition: {x: 1608.0001, y: -121}
-      _StartControl: {x: 1658.0001, y: -121}
-      _EndPosition: {x: 1308.0001, y: -72.99999}
-      _EndControl: {x: 1258.0001, y: -72.99999}
+      _StartPosition: {x: 1608, y: -120.99999}
+      _StartControl: {x: 1658, y: -120.99999}
+      _EndPosition: {x: 1308, y: -72.999985}
+      _EndControl: {x: 1258, y: -72.999985}
     showDataValue: 0
   - branchID: 822959691
     enabled: 1
@@ -1208,10 +1209,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 9130051215396019343}
     outNodeID: 471587800
     lineBezier:
-      _StartPosition: {x: 1608.0001, y: -72.99999}
-      _StartControl: {x: 1658.0001, y: -72.99999}
-      _EndPosition: {x: 1308.0001, y: 9.00005}
-      _EndControl: {x: 1258.0001, y: 9.00005}
+      _StartPosition: {x: 1608, y: -72.999985}
+      _StartControl: {x: 1658, y: -72.999985}
+      _EndPosition: {x: 1308, y: 175.00003}
+      _EndControl: {x: 1258, y: 175.00003}
     showDataValue: 0
   - branchID: 1944859510
     enabled: 1
@@ -1220,10 +1221,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 5257737099310877684}
     outNodeID: 1215376024
     lineBezier:
-      _StartPosition: {x: 1608.0001, y: 479.00006}
-      _StartControl: {x: 1658.0001, y: 479.00006}
-      _EndPosition: {x: 1308.0001, y: 669}
-      _EndControl: {x: 1258.0001, y: 669}
+      _StartPosition: {x: 1608, y: 479.00006}
+      _StartControl: {x: 1658, y: 479.00006}
+      _EndPosition: {x: 1308, y: 669.00006}
+      _EndControl: {x: 1258, y: 669.00006}
     showDataValue: 0
   - branchID: 919275682
     enabled: 1
@@ -1232,10 +1233,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 1587083481872721475}
     outNodeID: 567903791
     lineBezier:
-      _StartPosition: {x: 1008.00006, y: 71.00001}
-      _StartControl: {x: 1058, y: 71.00001}
-      _EndPosition: {x: 708.00006, y: 118.99997}
-      _EndControl: {x: 658.00006, y: 118.99997}
+      _StartPosition: {x: 1008, y: 71.00001}
+      _StartControl: {x: 1058, y: 71}
+      _EndPosition: {x: 708, y: 119.00001}
+      _EndControl: {x: 658, y: 119.00001}
     showDataValue: 0
   - branchID: 2041175501
     enabled: 1
@@ -1244,10 +1245,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 3999536372676296994}
     outNodeID: 1689803610
     lineBezier:
-      _StartPosition: {x: 1008.00006, y: 118.99997}
-      _StartControl: {x: 1058, y: 118.99997}
-      _EndPosition: {x: 708.00006, y: 273}
-      _EndControl: {x: 658.00006, y: 273}
+      _StartPosition: {x: 1008, y: 119.00001}
+      _StartControl: {x: 1058, y: 119}
+      _EndPosition: {x: 708, y: 439}
+      _EndControl: {x: 658, y: 439}
     showDataValue: 0
   - branchID: 1015591673
     enabled: 1
@@ -1256,10 +1257,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 2319198014445404278}
     outNodeID: 664219782
     lineBezier:
-      _StartPosition: {x: 1608.0001, y: 539}
-      _StartControl: {x: 1658.0001, y: 539}
-      _EndPosition: {x: 1308.0001, y: 587.0001}
-      _EndControl: {x: 1258.0001, y: 587.0001}
+      _StartPosition: {x: 1608, y: 539}
+      _StartControl: {x: 1658, y: 539}
+      _EndPosition: {x: 1308, y: 587}
+      _EndControl: {x: 1258, y: 587}
     showDataValue: 0
   - branchID: 2137491492
     enabled: 1
@@ -1268,10 +1269,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 5920237829851806874}
     outNodeID: 1786119601
     lineBezier:
-      _StartPosition: {x: 1608.0001, y: 587.0001}
-      _StartControl: {x: 1658.0001, y: 587.0001}
-      _EndPosition: {x: 1308.0001, y: 669}
-      _EndControl: {x: 1258.0001, y: 669}
+      _StartPosition: {x: 1608, y: 587}
+      _StartControl: {x: 1658, y: 587}
+      _EndPosition: {x: 1308, y: 669.00006}
+      _EndControl: {x: 1258, y: 669.00006}
     showDataValue: 0
   - branchID: 1111907664
     enabled: 1
@@ -1280,10 +1281,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 7761179653929933079}
     outNodeID: 760535773
     lineBezier:
-      _StartPosition: {x: 1008.00006, y: 10.999989}
-      _StartControl: {x: 1058, y: 10.999989}
-      _EndPosition: {x: 708.00006, y: 273}
-      _EndControl: {x: 658.00006, y: 273}
+      _StartPosition: {x: 1008, y: 11.000013}
+      _StartControl: {x: 1058, y: 11.000013}
+      _EndPosition: {x: 708, y: 439}
+      _EndControl: {x: 658, y: 439}
     showDataValue: 0
   - branchID: 86323836
     enabled: 1
@@ -1292,10 +1293,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 246787044219938569}
     outNodeID: 1882435592
     lineBezier:
-      _StartPosition: {x: 1008.00006, y: -37.00001}
-      _StartControl: {x: 1058, y: -37.00001}
-      _EndPosition: {x: 708.00006, y: 10.999989}
-      _EndControl: {x: 658.00006, y: 10.999989}
+      _StartPosition: {x: 1008, y: -36.99999}
+      _StartControl: {x: 1058, y: -36.99999}
+      _EndPosition: {x: 708, y: 11.000013}
+      _EndControl: {x: 658, y: 11.000013}
     showDataValue: 0
   - branchID: 1208223655
     enabled: 1
@@ -1304,10 +1305,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 7555176431742702183}
     outNodeID: 1978751583
     lineBezier:
-      _StartPosition: {x: -192.00003, y: 167.00003}
-      _StartControl: {x: -142.00003, y: 167.00003}
-      _EndPosition: {x: -492.00006, y: 214.99997}
-      _EndControl: {x: -542.00006, y: 214.99997}
+      _StartPosition: {x: -192.00003, y: 167}
+      _StartControl: {x: -142.00003, y: 167}
+      _EndPosition: {x: -492.00003, y: 215}
+      _EndControl: {x: -542, y: 215}
     showDataValue: 0
   - branchID: 182639827
     enabled: 1
@@ -1316,10 +1317,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 2358295948235549609}
     outNodeID: 856851764
     lineBezier:
-      _StartPosition: {x: -192.00003, y: 214.99997}
-      _StartControl: {x: -142.00003, y: 214.99997}
-      _EndPosition: {x: -492.00006, y: 263.00006}
-      _EndControl: {x: -542.00006, y: 263.00006}
+      _StartPosition: {x: -192.00003, y: 215}
+      _StartControl: {x: -142.00003, y: 215}
+      _EndPosition: {x: -492.00003, y: 263}
+      _EndControl: {x: -542, y: 263}
     showDataValue: 0
   _StartStateID: 1559595546
   _States:
@@ -1373,6 +1374,7 @@ MonoBehaviour:
     _Behaviours:
     - {fileID: 364020707114290788}
     - {fileID: 5180931027073457773}
+    - {fileID: 3648942577600734423}
     - {fileID: 6276171615498854428}
     _BreakPoint: 0
   - _NodeGraph: {fileID: 4643134090000307806}
@@ -1462,7 +1464,7 @@ MonoBehaviour:
     _IsSettedName: 1
     _Resident: 0
     _Behaviours:
-    - {fileID: 4939895225812315213}
+    - {fileID: 8368517237085434827}
     - {fileID: 6687107640367110093}
     - {fileID: 8901721063159071967}
     - {fileID: 2693794199207021641}
@@ -3288,7 +3290,7 @@ MonoBehaviour:
   _NodeGraph: {fileID: 4643134090000307806}
   _NodeID: 726643700
   _DataSlotFieldLinks: []
-  expanded: 0
+  expanded: 1
   _BehaviourEnabled: 1
   dequeElement:
     _Type: 1
@@ -3399,7 +3401,7 @@ MonoBehaviour:
   _NodeGraph: {fileID: 4643134090000307806}
   _NodeID: 534011718
   _DataSlotFieldLinks: []
-  expanded: 0
+  expanded: 1
   _BehaviourEnabled: 1
   dequeElement:
     _Type: 1
@@ -3436,53 +3438,6 @@ MonoBehaviour:
       id: 0
       name: 
     _Probability: 0
-    _Slot:
-      nodeGraph: {fileID: 0}
-      branchID: 0
---- !u!114 &4939895225812315213
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7748607480361016497}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39c39eacfd924b0cb947ef98c7e87988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _NodeGraph: {fileID: 4643134090000307806}
-  _NodeID: 822959691
-  _DataSlotFieldLinks: []
-  expanded: 0
-  _BehaviourEnabled: 1
-  animator:
-    _Type: 1
-    _HierarchyType: 0
-    _Value: {fileID: 0}
-    _Parameter:
-      _Type: 0
-      _Container: {fileID: 3091711851561693571}
-      _Slot:
-        nodeGraph: {fileID: 0}
-        branchID: 0
-      id: 630327709
-      name: Lerp Target Animator
-    _Slot:
-      nodeGraph: {fileID: 0}
-      branchID: 0
-  target:
-    _Type: 0
-    _HierarchyType: 0
-    _Value: {fileID: 0}
-    _Parameter:
-      _Type: 0
-      _Container: {fileID: 0}
-      _Slot:
-        nodeGraph: {fileID: 0}
-        branchID: 0
-      id: 0
-      name: 
     _Slot:
       nodeGraph: {fileID: 0}
       branchID: 0
@@ -4389,3 +4344,104 @@ MonoBehaviour:
       _AssemblyTypeName: SBEPIS.Capturellection.DequeElement, SBEPIS.Capturellection
   _IsInGraphParameter: 0
   _SerializeVersion: 1
+--- !u!114 &3648942577600734423
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18a783012a54420b2017db778c12035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 1655911537
+  _DataSlotFieldLinks: []
+  expanded: 0
+  _BehaviourEnabled: 1
+  passIfValid: 1
+  grabbable:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 534011718
+      name: Grabbable
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  onGrab:
+    name: 
+    _StateID: 822959691
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+  onDrop:
+    name: 
+    _StateID: 0
+    transitionTiming: 1
+    _LineColorChanged: 1
+    _LineColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+--- !u!114 &8368517237085434827
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748607480361016497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52f8922f64f45a8a2cbe862fbe098ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _NodeGraph: {fileID: 4643134090000307806}
+  _NodeID: 822959691
+  _DataSlotFieldLinks: []
+  expanded: 1
+  _BehaviourEnabled: 1
+  dequeElement:
+    _Type: 1
+    _HierarchyType: 0
+    _Value: {fileID: 0}
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 3091711851561693571}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 1559595546
+      name: Deque Element
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  index:
+    _Type: 0
+    _Value: -2
+    _Parameter:
+      _Type: 0
+      _Container: {fileID: 0}
+      _Slot:
+        nodeGraph: {fileID: 0}
+        branchID: 0
+      id: 0
+      name: 
+    _MinRange: 0
+    _MaxRange: 0
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+  currentTargetIndex:
+    _Type: 0
+    _Container: {fileID: 3847982722882840028}
+    _Slot:
+      nodeGraph: {fileID: 0}
+      branchID: 0
+    id: 1559595546
+    name: Target Index

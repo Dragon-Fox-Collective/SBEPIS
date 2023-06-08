@@ -16,8 +16,6 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public int InventoryCount { get; }
 		
-		public int NumEmptySlots { get; }
-		
 		public bool HasNoCards { get; }
 		public bool HasAllCards { get; }
 		
@@ -37,6 +35,7 @@ namespace SBEPIS.Capturellection.Storage
 		public UniTask<FetchResult> FetchItem(InventoryStorable card);
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action);
 		
+		public void LoadInit(List<InventoryStorable> cards);
 		public void Load(List<InventoryStorable> cards);
 		public IEnumerable<InventoryStorable> Save();
 		
