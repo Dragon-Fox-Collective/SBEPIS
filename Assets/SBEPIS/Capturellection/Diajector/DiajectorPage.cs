@@ -27,6 +27,7 @@ namespace SBEPIS.Capturellection
 		public bool IsOpen => Diajector.CurrentPage == this;
 		
 		private readonly Dictionary<DequeElement, CardTarget> cardTargets = new();
+		public IEnumerable<CardTarget> CardTargets => cardTargets.Values;
 		
 		public void AddCard(DequeElement card, CardTarget target)
 		{
@@ -70,7 +71,7 @@ namespace SBEPIS.Capturellection
 				return;
 			
 			onPrepareCardCreation.Invoke(this);
-			pageCreator.CreateCards(GetComponentsInChildren<CardTarget>()).ForEach(AddCard);
+			pageCreator.CreateCards(GetComponentsInChildren<CardTarget>().Where(target => !cardTargets.ContainsValue(target))).ForEach(AddCard);
 			hasCreatedCards = true;
 		}
 		

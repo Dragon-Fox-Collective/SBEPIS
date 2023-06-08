@@ -69,7 +69,7 @@ namespace SBEPIS.Capturellection.Deques
 		{
 			Storable newStorable = storable.GetNewStorableLikeThis();
 			newStorable.Parent = storable.Parent;
-			newStorable.Load(storable.Select(card => InstantiateCard(state, card, proxies.GetEnsured(card))).ToList());
+			newStorable.LoadInit(storable.Select(card => InstantiateCard(state, card, proxies.GetEnsured(card))).ToList());
 			state.originalStorables.Add(newStorable, storable);
 			return newStorable;
 		}
@@ -104,7 +104,7 @@ namespace SBEPIS.Capturellection.Deques
 	[Serializable]
 	public class MemoryState : InventoryState, DirectionState, FlippedState
 	{
-		public List<Storable> Inventory { get; set; } = new();
+		public CallbackList<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
 		public List<Storable> FlippedStorables { get; } = new();
 		public readonly Dictionary<Storable, Storable> pairs = new();

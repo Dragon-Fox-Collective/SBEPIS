@@ -40,7 +40,9 @@ namespace SBEPIS.Capturellection
 			foreach (Renderer objRenderer in obj.GetComponentsInChildren<Renderer>())
 				bounds.Encapsulate(objRenderer.bounds);
 			objectParent.position = stage.position + objectParent.position - bounds.center;
-			stage.localScale = Mathf.Min(stage.rect.width / 2f / bounds.size.x, stage.rect.height / bounds.size.y) * Vector3.one;
+			stage.localScale = bounds.size.magnitude > 0
+				? Mathf.Min(stage.rect.width / 2f / bounds.size.x, stage.rect.height / bounds.size.y) * Vector3.one
+				: Vector3.one;
 			
 			Texture2D rtn = TakePicture();
 			

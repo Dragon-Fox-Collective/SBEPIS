@@ -10,12 +10,14 @@ namespace SBEPIS.Tests.Scenes
 	public class DequeSystemScene : ValidatedMonoBehaviour
 	{
 		[Anywhere] public Grabber grabber;
+		[Anywhere] public Capturellector capturellector;
 		[Anywhere] public DequeBox dequeBox;
 		[Anywhere] public Diajector diajector;
 		[Anywhere] public Grabbable dequeBoxGrabbable;
 		[Anywhere] public DelayedCollisionTrigger dequeBoxTrigger;
 		[Anywhere] public Transform dropPoint;
 		[Anywhere] public Inventory inventory;
+		[Anywhere] public Capturellectable capturellectable;
 		public List<CardTarget> cardTargets = new();
 	}
 }

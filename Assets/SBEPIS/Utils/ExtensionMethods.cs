@@ -97,7 +97,7 @@ public static class ExtensionMethods
 	public static string Join<T>(this string delimiter, IEnumerable<T> source) => string.Join(delimiter, source);
 	public static string ToDelimString<T>(this IEnumerable<T> source) => "[" + ", ".Join(source) +  "]";
 	
-	public static T Pop<T>(this List<T> list)
+	public static T Pop<T>(this IList<T> list)
 	{
 		T obj = list[0];
 		list.RemoveAt(0);
@@ -232,8 +232,8 @@ public static class ExtensionMethods
 			}
 	}
 	
-	public static T RandomElement<T>(this List<T> source) => source[Random.Range(0, source.Count)];
-	public static void AddRange<T>(this List<T> source, int count, Func<T> factory) => source.AddRange(Enumerable.Range(0, count).Select(_ => factory()));
+	public static T RandomElement<T>(this IList<T> source) => source[Random.Range(0, source.Count)];
+	public static void AddRange<T>(this IList<T> source, int count, Func<T> factory) => Enumerable.Range(0, count).Select(_ => factory()).ForEach(source.Add);
 	
 	// Note that lhs * rhs means rotating by lhs and then by rhs
 	public static Quaternion TransformRotation(this Transform from, Quaternion delta) => from.rotation * delta; // from * delta = to
@@ -308,7 +308,7 @@ public static class ExtensionMethods
 			action(item1, item2);
 	}
 	
-	public static IEnumerable<IEnumerable<T>> Divide<T>(this List<T> source, int count)
+	public static IEnumerable<IEnumerable<T>> Divide<T>(this IList<T> source, int count)
 	{
 		for (int i = 0; i * count < source.Count; i++)
 			yield return source.Skip(i * count).Take(count);
@@ -340,6 +340,9 @@ public static class ExtensionMethods
 	
 	public static float Aggregate(this Vector3 vector, Func<float, float, float> func) => vector.Aggregate(0, func);
 	public static float Aggregate(this Vector3 vector, float seed, Func<float, float, float> func) => func(func(func(seed, vector.x), vector.y), vector.z);
+	
+	public static bool Any(this Vector3 vector, Func<float, bool> func) => vector.AsEnumerable().Any(func);
+	public static bool All(this Vector3 vector, Func<float, bool> func) => vector.AsEnumerable().All(func);
 	
 	public static Vector3 Sum<T>(this IEnumerable<T> source, Func<T, Vector3> func) => source.Aggregate(Vector3.zero, (sum, x) => sum + func(x));
 	public static Vector3 Sum(this IEnumerable<Vector3> source) => source.Aggregate(Vector3.zero, (sum, x) => sum + x);

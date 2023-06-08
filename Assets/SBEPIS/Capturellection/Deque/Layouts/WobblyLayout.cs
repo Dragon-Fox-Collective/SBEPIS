@@ -15,7 +15,7 @@ namespace SBEPIS.Capturellection.Deques
 		public float wobbleTimeFactor = 1;
 		public float wobbleSpaceFactor = 1;
 		
-		public void Tick<TState>(List<Storable> inventory, TState state, float deltaTime) where TState : DirectionState, TimeState
+		public void Tick<TState>(IList<Storable> inventory, TState state, float deltaTime) where TState : DirectionState, TimeState
 		{
 			state.Time += deltaTime;
 			
@@ -23,7 +23,7 @@ namespace SBEPIS.Capturellection.Deques
 				storable.Tick(deltaTime);
 		}
 		
-		public void Layout<TState>(List<Storable> inventory, TState state) where TState : DirectionState, TimeState
+		public void Layout<TState>(IList<Storable> inventory, TState state) where TState : DirectionState, TimeState
 		{
 			foreach (Storable storable in inventory)
 				storable.Layout(Quaternion.Euler(0, 0, -60) * state.Direction);
@@ -53,7 +53,7 @@ namespace SBEPIS.Capturellection.Deques
 	
 	public class WobblyState : InventoryState, DirectionState, TimeState
 	{
-		public List<Storable> Inventory { get; set; } = new();
+		public CallbackList<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
 		public float Time { get; set; }
 	}

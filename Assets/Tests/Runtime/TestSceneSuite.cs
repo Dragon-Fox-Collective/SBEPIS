@@ -13,11 +13,21 @@ namespace SBEPIS.Utils
 	{
 		protected TScene Scene { get; private set; }
 		
-		[SetUp]
-		public void Setup()
+		private bool requiresStart = false;
+		
+		public TestSceneSuite() : this(false) { }
+		public TestSceneSuite(bool requiresStart)
+		{
+			this.requiresStart = requiresStart;
+		}
+		
+		[UnitySetUp]
+		public IEnumerator Setup()
 		{
 			Scene = GetTestingPrefab();
 			Assert.That(Scene, Is.Not.Null);
+			
+			if (requiresStart) yield return 0;
 		}
 		
 		[UnityTearDown]
