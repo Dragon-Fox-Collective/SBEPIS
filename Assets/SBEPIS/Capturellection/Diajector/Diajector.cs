@@ -118,7 +118,7 @@ namespace SBEPIS.Capturellection
 		
 		public bool ShouldCardBeDisplayed(DequeElement card) => IsOpen && CurrentPage.HasCard(card);
 		
-		public LerpTarget GetLerpTargetAtIndex(DequeElement card, int index) => index >= 0 && index < lerpTargets.Count ? lerpTargets[index] : index == lerpTargets.Count ? card.LerpTarget : throw new IndexOutOfRangeException();
-		public int LerpTargetCount => lerpTargets.Count + 1;
+		public LerpTarget GetLerpTargetAtPathIndex(DequeElement card, int index) => index >= 0 && index < lerpTargets.Count ? lerpTargets[index] : index == lerpTargets.Count ? card.LerpTarget : throw new IndexOutOfRangeException();
+		public int LerpTargetPathCount => lerpTargets.Count + 1;
 	}
 }
