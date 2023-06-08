@@ -42,6 +42,7 @@ namespace SBEPIS.Capturellection
 			if (!result.wasSuccessful) return null;
 			
 			MoveEjectedItem(result.card, result.ejectedItem);
+			if (!result.card.gameObject.activeSelf) result.card.gameObject.SetActive(true);
 			TryGrab(result.card.transform);
 			return result.container;
 		}

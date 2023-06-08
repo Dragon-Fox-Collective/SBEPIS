@@ -20,7 +20,7 @@ namespace SBEPIS.Capturellection
 			ResetCaptureCode();
 		}
 		
-		public void UpdateCaptureCode(CaptureContainer card, Capturellectable item) => UpdateCaptureCode(item.GetComponent<ItemModule>().Bits.Bits);
+		public void UpdateCaptureCode(CaptureContainer card, Capturellectable item) => UpdateCaptureCode(item.TryGetComponent(out ItemModule module) ? module.Bits.Bits : new BitSet());
 		public void UpdateCaptureCode(BitSet bits)
 		{
 			this.bits = bits;

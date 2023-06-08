@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace SBEPIS.Capturellection
 		[Tooltip("Purely organizational for the hierarchy")]
 		[SerializeField, Anywhere] private Transform cardParent;
 		
+		[SerializeField, Anywhere(Flag.Optional)] private DiajectorCaptureLayout layout;
+		
 		public UnityEvent<Inventory> onLoadIntoDeque = new();
 		public UnityEvent<Inventory, List<InventoryStorable>> onSaveFromDeque = new();
 		
@@ -41,15 +44,25 @@ namespace SBEPIS.Capturellection
 		
 		private void LoadInventoryIntoDeque(StorableGroupDefinition definition, Transform ejectTransform)
 		{
+			if (storable != null) throw new InvalidOperationException($"Inventory {this} is already loaded");
+			
 			storable = StorableGroupDefinition.GetNewStorable(definition);
-			Load(ref savedInventory);
+			if (layout) storable.Parent = layout.transform;
+			savedInventory.ForEach(SetupCard);
+			storable.LoadInit(savedInventory);
+			savedInventory.ForEach(TearDownCard);
+			
 			foreach (InventoryStorable card in savedInventory)
 			{
 				Debug.Log($"Ejecting leftover card {card}", this);
 				card.gameObject.SetActive(true);
 				card.transform.SetPositionAndRotation(ejectTransform.position, ejectTransform.rotation);
 			}
+			
 			savedInventory.Clear();
+			
+			if (layout) storable.ForEach(layout.SyncAddNewCard);
+			
 			onLoadIntoDeque.Invoke(this);
 		}
 		private void UseExistingStorable(Storable existingStorable)
@@ -85,7 +98,6 @@ namespace SBEPIS.Capturellection
 			get => storable.Rotation;
 			set => storable.Rotation = value;
 		}
-		public void SetStorableParent(Transform transform) => storable.Parent = transform;
 		public Vector3 MaxPossibleSize => storable.MaxPossibleSize;
 		public void InitPage(DiajectorPage page) => storable.InitPage(page);
 		public void Tick(float deltaTime) => storable.Tick(deltaTime);
@@ -110,14 +122,14 @@ namespace SBEPIS.Capturellection
 		public void Load(InventoryStorable card)
 		{
 			List<InventoryStorable> cards = new(){ card };
-			Load(ref cards);
+			Load(cards);
 			if (cards.Count > 0) Debug.Log($"Extra card {card}");
 		}
-		public void Load(ref List<InventoryStorable> cards)
+		public void Load(List<InventoryStorable> cards)
 		{
-			cards = cards.Process(SetupCard).ToList();
+			cards.ForEach(SetupCard);
 			storable.Load(cards);
-			cards = cards.Process(TearDownCard).ToList();
+			cards.ForEach(TearDownCard);
 		}
 		public List<InventoryStorable> Save() => storable.Save().Process(TearDownCard).ToList();
 		public IEnumerable<Texture2D> GetCardTextures(InventoryStorable card) => storable.GetCardTextures(card);

@@ -12,7 +12,7 @@ namespace SBEPIS.Capturellection.Deques
 	{
 		public Vector2 offset = new(0.1f, 0.1f);
 		
-		public void Layout<TState>(List<Storable> inventory, TState state) where TState : DirectionState, FlippedState
+		public void Layout<TState>(IList<Storable> inventory, TState state) where TState : DirectionState, FlippedState
 		{
 			foreach (Storable storable in inventory)
 				storable.Layout(Quaternion.Euler(0, 0, -60) * state.Direction);
@@ -50,7 +50,7 @@ namespace SBEPIS.Capturellection.Deques
 	
 	public class FlippedGridState : InventoryState, DirectionState, FlippedState
 	{
-		public List<Storable> Inventory { get; set; } = new();
+		public CallbackList<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
 		public List<Storable> FlippedStorables { get; } = new();
 	}

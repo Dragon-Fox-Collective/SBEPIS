@@ -17,7 +17,6 @@ namespace SBEPIS.Capturellection.Deques
 		public int SlotIndex { get; set; }
 		public Storable OriginalStorable { get; set; }
 		public DiajectorPage Page { get; set; }
-		public DiajectorCaptureLayout Layout => Page.GetComponentInChildren<DiajectorCaptureLayout>();
 		
 		public void Fetch()
 		{

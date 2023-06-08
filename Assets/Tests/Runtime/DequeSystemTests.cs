@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using NUnit.Framework;
 using SBEPIS.Capturellection;
 using SBEPIS.Utils;
@@ -57,7 +58,6 @@ namespace SBEPIS.Tests
 		[Test]
 		public void NewCards_HavePage()
 		{
-			Scene.diajector.StartAssembly(Vector3.zero, Quaternion.identity);
 			Assert.That(Scene.inventory.First().DequeElement.Page);
 		}
 		
@@ -77,6 +77,22 @@ namespace SBEPIS.Tests
 			Assert.That(reached.Any(pair => pair.Value), Is.False);
 			yield return new WaitUntilOrTimeout(() => reached.All(pair => pair.Value), 3);
 			Assert.That(reached.All(pair => pair.Value), Is.True);
+		}
+		
+		[UnityTest]
+		public IEnumerator CapturingItem_WithClosedDeque_ActivatesCard() => UniTask.ToCoroutine(async () =>
+		{
+			Assert.That(!Scene.inventory.First().gameObject.activeSelf);
+			await Scene.capturellector.CaptureAndGrabCard(Scene.capturellectable);
+			Assert.That(Scene.inventory.First().gameObject.activeSelf);
+		});
+		
+		[Test]
+		public void OpeningDiajector_AfterInventoryMakesTargets_DoesntAddDuplicateCardTargets()
+		{
+			Scene.diajector.StartAssembly(Vector3.zero, Quaternion.identity);
+			List<CardTarget> cardTargets = Scene.diajector.CurrentPage.CardTargets.ToList();
+			Assert.That(cardTargets.Count, Is.EqualTo(cardTargets.Distinct().Count()));
 		}
 	}
 }

@@ -20,7 +20,7 @@ namespace SBEPIS.Capturellection.State
 		
 		private void MoveForward()
 		{
-			dequeElement.value.Animator.TargetTo(dequeElement.value.GetLerpTarget(targetIndex.value + 1), targetIndex.value < dequeElement.value.Page.Diajector.LerpTargetCount - 2 ? KeepMovingForward : null);
+			dequeElement.value.Animator.TargetTo(dequeElement.value.GetLerpTarget(targetIndex.value + 1), targetIndex.value < dequeElement.value.Page.Diajector.LerpTargetPathCount - 2 ? KeepMovingForward : null);
 		}
 		
 		private void KeepMovingForward(LerpTargetAnimator animator)

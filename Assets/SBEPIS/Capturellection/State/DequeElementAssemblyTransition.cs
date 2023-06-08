@@ -15,12 +15,10 @@ namespace SBEPIS.Capturellection.State
 		[SerializeField] private StateLink onStartDisassembly;
 		[SerializeField] private StateLink onStopAssemblyAndDisassembly;
 		
-		private bool addedListeners;
+		private bool addedListeners = false;
 		
 		public override void OnStateBegin()
 		{
-			addedListeners = false;
-			
 			if (passIfValid)
 				if (dequeElement.value.IsAssembling && Transition(onStartAssembly))
 					return;
@@ -28,8 +26,6 @@ namespace SBEPIS.Capturellection.State
 					return;
 				else if (!dequeElement.value.IsAssembling && !dequeElement.value.IsDisassembling && Transition(onStopAssemblyAndDisassembly))
 					return;
-			
-			addedListeners = true;
 			
 			AddListeners();
 		}
@@ -42,6 +38,7 @@ namespace SBEPIS.Capturellection.State
 		
 		private void AddListeners()
 		{
+			addedListeners = true;
 			dequeElement.value.onStartAssembling.AddListener(OnStartAssembly);
 			dequeElement.value.onStartDisassembling.AddListener(OnStartDisassembly);
 			dequeElement.value.onStopAssemblingAndDisassembling.AddListener(OnStopAssemblyAndDisassembly);
@@ -49,6 +46,7 @@ namespace SBEPIS.Capturellection.State
 		
 		private void RemoveListeners()
 		{
+			addedListeners = false;
 			dequeElement.value.onStartAssembling.RemoveListener(OnStartAssembly);
 			dequeElement.value.onStartDisassembling.RemoveListener(OnStartDisassembly);
 			dequeElement.value.onStopAssemblingAndDisassembling.RemoveListener(OnStopAssemblyAndDisassembly);

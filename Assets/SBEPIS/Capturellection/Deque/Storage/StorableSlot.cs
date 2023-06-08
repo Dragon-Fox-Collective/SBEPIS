@@ -73,6 +73,7 @@ namespace SBEPIS.Capturellection.Storage
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action) =>
 			throw new ArgumentException($"Interacting with {card} never hit {targetDeque}");
 		
+		public void LoadInit(List<InventoryStorable> cards) => Load(cards);
 		public void Load(List<InventoryStorable> cards)
 		{
 			if (HasAllCards || cards.Count == 0) return;

@@ -89,11 +89,8 @@ namespace SBEPIS.Tests
 		[UnityTest]
 		public IEnumerator ForceOpeningDiajector_GetsCardToBoard()
 		{
-			Debug.Log(Time.frameCount);
 			Scene.diajectorPage.CreateCardsIfNeeded();
-			Debug.Log(Time.frameCount);
 			yield return 0;
-			Debug.Log(Time.frameCount);
 			
 			bool reached = false;
 			Scene.cardTarget.Card.Animator.AddListenerOnMoveTo(Scene.endCardTarget, _ => reached = true);
