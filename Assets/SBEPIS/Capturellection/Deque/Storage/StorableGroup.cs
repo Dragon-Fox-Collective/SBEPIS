@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -10,12 +11,14 @@ namespace SBEPIS.Capturellection.Storage
 		[SerializeField] private StorableGroupDefinition definition;
 		
 		private object state;
-		private List<Storable> Inventory => ((InventoryState)state).Inventory;
+		private CallbackList<Storable> Inventory => ((InventoryState)state).Inventory;
 		
 		public void Init(StorableGroupDefinition definition)
 		{
 			this.definition = definition;
 			state = definition.Ruleset.GetNewState();
+			Inventory.onAddItem.AddListener(item => item.ForEach(GetComponentInParent<DiajectorCaptureLayout>().SyncAddNewCard));
+			Inventory.onRemoveItem.AddListener(item => item.ForEach(GetComponentInParent<DiajectorCaptureLayout>().SyncRemoveOldCard));
 		}
 		
 		public Vector3 Position
@@ -38,10 +41,8 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public int InventoryCount => Inventory.Count;
 		
-		public int NumEmptySlots => Inventory.Select(storable => storable.NumEmptySlots).Sum() + (definition.MaxStorables - Inventory.Count) * definition.MaxCardsPerStorable;
-		
 		public bool HasNoCards => Inventory.Count == 0;
-		public bool HasAllCards => NumEmptySlots == 0;
+		public bool HasAllCards => Inventory.Count == definition.MaxStorables && Inventory.All(storable => storable.HasAllCards);
 		
 		public bool HasAllCardsEmpty => Inventory.All(storable => storable.HasAllCardsEmpty);
 		public bool HasAllCardsFull => Inventory.All(storable => storable.HasAllCardsFull);
@@ -75,25 +76,37 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action) => definition.Ruleset.Interact(state, card, targetDeque, action);
 		
-		public void Load(List<InventoryStorable> cards)
+		public void LoadInit(List<InventoryStorable> cards) => Load(cards, true);
+		public void Load(List<InventoryStorable> cards) => Load(cards, false);
+		private void Load(List<InventoryStorable> cards, bool init)
 		{
+			if (init && Inventory.Any())
+				throw new InvalidOperationException($"StorableGroup {this} tried to initialize load with existing inventory");
+			
 			if (!cards.Any()) return;
-			int numCardsToTake = Mathf.Min(cards.Count, NumEmptySlots);
-			List<InventoryStorable> newCards = cards.Take(numCardsToTake).SelectMany(card => definition.Ruleset.LoadCardHook(state, card)).ToList();
-			cards.RemoveRange(0, numCardsToTake);
+			
+			List<InventoryStorable> newCards = cards.SelectMany(card => definition.Ruleset.LoadCardHook(state, card)).ToList();
+			cards.Clear();
 			
 			LoadExistingStorables(newCards);
-			LoadNewStorables(newCards);
+			LoadNewStorables(newCards, !init);
+			
+			cards.AddRange(newCards.SelectMany(card => definition.Ruleset.SaveCardHook(state, card)));
 		}
 		private void LoadExistingStorables(List<InventoryStorable> cards) => Inventory.ForEach(storable => storable.Load(cards));
-		private void LoadNewStorables(List<InventoryStorable> cards)
+		private void LoadNewStorables(List<InventoryStorable> cards, bool useCallbacks = true)
 		{
 			while (cards.Any())
 			{
 				Storable storable = StorableGroupDefinition.GetNewStorable(definition.Subdefinition);
 				storable.Parent = transform;
-				storable.Load(cards);
-				Inventory.AddRange(definition.Ruleset.LoadStorableHook(state, storable));
+				storable.LoadInit(cards);
+				
+				IEnumerable<Storable> storables = definition.Ruleset.LoadStorableHook(state, storable);
+				if (useCallbacks)
+					Inventory.AddRange(storables);
+				else
+					Inventory.backingList.AddRange(storables);
 			}
 		}
 		

@@ -40,7 +40,6 @@ namespace SBEPIS.Capturellection.Deques
 				
 				state.Inventory.Insert(bottle.SlotIndex, storable);
 				
-				bottle.Layout.SyncCards();
 				bottle.Page.StartAssemblyForCards(storable.Select(card => card.DequeElement));
 				
 				Destroy(bottle.Root.gameObject);
@@ -65,8 +64,6 @@ namespace SBEPIS.Capturellection.Deques
 			state.Inventory.Remove(bottle.Slot);
 			state.bottles.Remove(bottle.Slot);
 			Destroy(bottle.Slot.gameObject);
-			
-			bottle.Layout.SyncCards();
 		}
 		
 		private async UniTask<Bottle> ReplaceStorableWithBottle(MessageInABottleState state, Storable storable)
@@ -74,7 +71,6 @@ namespace SBEPIS.Capturellection.Deques
 			Bottle bottle = AddBottle(state, storable);
 			storable.ForEach(card => card.DequeElement.ForceClose());
 			state.Inventory[state.Inventory.IndexOf(storable)] = bottle.Slot;
-			storable.First().DequeElement.Page.GetComponentInChildren<DiajectorCaptureLayout>().SyncCards();
 			await UniTask.DelayFrame(1); // Wait for FSM to Start
 			bottle.Card.DequeElement.ForceOpen();
 			return bottle;
@@ -119,7 +115,7 @@ namespace SBEPIS.Capturellection.Deques
 	
 	public class MessageInABottleState : InventoryState, DirectionState
 	{
-		public List<Storable> Inventory { get; set; } = new();
+		public CallbackList<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
 		public readonly Dictionary<Storable, Bottle> bottles = new();
 	}

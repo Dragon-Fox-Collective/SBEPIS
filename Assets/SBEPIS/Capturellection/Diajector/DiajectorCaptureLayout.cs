@@ -26,11 +26,6 @@ namespace SBEPIS.Capturellection
 			LayoutTargets();
 		}
 		
-		public void SetInventoryStorableParent(Inventory inventory)
-		{
-			inventory.SetStorableParent(transform);
-		}
-		
 		private void LayoutTargets()
 		{
 			inventory.Layout(directionEndpoint ? transform.InverseTransformPoint(directionEndpoint.position).normalized : Vector3.zero);
@@ -81,21 +76,8 @@ namespace SBEPIS.Capturellection
 			RemoveTemporaryTarget(card);
 		}
 		
-		public void SyncCards()
-		{
-			if (inventory)
-			{
-				SyncRemoveOldCards();
-				SyncAddNewCards();
-			}
-			else
-			{
-				SyncRemoveAllCards();
-			}
-		}
-		private void SyncRemoveOldCards() => targets.Select(pair => pair.Key).Where(card => !inventory.Contains(card)).ToList().ForEach(RemovePermanentTargetAndCard);
-		private void SyncAddNewCards() => inventory.Where(card => !targets.ContainsKey(card)).ForEach(SyncAddNewCard);
-		private void SyncAddNewCard(InventoryStorable card)
+		public void SyncRemoveOldCard(InventoryStorable card) => RemovePermanentTargetAndCard(card);
+		public void SyncAddNewCard(InventoryStorable card)
 		{
 			CardTarget target = AddPermanentTargetAndCard(card);
 			if (card.TryGetComponent(out Grabbable grabbable) && grabbable.IsBeingHeld)
@@ -108,6 +90,5 @@ namespace SBEPIS.Capturellection
 				card.DequeElement.Animator.TeleportTo(pageCreator.StartTarget);
 			}
 		}
-		private void SyncRemoveAllCards() => targets.Select(pair => pair.Key).ToList().ForEach(RemovePermanentTargetAndCard);
 	}
 }

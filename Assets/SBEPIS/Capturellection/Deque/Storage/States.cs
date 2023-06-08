@@ -5,7 +5,7 @@ namespace SBEPIS.Capturellection.Storage
 {
 	public interface InventoryState
 	{
-		public List<Storable> Inventory { get; set; }
+		public CallbackList<Storable> Inventory { get; set; }
 	}
 	
 	public interface DirectionState

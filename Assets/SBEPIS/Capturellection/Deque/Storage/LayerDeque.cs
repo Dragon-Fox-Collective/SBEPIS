@@ -46,7 +46,7 @@ namespace SBEPIS.Capturellection.Storage
 		{
 			LayerState state = new();
 			state.states = rulesets.Select(ruleset => ruleset.Value.GetNewState()).ToArray();
-			state.Inventory = new List<Storable>();
+			state.Inventory = new CallbackList<Storable>();
 			return state;
 		}
 		
@@ -64,8 +64,8 @@ namespace SBEPIS.Capturellection.Storage
 	{
 		public object[] states;
 		
-		private List<Storable> inventory;
-		public List<Storable> Inventory
+		private CallbackList<Storable> inventory;
+		public CallbackList<Storable> Inventory
 		{
 			get => inventory;
 			set

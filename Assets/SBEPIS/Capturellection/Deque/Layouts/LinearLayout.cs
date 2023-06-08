@@ -12,7 +12,7 @@ namespace SBEPIS.Capturellection.Deques
 		public bool offsetFromEnd = false;
 		public float offset = 0.1f;
 		
-		public void Layout<TState>(List<Storable> inventory, TState state) where TState : DirectionState
+		public void Layout<TState>(IList<Storable> inventory, TState state) where TState : DirectionState
 		{
 			foreach (Storable storable in inventory)
 				storable.Layout(Quaternion.Euler(0, 0, -60) * state.Direction);
@@ -39,7 +39,7 @@ namespace SBEPIS.Capturellection.Deques
 	
 	public class LinearState : InventoryState, DirectionState
 	{
-		public List<Storable> Inventory { get; set; } = new();
+		public CallbackList<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
 	}
 	
