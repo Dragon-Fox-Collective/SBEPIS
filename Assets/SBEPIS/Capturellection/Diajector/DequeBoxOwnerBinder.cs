@@ -1,4 +1,6 @@
+using Cysharp.Threading.Tasks;
 using KBCore.Refs;
+using SBEPIS.Controller;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection
@@ -10,7 +12,16 @@ namespace SBEPIS.Capturellection
 		
 		public void BindToPlayer(PlayerReference playerReference)
 		{
-			playerReference.GetReferencedComponent<DequeBoxOwner>().DequeBox = dequeBox;
+			DequeBoxOwner dequeBoxOwner = playerReference.GetReferencedComponent<DequeBoxOwner>();
+			dequeBoxOwner.DequeBox = dequeBox;
+			Retrieve(dequeBoxOwner).Forget();
+		}
+		
+		private async UniTask Retrieve(DequeBoxOwner dequeBoxOwner)
+		{
+			await UniTask.NextFrame();
+			if (!(dequeBox.TryGetComponent(out Grabbable grabbable) && grabbable.IsBeingHeld))
+				dequeBox.Retrieve(dequeBoxOwner);
 		}
 	}
 }
