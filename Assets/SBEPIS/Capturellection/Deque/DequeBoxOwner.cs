@@ -48,10 +48,7 @@ namespace SBEPIS.Capturellection
 		private void Start()
 		{
 			if (dequeBox)
-			{
 				dequeBox.StartBindToPlayer(playerReference);
-				dequeBox.Retrieve(this);
-			}
 		}
 		
 		public void OnToggleDeque(CallbackContext context)
