@@ -11,8 +11,6 @@ namespace SBEPIS.Capturellection.Deques
 	{
 		[SerializeField] private GameObject bottlePrefab;
 		
-		public override bool CanFetch(MessageInABottleState state, InventoryStorable card) => true;
-		
 		public Bottle AddBottle(MessageInABottleState state, Storable storable)
 		{
 			InventoryStorable sampleCard = storable.First();
