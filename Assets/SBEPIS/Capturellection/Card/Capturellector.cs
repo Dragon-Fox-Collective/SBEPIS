@@ -63,6 +63,7 @@ namespace SBEPIS.Capturellection
 		
 		private Capturellectable RetrieveFromContainer(CaptureContainer container)
 		{
+			if (!container.CanBeFetchedByCapturellectors) return null;
 			Capturellectable item = container.Fetch();
 			if (item) TryGrab(item.transform);
 			return item;
