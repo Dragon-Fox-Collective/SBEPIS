@@ -41,24 +41,9 @@ namespace SBEPIS.Capturellection
 			StoreResult result = await inventory.StoreItem(item);
 			if (!result.wasSuccessful) return null;
 			
-			MoveEjectedItem(result.card, result.ejectedItem);
 			if (!result.card.gameObject.activeSelf) result.card.gameObject.SetActive(true);
 			TryGrab(result.card.transform);
 			return result.container;
-		}
-		
-		private static void MoveEjectedItem(InventoryStorable card, Capturellectable ejectedItem)
-		{
-			if (!ejectedItem)
-				return;
-			
-			Action<Vector3, Quaternion> move = ejectedItem.TryGetComponent(out Rigidbody ejectedItemRigidbody)
-				? ejectedItemRigidbody.Move
-				: ejectedItem.transform.SetPositionAndRotation;
-			if (card.DequeElement.ShouldBeDisplayed)
-				move(card.transform.position, card.transform.rotation);
-			else
-				move(card.DequeElement.Deque.transform.position, card.DequeElement.Deque.transform.rotation);
 		}
 		
 		private Capturellectable RetrieveFromContainer(CaptureContainer container)

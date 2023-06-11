@@ -22,7 +22,7 @@ namespace SBEPIS.Capturellection.State
 		
 		public override void OnStateEnd()
 		{
-			Destroy(arc);
+			Destroy(arc.gameObject);
 		}
 	}
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
@@ -26,5 +27,10 @@ namespace SBEPIS.Capturellection.Storage
 	public interface TopState
 	{
 		public Storable TopStorable { get; set; }
+	}
+	
+	public interface TreeDictionaryState
+	{
+		public TreeDictionary<string, Storable> Tree { get; }
 	}
 }
