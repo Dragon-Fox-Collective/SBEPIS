@@ -47,6 +47,8 @@ namespace SBEPIS.Capturellection.Storage
 		public bool HasAllCardsEmpty => Inventory.All(storable => storable.HasAllCardsEmpty);
 		public bool HasAllCardsFull => Inventory.All(storable => storable.HasAllCardsFull);
 		
+		public bool HasNoContainers => Inventory.All(storable => storable.HasNoContainers);
+		
 		public void InitPage(DiajectorPage page) => definition.Ruleset.InitPage(state, page);
 		
 		public void Tick(float deltaTime) => definition.Ruleset.Tick(state, deltaTime);
@@ -57,11 +59,12 @@ namespace SBEPIS.Capturellection.Storage
 		}
 		public void LayoutTarget(InventoryStorable card, CardTarget target) => Inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		
-		public bool CanFetch(InventoryStorable card) => definition.Ruleset.CanFetch(state, card);
+		public bool CanFetch(InventoryStorable card) => Inventory.First(storable => storable.Contains(card)).CanFetch(card) && definition.Ruleset.CanFetch(state, card);
 		public bool Contains(InventoryStorable card) => Inventory.Any(storable => storable.Contains(card));
 		
 		public async UniTask<StoreResult> StoreItem(Capturellectable item)
 		{
+			if (HasNoContainers) return new StoreResult();
 			StoreResult res = await definition.Ruleset.StoreItem(state, item);
 			res = await definition.Ruleset.StoreItemHook(state, item, res);
 			return res;
@@ -69,12 +72,18 @@ namespace SBEPIS.Capturellection.Storage
 		
 		public async UniTask<FetchResult> FetchItem(InventoryStorable card)
 		{
+			if (HasNoContainers) return new FetchResult();
 			FetchResult res = await definition.Ruleset.FetchItem(state, card);
 			res = await definition.Ruleset.FetchItemHook(state, card, res);
 			return res;
 		}
 		
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action) => definition.Ruleset.Interact(state, card, targetDeque, action);
+		
+		public void Eject()
+		{
+			Inventory.ForEach(storable => storable.Eject());
+		}
 		
 		public void LoadInit(List<InventoryStorable> cards) => Load(cards, true);
 		public void Load(List<InventoryStorable> cards) => Load(cards, false);

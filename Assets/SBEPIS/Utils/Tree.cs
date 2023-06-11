@@ -1,0 +1,222 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+namespace SBEPIS.Utils
+{
+	public class Tree<T> : IEnumerable<T> where T : IComparable<T>, IEquatable<T>
+	{
+		private Node root;
+		
+		public int Height => root?.Height ?? 0;
+		
+		public IEnumerable<IEnumerable<(int, T)>> Layers => root?.Layers ?? Enumerable.Empty<IEnumerable<(int, T)>>();
+		
+		public void Add(T item, bool balance) => Node.Add(ref root, item, balance);
+		
+		public IEnumerable<T> Drop(T item, bool balance)
+		{
+			if (root == null) return Enumerable.Empty<T>();
+
+			if (root.Drop(item, out IEnumerable<T> node, balance))
+				root = null;
+			return node;
+		}
+		
+		public IEnumerable<T> DropRoot(bool balance) => Drop(root == null ? default : root.Item, balance);
+		
+		public IEnumerator<T> GetEnumerator()
+		{
+			if (root != null)
+				foreach (T item in root)
+					yield return item;
+		}
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+		
+		private class Node : IEnumerable<T>
+		{
+			private T item;
+			public T Item => item;
+			private Node left, right;
+			
+			public int Height => Mathf.Max(HeightLeft, HeightRight) + 1;
+			private int HeightLeft => left?.Height ?? 0;
+			private int HeightRight => right?.Height ?? 0;
+			private int BalanceFactor => HeightRight - HeightLeft;
+			private int LeftBalanceFactor => left?.BalanceFactor ?? 0;
+			private int RightBalanceFactor => right?.BalanceFactor ?? 0;
+			
+			public IEnumerable<IEnumerable<(int, T)>> Layers
+			{
+				get
+				{
+					yield return ExtensionMethods.EnumerableOf((0, item));
+					
+					int depth = 0;
+					foreach ((IEnumerable<(int, T)> rightLayer, IEnumerable<(int, T)> leftLayer) in (left?.Layers ?? Enumerable.Empty<IEnumerable<(int, T)>>()).ZipOrDefault(left?.Layers ?? Enumerable.Empty<IEnumerable<(int, T)>>()))
+						yield return rightLayer.Concat(leftLayer.Select(tup => (tup.Item1 + (int)Mathf.Pow(2, depth++), tup.Item2)));
+				}
+			}
+			
+			public Node(T item)
+			{
+				this.item = item;
+			}
+			
+			public void Add(T item, bool balance)
+			{
+				if (this.item.CompareTo(item) > 0)
+					Add(ref left, item, balance);
+				else
+					Add(ref right, item, balance);
+			}
+			
+			public bool Drop(T item, out IEnumerable<T> node, bool balance)
+			{
+				if (this.item.Equals(item))
+				{
+					node = this;
+					return true;
+				}
+				
+				if (this.item.CompareTo(item) > 0)
+				{
+					if (left == null)
+						node = null;
+					else if (left.Drop(item, out node, balance))
+						left = null;
+					else if (balance)
+						while (BalanceFactor < -1)
+							Balance(ref left);
+				}
+				else
+				{
+					if (right == null)
+						node = null;
+					else if (right.Drop(item, out node, balance))
+						right = null;
+					else if (balance)
+						while (BalanceFactor > 1)
+							Balance(ref right);
+				}
+				
+				return false;
+			}
+			
+			public IEnumerator<T> GetEnumerator()
+			{
+				if (left != null)
+					foreach (T leftItem in left)
+						yield return leftItem;
+				
+				yield return item;
+				
+				if (right != null)
+					foreach (T rightItem in right)
+						yield return rightItem;
+			}
+			IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+			
+			public override string ToString() => $"Node<{item}>";
+			
+			public static void Add(ref Node node, T item, bool balance)
+			{
+				if (node == null)
+					node = new Node(item);
+				else
+					node.Add(item, balance);
+				
+				if (balance) Balance(ref node);
+			}
+			
+			private static void RecursiveBalance(ref Node node)
+			{
+				if (node.left != null) RecursiveBalance(ref node.left);
+				if (node.right != null) RecursiveBalance(ref node.right);
+				while(Mathf.Abs(node.BalanceFactor) > 1) Balance(ref node);
+			}
+			
+			private static void Balance(ref Node node)
+			{
+				if (node.BalanceFactor < -1)
+				{
+					if (node.LeftBalanceFactor > 0)
+						node.left = RotateLeft(node.left);
+					node = RotateRight(node);
+				}
+				else if (node.BalanceFactor > 1)
+				{
+					if (node.RightBalanceFactor < 0)
+						node.right = RotateRight(node.right);
+					node = RotateLeft(node);
+				}
+			}
+			
+			private static Node RotateRight(Node oldTop)
+			{
+				Node newTop = oldTop.left;
+				Node transfer = newTop.right;
+				
+				newTop.right = oldTop;
+				oldTop.left = transfer;
+				
+				return newTop;
+			}
+			
+			private static Node RotateLeft(Node oldTop)
+			{
+				Node newTop = oldTop.right;
+				Node transfer = newTop.left;
+				
+				newTop.left = oldTop;
+				oldTop.right = transfer;
+				
+				return newTop;
+			}
+		}
+	}
+	
+	public class TreeDictionary<TKey, TValue> : IEnumerable<TValue> where TKey : IComparable<TKey>, IEquatable<TKey>
+	{
+		private Tree<TKey> tree = new();
+		private Dictionary<TKey, TValue> dictionary = new();
+		
+		public IEnumerable<IEnumerable<(int, TValue)>> Layers => tree.Layers.Select(layer => layer.Select(tup => (tup.Item1, dictionary[tup.Item2])));
+		
+		public void Add(TKey key, TValue value, bool balance)
+		{
+			dictionary.Add(key, value);
+			tree.Add(key, balance);
+		}
+		
+		public bool ContainsKey(TKey key) => dictionary.ContainsKey(key);
+		public bool ContainsValue(TValue value) => dictionary.ContainsValue(value);
+		
+		public TValue Get(TKey key) => dictionary[key];
+		
+		public IEnumerable<TValue> Drop(TValue value, bool balance)
+		{
+			if (!ContainsValue(value)) yield break;
+			TKey key = dictionary.First(pair => EqualityComparer<TValue>.Default.Equals(pair.Value, value)).Key;
+			foreach ((TKey droppedKey, TValue droppedValue) in tree.Drop(key, balance).Select(droppedKey => (droppedKey, dictionary[droppedKey])))
+			{
+				dictionary.Remove(droppedKey);
+				yield return droppedValue;
+			}
+		}
+		
+		public IEnumerable<TValue> DropRoot(bool balance)
+		{
+			IEnumerable<TValue> node = tree.DropRoot(balance).Select(key => dictionary[key]);
+			dictionary.Clear();
+			return node;
+		}
+		
+		public bool TryGetValue(TKey key, out TValue value) => dictionary.TryGetValue(key, out value);
+		
+		public IEnumerator<TValue> GetEnumerator() => tree.Select(key => dictionary[key]).GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+	}
+}

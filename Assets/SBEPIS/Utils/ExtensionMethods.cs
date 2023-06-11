@@ -283,9 +283,39 @@ public static class ExtensionMethods
 		return last;
 	}
 	
-	public static IEnumerable<(T, TSecond)> Zip<T, TSecond>(this IEnumerable<T> first, IEnumerable<TSecond> second)
+	public static IEnumerable<(TFirst, TSecond)> Zip<TFirst, TSecond>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second)
 	{
 		return first.Zip(second, (firstItem, secondItem) => (firstItem, secondItem));
+	}
+	
+	public static IEnumerable<(TFirst, TSecond, TThird)> Zip<TFirst, TSecond, TThird>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second, IEnumerable<TThird> third)
+	{
+		return first.Zip(second).Zip(third, (firstSecond, thirdItem) => (firstSecond.Item1, firstSecond.Item2, thirdItem));
+	}
+	
+	public static IEnumerable<(TFirst, TSecond, TThird, TFourth)> Zip<TFirst, TSecond, TThird, TFourth>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second, IEnumerable<TThird> third, IEnumerable<TFourth> fourth)
+	{
+		return first.Zip(second, third).Zip(fourth, (firstSecondThird, fourthItem) => (firstSecondThird.Item1, firstSecondThird.Item2, firstSecondThird.Item3, fourthItem));
+	}
+	
+	public static IEnumerable<(TFirst, TSecond)> ZipOrDefault<TFirst, TSecond>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second)
+	{
+		using IEnumerator<TFirst> firstEnumerator = first.GetEnumerator();
+		using IEnumerator<TSecond> secondEnumerator = second.GetEnumerator();
+		
+		bool hasFirst = true;
+		bool hasSecond = true;
+		
+		while (true)
+		{
+			if (hasFirst) hasFirst = firstEnumerator.MoveNext();
+			if (hasSecond) hasSecond = secondEnumerator.MoveNext();
+			
+			if (!hasFirst && !hasSecond)
+				break;
+			
+			yield return (hasFirst ? firstEnumerator.Current : default, hasSecond ? secondEnumerator.Current : default);
+		}
 	}
 	
 	public static void Shuffle<T>(this IList<T> list)  
