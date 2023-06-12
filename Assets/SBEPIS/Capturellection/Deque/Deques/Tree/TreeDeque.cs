@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class TreeDeque : LaidOutDeque<TreeSettings, TreeLayout, TreeState>
+	public class TreeDeque : LaidOutRuleset<TreeSettings, TreeLayout, TreeState>
 	{
 		[SerializeField] private GameObject keyboardPrefab;
 		
@@ -18,9 +18,9 @@ namespace SBEPIS.Capturellection.Deques
 			keyboard = Instantiate(keyboardPrefab, page.transform).GetComponentInChildren<Keyboard>();
 		}
 		
-		public override bool CanFetch(TreeState state, InventoryStorable card) => state.Tree.ContainsValue(StorableWithCard(state, card));
+		protected override bool CanFetch(TreeState state, InventoryStorable card) => state.Tree.ContainsValue(StorableWithCard(state, card));
 		
-		public override UniTask<StoreResult> StoreItem(TreeState state, Capturellectable item)
+		protected override UniTask<StoreResult> StoreItem(TreeState state, Capturellectable item)
 		{
 			if (TryStoreInExistingTreeSlotIfKeyExists(out UniTask<StoreResult> res)) return res;
 			else if (TryStoreInEmptyCard(out res)) return res;
@@ -64,7 +64,7 @@ namespace SBEPIS.Capturellection.Deques
 			}
 		}
 		
-		public override async UniTask<FetchResult> FetchItem(TreeState state, InventoryStorable card)
+		protected override async UniTask<FetchResult> FetchItem(TreeState state, InventoryStorable card)
 		{
 			Storable storable = StorableWithCard(state, card);
 			FetchResult result = await storable.FetchItem(card);
@@ -74,7 +74,7 @@ namespace SBEPIS.Capturellection.Deques
 			return result;
 		}
 		
-		public override UniTask<StoreResult> StoreItemHook(TreeState state, Capturellectable item, StoreResult oldResult)
+		protected override UniTask<StoreResult> StoreItemHook(TreeState state, Capturellectable item, StoreResult oldResult)
 		{
 			Storable storable = StorableWithCard(state, oldResult.card);
 			if (!state.Tree.ContainsValue(storable))

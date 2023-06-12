@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class EightBallDeque : LaidOutDeque<LinearSettings, LinearLayout, EightBallState>
+	public class EightBallDeque : LaidOutRuleset<LinearSettings, LinearLayout, EightBallState>
 	{
 		[SerializeField] private GameObject menuEightBallPrefab;
 		[SerializeField] private GameObject fetchedEightBallPrefab;
 		
-		public override UniTask<FetchResult> FetchItemHook(EightBallState state, InventoryStorable card, FetchResult oldResult)
+		protected override UniTask<FetchResult> FetchItemHook(EightBallState state, InventoryStorable card, FetchResult oldResult)
 		{
 			EightBallFetched eightBall = Instantiate(fetchedEightBallPrefab).GetComponentInChildren<EightBallFetched>();
 			eightBall.Container.Capture(oldResult.fetchedItem);
@@ -18,7 +18,7 @@ namespace SBEPIS.Capturellection.Deques
 			return UniTask.FromResult(oldResult);
 		}
 		
-		public override IEnumerable<InventoryStorable> LoadCardHook(EightBallState state, InventoryStorable card)
+		protected override IEnumerable<InventoryStorable> LoadCardHook(EightBallState state, InventoryStorable card)
 		{
 			EightBall eightBall = Instantiate(menuEightBallPrefab).GetComponentInChildren<EightBall>();
 			eightBall.Card.DequeElement.SetParent(card.DequeElement.Parent);
@@ -28,7 +28,7 @@ namespace SBEPIS.Capturellection.Deques
 			yield return eightBall.Card;
 		}
 		
-		public override IEnumerable<InventoryStorable> SaveCardHook(EightBallState state, InventoryStorable slot)
+		protected override IEnumerable<InventoryStorable> SaveCardHook(EightBallState state, InventoryStorable slot)
 		{
 			state.eightBalls.Remove(slot, out EightBall eightBall);
 			InventoryStorable card = eightBall.OriginalCard;

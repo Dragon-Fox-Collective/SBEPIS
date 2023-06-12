@@ -59,7 +59,7 @@ namespace SBEPIS.Capturellection.Storage
 		}
 		public void LayoutTarget(InventoryStorable card, CardTarget target) => Inventory.Find(storable => storable.Contains(card)).LayoutTarget(card, target);
 		
-		public bool CanFetch(InventoryStorable card) => Inventory.First(storable => storable.Contains(card)).CanFetch(card) && definition.Ruleset.CanFetch(state, card);
+		public bool CanFetch(InventoryStorable card) => Contains(card) && Inventory.First(storable => storable.Contains(card)).CanFetch(card) && definition.Ruleset.CanFetch(state, card);
 		public bool Contains(InventoryStorable card) => Inventory.Any(storable => storable.Contains(card));
 		
 		public async UniTask<StoreResult> StoreItem(Capturellectable item)
@@ -105,7 +105,7 @@ namespace SBEPIS.Capturellection.Storage
 		private void LoadExistingStorables(List<InventoryStorable> cards) => Inventory.ForEach(storable => storable.Load(cards));
 		private void LoadNewStorables(List<InventoryStorable> cards, bool useCallbacks = true)
 		{
-			while (cards.Any())
+			while (cards.Any() && Inventory.Count < definition.MaxStorables)
 			{
 				Storable storable = StorableGroupDefinition.GetNewStorable(definition.Subdefinition);
 				storable.Parent = transform;
