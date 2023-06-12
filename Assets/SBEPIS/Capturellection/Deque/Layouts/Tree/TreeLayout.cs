@@ -22,12 +22,12 @@ namespace SBEPIS.Capturellection.Deques
 			foreach (Storable storable in inventory)
 				storable.Layout(Quaternion.Euler(0, 0, -60) * rightDirection);
 			
-			List<float> layerLengths = state.Tree.Layers.Select(layer => layer.Select(zip => Vector3.Project(zip.Item2.MaxPossibleSize, absRightDirection).magnitude).Aggregate(Mathf.Max)).ToList();
-			List<float> layerLengthSums = state.Tree.Layers.Zip(layerLengths).Select((zip, depth) =>
+			float layerLength = state.Tree.Any() ? state.Tree.Layers.Select(layer => layer.Select(zip => Vector3.Project(zip.Item2.MaxPossibleSize, absRightDirection).magnitude).Aggregate(Mathf.Max)).Aggregate(Mathf.Max) : 0;
+			List<float> layerLengthSums = state.Tree.Layers.Select((_, depth) =>
 			{
 				int count = (int)Mathf.Pow(2, depth);
 				return offsetFromEnd
-					? offset * (count - 1) + count * zip.Item2
+					? offset * (count - 1) + count * layerLength
 					: offset * (count - 1);
 			}).ToList();
 			
@@ -37,7 +37,7 @@ namespace SBEPIS.Capturellection.Deques
 				: offset * (state.Tree.Layers.Count() - 1);
 			
 			Vector3 up = -heightSum / 2 * downDirection;
-			foreach ((IEnumerable<(int, Storable)> layer, float layerLength, float layerLengthSum, float layerHeight) in state.Tree.Layers.Zip(layerLengths, layerLengthSums, layerHeights))
+			foreach ((IEnumerable<(int, Storable)> layer, float layerLengthSum, float layerHeight) in state.Tree.Layers.Zip(layerLengthSums, layerHeights))
 			{
 				up += downDirection * (offsetFromEnd ? layerHeight / 2 : 0);
 				
@@ -45,7 +45,7 @@ namespace SBEPIS.Capturellection.Deques
 				int lastIndex = -1;
 				foreach ((int index, Storable storable) in layer)
 				{
-					right += rightDirection * (index - lastIndex - 1) * offset;
+					right += rightDirection * (index - lastIndex - 1) * (offset + (offsetFromEnd ? layerLength : 0));
 					right += rightDirection * (offsetFromEnd ? layerLength / 2 : 0);
 					
 					storable.Position = right + up;
@@ -66,5 +66,12 @@ namespace SBEPIS.Capturellection.Deques
 				storable.Rotation = DequeLayout.GetOffsetRotation(rightDirection);
 			}
 		}
+	}
+	
+	[Serializable]
+	public class TreeLayoutSettings : LayoutSettings<TreeLayout>
+	{
+		[SerializeField] private TreeLayout layout;
+		public TreeLayout Layout => layout;
 	}
 }

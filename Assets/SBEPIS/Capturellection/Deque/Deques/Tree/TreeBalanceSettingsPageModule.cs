@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class TreeSettingsPageModule : DequeSettingsPageModule<TreeBalanceSettings>
+	public class TreeBalanceSettingsPageModule : DequeSettingsPageModule<TreeBalanceSettings>
 	{
 		[SerializeField] private SwitchCardAttacher balance;
 		

@@ -18,11 +18,8 @@ namespace SBEPIS.Utils
 		
 		public IEnumerable<T> Drop(T item, bool balance)
 		{
-			if (root == null) return Enumerable.Empty<T>();
-
-			if (root.Drop(item, out IEnumerable<T> node, balance))
-				root = null;
-			return node;
+			Node.Drop(item, ref root, balance, out IEnumerable<T> droppedItems);
+			return droppedItems ?? Enumerable.Empty<T>();
 		}
 		
 		public IEnumerable<T> DropRoot(bool balance) => Drop(root == null ? default : root.Item, balance);
@@ -54,9 +51,8 @@ namespace SBEPIS.Utils
 				{
 					yield return ExtensionMethods.EnumerableOf((0, item));
 					
-					int depth = 0;
-					foreach ((IEnumerable<(int, T)> rightLayer, IEnumerable<(int, T)> leftLayer) in (left?.Layers ?? Enumerable.Empty<IEnumerable<(int, T)>>()).ZipOrDefault(left?.Layers ?? Enumerable.Empty<IEnumerable<(int, T)>>()))
-						yield return rightLayer.Concat(leftLayer.Select(tup => (tup.Item1 + (int)Mathf.Pow(2, depth++), tup.Item2)));
+					foreach ((int depth, (IEnumerable<(int, T)> leftLayer, IEnumerable<(int, T)> rightLayer)) in (left?.Layers ?? Enumerable.Empty<IEnumerable<(int, T)>>()).ZipOrDefault(right?.Layers ?? Enumerable.Empty<IEnumerable<(int, T)>>(), Enumerable.Empty<(int, T)>).Enumerate())
+						yield return leftLayer.Concat(rightLayer.Select(tup => (tup.Item1 + (int)Mathf.Pow(2, depth), tup.Item2)));
 				}
 			}
 			
@@ -73,36 +69,22 @@ namespace SBEPIS.Utils
 					Add(ref right, item, balance);
 			}
 			
-			public bool Drop(T item, out IEnumerable<T> node, bool balance)
+			public bool Drop(T item, bool balance, out IEnumerable<T> droppedItems)
 			{
 				if (this.item.Equals(item))
 				{
-					node = this;
+					Debug.Log($"Dropping {this.ToDelimString()} from tree");
+					droppedItems = this;
 					return true;
-				}
-				
-				if (this.item.CompareTo(item) > 0)
-				{
-					if (left == null)
-						node = null;
-					else if (left.Drop(item, out node, balance))
-						left = null;
-					else if (balance)
-						while (BalanceFactor < -1)
-							Balance(ref left);
 				}
 				else
 				{
-					if (right == null)
-						node = null;
-					else if (right.Drop(item, out node, balance))
-						right = null;
-					else if (balance)
-						while (BalanceFactor > 1)
-							Balance(ref right);
+					if (this.item.CompareTo(item) > 0)
+						Drop(item, ref left, balance, out droppedItems);
+					else
+						Drop(item, ref right, balance, out droppedItems);
+					return false;
 				}
-				
-				return false;
 			}
 			
 			public IEnumerator<T> GetEnumerator()
@@ -129,6 +111,17 @@ namespace SBEPIS.Utils
 					node.Add(item, balance);
 				
 				if (balance) Balance(ref node);
+			}
+			
+			public static void Drop(T item, ref Node node, bool balance, out IEnumerable<T> droppedItems)
+			{
+				if (node == null)
+					droppedItems = null;
+				else if (node.Drop(item, balance, out droppedItems))
+					node = null;
+				else if (balance)
+					while (Mathf.Abs(node.BalanceFactor) > 1)
+						Balance(ref node);
 			}
 			
 			private static void RecursiveBalance(ref Node node)
@@ -209,9 +202,9 @@ namespace SBEPIS.Utils
 		
 		public IEnumerable<TValue> DropRoot(bool balance)
 		{
-			IEnumerable<TValue> node = tree.DropRoot(balance).Select(key => dictionary[key]);
+			IEnumerable<TValue> droppedItems = tree.DropRoot(balance).Select(key => dictionary[key]);
 			dictionary.Clear();
-			return node;
+			return droppedItems;
 		}
 		
 		public bool TryGetValue(TKey key, out TValue value) => dictionary.TryGetValue(key, out value);

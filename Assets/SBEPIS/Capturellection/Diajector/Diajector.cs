@@ -17,9 +17,6 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Anywhere] private Rigidbody staticRigidbody;
 		public Rigidbody StaticRigidbody => staticRigidbody;
 		
-		[SerializeField] private float cardDelay = 0.5f;
-		public float CardDelay => cardDelay;
-		
 		[Tooltip("Ordered from deque to diajector")]
 		[SerializeField] private List<LerpTarget> lerpTargets = new();
 		
