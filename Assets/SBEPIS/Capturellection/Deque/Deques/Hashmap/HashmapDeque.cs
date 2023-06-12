@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class HashmapDeque : LaidOutDeque<HashmapSettings, LinearLayout, LinearState>
+	public class HashmapDeque : LaidOutRuleset<HashmapSettings, LinearLayout, LinearState>
 	{
 		[SerializeField] private GameObject keyboardPrefab;
 		
@@ -16,7 +16,7 @@ namespace SBEPIS.Capturellection.Deques
 			keyboard = Instantiate(keyboardPrefab, page.transform).GetComponentInChildren<Keyboard>();
 		}
 		
-		public override bool CanFetch(LinearState state, InventoryStorable card)
+		protected override bool CanFetch(LinearState state, InventoryStorable card)
 		{
 			if (keyboard.Text.Length == 0)
 				return false;
@@ -25,7 +25,7 @@ namespace SBEPIS.Capturellection.Deques
 			return state.Inventory[index].CanFetch(card);
 		}
 		
-		public override async UniTask<StoreResult> StoreItem(LinearState state, Capturellectable item)
+		protected override async UniTask<StoreResult> StoreItem(LinearState state, Capturellectable item)
 		{
 			int index = Settings.HashFunction.Hash(keyboard.Text, state.Inventory.Count);
 			Storable storable = state.Inventory[index];
@@ -36,7 +36,7 @@ namespace SBEPIS.Capturellection.Deques
 			return res;
 		}
 		
-		public override UniTask<FetchResult> FetchItem(LinearState state, InventoryStorable card)
+		protected override UniTask<FetchResult> FetchItem(LinearState state, InventoryStorable card)
 		{
 			keyboard.Text = "";
 			return base.FetchItem(state, card);

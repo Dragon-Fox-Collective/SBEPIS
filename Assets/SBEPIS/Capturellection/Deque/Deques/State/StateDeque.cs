@@ -4,13 +4,13 @@ using SBEPIS.Capturellection.Storage;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class StateDeque : LaidOutDeque<LinearSettings, LinearLayout, LinearState>
+	public class StateDeque : LaidOutRuleset<LinearSettings, LinearLayout, LinearState>
 	{
 		public bool State { get; set; }
 		
-		public override bool CanFetch(LinearState state, InventoryStorable card) => State && state.Inventory.Any(storable => storable.CanFetch(card));
+		protected override bool CanFetch(LinearState state, InventoryStorable card) => State && state.Inventory.Any(storable => storable.CanFetch(card));
 		
-		public override async UniTask<StoreResult> StoreItem(LinearState state, Capturellectable item)
+		protected override async UniTask<StoreResult> StoreItem(LinearState state, Capturellectable item)
 		{
 			await UniTask.WaitUntil(() => State);
 			return await base.StoreItem(state, item);

@@ -17,6 +17,11 @@ namespace SBEPIS.Capturellection
 		[FormerlySerializedAs("cardPrefab")]
 		[SerializeField, Anywhere] private GameObject initialCardPrefab;
 		[SerializeField] private int initialCardCount = 0;
+		public int InitialCardCount
+		{
+			get => initialCardCount;
+			set => initialCardCount = value;
+		}
 		
 		[Tooltip("Purely organizational for the hierarchy")]
 		[SerializeField, Anywhere] private Transform cardParent;
@@ -29,7 +34,7 @@ namespace SBEPIS.Capturellection
 		private List<InventoryStorable> savedInventory = new();
 		private Storable storable;
 		
-		private void Awake()
+		private void Start()
 		{
 			SaveInitialInventory();
 			LoadInventoryIntoDeque(deque.Definition, deque.transform);

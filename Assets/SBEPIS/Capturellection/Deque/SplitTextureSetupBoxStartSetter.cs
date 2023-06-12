@@ -1,15 +1,18 @@
 using System.Linq;
+using KBCore.Refs;
 using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection
 {
-	[RequireComponent(typeof(SplitTextureSetup), typeof(DequeBox))]
-	public class SplitTextureSetupBoxStartSetter : MonoBehaviour
+	public class SplitTextureSetupBoxStartSetter : ValidatedMonoBehaviour
 	{
+		[SerializeField, Self] private SplitTextureSetup split;
+		[SerializeField, Self] private DequeBox dequeBox;
+		
 		private void Start()
 		{
-			GetComponent<SplitTextureSetup>().Textures = GetComponent<DequeBox>().Deque.Definition.Ruleset.GetBoxTextures().ToList();
+			split.Textures = dequeBox.Deque.Definition.Ruleset.GetBoxTextures().ToList();
 		}
 	}
 }
