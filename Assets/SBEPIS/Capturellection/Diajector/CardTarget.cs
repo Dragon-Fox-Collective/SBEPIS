@@ -25,6 +25,9 @@ namespace SBEPIS.Capturellection
 			}
 		}
 		
+		[SerializeField] private float dealDelay = 0.1f;
+		public float DealDelay => dealDelay;
+		
 		[FormerlySerializedAs("onCardCreated")]
 		public UnityEvent<DequeElement> onCardBound = new();
 		public UnityEvent onPrepareCard = new();

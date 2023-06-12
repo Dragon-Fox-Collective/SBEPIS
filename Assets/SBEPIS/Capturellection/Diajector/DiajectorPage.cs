@@ -89,7 +89,7 @@ namespace SBEPIS.Capturellection
 			{
 				target.onPrepareCard.Invoke();
 				card.StartAssembling();
-				yield return new WaitForSeconds(diajector.CardDelay);
+				yield return new WaitForSeconds(target.DealDelay);
 			}
 		}
 		
@@ -101,10 +101,10 @@ namespace SBEPIS.Capturellection
 		
 		private IEnumerator DespawnCards()
 		{
-			foreach ((DequeElement card, CardTarget _) in cardTargets)
+			foreach ((DequeElement card, CardTarget target) in cardTargets)
 			{
 				card.StartDisassembling();
-				yield return new WaitForSeconds(diajector.CardDelay);
+				yield return new WaitForSeconds(target.DealDelay);
 			}
 		}
 		

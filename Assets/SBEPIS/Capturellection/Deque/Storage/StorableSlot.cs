@@ -39,6 +39,8 @@ namespace SBEPIS.Capturellection.Storage
 		public bool HasAllCardsEmpty => container && container.IsEmpty;
 		public bool HasAllCardsFull => !HasAllCardsEmpty;
 		
+		public bool HasNoContainers => !container;
+		
 		public void InitPage(DiajectorPage page) { }
 		
 		public void Tick(float deltaTime) { }
@@ -56,9 +58,9 @@ namespace SBEPIS.Capturellection.Storage
 		{
 			if (!container) return UniTask.FromResult(new StoreResult());
 			
-			Capturellectable ejectedItem = container.Fetch();
+			Eject();
 			container.Capture(item);
-			StoreResult res = new(card, container, ejectedItem);
+			StoreResult res = new(card, container);
 			return UniTask.FromResult(res);
 		}
 		
@@ -68,6 +70,22 @@ namespace SBEPIS.Capturellection.Storage
 			
 			FetchResult res = new(Contains(card) ? container.Fetch() : null);
 			return UniTask.FromResult(res);
+		}
+		
+		public void Eject()
+		{
+			if (!container) return;
+			
+			Capturellectable ejectedItem = container.Fetch();
+			if (!ejectedItem) return;
+			
+			Action<Vector3, Quaternion> move = ejectedItem.TryGetComponent(out Rigidbody ejectedItemRigidbody)
+				? ejectedItemRigidbody.Move
+				: ejectedItem.transform.SetPositionAndRotation;
+			if (card.DequeElement.ShouldBeDisplayed)
+				move(card.transform.position, card.transform.rotation);
+			else
+				move(card.DequeElement.Deque.transform.position, card.DequeElement.Deque.transform.rotation);
 		}
 		
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action) =>
