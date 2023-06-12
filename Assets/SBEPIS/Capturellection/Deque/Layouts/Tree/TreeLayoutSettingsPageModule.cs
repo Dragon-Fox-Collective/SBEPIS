@@ -5,16 +5,28 @@ namespace SBEPIS.Capturellection.Deques
 {
 	public class TreeLayoutSettingsPageModule : DequeSettingsPageModule<LayoutSettings<TreeLayout>>
 	{
-		[SerializeField] private SwitchCardAttacher offsetFromEndSwitch;
+		[SerializeField] private SwitchCardAttacher offsetXFromEndSwitch;
 		
-		[SerializeField] private SliderCardAttacher offsetSlider;
-		[SerializeField] private float offsetMin = -0.25f;
-		[SerializeField] private float offsetMax = 0.25f;
+		[SerializeField] private SliderCardAttacher offsetXSlider;
+		[SerializeField] private float offsetXMin = -0.25f;
+		[SerializeField] private float offsetXMax = 0.25f;
 		
-		public void ResetOffsetFromEndSwitch() => offsetFromEndSwitch.SwitchValue = Settings.Layout.offsetFromEnd;
-		public void ChangeOffsetFromEnd(bool offsetFromEnd) => Settings.Layout.offsetFromEnd = offsetFromEnd;
+		[SerializeField] private SwitchCardAttacher offsetYFromEndSwitch;
 		
-		public void ResetOffsetSlider() => offsetSlider.SliderValue = Settings.Layout.offset.Map(offsetMin, offsetMax, 0, 1);
-		public void ChangeOffset(float percent) => Settings.Layout.offset = percent.Map(0, 1, offsetMin, offsetMax);
+		[SerializeField] private SliderCardAttacher offsetYSlider;
+		[SerializeField] private float offsetYMin = -0.25f;
+		[SerializeField] private float offsetYMax = 0.25f;
+		
+		public void ResetOffsetXFromEndSwitch() => offsetXFromEndSwitch.SwitchValue = Settings.Layout.offsetXFromEnd;
+		public void ChangeOffsetXFromEnd(bool offsetFromEnd) => Settings.Layout.offsetXFromEnd = offsetFromEnd;
+		
+		public void ResetOffsetXSlider() => offsetXSlider.SliderValue = Settings.Layout.offsetX.Map(offsetXMin, offsetXMax, 0, 1);
+		public void ChangeOffsetX(float percent) => Settings.Layout.offsetX = percent.Map(0, 1, offsetXMin, offsetXMax);
+		
+		public void ResetOffsetYFromEndSwitch() => offsetYFromEndSwitch.SwitchValue = Settings.Layout.offsetYFromEnd;
+		public void ChangeOffsetYFromEnd(bool offsetFromEnd) => Settings.Layout.offsetYFromEnd = offsetFromEnd;
+		
+		public void ResetOffsetYSlider() => offsetYSlider.SliderValue = Settings.Layout.offsetY.Map(offsetYMin, offsetYMax, 0, 1);
+		public void ChangeOffsetY(float percent) => Settings.Layout.offsetY = percent.Map(0, 1, offsetYMin, offsetYMax);
 	}
 }
