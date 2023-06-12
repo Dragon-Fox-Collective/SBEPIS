@@ -298,9 +298,11 @@ public static class ExtensionMethods
 		return first.Zip(second, third).Zip(fourth, (firstSecondThird, fourthItem) => (firstSecondThird.Item1, firstSecondThird.Item2, firstSecondThird.Item3, fourthItem));
 	}
 	
-	public static IEnumerable<(T, T)> ZipOrDefault<T>(this IEnumerable<T> first, IEnumerable<T> second, Func<T> generator) => ZipOrDefault(first, second, generator, generator);
-	public static IEnumerable<(TFirst, TSecond)> ZipOrDefault<TFirst, TSecond>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second) => ZipOrDefault(first, second, () => default, () => default);
-	public static IEnumerable<(TFirst, TSecond)> ZipOrDefault<TFirst, TSecond>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second, Func<TFirst> firstGenerator, Func<TSecond> secondGenerator)
+	public static (TFirst, TSecond) Zipper<TFirst, TSecond>(TFirst first, TSecond second) => (first, second);
+	
+	public static IEnumerable<(T, T)> ZipOrDefault<T>(this IEnumerable<T> first, IEnumerable<T> second, Func<T> generator) => ZipOrDefault(first, second, generator, generator, Zipper);
+	public static IEnumerable<(TFirst, TSecond)> ZipOrDefault<TFirst, TSecond>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second) => ZipOrDefault(first, second, () => default, () => default, Zipper);
+	public static IEnumerable<TResult> ZipOrDefault<TFirst, TSecond, TResult>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second, Func<TFirst> firstGenerator, Func<TSecond> secondGenerator, Func<TFirst, TSecond, TResult> zipper)
 	{
 		using IEnumerator<TFirst> firstEnumerator = first.GetEnumerator();
 		using IEnumerator<TSecond> secondEnumerator = second.GetEnumerator();
@@ -316,7 +318,18 @@ public static class ExtensionMethods
 			if (!hasFirst && !hasSecond)
 				break;
 			
-			yield return (hasFirst ? firstEnumerator.Current : firstGenerator(), hasSecond ? secondEnumerator.Current : secondGenerator());
+			yield return zipper(hasFirst ? firstEnumerator.Current : firstGenerator(), hasSecond ? secondEnumerator.Current : secondGenerator());
+		}
+	}
+	
+	public static IEnumerable<TResult> Zip<TSource, TResult>(this IEnumerable<IEnumerable<TSource>> source, Func<IEnumerable<TSource>, TResult> zipper)
+	{
+		List<IEnumerator<TSource>> enumerators = source.Select(layer => layer.GetEnumerator()).ToList();
+		while (true)
+		{
+			List<IEnumerator<TSource>> currentEnumerators = enumerators.Where(enumerator => enumerator.MoveNext()).ToList();
+			if (!currentEnumerators.Any()) yield break;
+			yield return zipper(currentEnumerators.Select(enumerator => enumerator.Current));
 		}
 	}
 	

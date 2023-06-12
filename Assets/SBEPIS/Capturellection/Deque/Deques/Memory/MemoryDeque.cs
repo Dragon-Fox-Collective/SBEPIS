@@ -8,25 +8,25 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class MemoryDeque : LaidOutDeque<FlippedGridSettings, FlippedGridLayout, MemoryState>
+	public class MemoryDeque : LaidOutRuleset<FlippedGridSettings, FlippedGridLayout, MemoryState>
 	{
 		[SerializeField, Anywhere] private GameObject memoryCardPrefab;
 		
 		private void OnValidate() => this.ValidateRefs();
 		
-		public override bool CanFetch(MemoryState state, InventoryStorable card)
+		protected override bool CanFetch(MemoryState state, InventoryStorable card)
 		{
 			Storable storable = StorableWithCard(state, card);
 			return storable.CanFetch(card) && (storable.HasAllCardsEmpty || (state.FlippedStorables.Contains(storable) && state.FlippedStorables.Contains(state.pairs[storable])));
 		}
 		
-		public override UniTask<StoreResult> StoreItemHook(MemoryState state, Capturellectable item, StoreResult oldResult)
+		protected override UniTask<StoreResult> StoreItemHook(MemoryState state, Capturellectable item, StoreResult oldResult)
 		{
 			state.Inventory.Shuffle();
 			return base.StoreItemHook(state, item, oldResult);
 		}
 		
-		public override async UniTask<FetchResult> FetchItem(MemoryState state, InventoryStorable card)
+		protected override async UniTask<FetchResult> FetchItem(MemoryState state, InventoryStorable card)
 		{
 			Storable storable = Flip(state, card);
 			if (storable != null)
@@ -57,7 +57,7 @@ namespace SBEPIS.Capturellection.Deques
 			return null;
 		}
 		
-		public override IEnumerable<Storable> LoadStorableHook(MemoryState state, Storable storable)
+		protected override IEnumerable<Storable> LoadStorableHook(MemoryState state, Storable storable)
 		{
 			Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies = new();
 			(Storable, Storable) newStorables = (InstantiateStorable(state, storable, proxies), InstantiateStorable(state, storable, proxies));
@@ -92,7 +92,7 @@ namespace SBEPIS.Capturellection.Deques
 			return newCard.Card;
 		}
 		
-		public override IEnumerable<Storable> SaveStorableHook(MemoryState state, Storable storable)
+		protected override IEnumerable<Storable> SaveStorableHook(MemoryState state, Storable storable)
 		{
 			storable.ForEach(card => state.flipTrackers.Remove(card));
 			state.pairs.Remove(storable);
