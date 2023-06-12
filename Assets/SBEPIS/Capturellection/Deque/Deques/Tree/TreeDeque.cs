@@ -70,11 +70,7 @@ namespace SBEPIS.Capturellection.Deques
 			FetchResult result = await storable.FetchItem(card);
 			if (storable.HasAllCardsEmpty)
 				foreach (Storable droppedStorable in state.Tree.Drop(storable, Settings.Balance))
-				{
-					Debug.Log($"Ejecting {droppedStorable.First().name}");
 					droppedStorable.Eject();
-				}
-			
 			return result;
 		}
 		

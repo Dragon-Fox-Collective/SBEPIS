@@ -9,8 +9,10 @@ namespace SBEPIS.Capturellection.Deques
 	[Serializable]
 	public class TreeLayout : DequeLayoutBase
 	{
-		public bool offsetFromEnd = false;
-		public float offset = 0.1f;
+		public bool offsetXFromEnd = false;
+		public float offsetX = 0.1f;
+		public bool offsetYFromEnd = false;
+		public float offsetY = 0.1f;
 		
 		public void Layout<TState>(IList<Storable> inventory, TState state) where TState : DirectionState, TreeDictionaryState
 		{
@@ -23,46 +25,44 @@ namespace SBEPIS.Capturellection.Deques
 				storable.Layout(Quaternion.Euler(0, 0, -60) * rightDirection);
 			
 			float layerLength = state.Tree.Any() ? state.Tree.Layers.Select(layer => layer.Select(zip => Vector3.Project(zip.Item2.MaxPossibleSize, absRightDirection).magnitude).Aggregate(Mathf.Max)).Aggregate(Mathf.Max) : 0;
-			List<float> layerLengthSums = state.Tree.Layers.Select((_, depth) =>
-			{
-				int count = (int)Mathf.Pow(2, depth);
-				return offsetFromEnd
-					? offset * (count - 1) + count * layerLength
-					: offset * (count - 1);
-			}).ToList();
+			List<int> layerCounts = state.Tree.Layers.Select((_, depth) => (int)Mathf.Pow(2, depth)).ToList();
+			List<float> layerOffsets = layerCounts.AsEnumerable().Reverse().Select(count => count * offsetX).ToList();
+			List<float> layerLengthSums = layerCounts.Zip(layerOffsets, (layerCount, layerOffset) => offsetXFromEnd
+				? layerOffset * (layerCount - 1) + layerCount * layerLength
+				: layerOffset * (layerCount - 1)).ToList();
 			
 			List<float> layerHeights = state.Tree.Layers.Select(layer => layer.Select(zip => Vector3.Project(zip.Item2.MaxPossibleSize, absDownDirection).magnitude).Aggregate(Mathf.Max)).ToList();
-			float heightSum = offsetFromEnd
-				? offset * (state.Tree.Layers.Count() - 1) + layerHeights.Aggregate(ExtensionMethods.Add)
-				: offset * (state.Tree.Layers.Count() - 1);
+			float heightSum = offsetYFromEnd
+				? offsetY * (state.Tree.Layers.Count() - 1) + layerHeights.Aggregate(ExtensionMethods.Add)
+				: offsetY * (state.Tree.Layers.Count() - 1);
 			
 			Vector3 up = -heightSum / 2 * downDirection;
-			foreach ((IEnumerable<(int, Storable)> layer, float layerLengthSum, float layerHeight) in state.Tree.Layers.Zip(layerLengthSums, layerHeights))
+			foreach ((IEnumerable<(int, Storable)> layer, float layerLengthSum, float layerHeight, float layerOffset) in state.Tree.Layers.Zip(layerLengthSums, layerHeights, layerOffsets))
 			{
-				up += downDirection * (offsetFromEnd ? layerHeight / 2 : 0);
+				up += downDirection * (offsetYFromEnd ? layerHeight / 2 : 0);
 				
 				Vector3 right = -layerLengthSum / 2 * rightDirection;
 				int lastIndex = -1;
 				foreach ((int index, Storable storable) in layer)
 				{
-					right += rightDirection * (index - lastIndex - 1) * (offset + (offsetFromEnd ? layerLength : 0));
-					right += rightDirection * (offsetFromEnd ? layerLength / 2 : 0);
+					right += rightDirection * (index - lastIndex - 1) * (layerOffset + (offsetXFromEnd ? layerLength : 0));
+					right += rightDirection * (offsetXFromEnd ? layerLength / 2 : 0);
 					
 					storable.Position = right + up;
 					storable.Rotation = DequeLayout.GetOffsetRotation(rightDirection);
 					
-					right += rightDirection * (offset + (offsetFromEnd ? layerLength / 2 : 0));
+					right += rightDirection * (layerOffset + (offsetXFromEnd ? layerLength / 2 : 0));
 					lastIndex = index;
 				}
 				
-				up += downDirection * (offset + (offsetFromEnd ? layerHeight / 2 : 0));
+				up += downDirection * (offsetY + (offsetYFromEnd ? layerHeight / 2 : 0));
 			}
 			
 			List<Storable> spares = inventory.Except(state.Tree).ToList();
 			float sparesHeight = spares.Select(spare => Vector3.Project(spare.MaxPossibleSize, absDownDirection).magnitude).Aggregate(Mathf.Max);
 			foreach (Storable storable in spares)
 			{
-				storable.Position = -(heightSum / 2 + offset + sparesHeight / 2) * downDirection;
+				storable.Position = -(heightSum / 2 + offsetY + sparesHeight / 2) * downDirection;
 				storable.Rotation = DequeLayout.GetOffsetRotation(rightDirection);
 			}
 		}

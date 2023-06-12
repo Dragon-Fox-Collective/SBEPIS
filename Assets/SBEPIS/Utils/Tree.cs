@@ -73,7 +73,6 @@ namespace SBEPIS.Utils
 			{
 				if (this.item.Equals(item))
 				{
-					Debug.Log($"Dropping {this.ToDelimString()} from tree");
 					droppedItems = this;
 					return true;
 				}
