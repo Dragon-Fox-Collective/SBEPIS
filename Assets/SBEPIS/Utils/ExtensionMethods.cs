@@ -298,7 +298,9 @@ public static class ExtensionMethods
 		return first.Zip(second, third).Zip(fourth, (firstSecondThird, fourthItem) => (firstSecondThird.Item1, firstSecondThird.Item2, firstSecondThird.Item3, fourthItem));
 	}
 	
-	public static IEnumerable<(TFirst, TSecond)> ZipOrDefault<TFirst, TSecond>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second)
+	public static IEnumerable<(T, T)> ZipOrDefault<T>(this IEnumerable<T> first, IEnumerable<T> second, Func<T> generator) => ZipOrDefault(first, second, generator, generator);
+	public static IEnumerable<(TFirst, TSecond)> ZipOrDefault<TFirst, TSecond>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second) => ZipOrDefault(first, second, () => default, () => default);
+	public static IEnumerable<(TFirst, TSecond)> ZipOrDefault<TFirst, TSecond>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second, Func<TFirst> firstGenerator, Func<TSecond> secondGenerator)
 	{
 		using IEnumerator<TFirst> firstEnumerator = first.GetEnumerator();
 		using IEnumerator<TSecond> secondEnumerator = second.GetEnumerator();
@@ -314,7 +316,7 @@ public static class ExtensionMethods
 			if (!hasFirst && !hasSecond)
 				break;
 			
-			yield return (hasFirst ? firstEnumerator.Current : default, hasSecond ? secondEnumerator.Current : default);
+			yield return (hasFirst ? firstEnumerator.Current : firstGenerator(), hasSecond ? secondEnumerator.Current : secondGenerator());
 		}
 	}
 	

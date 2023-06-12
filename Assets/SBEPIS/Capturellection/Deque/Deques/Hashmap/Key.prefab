@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 914007334191890185, guid: 1c8bc15bcd83611459142f20ba433cd1, type: 3}
+      propertyPath: dealDelay
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 914007334191890185, guid: 1c8bc15bcd83611459142f20ba433cd1, type: 3}
       propertyPath: onGrab.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -205,7 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardTarget: {fileID: 1638332782985576130}
+  handlers: []
   cardFaceMaterial: {fileID: 2100000, guid: 14780cba2b2008b42949209af650a747, type: 2}
-  character: A
-  displayCharacter: 
+  displayText: 
   textureScale: 5

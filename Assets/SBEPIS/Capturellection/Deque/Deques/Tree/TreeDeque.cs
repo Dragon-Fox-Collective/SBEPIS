@@ -9,7 +9,14 @@ namespace SBEPIS.Capturellection.Deques
 {
 	public class TreeDeque : LaidOutDeque<TreeSettings, TreeLayout, TreeState>
 	{
-		private const string Key = "bepis";
+		[SerializeField] private GameObject keyboardPrefab;
+		
+		private Keyboard keyboard;
+		
+		protected override void InitPageOnce(TreeState state, DiajectorPage page)
+		{
+			keyboard = Instantiate(keyboardPrefab, page.transform).GetComponentInChildren<Keyboard>();
+		}
 		
 		public override bool CanFetch(TreeState state, InventoryStorable card) => state.Tree.ContainsValue(StorableWithCard(state, card));
 		
@@ -21,7 +28,7 @@ namespace SBEPIS.Capturellection.Deques
 			
 			bool TryStoreInExistingTreeSlotIfKeyExists(out UniTask<StoreResult> result)
 			{
-				if (state.Tree.TryGetValue(Key, out Storable storable))
+				if (state.Tree.TryGetValue(keyboard.Text, out Storable storable))
 				{
 					result = storable.StoreItem(item);
 					return true;
@@ -50,8 +57,8 @@ namespace SBEPIS.Capturellection.Deques
 			
 			UniTask<StoreResult> EjectWholeTreeAndStoreInEmptyCard()
 			{
-				foreach (Storable storable in state.Tree.DropRoot(Settings.Balance))
-					storable.Eject();
+				foreach (Storable droppedStorable in state.Tree.DropRoot(Settings.Balance))
+					droppedStorable.Eject();
 				
 				return state.Inventory.First(storable => !storable.HasAllCardsFull).StoreItem(item);
 			}
@@ -63,7 +70,11 @@ namespace SBEPIS.Capturellection.Deques
 			FetchResult result = await storable.FetchItem(card);
 			if (storable.HasAllCardsEmpty)
 				foreach (Storable droppedStorable in state.Tree.Drop(storable, Settings.Balance))
+				{
+					Debug.Log($"Ejecting {droppedStorable.First().name}");
 					droppedStorable.Eject();
+				}
+			
 			return result;
 		}
 		
@@ -71,7 +82,10 @@ namespace SBEPIS.Capturellection.Deques
 		{
 			Storable storable = StorableWithCard(state, oldResult.card);
 			if (!state.Tree.ContainsValue(storable))
-				state.Tree.Add(Key, storable, Settings.Balance);
+			{
+				state.Tree.Add(keyboard.Text, storable, Settings.Balance);
+				keyboard.Text = "";
+			}
 			return UniTask.FromResult(oldResult);
 		}
 	}
@@ -81,6 +95,11 @@ namespace SBEPIS.Capturellection.Deques
 		public CallbackList<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
 		public TreeDictionary<string, Storable> Tree { get; } = new();
+	}
+	
+	public interface TreeBalanceSettings
+	{
+		public bool Balance { get; set; }
 	}
 	
 	[Serializable]
@@ -94,10 +113,5 @@ namespace SBEPIS.Capturellection.Deques
 			get => balance;
 			set => balance = value;
 		}
-	}
-	
-	public interface TreeBalanceSettings
-	{
-		public bool Balance { get; set; }
 	}
 }

@@ -1,7 +1,7 @@
-using SBEPIS.Capturellection.Deques;
+using SBEPIS.Capturellection.Storage;
 using UnityEngine;
 
-namespace SBEPIS.Capturellection.Storage
+namespace SBEPIS.Capturellection.Deques
 {
 	public abstract class LaidOutDeque<TSettings, TLayout, TState> : SingleDeque<TState> where TSettings : LayoutSettings<TLayout>, new() where TLayout : DequeLayout where TState : InventoryState, DirectionState, new()
 	{
@@ -13,5 +13,10 @@ namespace SBEPIS.Capturellection.Storage
 		public override Vector3 GetMaxPossibleSizeOf(TState state) => settings.Layout.GetMaxPossibleSizeOf(state.Inventory, state);
 		
 		protected override object DequeSettings => settings;
+	}
+	
+	public interface LayoutSettings<out TLayout>
+	{
+		public TLayout Layout { get; }
 	}
 }

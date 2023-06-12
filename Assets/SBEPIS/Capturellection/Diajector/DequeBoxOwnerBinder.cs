@@ -20,6 +20,7 @@ namespace SBEPIS.Capturellection
 		private async UniTask Retrieve(DequeBoxOwner dequeBoxOwner)
 		{
 			await UniTask.NextFrame();
+			if (!dequeBox) return;
 			if (!(dequeBox.TryGetComponent(out Grabbable grabbable) && grabbable.IsBeingHeld))
 				dequeBox.Retrieve(dequeBoxOwner);
 		}
