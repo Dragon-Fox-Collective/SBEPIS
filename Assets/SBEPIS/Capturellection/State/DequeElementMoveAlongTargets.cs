@@ -31,6 +31,7 @@ namespace SBEPIS.Capturellection.State
 		
 		private void MoveBackward()
 		{
+			Debug.Log($"{name} moving along, at {targetIndex.value}");
 			dequeElement.value.Animator.TargetTo(dequeElement.value.GetLerpTarget(targetIndex.value), targetIndex.value > 0 ? KeepMovingBackward : null);
 		}
 		
