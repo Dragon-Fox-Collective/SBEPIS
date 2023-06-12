@@ -98,7 +98,6 @@ namespace SBEPIS.Capturellection
 		
 		public void StopAssemblingAndDisassembling()
 		{
-			Debug.Log($"{name} stop disassembling");
 			if (!IsAssembling && !IsDisassembling)
 				return;
 			IsAssembling = false;
