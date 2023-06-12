@@ -19,6 +19,7 @@ namespace SBEPIS.Capturellection.State
 		
 		public override void OnStateBegin()
 		{
+			Debug.Log($"{name} {node.name} {dequeElement.value.IsAssembling} {dequeElement.value.IsDisassembling}");
 			if (passIfValid)
 				if (dequeElement.value.IsAssembling && Transition(onStartAssembly))
 					return;

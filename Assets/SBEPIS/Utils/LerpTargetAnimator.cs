@@ -73,6 +73,8 @@ namespace SBEPIS.Utils
 			LerpTarget oldTarget = pausedAtTarget = currentTarget;
 			Cancel();
 			
+			Debug.Log($"{name} ending at {oldTarget}");
+			
 			oldTarget.onMoveTo.Invoke(this);
 			foreach (UnityAction<LerpTargetAnimator> action in tempOnMoveToActions.ToList())
 				action?.Invoke(this);
