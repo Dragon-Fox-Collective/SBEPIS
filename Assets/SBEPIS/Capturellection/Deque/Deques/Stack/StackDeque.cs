@@ -3,11 +3,11 @@ using SBEPIS.Capturellection.Storage;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class StackDeque : LaidOutDeque<LinearSettings, LinearLayout, LinearState>
+	public class StackDeque : LaidOutRuleset<LinearSettings, LinearLayout, LinearState>
 	{
-		public override bool CanFetch(LinearState state, InventoryStorable card) => state.Inventory[0].CanFetch(card);
+		protected override bool CanFetch(LinearState state, InventoryStorable card) => state.Inventory[0].CanFetch(card);
 		
-		public override async UniTask<StoreResult> StoreItem(LinearState state, Capturellectable item)
+		protected override async UniTask<StoreResult> StoreItem(LinearState state, Capturellectable item)
 		{
 			Storable storable = state.Inventory[^1];
 			state.Inventory.Remove(storable);
@@ -16,7 +16,7 @@ namespace SBEPIS.Capturellection.Deques
 			return res;
 		}
 		
-		public override UniTask<FetchResult> FetchItem(LinearState state, InventoryStorable card)
+		protected override UniTask<FetchResult> FetchItem(LinearState state, InventoryStorable card)
 		{
 			Storable storable = state.Inventory[0];
 			state.Inventory.Remove(storable);

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class MessageInABottleDeque : LaidOutDeque<LinearSettings, LinearLayout, MessageInABottleState>
+	public class MessageInABottleDeque : LaidOutRuleset<LinearSettings, LinearLayout, MessageInABottleState>
 	{
 		[SerializeField] private GameObject bottlePrefab;
 		
@@ -74,7 +74,7 @@ namespace SBEPIS.Capturellection.Deques
 			return bottle;
 		}
 		
-		public override async UniTask<StoreResult> StoreItemHook(MessageInABottleState state, Capturellectable item, StoreResult oldResult)
+		protected override async UniTask<StoreResult> StoreItemHook(MessageInABottleState state, Capturellectable item, StoreResult oldResult)
 		{
 			Storable storable = StorableWithCard(state, oldResult.card);
 			if (oldResult.wasSuccessful && !state.bottles.ContainsKey(storable))
@@ -86,7 +86,7 @@ namespace SBEPIS.Capturellection.Deques
 			return oldResult;
 		}
 		
-		public override async UniTask<FetchResult> FetchItemHook(MessageInABottleState state, InventoryStorable card, FetchResult oldResult)
+		protected override async UniTask<FetchResult> FetchItemHook(MessageInABottleState state, InventoryStorable card, FetchResult oldResult)
 		{
 			Storable storable = StorableWithCard(state, card);
 			if (oldResult.wasSuccessful && !state.bottles.ContainsKey(storable))
@@ -95,13 +95,13 @@ namespace SBEPIS.Capturellection.Deques
 			return oldResult;
 		}
 		
-		public override IEnumerable<Storable> LoadStorableHook(MessageInABottleState state, Storable storable)
+		protected override IEnumerable<Storable> LoadStorableHook(MessageInABottleState state, Storable storable)
 		{
 			Bottle bottle = AddBottle(state, storable);
 			yield return bottle.Slot;
 		}
 		
-		public override IEnumerable<Storable> SaveStorableHook(MessageInABottleState state, Storable slot)
+		protected override IEnumerable<Storable> SaveStorableHook(MessageInABottleState state, Storable slot)
 		{
 			state.bottles.Remove(slot, out Bottle bottle);
 			Storable storable = bottle.OriginalStorable;

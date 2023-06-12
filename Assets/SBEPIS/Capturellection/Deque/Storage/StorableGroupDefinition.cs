@@ -1,21 +1,45 @@
+using System;
 using System.Collections.Generic;
-using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
 {
-	public class StorableGroupDefinition : ValidatedMonoBehaviour
+	public class StorableGroupDefinition : MonoBehaviour
 	{
-		[SerializeField, Anywhere] private InterfaceRef<DequeRuleset> ruleset;
-		public DequeRuleset Ruleset => ruleset.Value;
+		[SerializeField] private DequeRuleset ruleset;
+		public DequeRuleset Ruleset => ruleset;
 		[SerializeField] private int maxStorables;
-		public int MaxStorables => maxStorables;
-		public int MaxCardsPerStorable => subdefinition ? subdefinition.MaxStorables * subdefinition.MaxCardsPerStorable : 1;
-		[SerializeField, Anywhere(Flag.Optional)] private StorableGroupDefinition subdefinition;
+		public int MaxStorables
+		{
+			get => maxStorables;
+			set => maxStorables = value;
+		}
+		//public int MaxCardsPerStorable => subdefinition ? subdefinition.MaxStorables * subdefinition.MaxCardsPerStorable : 1;
+		[SerializeField] private StorableGroupDefinition subdefinition;
 		public StorableGroupDefinition Subdefinition => subdefinition;
 		
 		public string DequeName => Ruleset.GetDequeNamePart(true, true, false) + (subdefinition ? " of " + subdefinition.DequeNamePlural : "");
 		public string DequeNamePlural => Ruleset.GetDequeNamePart(true, true, true) + (subdefinition ? " of " + subdefinition.DequeNamePlural : "");
+		
+		public IEnumerable<IEnumerable<DequeRuleset>> Layers
+		{
+			get
+			{
+				yield return Ruleset.Layer;
+				
+				if (subdefinition)
+					foreach (IEnumerable<DequeRuleset> layer in subdefinition.Layers)
+						yield return layer;
+			}
+		}
+		
+		public void Init(DequeRuleset ruleset, int maxStorables, StorableGroupDefinition subdefinition)
+		{
+			if (this.ruleset) throw new InvalidOperationException($"Definition {this} has already been initialized");
+			this.ruleset = ruleset;
+			this.maxStorables = maxStorables;
+			this.subdefinition = subdefinition;
+		}
 		
 		public static Storable GetNewStorable(StorableGroupDefinition definition) => definition ? GetNewStorableGroup(definition) : GetNewStorableSlot();
 		private static Storable GetNewStorableGroup(StorableGroupDefinition definition)

@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
 {
-	public class CycloneDeque : LaidOutDeque<CycloneSettings, CycloneLayout, CycloneState>
+	public class CycloneDeque : LaidOutRuleset<CycloneSettings, CycloneLayout, CycloneState>
 	{
-		public override bool CanFetch(CycloneState state, InventoryStorable card) => state.TopStorable.CanFetch(card);
+		protected override bool CanFetch(CycloneState state, InventoryStorable card) => state.TopStorable.CanFetch(card);
 		
-		public override UniTask<StoreResult> StoreItem(CycloneState state, Capturellectable item)
+		protected override UniTask<StoreResult> StoreItem(CycloneState state, Capturellectable item)
 		{
 			int index = state.Inventory.IndexOf(state.TopStorable);
 			if (index < 0) index = Mathf.Max(state.Inventory.FindIndex(storable => !storable.HasAllCardsFull), 0);

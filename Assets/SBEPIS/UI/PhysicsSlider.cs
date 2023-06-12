@@ -8,13 +8,10 @@ namespace SBEPIS.UI
 	[RequireComponent(typeof(Rigidbody), typeof(ConfigurableJoint))]
 	public class PhysicsSlider : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self]
-		private new Rigidbody rigidbody;
+		[SerializeField, Self] private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;
 		
-		[SerializeField, Self]
-		private ConfigurableJoint joint;
-		public ConfigurableJoint Joint => joint;
+		[SerializeField, Self] private ConfigurableJoint joint;
 		
 		public ButtonAxis axis;
 		
