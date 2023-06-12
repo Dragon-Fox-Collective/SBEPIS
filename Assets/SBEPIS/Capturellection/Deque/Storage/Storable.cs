@@ -22,6 +22,8 @@ namespace SBEPIS.Capturellection.Storage
 		public bool HasAllCardsEmpty { get; }
 		public bool HasAllCardsFull { get; }
 		
+		public bool HasNoContainers { get; }
+		
 		public void InitPage(DiajectorPage page);
 		
 		public void Tick(float deltaTime);
@@ -34,6 +36,8 @@ namespace SBEPIS.Capturellection.Storage
 		public UniTask<StoreResult> StoreItem(Capturellectable item);
 		public UniTask<FetchResult> FetchItem(InventoryStorable card);
 		public UniTask Interact<TState>(InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TState> action);
+		
+		public void Eject();
 		
 		public void LoadInit(List<InventoryStorable> cards);
 		public void Load(List<InventoryStorable> cards);
@@ -92,14 +96,12 @@ namespace SBEPIS.Capturellection.Storage
 		public bool wasSuccessful;
 		public InventoryStorable card;
 		public CaptureContainer container;
-		public Capturellectable ejectedItem;
 		
-		public StoreResult(InventoryStorable card, CaptureContainer container, Capturellectable ejectedItem)
+		public StoreResult(InventoryStorable card, CaptureContainer container)
 		{
 			wasSuccessful = true;
 			this.card = card;
 			this.container = container;
-			this.ejectedItem = ejectedItem;
 		}
 	}
 	

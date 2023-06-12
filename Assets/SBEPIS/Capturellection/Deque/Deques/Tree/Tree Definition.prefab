@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1729864955831579393}
-  - component: {fileID: -5833340545114159082}
+  - component: {fileID: 2727245734900493029}
   m_Layer: 0
-  m_Name: Stack Definition
+  m_Name: Tree Definition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,9 +30,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-5833340545114159082
+--- !u!114 &2727245734900493029
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,21 +41,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 5808903989321562147}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 762cc8c1d155d8f4ebbac7ac25638b65, type: 3}
+  m_Script: {fileID: 11500000, guid: 1df567b0338c8df43bcb47f65563e54d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dequeNameSingluar: Stack
-  dequeNamePlural: Stacks
-  firstPlaceDequeName: Stack
-  middlePlaceDequeName: stack
-  lastPlaceDequeNameSingular: stack
-  lastPlaceDequeNamePlural: stacks
-  dequeration: {fileID: 11400000, guid: e7b948e2168a8a34b87b120c16dc8ef2, type: 2}
-  settingsPagePrefab: {fileID: 2428469602301905387, guid: 9171874b2702f6c47bfd4c1a78c7fe75, type: 3}
-  firstPlaceSettingsPagePrefab: {fileID: 2428469602301905387, guid: 9171874b2702f6c47bfd4c1a78c7fe75, type: 3}
-  middlePlaceSettingsPagePrefab: {fileID: 0}
-  lastPlaceSettingsPagePrefab: {fileID: 0}
+  dequeNameSingluar: Tree
+  dequeNamePlural: Trees
+  firstPlaceDequeName: Tree
+  middlePlaceDequeName: tree
+  lastPlaceDequeNameSingular: tree
+  lastPlaceDequeNamePlural: trees
+  dequeration: {fileID: 11400000, guid: 67fc81a8bf8088c449a0ca759703c823, type: 2}
+  settingsPagePrefab: {fileID: 2428469602301905387, guid: f34c377d642b2024ca433b4d41604d32, type: 3}
+  firstPlaceSettingsPagePrefab: {fileID: 2428469602301905387, guid: f34c377d642b2024ca433b4d41604d32, type: 3}
+  middlePlaceSettingsPagePrefab: {fileID: 2428469602301905387, guid: a33448b1d679f3d498ebcba4b98a542d, type: 3}
+  lastPlaceSettingsPagePrefab: {fileID: 2428469602301905387, guid: a33448b1d679f3d498ebcba4b98a542d, type: 3}
   settings:
     layout:
-      offsetFromEnd: 0
-      offset: 0.1
+      offsetXFromEnd: 0
+      offsetX: 0.1
+      offsetYFromEnd: 0
+      offsetY: 0.15
+    balance: 1
+  keyboardPrefab: {fileID: 6495267315266270959, guid: 8bab5e0e990151048bf21fb3bf93b4bc, type: 3}
