@@ -3,6 +3,7 @@ using System.Linq;
 using SBEPIS.Bits;
 using SBEPIS.Bits.ThaumergeRules;
 using SBEPIS.Items;
+using SBEPIS.Utils.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Thaumergy

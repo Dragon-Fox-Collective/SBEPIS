@@ -1,4 +1,5 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,9 +8,9 @@ namespace SBEPIS.Utils
 	public class Counter : MonoBehaviour
 	{
 		[SerializeField] private bool useMin;
-		[SerializeField] private int min;
+		[SerializeField, ShowIf("useMin")] private int min;
 		[SerializeField] private bool useMax;
-		[SerializeField] private int max;
+		[SerializeField, ShowIf("useMin")] private int max;
 		
 		public UnityEvent<int> onCountChanged = new();
 		

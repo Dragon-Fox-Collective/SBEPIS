@@ -1,4 +1,5 @@
 using SBEPIS.Capturellection.UI;
+using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques

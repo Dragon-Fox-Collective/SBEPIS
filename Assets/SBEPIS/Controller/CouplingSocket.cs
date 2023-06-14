@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SBEPIS.Predicates;
+using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -21,8 +22,7 @@ namespace SBEPIS.Controller
 		
 		public void OnTriggerEnter(Collider other)
 		{
-			CouplingPlug newPlug = other.GetAttachedComponent<CouplingPlug>();
-			if (!newPlug)
+			if (!other.TryGetAttachedComponent(out CouplingPlug newPlug))
 				return;
 			
 			newPlug.Grabbable.onDrop.AddListener(Couple);
@@ -30,8 +30,7 @@ namespace SBEPIS.Controller
 		
 		private void OnTriggerExit(Collider other)
 		{
-			CouplingPlug newPlug = other.GetAttachedComponent<CouplingPlug>();
-			if (!newPlug)
+			if (!other.TryGetAttachedComponent(out CouplingPlug newPlug))
 				return;
 			
 			newPlug.Grabbable.onDrop.RemoveListener(Couple);

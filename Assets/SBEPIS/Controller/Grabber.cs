@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using KBCore.Refs;
+using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
@@ -104,8 +105,7 @@ namespace SBEPIS.Controller
 				else
 					return false;
 			
-			Grabbable grabbable = collider.GetAttachedComponent<Grabbable>();
-			if (grabbable)
+			if (collider.TryGetAttachedComponent(out Grabbable grabbable))
 				return GrabGrabbable(grabbable);
 			
 			if (CastGrabNormal(out RaycastHit hit, collider))

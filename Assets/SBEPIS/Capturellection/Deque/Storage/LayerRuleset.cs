@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using SBEPIS.Utils.Linq;
+using SBEPIS.Utils.UniTaskLinq;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
@@ -41,8 +43,8 @@ namespace SBEPIS.Capturellection.Storage
 		private IEnumerable<(DequeRuleset, object)> Zip(LayerState state) => rulesets.Zip(state.states).Reverse();
 		private T Aggregate<T>(LayerState state, T seed, Func<T, DequeRuleset, object, T> func)						=> Zip(state).Aggregate(seed,      (result, zip) => func(result, zip.Item1, zip.Item2));
 		private UniTask<T> Aggregate<T>(LayerState state, T seed, Func<T, DequeRuleset, object, UniTask<T>> func)	=> Zip(state).Aggregate(seed, (result, zip) => func(result, zip.Item1, zip.Item2));
-		private IEnumerable<T> AggregateExponential<T>(LayerState layerState, T seed, Func<T, DequeRuleset, object, IEnumerable<T>> func)					=> Aggregate(layerState, ExtensionMethods.EnumerableOf(seed), (result, ruleset, state) => result.SelectMany(res => func(res, ruleset, state)).Where(res => res is not null));
-		private UniTask<IEnumerable<T>> AggregateExponential<T>(LayerState layerState, T seed, Func<T, DequeRuleset, object, UniTask<IEnumerable<T>>> func)	=> Aggregate(layerState, ExtensionMethods.EnumerableOf(seed), (result, ruleset, state) => result.SelectMany(res => func(res, ruleset, state)).Where(res => res is not null));
+		private IEnumerable<T> AggregateExponential<T>(LayerState layerState, T seed, Func<T, DequeRuleset, object, IEnumerable<T>> func)					=> Aggregate(layerState, LINQ.Of(seed), (result, ruleset, state) => result.SelectMany(res => func(res, ruleset, state)).Where(res => res is not null));
+		private UniTask<IEnumerable<T>> AggregateExponential<T>(LayerState layerState, T seed, Func<T, DequeRuleset, object, UniTask<IEnumerable<T>>> func)	=> Aggregate(layerState, LINQ.Of(seed), (result, ruleset, state) => result.SelectMany(res => func(res, ruleset, state)).Where(res => res is not null));
 		
 		private (DequeRuleset, object) DequeForLayingOut(LayerState state) => (rulesets[0], state.states[0]);
 		private (DequeRuleset, object) DequeForStoring(LayerState state) => (rulesets[^1], state.states[^1]);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using SBEPIS.Utils.Linq;
 using UnityEngine.Serialization;
 
 namespace SBEPIS.Bits

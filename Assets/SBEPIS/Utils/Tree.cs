@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SBEPIS.Utils.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Utils
@@ -49,7 +50,7 @@ namespace SBEPIS.Utils
 			{
 				get
 				{
-					yield return ExtensionMethods.EnumerableOf((0, item));
+					yield return LINQ.Of((0, item));
 					
 					foreach ((int depth, (IEnumerable<(int, T)> leftLayer, IEnumerable<(int, T)> rightLayer)) in (left?.Layers ?? Enumerable.Empty<IEnumerable<(int, T)>>()).ZipOrDefault(right?.Layers ?? Enumerable.Empty<IEnumerable<(int, T)>>(), Enumerable.Empty<(int, T)>).Enumerate())
 						yield return leftLayer.Concat(rightLayer.Select(tup => (tup.Item1 + (int)Mathf.Pow(2, depth), tup.Item2)));

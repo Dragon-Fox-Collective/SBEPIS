@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using SBEPIS.Capturellection.Storage;
 using SBEPIS.Utils;
+using SBEPIS.Utils.Linq;
+using SBEPIS.Utils.VectorLinq;
 using UnityEngine;
+using Math = SBEPIS.Utils.Math;
 
 namespace SBEPIS.Capturellection.Deques
 {
@@ -20,7 +23,7 @@ namespace SBEPIS.Capturellection.Deques
 			int numCardsX = Mathf.CeilToInt(Mathf.Sqrt(inventory.Count));
 			Vector2 gridCount = new(numCardsX, Mathf.Ceil((float)inventory.Count / numCardsX));
 			
-			Vector3 maxSize = inventory.Select(storable => storable.MaxPossibleSize).Aggregate(ExtensionMethods.Max);
+			Vector3 maxSize = inventory.Select(storable => storable.MaxPossibleSize).Max();
 			Vector3x2 direction = new(state.Direction, Quaternion.Euler(0, 0, -90) * state.Direction);
 			Vector3x2 absDirection = direction.Select(Mathf.Abs);
 			Vector2 lengthSum = absDirection.AggregateIndex((index, absDir) => offset[index] * (gridCount[index] - 1) + Vector3.Project(maxSize, absDir).magnitude * gridCount[index]);

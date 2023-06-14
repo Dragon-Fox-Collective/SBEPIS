@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KBCore.Refs;
 using SBEPIS.Utils;
+using SBEPIS.Utils.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;

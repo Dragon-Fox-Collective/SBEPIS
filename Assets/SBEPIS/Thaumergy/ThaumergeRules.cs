@@ -1,6 +1,8 @@
 using System.Linq;
 using SBEPIS.Bits.Tags;
 using SBEPIS.Items;
+using SBEPIS.Utils;
+using SBEPIS.Utils.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Bits.ThaumergeRules

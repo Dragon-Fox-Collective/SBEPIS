@@ -4,6 +4,7 @@ using System.Linq;
 using KBCore.Refs;
 using SBEPIS.Capturellection;
 using SBEPIS.Capturellection.Storage;
+using SBEPIS.Utils.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -42,7 +43,7 @@ namespace SBEPIS.Utils
 			{
 				GameObject definitionGameObject = new("Definition");
 				
-				IEnumerable<List<DequeRuleset>> rulesets = definitions.SelectMany(layer => layer.Select(definition => definition.Layers).Zip(ExtensionMethods.Flatten).Select(realLayer => realLayer.ToList()));
+				IEnumerable<List<DequeRuleset>> rulesets = definitions.SelectMany(layer => layer.Select(definition => definition.Layers).Zip(LINQ.Flatten).Select(realLayer => realLayer.ToList()));
 				definitionPrefab = rulesets.Reverse().Select(layer =>
 				{
 					if (layer.Count > 1)

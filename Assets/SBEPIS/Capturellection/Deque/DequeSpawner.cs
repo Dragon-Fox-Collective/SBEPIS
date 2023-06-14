@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using KBCore.Refs;
 using SBEPIS.Capturellection.Storage;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace SBEPIS.Capturellection
 	public class DequeSpawner : ValidatedMonoBehaviour
 	{
 		[SerializeField, Anywhere] private GameObject dequeBoxPrefab;
-		[SerializeField, Anywhere] private DequeRuleset[] rulesets;
+		[SerializeField, Anywhere] private List<DequeRuleset> rulesets;
 		
 		private void Start()
 		{

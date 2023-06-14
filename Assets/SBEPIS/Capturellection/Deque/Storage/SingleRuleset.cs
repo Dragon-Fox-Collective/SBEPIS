@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using SBEPIS.Utils.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection.Storage
@@ -25,7 +26,7 @@ namespace SBEPIS.Capturellection.Storage
 		[Tooltip("Capture and fetch settings only")]
 		[SerializeField] private DequeSettingsPageLayout lastPlaceSettingsPagePrefab;
 		
-		public override IEnumerable<DequeRuleset> Layer => ExtensionMethods.EnumerableOf(this);
+		public override IEnumerable<DequeRuleset> Layer => LINQ.Of(this);
 		
 		private bool initializedPage;
 		protected override void InitPage(TState state, DiajectorPage page)
@@ -53,11 +54,11 @@ namespace SBEPIS.Capturellection.Storage
 		
 		protected override UniTask Interact<TIState>(TState state, InventoryStorable card, DequeRuleset targetDeque, DequeInteraction<TIState> action) => ReferenceEquals(targetDeque, this) ? action((TIState)(object)state, card) : StorableWithCard(state, card).Interact(card, targetDeque, action);
 		
-		protected override IEnumerable<InventoryStorable> LoadCardHook(TState state, InventoryStorable card) => ExtensionMethods.EnumerableOf(card);
-		protected override IEnumerable<InventoryStorable> SaveCardHook(TState state, InventoryStorable card) => ExtensionMethods.EnumerableOf(card);
+		protected override IEnumerable<InventoryStorable> LoadCardHook(TState state, InventoryStorable card) => LINQ.Of(card);
+		protected override IEnumerable<InventoryStorable> SaveCardHook(TState state, InventoryStorable card) => LINQ.Of(card);
 		
-		protected override IEnumerable<Storable> LoadStorableHook(TState state, Storable storable) => ExtensionMethods.EnumerableOf(storable);
-		protected override IEnumerable<Storable> SaveStorableHook(TState state, Storable storable) => ExtensionMethods.EnumerableOf(storable);
+		protected override IEnumerable<Storable> LoadStorableHook(TState state, Storable storable) => LINQ.Of(storable);
+		protected override IEnumerable<Storable> SaveStorableHook(TState state, Storable storable) => LINQ.Of(storable);
 		
 		public override object GetNewState() => new TState();
 		

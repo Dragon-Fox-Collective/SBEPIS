@@ -4,6 +4,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using KBCore.Refs;
 using SBEPIS.Capturellection.Storage;
+using SBEPIS.Utils.Linq;
 using UnityEngine;
 
 namespace SBEPIS.Capturellection.Deques
@@ -63,7 +64,7 @@ namespace SBEPIS.Capturellection.Deques
 			(Storable, Storable) newStorables = (InstantiateStorable(state, storable, proxies), InstantiateStorable(state, storable, proxies));
 			state.pairs.Add(newStorables.Item1, newStorables.Item2);
 			state.pairs.Add(newStorables.Item2, newStorables.Item1);
-			return ExtensionMethods.EnumerableOf(newStorables.Item1, newStorables.Item2);
+			return LINQ.Of(newStorables.Item1, newStorables.Item2);
 		}
 		private Storable InstantiateStorable(MemoryState state, Storable storable, Dictionary<InventoryStorable, List<ProxyCaptureContainer>> proxies)
 		{

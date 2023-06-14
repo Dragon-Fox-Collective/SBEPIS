@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using KBCore.Refs;
+using SBEPIS.Utils.VectorLinq;
 using UnityEngine.Events;
 
 namespace SBEPIS.Physics

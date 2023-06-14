@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SBEPIS.Capturellection.Storage;
+using SBEPIS.Utils.Linq;
+using SBEPIS.Utils.VectorLinq;
 using UnityEngine;
+using Math = SBEPIS.Utils.Math;
 
 namespace SBEPIS.Capturellection.Deques
 {
@@ -20,7 +23,7 @@ namespace SBEPIS.Capturellection.Deques
 			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
 			Vector3 absDirection = state.Direction.Select(Mathf.Abs);
 			float lengthSum = offsetFromEnd
-				? offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude
+				? offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Sum().magnitude
 				: offset * (inventory.Count - 1);
 			
 			Vector3 right = -lengthSum / 2 * state.Direction;

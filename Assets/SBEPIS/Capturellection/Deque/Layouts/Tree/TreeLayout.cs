@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SBEPIS.Capturellection.Storage;
+using SBEPIS.Utils.Linq;
+using SBEPIS.Utils.VectorLinq;
 using UnityEngine;
+using Math = SBEPIS.Utils.Math;
 
 namespace SBEPIS.Capturellection.Deques
 {
@@ -33,7 +36,7 @@ namespace SBEPIS.Capturellection.Deques
 			
 			List<float> layerHeights = state.Tree.Layers.Select(layer => layer.Select(zip => Vector3.Project(zip.Item2.MaxPossibleSize, absDownDirection).magnitude).Aggregate(Mathf.Max)).ToList();
 			float heightSum = offsetYFromEnd
-				? offsetY * (state.Tree.Layers.Count() - 1) + layerHeights.Aggregate(ExtensionMethods.Add)
+				? offsetY * (state.Tree.Layers.Count() - 1) + layerHeights.Sum()
 				: offsetY * (state.Tree.Layers.Count() - 1);
 			
 			Vector3 up = -heightSum / 2 * downDirection;
