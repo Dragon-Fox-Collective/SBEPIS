@@ -76,7 +76,7 @@ namespace SBEPIS.AI
 		}
 	}
 	
-	public class AINode
+	public class AINode : IComparable<AINode>
 	{
 		public Point point;
 		public AINode previousNode;
@@ -99,6 +99,8 @@ namespace SBEPIS.AI
 				}
 			}
 		}
+		
+		public int CompareTo(AINode other) => currentValue.CompareTo(other.currentValue);
 		
 		public override string ToString() => $"{point}{{{currentValue:0.##} value, {state}}}";
 	}
