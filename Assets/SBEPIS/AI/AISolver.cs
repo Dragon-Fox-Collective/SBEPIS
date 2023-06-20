@@ -21,27 +21,25 @@ namespace SBEPIS.AI
 				state = initialState,
 			};
 			
-			List<AIEdge> edges = new();
-			edges.AddRange(startNode.Edges);
+			List<AINode> nodesToExplore = new();
+			nodesToExplore.AddRange(startNode.ConnectedNodes);
 			
 			AINode solution = null;
-			while (edges.Count > 0)
+			while (nodesToExplore.Count > 0)
 			{
-				AIEdge edge = edges.Max();
-				edges.Remove(edge);
+				AINode node = nodesToExplore.Max();
+				nodesToExplore.Remove(node);
 				
-				Debug.Log($"{edge} (best is {(solution == null ? "null" : solution)})");
+				Debug.Log($"{node.previousNode} ==> {node} (best is {(solution == null ? "null" : solution)})");
 				
 				const float sunkCostBreakOff = 5;
-				if (solution != null && edge.TotalValue < solution.currentValue - sunkCostBreakOff)
+				if (solution != null && node.currentValue < solution.currentValue - sunkCostBreakOff)
 					break;
-				
-				AINode node = edge.NewDestination();
 				
 				if (node.point == goal && (solution == null || solution.currentValue < node.currentValue))
 					solution = node;
 				
-				edges.AddRange(node.Edges);
+				nodesToExplore.AddRange(node.ConnectedNodes);
 			}
 			
 			if (solution != null)
@@ -73,44 +71,9 @@ namespace SBEPIS.AI
 				nextState.steps++;
 				return nextState;
 			}
-
+			
 			public override string ToString() => $"{steps} steps taken";
 		}
-	}
-	
-	public class AIEdge : IComparable<AIEdge>
-	{
-		public AINode origin;
-		public Point destination;
-		public AIState state;
-		public Func<AIState, float>[] valueCalculators;
-		
-		private bool calculatedValue;
-		private float value;
-		public float TotalValue
-		{
-			get
-			{
-				if (!calculatedValue)
-				{
-					value = state.Value + valueCalculators.Select(calc => calc(state)).Sum();
-					calculatedValue = true;
-				}
-				return origin.currentValue + value;
-			}
-		}
-		
-		public AINode NewDestination() => new()
-		{
-			point = destination,
-			previousNode = origin,
-			currentValue = TotalValue,
-			state = state,
-		};
-		
-		public int CompareTo(AIEdge other) => TotalValue.CompareTo(other.TotalValue);
-		
-		public override string ToString() => $"{origin} ==> {destination}{{{TotalValue:0.##} value, {state}}}";
 	}
 	
 	public class AINode
@@ -120,7 +83,7 @@ namespace SBEPIS.AI
 		public float currentValue;
 		public AIState state;
 		
-		public IEnumerable<AIEdge> Edges => point.GetEdges(this);
+		public IEnumerable<AINode> ConnectedNodes => point.GetConnectedNodes(this);
 		
 		public IEnumerable<Point> PathBack
 		{
@@ -169,7 +132,7 @@ namespace SBEPIS.AI
 	{
 		private string name;
 		private Vector2 position;
-		private List<AIEdgeDestinationGenerator> accessiblePoints = new();
+		private List<Edge> connectedPoints = new();
 		
 		public Point(string name, float x, float y) : this(name, new Vector2(x, y)) { }
 		public Point(string name, Vector2 position)
@@ -178,12 +141,16 @@ namespace SBEPIS.AI
 			this.position = position;
 		}
 		
-		public IEnumerable<AIEdge> GetEdges(AINode origin) => accessiblePoints.Select(edge => new AIEdge
+		public IEnumerable<AINode> GetConnectedNodes(AINode origin) => connectedPoints.Select(edge =>
 		{
-			origin = origin,
-			destination = edge.destination,
-			state = edge.stateModifiers.ProcessOn(origin.state.StepState()),
-			valueCalculators = edge.valueCalculators,
+			AIState state = edge.stateModifiers.ProcessOn(origin.state.StepState());
+			return new AINode
+			{
+				currentValue = origin.currentValue + state.Value + edge.valueCalculators.Select(calc => calc(state)).Sum(),
+				point = edge.destination,
+				previousNode = origin,
+				state = state,
+			};
 		});
 		
 		public void ConnectDistance(Point point) => Connect(point, -Vector2.Distance(position, point.position));
@@ -191,7 +158,7 @@ namespace SBEPIS.AI
 		public void Connect(Point point, float value) => Connect(point, new Func<AIState, float>[]{ _ => value }, Array.Empty<Action<AIState>>());
 		public void Connect<TStateComponent>(Point point, Func<TStateComponent, TStateComponent> stateModifier) where TStateComponent : struct, AIStateComponent => Connect(point, state => state.Set(stateModifier(state.Get<TStateComponent>())));
 		public void Connect(Point point, Action<AIState> stateModifier) => Connect(point, Array.Empty<Func<AIState, float>>(), new[]{ stateModifier });
-		public void Connect(Point point, Func<AIState, float>[] valueCalculators, Action<AIState>[] stateModifiers) => accessiblePoints.Add(new AIEdgeDestinationGenerator
+		public void Connect(Point point, Func<AIState, float>[] valueCalculators, Action<AIState>[] stateModifiers) => connectedPoints.Add(new Edge
 		{
 			destination = point,
 			valueCalculators = valueCalculators,
@@ -200,7 +167,7 @@ namespace SBEPIS.AI
 		
 		public override string ToString() => name;
 		
-		private struct AIEdgeDestinationGenerator
+		private struct Edge
 		{
 			public Point destination;
 			public Func<AIState, float>[] valueCalculators;
