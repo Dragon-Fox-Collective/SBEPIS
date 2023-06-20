@@ -6,66 +6,52 @@ namespace SBEPIS.Tests.EditMode
 {
 	public class AITests
 	{
-		[Test]
-		public void BusTest()
-		{
-			Point start = new("Start", 0, 0);
-			Point end =  new("End", 0, 10);
-			Point busStart = new("Bus Start", 1, 1);
-			Point busEnd = new("Bus End", 1, 9);
-			
-			start.Connect(end);
-			start.Connect(busStart);
-			start.Connect(busEnd);
-			
-			busStart.Connect(start);
-			busStart.Connect(end);
-			busStart.Connect(busEnd, -4);
-			
-			busEnd.Connect(start);
-			busEnd.Connect(end);
-			busEnd.Connect(busStart, -4);
-			
-			Assert.That(AISolver.Solve(start, end, new AIState(), out Point[] path));
-			Assert.That(path, Is.EqualTo(new[]{ start, busStart, busEnd, end }));
-		}
+		private static readonly Point Start = new("Start", 0, 0);
+		private static readonly Point End =  new("End", 0, 10);
+		private static readonly Point BusStart = new("Bus Start", 1, 1);
+		private static readonly Point BusEnd = new("Bus End", 1, 9);
+		private static readonly Point Shop = new("Candy Shop", -1, 5);
 		
-		[Test]
-		public void CandyShopAndBusTest()
+		static AITests()
 		{
-			Point start = new("Start", 0, 0);
-			Point end =  new("End", 0, 10);
-			Point busStart = new("Bus Start", 1, 1);
-			Point busEnd = new("Bus End", 1, 9);
-			Point shop = new("Candy Shop", -1, 5);
+			Start.Connect(End);
+			Start.Connect(BusStart);
+			Start.Connect(BusEnd);
+			Start.Connect(Shop);
 			
-			start.Connect(end);
-			start.Connect(busStart);
-			start.Connect(busEnd);
-			start.Connect(shop);
+			BusStart.Connect(Start);
+			BusStart.Connect(End);
+			BusStart.Connect(BusEnd, -4);
+			BusStart.Connect(Shop);
 			
-			busStart.Connect(start);
-			busStart.Connect(end);
-			busStart.Connect(busEnd, -4);
-			busStart.Connect(shop);
+			BusEnd.Connect(Start);
+			BusEnd.Connect(End);
+			BusEnd.Connect(BusStart, -4);
+			BusEnd.Connect(Shop);
 			
-			busEnd.Connect(start);
-			busEnd.Connect(end);
-			busEnd.Connect(busStart, -4);
-			busEnd.Connect(shop);
-			
-			shop.Connect(start);
-			shop.Connect(end);
-			shop.Connect(busStart);
-			shop.Connect(busEnd);
-			shop.Connect(shop, state => state.cash > 0 ? state.cash : Mathf.NegativeInfinity, state =>
+			Shop.Connect(Start);
+			Shop.Connect(End);
+			Shop.Connect(BusStart);
+			Shop.Connect(BusEnd);
+			Shop.Connect(Shop, state => state.cash > 0 ? state.cash : Mathf.NegativeInfinity, state =>
 			{
 				state.cash--;
 				return state;
 			});
-			
-			Assert.That(AISolver.Solve(start, end, new AIState{ cash = 3 }, out Point[] path));
-			Assert.That(path, Is.EqualTo(new[]{ start, shop, shop, shop, shop, end }));
+		}
+		
+		[Test]
+		public void AISolver_UsesBus_WhenItHasNoMoney()
+		{
+			Assert.That(AISolver.Solve(Start, End,  new AIState{ cash = 0 }, out Point[] path));
+			Assert.That(path, Is.EqualTo(new[]{ Start, BusStart, BusEnd, End }));
+		}
+		
+		[Test]
+		public void AISolver_GoesToCandyShop_WhenItHasMoney()
+		{
+			Assert.That(AISolver.Solve(Start, End, new AIState{ cash = 3 }, out Point[] path));
+			Assert.That(path, Is.EqualTo(new[]{ Start, Shop, Shop, Shop, Shop, End }));
 		}
 	}
 }
