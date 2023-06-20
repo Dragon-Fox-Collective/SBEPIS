@@ -16,6 +16,8 @@ namespace SBEPIS.AI
 		
 		public IEnumerable<AIAction> GetBestRouteToComplete(List<AIValuedAction> possibleActions, Func<AIValueTotalCost, float> valueConverter, out float totalValue)
 		{
+			throw new NotImplementedException();
+			/*
 			foreach (AIActionConstraint constraint in constraints)
 			{
 				(IEnumerable<AIAction> performedActions, float value) = possibleActions.Select(possibleAction => (satisfied: possibleAction.Action.CanSatisfy(constraint, possibleActions, out AIValueTotalCost actionCosts, out IEnumerable<AIAction> subPerformedActions), actionCosts, performedActions: subPerformedActions.Prepend(possibleAction.Action)))
@@ -28,10 +30,13 @@ namespace SBEPIS.AI
 				totalValue = value;
 				return performedActions;
 			}
+			*/
 		}
 		
 		public bool CanSatisfy(AIActionConstraint constraint, List<AIValuedAction> possibleActions, out AIValueTotalCost costs, out IEnumerable<AIAction> performedActions)
 		{
+			throw new NotImplementedException();
+			/*
 			if (!GetRoutesToComplete(possibleActions, out costs, out performedActions))
 				return false;
 			
@@ -46,6 +51,7 @@ namespace SBEPIS.AI
 				performedActions = Enumerable.Empty<AIAction>();
 				return false;
 			}
+			*/
 		}
 	}
 }

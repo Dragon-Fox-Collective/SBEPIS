@@ -30,7 +30,7 @@ namespace SBEPIS.AI
 		
 		public void DoAction(AIAction action)
 		{
-			IEnumerable<AIAction> performedActions = action.GetBestRouteToComplete(values, solverActions, out float totalValue);
+			IEnumerable<AIAction> performedActions = action.GetBestRouteToComplete(solverActions, GetTotalValue, out float totalValue);
 			Debug.Log($"Doing {action.name} on {name} via {performedActions.ToDelimString()}, value {totalValue}");
 		}
 		

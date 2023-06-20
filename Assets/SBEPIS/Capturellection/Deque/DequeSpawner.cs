@@ -8,7 +8,7 @@ namespace SBEPIS.Capturellection
 	public class DequeSpawner : ValidatedMonoBehaviour
 	{
 		[SerializeField, Anywhere] private GameObject dequeBoxPrefab;
-		[SerializeField, Anywhere] private List<DequeRuleset> rulesets;
+		[SerializeField] private List<DequeRuleset> rulesets;
 		
 		private void Start()
 		{
