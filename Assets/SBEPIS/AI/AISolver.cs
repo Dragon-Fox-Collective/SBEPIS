@@ -28,14 +28,14 @@ namespace SBEPIS.AI
 				
 				//Debug.Log($"{edge} (best is {(solution == null ? "null" : solution)})");
 				
+				const float sunkCostBreakOff = 5;
+				if (solution != null && edge.TotalValue < solution.currentValue - sunkCostBreakOff)
+					break;
+				
 				AINode node = edge.NewDestination();
 				
 				if (node.point == goal && (solution == null || solution.currentValue < node.currentValue))
 					solution = node;
-				
-				const float sunkCostBreakOff = 5;
-				if (solution != null && node.currentValue < solution.currentValue - sunkCostBreakOff)
-					break;
 				
 				edges.AddRange(node.Edges);
 			}
