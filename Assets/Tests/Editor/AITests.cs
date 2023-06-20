@@ -43,7 +43,7 @@ namespace SBEPIS.Tests.EditMode
 		[Test]
 		public void AISolver_UsesBus_WhenItHasNoMoney()
 		{
-			Assert.That(AISolver.Solve(Start, End,  new AIState{ cash = 0 }, out Point[] path));
+			Assert.That(AISolver.Solve(Start, End, new AIState{ cash = 0 }, out Point[] path));
 			Assert.That(path, Is.EqualTo(new[]{ Start, BusStart, BusEnd, End }));
 		}
 		
