@@ -14,44 +14,57 @@ namespace SBEPIS.Tests.EditMode
 		
 		static AITests()
 		{
-			Start.Connect(End);
-			Start.Connect(BusStart);
-			Start.Connect(BusEnd);
-			Start.Connect(Shop);
+			Start.ConnectDistance(End);
+			Start.ConnectDistance(BusStart);
+			Start.ConnectDistance(BusEnd);
+			Start.ConnectDistance(Shop);
 			
-			BusStart.Connect(Start);
-			BusStart.Connect(End);
+			BusStart.ConnectDistance(Start);
+			BusStart.ConnectDistance(End);
 			BusStart.Connect(BusEnd, -4);
-			BusStart.Connect(Shop);
+			BusStart.ConnectDistance(Shop);
 			
-			BusEnd.Connect(Start);
-			BusEnd.Connect(End);
+			BusEnd.ConnectDistance(Start);
+			BusEnd.ConnectDistance(End);
 			BusEnd.Connect(BusStart, -4);
-			BusEnd.Connect(Shop);
+			BusEnd.ConnectDistance(Shop);
 			
-			Shop.Connect(Start);
-			Shop.Connect(End);
-			Shop.Connect(BusStart);
-			Shop.Connect(BusEnd);
-			Shop.Connect(Shop, state => state.cash > 0 ? state.cash : Mathf.NegativeInfinity, state =>
-			{
-				state.cash--;
-				return state;
-			});
+			Shop.ConnectDistance(Start);
+			Shop.ConnectDistance(End);
+			Shop.ConnectDistance(BusStart);
+			Shop.ConnectDistance(BusEnd);
+			Shop.Connect<CashState>(Shop, state => state.Spend());
 		}
 		
 		[Test]
 		public void AISolver_UsesBus_WhenItHasNoMoney()
 		{
-			Assert.That(AISolver.Solve(Start, End, new AIState{ cash = 0 }, out Point[] path));
+			Assert.That(AISolver.Solve(Start, End, new AIState{ new CashState{ cash = 3 } }, out Point[] path));
 			Assert.That(path, Is.EqualTo(new[]{ Start, BusStart, BusEnd, End }));
 		}
 		
 		[Test]
 		public void AISolver_GoesToCandyShop_WhenItHasMoney()
 		{
-			Assert.That(AISolver.Solve(Start, End, new AIState{ cash = 3 }, out Point[] path));
+			Assert.That(AISolver.Solve(Start, End, new AIState{ new CashState{ cash = 3 } }, out Point[] path));
 			Assert.That(path, Is.EqualTo(new[]{ Start, Shop, Shop, Shop, Shop, End }));
+		}
+		
+		private struct CashState : AIStateComponent
+		{
+			public int cash;
+			
+			public CashState Spend()
+			{
+				CashState state = this;
+				state.cash--;
+				return state;
+			}
+			
+			public float GetValue() => cash >= 0 ? 0 : Mathf.NegativeInfinity;
+			public AIStateComponent StepState() => this;
+			
+			public override string ToString() => $"${cash} left";
 		}
 	}
 }

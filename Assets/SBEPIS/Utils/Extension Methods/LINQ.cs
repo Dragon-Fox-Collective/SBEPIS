@@ -44,6 +44,12 @@ namespace SBEPIS.Utils.Linq
         	}
         }
         
+        public static T ProcessOn<T>(this IEnumerable<Action<T>> source, T obj)
+        {
+	        source.ForEach(action => action(obj));
+	        return obj;
+        }
+        
         public static IEnumerable<T> Pivot<T>(this IEnumerable<T> source, int index)
         {
         	IEnumerable<T> first = Enumerable.Empty<T>();
