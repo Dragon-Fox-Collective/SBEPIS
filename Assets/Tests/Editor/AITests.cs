@@ -33,13 +33,13 @@ namespace SBEPIS.Tests.EditMode
 			Shop.ConnectDistance(End);
 			Shop.ConnectDistance(BusStart);
 			Shop.ConnectDistance(BusEnd);
-			Shop.Connect<CashState>(Shop, state => state.Spend());
+			Shop.Connect<CashState>(Shop, state => state.Spend(), state => state.cash + 1);
 		}
 		
 		[Test]
 		public void AISolver_UsesBus_WhenItHasNoMoney()
 		{
-			Assert.That(AISolver.Solve(Start, End, new AIState{ new CashState{ cash = 3 } }, out Point[] path));
+			Assert.That(AISolver.Solve(Start, End, new AIState{ new CashState{ cash = 0 } }, out Point[] path));
 			Assert.That(path, Is.EqualTo(new[]{ Start, BusStart, BusEnd, End }));
 		}
 		
