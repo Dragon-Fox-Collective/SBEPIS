@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NaughtyAttributes;
+using SBEPIS.Utils.Linq;
 using UnityEngine;
 
 namespace SBEPIS.AI
@@ -10,19 +11,16 @@ namespace SBEPIS.AI
 	{
 		[SerializeField] private AIAction action;
 		
-		[Label("Static Values (value per unit)")]
-		[SerializeField] private List<AIStaticValue> staticValues = new();
-		[Label("Dynamic Values (dependent unit per main unit)")]
-		[SerializeField] private List<AIDynamicValue.AIDynamicValueSetup> dynamicValues = new();
+		[Label("Values (value per unit)")]
+		[SerializeField] private List<AIValue> values = new();
 		
-		[SerializeField] private List<AIAction> solverActions = new();
-
-		private Dictionary<AIValueType, AIValue> values;
+		[SerializeField] private List<AIValuedAction> solverActions = new();
+		
+		private Dictionary<AIValueType, AIValue> valuesDict;
 		
 		private void Awake()
 		{
-			values = staticValues.Cast<AIValue>().ToDictionary(value => value.ValueType);
-			values = values.Values.Concat(dynamicValues.Select(value => value.Setup(values)).Cast<AIValue>()).ToDictionary(value => value.ValueType);
+			valuesDict = values.ToDictionary(value => value.ValueType);
 		}
 		
 		private void Start()
@@ -32,47 +30,47 @@ namespace SBEPIS.AI
 		
 		public void DoAction(AIAction action)
 		{
-			bool canComplete = action.CanComplete(solverActions, out AIValueTotalCost costs);
-			float totalValue = GetTotalValue(costs);
-			Debug.Log($"Doing action on {name}, can complete {canComplete}, costs {costs}, value {totalValue}");
+			IEnumerable<AIAction> performedActions = action.GetBestRouteToComplete(values, solverActions, out float totalValue);
+			Debug.Log($"Doing {action.name} on {name} via {performedActions.ToDelimString()}, value {totalValue}");
 		}
 		
-		public float GetTotalValue(AIValueTotalCost costs) => values.Keys.Intersect(costs).Select(valueType => valueType.InterpretValue(costs[valueType], values[valueType].Value)).Sum();
-	}
-	
-	public interface AIValue
-	{
-		public AIValueType ValueType { get; }
-		public float Value { get; }
+		public float GetTotalValue(AIValueTotalCost costs) => valuesDict.Keys.Intersect(costs).Select(valueType => valueType.InterpretValue(costs[valueType], valuesDict[valueType].Value)).Sum();
 	}
 	
 	[Serializable]
-	public struct AIStaticValue : AIValue
+	public struct AIValue
 	{
 		[SerializeField] private AIValueType valueType;
 		public AIValueType ValueType => valueType;
 		[SerializeField] private float value;
 		public float Value => value;
+		
+		public static AIValue operator *(AIValue value, float multipler) => new(){ valueType = value.valueType, value = value.value * multipler };
 	}
 	
-	public struct AIDynamicValue : AIValue
+	[Serializable]
+	public struct AICostConversion
 	{
-		public AIValueType ValueType { get; private set; }
-		private List<(AIValue, float)> dependentValues;
+		[SerializeField] private AIValueType valueType;
 		
-		public float Value => dependentValues.Sum(zip => zip.Item1.Value * zip.Item2);
+		[Label("Conversions (converted unit per main unit)")]
+		[SerializeField] private List<AIValue> conversions;
 		
-		[Serializable]
-		public struct AIDynamicValueSetup
+		public AIValueTotalCost AttemptConvert(AIValueType valueType, float cost) => valueType != this.valueType ? new AIValueTotalCost() : conversions.Select(conversionCost => conversionCost * cost).Sum();
+	}
+	
+	[Serializable]
+	public struct AIValuedAction
+	{
+		[SerializeField] private AIAction action;
+		public AIAction Action => action;
+		
+		[SerializeField] private List<AICostConversion> conversions;
+		
+		public AIValueTotalCost Convert(AIValueTotalCost costs)
 		{
-			[SerializeField] private AIValueType valueType;
-			[SerializeField] private List<AIStaticValue> dependentValues;
-			
-			public AIDynamicValue Setup(Dictionary<AIValueType, AIValue> values) => new()
-			{
-				ValueType = valueType,
-				dependentValues = dependentValues.Select(value => (values[value.ValueType], value.Value)).ToList(),
-			};
+			List<AICostConversion> conversions = this.conversions;
+			return costs.SelectMany(valueType => conversions.Select(conversion => conversion.AttemptConvert(valueType, costs[valueType]))).Sum();
 		}
 	}
 }

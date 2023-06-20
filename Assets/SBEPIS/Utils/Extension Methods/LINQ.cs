@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -192,6 +193,17 @@ namespace SBEPIS.Utils.Linq
 		{
 			for (int i = 0; i * count < source.Count; i++)
 				yield return source.Skip(i * count).Take(count);
+		}
+		
+		public static IEnumerable<T> AsEnumerable<T>(this IEnumerator<T> source)
+		{
+			while (source.MoveNext())
+				yield return source.Current;
+		}
+		public static IEnumerable AsEnumerable(this IEnumerator source)
+		{
+			while (source.MoveNext())
+				yield return source.Current;
 		}
 	}
 }

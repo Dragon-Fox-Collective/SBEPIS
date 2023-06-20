@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,55 +8,44 @@ namespace SBEPIS.AI
 	[CreateAssetMenu]
 	public class AIAction : ScriptableObject
 	{
-		[SerializeField] private List<AIValueCost> costs = new();
+		[SerializeField] private List<AIValue> costs = new();
 		
 		[SerializeField] private List<AIActionConstraint> constraints = new();
 		
 		[SerializeField] private List<AIActionConstraint> solvedConstraints = new();
 		
-		public bool CanComplete(List<AIAction> possibleActions, out AIValueTotalCost costs)
+		public IEnumerable<AIAction> GetBestRouteToComplete(List<AIValuedAction> possibleActions, Func<AIValueTotalCost, float> valueConverter, out float totalValue)
 		{
-			costs = new AIValueTotalCost();
-			
 			foreach (AIActionConstraint constraint in constraints)
 			{
-				bool satisfied = false;
-				foreach (AIAction possibleAction in possibleActions)
-				{
-					if (possibleAction.CanSatisfy(constraint, possibleActions, out AIValueTotalCost actionCosts))
+				(IEnumerable<AIAction> performedActions, float value) = possibleActions.Select(possibleAction => (satisfied: possibleAction.Action.CanSatisfy(constraint, possibleActions, out AIValueTotalCost actionCosts, out IEnumerable<AIAction> subPerformedActions), actionCosts, performedActions: subPerformedActions.Prepend(possibleAction.Action)))
+					.Where(zip => zip.satisfied)
+					.Aggregate((Enumerable.Empty<AIAction>(), 0f), (currentMax, zip) =>
 					{
-						satisfied = true;
-						costs.AddCosts(actionCosts);
-						break;
-					}
-				}
-				
-				if (!satisfied)
-				{
-					costs.Clear();
-					return false;
-				}
+						float newValue = valueConverter(zip.actionCosts);
+						return newValue > currentMax.Item2 ? (zip.performedActions, newValue) : currentMax;
+					});
+				totalValue = value;
+				return performedActions;
 			}
-			
-			return true;
 		}
 		
-		public bool CanSatisfy(AIActionConstraint constraint, List<AIAction> possibleActions, out AIValueTotalCost costs)
+		public bool CanSatisfy(AIActionConstraint constraint, List<AIValuedAction> possibleActions, out AIValueTotalCost costs, out IEnumerable<AIAction> performedActions)
 		{
-			if (!CanComplete(possibleActions, out costs))
+			if (!GetRoutesToComplete(possibleActions, out costs, out performedActions))
 				return false;
 			
-			foreach (AIActionConstraint solvedConstraint in solvedConstraints)
+			if (solvedConstraints.Contains(constraint))
 			{
-				if (constraint == solvedConstraint)
-				{
-					this.costs.ForEach(costs.AddCost);
-					return true;
-				}
+				costs += this.costs.Sum();
+				return true;
 			}
-			
-			costs.Clear();
-			return false;
+			else
+			{
+				costs = AIValueTotalCost.Zero;
+				performedActions = Enumerable.Empty<AIAction>();
+				return false;
+			}
 		}
 	}
 }

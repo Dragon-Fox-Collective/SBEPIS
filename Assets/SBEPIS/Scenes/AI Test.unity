@@ -153,18 +153,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   action: {fileID: 11400000, guid: ceccfc5c13edaa842b8e3a79a857e80d, type: 2}
-  staticValues:
+  values:
   - valueType: {fileID: 11400000, guid: 96ed04fa90cf37b4eb12dc34eaa0993b, type: 2}
     value: -15
   - valueType: {fileID: 11400000, guid: 7c7e8c10d42898c47a934b53f3e2ba68, type: 2}
     value: -2
-  dynamicValues:
-  - valueType: {fileID: 11400000, guid: 7e53a1f5f40a7e84d80d2aa11a3f0066, type: 2}
-    dependentValues:
-    - valueType: {fileID: 11400000, guid: 7c7e8c10d42898c47a934b53f3e2ba68, type: 2}
-      value: 2
   solverActions:
-  - {fileID: 11400000, guid: 7a2e62cfc50e0c64b8b8a6773b5b1ea1, type: 2}
+  - action: {fileID: 11400000, guid: 7a2e62cfc50e0c64b8b8a6773b5b1ea1, type: 2}
+    conversions:
+    - valueType: {fileID: 11400000, guid: 7e53a1f5f40a7e84d80d2aa11a3f0066, type: 2}
+      conversions:
+      - valueType: {fileID: 11400000, guid: 96ed04fa90cf37b4eb12dc34eaa0993b, type: 2}
+        value: 0.5
+      - valueType: {fileID: 11400000, guid: 7c7e8c10d42898c47a934b53f3e2ba68, type: 2}
+        value: 1
+  - action: {fileID: 11400000, guid: d749da115cc379a479135b4cbfb9df29, type: 2}
+    conversions:
+    - valueType: {fileID: 11400000, guid: 7e53a1f5f40a7e84d80d2aa11a3f0066, type: 2}
+      conversions:
+      - valueType: {fileID: 11400000, guid: 7c7e8c10d42898c47a934b53f3e2ba68, type: 2}
+        value: 2
 --- !u!4 &247317953
 Transform:
   m_ObjectHideFlags: 0
@@ -210,20 +218,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   action: {fileID: 11400000, guid: ceccfc5c13edaa842b8e3a79a857e80d, type: 2}
-  staticValues:
+  values:
   - valueType: {fileID: 11400000, guid: 96ed04fa90cf37b4eb12dc34eaa0993b, type: 2}
     value: -5
   - valueType: {fileID: 11400000, guid: 7c7e8c10d42898c47a934b53f3e2ba68, type: 2}
     value: -2
-  dynamicValues:
-  - valueType: {fileID: 11400000, guid: 7e53a1f5f40a7e84d80d2aa11a3f0066, type: 2}
-    dependentValues:
-    - valueType: {fileID: 11400000, guid: 96ed04fa90cf37b4eb12dc34eaa0993b, type: 2}
-      value: 0.5
-    - valueType: {fileID: 11400000, guid: 7c7e8c10d42898c47a934b53f3e2ba68, type: 2}
-      value: 1
   solverActions:
-  - {fileID: 11400000, guid: 7a2e62cfc50e0c64b8b8a6773b5b1ea1, type: 2}
+  - action: {fileID: 11400000, guid: 7a2e62cfc50e0c64b8b8a6773b5b1ea1, type: 2}
+    conversions:
+    - valueType: {fileID: 11400000, guid: 7e53a1f5f40a7e84d80d2aa11a3f0066, type: 2}
+      conversions:
+      - valueType: {fileID: 11400000, guid: 96ed04fa90cf37b4eb12dc34eaa0993b, type: 2}
+        value: 0.5
+      - valueType: {fileID: 11400000, guid: 7c7e8c10d42898c47a934b53f3e2ba68, type: 2}
+        value: 1
 --- !u!4 &364642751
 Transform:
   m_ObjectHideFlags: 0
@@ -368,6 +376,7 @@ GameObject:
   - component: {fileID: 1357832135}
   - component: {fileID: 1357832134}
   - component: {fileID: 1357832133}
+  - component: {fileID: 1357832136}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -449,3 +458,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1357832136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357832132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0

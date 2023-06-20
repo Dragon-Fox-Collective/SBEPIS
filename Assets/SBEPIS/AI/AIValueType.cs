@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +14,12 @@ namespace SBEPIS.AI
 	
 	public class AIValueTotalCost : IEnumerable<AIValueType>
 	{
+		public static AIValueTotalCost Zero => new();
+		
 		private Dictionary<AIValueType, float> costs = new();
 		
-		public void AddCost(AIValueCost cost) => AddCost(cost.ValueType, cost.Cost);
-		public void AddCost(AIValueType valueType, float cost)
+		private void AddCost(AIValue cost) => AddCost(cost.ValueType, cost.Value);
+		private void AddCost(AIValueType valueType, float cost)
 		{
 			if (costs.ContainsKey(valueType))
 				costs[valueType] += cost;
@@ -26,14 +27,9 @@ namespace SBEPIS.AI
 				costs.Add(valueType, cost);
 		}
 		
-		public void AddCosts(AIValueTotalCost cost)
+		private void AddCosts(AIValueTotalCost cost)
 		{
 			cost.costs.ForEach(pair => AddCost(pair.Key, pair.Value));
-		}
-		
-		public void Clear()
-		{
-			costs.Clear();
 		}
 		
 		public IEnumerator<AIValueType> GetEnumerator() => costs.Keys.GetEnumerator();
@@ -41,15 +37,28 @@ namespace SBEPIS.AI
 		
 		public float this[AIValueType type] => costs[type];
 		
+		public static AIValueTotalCost operator +(AIValueTotalCost costs, AIValue cost)
+		{
+			AIValueTotalCost newCosts = Zero;
+			newCosts.AddCosts(costs);
+			newCosts.AddCost(cost);
+			return newCosts;
+		}
+		
+		public static AIValueTotalCost operator +(AIValueTotalCost costs, AIValueTotalCost cost)
+		{
+			AIValueTotalCost newCosts = Zero;
+			newCosts.AddCosts(costs);
+			newCosts.AddCosts(cost);
+			return newCosts;
+		}
+		
 		public override string ToString() => costs.ToDelimString();
 	}
 	
-	[Serializable]
-	public struct AIValueCost
+	public static class AIValueCostLINQ
 	{
-		[SerializeField] private AIValueType valueType;
-		public AIValueType ValueType => valueType;
-		[SerializeField] private float cost;
-		public float Cost => cost;
+		public static AIValueTotalCost Sum(this IEnumerable<AIValue> costs) => costs.Aggregate(AIValueTotalCost.Zero, (currentCosts, cost) => currentCosts + cost);
+		public static AIValueTotalCost Sum(this IEnumerable<AIValueTotalCost> costs) => costs.Aggregate(AIValueTotalCost.Zero, (currentCosts, cost) => currentCosts + cost);
 	}
 }

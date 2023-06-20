@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using SBEPIS.Utils.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace SBEPIS.Utils
@@ -58,7 +61,7 @@ namespace SBEPIS.Utils
 				return false;
 			}
 			
-			return collider.attachedRigidbody.TryGetComponent<T>(out component);
+			return collider.attachedRigidbody.TryGetComponent(out component);
 		}
 		public static T GetAttachedComponent<T>(this Collider collider) => collider ? collider.attachedRigidbody ? collider.attachedRigidbody.GetComponent<T>() : default : default;
 		
@@ -71,6 +74,14 @@ namespace SBEPIS.Utils
 					if (materialName.EndsWith(" (Instance)") && materialName[..^11] == material.name)
 						action.Invoke(renderer.materials[i]);
 				}
+		}
+		
+		public static IEnumerable<SerializedProperty> GetChildren(this SerializedProperty property)
+		{
+			SerializedProperty nextProperty = property.GetEndProperty();
+			int numChildren = 0;
+			while (property.NextVisible(numChildren++ == 0) && !SerializedProperty.EqualContents(property, nextProperty))
+				yield return property.Copy();
 		}
 	}
 }
