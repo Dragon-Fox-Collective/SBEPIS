@@ -21,10 +21,18 @@ namespace SBEPIS.AI
 			
 			List<AINode> nodesToExplore = new();
 			nodesToExplore.AddRange(startNode.ConnectedNodes);
-			
+
+			int numIterations = 0;
 			AINode solution = null;
 			while (nodesToExplore.Count > 0)
 			{
+				const int iterationCap = 1_000_000;
+				if (numIterations++ >= iterationCap)
+				{
+					Debug.LogError($"Solver capped at {iterationCap} iterations!");
+					break;
+				}
+				
 				AINode node = nodesToExplore.Max();
 				nodesToExplore.Remove(node);
 				
