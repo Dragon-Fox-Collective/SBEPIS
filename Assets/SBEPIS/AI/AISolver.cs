@@ -9,7 +9,7 @@ namespace SBEPIS.AI
 {
 	public static class AISolver
 	{
-		public static bool Solve(Point start, Point goal, AIState initialState, out Point[] path)
+		public static bool Solve(AIPoint start, AIPoint goal, AIState initialState, out AIPoint[] path)
 		{
 			AINode startNode = new()
 			{
@@ -63,14 +63,14 @@ namespace SBEPIS.AI
 	
 	public class AINode : IComparable<AINode>
 	{
-		public Point point;
+		public AIPoint point;
 		public AINode previousNode;
 		public float currentValue;
 		public AIState state;
 		
 		public IEnumerable<AINode> ConnectedNodes => point.GetConnectedNodes(this);
 		
-		public IEnumerable<Point> PathBack
+		public IEnumerable<AIPoint> PathBack
 		{
 			get
 			{
@@ -106,13 +106,14 @@ namespace SBEPIS.AI
 		public AIStateComponent StepState();
 	}
 	
-	public class Point
+	public class AIPoint
 	{
 		private string name;
-		public AIPointState state;
+		private AIPointState state;
+		public AIPointState State => state;
 		private List<Edge> connectedPoints = new();
 		
-		public Point(string name, AIPointState state)
+		public AIPoint(string name, AIPointState state)
 		{
 			this.name = name;
 			this.state = state;
@@ -130,10 +131,10 @@ namespace SBEPIS.AI
 			};
 		});
 		
-		public void Connect(Point point, float value) => Connect(point, Array.Empty<Action<AIState>>(), new Func<AIState, float>[]{ _ => value });
-		public void Connect<TStateComponent>(Point point, Func<TStateComponent, TStateComponent> stateModifier, Func<TStateComponent, float> valueCalculator) where TStateComponent : struct, AIStateComponent => Connect(point, state => state.Set(stateModifier(state.Get<TStateComponent>())), state => valueCalculator(state.Get<TStateComponent>()));
-		public void Connect(Point point, Action<AIState> stateModifier, Func<AIState, float> valueCalculator) => Connect(point, new[]{ stateModifier }, new[]{ valueCalculator });
-		public void Connect(Point point, Action<AIState>[] stateModifiers, Func<AIState, float>[] valueCalculators) => connectedPoints.Add(new Edge
+		public void Connect(AIPoint point, float value) => Connect(point, Array.Empty<Action<AIState>>(), new Func<AIState, float>[]{ _ => value });
+		public void Connect<TStateComponent>(AIPoint point, Func<TStateComponent, TStateComponent> stateModifier, Func<TStateComponent, float> valueCalculator) where TStateComponent : struct, AIStateComponent => Connect(point, state => state.Set(stateModifier(state.Get<TStateComponent>())), state => valueCalculator(state.Get<TStateComponent>()));
+		public void Connect(AIPoint point, Action<AIState> stateModifier, Func<AIState, float> valueCalculator) => Connect(point, new[]{ stateModifier }, new[]{ valueCalculator });
+		public void Connect(AIPoint point, Action<AIState>[] stateModifiers, Func<AIState, float>[] valueCalculators) => connectedPoints.Add(new Edge
 		{
 			destination = point,
 			stateModifiers = stateModifiers,
@@ -144,7 +145,7 @@ namespace SBEPIS.AI
 		
 		private struct Edge
 		{
-			public Point destination;
+			public AIPoint destination;
 			public Action<AIState>[] stateModifiers;
 			public Func<AIState, float>[] valueCalculators;
 		}

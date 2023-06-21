@@ -1,13 +1,27 @@
-using System.Collections.Generic;
-using System.Linq;
-using SBEPIS.Utils.Linq;
+using System;
+using KBCore.Refs;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace SBEPIS.AI
 {
-	public class AIBrain : MonoBehaviour
+	public class AIBrain : ValidatedMonoBehaviour
 	{
-		[SerializeField] private Transform moveTo;
+		[SerializeField, Self] private NavMeshAgent agent;
 		
+		[SerializeField] private AIPointBehaviour moveTo;
+		
+		private void Start()
+		{
+			agent.updatePosition = false;
+			agent.updateRotation = false;
+			agent.destination = moveTo.transform.position;
+		}
+		
+		private void Update()
+		{
+			transform.position += agent.velocity * Time.deltaTime;
+			//agent.nextPosition = transform.position;
+		}
 	}
 }

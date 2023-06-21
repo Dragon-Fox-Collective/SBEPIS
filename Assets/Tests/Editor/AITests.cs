@@ -7,11 +7,11 @@ namespace SBEPIS.Tests.EditMode
 {
 	public class AITests
 	{
-		private static readonly Point Start = new("Start", new AIPointState{ new PositionState{ position = new Vector2(0, 0) } });
-		private static readonly Point End =  new("End", new AIPointState{ new PositionState{ position = new Vector2(0, 10) } });
-		private static readonly Point BusStart = new("Bus Start", new AIPointState{ new PositionState{ position = new Vector2(1, 1) } });
-		private static readonly Point BusEnd = new("Bus End", new AIPointState{ new PositionState{ position = new Vector2(1, 9) } });
-		private static readonly Point Shop = new("Candy Shop", new AIPointState{ new PositionState{ position = new Vector2(-1, 5) } });
+		private static readonly AIPoint Start = new("Start", new AIPointState{ new PositionState{ position = new Vector2(0, 0) } });
+		private static readonly AIPoint End =  new("End", new AIPointState{ new PositionState{ position = new Vector2(0, 10) } });
+		private static readonly AIPoint BusStart = new("Bus Start", new AIPointState{ new PositionState{ position = new Vector2(1, 1) } });
+		private static readonly AIPoint BusEnd = new("Bus End", new AIPointState{ new PositionState{ position = new Vector2(1, 9) } });
+		private static readonly AIPoint Shop = new("Candy Shop", new AIPointState{ new PositionState{ position = new Vector2(-1, 5) } });
 		
 		static AITests()
 		{
@@ -34,37 +34,37 @@ namespace SBEPIS.Tests.EditMode
 		[Test]
 		public void AISolver_UsesBus_WhenItHasNoMoneyOrEnergy()
 		{
-			Assert.That(AISolver.Solve(Start, End, new AIState{ new CashState{ cash = 0 }, new EnergyState{ energy = 0 } }, out Point[] path));
+			Assert.That(AISolver.Solve(Start, End, new AIState{ new CashState{ cash = 0 }, new EnergyState{ energy = 0 } }, out AIPoint[] path));
 			Assert.That(path, Is.EqualTo(new[]{ Start, BusStart, BusEnd, End }));
 		}
 		
 		[Test]
 		public void AISolver_GoesToCandyShop_WhenItHasMoney()
 		{
-			Assert.That(AISolver.Solve(Start, End, new AIState{ new CashState{ cash = 3 }, new EnergyState{ energy = 0 } }, out Point[] path));
+			Assert.That(AISolver.Solve(Start, End, new AIState{ new CashState{ cash = 3 }, new EnergyState{ energy = 0 } }, out AIPoint[] path));
 			Assert.That(path, Is.EqualTo(new[]{ Start, Shop, Shop, Shop, Shop, End }));
 		}
 		
 		[Test]
 		public void AISolver_TeleportsToEnd_WhenItHasEnergy()
 		{
-			Assert.That(AISolver.Solve(Start, End, new AIState{ new CashState{ cash = 0 }, new EnergyState{ energy = 1 } }, out Point[] path));
+			Assert.That(AISolver.Solve(Start, End, new AIState{ new CashState{ cash = 0 }, new EnergyState{ energy = 1 } }, out AIPoint[] path));
 			Assert.That(path, Is.EqualTo(new[]{ Start, End }));
 		}
 		
-		private static void ConnectBiWayByDistance(Point a, Point b)
+		private static void ConnectBiWayByDistance(AIPoint a, AIPoint b)
 		{
-			ConnectBiWay(a, b, -Vector2.Distance(a.state.Get<PositionState>().position, b.state.Get<PositionState>().position)); // 1 v/m
+			ConnectBiWay(a, b, -Vector2.Distance(a.State.Get<PositionState>().position, b.State.Get<PositionState>().position)); // 1 v/m
 			ConnectBiWay<EnergyState>(a, b, state => state.Spend(), _ => 0);
 		}
 		
-		private static void ConnectBiWay<TStateComponent>(Point a, Point b, Func<TStateComponent, TStateComponent> stateModifier, Func<TStateComponent, float> valueCalculator) where TStateComponent : struct, AIStateComponent
+		private static void ConnectBiWay<TStateComponent>(AIPoint a, AIPoint b, Func<TStateComponent, TStateComponent> stateModifier, Func<TStateComponent, float> valueCalculator) where TStateComponent : struct, AIStateComponent
 		{
 			a.Connect(b, stateModifier, valueCalculator);
 			b.Connect(a, stateModifier, valueCalculator);
 		}
 		
-		private static void ConnectBiWay(Point a, Point b, float value)
+		private static void ConnectBiWay(AIPoint a, AIPoint b, float value)
 		{
 			a.Connect(b, value);
 			b.Connect(a, value);
