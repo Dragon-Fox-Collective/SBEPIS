@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SBEPIS.Utils.ECS;
 using SBEPIS.Utils.Linq;
 using UnityEngine;
 
@@ -82,23 +82,14 @@ namespace SBEPIS.AI
 		public override string ToString() => $"{point}{{{currentValue:0.##} value, {state}}}";
 	}
 	
-	public class AIState : IEnumerable<AIStateComponent>
+	public class AIState : ECSEntity<AIStateComponent>
 	{
-		private Dictionary<Type, AIStateComponent> stateComponents = new();
-		
 		public float Value => this.Select(component => component.GetValue()).Sum();
 		
-		public void Add<TStateComponent>(TStateComponent stateComponent) where TStateComponent : AIStateComponent => stateComponents.Add(typeof(TStateComponent), stateComponent);
+		public AIState() { }
+		public AIState(Dictionary<Type, AIStateComponent> components) : base(components) { }
 		
-		public TStateComponent Get<TStateComponent>() => (TStateComponent)stateComponents[typeof(TStateComponent)];
-		public void Set<TStateComponent>(TStateComponent component) where TStateComponent : AIStateComponent => stateComponents[typeof(TStateComponent)] = component;
-		
-		public AIState StepState() => new(){ stateComponents = stateComponents.Select(pair => (pair.Key, Value: pair.Value.StepState())).ToDictionary(pair => pair.Key, pair => pair.Value) };
-		
-		public IEnumerator<AIStateComponent> GetEnumerator() => stateComponents.Values.GetEnumerator();
-		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-		
-		public override string ToString() => ", ".Join(stateComponents.Values);
+		public AIState StepState() => new(Components.Select(pair => (pair.Key, Value: pair.Value.StepState())).ToDictionary(pair => pair.Key, pair => pair.Value));
 	}
 	
 	public interface AIStateComponent
@@ -110,29 +101,26 @@ namespace SBEPIS.AI
 	public class Point
 	{
 		private string name;
-		private Vector2 position;
+		public AIPointState state;
 		private List<Edge> connectedPoints = new();
 		
-		public Point(string name, float x, float y) : this(name, new Vector2(x, y)) { }
-		public Point(string name, Vector2 position)
+		public Point(string name, AIPointState state)
 		{
 			this.name = name;
-			this.position = position;
+			this.state = state;
 		}
 		
 		public IEnumerable<AINode> GetConnectedNodes(AINode origin) => connectedPoints.Select(edge =>
 		{
-			AIState state = edge.stateModifiers.ProcessOn(origin.state.StepState());
+			AIState connectedState = edge.stateModifiers.ProcessOn(origin.state.StepState());
 			return new AINode
 			{
-				currentValue = origin.currentValue + state.Value + edge.valueCalculators.Select(calc => calc(state)).Sum(),
+				currentValue = origin.currentValue + connectedState.Value + edge.valueCalculators.Select(calc => calc(connectedState)).Sum(),
 				point = edge.destination,
 				previousNode = origin,
-				state = state,
+				state = connectedState,
 			};
 		});
-		
-		public void ConnectDistance(Point point) => Connect(point, -Vector2.Distance(position, point.position));
 		
 		public void Connect(Point point, float value) => Connect(point, Array.Empty<Action<AIState>>(), new Func<AIState, float>[]{ _ => value });
 		public void Connect<TStateComponent>(Point point, Func<TStateComponent, TStateComponent> stateModifier, Func<TStateComponent, float> valueCalculator) where TStateComponent : struct, AIStateComponent => Connect(point, state => state.Set(stateModifier(state.Get<TStateComponent>())), state => valueCalculator(state.Get<TStateComponent>()));
@@ -152,5 +140,15 @@ namespace SBEPIS.AI
 			public Action<AIState>[] stateModifiers;
 			public Func<AIState, float>[] valueCalculators;
 		}
+	}
+	
+	public class AIPointState : ECSEntity<AIPointComponent>
+	{
+		
+	}
+	
+	public interface AIPointComponent
+	{
+		
 	}
 }
