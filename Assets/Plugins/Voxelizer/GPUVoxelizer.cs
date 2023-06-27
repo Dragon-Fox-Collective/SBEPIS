@@ -120,7 +120,7 @@ namespace VoxelSystem {
 			uvBuffer.Release();
 			triBuffer.Release();
 
-			return new GPUVoxelData(voxelBuffer, w, h, d, unit);
+			return new GPUVoxelData(voxelBuffer, w, h, d, unit, start);
         }
 
         public static RenderTexture BuildTexture3D(ComputeShader voxelizer, GPUVoxelData data, RenderTextureFormat format, FilterMode filterMode)

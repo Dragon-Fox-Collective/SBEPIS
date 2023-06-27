@@ -104,7 +104,7 @@ namespace MarchingCubesProject
                             iy = y + VertexOffset[i, 1];
                             iz = z + VertexOffset[i, 2];
 
-                            Cube[i] = voxels[ix + iy * width + iz * width * height];
+                            Cube[i] = voxels[ix * height * depth + iy * depth + iz];
                         }
 
                         //Perform algorithm

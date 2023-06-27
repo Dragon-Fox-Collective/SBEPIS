@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using KBCore.Refs;
 using MarchingCubesProject;
+using NaughtyAttributes;
+using SBEPIS.Utils.Linq;
 using SBEPIS.Utils.VectorLinq;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -14,13 +16,18 @@ namespace SBEPIS.AI
 		[SerializeField, Child] private MeshFilter[] meshFilters;
 		
 		[SerializeField] private float voxelSize;
-		[SerializeField] private Mesh voxelMesh;
 		
 		[SerializeField] private bool addVoxelizedMesh = false;
+		[SerializeField, ShowIf("addVoxelizedMesh")] private Mesh voxelMesh;
+		
 		[SerializeField] private bool addMarchedMesh = true;
+		
+		[SerializeField] private bool useGPU = false;
+		[SerializeField, ShowIf("useGPU")] private ComputeShader GPUVoxelizerShader;
 		
 		[SerializeField, HideInInspector] private MeshCollider meshCollider;
 		
+		[Button]
 		public void GenerateMesh()
 		{
 			Mesh mesh = GetChildMeshes();
@@ -42,27 +49,42 @@ namespace SBEPIS.AI
 		
 		private Mesh ProcessMesh(Mesh mesh)
 		{
-			VoxelizeMesh(mesh, voxelSize, out List<Voxel_t> voxels, out float scale, out float[,,] voxelField, out Vector3 min);
-			Mesh voxelizedMesh = GenerateVoxelBoxMesh(voxels, voxelMesh, scale);
+			VoxelizeMesh(mesh, voxelSize, out IEnumerable<Voxel_t> voxels, out float scale, out Voxel_t[,,] voxelField, out Vector3 min, useGPU);
+			Mesh voxelizedMesh = GenerateVoxelBoxMesh(voxelField.Cast<Voxel_t>(), voxelMesh, scale);
 			Mesh marchedMesh = MarchVoxels(voxelField, min, scale);
 			return CombineMeshes(transform.worldToLocalMatrix,
 				addVoxelizedMesh ? voxelizedMesh : null,
 				addMarchedMesh ? marchedMesh : null);
 		}
 		
-		private static void VoxelizeMesh(Mesh mesh, float voxelSize, out List<Voxel_t> voxels, out float scale, out float[,,] voxelField, out Vector3 min)
+		private void VoxelizeMesh(Mesh mesh, float voxelSize, out IEnumerable<Voxel_t> voxels, out float scale, out Voxel_t[,,] voxelField, out Vector3 min, bool useGPU = false)
 		{
 			int resolution = Mathf.RoundToInt(mesh.bounds.size.Max() / voxelSize);
-			CPUVoxelizer.Voxelize(mesh, resolution, out voxels, out scale, out voxelField, out min);
+			
+			if (useGPU)
+			{
+				GPUVoxelData voxelData = GPUVoxelizer.Voxelize(GPUVoxelizerShader, mesh, resolution, true, false);
+				voxels = voxelData.GetData();
+				scale = voxelData.UnitLength;
+				voxelField = new Voxel_t[0, 0, 0];
+				min = voxelData.Start;
+			}
+			else
+			{
+				CPUVoxelizer.Voxelize(mesh, resolution, out List<Voxel_t> voxelList, out scale, out voxelField, out min);
+				voxels = voxelList;
+			}
 		}
 		
-		private static Mesh MarchVoxels(float[,,] voxelField, Vector3 min, float scale)
+		private static Mesh MarchVoxels(Voxel_t[,,] voxelField, Vector3 min, float scale)
 		{
 			List<Vector3> vertices = new();
 			List<int> indices = new();
 			Marching marching = new MarchingCubes();
 			marching.Surface = 0.5f;
-			marching.Generate(voxelField, vertices, indices);
+			marching.Generate(voxelField.Cast<Voxel_t>().Select(voxel => voxel.IsEmpty() ? 0f : 1f).ToList(),
+				voxelField.GetLength(0), voxelField.GetLength(1), voxelField.GetLength(2),
+				vertices, indices);
 			
 			Mesh mesh = new();
 			mesh.indexFormat = IndexFormat.UInt32;
@@ -75,7 +97,7 @@ namespace SBEPIS.AI
 		{
 			Mesh mesh = new();
 			mesh.indexFormat = IndexFormat.UInt32;
-			mesh.CombineMeshes(voxels.Select(voxel => new CombineInstance
+			mesh.CombineMeshes(voxels.Where(voxel => !voxel.IsEmpty()).Select(voxel => new CombineInstance
 				{
 					mesh = voxelMesh,
 					transform = Matrix4x4.TRS(voxel.position, Quaternion.identity, Vector3.one * scale),

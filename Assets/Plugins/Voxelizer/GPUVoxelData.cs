@@ -15,19 +15,22 @@ namespace VoxelSystem {
 		public int Height { get { return height; } }
 		public int Depth { get { return depth; } }
 		public float UnitLength { get { return unitLength; } }
+		public Vector3 Start { get { return start; } }
 
 		int width, height, depth;
 		float unitLength;
+		Vector3 start;
 
 		ComputeBuffer buffer;
         Voxel_t[] voxels;
 
-		public GPUVoxelData(ComputeBuffer buf, int w, int h, int d, float u) {
+		public GPUVoxelData(ComputeBuffer buf, int w, int h, int d, float u, Vector3 start) {
 			buffer = buf;
 			width = w;
 			height = h;
 			depth = d;
 			unitLength = u;
+			this.start = start;
 		}
 
 		public Voxel_t[] GetData() {
