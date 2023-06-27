@@ -53,20 +53,21 @@ namespace VoxelSystem
 		public static void Voxelize (Mesh mesh, int resolution, out List<Voxel_t> voxels, out float unit, out Voxel_t[,,] volume, out Vector3 start)
 		{
 			mesh.RecalculateBounds();
-
+			
 			var bounds = mesh.bounds;
+			bounds.extents += Vector3.one * 0.1f; // Rounding error
 			float maxLength = Mathf.Max(bounds.size.x, Mathf.Max(bounds.size.y, bounds.size.z));
 			unit = maxLength / resolution;
 			var hunit = unit * 0.5f;
-
+			
 			start = bounds.min - 3 * new Vector3(hunit, hunit, hunit);
 			var end = bounds.max + 3 * new Vector3(hunit, hunit, hunit);
 			var size = end - start;
-
+			
 			var width = Mathf.CeilToInt(size.x / unit);
 			var height = Mathf.CeilToInt(size.y / unit);
 			var depth = Mathf.CeilToInt(size.z / unit);
-
+			
 			volume = new Voxel_t[width, height, depth];
 			var boxes = new Bounds[width, height, depth];
 			var voxelSize = Vector3.one * unit;
@@ -83,7 +84,7 @@ namespace VoxelSystem
 					}
 				}
 			}
-
+			
 			// build triangles
 			var vertices = mesh.vertices;
 			var uvs = mesh.uv;
@@ -147,7 +148,6 @@ namespace VoxelSystem
 				}
 			}
 			
-			/*
 			for(int x = 0; x < width; x++)
 			{
 				for(int y = 0; y < height; y++)
@@ -196,7 +196,6 @@ namespace VoxelSystem
 					}
 				}
 			}
-			*/
 			
 			voxels = new List<Voxel_t>();
 			for(int x = 0; x < width; x++)
