@@ -40,8 +40,9 @@ namespace SBEPIS.Utils.VectorLinq
 		public static Vector3 Sum<T>(this IEnumerable<T> source, Func<T, Vector3> func) => source.Aggregate(Vector3.zero, (sum, x) => sum + func(x));
 		public static Vector3 Sum(this IEnumerable<Vector3> source) => source.Aggregate(Vector3.zero, (sum, x) => sum + x);
 		
-		public static Vector3 MaxEach(Vector3 a, Vector3 b) => new(Mathf.Max(a.x, b.x), Mathf.Max(a.y, b.y), Mathf.Max(a.z, b.z));
-		public static Vector3 MaxEach(this IEnumerable<Vector3> source) => source.Aggregate(MaxEach);
+		public static float Max(this Vector3 source) => source.AsEnumerable().Max();
+		
+		public static Vector3 MaxEach(this IEnumerable<Vector3> source) => source.Aggregate(Vector3.Max);
 		
 		public static Quaternion Select(this Quaternion quaternion, Func<float, float> func) => new(func(quaternion.x), func(quaternion.y), func(quaternion.z), func(quaternion.w));
 		
