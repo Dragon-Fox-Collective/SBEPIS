@@ -7,6 +7,7 @@ using SBEPIS.Utils.Linq;
 using SBEPIS.Utils.VectorLinq;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using VoxelSystem;
 
 namespace SBEPIS.AI
@@ -25,7 +26,7 @@ namespace SBEPIS.AI
 		[SerializeField] private bool useGPU = false;
 		[SerializeField, ShowIf("useGPU")] private ComputeShader GPUVoxelizerShader;
 		
-		[SerializeField, HideInInspector] private MeshCollider meshCollider;
+		[SerializeField, HideInInspector] private NavMesh navMeshComponent;
 		
 		[Button]
 		public void GenerateMesh()
@@ -50,8 +51,9 @@ namespace SBEPIS.AI
 		private Mesh ProcessMesh(Mesh mesh)
 		{
 			VoxelizeMesh(mesh, voxelSize, out IEnumerable<Voxel_t> voxels, out float scale, out Voxel_t[,,] voxelField, out Vector3 min, useGPU);
-			Mesh voxelizedMesh = GenerateVoxelBoxMesh(voxelField.Cast<Voxel_t>(), voxelMesh, scale);
-			Mesh marchedMesh = MarchVoxels(voxelField, min, scale);
+			Mesh voxelizedMesh = GenerateVoxelBoxMesh(voxels, voxelMesh, scale);
+			Mesh marchedMesh = MergeSameVertices(MarchVoxels(voxelField, min, scale), 0.001f);
+			marchedMesh.RecalculateNormals();
 			return CombineMeshes(transform.worldToLocalMatrix,
 				addVoxelizedMesh ? voxelizedMesh : null,
 				addMarchedMesh ? marchedMesh : null);
@@ -93,6 +95,40 @@ namespace SBEPIS.AI
 			return mesh;
 		}
 		
+		private static Mesh MergeSameVertices(Mesh mesh, float epsilon)
+		{
+			List<Vector3> newVertices = new();
+			Dictionary<int, int> vertexMapping = new();
+			
+			bool TryMerge(int vertexIndex, Vector3 vertex)
+			{
+				foreach ((int newVertexIndex, Vector3 newVertex) in newVertices.Enumerate())
+				{
+					if (Vector3.Distance(vertex, newVertex) < epsilon)
+					{
+						vertexMapping.Add(vertexIndex, newVertexIndex);
+						return true;
+					}
+				}
+				return false;
+			}
+			
+			foreach ((int vertexIndex, Vector3 vertex) in mesh.vertices.Enumerate())
+			{
+				if (!TryMerge(vertexIndex, vertex))
+				{
+					newVertices.Add(vertex);
+					vertexMapping.Add(vertexIndex, newVertices.Count - 1);
+				}
+			}
+			
+			Mesh newMesh = new();
+			newMesh.indexFormat = IndexFormat.UInt32;
+			newMesh.vertices = newVertices.ToArray();
+			newMesh.triangles = mesh.triangles.Select(index => vertexMapping[index]).ToArray();
+			return newMesh;
+		}
+		
 		private static Mesh GenerateVoxelBoxMesh(IEnumerable<Voxel_t> voxels, Mesh voxelMesh, float scale)
 		{
 			Mesh mesh = new();
@@ -122,9 +158,9 @@ namespace SBEPIS.AI
 		
 		private void EnsureMeshIsOnCollider(Mesh mesh)
 		{
-			if (!meshCollider)
-				meshCollider = gameObject.AddComponent<MeshCollider>();
-			meshCollider.sharedMesh = mesh;
+			if (!navMeshComponent)
+				navMeshComponent = gameObject.AddComponent<NavMesh>();
+			navMeshComponent.Mesh = mesh;
 		}
 	}
 }

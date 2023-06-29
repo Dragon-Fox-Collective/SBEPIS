@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using KBCore.Refs;
+using SBEPIS.Utils.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,14 +12,29 @@ namespace SBEPIS.AI
 	{
 		[SerializeField, Anywhere] private AIPointBehaviour moveTo;
 		
+		[SerializeField, Anywhere] private NavMesh navMesh;
+		[SerializeField] private float speed = 1;
+		[SerializeField] private float waypointDistanceThreshold = 0.1f;
+		
+		private List<Vector3> waypoints = new();
+		
 		private void Start()
 		{
 			
 		}
 		
-		private void Update()
+		private void FixedUpdate()
 		{
-			
+			if (waypoints.Any())
+				FollowWaypoints();
+		}
+		
+		private void FollowWaypoints()
+		{
+			Vector3 waypoint = waypoints.First();
+			transform.position += speed * Time.fixedDeltaTime * (waypoint - transform.position).normalized;
+			if (Vector3.Distance(transform.position, waypoint) < waypointDistanceThreshold)
+				waypoints.Pop();
 		}
 	}
 }

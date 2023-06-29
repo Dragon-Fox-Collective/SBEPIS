@@ -8,7 +8,8 @@ namespace SBEPIS.Utils.Linq
 	public static class LINQ
 	{
 		public static string Join<T>(this string delimiter, IEnumerable<T> source) => string.Join(delimiter, source);
-		public static string ToDelimString<T>(this IEnumerable<T> source) => "[" + ", ".Join(source) +  "]";
+		public static string JoinWith<T>(this IEnumerable<T> source, string delimiter) => string.Join(delimiter, source);
+		public static string ToDelimString<T>(this IEnumerable<T> source) => "[" + source.JoinWith(", ") +  "]";
 		
 		public static T Pop<T>(this IList<T> list)
 		{
@@ -211,5 +212,7 @@ namespace SBEPIS.Utils.Linq
 			while (source.MoveNext())
 				yield return source.Current;
 		}
+		
+		public static TSource CompareBy<TSource, TAggregate>(this IEnumerable<TSource> source, Func<TSource, TAggregate> selector, TAggregate seed, Func<TAggregate, TAggregate, bool> useNewValue) => source.Select(item => (item, selector(item))).Aggregate<(TSource, TAggregate), (TSource, TAggregate)>((default, seed), (currentZip, newZip) => useNewValue(currentZip.Item2, newZip.Item2) ? newZip : currentZip).Item1;
 	}
 }
