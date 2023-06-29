@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using KBCore.Refs;
 using SBEPIS.Utils.Linq;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace SBEPIS.AI
 {
@@ -20,7 +18,7 @@ namespace SBEPIS.AI
 		
 		private void Start()
 		{
-			
+			waypoints = navMesh.PathFromTo(transform.position, moveTo.transform.position).ToList();
 		}
 		
 		private void FixedUpdate()

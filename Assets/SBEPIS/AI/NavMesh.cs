@@ -56,13 +56,28 @@ namespace SBEPIS.AI
 			Node fromNode = GetClosestNodeTo(from);
 			Node toNode = GetClosestNodeTo(to);
 			
-			Dictionary<Node, PathingNode> alreadyChecked = new();
-			List<PathingNode> toCheck = new(){ new PathingNode { node = fromNode } };
+			HashSet<Node> alreadyChecked = new();
+			List<PathingNode> toCheck = new(){ new PathingNode { node = fromNode, target = toNode } };
 			
 			while (toCheck.Any())
 			{
+				PathingNode node = toCheck.Min();
+				toCheck.Remove(node);
+				alreadyChecked.Add(node.node);
 				
+				if (node.node == toNode)
+					return node.Path.Select(pathNode => pathNode.position).ToArray();
+				
+				toCheck.AddRange(node.node.connectedNodes.Where(connectedNode => !alreadyChecked.Contains(connectedNode)).Select(connectedNode => new PathingNode
+					{
+						node = connectedNode,
+						previousNode = node,
+						target = toNode,
+					}
+				));
 			}
+			
+			return null;
 		}
 		
 		private void OnDrawGizmos()
@@ -93,12 +108,29 @@ namespace SBEPIS.AI
 		}
 		
 		[Serializable]
-		private class PathingNode
+		private class PathingNode : IComparable<PathingNode>
 		{
 			public Node node;
 			public PathingNode previousNode;
+			public Node target;
 			
-			public float Distance => previousNode == null ? 0 : previousNode.Distance + Vector3.Distance(node.position, previousNode.node.position);
+			public float DistanceTravelled => previousNode == null ? 0 : previousNode.DistanceTravelled + Vector3.Distance(node.position, previousNode.node.position);
+			public float DistanceToGo => Vector3.Distance(node.position, target.position);
+			public float Heuristic => DistanceTravelled + DistanceToGo;
+			
+			public IEnumerable<Node> Path
+			{
+				get
+				{
+					if (previousNode != null)
+						foreach (Node prevNode in previousNode.Path)
+							yield return prevNode;
+					
+					yield return node;
+				}
+			}
+			
+			public int CompareTo(PathingNode other) => Heuristic.CompareTo(other.Heuristic);
 		}
 	}
 }
