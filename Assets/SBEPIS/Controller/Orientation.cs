@@ -8,20 +8,18 @@ namespace SBEPIS.Controller
 	[RequireComponent(typeof(Rigidbody), typeof(GravitySum))]
 	public class Orientation : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self]
-		private new Rigidbody rigidbody;
-		[SerializeField, Self]
-		private GravitySum gravityNormalizer;
+		[SerializeField, Self] private new Rigidbody rigidbody;
+		[SerializeField, Self] private GravitySum gravityNormalizer;
 		
-		public SphereCollider groundCheck;
-		public LayerMask groundCheckMask;
+		[SerializeField] private SphereCollider groundCheck;
+		[SerializeField] private LayerMask groundCheckMask;
 		
 		private readonly Collider[] groundedColliders = new Collider[1];
 		private float delayTimeLeft;
 		
 		public bool IsGrounded { get; private set; }
-		public Collider GroundCollider { get; private set; }
-		public Rigidbody GroundRigidbody => GroundCollider ? GroundCollider.attachedRigidbody : null;
+		private Collider groundCollider;
+		private Rigidbody GroundRigidbody => groundCollider ? groundCollider.attachedRigidbody : null;
 		
 		public Vector3 RelativeVelocity => GroundRigidbody ? rigidbody.velocity - GroundRigidbody.velocity : rigidbody.velocity;
 		public Vector3 GroundVelocity => Vector3.ProjectOnPlane(RelativeVelocity, gravityNormalizer.UpDirection);
@@ -34,7 +32,7 @@ namespace SBEPIS.Controller
 			if (delayTimeLeft > 0)
 				delayTimeLeft -= Time.fixedDeltaTime;
 			IsGrounded = delayTimeLeft <= 0 && UnityEngine.Physics.OverlapSphereNonAlloc(groundCheck.transform.TransformPoint(groundCheck.center), groundCheck.radius * groundCheck.transform.lossyScale.Aggregate(Mathf.Max), groundedColliders, groundCheckMask, QueryTriggerInteraction.Ignore) > 0;
-			GroundCollider = IsGrounded ? groundedColliders[0] : null;
+			groundCollider = IsGrounded ? groundedColliders[0] : null;
 		}
 		
 		public void Delay(float time)

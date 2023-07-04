@@ -214,5 +214,11 @@ namespace SBEPIS.Utils.Linq
 		}
 		
 		public static TSource CompareBy<TSource, TAggregate>(this IEnumerable<TSource> source, Func<TSource, TAggregate> selector, TAggregate seed, Func<TAggregate, TAggregate, bool> useNewValue) => source.Select(item => (item, selector(item))).Aggregate<(TSource, TAggregate), (TSource, TAggregate)>((default, seed), (currentZip, newZip) => useNewValue(currentZip.Item2, newZip.Item2) ? newZip : currentZip).Item1;
+		
+		public static void AddRange<T>(this HashSet<T> source, IEnumerable<T> items)
+		{
+			foreach (T item in items)
+				source.Add(item);
+		}
 	}
 }

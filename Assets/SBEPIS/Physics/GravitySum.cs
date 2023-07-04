@@ -11,7 +11,7 @@ namespace SBEPIS.Physics
 	{
 		[SerializeField, Self(Flag.Optional)] private new Rigidbody rigidbody;
 		
-		public Transform customCenterOfMass;
+		[SerializeField] private Transform customCenterOfMass;
 		public UnityEvent<Vector3> onGravityChanged = new();
 		
 		public Vector3 UpDirection { get; private set; } = Vector3.up;
@@ -26,32 +26,29 @@ namespace SBEPIS.Physics
 			ApplyGravity();
 		}
 		
+		public Vector3 GetGravityAt(Vector3 point) => massiveBodies.Count == 0 ? Vector3.zero : massiveBodies
+			.Distinct()
+			.GroupBy(body => body.priority)
+			.OrderBy(group => group.Key)
+			.Aggregate(Vector3.zero, (lowerProrityGravity, group) =>
+			{
+				List<Vector3> localCentersOfMass = group.Select(body => body.transform.InverseTransformPoint(point)).ToList();
+				List<float> priorities = group.Zip(localCentersOfMass, (body, localCenterOfMass) => body.GetPriority(localCenterOfMass).Aggregate(1, (product, x) => product * x)).ToList();
+				return Vector3.Lerp(lowerProrityGravity,
+					group.Zip(localCentersOfMass, (body, localCenterOfMass) => body.transform.TransformDirection(body.GetGravity(localCenterOfMass)))
+						.Zip(priorities, (gravity, priority) => Vector3.LerpUnclamped(Vector3.zero, gravity, priority)).Sum(),
+					priorities.Sum());
+			});
+		
 		private void UpdateGravity()
 		{
 			WorldCenterOfMass = customCenterOfMass ? customCenterOfMass.position : rigidbody ? rigidbody.worldCenterOfMass : transform.position;
-			Vector3 gravity = massiveBodies.Count == 0 ? Vector3.zero : massiveBodies
-				.Distinct()
-				.GroupBy(body => body.priority)
-				.OrderBy(group => group.Key)
-				.Aggregate(Vector3.zero, (lowerProrityGravity, group) =>
-				{
-					List<Vector3> localCentersOfMass = group.Select(body => body.transform.InverseTransformPoint(WorldCenterOfMass)).ToList();
-					List<float> priorities = group.Zip(localCentersOfMass, (body, localCenterOfMass) => body.GetPriority(localCenterOfMass).Aggregate(1, (product, x) => product * x)).ToList();
-					return Vector3.Lerp(lowerProrityGravity,
-						group.Zip(localCentersOfMass, (body, localCenterOfMass) => body.transform.TransformDirection(body.GetGravity(localCenterOfMass)))
-							.Zip(priorities, (gravity, priority) => Vector3.LerpUnclamped(Vector3.zero, gravity, priority)).Sum(),
-						priorities.Sum());
-				});
-			
+			Vector3 gravity = GetGravityAt(WorldCenterOfMass);
 			GravityAcceleration = gravity.magnitude;
 			if (GravityAcceleration > 0)
 			{
-				Vector3 newUpDirection = -gravity.normalized;
-				if (UpDirection != newUpDirection)
-				{
-					UpDirection = newUpDirection;
-					onGravityChanged.Invoke(UpDirection);
-				}
+				UpDirection = -gravity.normalized;
+				onGravityChanged.Invoke(UpDirection);
 			}
 		}
 		

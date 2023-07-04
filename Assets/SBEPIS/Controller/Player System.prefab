@@ -897,8 +897,9 @@ GameObject:
   - component: {fileID: 6308269547464211983}
   - component: {fileID: 9031247351748657295}
   - component: {fileID: 1746505250530069798}
+  - component: {fileID: 5470990556484961117}
   m_Layer: 8
-  m_Name: Football
+  m_Name: Foot Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1070,6 +1071,20 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &5470990556484961117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3022089293146867446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3573281b844416a6e4957344bf7500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 6308269547464211983}
+  joint: {fileID: 1746505250530069798}
 --- !u!1 &3896172613111395258
 GameObject:
   m_ObjectHideFlags: 0
@@ -2031,7 +2046,7 @@ GameObject:
   - component: {fileID: 2630919441290191798}
   - component: {fileID: 6677654821122853423}
   m_Layer: 8
-  m_Name: Football Model
+  m_Name: Foot Ball Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3202,13 +3217,15 @@ MonoBehaviour:
   rigidbody: {fileID: 8136032471875334439}
   orientation: {fileID: 690210978355806070}
   moveAimer: {fileID: 6376568279122881040}
-  footballCollider: {fileID: 6308269547464211983}
-  footballJoint: {fileID: 1746505250530069798}
+  footBall: {fileID: 5470990556484961117}
   maxGroundSpeed: 6
   groundAcceleration: 80
   airAcceleration: 20
   sprintFactor: 1.5
   sprintControlThreshold: 0.9
+  controlsTarget: {x: 0, y: 0, z: 0}
+  isTryingToSprint: 0
+  isSprinting: 0
 --- !u!114 &6761588775947424754
 MonoBehaviour:
   m_ObjectHideFlags: 0

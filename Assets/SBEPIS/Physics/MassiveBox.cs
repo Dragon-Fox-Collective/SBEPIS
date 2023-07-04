@@ -16,7 +16,7 @@ namespace SBEPIS.Physics
 		public override Vector3 GetPriority(Vector3 centerOfMass)
 		{
 			Vector3 localCenterOfMass = centerOfMass - box.center;
-			return new(
+			return new Vector3(
 				GetPriorityFalloff(localCenterOfMass.x, box.size.x / 2, falloffDistance),
 				localCenterOfMass.y > -box.size.y / 2 ? GetPriorityFalloff(localCenterOfMass.y + box.size.y / 2, box.size.y, falloffDistance) : 0,
 				GetPriorityFalloff(localCenterOfMass.z, box.size.z / 2, falloffDistance)
@@ -25,7 +25,14 @@ namespace SBEPIS.Physics
 		
 		public static float GetPriorityFalloff(float x, float radius, float falloffDistance) =>
 			falloffDistance > 0 ? Mathf.Clamp(Mathf.Abs(x).Map(radius, radius - falloffDistance, 0, 1), 0, 1) : Mathf.Abs(x) < radius ? 1 : 0;
-
+		
 		public override Vector3 GetGravity(Vector3 centerOfMass) => gravity * Vector3.down;
+		
+		public void OnDrawGizmosSelected()
+		{
+			Gizmos.color = new Color32(145, 244, 139, 210);
+			if (falloffDistance > 0)
+				Gizmos.DrawWireCube(transform.TransformPoint(box.center), box.size - falloffDistance * 2 * Vector3.one);
+		}
 	}
 }

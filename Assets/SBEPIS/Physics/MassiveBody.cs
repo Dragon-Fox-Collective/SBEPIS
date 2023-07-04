@@ -1,4 +1,3 @@
-using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Physics
@@ -15,8 +14,7 @@ namespace SBEPIS.Physics
 			if (!other.attachedRigidbody)
 				return;
 			
-			GravitySum gravitySum = other.attachedRigidbody.GetComponent<GravitySum>();
-			if (gravitySum)
+			if (other.attachedRigidbody.TryGetComponent(out GravitySum gravitySum))
 				gravitySum.Accumulate(this);
 		}
 		
@@ -25,8 +23,7 @@ namespace SBEPIS.Physics
 			if (!other.attachedRigidbody)
 				return;
 			
-			GravitySum gravitySum = other.attachedRigidbody.GetComponent<GravitySum>();
-			if (gravitySum)
+			if (other.attachedRigidbody.TryGetComponent(out GravitySum gravitySum))
 				gravitySum.Deaccumulate(this);
 		}
 	}

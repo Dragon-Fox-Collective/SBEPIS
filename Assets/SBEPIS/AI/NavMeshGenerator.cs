@@ -51,12 +51,21 @@ namespace SBEPIS.AI
 		private Mesh ProcessMesh(Mesh mesh)
 		{
 			VoxelizeMesh(mesh, voxelSize, out IEnumerable<Voxel_t> voxels, out float scale, out Voxel_t[,,] voxelField, out Vector3 min, useGPU);
-			Mesh voxelizedMesh = GenerateVoxelBoxMesh(voxels, voxelMesh, scale);
-			Mesh marchedMesh = MergeSameVertices(MarchVoxels(voxelField, min, scale), 0.001f);
-			marchedMesh.RecalculateNormals();
-			return CombineMeshes(transform.worldToLocalMatrix,
-				addVoxelizedMesh ? voxelizedMesh : null,
-				addMarchedMesh ? marchedMesh : null);
+			
+			Mesh voxelizedMesh = null;
+			if (addVoxelizedMesh)
+				voxelizedMesh = GenerateVoxelBoxMesh(voxels, voxelMesh, scale);
+			
+			
+			Mesh marchedMesh = null;
+			if (addMarchedMesh)
+			{
+				marchedMesh = MergeSameVertices(MarchVoxels(voxelField, min, scale), 0.001f);
+				marchedMesh.RecalculateNormals();
+				
+			}
+			
+			return CombineMeshes(transform.worldToLocalMatrix, voxelizedMesh, marchedMesh);
 		}
 		
 		private void VoxelizeMesh(Mesh mesh, float voxelSize, out IEnumerable<Voxel_t> voxels, out float scale, out Voxel_t[,,] voxelField, out Vector3 min, bool useGPU = false)
