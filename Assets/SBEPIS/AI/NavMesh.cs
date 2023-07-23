@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using SBEPIS.Utils.Linq;
-using SBEPIS.Utils.VectorLinq;
 using UnityEngine;
 
 namespace SBEPIS.AI
@@ -30,42 +29,46 @@ namespace SBEPIS.AI
 		
 		private void RegenerateNodes()
 		{
-			IEnumerable<(int, int)> EdgesOf((int, int, int) tri) => LINQ.Of((tri.Item1, tri.Item2), (tri.Item1, tri.Item3), (tri.Item2, tri.Item3));
+			List<(int, int, int)> triangles = mesh.triangles.Chunk(3).Select(SortedIndices).ToList();
 			
-			List<(int, int, int)> triangles = mesh.triangles.Chunk(3).Select(tri =>
-			{
-				List<int> indices = tri.ToList();
-				indices.Sort();
-				return (indices[0], indices[1], indices[2]);
-			}).ToList();
+			Dictionary<(int, int, int), Node> triangleNodes = triangles.ToDictionary(triangle => triangle, triangle => new Node(mesh, triangle));
 			
-			Dictionary<(int, int), (int, int, int)> singleTriangleEdges = new();
-			Dictionary<(int, int), ((int, int, int), (int, int, int))> pairedTriangleEdges = new();
-			foreach ((int, int, int) triangle in triangles)
+			Dictionary<(int, int), Node> singleNodeEdges = new();
+			foreach (((int, int, int) triangle, Node node) in triangleNodes)
 			foreach ((int, int) edge in EdgesOf(triangle))
-			{
-				if (!singleTriangleEdges.ContainsKey(edge))
+				if (!singleNodeEdges.TryAdd(edge, node))
 				{
-					singleTriangleEdges.Add(edge, triangle);
+					node.AddConnection(singleNodeEdges[edge]);
+					singleNodeEdges[edge].AddConnection(node);
+					singleNodeEdges.Remove(edge);
 				}
-				else
-				{
-					pairedTriangleEdges.Add(edge, (singleTriangleEdges[edge], triangle));
-					singleTriangleEdges.Remove(edge);
-				}
-			}
-			
-			Dictionary<(int, int, int), Node> triangleNodes = triangles.Zip(mesh.triangles.Chunk(3).Select(chunk => chunk.Select(vertex => mesh.vertices[vertex]).ToArray())).ToDictionary(zip => zip.Item1, zip => new Node(
-				zip.Item2.Sum() / 3f,
-				Vector3.Cross(zip.Item2[0] - zip.Item2[1], zip.Item2[2] - zip.Item2[1])));
-			
-			foreach (((int, int, int) triangle1, (int, int, int) triangle2) in pairedTriangleEdges.Values)
-			{
-				triangleNodes[triangle1].AddConnection(triangleNodes[triangle2]);
-				triangleNodes[triangle2].AddConnection(triangleNodes[triangle1]);
-			}
 			
 			nodes = triangleNodes.Select(pair => pair.Value).ToList();
+		}
+		
+		private static IEnumerable<(int, int)> EdgesOf((int, int, int) tri) => LINQ.Of((tri.Item1, tri.Item2), (tri.Item1, tri.Item3), (tri.Item2, tri.Item3));
+		
+		private static (int, int, int) SortedIndices(IEnumerable<int> chunk)
+		{
+			IEnumerator<int> enumerator = chunk.GetEnumerator();
+			enumerator.MoveNext();
+			int a = enumerator.Current;
+			enumerator.MoveNext();
+			int b = enumerator.Current;
+			enumerator.MoveNext();
+			int c = enumerator.Current;
+			enumerator.Dispose();
+			return SortedIndices((a, b, c));
+		}
+		private static (int, int, int) SortedIndices((int, int, int) triangle)
+		{
+			int first = Mathf.Min(Mathf.Min(triangle.Item1, triangle.Item2), triangle.Item3);
+			int last = Mathf.Max(Mathf.Max(triangle.Item1, triangle.Item2), triangle.Item3);
+			bool IsFirstOrLast(int index) => index == first || index == last;
+			int middle = IsFirstOrLast(triangle.Item1) && IsFirstOrLast(triangle.Item2) ? triangle.Item3
+				: IsFirstOrLast(triangle.Item1) && IsFirstOrLast(triangle.Item3) ? triangle.Item2
+				: triangle.Item1;
+			return (first, middle, last);
 		}
 		
 		public async UniTask<IEnumerable<Vector3>> PathFromTo(Vector3 from, Vector3 to, Predicate<Node> predicate = null)
@@ -154,6 +157,10 @@ namespace SBEPIS.AI
 				this.position = position;
 				this.normal = normal;
 			}
+			
+			public Node(Mesh mesh, (int, int, int) triangle) : this(
+				(mesh.vertices[triangle.Item1] + mesh.vertices[triangle.Item2] + mesh.vertices[triangle.Item3]) / 3f,
+				Vector3.Cross(mesh.vertices[triangle.Item1] - mesh.vertices[triangle.Item2], mesh.vertices[triangle.Item3] - mesh.vertices[triangle.Item2])) {}
 			
 			public void AddConnection(Node node)
 			{
