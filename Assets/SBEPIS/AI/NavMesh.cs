@@ -39,16 +39,33 @@ namespace SBEPIS.AI
 				return (indices[0], indices[1], indices[2]);
 			}).ToList();
 			
-			Dictionary<(int, int), ((int, int, int), (int, int, int))> pairedTriangles = new();
-			foreach ((int, int, int) tri in triangles)
-			foreach ((int, int) edge in EdgesOf(tri))
-				if (!pairedTriangles.TryAdd(edge, (tri, (-1, -1, -1))))
-					pairedTriangles[edge] = (pairedTriangles[edge].Item1, tri);
+			Dictionary<(int, int), (int, int, int)> singleTriangleEdges = new();
+			Dictionary<(int, int), ((int, int, int), (int, int, int))> pairedTriangleEdges = new();
+			foreach ((int, int, int) triangle in triangles)
+			foreach ((int, int) edge in EdgesOf(triangle))
+			{
+				if (!singleTriangleEdges.ContainsKey(edge))
+				{
+					singleTriangleEdges.Add(edge, triangle);
+				}
+				else
+				{
+					pairedTriangleEdges.Add(edge, (singleTriangleEdges[edge], triangle));
+					singleTriangleEdges.Remove(edge);
+				}
+			}
 			
-			Dictionary<(int, int, int), Node> triNodes = triangles.Zip(mesh.triangles.Chunk(3).Select(chunk => chunk.Select(vert => mesh.vertices[vert]).ToArray())).ToDictionary(zip => zip.Item1, zip => new Node(
+			Dictionary<(int, int, int), Node> triangleNodes = triangles.Zip(mesh.triangles.Chunk(3).Select(chunk => chunk.Select(vertex => mesh.vertices[vertex]).ToArray())).ToDictionary(zip => zip.Item1, zip => new Node(
 				zip.Item2.Sum() / 3f,
 				Vector3.Cross(zip.Item2[0] - zip.Item2[1], zip.Item2[2] - zip.Item2[1])));
-			nodes = triNodes.Process(pair => pair.Value.AddConnections(EdgesOf(pair.Key).Select(edge => triNodes[pairedTriangles[edge].Item1] == pair.Value ? triNodes[pairedTriangles[edge].Item2] : triNodes[pairedTriangles[edge].Item1]))).Select(pair => pair.Value).ToList();
+			
+			foreach (((int, int, int) triangle1, (int, int, int) triangle2) in pairedTriangleEdges.Values)
+			{
+				triangleNodes[triangle1].AddConnection(triangleNodes[triangle2]);
+				triangleNodes[triangle2].AddConnection(triangleNodes[triangle1]);
+			}
+			
+			nodes = triangleNodes.Select(pair => pair.Value).ToList();
 		}
 		
 		public async UniTask<IEnumerable<Vector3>> PathFromTo(Vector3 from, Vector3 to, Predicate<Node> predicate = null)
