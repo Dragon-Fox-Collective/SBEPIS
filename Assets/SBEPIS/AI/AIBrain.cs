@@ -34,7 +34,7 @@ namespace SBEPIS.AI
 			
 			if (!navMesh.TryGetComponent(out GravitySum navMeshGravitySum))
 				Debug.LogWarning($"NavMesh {navMesh} has no GravitySum");
-			waypoints = navMesh.PathFromTo(transform.position, moveTo.transform.position, node => !navMeshGravitySum || Vector3.Angle(node.Normal, -navMeshGravitySum.GetGravityAt(node.Position)) <= pathfindingClimbingAngle)?.ToList();
+			waypoints = (await navMesh.PathFromTo(transform.position, moveTo.transform.position, node => !navMeshGravitySum || Vector3.Angle(node.Normal, -navMeshGravitySum.GetGravityAt(node.Position)) <= pathfindingClimbingAngle))?.ToList();
 			if (waypoints == null)
 				Debug.LogWarning($"AI {this} could not pathfind on {navMesh} to {moveTo}");
 			

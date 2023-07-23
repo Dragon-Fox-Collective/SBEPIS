@@ -26,6 +26,8 @@ namespace SBEPIS.AI
 		
 		[SerializeReference, HideInInspector] private List<Node> nodes = new();
 		
+		[SerializeField] private List<Vector3[]> debugPaths = new();
+		
 		private void RegenerateNodes()
 		{
 			IEnumerable<(int, int)> EdgesOf((int, int, int) tri) => LINQ.Of((tri.Item1, tri.Item2), (tri.Item1, tri.Item3), (tri.Item2, tri.Item3));
@@ -49,10 +51,8 @@ namespace SBEPIS.AI
 			nodes = triNodes.Process(pair => pair.Value.AddConnections(EdgesOf(pair.Key).Select(edge => triNodes[pairedTriangles[edge].Item1] == pair.Value ? triNodes[pairedTriangles[edge].Item2] : triNodes[pairedTriangles[edge].Item1]))).Select(pair => pair.Value).ToList();
 		}
 		
-		public IEnumerable<Vector3> PathFromTo(Vector3 from, Vector3 to, Predicate<Node> predicate = null)
+		public async UniTask<IEnumerable<Vector3>> PathFromTo(Vector3 from, Vector3 to, Predicate<Node> predicate = null)
 		{
-			Node GetClosestNodeTo(Vector3 position) => nodes.CompareBy(node => Vector3.Distance(position, node.Position), float.MaxValue, (current, distance) => distance < current);
-			
 			Node fromNode = GetClosestNodeTo(from);
 			Node toNode = GetClosestNodeTo(to);
 			
@@ -61,24 +61,37 @@ namespace SBEPIS.AI
 			
 			while (toCheck.Any())
 			{
-				PathingNode node = toCheck.Min();
-				toCheck.Remove(node);
+				PathingNode node = PopShortestPathingNode(toCheck);
 				
 				if (node.node == toNode)
-					return node.Path.Select(pathNode => pathNode.Position).Prepend(from).Append(to);
+					return node.GetWaypoints(from, to);
 				
-				int toCheckBeforeCount = toCheck.Count;
-				toCheck.AddRange(node.node.ConnectedNodes.Where(connectedNode => !accountedFor.Contains(connectedNode)).Where(connectedNode => predicate == null || predicate(connectedNode)).Select(connectedNode => new PathingNode
+				List<PathingNode> newNodesToExplore = node.node.ConnectedNodes.Where(connectedNode => !accountedFor.Contains(connectedNode)).Where(connectedNode => predicate == null || predicate(connectedNode)).Select(connectedNode => new PathingNode
 					{
 						node = connectedNode,
 						previousNode = node,
 						target = toNode,
 					}
-				));
-				accountedFor.AddRange(toCheck.Skip(toCheckBeforeCount).Select(connectedNode => connectedNode.node));
+				).ToList();
+				toCheck.AddRange(newNodesToExplore);
+				accountedFor.AddRange(newNodesToExplore.Select(connectedNode => connectedNode.node));
+				
+				Vector3[] debugPath = node.Path.Select(debugNode => debugNode.Position).ToArray();
+				debugPaths.Add(debugPath);
+				await UniTask.Delay(100);
+				debugPaths.Remove(debugPath);
 			}
 			
 			return null;
+		}
+		
+		private Node GetClosestNodeTo(Vector3 position) => nodes.CompareBy(node => Vector3.Distance(position, node.Position), float.MaxValue, (current, distance) => distance < current);
+		
+		private static PathingNode PopShortestPathingNode(List<PathingNode> nodes)
+		{
+			PathingNode node = nodes.Min();
+			nodes.Remove(node);
+			return node;
 		}
 		
 		private void OnDrawGizmosSelected()
@@ -102,6 +115,11 @@ namespace SBEPIS.AI
 					Gizmos.DrawRay(node.Position, node.Normal * 0.2f);
 				}
 			}
+			
+			Gizmos.color = Color.green;
+			foreach (Vector3[] debugPath in debugPaths)
+				foreach ((Vector3 a, Vector3 b) in debugPath[..^1].Zip(debugPath[1..]))
+					Gizmos.DrawLine(a, b);
 		}
 		
 		[Serializable]
@@ -153,6 +171,8 @@ namespace SBEPIS.AI
 					yield return node;
 				}
 			}
+			
+			public IEnumerable<Vector3> GetWaypoints(Vector3 from, Vector3 to) => Path.Select(pathNode => pathNode.Position).Prepend(from).Append(to);
 			
 			public int CompareTo(PathingNode other) => Heuristic.CompareTo(other.Heuristic);
 		}
