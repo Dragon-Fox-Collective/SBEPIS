@@ -17,21 +17,32 @@ namespace SBEPIS.AI
 		
 		[SerializeField] private float waypointDistanceThreshold = 0.1f;
 		[SerializeField] private float pathfindingClimbingAngle = 45f;
+		[SerializeField] private float stepUpHeight = 0.5f;
 		
 		private List<Vector3> waypoints;
 		
-		private (Vector3, AIRaycastHit)[] rays = GenerateRays(0, 60, 5).Select(ray => (ray, default(AIRaycastHit))).ToArray();
+		private (Vector3, AIRaycastHit)[][] rays = GenerateRays(60, 5, 10, 3, 4).Select(side => side.Select(ray => (ray, default(AIRaycastHit))).ToArray()).ToArray();
 		
 		private void FixedUpdate()
 		{
-			for (int i = 0; i < rays.Length; i++)
-			{
-				UnityEngine.Physics.Raycast(transform.position, transform.TransformDirection(rays[i].Item1), out RaycastHit hit);
-				rays[i] = (rays[i].Item1, new AIRaycastHit(hit));
-			}
+			foreach ((Vector3, AIRaycastHit)[] side in rays)
+				for (int j = 0; j < side.Length; j++)
+				{
+					Vector3 ray = side[j].Item1;
+					UnityEngine.Physics.Raycast(transform.position, transform.TransformDirection(ray), out RaycastHit hit);
+					side[j] = (ray, new AIRaycastHit(hit));
+				}
 		}
 		
-		private static IEnumerable<Vector3> GenerateRays(float downAngle, float upAngle, int numRays)
+		private static IEnumerable<IEnumerable<Vector3>> GenerateRays(float downAngle, float upAngle, int numRaysForward, int numRaysSide, int numSides)
+		{
+			for (float side = 0; side < numSides + 1; side++)
+			{
+				float sideAngle = side.Map(0, numSides + 1, 0, 360);
+				yield return GenerateSideRays(downAngle, upAngle, side == 0 ? numRaysForward : numRaysSide).Select(ray => Quaternion.Euler(0, sideAngle, 0) * ray);
+			}
+		}
+		private static IEnumerable<Vector3> GenerateSideRays(float downAngle, float upAngle, int numRays)
 		{
 			for (float i = 0; i < numRays; i++)
 				yield return Quaternion.Euler(i.Map(0, numRays - 1, downAngle, upAngle), 0, 0) * Vector3.forward;
@@ -46,22 +57,28 @@ namespace SBEPIS.AI
 			else
 				Gizmos.DrawLine(transform.position, moveTo.transform.position);
 			
-			foreach ((Vector3 ray, AIRaycastHit hit) in rays)
-				if (hit.DidHit)
+			foreach ((Vector3, AIRaycastHit)[] side in rays)
+				for (int j = 0; j < side.Length; j++)
 				{
-					Gizmos.color = hit.Inclination < pathfindingClimbingAngle ? Color.green : Color.red;
-					
-					Gizmos.DrawRay(transform.position, transform.TransformDirection(ray) * hit.Distance);
-					Gizmos.DrawWireSphere(hit.Point, 0.05f);
-					Gizmos.color = Color.cyan;
-					Gizmos.DrawRay(hit.Point, hit.Normal * 0.1f);
-					Gizmos.color = Color.magenta;
-					Gizmos.DrawRay(hit.Point, hit.Gravity * -0.01f); // Also shows gravity magnitude
-				}
-				else
-				{
-					Gizmos.color = Color.yellow;
-					Gizmos.DrawRay(transform.position, transform.TransformDirection(ray) * 0.3f);
+					(Vector3 ray, AIRaycastHit hit) = side[j];
+					if (hit.DidHit)
+					{
+						Gizmos.color = hit.Inclination < pathfindingClimbingAngle ? Color.green
+							: j > 0 && Vector3.Project(hit.Point - side[j - 1].Item2.Point, hit.Gravity).magnitude <= stepUpHeight ? Color.green + Color.white * 0.5f
+							: Color.red;
+						
+						Gizmos.DrawRay(transform.position, transform.TransformDirection(ray) * hit.Distance);
+						Gizmos.DrawWireSphere(hit.Point, 0.05f);
+						Gizmos.color = Color.cyan;
+						Gizmos.DrawRay(hit.Point, hit.Normal * 0.1f);
+						Gizmos.color = Color.magenta;
+						Gizmos.DrawRay(hit.Point, hit.Gravity * -0.01f); // Also shows gravity magnitude
+					}
+					else
+					{
+						Gizmos.color = Color.yellow;
+						Gizmos.DrawRay(transform.position, transform.TransformDirection(ray) * 0.3f);
+					}
 				}
 		}
 		
