@@ -251,7 +251,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.6
+  m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &70706350
 MonoBehaviour:
@@ -561,10 +561,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navigator: {fileID: 245816790}
+  gravitySum: {fileID: 245816788}
   moveTo: {fileID: 2031687771}
-  waypointDistanceThreshold: 0.5
-  pathfindingClimbingAngle: 45
-  stepUpHeight: 0.1
+  waypointDistanceThreshold: 1
+  climbingAngle: 45
+  stepUpHeight: 0.5
+  spinCycleIterations: 8
 --- !u!1 &247317951
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,7 +925,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 568105620}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d9307b844d84af18280b2342043d599, type: 3}
   m_Name: 
@@ -944,10 +946,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navigator: {fileID: 568105628}
+  gravitySum: {fileID: 568105626}
   moveTo: {fileID: 2031687771}
-  waypointDistanceThreshold: 0.5
-  pathfindingClimbingAngle: 45
+  waypointDistanceThreshold: 1
+  climbingAngle: 45
   stepUpHeight: 0.5
+  spinCycleIterations: 8
 --- !u!1 &849356853
 GameObject:
   m_ObjectHideFlags: 0
