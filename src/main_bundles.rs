@@ -17,6 +17,7 @@ impl PlanetBundle
 	pub fn new(
 		position: Vec3,
 		radius: f32,
+		gravity: f32,
 		meshes: &mut Assets<Mesh>,
 		materials: &mut Assets<StandardMaterial>,
 	) -> Self
@@ -34,7 +35,7 @@ impl PlanetBundle
 			rigidbody: RigidBody::Static,
 			collider,
 			position: Position(position),
-			gravity: GravityPoint { priority:0, gravity: 100.0 },
+			gravity: GravityPoint { priority:0, standard_radius: radius, acceleration_at_radius: gravity },
 		}
 	}
 }

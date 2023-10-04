@@ -25,7 +25,7 @@ fn setup(
 	mut materials: ResMut<Assets<StandardMaterial>>,
 )
 {
-	commands.spawn(PlanetBundle::new(Vec3::Y * -2.0, 2.0, &mut meshes, &mut materials));
+	commands.spawn(PlanetBundle::new(Vec3::Y * -2.0, 2.0, 10.0, &mut meshes, &mut materials));
 
 	commands.spawn(BoxBundle::new(Vec3::new(0.0, 4.0, 0.0), &mut meshes, &mut materials));
 	commands.spawn(BoxBundle::new(Vec3::new(0.5, 5.5, 0.0), &mut meshes, &mut materials));

@@ -30,7 +30,8 @@ pub trait GravitationalField
 pub struct GravityPoint
 {
 	pub priority: i32,
-	pub gravity: f32,
+	pub standard_radius: f32,
+	pub acceleration_at_radius: f32,
 }
 
 impl GravitationalField for GravityPoint
@@ -43,7 +44,8 @@ impl GravitationalField for GravityPoint
 
 	fn get_acceleration_at(&self, position: Vec3, field_position: Vec3) -> Vec3
 	{
-		self.gravity / field_position.distance_squared(position) * (field_position - position).normalize()
+		let mass = self.acceleration_at_radius * self.standard_radius * self.standard_radius;
+		mass / field_position.distance_squared(position) * (field_position - position).normalize()
 	}
 }
 
