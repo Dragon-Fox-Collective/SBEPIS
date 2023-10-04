@@ -11,35 +11,53 @@ fn main()
 }
 
 #[derive(Component)]
-pub struct GravitationalField {
+pub struct GravitationalField
+{
 	gravity: f64
 }
 
 #[derive(Component)]
 pub struct AffectedByGravity { }
 
-fn setup(
-	mut commands: Commands,
-	mut meshes: ResMut<Assets<Mesh>>,
-	mut materials: ResMut<Assets<StandardMaterial>>,
-) {
-	let mut spawn_planet = |
+#[derive(Bundle)]
+pub struct PlanetBundle
+{
+	pbr: PbrBundle,
+	rigidbody: RigidBody,
+	collider: Collider,
+	position: Position,
+}
+
+impl PlanetBundle {
+	fn new(
 		position: Vec3,
 		radius: f32,
-	| {
-		commands.spawn((
-			PbrBundle {
+		meshes: &mut Assets<Mesh>,
+		materials: &mut Assets<StandardMaterial>,
+	) -> PlanetBundle
+	{
+		PlanetBundle
+		{
+			pbr: PbrBundle
+			{
 				mesh: meshes.add(Mesh::from(shape::UVSphere { radius, sectors: 16, stacks: 16 })),
 				material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
 				..default()
 			},
-			RigidBody::Static,
-			Collider::ball(radius),
-			Position(position),
-		));
-	};
+			rigidbody: RigidBody::Static,
+			collider: Collider::ball(radius),
+			position: Position(position),
+		}
+	}
+}
 
-	spawn_planet(Vec3::new(0.0, -6.0, 0.0), 6.0);
+fn setup(
+	mut commands: Commands,
+	mut meshes: ResMut<Assets<Mesh>>,
+	mut materials: ResMut<Assets<StandardMaterial>>,
+)
+{
+	commands.spawn(PlanetBundle::new(Vec3::new(0.0, 0.0, -6.0), 6.0, &mut meshes, &mut materials));
 
 	// Cube
 	commands.spawn((
