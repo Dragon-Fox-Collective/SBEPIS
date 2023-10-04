@@ -9,7 +9,8 @@ pub struct PlanetBundle
 	rigidbody: RigidBody,
 	collider: Collider,
 	position: Position,
-	gravity: GravitationalField,
+	gravity: GravityPoint,
+	gravity_priority: GravityPriority,
 }
 
 impl PlanetBundle
@@ -17,6 +18,7 @@ impl PlanetBundle
 	pub fn new(
 		position: Vec3,
 		radius: f32,
+		gravity: f32,
 		meshes: &mut Assets<Mesh>,
 		materials: &mut Assets<StandardMaterial>,
 	) -> Self
@@ -34,7 +36,8 @@ impl PlanetBundle
 			rigidbody: RigidBody::Static,
 			collider,
 			position: Position(position),
-			gravity: GravitationalField { gravity: 100.0 },
+			gravity: GravityPoint { standard_radius: radius, acceleration_at_radius: gravity },
+			gravity_priority: GravityPriority(0),
 		}
 	}
 }
