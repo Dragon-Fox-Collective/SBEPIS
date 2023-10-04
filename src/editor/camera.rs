@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 use bevy_egui::EguiSettings;
 use bevy_mod_picking::prelude::*;
+use bevy_panorbit_camera::{PanOrbitCamera, PanOrbitCameraPlugin};
 use bevy_render::camera::Viewport;
 use bevy_window::PrimaryWindow;
 
@@ -13,6 +14,9 @@ impl Plugin for EditorCameraPlugin
 	fn build(&self, app: &mut App)
 	{
 		app
+			.add_plugins((
+				PanOrbitCameraPlugin,
+			))
 			.add_systems(Startup, (
 				spawn_editor_camera,
 			))
@@ -65,6 +69,13 @@ pub fn spawn_editor_camera(
 		},
 		EditorCamera,
 		RaycastPickCamera::default(),
+		PanOrbitCamera {
+			button_orbit: MouseButton::Left,
+			button_pan: MouseButton::Left,
+			modifier_pan: Some(KeyCode::ShiftLeft),
+			reversed_zoom: true,
+			..default()
+		},
 	));
 }
 
