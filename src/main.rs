@@ -3,6 +3,7 @@ mod main_bundles;
 mod ui;
 
 use bevy::prelude::*;
+use bevy_mod_picking::prelude::RaycastPickCamera;
 use bevy_xpbd_3d::prelude::*;
 use gravity::*;
 use main_bundles::*;
@@ -49,6 +50,7 @@ fn setup(
 			transform: Transform::from_xyz(-4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
 			..default()
 		},
-		EditorCamera
+		EditorCamera,
+		RaycastPickCamera::default(),
 	));
 }
