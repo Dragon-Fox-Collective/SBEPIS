@@ -1,11 +1,12 @@
-mod main_bundles;
 mod gravity;
+mod main_bundles;
+mod ui;
 
 use bevy::prelude::*;
-use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use bevy_xpbd_3d::prelude::*;
 use gravity::*;
 use main_bundles::*;
+use ui::{UiPlugin, EditorCamera};
 
 fn main()
 {
@@ -13,7 +14,7 @@ fn main()
 		.add_plugins((
 			DefaultPlugins,
 			PhysicsPlugins::default(),
-			WorldInspectorPlugin::new(),
+			UiPlugin,
 			GravityPlugin,
 		))
 		.insert_resource(FixedTime::new_from_secs(1.0 / 60.0))
@@ -27,11 +28,11 @@ fn setup(
 	mut materials: ResMut<Assets<StandardMaterial>>,
 )
 {
-	commands.spawn((PlanetBundle::new(Vec3::Y * -2.0, 2.0, 10.0, &mut meshes, &mut materials), Name::new("Planet")));
+	commands.spawn((Name::new("Planet"), PlanetBundle::new(Vec3::Y * -2.0, 2.0, 10.0, &mut meshes, &mut materials)));
 
-	commands.spawn((BoxBundle::new(Vec3::new(0.0, 4.0, 0.0), &mut meshes, &mut materials), Name::new("Cube 1")));
-	commands.spawn((BoxBundle::new(Vec3::new(0.5, 5.5, 0.0), &mut meshes, &mut materials), Name::new("Cube 2")));
-	commands.spawn((BoxBundle::new(Vec3::new(-0.5, 7.0, 0.0), &mut meshes, &mut materials), Name::new("Cube 3")));
+	commands.spawn((Name::new("Cube 1"), BoxBundle::new(Vec3::new(0.0, 4.0, 0.0), &mut meshes, &mut materials)));
+	commands.spawn((Name::new("Cube 2"), BoxBundle::new(Vec3::new(0.5, 5.5, 0.0), &mut meshes, &mut materials)));
+	commands.spawn((Name::new("Cube 3"), BoxBundle::new(Vec3::new(-0.5, 7.0, 0.0), &mut meshes, &mut materials)));
 
 	commands.spawn(PointLightBundle {
 		point_light: PointLight {
@@ -43,8 +44,11 @@ fn setup(
 		..default()
 	});
 
-	commands.spawn(Camera3dBundle {
-		transform: Transform::from_xyz(-4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
-		..default()
-	});
+	commands.spawn((
+		Camera3dBundle {
+			transform: Transform::from_xyz(-4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
+			..default()
+		},
+		EditorCamera
+	));
 }
