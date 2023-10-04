@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-use bevy_trait_query::{One, queryable, RegisterExt};
 use bevy_xpbd_3d::{prelude::*, PhysicsSchedule, PhysicsStepSet};
 
 pub struct GravityPlugin;
@@ -9,19 +8,19 @@ impl Plugin for GravityPlugin
 	fn build(&self, app: &mut App) {
 		app
 			.insert_resource(Gravity(Vec3::ZERO))
-			.register_component_as::<dyn GravitationalField, GravityPoint>()
 			;
 		
 		app.get_schedule_mut(PhysicsSchedule)
 			.expect("add PhysicsSchedule first")
-			.add_systems(gravity.before(PhysicsStepSet::Substeps));
+			.add_systems((
+				gravity::<GravityPoint>
+			).before(PhysicsStepSet::Substeps));
 	}
 }
 
 #[derive(Component)]
 pub struct GravityPriority(pub u32);
 
-#[queryable]
 pub trait GravitationalField
 {
 	/// How much this acceleration affects an object, but also how much this priority should override lower priorities.
@@ -54,10 +53,11 @@ impl GravitationalField for GravityPoint
 #[derive(Component)]
 pub struct AffectedByGravity;
 
-fn gravity(
+fn gravity<T>(
 	mut rigidbodies: Query<(&Position, &Mass, &mut ExternalForce), With<AffectedByGravity>>,
-	gravity_fields: Query<(&Position, &Rotation, &GravityPriority, One<&dyn GravitationalField>)>,
+	gravity_fields: Query<(&Position, &Rotation, &GravityPriority, &T)>,
 )
+	where T : Component + GravitationalField
 {
 	for (position, mass, mut force) in &mut rigidbodies {
 		for (field_position, field_rotation, gravity_priority, gravity_field) in &gravity_fields {
