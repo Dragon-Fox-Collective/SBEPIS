@@ -2,6 +2,7 @@ mod main_bundles;
 mod gravity;
 
 use bevy::prelude::*;
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use bevy_xpbd_3d::prelude::*;
 use gravity::*;
 use main_bundles::*;
@@ -12,6 +13,7 @@ fn main()
 		.add_plugins((
 			DefaultPlugins,
 			PhysicsPlugins::default(),
+			WorldInspectorPlugin::new(),
 			GravityPlugin,
 		))
 		.insert_resource(FixedTime::new_from_secs(1.0 / 60.0))
@@ -25,11 +27,11 @@ fn setup(
 	mut materials: ResMut<Assets<StandardMaterial>>,
 )
 {
-	commands.spawn(PlanetBundle::new(Vec3::Y * -2.0, 2.0, 10.0, &mut meshes, &mut materials));
+	commands.spawn((PlanetBundle::new(Vec3::Y * -2.0, 2.0, 10.0, &mut meshes, &mut materials), Name::new("Planet")));
 
-	commands.spawn(BoxBundle::new(Vec3::new(0.0, 4.0, 0.0), &mut meshes, &mut materials));
-	commands.spawn(BoxBundle::new(Vec3::new(0.5, 5.5, 0.0), &mut meshes, &mut materials));
-	commands.spawn(BoxBundle::new(Vec3::new(-0.5, 7.0, 0.0), &mut meshes, &mut materials));
+	commands.spawn((BoxBundle::new(Vec3::new(0.0, 4.0, 0.0), &mut meshes, &mut materials), Name::new("Cube 1")));
+	commands.spawn((BoxBundle::new(Vec3::new(0.5, 5.5, 0.0), &mut meshes, &mut materials), Name::new("Cube 2")));
+	commands.spawn((BoxBundle::new(Vec3::new(-0.5, 7.0, 0.0), &mut meshes, &mut materials), Name::new("Cube 3")));
 
 	commands.spawn(PointLightBundle {
 		point_light: PointLight {
