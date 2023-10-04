@@ -38,7 +38,8 @@ pub struct PlanetBundle
 	gravity: GravitationalField,
 }
 
-impl PlanetBundle {
+impl PlanetBundle
+{
 	fn new(
 		position: Vec3,
 		radius: f32,
@@ -63,6 +64,44 @@ impl PlanetBundle {
 }
 
 
+#[derive(Bundle)]
+pub struct BoxBundle
+{
+	pbr: PbrBundle,
+	rigidbody: RigidBody,
+	position: Position,
+	angular_velocity: AngularVelocity,
+	force: ExternalForce,
+	collider: Collider,
+	gravity: AffectedByGravity,
+}
+
+impl BoxBundle
+{
+	fn new(
+		position: Vec3,
+		meshes: &mut Assets<Mesh>,
+		materials: &mut Assets<StandardMaterial>,
+	) -> BoxBundle
+	{
+		BoxBundle
+		{
+			pbr: PbrBundle {
+				mesh: meshes.add(Mesh::from(shape::Cube { size: 1.0 })),
+				material: materials.add(Color::rgb(0.8, 0.7, 0.6).into()),
+				..default()
+			},
+			rigidbody: RigidBody::Dynamic,
+			position: Position(position),
+			angular_velocity: AngularVelocity(Vec3::new(2.5, 3.4, 1.6)),
+			force: ExternalForce::new(Vec3::ZERO).with_persistence(false),
+			collider: Collider::cuboid(1.0, 1.0, 1.0),
+			gravity: AffectedByGravity,
+		}
+	}
+}
+
+
 fn setup(
 	mut commands: Commands,
 	mut meshes: ResMut<Assets<Mesh>>,
@@ -71,19 +110,9 @@ fn setup(
 {
 	commands.spawn(PlanetBundle::new(Vec3::Y * -2.0, 2.0, &mut meshes, &mut materials));
 
-	commands.spawn((
-		PbrBundle {
-			mesh: meshes.add(Mesh::from(shape::Cube { size: 1.0 })),
-			material: materials.add(Color::rgb(0.8, 0.7, 0.6).into()),
-			..default()
-		},
-		RigidBody::Dynamic,
-		Position(Vec3::Y * 4.0),
-		AngularVelocity(Vec3::new(2.5, 3.4, 1.6)),
-		ExternalForce::new(Vec3::ZERO).with_persistence(false),
-		Collider::cuboid(1.0, 1.0, 1.0),
-		AffectedByGravity,
-	));
+	commands.spawn(BoxBundle::new(Vec3::new(0.0, 4.0, 0.0), &mut meshes, &mut materials));
+	commands.spawn(BoxBundle::new(Vec3::new(0.5, 5.5, 0.0), &mut meshes, &mut materials));
+	commands.spawn(BoxBundle::new(Vec3::new(-0.5, 7.0, 0.0), &mut meshes, &mut materials));
 
 	commands.spawn(PointLightBundle {
 		point_light: PointLight {
