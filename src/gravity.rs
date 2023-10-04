@@ -21,6 +21,7 @@ impl Plugin for GravityPlugin
 #[queryable]
 pub trait GravitationalField
 {
+	/// How much this acceleration affects an object, but also how much this priority should override lower priorities.
 	fn get_priority_factor_at(&self, position: Vec3) -> Vec3;
 	fn get_acceleration_at(&self, position: Vec3, field_position: Vec3) -> Vec3;
 }
@@ -34,6 +35,7 @@ pub struct GravityPoint
 
 impl GravitationalField for GravityPoint
 {
+	/// Points affect *all* objects, so they will always override lower priorities.
 	fn get_priority_factor_at(&self, _position: Vec3) -> Vec3
 	{
 		Vec3::ONE
