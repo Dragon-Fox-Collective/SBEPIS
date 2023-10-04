@@ -1,13 +1,14 @@
 mod gravity;
 mod main_bundles;
-mod ui;
+#[cfg(feature = "editor_mode")]
+mod editor;
 
 use bevy::prelude::*;
-use bevy_mod_picking::prelude::RaycastPickCamera;
 use bevy_xpbd_3d::prelude::*;
 use gravity::*;
 use main_bundles::*;
-use ui::{UiPlugin, EditorCamera};
+#[cfg(feature = "editor_mode")]
+use editor::EditorPlugin;
 
 fn main()
 {
@@ -15,7 +16,8 @@ fn main()
 		.add_plugins((
 			DefaultPlugins,
 			PhysicsPlugins::default(),
-			UiPlugin,
+			#[cfg(feature = "editor_mode")]
+			EditorPlugin,
 			GravityPlugin,
 		))
 		.insert_resource(FixedTime::new_from_secs(1.0 / 60.0))
@@ -50,7 +52,5 @@ fn setup(
 			transform: Transform::from_xyz(-4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
 			..default()
 		},
-		EditorCamera,
-		RaycastPickCamera::default(),
 	));
 }

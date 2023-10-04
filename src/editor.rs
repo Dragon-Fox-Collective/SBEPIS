@@ -12,9 +12,9 @@ use egui::{Rect, Context};
 use egui_dock::{NodeIndex, DockArea, Style, DockState};
 use egui_gizmo::{Gizmo, GizmoMode, GizmoOrientation};
 
-pub struct UiPlugin;
+pub struct EditorPlugin;
 
-impl Plugin for UiPlugin
+impl Plugin for EditorPlugin
 {
 	fn build(&self, app: &mut App) {
 		app
@@ -24,17 +24,23 @@ impl Plugin for UiPlugin
 				DefaultPickingPlugins,
 			))
 			.insert_resource(UiState::new())
+			.add_systems(Startup, (
+				spawn_editor_camera,
+			))
+			.add_systems(PostStartup, (
+				disable_other_cameras,
+			))
+			.add_systems(Update, (
+				set_gizmo_mode,
+				auto_add_raycast_target,
+				handle_pick_events,
+			))
 			.add_systems(
 				PostUpdate, (
 					show_ui_system
 						.before(EguiSet::ProcessOutput)
 						.before(bevy::transform::TransformSystem::TransformPropagate),
 					set_camera_viewport.after(show_ui_system),
-			))
-			.add_systems(Update, (
-				set_gizmo_mode,
-				auto_add_raycast_target,
-				handle_pick_events,
 			));
 	}
 }
@@ -78,13 +84,14 @@ fn handle_pick_events(
 }
 
 #[derive(Component)]
-pub struct EditorCamera;
+struct EditorCamera;
 
 fn show_ui_system(
 	world: &mut World,
 )
 {
-	let Ok(egui_context) = world.query_filtered::<&mut EguiContext, With<PrimaryWindow>>().get_single(world) else { return; };
+	let Ok(egui_context) = world.query_filtered::<&mut EguiContext, With<PrimaryWindow>>().get_single(world)
+	else { return; };
 	let mut egui_context = egui_context.clone();
 
 	world.resource_scope::<UiState, _>(|world, mut ui_state| {
@@ -365,5 +372,29 @@ fn select_asset(
 				}
 			}
 		});
+	}
+}
+
+fn spawn_editor_camera(
+	mut commands: Commands,
+)
+{
+	commands.spawn((
+		Camera3dBundle {
+			transform: Transform::from_xyz(4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
+			..default()
+		},
+		EditorCamera,
+		RaycastPickCamera::default(),
+	));
+}
+
+fn disable_other_cameras(
+	mut cameras: Query<&mut Camera, Without<EditorCamera>>
+)
+{
+	for mut camera in &mut cameras
+	{
+		camera.is_active = false;
 	}
 }
