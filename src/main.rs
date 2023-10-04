@@ -6,7 +6,8 @@ fn main()
 	let mut app = App::new();
 
 	app
-		.add_plugins((DefaultPlugins, PhysicsPlugins::default()))
+		.add_plugins(DefaultPlugins)
+		.add_plugins(PhysicsPlugins::default())
 		.insert_resource(Gravity(Vec3::ZERO))
 		.insert_resource(FixedTime::new_from_secs(1.0 / 60.0))
 		.add_systems(Startup, setup);
@@ -45,18 +46,20 @@ impl PlanetBundle
 		radius: f32,
 		meshes: &mut Assets<Mesh>,
 		materials: &mut Assets<StandardMaterial>,
-	) -> PlanetBundle
+	) -> Self
 	{
+		let mesh = Mesh::from(shape::UVSphere { radius, sectors: 16, stacks: 16 });
+		let collider = Collider::trimesh_from_bevy_mesh(&mesh).expect("couldn't make a planet collider");
 		PlanetBundle
 		{
 			pbr: PbrBundle
 			{
-				mesh: meshes.add(Mesh::from(shape::UVSphere { radius, sectors: 16, stacks: 16 })),
+				mesh: meshes.add(mesh),
 				material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
 				..default()
 			},
 			rigidbody: RigidBody::Static,
-			collider: Collider::ball(radius),
+			collider,
 			position: Position(position),
 			gravity: GravitationalField { gravity: 100.0 },
 		}
@@ -82,7 +85,7 @@ impl BoxBundle
 		position: Vec3,
 		meshes: &mut Assets<Mesh>,
 		materials: &mut Assets<StandardMaterial>,
-	) -> BoxBundle
+	) -> Self
 	{
 		BoxBundle
 		{
