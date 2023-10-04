@@ -18,6 +18,9 @@ impl Plugin for GravityPlugin
 	}
 }
 
+#[derive(Component)]
+pub struct GravityPriority(pub u32);
+
 #[queryable]
 pub trait GravitationalField
 {
@@ -29,7 +32,6 @@ pub trait GravitationalField
 #[derive(Component)]
 pub struct GravityPoint
 {
-	pub priority: i32,
 	pub standard_radius: f32,
 	pub acceleration_at_radius: f32,
 }
@@ -54,11 +56,11 @@ pub struct AffectedByGravity;
 
 fn gravity(
 	mut rigidbodies: Query<(&Position, &Mass, &mut ExternalForce), With<AffectedByGravity>>,
-	gravity_fields: Query<(&Position, &Rotation, One<&dyn GravitationalField>)>,
+	gravity_fields: Query<(&Position, &Rotation, &GravityPriority, One<&dyn GravitationalField>)>,
 )
 {
 	for (position, mass, mut force) in &mut rigidbodies {
-		for (field_position, field_rotation, gravity_field) in &gravity_fields {
+		for (field_position, field_rotation, gravity_priority, gravity_field) in &gravity_fields {
 			force.apply_force(mass.0 * gravity_field.get_acceleration_at(global_to_local(position.0, field_position.0, field_rotation.0)));
 		}
 	}

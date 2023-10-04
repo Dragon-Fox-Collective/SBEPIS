@@ -10,6 +10,7 @@ pub struct PlanetBundle
 	collider: Collider,
 	position: Position,
 	gravity: GravityPoint,
+	gravity_priority: GravityPriority,
 }
 
 impl PlanetBundle
@@ -35,7 +36,8 @@ impl PlanetBundle
 			rigidbody: RigidBody::Static,
 			collider,
 			position: Position(position),
-			gravity: GravityPoint { priority:0, standard_radius: radius, acceleration_at_radius: gravity },
+			gravity: GravityPoint { standard_radius: radius, acceleration_at_radius: gravity },
+			gravity_priority: GravityPriority(0),
 		}
 	}
 }
