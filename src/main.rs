@@ -23,8 +23,24 @@ fn setup(
 	mut meshes: ResMut<Assets<Mesh>>,
 	mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-	spawn_planet(Vec3::new(0.0, -6.0, 0.0), 6.0, &mut commands, &mut meshes, &mut materials);
-	
+	let mut spawn_planet = |
+		position: Vec3,
+		radius: f32,
+	| {
+		commands.spawn((
+			PbrBundle {
+				mesh: meshes.add(Mesh::from(shape::UVSphere { radius, sectors: 16, stacks: 16 })),
+				material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+				..default()
+			},
+			RigidBody::Static,
+			Collider::ball(radius),
+			Position(position),
+		));
+	};
+
+	spawn_planet(Vec3::new(0.0, -6.0, 0.0), 6.0);
+
 	// Cube
 	commands.spawn((
 		PbrBundle {
@@ -54,24 +70,4 @@ fn setup(
 		transform: Transform::from_xyz(-4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
 		..default()
 	});
-}
-
-fn spawn_planet
-(
-	position: Vec3,
-	radius: f32,
-	commands: &mut Commands,
-	meshes: &mut Assets<Mesh>,
-	materials: &mut Assets<StandardMaterial>,
-) {
-	commands.spawn((
-		PbrBundle {
-			mesh: meshes.add(Mesh::from(shape::UVSphere { radius, sectors: 16, stacks: 16 })),
-			material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
-			..default()
-		},
-		RigidBody::Static,
-		Collider::ball(radius),
-		Position(position),
-	));
 }
