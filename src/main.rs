@@ -7,8 +7,6 @@ use bevy::prelude::*;
 use bevy_xpbd_3d::prelude::*;
 use gravity::*;
 use main_bundles::*;
-#[cfg(feature = "editor_mode")]
-use editor::EditorPlugin;
 
 fn main()
 {
@@ -17,7 +15,7 @@ fn main()
 			DefaultPlugins,
 			PhysicsPlugins::default(),
 			#[cfg(feature = "editor_mode")]
-			EditorPlugin,
+			editor::EditorPlugins,
 			GravityPlugin,
 		))
 		.insert_resource(FixedTime::new_from_secs(1.0 / 60.0))
