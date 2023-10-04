@@ -3,7 +3,9 @@ name = "sbepis-bevy"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[features]
+default = ["editor_mode"]
+editor_mode = []
 
 # Enable max optimizations for dependencies, but not for our code:
 [profile.dev.package."*"]
@@ -11,4 +13,21 @@ opt-level = 3
 
 [dependencies]
 bevy = "0.11.2"
+bevy-inspector-egui = "0.19.0"
+bevy_asset = "0.11.2"
+bevy_egui = "0.21.0"
+bevy_mod_picking = { version = "0.15.0", default-features = false, features = ["backend_raycast", "backend_egui", "backend_sprite"] }
+bevy_panorbit_camera = "0.8.0"
+bevy_reflect = "0.11.2"
+bevy_render = "0.11.2"
+bevy_window = "0.11.2"
+bevy_winit = "0.11.2"
 bevy_xpbd_3d = "0.2.0"
+egui = "0.22.0"
+egui-gizmo = "0.11.0"
+egui_dock = "0.7.3"
+image = "0.24.7"
+winit = "0.28.6"
+
+[build-dependencies]
+winres = "0.1"

@@ -8,6 +8,8 @@ impl Plugin for GravityPlugin
 	fn build(&self, app: &mut App) {
 		app
 			.insert_resource(Gravity(Vec3::ZERO))
+			.register_type::<GravityPriority>()
+			.register_type::<GravityPoint>()
 			;
 		
 		app.get_schedule_mut(PhysicsSchedule)
@@ -18,7 +20,7 @@ impl Plugin for GravityPlugin
 	}
 }
 
-#[derive(Component)]
+#[derive(Component, Reflect)]
 pub struct GravityPriority(pub u32);
 
 pub trait GravitationalField
@@ -28,7 +30,7 @@ pub trait GravitationalField
 	fn get_acceleration_at(&self, local_position: Vec3) -> Vec3;
 }
 
-#[derive(Component)]
+#[derive(Component, Reflect)]
 pub struct GravityPoint
 {
 	pub standard_radius: f32,
