@@ -13,8 +13,8 @@ impl Plugin for GravityPlugin
 		app.get_schedule_mut(PhysicsSchedule)
 			.expect("add PhysicsSchedule first")
 			.add_systems((
-				gravity::<GravityPoint>
-			).before(PhysicsStepSet::Substeps));
+				gravity::<GravityPoint>,
+			).chain().before(PhysicsStepSet::Substeps));
 	}
 }
 
