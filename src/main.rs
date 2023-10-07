@@ -18,7 +18,16 @@ fn main()
 {
 	App::new()
 		.add_plugins((
-			DefaultPlugins,
+			DefaultPlugins
+				.set(WindowPlugin
+				{
+					primary_window: Some(Window
+					{
+						title: "SBEPIS".to_string(),
+						..default()
+					}),
+					..default()
+				}),
 			PhysicsPlugins::default(),
 			#[cfg(feature = "editor_mode")]
 			editor::EditorPlugins,
@@ -26,13 +35,13 @@ fn main()
 		))
 		.insert_resource(FixedTime::new_from_secs(1.0 / 60.0))
 		.add_systems(Startup, (
-			set_window,
+			set_window_icon,
 			setup,
 		))
 		.run();
 }
 
-fn set_window(
+fn set_window_icon(
 	windows: NonSend<WinitWindows>,
 	primary_window: Query<Entity, With<PrimaryWindow>>,
 )
@@ -47,7 +56,6 @@ fn set_window(
 	let primary_entity = primary_window.single();
 	let primary = windows.get_window(primary_entity).unwrap();
 
-	primary.set_title("SBEPIS");
 	primary.set_window_icon(Some(icon));
 }
 
