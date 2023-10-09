@@ -2,6 +2,11 @@ mod gravity;
 mod main_bundles;
 #[cfg(feature = "editor_mode")]
 mod editor;
+mod player_commands;
+
+use self::gravity::*;
+use self::main_bundles::*;
+use self::player_commands::*;
 
 use std::io::Cursor;
 
@@ -10,9 +15,6 @@ use bevy_window::PrimaryWindow;
 use bevy_winit::WinitWindows;
 use bevy_xpbd_3d::prelude::*;
 use winit::window::Icon;
-
-use self::gravity::*;
-use self::main_bundles::*;
 
 fn main()
 {
@@ -32,6 +34,7 @@ fn main()
 			#[cfg(feature = "editor_mode")]
 			editor::EditorPlugins,
 			GravityPlugin,
+			PlayerCommandsPlugin,
 		))
 		.insert_resource(FixedTime::new_from_secs(1.0 / 60.0))
 		.add_systems(Startup, (
