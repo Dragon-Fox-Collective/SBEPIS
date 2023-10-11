@@ -25,23 +25,84 @@ pub struct CommandStaff
 
 fn spawn_staff(
 	mut commands: Commands,
+	asset_server: Res<AssetServer>,
 )
 {
-	commands.spawn((
-		NodeBundle
-		{
-			style: Style
+	let treble_clef = asset_server.load("treble_clef.png");
+	
+	// This should be enough information to map all notes
+	let f5_line_top = 19.0;
+	let e4_line_bottom = 21.0;
+	let clef_height = 80.0;
+
+	// Background
+	commands
+		.spawn((
+			NodeBundle
 			{
-				width: Val::Percent(100.0),
-				height: Val::Px(100.0),
-				display: Display::None,
+				style: Style
+				{
+					width: Val::Percent(100.0),
+					height: Val::Px(100.0),
+					flex_direction: FlexDirection::Row,
+					align_content: AlignContent::Stretch,
+					margin: UiRect::all(Val::Px(10.0)),
+					padding: UiRect::axes(Val::Px(100.0), Val::Px(10.0)),
+					display: Display::None,
+					..default()
+				},
+				background_color: Color::BEIGE.into(),
 				..default()
 			},
-			background_color: Color::BEIGE.into(),
-			..default()
-		},
-		CommandStaff::default(),
-	));
+			CommandStaff::default(),
+		))
+		.with_children(|parent|
+		{
+			// Clef
+			parent
+				.spawn(ImageBundle
+				{
+					image: treble_clef.into(),
+					style: Style
+					{
+						position_type: PositionType::Absolute,
+						height: Val::Px(clef_height),
+						..default()
+					},
+					..default()
+				});
+
+			// Staff lines
+			parent
+				.spawn(NodeBundle
+				{
+					style: Style
+					{
+						flex_direction: FlexDirection::Column,
+						flex_grow: 1.0,
+						padding: UiRect::px(0.0, 0.0, f5_line_top, e4_line_bottom),
+						..default()
+					},
+					..default()
+				})
+				.with_children(|parent|
+				{
+					for _ in 0..5
+					{
+						parent.spawn(NodeBundle
+						{
+							style: Style
+							{
+								width: Val::Percent(100.0),
+								height: Val::Px(2.0),
+								..default()
+							},
+							background_color: Color::BLACK.into(),
+							..default()
+						});
+					}
+				});
+		});
 }
 
 fn toggle_staffs(
@@ -213,12 +274,13 @@ fn play_notes(
 	asset_server: Res<AssetServer>,
 )
 {
+	if input.get_just_pressed().next().is_none() {
+		return;
+	}
+
 	for staff in &staffs
 	{
 		if !staff.is_open {
-			continue;
-		}
-		if input.get_just_pressed().next().is_none() {
 			continue;
 		}
 		
