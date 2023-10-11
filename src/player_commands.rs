@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use bevy_input::common_conditions::input_just_pressed;
-use bevy_audio::{PlaybackMode, Volume, VolumeLevel};
+use bevy_audio::PlaybackMode;
 
 pub struct PlayerCommandsPlugin;
 
@@ -73,6 +73,7 @@ fn close_staff(
 	style.display = Display::None;
 }
 
+#[allow(dead_code)]
 enum Note
 {
 	C0, CS0, D0, DS0, E0, F0, FS0, G0, GS0, A0, AS0, B0,
