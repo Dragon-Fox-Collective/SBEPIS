@@ -37,7 +37,7 @@ fn spawn_staff(
 				display: Display::None,
 				..default()
 			},
-			background_color: Color::hex("#faefb4").unwrap().into(),
+			background_color: Color::BEIGE.into(),
 			..default()
 		},
 		CommandStaff::default(),
