@@ -3,6 +3,7 @@ mod main_bundles;
 #[cfg(feature = "editor_mode")]
 mod editor;
 mod player_commands;
+mod util;
 
 use self::gravity::*;
 use self::main_bundles::*;

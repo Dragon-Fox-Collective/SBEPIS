@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 use bevy_input::common_conditions::input_just_pressed;
 use bevy_audio::PlaybackMode;
+use super::util::MapRange;
 
 pub struct PlayerCommandsPlugin;
 
@@ -29,11 +30,17 @@ fn spawn_staff(
 )
 {
 	let treble_clef = asset_server.load("treble_clef.png");
+	let quarter_note = asset_server.load("quarter_note.png");
 	
 	// This should be enough information to map all notes
-	let f5_line_top = 19.0;
-	let e4_line_bottom = 21.0;
+	let f5_line_top = 15.0;
+	let staff_height = 60.0;
 	let clef_height = 80.0;
+
+	let quarter_note_top = 60.0;
+	let quarter_note_height = 55.0;
+	let quarter_note_left_start = 40.0;
+	let quarter_note_left_spacing = 20.0;
 
 	// Background
 	commands
@@ -45,7 +52,6 @@ fn spawn_staff(
 					width: Val::Percent(100.0),
 					height: Val::Px(100.0),
 					flex_direction: FlexDirection::Row,
-					align_content: AlignContent::Stretch,
 					margin: UiRect::all(Val::Px(10.0)),
 					padding: UiRect::axes(Val::Px(100.0), Val::Px(10.0)),
 					display: Display::None,
@@ -72,6 +78,42 @@ fn spawn_staff(
 					..default()
 				});
 
+			// Notes
+			parent
+				.spawn(NodeBundle
+				{
+					style: Style
+					{
+						flex_direction: FlexDirection::Column,
+						height: Val::Px(staff_height),
+						padding: UiRect::top(Val::Px(f5_line_top)),
+						..default()
+					},
+					..default()
+				})
+				.with_children(|parent|
+				{
+					for i in 0..10
+					{
+						let note_top = (i as f32 + Note::E4 as u8 as f32).map(Note::E4 as u8 as f32, Note::F5 as u8 as f32 - 1.0, f5_line_top + staff_height, f5_line_top) - quarter_note_top;
+
+						parent
+							.spawn(ImageBundle
+							{
+								image: quarter_note.clone().into(),
+								style: Style
+								{
+									position_type: PositionType::Absolute,
+									left: Val::Px(quarter_note_left_start + i as f32 * quarter_note_left_spacing),
+									top: Val::Px(note_top),
+									height: Val::Px(quarter_note_height),
+									..default()
+								},
+								..default()
+							});
+					}
+				});
+
 			// Staff lines
 			parent
 				.spawn(NodeBundle
@@ -80,7 +122,9 @@ fn spawn_staff(
 					{
 						flex_direction: FlexDirection::Column,
 						flex_grow: 1.0,
-						padding: UiRect::px(0.0, 0.0, f5_line_top, e4_line_bottom),
+						padding: UiRect::top(Val::Px(f5_line_top)),
+						height: Val::Px(staff_height),
+						justify_content: JustifyContent::SpaceBetween,
 						..default()
 					},
 					..default()
@@ -134,6 +178,7 @@ fn close_staff(
 	style.display = Display::None;
 }
 
+#[derive(Debug)]
 #[allow(dead_code)]
 enum Note
 {
