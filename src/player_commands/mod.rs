@@ -98,9 +98,9 @@ fn spawn_staff(
 				})
 				.with_children(|parent|
 				{
-					for i in 0..10
+					for (i, note) in vec![Note::E4, Note::F4, Note::G4, Note::A4, Note::B4, Note::C5, Note::D5, Note::E5, Note::F5].iter().enumerate()
 					{
-						let note_top = (i as f32 + Note::E4 as u8 as f32).map(Note::E4 as u8 as f32, Note::F5 as u8 as f32 - 1.0, f5_line_top + staff_height, f5_line_top) - quarter_note_top;
+						let note_top = (note.position as f32).map(Note::E4.position as f32, Note::F5.position as f32, f5_line_top + staff_height, f5_line_top) - quarter_note_top;
 
 						parent
 							.spawn(ImageBundle
@@ -258,7 +258,7 @@ fn play_note(
 			settings: PlaybackSettings
 			{
 				mode: PlaybackMode::Despawn,
-				speed: note.frequency() / Note::C4.frequency(),
+				speed: note.frequency / Note::C4.frequency,
 				..default()
 			},
 		});
