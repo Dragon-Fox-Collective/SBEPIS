@@ -41,11 +41,15 @@ fn spawn_staff(
 	let f5_line_top = 15.0;
 	let staff_height = 60.0;
 	let clef_height = 80.0;
+	let line_height = 2.0;
 
-	let quarter_note_top = 60.0;
+	let quarter_note_top_offset = 41.0;
 	let quarter_note_height = 55.0;
 	let quarter_note_left_start = 40.0;
 	let quarter_note_left_spacing = 20.0;
+	
+	// Does top + height not actually equal bottom???
+	let quarter_note_weird_spacing_offset = 18.0;
 
 	// Background
 	commands
@@ -83,42 +87,6 @@ fn spawn_staff(
 					..default()
 				});
 
-			// Notes
-			parent
-				.spawn(NodeBundle
-				{
-					style: Style
-					{
-						flex_direction: FlexDirection::Column,
-						height: Val::Px(staff_height),
-						padding: UiRect::top(Val::Px(f5_line_top)),
-						..default()
-					},
-					..default()
-				})
-				.with_children(|parent|
-				{
-					for (i, note) in vec![Note::E4, Note::F4, Note::G4, Note::A4, Note::B4, Note::C5, Note::D5, Note::E5, Note::F5].iter().enumerate()
-					{
-						let note_top = (note.position as f32).map(Note::E4.position as f32, Note::F5.position as f32, f5_line_top + staff_height, f5_line_top) - quarter_note_top;
-
-						parent
-							.spawn(ImageBundle
-							{
-								image: quarter_note.clone().into(),
-								style: Style
-								{
-									position_type: PositionType::Absolute,
-									left: Val::Px(quarter_note_left_start + i as f32 * quarter_note_left_spacing),
-									top: Val::Px(note_top),
-									height: Val::Px(quarter_note_height),
-									..default()
-								},
-								..default()
-							});
-					}
-				});
-
 			// Staff lines
 			parent
 				.spawn(NodeBundle
@@ -143,12 +111,35 @@ fn spawn_staff(
 							style: Style
 							{
 								width: Val::Percent(100.0),
-								height: Val::Px(2.0),
+								height: Val::Px(line_height),
 								..default()
 							},
 							background_color: Color::BLACK.into(),
 							..default()
 						});
+					}
+
+					// Notes
+					for (i, note) in vec![Note::C4, Note::D4, Note::E4, Note::F4, Note::G4, Note::A4, Note::B4, Note::C5, Note::D5, Note::E5, Note::F5, Note::G5, Note::A5].iter().enumerate()
+					{
+						let note_top = (note.position() as f32).map(Note::E4.position() as f32, Note::F5.position() as f32, f5_line_top + staff_height - quarter_note_weird_spacing_offset, f5_line_top) - quarter_note_top_offset;
+
+						println!("{} {} {}", note, note.position(), note_top);
+
+						parent
+							.spawn(ImageBundle
+							{
+								image: quarter_note.clone().into(),
+								style: Style
+								{
+									position_type: PositionType::Absolute,
+									left: Val::Px(quarter_note_left_start + i as f32 * quarter_note_left_spacing),
+									top: Val::Px(note_top),
+									height: Val::Px(quarter_note_height),
+									..default()
+								},
+								..default()
+							});
 					}
 				});
 		});
