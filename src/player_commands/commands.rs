@@ -1,6 +1,7 @@
 use std::marker::PhantomData;
 
 use bevy::prelude::*;
+use bevy_audio::PlaybackMode;
 
 use super::{notes::Note, NoteHolder};
 
@@ -40,11 +41,21 @@ pub fn check_note_patterns<T: Event + Default>(
 }
 
 pub fn ping(
+	mut commands: Commands,
 	mut event_reader: EventReader<PingCommandEvent>,
+	asset_server: Res<AssetServer>,
 )
 {
 	for _ in event_reader.iter()
 	{
-		println!("Pong!");
-	}
+		commands.spawn(AudioBundle
+		{
+			source: asset_server.load("pester_notif.mp3").clone(),
+			settings: PlaybackSettings
+			{
+				mode: PlaybackMode::Despawn,
+				..default()
+			},
+		});
+}
 }
