@@ -6,7 +6,7 @@ pub enum NoteLetter
 	C, D, E, F, G, A, B
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub struct Note
 {
 	pub note_letter: NoteLetter,

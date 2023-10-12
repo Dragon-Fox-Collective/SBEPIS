@@ -30,16 +30,17 @@ impl Plugin for PlayerCommandsPlugin
 	}
 }
 
-#[derive(Component, Reflect, Default)]
+#[derive(Component, Default)]
 pub struct CommandStaff
 {
 	pub is_open: bool,
 }
 
-#[derive(Component, Reflect, Default)]
+#[derive(Component, Default)]
 pub struct NoteHolder
 {
-	pub num_notes: u32,
+	notes: Vec<Note>,
+	note_entities: Vec<Entity>,
 	
 	pub quarter_note: Handle<Image>,
 	
@@ -57,11 +58,29 @@ pub struct NoteHolder
 
 impl NoteHolder
 {
+	pub fn add_note(&mut self, note: Note, note_entity: Entity)
+	{
+		self.notes.push(note);
+		self.note_entities.push(note_entity);
+	}
+
+	pub fn clear_notes(&mut self, commands: &mut Commands)
+	{
+		self.notes.clear();
+		for note_entity in self.note_entities.iter() {
+			commands.entity(*note_entity).despawn_recursive();
+		}
+		self.note_entities.clear();
+	}
+
+	pub fn len(&self) -> usize
+	{
+		self.notes.len()
+	}
+
 	pub fn next_note_left(&mut self) -> f32
 	{
-		let left = self.quarter_note_left_start + self.num_notes as f32 * self.quarter_note_left_spacing;
-		self.num_notes += 1;
-		left
+		self.quarter_note_left_start + (self.len() as f32 + 1.0) * self.quarter_note_left_spacing
 	}
 
 	pub fn note_top(&self, note: &Note) -> f32
@@ -146,7 +165,6 @@ fn spawn_staff(
 					},
 					NoteHolder
 					{
-						num_notes: 0,
 						quarter_note,
 						f5_line_top,
 						staff_height,
@@ -155,6 +173,7 @@ fn spawn_staff(
 						quarter_note_left_start,
 						quarter_note_left_spacing,
 						quarter_note_weird_spacing_offset,
+						..default()
 					},
 				))
 				.with_children(|parent|
@@ -196,14 +215,16 @@ fn spawn_debug_notes(
 		});
 }
 
-fn note_bundle(
+fn spawn_note(
+	commands: &mut Commands,
 	note_holder: &mut NoteHolder,
+	note_holder_entity: Entity,
 	note: Note,
 ) -> impl Bundle
 {
 	println!("{} {} {}", note, note.position(), note_holder.note_top(&note));
 
-	ImageBundle
+	let note_entity = commands.spawn(ImageBundle
 	{
 		image: note_holder.quarter_note.clone().into(),
 		style: Style
@@ -215,18 +236,23 @@ fn note_bundle(
 			..default()
 		},
 		..default()
-	}
+	}).id();
+	
+	commands.entity(note_holder_entity).add_child(note_entity);
+
+	note_holder.add_note(note, note_entity);
 }
 
 fn toggle_staffs(
-	mut staffs: Query<(&mut CommandStaff, &mut Style)>
+	mut commands: Commands,
+	mut staffs: Query<(&mut CommandStaff, &mut Style)>,
+	mut note_holders: Query<&mut NoteHolder>,
 )
 {
-	for (mut staff, mut style) in &mut staffs
-	{
-		if staff.is_open { close_staff(&mut staff, &mut style) }
-		else { open_staff(&mut staff, &mut style) }
-	}
+	let (mut staff, mut style) = staffs.single_mut();
+
+	if staff.is_open { close_staff(&mut commands, &mut staff, &mut style, &mut note_holders.single_mut()) }
+	else { open_staff(&mut staff, &mut style) }
 }
 
 fn open_staff(
@@ -239,12 +265,15 @@ fn open_staff(
 }
 
 fn close_staff(
+	commands: &mut Commands,
 	staff: &mut CommandStaff,
 	style: &mut Style,
+	note_holder: &mut NoteHolder,
 )
 {
 	staff.is_open = false;
 	style.display = Display::None;
+	note_holder.clear_notes(commands);
 }
 
 fn play_notes(
@@ -265,52 +294,51 @@ fn play_notes(
 	}
 	
 	let (mut note_holder, note_holder_entity) = note_holders.single_mut();
-	
 	let sound = asset_server.load("flute.wav");
 	
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Z, Note::C4, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::S, Note::CS4, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::X, Note::D4, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::D, Note::DS4, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::C, Note::E4, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::V, Note::F4, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::G, Note::FS4, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::B, Note::G4, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::H, Note::GS4, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::N, Note::A4, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::J, Note::AS4, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::M, Note::B4, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Z, Note::C4, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::S, Note::CS4, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::X, Note::D4, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::D, Note::DS4, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::C, Note::E4, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::V, Note::F4, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::G, Note::FS4, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::B, Note::G4, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::H, Note::GS4, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::N, Note::A4, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::J, Note::AS4, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::M, Note::B4, sound.clone());
 	
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Comma, Note::C5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::L, Note::CS5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Period, Note::D5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Semicolon, Note::DS5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Slash, Note::E5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Comma, Note::C5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::L, Note::CS5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Period, Note::D5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Semicolon, Note::DS5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Slash, Note::E5, sound.clone());
 	
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Q, Note::C5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Key2, Note::CS5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::W, Note::D5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Key3, Note::DS5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::E, Note::E5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::R, Note::F5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Key5, Note::FS5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::T, Note::G5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Key6, Note::GS5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Y, Note::A5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Key7, Note::AS5, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::U, Note::B5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Q, Note::C5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Key2, Note::CS5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::W, Note::D5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Key3, Note::DS5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::E, Note::E5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::R, Note::F5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Key5, Note::FS5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::T, Note::G5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Key6, Note::GS5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Y, Note::A5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Key7, Note::AS5, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::U, Note::B5, sound.clone());
 	
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::I, Note::C6, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Key9, Note::CS6, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::O, Note::D6, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::Key0, Note::DS6, sound.clone());
-	play_note(&mut commands, &mut note_holder, &note_holder_entity, &input, KeyCode::P, Note::E6, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::I, Note::C6, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Key9, Note::CS6, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::O, Note::D6, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::Key0, Note::DS6, sound.clone());
+	play_note(&mut commands, &mut note_holder, note_holder_entity, &input, KeyCode::P, Note::E6, sound.clone());
 }
 
 fn play_note(
 	commands: &mut Commands,
 	note_holder: &mut NoteHolder,
-	note_holder_entity: &Entity,
+	note_holder_entity: Entity,
 	input: &Input<KeyCode>,
 	key: KeyCode,
 	note: Note,
@@ -330,11 +358,6 @@ fn play_note(
 			},
 		});
 
-		commands
-			.entity(*note_holder_entity)
-			.with_children(|parent|
-			{
-				parent.spawn(note_bundle(note_holder, note));
-			});
+		spawn_note(commands, note_holder, note_holder_entity, note);
 	}
 }
