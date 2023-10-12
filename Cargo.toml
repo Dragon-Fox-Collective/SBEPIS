@@ -6,6 +6,7 @@ edition = "2021"
 [features]
 default = []
 editor_mode = []
+spawn_debug_notes_on_staff = []
 
 # Enable max optimizations for dependencies, but not for our code:
 [profile.dev.package."*"]

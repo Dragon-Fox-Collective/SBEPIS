@@ -16,9 +16,12 @@ impl Plugin for PlayerCommandsPlugin
 		app
 			.add_systems(Startup, (
 				spawn_staff,
-				apply_deferred,
-				spawn_debug_notes,
-			).chain())
+				#[cfg(feature = "spawn_debug_notes_on_staff")]
+				(
+					apply_deferred,
+					spawn_debug_notes,
+				).chain().after(spawn_staff),
+			))
 			.add_systems(Update, (
 				toggle_staffs.run_if(input_just_pressed(KeyCode::Grave)),
 				play_notes,
@@ -174,6 +177,7 @@ fn spawn_staff(
 		});
 }
 
+#[cfg(feature = "spawn_debug_notes_on_staff")]
 fn spawn_debug_notes(
 	mut commands: Commands,
 	mut note_holders: Query<(&mut NoteHolder, Entity)>,
