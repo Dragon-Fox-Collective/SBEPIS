@@ -3,7 +3,7 @@ use std::marker::PhantomData;
 use bevy::prelude::*;
 use bevy_audio::PlaybackMode;
 
-use super::{notes::Note, NoteHolder};
+use super::notes::{Note, NotePlayedEvent};
 
 #[derive(Resource)]
 pub struct NotePattern<T: Event>
@@ -17,45 +17,61 @@ impl<T: Event> NotePattern<T>
 	pub fn new(pattern: Vec<Note>) -> Self { Self{ pattern, event_type: PhantomData } }
 }
 
-impl<T: Event + Default> NotePattern<T>
-{
-	pub fn new_event(&self) -> T { T::default() }
-}
-
 #[derive(Event, Default)]
 pub struct PingCommandEvent;
 
 pub fn check_note_patterns<T: Event + Default>(
-	mut commands: Commands,
-	mut note_holders: Query<&mut NoteHolder>,
+	note_holder: Res<NotePatternPlayer>,
 	pattern: Res<NotePattern<T>>,
-	mut event_writer: EventWriter<T>,
+	mut ev_command: EventWriter<T>,
+	mut ev_command_sent: EventWriter<CommandSentEvent>,
 )
 {
-	let mut note_holder = note_holders.single_mut();
-	
-	if pattern.pattern == note_holder.notes {
-		event_writer.send(pattern.new_event());
-		note_holder.clear_notes(&mut commands);
+	if pattern.pattern == note_holder.current_pattern {
+		ev_command.send(T::default());
+		ev_command_sent.send(CommandSentEvent);
 	}
 }
 
 pub fn ping(
 	mut commands: Commands,
-	mut event_reader: EventReader<PingCommandEvent>,
 	asset_server: Res<AssetServer>,
 )
 {
-	for _ in event_reader.iter()
+	commands.spawn(AudioBundle
 	{
-		commands.spawn(AudioBundle
+		source: asset_server.load("pester_notif.mp3").clone(),
+		settings: PlaybackSettings
 		{
-			source: asset_server.load("pester_notif.mp3").clone(),
-			settings: PlaybackSettings
-			{
-				mode: PlaybackMode::Despawn,
-				..default()
-			},
-		});
+			mode: PlaybackMode::Despawn,
+			..default()
+		},
+	});
 }
+
+#[derive(Resource, Default)]
+pub struct NotePatternPlayer
+{
+	pub current_pattern: Vec<Note>,
+}
+
+#[derive(Event)]
+pub struct CommandSentEvent;
+
+pub fn add_note_to_player(
+	mut player: ResMut<NotePatternPlayer>,
+	mut ev_note_played: EventReader<NotePlayedEvent>,
+)
+{
+	for ev in ev_note_played.iter()
+	{
+		player.current_pattern.push(ev.0);
+	}
+}
+
+pub fn clear_player_notes(
+	mut player: ResMut<NotePatternPlayer>,
+)
+{
+	player.current_pattern.clear();
 }

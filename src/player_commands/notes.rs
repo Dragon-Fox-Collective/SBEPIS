@@ -1,4 +1,8 @@
+use bevy::prelude::*;
+use bevy_audio::PlaybackMode;
 use std::fmt::Display;
+
+use super::staff::CommandStaff;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum NoteLetter
@@ -142,4 +146,106 @@ impl Note
 	{
 		self.octave as i32 * 7 + self.note_letter as i32
 	}
+}
+
+#[derive(Event)]
+pub struct NotePlayedEvent(pub Note);
+
+#[derive(Event)]
+pub struct ClearNotesEvent;
+
+pub fn play_notes(
+	staffs: Query<&CommandStaff>,
+	input: Res<Input<KeyCode>>,
+	mut ev_note_played: EventWriter<NotePlayedEvent>,
+)
+{
+	if input.get_just_pressed().next().is_none() {
+		return;
+	}
+
+	let staff = staffs.single();
+	if !staff.is_open {
+		return;
+	}
+	
+	let mut play_note_if_pressed = |
+		key: KeyCode,
+		note: Note,
+	|
+	{
+		if !input.just_pressed(key) {
+			return;
+		}
+
+		ev_note_played.send(NotePlayedEvent(note));
+	};
+	
+	play_note_if_pressed(KeyCode::Z, Note::C4);
+	play_note_if_pressed(KeyCode::S, Note::CS4);
+	play_note_if_pressed(KeyCode::X, Note::D4);
+	play_note_if_pressed(KeyCode::D, Note::DS4);
+	play_note_if_pressed(KeyCode::C, Note::E4);
+	play_note_if_pressed(KeyCode::V, Note::F4);
+	play_note_if_pressed(KeyCode::G, Note::FS4);
+	play_note_if_pressed(KeyCode::B, Note::G4);
+	play_note_if_pressed(KeyCode::H, Note::GS4);
+	play_note_if_pressed(KeyCode::N, Note::A4);
+	play_note_if_pressed(KeyCode::J, Note::AS4);
+	play_note_if_pressed(KeyCode::M, Note::B4);
+	
+	play_note_if_pressed(KeyCode::Comma, Note::C5);
+	play_note_if_pressed(KeyCode::L, Note::CS5);
+	play_note_if_pressed(KeyCode::Period, Note::D5);
+	play_note_if_pressed(KeyCode::Semicolon, Note::DS5);
+	play_note_if_pressed(KeyCode::Slash, Note::E5);
+	
+	play_note_if_pressed(KeyCode::Q, Note::C5);
+	play_note_if_pressed(KeyCode::Key2, Note::CS5);
+	play_note_if_pressed(KeyCode::W, Note::D5);
+	play_note_if_pressed(KeyCode::Key3, Note::DS5);
+	play_note_if_pressed(KeyCode::E, Note::E5);
+	play_note_if_pressed(KeyCode::R, Note::F5);
+	play_note_if_pressed(KeyCode::Key5, Note::FS5);
+	play_note_if_pressed(KeyCode::T, Note::G5);
+	play_note_if_pressed(KeyCode::Key6, Note::GS5);
+	play_note_if_pressed(KeyCode::Y, Note::A5);
+	play_note_if_pressed(KeyCode::Key7, Note::AS5);
+	play_note_if_pressed(KeyCode::U, Note::B5);
+	
+	play_note_if_pressed(KeyCode::I, Note::C6);
+	play_note_if_pressed(KeyCode::Key9, Note::CS6);
+	play_note_if_pressed(KeyCode::O, Note::D6);
+	play_note_if_pressed(KeyCode::Key0, Note::DS6);
+	play_note_if_pressed(KeyCode::P, Note::E6);
+}
+
+pub fn spawn_note_audio(
+	mut commands: Commands,
+	mut ev_note_played: EventReader<NotePlayedEvent>,
+	asset_server: Res<AssetServer>,
+)
+{
+	for ev in ev_note_played.iter()
+	{
+		let note = ev.0;
+
+		commands.spawn(AudioBundle
+		{
+			source: asset_server.load("flute.wav").clone(),
+			settings: PlaybackSettings
+			{
+				mode: PlaybackMode::Despawn,
+				speed: note.frequency / Note::C4.frequency,
+				..default()
+			},
+		});
+	}
+}
+
+pub fn clear_notes(
+	mut ev_clear_notes: EventWriter<ClearNotesEvent>,
+)
+{
+	ev_clear_notes.send(ClearNotesEvent);
 }
