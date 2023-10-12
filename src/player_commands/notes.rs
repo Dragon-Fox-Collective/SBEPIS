@@ -1,12 +1,12 @@
 use std::fmt::Display;
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum NoteLetter
 {
 	C, D, E, F, G, A, B
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Note
 {
 	pub note_letter: NoteLetter,
