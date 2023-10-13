@@ -18,6 +18,7 @@ use bevy_render::render_resource::Extent3d;
 use bevy_render::render_resource::TextureDimension;
 use bevy_render::render_resource::TextureViewDescriptor;
 use bevy_render::render_resource::TextureViewDimension;
+use bevy_panorbit_camera::{PanOrbitCamera, PanOrbitCameraPlugin};
 use bevy_window::PrimaryWindow;
 use bevy_winit::WinitWindows;
 use bevy_xpbd_3d::prelude::*;
@@ -38,6 +39,7 @@ fn main()
 					..default()
 				}),
 			PhysicsPlugins::default(),
+			PanOrbitCameraPlugin,
 			#[cfg(feature = "editor_mode")]
 			editor::EditorPlugins,
 			GravityPlugin,
@@ -100,6 +102,13 @@ fn setup(
 	commands.spawn((
 		Camera3dBundle {
 			transform: Transform::from_xyz(-4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
+			..default()
+		},
+		PanOrbitCamera {
+			button_orbit: MouseButton::Left,
+			button_pan: MouseButton::Left,
+			modifier_pan: Some(KeyCode::ShiftLeft),
+			reversed_zoom: true,
 			..default()
 		},
 		MainCamera,
