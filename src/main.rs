@@ -141,7 +141,7 @@ fn load_skybox(
 	asset_server: &AssetServer,
 ) -> Option<Handle<Image>>
 {
-	let side_handles: Vec<Handle<Image>> = ["left", "right", "bottom", "top", "back", "front"].into_iter()
+	let side_handles: Vec<Handle<Image>> = ["left", "right", "top", "bottom", "back", "front"].into_iter()
 		.map(|side_name| format!("skybox/{side_name}.png"))
 		.map(|texture_name| asset_server.load(texture_name))
 		.collect();
