@@ -4,14 +4,17 @@ mod main_bundles;
 mod editor;
 mod player_commands;
 mod util;
+mod skybox;
 
 use self::gravity::*;
 use self::main_bundles::*;
 use self::player_commands::*;
+use self::skybox::*;
 
 use std::io::Cursor;
 
 use bevy::prelude::*;
+use bevy_panorbit_camera::{PanOrbitCamera, PanOrbitCameraPlugin};
 use bevy_window::PrimaryWindow;
 use bevy_winit::WinitWindows;
 use bevy_xpbd_3d::prelude::*;
@@ -32,10 +35,12 @@ fn main()
 					..default()
 				}),
 			PhysicsPlugins::default(),
+			PanOrbitCameraPlugin,
 			#[cfg(feature = "editor_mode")]
 			editor::EditorPlugins,
 			GravityPlugin,
 			PlayerCommandsPlugin,
+			SkyboxPlugin,
 		))
 		.insert_resource(FixedTime::new_from_secs(1.0 / 60.0))
 		.add_systems(Startup, (
@@ -63,6 +68,9 @@ fn set_window_icon(
 	primary.set_window_icon(Some(icon));
 }
 
+#[derive(Component)]
+struct MainCamera;
+
 fn setup(
 	mut commands: Commands,
 	mut meshes: ResMut<Assets<Mesh>>,
@@ -86,9 +94,18 @@ fn setup(
 	});
 
 	commands.spawn((
+		Name::new("Main Camera"),
 		Camera3dBundle {
 			transform: Transform::from_xyz(-4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
 			..default()
 		},
+		PanOrbitCamera {
+			button_orbit: MouseButton::Left,
+			button_pan: MouseButton::Left,
+			modifier_pan: Some(KeyCode::ShiftLeft),
+			reversed_zoom: true,
+			..default()
+		},
+		MainCamera,
 	));
 }
