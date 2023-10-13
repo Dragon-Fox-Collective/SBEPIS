@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use bevy_egui::EguiSettings;
 use bevy_mod_picking::prelude::*;
-use bevy_panorbit_camera::{PanOrbitCamera, PanOrbitCameraPlugin};
+use bevy_panorbit_camera::PanOrbitCamera;
 use bevy_render::camera::Viewport;
 use bevy_window::PrimaryWindow;
 
@@ -14,9 +14,6 @@ impl Plugin for EditorCameraPlugin
 	fn build(&self, app: &mut App)
 	{
 		app
-			.add_plugins((
-				PanOrbitCameraPlugin,
-			))
 			.add_systems(Startup, (
 				spawn_editor_camera,
 			))
@@ -63,6 +60,7 @@ pub fn spawn_editor_camera(
 )
 {
 	commands.spawn((
+		Name::new("Editor Camera"),
 		Camera3dBundle {
 			transform: Transform::from_xyz(4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
 			..default()

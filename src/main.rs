@@ -4,20 +4,16 @@ mod main_bundles;
 mod editor;
 mod player_commands;
 mod util;
+mod skybox;
 
 use self::gravity::*;
 use self::main_bundles::*;
 use self::player_commands::*;
+use self::skybox::*;
 
 use std::io::Cursor;
 
-use bevy::core_pipeline::Skybox;
 use bevy::prelude::*;
-use bevy_asset::LoadState;
-use bevy_render::render_resource::Extent3d;
-use bevy_render::render_resource::TextureDimension;
-use bevy_render::render_resource::TextureViewDescriptor;
-use bevy_render::render_resource::TextureViewDimension;
 use bevy_panorbit_camera::{PanOrbitCamera, PanOrbitCameraPlugin};
 use bevy_window::PrimaryWindow;
 use bevy_winit::WinitWindows;
@@ -44,14 +40,12 @@ fn main()
 			editor::EditorPlugins,
 			GravityPlugin,
 			PlayerCommandsPlugin,
+			SkyboxPlugin,
 		))
 		.insert_resource(FixedTime::new_from_secs(1.0 / 60.0))
 		.add_systems(Startup, (
 			set_window_icon,
 			setup,
-		))
-		.add_systems(Update, (
-			add_skybox,
 		))
 		.run();
 }
@@ -100,6 +94,7 @@ fn setup(
 	});
 
 	commands.spawn((
+		Name::new("Main Camera"),
 		Camera3dBundle {
 			transform: Transform::from_xyz(-4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
 			..default()
@@ -113,74 +108,4 @@ fn setup(
 		},
 		MainCamera,
 	));
-}
-
-fn add_skybox(
-	mut commands: Commands,
-	mut images: ResMut<Assets<Image>>,
-	asset_server: Res<AssetServer>,
-	camera: Query<(Option<&Skybox>, Entity), With<MainCamera>>
-)
-{
-	let (camera_skybox, camera_entity) = camera.single();
-	if camera_skybox.is_some() {
-		return;
-	}
-
-	let skybox = load_skybox(&mut images, &asset_server);
-	if skybox.is_none() {
-		return;
-	}
-	let skybox = skybox.unwrap();
-
-	commands.entity(camera_entity).insert(Skybox(skybox));
-}
-
-fn load_skybox(
-	images: &mut Assets<Image>,
-	asset_server: &AssetServer,
-) -> Option<Handle<Image>>
-{
-	let side_handles: Vec<Handle<Image>> = ["left", "right", "top", "bottom", "back", "front"].into_iter()
-		.map(|side_name| format!("skybox/{side_name}.png"))
-		.map(|texture_name| asset_server.load(texture_name))
-		.collect();
-
-	let sides_states: Vec<LoadState> = side_handles.iter().map(|side| asset_server.get_load_state(side)).collect();
-
-	if sides_states.iter().copied().any(|state| match state {
-		LoadState::NotLoaded => false,
-		LoadState::Loading => false,
-		LoadState::Loaded => false,
-		LoadState::Failed => true,
-		LoadState::Unloaded => true,
-	}) {
-		panic!("Erroneous skybox load states {:?}", sides_states);
-	}
-	if sides_states.iter().copied().any(|state| state != LoadState::Loaded) {
-		return None;
-	}
-
-	let sides: Vec<&Image> = side_handles.iter().map(|side| images.get(side).unwrap()).collect();
-	let first_side_image = *sides.first().unwrap();
-
-	let mut skybox = Image::new(
-		Extent3d
-		{
-			width: first_side_image.texture_descriptor.size.width,
-			height: first_side_image.texture_descriptor.size.width * 6,
-			depth_or_array_layers: 1,
-		},
-		TextureDimension::D2,
-		sides.into_iter().flat_map(|texture| texture.data.as_slice()).copied().collect(),
-		first_side_image.texture_descriptor.format
-	);
-	skybox.reinterpret_stacked_2d_as_array(6);
-	skybox.texture_view_descriptor = Some(TextureViewDescriptor
-	{
-		dimension: Some(TextureViewDimension::Cube),
-		..default()
-	});
-
-	Some(images.add(skybox))
 }
