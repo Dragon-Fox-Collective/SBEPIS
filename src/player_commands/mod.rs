@@ -42,16 +42,14 @@ impl Plugin for PlayerCommandsPlugin
 					spawn_note_audio,
 					add_note_to_holder,
 					add_note_to_player,
-					(
-						(
-							check_note_patterns::<PingCommandEvent>,
-						),
-						(
-							clear_notes,
-							ping.run_if(on_event::<PingCommandEvent>()),
-						).run_if(on_event::<CommandSentEvent>()),
-					).chain().after(add_note_to_player),
 				).run_if(on_event::<NotePlayedEvent>()),
+				(
+					check_note_patterns::<PingCommandEvent>,
+				),
+				(
+					clear_notes.run_if(on_event::<CommandSentEvent>()),
+					ping.run_if(on_event::<PingCommandEvent>()),
+				),
 				(
 					clear_holder_notes,
 					clear_player_notes,
