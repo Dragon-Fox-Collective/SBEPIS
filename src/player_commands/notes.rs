@@ -232,7 +232,7 @@ pub fn spawn_note_audio(
 
 		commands.spawn(AudioBundle
 		{
-			source: asset_server.load("flute.wav").clone(),
+			source: asset_server.load("flute.wav"),
 			settings: PlaybackSettings
 			{
 				mode: PlaybackMode::Despawn,
