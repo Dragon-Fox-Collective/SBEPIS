@@ -1,7 +1,7 @@
 use std::marker::PhantomData;
 
+use bevy::audio::PlaybackMode;
 use bevy::prelude::*;
-use bevy_audio::PlaybackMode;
 
 use super::notes::{Note, NotePlayedEvent};
 

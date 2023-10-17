@@ -1,5 +1,5 @@
+use bevy::audio::PlaybackMode;
 use bevy::prelude::*;
-use bevy_audio::PlaybackMode;
 use std::fmt::Display;
 
 use super::staff::CommandStaff;

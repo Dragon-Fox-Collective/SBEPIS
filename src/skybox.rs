@@ -1,10 +1,10 @@
+use bevy::asset::LoadState;
 use bevy::core_pipeline::Skybox;
 use bevy::prelude::*;
-use bevy_asset::LoadState;
-use bevy_render::render_resource::Extent3d;
-use bevy_render::render_resource::TextureDimension;
-use bevy_render::render_resource::TextureViewDescriptor;
-use bevy_render::render_resource::TextureViewDimension;
+use bevy::render::render_resource::Extent3d;
+use bevy::render::render_resource::TextureDimension;
+use bevy::render::render_resource::TextureViewDescriptor;
+use bevy::render::render_resource::TextureViewDimension;
 
 pub struct SkyboxPlugin;
 

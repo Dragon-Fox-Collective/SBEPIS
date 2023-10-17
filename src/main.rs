@@ -14,9 +14,9 @@ use self::skybox::*;
 use std::io::Cursor;
 
 use bevy::prelude::*;
+use bevy::window::PrimaryWindow;
+use bevy::winit::WinitWindows;
 use bevy_panorbit_camera::{PanOrbitCamera, PanOrbitCameraPlugin};
-use bevy_window::PrimaryWindow;
-use bevy_winit::WinitWindows;
 use bevy_xpbd_3d::prelude::*;
 use winit::window::Icon;
 

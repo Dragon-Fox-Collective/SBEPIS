@@ -3,8 +3,8 @@ mod commands;
 mod staff;
 mod note_holder;
 
+use bevy::input::common_conditions::input_just_pressed;
 use bevy::prelude::*;
-use bevy_input::common_conditions::input_just_pressed;
 
 use self::note_holder::*;
 use self::notes::*;
