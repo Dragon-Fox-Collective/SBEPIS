@@ -12,41 +12,17 @@ pub struct NotePattern<T: Event>
 	event_type: PhantomData<T>,
 }
 
-impl<T: Event> NotePattern<T>
-{
-	pub fn new(pattern: Vec<Note>) -> Self { Self{ pattern, event_type: PhantomData } }
-}
-
-#[derive(Event, Default)]
-pub struct PingCommandEvent;
-
-pub fn check_note_patterns<T: Event + Default>(
+pub fn check_note_patterns<T: Event + NotePatternEvent>(
 	note_holder: Res<NotePatternPlayer>,
-	pattern: Res<NotePattern<T>>,
 	mut ev_command: EventWriter<T>,
 	mut ev_command_sent: EventWriter<CommandSentEvent>,
 )
 {
-	if pattern.pattern == note_holder.current_pattern {
-		ev_command.send(T::default());
+	let event = T::compare_notes(note_holder.current_pattern.as_slice());
+	if let Some(event) = event {
+		ev_command.send(event);
 		ev_command_sent.send(CommandSentEvent);
 	}
-}
-
-pub fn ping(
-	mut commands: Commands,
-	asset_server: Res<AssetServer>,
-)
-{
-	commands.spawn(AudioBundle
-	{
-		source: asset_server.load("pester_notif.mp3").clone(),
-		settings: PlaybackSettings
-		{
-			mode: PlaybackMode::Despawn,
-			..default()
-		},
-	});
 }
 
 #[derive(Resource, Default)]
@@ -63,7 +39,7 @@ pub fn add_note_to_player(
 	mut ev_note_played: EventReader<NotePlayedEvent>,
 )
 {
-	for ev in ev_note_played.iter()
+	for ev in &mut ev_note_played
 	{
 		player.current_pattern.push(ev.0);
 	}
@@ -74,4 +50,111 @@ pub fn clear_player_notes(
 )
 {
 	player.current_pattern.clear();
+}
+
+pub trait NotePatternEvent
+{
+	fn compare_notes(notes: &[Note]) -> Option<Self> where Self: Sized;
+}
+
+pub trait NoteSequence
+{
+	fn eat(self, notes: &[Note]) -> Option<Self> where Self: Sized;
+}
+
+impl NoteSequence for &[Note]
+{
+	fn eat(self, notes: &[Note]) -> Option<Self>
+	{
+		if self.starts_with(notes) {
+			Some(&self[notes.len()..])
+		} else {
+			None
+		}
+	}
+}
+
+pub trait NoteSequenceTyped<T>
+{
+	fn eat_type(self) -> Option<(T, Self)> where Self: Sized;
+}
+
+impl NoteSequenceTyped<bool> for &[Note]
+{
+	fn eat_type(self) -> Option<(bool, Self)> where Self: Sized
+	{
+		if self.starts_with(&[Note::A4]) {
+			Some((true, &self[1..]))
+		} else if self.starts_with(&[Note::C5]) {
+			Some((false, &self[1..]))
+		} else {
+			None
+		}
+	}
+}
+
+
+#[derive(Event)]
+pub struct PingCommandEvent;
+
+impl PingCommandEvent
+{
+	const PATTERN: &[Note] = &[Note::C4, Note::D4, Note::E4];
+}
+
+impl NotePatternEvent for PingCommandEvent
+{
+	fn compare_notes(notes: &[Note]) -> Option<Self> where Self: Sized
+	{
+		let _notes = notes.eat(PingCommandEvent::PATTERN)?;
+		Some(PingCommandEvent)
+	}
+}
+
+pub fn ping(
+	mut commands: Commands,
+	asset_server: Res<AssetServer>,
+)
+{
+	commands.spawn(AudioBundle
+	{
+		source: asset_server.load("pester_notif.mp3"),
+		settings: PlaybackSettings
+		{
+			mode: PlaybackMode::Despawn,
+			..default()
+		},
+	});
+}
+
+
+#[derive(Event)]
+pub struct KillCommandEvent(pub bool);
+
+impl KillCommandEvent
+{
+	const PATTERN: &[Note] = &[Note::D4, Note::D4, Note::D5];
+}
+
+impl NotePatternEvent for KillCommandEvent
+{
+	fn compare_notes(notes: &[Note]) -> Option<Self> where Self: Sized
+	{
+		let notes = notes.eat(KillCommandEvent::PATTERN)?;
+		let (actually_kill, _notes) = notes.eat_type()?;
+		Some(KillCommandEvent(actually_kill))
+	}
+}
+
+pub fn kill(
+	mut ev_kill: EventReader<KillCommandEvent>,
+	mut ev_quit: EventWriter<bevy::app::AppExit>,
+)
+{
+	for ev in &mut ev_kill {
+		println!("Tried to kill {}", ev.0);
+		if ev.0 {
+			ev_quit.send(bevy::app::AppExit);
+		}
+	}
 }

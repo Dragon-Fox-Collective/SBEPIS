@@ -45,7 +45,7 @@ pub fn handle_pick_events(
 	let Ok(mut egui_context) = egui.get_single_mut() else { return; };
 	let egui_context = egui_context.get_mut();
 
-	for click in click_events.iter() {
+	for click in &click_events {
 		if egui_entity.get(click.target()).is_ok() {
 			continue;
 		};
