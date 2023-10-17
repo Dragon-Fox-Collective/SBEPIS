@@ -32,7 +32,7 @@ pub fn add_note_to_holder(
 {
 	let (mut note_holder, note_holder_entity) = note_holder.single_mut();
 
-	for ev in ev_note_played.iter()
+	for ev in &mut ev_note_played
 	{
 		let note = ev.0;
 
@@ -64,7 +64,7 @@ pub fn clear_holder_notes(
 )
 {
 	let mut note_holder = note_holder.single_mut();
-	for note_entity in note_holder.note_entities.iter() {
+	for note_entity in &mut note_holder.note_entities {
 		commands.entity(*note_entity).despawn_recursive();
 	}
 	note_holder.note_entities.clear();

@@ -46,7 +46,7 @@ pub fn draw_gizmo(
 		return;
 	}
 
-	for selected in selected_entities.iter() {
+	for selected in &selected_entities {
 		let Some(transform) = world.get::<Transform>(selected) else {
 			continue;
 		};

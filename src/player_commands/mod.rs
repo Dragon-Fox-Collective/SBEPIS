@@ -22,7 +22,7 @@ impl Plugin for PlayerCommandsPlugin
 			.add_event::<ClearNotesEvent>()
 
 			.add_event::<PingCommandEvent>()
-			.insert_resource(NotePattern::<PingCommandEvent>::new(vec![Note::C4, Note::D4, Note::E4]))
+			.add_event::<KillCommandEvent>()
 
 			.insert_resource(NotePatternPlayer::default())
 
@@ -45,10 +45,12 @@ impl Plugin for PlayerCommandsPlugin
 				).run_if(on_event::<NotePlayedEvent>()),
 				(
 					check_note_patterns::<PingCommandEvent>,
+					check_note_patterns::<KillCommandEvent>,
 				),
 				(
 					clear_notes.run_if(on_event::<CommandSentEvent>()),
 					ping.run_if(on_event::<PingCommandEvent>()),
+					kill.run_if(on_event::<KillCommandEvent>()),
 				),
 				(
 					clear_holder_notes,

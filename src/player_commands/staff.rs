@@ -115,7 +115,7 @@ pub fn spawn_debug_notes(
 		.entity(note_holder_entity)
 		.with_children(|parent|
 		{
-			for note in vec![Note::C4, Note::D4, Note::E4, Note::F4, Note::G4, Note::A4, Note::B4, Note::C5, Note::D5, Note::E5, Note::F5, Note::G5, Note::A5].iter()
+			for note in [Note::C4, Note::D4, Note::E4, Note::F4, Note::G4, Note::A4, Note::B4, Note::C5, Note::D5, Note::E5, Note::F5, Note::G5, Note::A5]
 			{
 				parent.spawn(note_bundle(&mut note_holder, note.clone()));
 			}

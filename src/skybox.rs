@@ -32,7 +32,7 @@ fn add_skybox(
 	current_skybox: Res<CurrentSkybox>,
 )
 {
-	for camera in camera.iter() {
+	for camera in &camera {
 		commands.entity(camera).insert(Skybox(current_skybox.0.clone().unwrap()));
 	}
 }
