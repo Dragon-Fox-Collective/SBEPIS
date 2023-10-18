@@ -20,7 +20,7 @@ impl PlanetBundle
 		radius: f32,
 		gravity: f32,
 		meshes: &mut Assets<Mesh>,
-		materials: &mut Assets<StandardMaterial>,
+		material: Handle<StandardMaterial>,
 	) -> Self
 	{
 		let mesh = Mesh::from(shape::UVSphere { radius, sectors: 32, stacks: 32 });
@@ -30,7 +30,7 @@ impl PlanetBundle
 			pbr: PbrBundle
 			{
 				mesh: meshes.add(mesh),
-				material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+				material,
 				..default()
 			},
 			rigidbody: RigidBody::Static,
@@ -59,15 +59,15 @@ impl BoxBundle
 {
 	pub fn new(
 		position: Vec3,
-		meshes: &mut Assets<Mesh>,
-		materials: &mut Assets<StandardMaterial>,
+		mesh: Handle<Mesh>,
+		material: Handle<StandardMaterial>,
 	) -> Self
 	{
 		BoxBundle
 		{
 			pbr: PbrBundle {
-				mesh: meshes.add(Mesh::from(shape::Cube { size: 1.0 })),
-				material: materials.add(Color::rgb(0.8, 0.7, 0.6).into()),
+				mesh,
+				material,
 				..default()
 			},
 			rigidbody: RigidBody::Dynamic,

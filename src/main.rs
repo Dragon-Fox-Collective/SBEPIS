@@ -65,6 +65,19 @@ fn set_window_icon(
 	primary.set_window_icon(Some(icon));
 }
 
+fn gridbox_texture(color: &str) -> String
+{
+	format!("Gridbox Prototype Materials/prototype_512x512_{color}.png")
+}
+
+fn gridbox_material(color: &str, materials: &mut Assets<StandardMaterial>, asset_server: &AssetServer) -> Handle<StandardMaterial>
+{
+	materials.add(StandardMaterial {
+		base_color_texture: Some(asset_server.load(gridbox_texture(color))),
+		..default()
+	})
+}
+
 #[derive(Component)]
 pub struct OverviewCamera;
 
@@ -72,13 +85,18 @@ fn setup(
 	mut commands: Commands,
 	mut meshes: ResMut<Assets<Mesh>>,
 	mut materials: ResMut<Assets<StandardMaterial>>,
+	asset_server: Res<AssetServer>,
 )
 {
-	commands.spawn((Name::new("Planet"), PlanetBundle::new(Vec3::Y * -100.0, 100.0, 10.0, &mut meshes, &mut materials)));
+	let gray_material = gridbox_material("grey2", &mut materials, &asset_server);
+	let green_material = gridbox_material("green1", &mut materials, &asset_server);
 
-	commands.spawn((Name::new("Cube 1"), BoxBundle::new(Vec3::new(0.0, 4.0, 0.0), &mut meshes, &mut materials)));
-	commands.spawn((Name::new("Cube 2"), BoxBundle::new(Vec3::new(0.5, 5.5, 0.0), &mut meshes, &mut materials)));
-	commands.spawn((Name::new("Cube 3"), BoxBundle::new(Vec3::new(-0.5, 7.0, 0.0), &mut meshes, &mut materials)));
+	commands.spawn((Name::new("Planet"), PlanetBundle::new(Vec3::Y * -100.0, 100.0, 10.0, &mut meshes, gray_material)));
+
+	let cube_mesh = meshes.add(Mesh::from(shape::Cube { size: 1.0 }));
+	commands.spawn((Name::new("Cube 1"), BoxBundle::new(Vec3::new(0.0, 4.0, 0.0), cube_mesh.clone(), green_material.clone())));
+	commands.spawn((Name::new("Cube 2"), BoxBundle::new(Vec3::new(0.5, 5.5, 0.0), cube_mesh.clone(), green_material.clone())));
+	commands.spawn((Name::new("Cube 3"), BoxBundle::new(Vec3::new(-0.5, 7.0, 0.0), cube_mesh.clone(), green_material.clone())));
 
 	commands.spawn(DirectionalLightBundle {
 		directional_light: DirectionalLight {

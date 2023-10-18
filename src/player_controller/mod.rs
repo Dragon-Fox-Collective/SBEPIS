@@ -1,7 +1,7 @@
 use bevy::{prelude::*, input::common_conditions::input_just_pressed};
 use bevy_xpbd_3d::prelude::*;
 
-use crate::{gravity::AffectedByGravity, OverviewCamera};
+use crate::{gravity::AffectedByGravity, OverviewCamera, gridbox_material};
 
 pub struct PlayerControllerPlugin;
 
@@ -25,13 +25,14 @@ fn setup(
 	mut commands: Commands,
 	mut meshes: ResMut<Assets<Mesh>>,
 	mut materials: ResMut<Assets<StandardMaterial>>,
+	asset_server: Res<AssetServer>,
 )
 {
 	let body = commands.spawn((
 		Name::new("Player Body"),
 		PbrBundle {
-			mesh: meshes.add(Mesh::from(shape::Capsule{ radius: 0.5, rings: 1, depth: 1.0, latitudes: 8, longitudes: 16, uv_profile: shape::CapsuleUvProfile::Fixed })),
-			material: materials.add(Color::WHITE.into()),
+			mesh: meshes.add(Mesh::from(shape::Capsule { radius: 0.5, rings: 1, depth: 1.0, latitudes: 8, longitudes: 16, uv_profile: shape::CapsuleUvProfile::Fixed })),
+			material: gridbox_material("white", &mut materials, &asset_server),
 			..default()
 		},
 		RigidBody::Dynamic,
