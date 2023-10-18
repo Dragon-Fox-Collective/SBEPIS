@@ -1,20 +1,18 @@
 mod gravity;
 mod main_bundles;
 mod player_commands;
+mod player_controller;
 mod util;
 mod skybox;
 
-use self::gravity::*;
 use self::main_bundles::*;
-use self::player_commands::*;
-use self::skybox::*;
 
+use std::f32::consts::PI;
 use std::io::Cursor;
 
 use bevy::prelude::*;
 use bevy::window::PrimaryWindow;
 use bevy::winit::WinitWindows;
-use bevy_panorbit_camera::{PanOrbitCamera, PanOrbitCameraPlugin};
 use bevy_xpbd_3d::prelude::*;
 use winit::window::Icon;
 
@@ -33,12 +31,13 @@ fn main()
 					..default()
 				}),
 			PhysicsPlugins::default(),
-			PanOrbitCameraPlugin,
+			bevy_panorbit_camera::PanOrbitCameraPlugin,
 			#[cfg(feature = "inspector")]
 			bevy_inspector_egui::quick::WorldInspectorPlugin::new(),
-			GravityPlugin,
-			PlayerCommandsPlugin,
-			SkyboxPlugin,
+			self::gravity::GravityPlugin,
+			self::player_commands::PlayerCommandsPlugin,
+			self::skybox::SkyboxPlugin,
+			self::player_controller::PlayerControllerPlugin,
 		))
 		.insert_resource(FixedTime::new_from_secs(1.0 / 60.0))
 		.add_systems(Startup, (
@@ -66,28 +65,50 @@ fn set_window_icon(
 	primary.set_window_icon(Some(icon));
 }
 
+fn gridbox_texture(color: &str) -> String
+{
+	format!("Gridbox Prototype Materials/prototype_512x512_{color}.png")
+}
+
+fn gridbox_material(color: &str, materials: &mut Assets<StandardMaterial>, asset_server: &AssetServer) -> Handle<StandardMaterial>
+{
+	materials.add(StandardMaterial {
+		base_color_texture: Some(asset_server.load(gridbox_texture(color))),
+		..default()
+	})
+}
+
 #[derive(Component)]
-struct MainCamera;
+pub struct OverviewCamera;
 
 fn setup(
 	mut commands: Commands,
 	mut meshes: ResMut<Assets<Mesh>>,
 	mut materials: ResMut<Assets<StandardMaterial>>,
+	asset_server: Res<AssetServer>,
 )
 {
-	commands.spawn((Name::new("Planet"), PlanetBundle::new(Vec3::Y * -2.0, 2.0, 10.0, &mut meshes, &mut materials)));
+	let gray_material = gridbox_material("grey2", &mut materials, &asset_server);
+	let green_material = gridbox_material("green1", &mut materials, &asset_server);
 
-	commands.spawn((Name::new("Cube 1"), BoxBundle::new(Vec3::new(0.0, 4.0, 0.0), &mut meshes, &mut materials)));
-	commands.spawn((Name::new("Cube 2"), BoxBundle::new(Vec3::new(0.5, 5.5, 0.0), &mut meshes, &mut materials)));
-	commands.spawn((Name::new("Cube 3"), BoxBundle::new(Vec3::new(-0.5, 7.0, 0.0), &mut meshes, &mut materials)));
+	commands.spawn((Name::new("Planet"), PlanetBundle::new(Vec3::Y * -100.0, 100.0, 10.0, &mut meshes, gray_material)));
 
-	commands.spawn(PointLightBundle {
-		point_light: PointLight {
-			intensity: 1500.0,
+	let cube_mesh = meshes.add(Mesh::from(shape::Cube { size: 1.0 }));
+	commands.spawn((Name::new("Cube 1"), BoxBundle::new(Vec3::new(0.0, 4.0, 0.0), cube_mesh.clone(), green_material.clone())));
+	commands.spawn((Name::new("Cube 2"), BoxBundle::new(Vec3::new(0.5, 5.5, 0.0), cube_mesh.clone(), green_material.clone())));
+	commands.spawn((Name::new("Cube 3"), BoxBundle::new(Vec3::new(-0.5, 7.0, 0.0), cube_mesh.clone(), green_material.clone())));
+
+	commands.spawn(DirectionalLightBundle {
+		directional_light: DirectionalLight {
+			illuminance: 10000.0,
 			shadows_enabled: true,
 			..default()
 		},
-		transform: Transform::from_xyz(4.0, 8.0, 4.0),
+        transform: Transform {
+            translation: Vec3::new(0.0, 2.0, 0.0),
+            rotation: Quat::from_rotation_x(-PI / 4.),
+            ..default()
+        },
 		..default()
 	});
 
@@ -97,13 +118,13 @@ fn setup(
 			transform: Transform::from_xyz(-4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
 			..default()
 		},
-		PanOrbitCamera {
+		bevy_panorbit_camera::PanOrbitCamera {
 			button_orbit: MouseButton::Left,
 			button_pan: MouseButton::Left,
 			modifier_pan: Some(KeyCode::ShiftLeft),
 			reversed_zoom: true,
 			..default()
 		},
-		MainCamera,
+		OverviewCamera,
 	));
 }
