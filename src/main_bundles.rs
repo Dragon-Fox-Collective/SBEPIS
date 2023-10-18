@@ -23,7 +23,7 @@ impl PlanetBundle
 		materials: &mut Assets<StandardMaterial>,
 	) -> Self
 	{
-		let mesh = Mesh::from(shape::UVSphere { radius, sectors: 16, stacks: 16 });
+		let mesh = Mesh::from(shape::UVSphere { radius, sectors: 32, stacks: 32 });
 		let collider = Collider::trimesh_from_bevy_mesh(&mesh).expect("couldn't make a planet collider");
 		PlanetBundle
 		{
