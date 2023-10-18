@@ -1,7 +1,5 @@
 mod gravity;
 mod main_bundles;
-#[cfg(feature = "editor_mode")]
-mod editor;
 mod player_commands;
 mod util;
 mod skybox;
@@ -36,8 +34,8 @@ fn main()
 				}),
 			PhysicsPlugins::default(),
 			PanOrbitCameraPlugin,
-			#[cfg(feature = "editor_mode")]
-			editor::EditorPlugins,
+			#[cfg(feature = "inspector")]
+			bevy_inspector_egui::quick::WorldInspectorPlugin::new(),
 			GravityPlugin,
 			PlayerCommandsPlugin,
 			SkyboxPlugin,
