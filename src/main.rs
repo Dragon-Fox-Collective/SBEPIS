@@ -65,6 +65,9 @@ fn set_window_icon(
 	primary.set_window_icon(Some(icon));
 }
 
+#[derive(Component)]
+pub struct OverviewCamera;
+
 fn setup(
 	mut commands: Commands,
 	mut meshes: ResMut<Assets<Mesh>>,
@@ -79,6 +82,7 @@ fn setup(
 
 	commands.spawn(DirectionalLightBundle {
 		directional_light: DirectionalLight {
+			illuminance: 10000.0,
 			shadows_enabled: true,
 			..default()
 		},
@@ -103,5 +107,6 @@ fn setup(
 			reversed_zoom: true,
 			..default()
 		},
+		OverviewCamera,
 	));
 }

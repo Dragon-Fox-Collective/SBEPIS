@@ -1,7 +1,7 @@
-use bevy::prelude::*;
+use bevy::{prelude::*, input::common_conditions::input_just_pressed};
 use bevy_xpbd_3d::prelude::*;
 
-use crate::gravity::AffectedByGravity;
+use crate::{gravity::AffectedByGravity, OverviewCamera};
 
 pub struct PlayerControllerPlugin;
 
@@ -11,9 +11,15 @@ impl Plugin for PlayerControllerPlugin
 		app
 			.add_systems(Startup, (
 				setup,
+			))
+			.add_systems(Update, (
+				toggle_camera.run_if(input_just_pressed(KeyCode::Tab)),
 			));
 	}
 }
+
+#[derive(Component)]
+pub struct PlayerCamera;
 
 fn setup(
 	mut commands: Commands,
@@ -45,5 +51,18 @@ fn setup(
 			},
 			..default()
 		},
+		PlayerCamera,
 	)).set_parent(body);
+}
+
+pub fn toggle_camera(
+	mut overview_camera: Query<&mut Camera, (With<OverviewCamera>, Without<PlayerCamera>)>,
+	mut player_camera: Query<&mut Camera, (With<PlayerCamera>, Without<OverviewCamera>)>,
+)
+{
+	let mut overview_camera = overview_camera.single_mut();
+	overview_camera.is_active = !overview_camera.is_active;
+
+	let mut player_camera = player_camera.single_mut();
+	player_camera.is_active = !player_camera.is_active;
 }
