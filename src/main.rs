@@ -29,6 +29,14 @@ fn main()
 						..default()
 					}),
 					..default()
+				})
+				.set(ImagePlugin {
+					default_sampler: bevy::render::render_resource::SamplerDescriptor {
+						address_mode_u: bevy::render::render_resource::AddressMode::Repeat,
+						address_mode_v: bevy::render::render_resource::AddressMode::Repeat,
+						address_mode_w: bevy::render::render_resource::AddressMode::Repeat,
+						..default()
+					},
 				}),
 			PhysicsPlugins::default(),
 			bevy_panorbit_camera::PanOrbitCameraPlugin,
