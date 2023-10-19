@@ -17,7 +17,7 @@ bevy = { version = "0.11.2", features = ["wav", "mp3"] }
 bevy-inspector-egui = "0.19.0"
 bevy_egui = "0.21.0"
 bevy_mod_picking = { version = "0.15.0", default-features = false, features = ["backend_raycast", "backend_egui", "backend_sprite"] }
-bevy_panorbit_camera = "0.8.0"
+bevy_panorbit_camera = { version = "0.8.0", features = ["bevy_egui"] }
 bevy_xpbd_3d = "0.2.0"
 egui = "0.22.0"
 egui-gizmo = "0.11.0"
