@@ -7,7 +7,6 @@ mod skybox;
 
 use self::main_bundles::*;
 
-use std::f32::consts::PI;
 use std::io::Cursor;
 
 use bevy::prelude::*;
@@ -113,8 +112,7 @@ fn setup(
 			..default()
 		},
         transform: Transform {
-            translation: Vec3::new(0.0, 2.0, 0.0),
-            rotation: Quat::from_rotation_x(-PI / 4.),
+            rotation: Quat::from_euler(EulerRot::XYZ, -1.9, 0.8, 0.0),
             ..default()
         },
 		..default()

@@ -62,13 +62,22 @@ fn gravity<T>(
 	where T : Component + GravitationalField
 {
 	for (position, mass, mut force) in &mut rigidbodies {
-		for (field_position, field_rotation, gravity_priority, gravity_field) in &gravity_fields {
-			force.apply_force(mass.0 * gravity_field.get_acceleration_at(global_to_local(position.0, field_position.0, field_rotation.0)));
+		for (field_position, field_rotation, gravity_priority, gravity_field) in &gravity_fields
+		{
+			let local_position = global_position_to_local(position.0, field_position.0, field_rotation.0);
+			let local_acceleration = gravity_field.get_acceleration_at(local_position);
+			let global_acceleration = local_direction_to_global(local_acceleration, field_rotation.0);
+			force.apply_force(mass.0 * global_acceleration);
 		}
 	}
 }
 
-fn global_to_local(position: Vec3, reference_position: Vec3, reference_rotation: Quat) -> Vec3
+fn global_position_to_local(position: Vec3, reference_position: Vec3, reference_rotation: Quat) -> Vec3
 {
 	reference_rotation.mul_vec3(position - reference_position)
+}
+
+fn local_direction_to_global(direction: Vec3, reference_rotation: Quat) -> Vec3
+{
+	reference_rotation.inverse().mul_vec3(direction)
 }
