@@ -32,6 +32,7 @@ pub fn spawn_staff(
 	// Background
 	commands
 		.spawn((
+			Name::new("Staff"),
 			NodeBundle
 			{
 				style: Style
@@ -53,21 +54,25 @@ pub fn spawn_staff(
 		{
 			// Clef
 			parent
-				.spawn(ImageBundle
-				{
-					image: treble_clef.into(),
-					style: Style
+				.spawn((
+					Name::new("Clef"),
+					ImageBundle
 					{
-						position_type: PositionType::Absolute,
-						height: Val::Px(CLEF_HEIGHT),
+						image: treble_clef.into(),
+						style: Style
+						{
+							position_type: PositionType::Absolute,
+							height: Val::Px(CLEF_HEIGHT),
+							..default()
+						},
 						..default()
 					},
-					..default()
-				});
+				));
 
 			// Staff lines
 			parent
 				.spawn((
+					Name::new("Staff lines"),
 					NodeBundle
 					{
 						style: Style
@@ -85,19 +90,22 @@ pub fn spawn_staff(
 				))
 				.with_children(|parent|
 				{
-					for _ in 0..5
+					for i in 0..5
 					{
-						parent.spawn(NodeBundle
-						{
-							style: Style
+						parent.spawn((
+							Name::new(format!("Line {i}")),
+							NodeBundle
 							{
-								width: Val::Percent(100.0),
-								height: Val::Px(LINE_HEIGHT),
+								style: Style
+								{
+									width: Val::Percent(100.0),
+									height: Val::Px(LINE_HEIGHT),
+									..default()
+								},
+								background_color: Color::BLACK.into(),
 								..default()
 							},
-							background_color: Color::BLACK.into(),
-							..default()
-						});
+						));
 					}
 				});
 		});

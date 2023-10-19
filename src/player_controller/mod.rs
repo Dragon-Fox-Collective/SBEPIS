@@ -44,7 +44,7 @@ fn setup(
 	)).id();
 
 	commands.spawn((
-		Name::new("Main Camera"),
+		Name::new("Player Camera"),
 		Camera3dBundle {
 			camera: Camera {
 				is_active: false,

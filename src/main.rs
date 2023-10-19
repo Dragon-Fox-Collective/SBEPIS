@@ -105,23 +105,26 @@ fn setup(
 	commands.spawn((Name::new("Cube 2"), BoxBundle::new(Vec3::new(0.5, 5.5, 0.0), cube_mesh.clone(), green_material.clone())));
 	commands.spawn((Name::new("Cube 3"), BoxBundle::new(Vec3::new(-0.5, 7.0, 0.0), cube_mesh.clone(), green_material.clone())));
 
-	commands.spawn(DirectionalLightBundle {
-		directional_light: DirectionalLight {
-			illuminance: 10000.0,
-			shadows_enabled: true,
+	commands.spawn((
+		Name::new("Sun"),
+		DirectionalLightBundle {
+			directional_light: DirectionalLight {
+				illuminance: 10000.0,
+				shadows_enabled: true,
+				..default()
+			},
+			transform: Transform {
+				rotation: Quat::from_euler(EulerRot::XYZ, -1.9, 0.8, 0.0),
+				..default()
+			},
 			..default()
 		},
-        transform: Transform {
-            rotation: Quat::from_euler(EulerRot::XYZ, -1.9, 0.8, 0.0),
-            ..default()
-        },
-		..default()
-	});
+	));
 
 	commands.spawn((
-		Name::new("Main Camera"),
+		Name::new("Overview Camera"),
 		Camera3dBundle {
-			transform: Transform::from_xyz(-4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
+			transform: Transform::from_xyz(4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
 			..default()
 		},
 		bevy_panorbit_camera::PanOrbitCamera {
