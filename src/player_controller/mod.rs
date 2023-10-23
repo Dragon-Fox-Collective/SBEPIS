@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use bevy_xpbd_3d::prelude::*;
 
-use crate::{gravity::AffectedByGravity, gridbox_material};
+use crate::{gravity::GravityRigidbodyBundle, gridbox_material};
 
 pub struct PlayerControllerPlugin;
 
@@ -36,11 +36,9 @@ fn setup(
 			material: gridbox_material("white", &mut materials, &asset_server),
 			..default()
 		},
-		RigidBody::Dynamic,
+		GravityRigidbodyBundle::default(),
 		Position(position),
 		Collider::capsule(1.0, 0.25),
-		ExternalForce::new(Vec3::ZERO).with_persistence(false),
-		AffectedByGravity,
 	)).id();
 
 	let football = commands.spawn((
@@ -50,11 +48,9 @@ fn setup(
 			material: gridbox_material("grey4", &mut materials, &asset_server),
 			..default()
 		},
-		RigidBody::Dynamic,
+		GravityRigidbodyBundle::default(),
 		Position(position + football_local_position),
 		Collider::ball(0.5),
-		ExternalForce::new(Vec3::ZERO).with_persistence(false),
-		AffectedByGravity,
 	)).id();
 
 	commands.spawn(RevoluteJoint::new(body, football).with_local_anchor_1(football_local_position));
