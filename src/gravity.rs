@@ -55,6 +55,26 @@ impl GravitationalField for GravityPoint
 #[derive(Component)]
 pub struct AffectedByGravity;
 
+#[derive(Bundle)]
+pub struct GravityRigidbodyBundle
+{
+	pub gravity: AffectedByGravity,
+	pub rigidbody: RigidBody,
+	pub external_force: ExternalForce,
+}
+
+impl Default for GravityRigidbodyBundle
+{
+	fn default() -> Self {
+		GravityRigidbodyBundle
+		{
+			gravity: AffectedByGravity,
+			rigidbody: RigidBody::Dynamic,
+			external_force: ExternalForce::new(Vec3::ZERO).with_persistence(false),
+		}
+	}
+}
+
 fn gravity<T>(
 	mut rigidbodies: Query<(&Position, &Mass, &mut ExternalForce), With<AffectedByGravity>>,
 	gravity_fields: Query<(&Position, &Rotation, &GravityPriority, &T)>,
