@@ -1,3 +1,7 @@
+mod football;
+
+use self::football::*;
+
 use bevy::prelude::*;
 use bevy_xpbd_3d::prelude::*;
 
@@ -12,12 +16,18 @@ impl Plugin for PlayerControllerPlugin
 			.add_systems(Startup, (
 				setup,
 			))
+			.add_systems(Update, (
+				compose_axes.pipe(spin_football),
+			))
 			;
 	}
 }
 
 #[derive(Component)]
 pub struct PlayerCamera;
+
+#[derive(Component)]
+pub struct Football;
 
 fn setup(
 	mut commands: Commands,
@@ -43,6 +53,7 @@ fn setup(
 
 	let football = commands.spawn((
 		Name::new("Football"),
+		Football,
 		PbrBundle {
 			mesh: meshes.add(Mesh::try_from(shape::Icosphere { radius: 0.5, subdivisions: 2 }).unwrap()),
 			material: gridbox_material("grey4", &mut materials, &asset_server),
@@ -51,9 +62,11 @@ fn setup(
 		GravityRigidbodyBundle::default(),
 		Position(position + football_local_position),
 		Collider::ball(0.5),
+		AngularVelocity::default(),
+		Friction::new(100.0).with_combine_rule(CoefficientCombine::Multiply),
 	)).id();
 
-	commands.spawn(RevoluteJoint::new(body, football).with_local_anchor_1(football_local_position));
+	commands.spawn((Name::new("Football Joint"), SphericalJoint::new(body, football).with_local_anchor_1(football_local_position)));
 
 	commands.spawn((
 		Name::new("Player Camera"),
