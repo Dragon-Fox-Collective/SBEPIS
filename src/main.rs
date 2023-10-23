@@ -4,6 +4,8 @@ mod player_commands;
 mod player_controller;
 mod util;
 mod skybox;
+#[cfg(feature = "overview_camera")]
+mod overview_camera;
 
 use self::main_bundles::*;
 
@@ -38,9 +40,10 @@ fn main()
 					},
 				}),
 			PhysicsPlugins::default(),
-			bevy_panorbit_camera::PanOrbitCameraPlugin,
 			#[cfg(feature = "inspector")]
 			bevy_inspector_egui::quick::WorldInspectorPlugin::new(),
+			#[cfg(feature = "overview_camera")]
+			self::overview_camera::OverviewCameraPlugin,
 			self::gravity::GravityPlugin,
 			self::player_commands::PlayerCommandsPlugin,
 			self::skybox::SkyboxPlugin,
@@ -85,9 +88,6 @@ fn gridbox_material(color: &str, materials: &mut Assets<StandardMaterial>, asset
 	})
 }
 
-#[derive(Component)]
-pub struct OverviewCamera;
-
 fn setup(
 	mut commands: Commands,
 	mut meshes: ResMut<Assets<Mesh>>,
@@ -105,32 +105,19 @@ fn setup(
 	commands.spawn((Name::new("Cube 2"), BoxBundle::new(Vec3::new(0.5, 5.5, 0.0), cube_mesh.clone(), green_material.clone())));
 	commands.spawn((Name::new("Cube 3"), BoxBundle::new(Vec3::new(-0.5, 7.0, 0.0), cube_mesh.clone(), green_material.clone())));
 
-	commands.spawn(DirectionalLightBundle {
-		directional_light: DirectionalLight {
-			illuminance: 10000.0,
-			shadows_enabled: true,
-			..default()
-		},
-        transform: Transform {
-            rotation: Quat::from_euler(EulerRot::XYZ, -1.9, 0.8, 0.0),
-            ..default()
-        },
-		..default()
-	});
-
 	commands.spawn((
-		Name::new("Main Camera"),
-		Camera3dBundle {
-			transform: Transform::from_xyz(-4.0, 6.5, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
+		Name::new("Sun"),
+		DirectionalLightBundle {
+			directional_light: DirectionalLight {
+				illuminance: 10000.0,
+				shadows_enabled: true,
+				..default()
+			},
+			transform: Transform {
+				rotation: Quat::from_euler(EulerRot::XYZ, -1.9, 0.8, 0.0),
+				..default()
+			},
 			..default()
 		},
-		bevy_panorbit_camera::PanOrbitCamera {
-			button_orbit: MouseButton::Left,
-			button_pan: MouseButton::Left,
-			modifier_pan: Some(KeyCode::ShiftLeft),
-			reversed_zoom: true,
-			..default()
-		},
-		OverviewCamera,
 	));
 }
