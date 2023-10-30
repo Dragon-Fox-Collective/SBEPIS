@@ -1,7 +1,8 @@
 use bevy::prelude::*;
 use bevy_xpbd_3d::prelude::*;
 
-use super::Football;
+#[derive(Component)]
+pub struct Football;
 
 pub fn compose_axes(
 	input: Res<Input<KeyCode>>,

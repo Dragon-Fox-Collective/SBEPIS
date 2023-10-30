@@ -17,6 +17,7 @@ opt-level = 3
 [dependencies]
 bevy = { version = "0.11.2", features = ["wav", "mp3"] }
 bevy-inspector-egui = { version = "0.19.0", optional = true }
+bevy-trait-query = "0.3.0"
 bevy_panorbit_camera = { version = "0.8.0", optional = true }
 bevy_xpbd_3d = "0.2.0"
 image = "0.24.7"
