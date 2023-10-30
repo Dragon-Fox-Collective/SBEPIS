@@ -49,7 +49,6 @@ fn main()
 			self::skybox::SkyboxPlugin,
 			self::player_controller::PlayerControllerPlugin,
 		))
-		.insert_resource(FixedTime::new_from_secs(1.0 / 60.0))
 		.add_systems(Startup, (
 			set_window_icon,
 			setup,

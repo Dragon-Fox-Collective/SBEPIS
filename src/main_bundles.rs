@@ -67,7 +67,6 @@ pub struct BoxBundle
 	rigidbody: RigidBody,
 	position: Position,
 	angular_velocity: AngularVelocity,
-	force: ExternalForce,
 	collider: Collider,
 	gravity: AffectedByGravity,
 }
@@ -90,9 +89,8 @@ impl BoxBundle
 			rigidbody: RigidBody::Dynamic,
 			position: Position(position),
 			angular_velocity: AngularVelocity(Vec3::new(2.5, 3.4, 1.6)),
-			force: ExternalForce::new(Vec3::ZERO).with_persistence(false),
 			collider: Collider::cuboid(1.0, 1.0, 1.0),
-			gravity: AffectedByGravity,
+			gravity: AffectedByGravity::default(),
 		}
 	}
 }

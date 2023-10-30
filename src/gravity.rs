@@ -1,28 +1,33 @@
 use bevy::prelude::*;
-use bevy_xpbd_3d::{prelude::*, PhysicsSchedule, PhysicsStepSet};
+use bevy_trait_query::{One, queryable, RegisterExt};
+use bevy_xpbd_3d::{prelude::*, SubstepSchedule, SubstepSet};
 
 pub struct GravityPlugin;
 
 impl Plugin for GravityPlugin
 {
-	fn build(&self, app: &mut App) {
+	fn build(&self, app: &mut App)
+	{
 		app
 			.insert_resource(Gravity(Vec3::ZERO))
 			.register_type::<GravityPriority>()
 			.register_type::<GravityPoint>()
+			.register_component_as::<dyn GravitationalField, GravityPoint>()
 			;
 		
-		app.get_schedule_mut(PhysicsSchedule)
-			.expect("add PhysicsSchedule first")
+		app.get_schedule_mut(SubstepSchedule)
+			.expect("add SubstepSchedule first")
 			.add_systems((
-				gravity::<GravityPoint>,
-			).chain().before(PhysicsStepSet::Substeps));
+				calculate_gravity,
+				apply_gravity,
+			).chain().in_set(SubstepSet::SolveUserConstraints));
 	}
 }
 
 #[derive(Component, Reflect)]
 pub struct GravityPriority(pub u32);
 
+#[queryable]
 pub trait GravitationalField
 {
 	/// How much this acceleration affects an object, but also how much this priority should override lower priorities.
@@ -52,15 +57,18 @@ impl GravitationalField for GravityPoint
 	}
 }
 
-#[derive(Component)]
-pub struct AffectedByGravity;
+#[derive(Component, Default)]
+pub struct AffectedByGravity
+{
+	pub acceleration: Vec3,
+	pub up: Vec3,
+}
 
 #[derive(Bundle)]
 pub struct GravityRigidbodyBundle
 {
 	pub gravity: AffectedByGravity,
 	pub rigidbody: RigidBody,
-	pub external_force: ExternalForce,
 }
 
 impl Default for GravityRigidbodyBundle
@@ -68,27 +76,37 @@ impl Default for GravityRigidbodyBundle
 	fn default() -> Self {
 		GravityRigidbodyBundle
 		{
-			gravity: AffectedByGravity,
+			gravity: AffectedByGravity::default(),
 			rigidbody: RigidBody::Dynamic,
-			external_force: ExternalForce::new(Vec3::ZERO).with_persistence(false),
 		}
 	}
 }
 
-fn gravity<T>(
-	mut rigidbodies: Query<(&Position, &Mass, &mut ExternalForce), With<AffectedByGravity>>,
-	gravity_fields: Query<(&Position, &Rotation, &GravityPriority, &T)>,
+pub fn calculate_gravity(
+	mut rigidbodies: Query<(&Position, &mut AffectedByGravity)>,
+	gravity_fields: Query<(&Position, &Rotation, &GravityPriority, One<&dyn GravitationalField>)>,
 )
-	where T : Component + GravitationalField
 {
-	for (position, mass, mut force) in &mut rigidbodies {
+	// TODO: don't make this n^2
+	for (position, mut gravity) in &mut rigidbodies {
 		for (field_position, field_rotation, gravity_priority, gravity_field) in &gravity_fields
 		{
 			let local_position = global_position_to_local(position.0, field_position.0, field_rotation.0);
 			let local_acceleration = gravity_field.get_acceleration_at(local_position);
 			let global_acceleration = local_direction_to_global(local_acceleration, field_rotation.0);
-			force.apply_force(mass.0 * global_acceleration);
+			gravity.acceleration = global_acceleration;
+			gravity.up = -global_acceleration.normalize();
 		}
+	}
+}
+
+pub fn apply_gravity(
+	mut rigidbodies: Query<(&mut Position, &AffectedByGravity)>,
+	delta_time: Res<SubDeltaTime>,
+)
+{
+	for (mut position, gravity) in &mut rigidbodies {
+		position.0 += 0.5 * gravity.acceleration * delta_time.0 * delta_time.0;
 	}
 }
 

@@ -1,11 +1,15 @@
 mod football;
+mod orientation;
 
 use self::football::*;
+use self::orientation::*;
 
 use bevy::prelude::*;
-use bevy_xpbd_3d::prelude::*;
+use bevy_xpbd_3d::{prelude::*, SubstepSchedule, SubstepSet};
 
-use crate::{gravity::GravityRigidbodyBundle, gridbox_material};
+use crate::gravity::GravityRigidbodyBundle;
+use crate::gravity::calculate_gravity;
+use crate::gridbox_material;
 
 pub struct PlayerControllerPlugin;
 
@@ -20,14 +24,17 @@ impl Plugin for PlayerControllerPlugin
 				compose_axes.pipe(spin_football),
 			))
 			;
+		
+		app.get_schedule_mut(SubstepSchedule)
+			.expect("add SubstepSchedule first")
+			.add_systems((
+				orient.after(calculate_gravity),
+			).in_set(SubstepSet::SolveUserConstraints));
 	}
 }
 
 #[derive(Component)]
 pub struct PlayerCamera;
-
-#[derive(Component)]
-pub struct Football;
 
 fn setup(
 	mut commands: Commands,
@@ -49,6 +56,7 @@ fn setup(
 		GravityRigidbodyBundle::default(),
 		Position(position),
 		Collider::capsule(1.0, 0.25),
+		GravityOrientation,
 	)).id();
 
 	let football = commands.spawn((
