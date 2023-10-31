@@ -11,6 +11,6 @@ pub fn orient(
 )
 {
 	for (mut rotation, gravity) in &mut rigidbodies {
-		rotation.0 = Quat::from_rotation_arc(Vec3::Y, gravity.up);
+		rotation.0 = Quat::from_rotation_arc(rotation.rotate(Vec3::Y), gravity.up) * rotation.0;
 	}
 }

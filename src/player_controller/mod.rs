@@ -1,8 +1,12 @@
 mod football;
 mod orientation;
+mod camera_controls;
 
 use self::football::*;
 use self::orientation::*;
+use self::camera_controls::*;
+
+pub use self::camera_controls::{PlayerCamera, PlayerBody, MouseSensitivity};
 
 use bevy::prelude::*;
 use bevy_xpbd_3d::{prelude::*, SubstepSchedule, SubstepSet};
@@ -10,6 +14,8 @@ use bevy_xpbd_3d::{prelude::*, SubstepSchedule, SubstepSet};
 use crate::gravity::GravityRigidbodyBundle;
 use crate::gravity::calculate_gravity;
 use crate::gridbox_material;
+use crate::util::compose_mouse_delta_axes;
+use crate::util::compose_wasd_axes;
 
 pub struct PlayerControllerPlugin;
 
@@ -17,11 +23,13 @@ impl Plugin for PlayerControllerPlugin
 {
 	fn build(&self, app: &mut App) {
 		app
+			.insert_resource(MouseSensitivity(0.003))
 			.add_systems(Startup, (
 				setup,
 			))
 			.add_systems(Update, (
-				compose_axes.pipe(spin_football),
+				compose_wasd_axes.pipe(spin_football),
+				compose_mouse_delta_axes.pipe(rotate_camera),
 			))
 			;
 		
@@ -32,9 +40,6 @@ impl Plugin for PlayerControllerPlugin
 			).in_set(SubstepSet::SolveUserConstraints));
 	}
 }
-
-#[derive(Component)]
-pub struct PlayerCamera;
 
 fn setup(
 	mut commands: Commands,
@@ -57,6 +62,8 @@ fn setup(
 		Position(position),
 		Collider::capsule(1.0, 0.25),
 		GravityOrientation,
+		PlayerBody,
+		Rotation(Quat::IDENTITY),
 	)).id();
 
 	let football = commands.spawn((
@@ -85,5 +92,6 @@ fn setup(
 			..default()
 		},
 		PlayerCamera,
+		Pitch(0.0),
 	)).set_parent(body);
 }
