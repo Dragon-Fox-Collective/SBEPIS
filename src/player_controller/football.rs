@@ -1,6 +1,8 @@
 use bevy::prelude::*;
 use bevy_xpbd_3d::prelude::*;
 
+use super::PlayerCamera;
+
 #[derive(Component)]
 pub struct Football;
 
@@ -23,8 +25,10 @@ pub fn axes_to_football_velocity(
 pub fn spin_football(
 	In(input_velocity): In<Vec2>,
 	mut football: Query<&mut AngularVelocity, With<Football>>,
+	player_camera: Query<&GlobalTransform, With<PlayerCamera>>
 )
 {
 	let mut football_velocity = football.single_mut();
-	football_velocity.0 = Vec3::new(-input_velocity.y, 0., -input_velocity.x);
+	let camera_transform = player_camera.single();
+	football_velocity.0 = camera_transform.compute_transform().rotation * Vec3::new(-input_velocity.y, 0., -input_velocity.x);
 }

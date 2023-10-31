@@ -64,7 +64,8 @@ fn setup(
 		Collider::capsule(1.0, 0.25),
 		GravityOrientation,
 		PlayerBody,
-		Rotation(Quat::IDENTITY),
+		Rotation::default(),
+		AngularVelocity::default(),
 	)).id();
 
 	let football = commands.spawn((
