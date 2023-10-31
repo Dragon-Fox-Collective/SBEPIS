@@ -4,20 +4,6 @@ use bevy_xpbd_3d::prelude::*;
 #[derive(Component)]
 pub struct Football;
 
-pub fn compose_axes(
-	input: Res<Input<KeyCode>>,
-) -> Vec2
-{
-	let mut axes = Vec2::ZERO;
-	
-	if input.pressed(KeyCode::A) { axes += Vec2::NEG_X }
-	if input.pressed(KeyCode::D) { axes += Vec2::X }
-	if input.pressed(KeyCode::S) { axes += Vec2::NEG_Y }
-	if input.pressed(KeyCode::W) { axes += Vec2::Y }
-
-	axes.normalize_or_zero()
-}
-
 pub fn spin_football(
 	In(input): In<Vec2>,
 	mut football: Query<&mut AngularVelocity, With<Football>>,
