@@ -24,11 +24,12 @@ impl Plugin for PlayerControllerPlugin
 	fn build(&self, app: &mut App) {
 		app
 			.insert_resource(MouseSensitivity(0.003))
+			.insert_resource(PlayerSpeed { speed: 10.0, sprint_modifier: 2.0 })
 			.add_systems(Startup, (
 				setup,
 			))
 			.add_systems(Update, (
-				compose_wasd_axes.pipe(spin_football),
+				compose_wasd_axes.pipe(axes_to_football_velocity).pipe(spin_football),
 				compose_mouse_delta_axes.pipe(rotate_camera),
 			))
 			;
