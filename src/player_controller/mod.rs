@@ -8,7 +8,9 @@ use self::camera_controls::*;
 
 pub use self::camera_controls::{PlayerCamera, PlayerBody, MouseSensitivity};
 
+use bevy::input::common_conditions::input_pressed;
 use bevy::prelude::*;
+use bevy_xpbd_3d::math::PI;
 use bevy_xpbd_3d::{prelude::*, SubstepSchedule, SubstepSet};
 
 use crate::gravity::GravityRigidbodyBundle;
@@ -30,7 +32,7 @@ impl Plugin for PlayerControllerPlugin
 			))
 			.add_systems(Update, (
 				compose_wasd_axes.pipe(axes_to_football_velocity).pipe(spin_football),
-				compose_mouse_delta_axes.pipe(rotate_camera),
+				compose_mouse_delta_axes.pipe(rotate_camera_and_body),
 			))
 			;
 		
@@ -38,6 +40,7 @@ impl Plugin for PlayerControllerPlugin
 			.expect("add SubstepSchedule first")
 			.add_systems((
 				orient.after(calculate_gravity),
+				input_pressed(KeyCode::Space).pipe(jump),
 			).in_set(SubstepSet::SolveUserConstraints));
 	}
 }
@@ -83,14 +86,23 @@ fn setup(
 		Friction::new(100.0).with_combine_rule(CoefficientCombine::Multiply),
 	)).id();
 
-	commands.spawn((Name::new("Football Joint"), SphericalJoint::new(body, football).with_local_anchor_1(football_local_position)));
+	commands.spawn((
+		Name::new("Football Joint"),
+		SphericalJoint::new(body, football).with_local_anchor_1(football_local_position),
+		FootballJoint {
+			rest_local_position: football_local_position,
+			jump_local_position: Vec3::NEG_Y * 1.5,
+			jump_speed: 10.0,
+		},
+	));
 
 	commands.spawn((
 		Name::new("Player Camera"),
 		Camera3dBundle {
-			camera: Camera {
+			projection: Projection::Perspective(PerspectiveProjection {
+				fov: 70.0 / 180. * PI,
 				..default()
-			},
+			}),
 			..default()
 		},
 		PlayerCamera,

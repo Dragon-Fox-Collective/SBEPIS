@@ -14,7 +14,7 @@ pub struct PlayerBody;
 #[derive(Resource)]
 pub struct MouseSensitivity(pub f32);
 
-pub fn rotate_camera(
+pub fn rotate_camera_and_body(
 	In(delta): In<Vec2>,
 	sensitivity: Res<MouseSensitivity>,
 	mut player_camera: Query<(&mut Transform, &mut Pitch, &Camera), With<PlayerCamera>>,
