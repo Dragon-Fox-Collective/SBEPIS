@@ -6,6 +6,14 @@ use super::PlayerCamera;
 #[derive(Component)]
 pub struct Football;
 
+#[derive(Component)]
+pub struct FootballJoint
+{
+	pub rest_local_position: Vec3,
+	pub jump_local_position: Vec3,
+	pub jump_speed: f32,
+}
+
 #[derive(Resource)]
 pub struct PlayerSpeed
 {
@@ -31,4 +39,15 @@ pub fn spin_football(
 	let mut football_velocity = football.single_mut();
 	let camera_transform = player_camera.single();
 	football_velocity.0 = camera_transform.compute_transform().rotation * Vec3::new(-input_velocity.y, 0., -input_velocity.x);
+}
+
+pub fn jump(
+	In(is_jumping): In<bool>,
+	mut football_joint: Query<(&mut SphericalJoint, &FootballJoint)>,
+	delta_time: Res<SubDeltaTime>,
+)
+{
+	let (mut joint, joint_params) = football_joint.single_mut();
+	let target = if is_jumping { joint_params.jump_local_position } else { joint_params.rest_local_position };
+	joint.local_anchor1 = joint.local_anchor1 + (target - joint.local_anchor1).clamp_length_max(delta_time.0 * joint_params.jump_speed);
 }
