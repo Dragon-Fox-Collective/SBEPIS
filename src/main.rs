@@ -12,7 +12,7 @@ use self::main_bundles::*;
 use std::io::Cursor;
 
 use bevy::prelude::*;
-use bevy::window::PrimaryWindow;
+use bevy::window::{PrimaryWindow, CursorGrabMode};
 use bevy::winit::WinitWindows;
 use bevy_xpbd_3d::prelude::*;
 use winit::window::Icon;
@@ -52,6 +52,7 @@ fn main()
 		.add_systems(Startup, (
 			set_window_icon,
 			setup,
+			hide_mouse,
 		))
 		.run();
 }
@@ -119,4 +120,13 @@ fn setup(
 			..default()
 		},
 	));
+}
+
+fn hide_mouse(
+	mut window: Query<&mut Window, With<PrimaryWindow>>,
+)
+{
+	let mut window = window.single_mut();
+	window.cursor.grab_mode = CursorGrabMode::Locked;
+	window.cursor.visible = false;
 }
