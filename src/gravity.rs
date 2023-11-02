@@ -2,6 +2,8 @@ use bevy::prelude::*;
 use bevy_trait_query::{One, queryable, RegisterExt};
 use bevy_xpbd_3d::{prelude::*, SubstepSchedule, SubstepSet};
 
+use crate::util::TransformEx;
+
 pub struct GravityPlugin;
 
 impl Plugin for GravityPlugin
@@ -84,16 +86,16 @@ impl Default for GravityRigidbodyBundle
 
 pub fn calculate_gravity(
 	mut rigidbodies: Query<(&Position, &mut AffectedByGravity)>,
-	gravity_fields: Query<(&Position, &Rotation, &GravityPriority, One<&dyn GravitationalField>)>,
+	gravity_fields: Query<(&GlobalTransform, &GravityPriority, One<&dyn GravitationalField>)>,
 )
 {
 	// TODO: don't make this n^2
 	for (position, mut gravity) in &mut rigidbodies {
-		for (field_position, field_rotation, gravity_priority, gravity_field) in &gravity_fields
+		for (field_transform, gravity_priority, gravity_field) in &gravity_fields
 		{
-			let local_position = global_position_to_local(position.0, field_position.0, field_rotation.0);
+			let local_position = field_transform.transform_point(position.0);
 			let local_acceleration = gravity_field.get_acceleration_at(local_position);
-			let global_acceleration = local_direction_to_global(local_acceleration, field_rotation.0);
+			let global_acceleration = field_transform.inverse_transform_vector3(local_acceleration);
 			gravity.acceleration = global_acceleration;
 			gravity.up = -global_acceleration.normalize();
 		}
@@ -108,14 +110,4 @@ pub fn apply_gravity(
 	for (mut position, gravity) in &mut rigidbodies {
 		position.0 += 0.5 * gravity.acceleration * delta_time.0 * delta_time.0;
 	}
-}
-
-fn global_position_to_local(position: Vec3, reference_position: Vec3, reference_rotation: Quat) -> Vec3
-{
-	reference_rotation.mul_vec3(position - reference_position)
-}
-
-fn local_direction_to_global(direction: Vec3, reference_rotation: Quat) -> Vec3
-{
-	reference_rotation.inverse().mul_vec3(direction)
 }
