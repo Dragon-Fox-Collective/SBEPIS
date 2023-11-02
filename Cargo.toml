@@ -4,11 +4,12 @@ version = "0.1.0"
 edition = "2021"
 
 [features]
-debug = ["inspector", "overview_camera"]
+debug = ["inspector", "overview_camera", "terminal"]
 default = ["debug"]
 inspector = ["dep:bevy-inspector-egui", "bevy_panorbit_camera?/bevy_egui"]
 overview_camera = ["dep:bevy_panorbit_camera"]
 spawn_debug_notes_on_staff = []
+terminal = []
 
 # Enable max optimizations for dependencies, but not for our code:
 [profile.dev.package."*"]

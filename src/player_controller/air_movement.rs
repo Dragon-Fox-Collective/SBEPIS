@@ -11,7 +11,6 @@ pub fn air_strafe(
 {
 	let (mut position, rotation) = player_body.single_mut();
 	let delta = rotation.0 * Vec3::new(velocity.x, 0., -velocity.y) * 0.5 * delta_time.0 * delta_time.0;
-	println!("{} {} {}", velocity, delta_time.0, delta);
 	position.0 += delta;
 }
 
