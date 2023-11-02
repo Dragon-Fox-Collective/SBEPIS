@@ -104,7 +104,7 @@ fn setup(
 	let gray_material = gridbox_material("grey2", &mut materials, &asset_server);
 	let green_material = gridbox_material("green1", &mut materials, &asset_server);
 
-	commands.spawn((Name::new("Planet"), PlanetBundle::new(Vec3::Y * -100.0, 100.0, 10.0, &mut meshes, gray_material)));
+	commands.spawn((Name::new("Planet"), PlanetBundle::new(Vec3::Y * -1000.0, 1000.0, 10.0, &mut meshes, gray_material)));
 
 	let cube_mesh = meshes.add(Mesh::from(shape::Cube { size: 1.0 }));
 	commands.spawn((Name::new("Cube 1"), BoxBundle::new(Vec3::new(0.0, 4.0, 0.0), cube_mesh.clone(), green_material.clone())));
