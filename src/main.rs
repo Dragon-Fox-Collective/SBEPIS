@@ -11,6 +11,7 @@ use self::main_bundles::*;
 
 use std::io::Cursor;
 
+use bevy::input::common_conditions::input_just_pressed;
 use bevy::prelude::*;
 use bevy::window::{PrimaryWindow, CursorGrabMode};
 use bevy::winit::WinitWindows;
@@ -53,6 +54,9 @@ fn main()
 			set_window_icon,
 			setup,
 			hide_mouse,
+		))
+		.add_systems(Update, (
+			quit.run_if(input_just_pressed(KeyCode::Escape)),
 		))
 		.run();
 }
@@ -129,4 +133,11 @@ fn hide_mouse(
 	let mut window = window.single_mut();
 	window.cursor.grab_mode = CursorGrabMode::Locked;
 	window.cursor.visible = false;
+}
+
+fn quit(
+	mut ev_quit: EventWriter<bevy::app::AppExit>,
+)
+{
+	ev_quit.send(bevy::app::AppExit);
 }

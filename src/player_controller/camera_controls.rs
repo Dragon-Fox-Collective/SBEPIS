@@ -26,7 +26,7 @@ pub fn rotate_camera_and_body(
 		if !camera.is_active { return; }
 
 		camera_pitch.0 += delta.y * sensitivity.0;
-		camera_pitch.0 = camera_pitch.0.clamp(-PI, PI);
+		camera_pitch.0 = camera_pitch.0.clamp(-PI / 2., PI / 2.);
 		camera_transform.rotation = Quat::from_rotation_x(-camera_pitch.0);
 	}
 
