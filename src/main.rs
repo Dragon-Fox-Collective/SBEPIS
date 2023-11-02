@@ -1,3 +1,5 @@
+#![cfg_attr(not(feature = "terminal"), windows_subsystem = "windows")]
+
 mod gravity;
 mod main_bundles;
 mod player_commands;

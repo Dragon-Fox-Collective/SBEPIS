@@ -107,7 +107,6 @@ pub fn apply_gravity(
 {
 	for (mut position, gravity) in &mut rigidbodies {
 		position.0 += 0.5 * gravity.acceleration * delta_time.0 * delta_time.0;
-		println!("{} {}", gravity.acceleration, 0.5 * gravity.acceleration * delta_time.0 * delta_time.0);
 	}
 }
 
