@@ -26,7 +26,7 @@ impl PlanetBundle
 		material: Handle<StandardMaterial>,
 	) -> Self
 	{
-		let mut mesh = Mesh::try_from(shape::Icosphere { radius, subdivisions: 6 }).unwrap();
+		let mut mesh = Mesh::try_from(shape::Icosphere { radius, subdivisions: 70 }).unwrap();
 		let uvs = mesh.attribute_mut(Mesh::ATTRIBUTE_UV_0).unwrap();
 		match uvs {
 			bevy::render::mesh::VertexAttributeValues::Float32x2(values) =>
