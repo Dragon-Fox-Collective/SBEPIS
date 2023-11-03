@@ -1,8 +1,9 @@
 use bevy::prelude::*;
 use bevy_trait_query::{One, queryable, RegisterExt};
 use bevy_xpbd_3d::{prelude::*, SubstepSchedule, SubstepSet};
+use itertools::Itertools;
 
-use crate::util::TransformEx;
+use crate::util::{TransformEx, IterElements};
 
 pub struct GravityPlugin;
 
@@ -89,18 +90,45 @@ pub fn calculate_gravity(
 	gravity_fields: Query<(&GlobalTransform, &GravityPriority, One<&dyn GravitationalField>)>,
 )
 {
-	// TODO: don't make this n^2
+	let field_groups: Vec<Vec<(&GlobalTransform, &GravityPriority, &dyn GravitationalField)>> = gravity_fields
+		.into_iter()
+		.sorted_by_cached_key(|(_, priority, _)| priority.0)
+		.group_by(|(_, priority, _)| priority.0)
+		.into_iter()
+		.map(|(_, group)| group.collect())
+		.collect();
+
 	for (position, mut gravity) in &mut rigidbodies {
-		for (field_transform, gravity_priority, gravity_field) in &gravity_fields
-		{
-			let local_position = field_transform.transform_point(position.0);
-			let local_acceleration = gravity_field.get_acceleration_at(local_position);
-			let global_acceleration = field_transform.inverse_transform_vector3(local_acceleration);
-			gravity.acceleration = global_acceleration;
-			gravity.up = -global_acceleration.normalize();
-		}
+		let acceleration = field_groups.iter().fold(Vec3::ZERO, |lower_priority_acceleration, group: &Vec<(&GlobalTransform, &GravityPriority, &dyn GravitationalField)>| {
+				let local_positions: Vec<Vec3> = group.iter().map(|(transform, _, _)| transform.inverse_transform_point(position.0)).collect();
+				let priority_factors: Vec<f32> = group.iter().zip(&local_positions).map(|((_, _, field), local_position)| field.get_priority_factor_at(*local_position).iter_elements().product()).collect();
+				let accelerations: Vec<Vec3> = group.iter().zip(&local_positions).map(|((transform, _, field), local_position)| transform.transform_vector3(field.get_acceleration_at(*local_position))).collect();
+				let accelerations: Vec<Vec3> = accelerations.into_iter().zip(&priority_factors).map(|(acceleration, priority_factor)| acceleration * *priority_factor).collect();
+				Vec3::lerp(
+					lower_priority_acceleration,
+					accelerations.iter().sum(),
+					priority_factors.iter().sum())
+			});
+		
+		gravity.acceleration = acceleration;
+		gravity.up = -acceleration.normalize();
 	}
 }
+
+// public static Vector3 GetGravityAt(Vector3 point, IEnumerable<MassiveBody> massiveBodies) => massiveBodies
+// 			.Distinct()
+// 			.Where(body => body)
+// 			.GroupBy(body => body.priority)
+// 			.OrderBy(group => group.Key)
+// 			.Aggregate(Vector3.zero, (lowerProrityGravity, group) =>
+// 			{
+// 				List<Vector3> localCentersOfMass = group.Select(body => body.transform.InverseTransformPoint(point)).ToList();
+// 				List<float> priorities = group.Zip(localCentersOfMass, (body, localCenterOfMass) => body.GetPriority(localCenterOfMass).Aggregate(1, (product, x) => product * x)).ToList();
+// 				return Vector3.Lerp(lowerProrityGravity,
+// 					group.Zip(localCentersOfMass, (body, localCenterOfMass) => body.transform.TransformDirection(body.GetGravity(localCenterOfMass)))
+// 						.Zip(priorities, (gravity, priority) => Vector3.LerpUnclamped(Vector3.zero, gravity, priority)).Sum(),
+// 					priorities.Sum());
+// 			});
 
 pub fn apply_gravity(
 	mut rigidbodies: Query<(&mut Position, &AffectedByGravity)>,

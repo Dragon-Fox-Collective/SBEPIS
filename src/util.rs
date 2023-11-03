@@ -1,6 +1,6 @@
 use bevy::{prelude::*, input::mouse::MouseMotion};
 use num_traits::Float;
-use std::ops::{Add, Sub, Mul, Div};
+use std::{ops::{Add, Sub, Mul, Div}, array::IntoIter};
 
 pub trait MapRange<T>
 {
@@ -56,5 +56,16 @@ impl TransformEx for GlobalTransform
 	
 	fn inverse_transform_vector3(&self, vector: Vec3) -> Vec3 {
 		self.affine().inverse().transform_vector3(vector)
+	}
+}
+
+pub trait IterElements<T, const N: usize>
+{
+	fn iter_elements(&self) -> IntoIter<T, N>;
+}
+impl IterElements<f32, 3> for Vec3
+{
+	fn iter_elements(&self) -> IntoIter<f32, 3> {
+		[self.x, self.y, self.z].into_iter()
 	}
 }
