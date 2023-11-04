@@ -8,6 +8,7 @@ mod util;
 mod skybox;
 #[cfg(feature = "overview_camera")]
 mod overview_camera;
+mod input;
 
 use self::main_bundles::*;
 
@@ -51,6 +52,7 @@ fn main()
 			self::player_commands::PlayerCommandsPlugin,
 			self::skybox::SkyboxPlugin,
 			self::player_controller::PlayerControllerPlugin,
+			self::input::InputPlugin,
 		))
 		.add_systems(Startup, (
 			set_window_icon,

@@ -22,7 +22,6 @@ use crate::util::compose_mouse_delta_axes;
 use crate::util::compose_wasd_axes;
 
 pub struct PlayerControllerPlugin;
-
 impl Plugin for PlayerControllerPlugin
 {
 	fn build(&self, app: &mut App) {
