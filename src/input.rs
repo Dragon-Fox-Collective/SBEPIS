@@ -7,26 +7,46 @@ use leafwing_input_manager::prelude::*;
 pub struct InputPlugin;
 impl Plugin for InputPlugin
 {
-	fn build(&self, app: &mut App) {
+	fn build(&self, app: &mut App)
+	{
+		add_action_set(app, [(KeyCode::W, MovementAction::Forward)]);
+		add_button_event(app, MovementAction::Forward, MoveForward::default);
+		
+		add_action_set(app, [(KeyCode::W, NoteAction::D5)]);
+		add_button_event(app, NoteAction::D5, PlayNoteD5::default);
+
 		app
-			.add_plugins(InputManagerPlugin::<MovementAction>::default())
-			.add_plugins(InputManagerPlugin::<NoteAction>::default())
-			.add_event::<MoveForward>()
-			.add_event::<PlayNoteD5>()
-			.add_systems(Startup, (
-				spawn_manager([(KeyCode::W, MovementAction::Forward)]),
-				spawn_manager([(KeyCode::W, NoteAction::D5)]),
-			))
-			.add_systems(PreUpdate, (
-				button_event(MovementAction::Forward, MoveForward::default).after(InputManagerSystem::ManualControl),
-				button_event(NoteAction::D5, PlayNoteD5::default).after(InputManagerSystem::ManualControl),
-			))
 			.add_systems(Update, (
 				event_consumer::<MoveForward>,
 				event_consumer::<PlayNoteD5>,
-			))
-			;
+			));
 	}
+}
+
+pub fn add_action_set<Action>(
+	app: &mut App,
+	bindings: impl IntoIterator<Item = (impl Into<UserInput> + 'static, Action)> + Copy + Send + Sync + 'static,
+)
+where
+	Action: Actionlike + Copy,
+{
+	app
+		.add_plugins(InputManagerPlugin::<Action>::default())
+		.add_systems(Startup, spawn_manager(bindings));
+}
+
+pub fn add_button_event<Action, EventType>(
+	app: &mut App,
+	action: Action,  
+	event_generator: impl Fn() -> EventType + Send + Sync + 'static,
+)
+where
+	Action: Actionlike + Copy,
+	EventType: Event,
+{
+	app
+		.add_event::<EventType>()
+		.add_systems(PreUpdate, button_event(action, event_generator).after(InputManagerSystem::ManualControl));
 }
 
 #[derive(Actionlike, Clone, Copy, Reflect)]
