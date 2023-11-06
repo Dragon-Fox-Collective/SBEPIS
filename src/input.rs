@@ -2,12 +2,14 @@ use core::hash::Hash;
 use core::fmt::Debug;
 
 use bevy::prelude::*;
+use leafwing_input_manager::prelude::*;
 
 pub struct InputPlugin;
 impl Plugin for InputPlugin
 {
 	fn build(&self, app: &mut App) {
 		app
+			.add_plugins(InputManagerPlugin)
 			.add_event::<MoveForward>()
 			.add_event::<PlayNoteD5>()
 			.add_systems(Update, (
@@ -22,6 +24,11 @@ impl Plugin for InputPlugin
 			).chain())
 			;
 	}
+}
+
+#[derive(Actionlike)]
+enum CameraMovement {
+    Pan,
 }
 
 #[derive(Event, Default, Debug)]

@@ -36,8 +36,12 @@ impl Plugin for PlayerCommandsPlugin
 			))
 
 			.add_systems(Update, (
-				toggle_staffs.run_if(input_just_pressed(KeyCode::Grave)),
-				play_notes,
+				// input, an example of a thing that needs to be disabled if something else is enabled
+				send_toggle_staff.run_if(input_just_pressed(KeyCode::Grave)),
+
+				toggle_staff.run_if(on_event::<ToggleStaffEvent>()),
+
+				play_notes, // also input
 				(
 					spawn_note_audio,
 					add_note_to_holder,

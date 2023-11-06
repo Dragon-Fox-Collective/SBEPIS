@@ -130,12 +130,22 @@ pub fn spawn_debug_notes(
 		});
 }
 
-pub fn toggle_staffs(
-	mut staffs: Query<(&mut CommandStaff, &mut Style)>,
+#[derive(Event)]
+pub struct ToggleStaffEvent;
+
+pub fn send_toggle_staff(
+	mut ev_toggle_staff: EventWriter<ToggleStaffEvent>
+)
+{
+	ev_toggle_staff.send(ToggleStaffEvent);
+}
+
+pub fn toggle_staff(
+	mut staff: Query<(&mut CommandStaff, &mut Style)>,
 	mut ev_clear_notes: EventWriter<ClearNotesEvent>,
 )
 {
-	let (mut staff, mut style) = staffs.single_mut();
+	let (mut staff, mut style) = staff.single_mut();
 
 	if staff.is_open { close_staff(&mut staff, &mut style, &mut ev_clear_notes) }
 	else { open_staff(&mut staff, &mut style) }
