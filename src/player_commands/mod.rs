@@ -20,6 +20,7 @@ impl Plugin for PlayerCommandsPlugin
 			.add_event::<NotePlayedEvent>()
 			.add_event::<CommandSentEvent>()
 			.add_event::<ClearNotesEvent>()
+			.add_event::<ToggleStaffEvent>()
 
 			.add_event::<PingCommandEvent>()
 			.add_event::<KillCommandEvent>()
