@@ -15,8 +15,14 @@ impl Plugin for InputPlugin
 		add_action_set(app, [(KeyCode::W, NoteAction::D5)]);
 		add_button_event(app, NoteAction::D5, PlayNoteD5::default);
 
+		add_input_block::<NoteAction, MovementAction>(app);
+
+		add_action_set(app, [(KeyCode::Q, ToggleNoteAction::ToggleNote)]);
+		add_button_event(app, ToggleNoteAction::ToggleNote, ToggleNote::default);
+
 		app
 			.add_systems(Update, (
+				toggle_note.run_if(on_event::<ToggleNote>()),
 				event_consumer::<MoveForward>,
 				event_consumer::<PlayNoteD5>,
 			));
@@ -59,11 +65,19 @@ pub enum NoteAction {
 	D5,
 }
 
+#[derive(Actionlike, Clone, Copy, Reflect)]
+pub enum ToggleNoteAction {
+	ToggleNote,
+}
+
 #[derive(Event, Default, Debug)]
 pub struct MoveForward;
 
 #[derive(Event, Default, Debug)]
 pub struct PlayNoteD5;
+
+#[derive(Event, Default, Debug)]
+pub struct ToggleNote;
 
 pub fn button_event<Action, EventType>(
 	action: Action,
@@ -77,25 +91,23 @@ where
 		input: Query<&ActionState<Action>>,
 		mut event: EventWriter<EventType>,
 	|
-		for input in input.iter() {
-			if input.just_pressed(action) { event.send(event_generator()) }
-		}
+	{
+		let input = input.single();
+		if input.just_pressed(action) { event.send(event_generator()); }
+	}
 }
 
 fn event_consumer<T: Event + Debug>(
 	mut event: EventReader<T>,
-)
-{
+) {
 	for ev in event.into_iter() {
 		println!("{:?}", ev);
 	}
 }
 
-fn spawn_manager<Action>(
+fn spawn_manager<Action: Actionlike>(
 	bindings: impl IntoIterator<Item = (impl Into<UserInput>, Action)> + Copy,
 ) -> impl Fn(Commands)
-where
-	Action: Actionlike
 {
 	move |
 		mut commands: Commands
@@ -106,4 +118,44 @@ where
 			input_map: InputMap::new(bindings),
 		});
 	}
+}
+
+pub fn add_input_block<Blocker: Actionlike, Blockee: Actionlike>(
+	app: &mut App,
+) {
+	app
+		.add_systems(Startup, disable_action::<Blocker>)
+		.add_systems(Update, (
+			reset_block::<Blockee>,
+			input_block::<Blocker, Blockee>.after(reset_block::<Blockee>),
+		));
+}
+
+fn disable_action<Action: Actionlike>(
+	mut action: ResMut<ToggleActions<Action>>,
+) {
+	action.enabled = false;
+}
+
+fn reset_block<Blockee: Actionlike>(
+	mut blockee: ResMut<ToggleActions<Blockee>>,
+) {
+	blockee.enabled = true;
+}
+
+fn input_block<Blocker: Actionlike, Blockee: Actionlike>(
+	blocker: Res<ToggleActions<Blocker>>,
+	mut blockee: ResMut<ToggleActions<Blockee>>,
+) {
+	if blocker.enabled {
+		blockee.enabled = false;
+		return;
+	}
+}
+
+fn toggle_note(
+	mut note_action: ResMut<ToggleActions<NoteAction>>,
+) {
+	note_action.enabled = !note_action.enabled;
+	println!("Toggled NoteAction to {}", note_action.enabled);
 }
