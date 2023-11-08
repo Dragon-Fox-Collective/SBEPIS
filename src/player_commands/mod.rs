@@ -91,9 +91,22 @@ impl Plugin for PlayerCommandsPlugin
 				button_event(ToggleStaffAction::ToggleStaff, ToggleStaffEvent::default)
 			))
 
-			.add_systems(Update, toggle_staff.run_if(on_event::<ToggleStaffEvent>()))
-
 			.add_systems(Update, (
+				(
+					toggle_staff,
+					(
+						show_staff,
+						enable_note_input,
+						disable_movement_input,
+					).run_if(is_staff_open),
+					(
+						hide_staff,
+						disable_note_input,
+						enable_movement_input,
+						send_clear_notes,
+					).run_if(not(is_staff_open)),
+				).chain().run_if(on_event::<ToggleStaffEvent>()),
+
 				(
 					spawn_note_audio,
 					add_note_to_holder,
