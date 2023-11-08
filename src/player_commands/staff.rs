@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use leafwing_input_manager::prelude::ToggleActions;
+use leafwing_input_manager::{prelude::ToggleActions, Actionlike};
 
 use super::{note_holder::NoteNodeHolder, notes::{ClearNotesEvent, PlayNoteAction}};
 
@@ -131,15 +131,13 @@ pub fn spawn_debug_notes(
 		});
 }
 
-#[derive(Event)]
-pub struct ToggleStaffEvent;
-
-pub fn send_toggle_staff(
-	mut ev_toggle_staff: EventWriter<ToggleStaffEvent>
-)
-{
-	ev_toggle_staff.send(ToggleStaffEvent);
+#[derive(Actionlike, Clone, Copy, Reflect)]
+pub enum ToggleStaffAction {
+	ToggleStaff,
 }
+
+#[derive(Event, Default)]
+pub struct ToggleStaffEvent;
 
 pub fn toggle_staff(
 	mut staff: Query<(&mut CommandStaff, &mut Style)>,

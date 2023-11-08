@@ -3,11 +3,11 @@ mod commands;
 mod staff;
 mod note_holder;
 
-use bevy::input::common_conditions::input_just_pressed;
 use bevy::prelude::*;
 use leafwing_input_manager::prelude::*;
 
 use crate::input::action_event;
+use crate::input::button_event;
 use crate::input::spawn_input_manager;
 
 use self::note_holder::*;
@@ -21,6 +21,7 @@ impl Plugin for PlayerCommandsPlugin
 {
 	fn build(&self, app: &mut App) {
 		app
+			.add_plugins(InputManagerPlugin::<ToggleStaffAction>::default())
 			.add_plugins(InputManagerPlugin::<PlayNoteAction>::default())
 			.insert_resource(ToggleActions::<PlayNoteAction>::DISABLED)
 			
@@ -80,18 +81,19 @@ impl Plugin for PlayerCommandsPlugin
 					(KeyCode::Key0, PlayNoteAction::DS6),
 					(KeyCode::P, PlayNoteAction::E6),
 				]),
+				spawn_input_manager([
+					(KeyCode::Grave, ToggleStaffAction::ToggleStaff),
+				])
 			))
 
 			.add_systems(PreUpdate, (
 				action_event(|action: PlayNoteAction| NotePlayedEvent(action.note())),
+				button_event(ToggleStaffAction::ToggleStaff, ToggleStaffEvent::default)
 			))
 
+			.add_systems(Update, toggle_staff.run_if(on_event::<ToggleStaffEvent>()))
+
 			.add_systems(Update, (
-				// input, an example of a thing that needs to be disabled if something else is enabled
-				send_toggle_staff.run_if(input_just_pressed(KeyCode::Grave)),
-
-				toggle_staff.run_if(on_event::<ToggleStaffEvent>()),
-
 				(
 					spawn_note_audio,
 					add_note_to_holder,
