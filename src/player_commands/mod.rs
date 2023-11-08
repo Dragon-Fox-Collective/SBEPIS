@@ -8,7 +8,7 @@ use leafwing_input_manager::prelude::*;
 
 use crate::input::action_event;
 use crate::input::button_event;
-use crate::input::spawn_input_manager;
+use crate::input::spawn_input_manager_with_bindings;
 
 use self::note_holder::*;
 use self::notes::*;
@@ -42,7 +42,7 @@ impl Plugin for PlayerCommandsPlugin
 					apply_deferred,
 					spawn_debug_notes,
 				).chain().after(spawn_staff),
-				spawn_input_manager([
+				spawn_input_manager_with_bindings([
 					(KeyCode::Z, PlayNoteAction::C4),
 					(KeyCode::S, PlayNoteAction::CS4),
 					(KeyCode::X, PlayNoteAction::D4),
@@ -81,7 +81,7 @@ impl Plugin for PlayerCommandsPlugin
 					(KeyCode::Key0, PlayNoteAction::DS6),
 					(KeyCode::P, PlayNoteAction::E6),
 				]),
-				spawn_input_manager([
+				spawn_input_manager_with_bindings([
 					(KeyCode::Grave, ToggleStaffAction::ToggleStaff),
 				])
 			))

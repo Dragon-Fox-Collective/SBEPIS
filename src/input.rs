@@ -2,7 +2,7 @@ use bevy::{prelude::*, ecs::schedule::SystemConfigs};
 use leafwing_input_manager::{prelude::*, plugin::InputManagerSystem};
 
 pub fn spawn_input_manager<Action: Actionlike>(
-	bindings: impl IntoIterator<Item = (impl Into<UserInput>, Action)> + Copy + Send + Sync + 'static,
+	input_map: InputMap<Action>,
 ) -> SystemConfigs
 {
 	(move |
@@ -10,10 +10,33 @@ pub fn spawn_input_manager<Action: Actionlike>(
 	|
 	{
 		commands.spawn(InputManagerBundle::<Action> {
-			action_state: ActionState::default(),
-			input_map: InputMap::new(bindings),
+			input_map: input_map.clone(),
+			..default()
 		});
 	}).into_configs()
+}
+
+pub fn spawn_input_manager_with_bindings<Action: Actionlike>(
+	bindings: impl IntoIterator<Item = (impl Into<UserInput>, Action)>,
+) -> SystemConfigs
+{
+	spawn_input_manager(InputMap::new(bindings))
+}
+
+pub fn action_event<Action: Actionlike + Copy, EventType: Event>(
+	event_generator: impl Fn(Action) -> EventType + Send + Sync + 'static,
+) -> SystemConfigs
+{
+	(move |
+		input: Query<&ActionState<Action>>,
+		mut event: EventWriter<EventType>,
+	|
+	{
+		let input = input.single();
+		for action in input.get_just_pressed() {
+			event.send(event_generator(action));
+		}
+	}).after(InputManagerSystem::ManualControl)
 }
 
 pub fn button_event<Action: Actionlike + Copy, EventType: Event>(
@@ -31,18 +54,41 @@ pub fn button_event<Action: Actionlike + Copy, EventType: Event>(
 	}).after(InputManagerSystem::ManualControl)
 }
 
-pub fn action_event<Action: Actionlike + Copy, EventType: Event>(
-	event_generator: impl Fn(Action) -> EventType + Send + Sync + 'static,
-) -> SystemConfigs
+pub fn button_input<Action: Actionlike + Copy>(
+	action: Action,
+) -> impl Fn(Query<&ActionState<Action>>) -> bool
 {
-	(move |
+	move |
 		input: Query<&ActionState<Action>>,
-		mut event: EventWriter<EventType>,
 	|
 	{
 		let input = input.single();
-		for action in input.get_just_pressed() {
-			event.send(event_generator(action));
-		}
-	}).after(InputManagerSystem::ManualControl)
+		input.pressed(action)
+	}
+}
+
+pub fn dual_axes_input<Action: Actionlike + Copy>(
+	action: Action,
+) -> impl Fn(Query<&ActionState<Action>>) -> Vec2
+{
+	move |
+		input: Query<&ActionState<Action>>,
+	|
+	{
+		let input = input.single();
+		input.axis_pair(action).unwrap_or_default().xy()
+	}
+}
+
+pub fn clamped_dual_axes_input<Action: Actionlike + Copy>(
+	action: Action,
+) -> impl Fn(Query<&ActionState<Action>>) -> Vec2
+{
+	move |
+		input: Query<&ActionState<Action>>,
+	|
+	{
+		let input = input.single();
+		input.clamped_axis_pair(action).unwrap_or_default().xy()
+	}
 }

@@ -10,16 +10,18 @@ use self::air_movement::*;
 
 pub use self::camera_controls::{PlayerCamera, PlayerBody, MouseSensitivity};
 
-use bevy::input::common_conditions::input_pressed;
 use bevy::prelude::*;
 use bevy_xpbd_3d::math::PI;
 use bevy_xpbd_3d::{prelude::*, SubstepSchedule, SubstepSet};
+use leafwing_input_manager::prelude::*;
 
 use crate::gravity::GravityRigidbodyBundle;
 use crate::gravity::apply_gravity;
 use crate::gridbox_material;
-use crate::util::compose_mouse_delta_axes;
-use crate::util::compose_wasd_axes;
+use crate::input::button_input;
+use crate::input::clamped_dual_axes_input;
+use crate::input::dual_axes_input;
+use crate::input::spawn_input_manager;
 
 pub struct PlayerControllerPlugin;
 impl Plugin for PlayerControllerPlugin
@@ -28,11 +30,20 @@ impl Plugin for PlayerControllerPlugin
 		app
 			.insert_resource(MouseSensitivity(0.003))
 			.insert_resource(PlayerSpeed { speed: 5.0, sprint_modifier: 2.0, air_acceleration: 20.0 })
+			
+			.add_plugins(InputManagerPlugin::<MovementAction>::default())
+
 			.add_systems(Startup, (
 				setup,
+				spawn_input_manager(InputMap::default()
+					.insert(VirtualDPad::wasd(), MovementAction::Move)
+					.insert(KeyCode::Space, MovementAction::Jump)
+					.insert(DualAxis::mouse_motion(), MovementAction::Look)
+					.build()
+				),
 			))
 			.add_systems(Update, (
-				compose_mouse_delta_axes.pipe(rotate_camera_and_body),
+				dual_axes_input(MovementAction::Look).pipe(rotate_camera_and_body),
 			))
 			;
 		
@@ -40,9 +51,9 @@ impl Plugin for PlayerControllerPlugin
 			.expect("add SubstepSchedule first")
 			.add_systems((
 				orient.after(apply_gravity),
-				input_pressed(KeyCode::Space).pipe(jump),
-				compose_wasd_axes.pipe(axes_to_ground_velocity).pipe(spin_football).after(orient),
-				compose_wasd_axes.pipe(axes_to_air_acceleration).pipe(air_strafe).run_if(not(is_football_on_ground)).after(spin_football),
+				button_input(MovementAction::Jump).pipe(jump),
+				clamped_dual_axes_input(MovementAction::Move).pipe(axes_to_ground_velocity).pipe(spin_football).after(orient),
+				clamped_dual_axes_input(MovementAction::Move).pipe(axes_to_air_acceleration).pipe(air_strafe).run_if(not(is_football_on_ground)).after(spin_football),
 			).in_set(SubstepSet::SolveUserConstraints));
 	}
 }
@@ -117,4 +128,12 @@ fn setup(
 		PlayerCamera,
 		Pitch(0.0),
 	)).set_parent(body);
+}
+
+#[derive(Actionlike, Clone, Copy, Reflect)]
+pub enum MovementAction
+{
+	Move,
+	Jump,
+	Look,
 }
