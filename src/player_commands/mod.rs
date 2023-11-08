@@ -3,8 +3,12 @@ mod commands;
 mod staff;
 mod note_holder;
 
-use bevy::input::common_conditions::input_just_pressed;
 use bevy::prelude::*;
+use leafwing_input_manager::prelude::*;
+
+use crate::input::action_event;
+use crate::input::button_event;
+use crate::input::spawn_input_manager_with_bindings;
 
 use self::note_holder::*;
 use self::notes::*;
@@ -17,9 +21,14 @@ impl Plugin for PlayerCommandsPlugin
 {
 	fn build(&self, app: &mut App) {
 		app
+			.add_plugins(InputManagerPlugin::<ToggleStaffAction>::default())
+			.add_plugins(InputManagerPlugin::<PlayNoteAction>::default())
+			.insert_resource(ToggleActions::<PlayNoteAction>::DISABLED)
+			
 			.add_event::<NotePlayedEvent>()
 			.add_event::<CommandSentEvent>()
 			.add_event::<ClearNotesEvent>()
+			.add_event::<ToggleStaffEvent>()
 
 			.add_event::<PingCommandEvent>()
 			.add_event::<KillCommandEvent>()
@@ -33,11 +42,71 @@ impl Plugin for PlayerCommandsPlugin
 					apply_deferred,
 					spawn_debug_notes,
 				).chain().after(spawn_staff),
+				spawn_input_manager_with_bindings([
+					(KeyCode::Z, PlayNoteAction::C4),
+					(KeyCode::S, PlayNoteAction::CS4),
+					(KeyCode::X, PlayNoteAction::D4),
+					(KeyCode::D, PlayNoteAction::DS4),
+					(KeyCode::C, PlayNoteAction::E4),
+					(KeyCode::V, PlayNoteAction::F4),
+					(KeyCode::G, PlayNoteAction::FS4),
+					(KeyCode::B, PlayNoteAction::G4),
+					(KeyCode::H, PlayNoteAction::GS4),
+					(KeyCode::N, PlayNoteAction::A4),
+					(KeyCode::J, PlayNoteAction::AS4),
+					(KeyCode::M, PlayNoteAction::B4),
+					
+					(KeyCode::Comma, PlayNoteAction::C5),
+					(KeyCode::L, PlayNoteAction::CS5),
+					(KeyCode::Period, PlayNoteAction::D5),
+					(KeyCode::Semicolon, PlayNoteAction::DS5),
+					(KeyCode::Slash, PlayNoteAction::E5),
+					
+					(KeyCode::Q, PlayNoteAction::C5),
+					(KeyCode::Key2, PlayNoteAction::CS5),
+					(KeyCode::W, PlayNoteAction::D5),
+					(KeyCode::Key3, PlayNoteAction::DS5),
+					(KeyCode::E, PlayNoteAction::E5),
+					(KeyCode::R, PlayNoteAction::F5),
+					(KeyCode::Key5, PlayNoteAction::FS5),
+					(KeyCode::T, PlayNoteAction::G5),
+					(KeyCode::Key6, PlayNoteAction::GS5),
+					(KeyCode::Y, PlayNoteAction::A5),
+					(KeyCode::Key7, PlayNoteAction::AS5),
+					(KeyCode::U, PlayNoteAction::B5),
+					
+					(KeyCode::I, PlayNoteAction::C6),
+					(KeyCode::Key9, PlayNoteAction::CS6),
+					(KeyCode::O, PlayNoteAction::D6),
+					(KeyCode::Key0, PlayNoteAction::DS6),
+					(KeyCode::P, PlayNoteAction::E6),
+				]),
+				spawn_input_manager_with_bindings([
+					(KeyCode::Grave, ToggleStaffAction::ToggleStaff),
+				])
+			))
+
+			.add_systems(PreUpdate, (
+				action_event(|action: PlayNoteAction| NotePlayedEvent(action.note())),
+				button_event(ToggleStaffAction::ToggleStaff, ToggleStaffEvent::default)
 			))
 
 			.add_systems(Update, (
-				toggle_staffs.run_if(input_just_pressed(KeyCode::Grave)),
-				play_notes,
+				(
+					toggle_staff,
+					(
+						show_staff,
+						enable_note_input,
+						disable_movement_input,
+					).run_if(is_staff_open),
+					(
+						hide_staff,
+						disable_note_input,
+						enable_movement_input,
+						send_clear_notes,
+					).run_if(not(is_staff_open)),
+				).chain().run_if(on_event::<ToggleStaffEvent>()),
+
 				(
 					spawn_note_audio,
 					add_note_to_holder,

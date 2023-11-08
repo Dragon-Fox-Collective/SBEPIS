@@ -8,6 +8,7 @@ mod util;
 mod skybox;
 #[cfg(feature = "overview_camera")]
 mod overview_camera;
+mod input;
 
 use self::main_bundles::*;
 

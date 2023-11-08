@@ -1,6 +1,9 @@
 use bevy::prelude::*;
+use leafwing_input_manager::{prelude::ToggleActions, Actionlike};
 
-use super::{note_holder::NoteNodeHolder, notes::ClearNotesEvent};
+use crate::player_controller::MovementAction;
+
+use super::{note_holder::NoteNodeHolder, notes::{ClearNotesEvent, PlayNoteAction}};
 
 #[derive(Component, Default)]
 pub struct CommandStaff
@@ -130,33 +133,74 @@ pub fn spawn_debug_notes(
 		});
 }
 
-pub fn toggle_staffs(
-	mut staffs: Query<(&mut CommandStaff, &mut Style)>,
+#[derive(Actionlike, Clone, Copy, Reflect)]
+pub enum ToggleStaffAction {
+	ToggleStaff,
+}
+
+#[derive(Event, Default)]
+pub struct ToggleStaffEvent;
+
+pub fn toggle_staff(
+	mut staff: Query<&mut CommandStaff>,
+)
+{
+	let mut staff = staff.single_mut();
+	staff.is_open = !staff.is_open;
+}
+
+pub fn is_staff_open(
+	staff: Query<&CommandStaff>,
+) -> bool
+{
+	staff.single().is_open
+}
+
+pub fn show_staff(
+	mut staff_style: Query<&mut Style, With<CommandStaff>>,
+)
+{
+	staff_style.single_mut().display = Display::Flex;
+}
+
+pub fn hide_staff(
+	mut staff_style: Query<&mut Style, With<CommandStaff>>,
+)
+{
+	staff_style.single_mut().display = Display::None;
+}
+
+pub fn disable_note_input(
+	mut note_input: ResMut<ToggleActions<PlayNoteAction>>,
+)
+{
+	note_input.enabled = false;
+}
+
+pub fn enable_note_input(
+	mut note_input: ResMut<ToggleActions<PlayNoteAction>>,
+)
+{
+	note_input.enabled = true;
+}
+
+pub fn disable_movement_input(
+	mut movement_input: ResMut<ToggleActions<MovementAction>>,
+)
+{
+	movement_input.enabled = false;
+}
+
+pub fn enable_movement_input(
+	mut movement_input: ResMut<ToggleActions<MovementAction>>,
+)
+{
+	movement_input.enabled = true;
+}
+
+pub fn send_clear_notes(
 	mut ev_clear_notes: EventWriter<ClearNotesEvent>,
 )
 {
-	let (mut staff, mut style) = staffs.single_mut();
-
-	if staff.is_open { close_staff(&mut staff, &mut style, &mut ev_clear_notes) }
-	else { open_staff(&mut staff, &mut style) }
-}
-
-fn open_staff(
-	staff: &mut CommandStaff,
-	style: &mut Style,
-)
-{
-	staff.is_open = true;
-	style.display = Display::Flex;
-}
-
-fn close_staff(
-	staff: &mut CommandStaff,
-	style: &mut Style,
-	ev_clear_notes: &mut EventWriter<ClearNotesEvent>,
-)
-{
-	staff.is_open = false;
-	style.display = Display::None;
 	ev_clear_notes.send(ClearNotesEvent);
 }
