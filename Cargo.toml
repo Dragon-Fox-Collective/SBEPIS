@@ -16,16 +16,16 @@ terminal = []
 opt-level = 3
 
 [dependencies]
-bevy = { version = "0.11.2", features = ["wav", "mp3"] }
-bevy-inspector-egui = { version = "0.19.0", optional = true }
-bevy-trait-query = "0.3.0"
-bevy_panorbit_camera = { version = "0.8.0", optional = true }
-bevy_xpbd_3d = "0.2.0"
+bevy = { version = "0.12.0", features = ["wav", "mp3"] }
+bevy-inspector-egui = { version = "0.21.0", optional = true }
+bevy-trait-query = "0.4.0"
+bevy_panorbit_camera = { version = "0.9.0", optional = true }
+bevy_xpbd_3d = "0.3.1"
 image = "0.24.7"
 itertools = "0.11.0"
-leafwing-input-manager = "0.10.0"
+leafwing-input-manager = "0.11.1"
 num-traits = "0.2.17"
-winit = "0.28.6"
+winit = "0.29.3"
 
 [build-dependencies]
 winres = "0.1"
