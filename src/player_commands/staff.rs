@@ -1,6 +1,7 @@
 use bevy::prelude::*;
+use leafwing_input_manager::prelude::ToggleActions;
 
-use super::{note_holder::NoteNodeHolder, notes::ClearNotesEvent};
+use super::{note_holder::NoteNodeHolder, notes::{ClearNotesEvent, PlayNoteAction}};
 
 #[derive(Component, Default)]
 pub struct CommandStaff
@@ -142,31 +143,36 @@ pub fn send_toggle_staff(
 
 pub fn toggle_staff(
 	mut staff: Query<(&mut CommandStaff, &mut Style)>,
+	mut note_input: ResMut<ToggleActions<PlayNoteAction>>,
 	mut ev_clear_notes: EventWriter<ClearNotesEvent>,
 )
 {
 	let (mut staff, mut style) = staff.single_mut();
 
-	if staff.is_open { close_staff(&mut staff, &mut style, &mut ev_clear_notes) }
-	else { open_staff(&mut staff, &mut style) }
+	if staff.is_open { close_staff(&mut staff, &mut style, &mut note_input, &mut ev_clear_notes) }
+	else { open_staff(&mut staff, &mut style, &mut note_input) }
 }
 
 fn open_staff(
 	staff: &mut CommandStaff,
 	style: &mut Style,
+	note_input: &mut ToggleActions<PlayNoteAction>,
 )
 {
 	staff.is_open = true;
 	style.display = Display::Flex;
+	note_input.enabled = true;
 }
 
 fn close_staff(
 	staff: &mut CommandStaff,
 	style: &mut Style,
+	note_input: &mut ToggleActions<PlayNoteAction>,
 	ev_clear_notes: &mut EventWriter<ClearNotesEvent>,
 )
 {
 	staff.is_open = false;
 	style.display = Display::None;
+	note_input.enabled = false;
 	ev_clear_notes.send(ClearNotesEvent);
 }
