@@ -36,12 +36,12 @@ fn main()
 					..default()
 				})
 				.set(ImagePlugin {
-					default_sampler: bevy::render::render_resource::SamplerDescriptor {
-						address_mode_u: bevy::render::render_resource::AddressMode::Repeat,
-						address_mode_v: bevy::render::render_resource::AddressMode::Repeat,
-						address_mode_w: bevy::render::render_resource::AddressMode::Repeat,
+					default_sampler: bevy::render::texture::ImageSamplerDescriptor {
+						address_mode_u: bevy::render::texture::ImageAddressMode::Repeat,
+						address_mode_v: bevy::render::texture::ImageAddressMode::Repeat,
+						address_mode_w: bevy::render::texture::ImageAddressMode::Repeat,
 						..default()
-					},
+					}.into(),
 				}),
 			PhysicsPlugins::default(),
 			#[cfg(feature = "inspector")]

@@ -38,22 +38,22 @@ pub fn spin_football(
 	In(input_velocity): In<Vec2>,
 	mut football: Query<(&mut Rotation, &PreviousRotation, &Football), Without<PlayerBody>>,
 	player_body: Query<&Rotation, With<PlayerBody>>,
-	delta_time: Res<SubDeltaTime>,
+	time: Res<Time>,
 )
 {
 	let (mut rotation, prev_rotation, football) = football.single_mut();
 	let body_rotation = player_body.single();
-	let delta = body_rotation.0 * Vec3::new(-input_velocity.y, 0., -input_velocity.x) / football.radius * delta_time.0;
+	let delta = body_rotation.0 * Vec3::new(-input_velocity.y, 0., -input_velocity.x) / football.radius * time.delta_seconds();
 	rotation.0 = Quat::from_scaled_axis(delta) * prev_rotation.0.0;
 }
 
 pub fn jump(
 	In(is_jumping): In<bool>,
 	mut football_joint: Query<(&mut SphericalJoint, &FootballJoint)>,
-	delta_time: Res<SubDeltaTime>,
+	time: Res<Time>,
 )
 {
 	let (mut joint, joint_params) = football_joint.single_mut();
 	let target = if is_jumping { joint_params.jump_local_position } else { joint_params.rest_local_position };
-	joint.local_anchor1 = joint.local_anchor1 + (target - joint.local_anchor1).clamp_length_max(delta_time.0 * joint_params.jump_speed);
+	joint.local_anchor1 = joint.local_anchor1 + (target - joint.local_anchor1).clamp_length_max(time.delta_seconds() * joint_params.jump_speed);
 }

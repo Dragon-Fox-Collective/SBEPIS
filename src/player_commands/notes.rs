@@ -288,7 +288,7 @@ pub fn spawn_note_audio(
 	asset_server: Res<AssetServer>,
 )
 {
-	for ev in &mut ev_note_played
+	for ev in ev_note_played.read()
 	{
 		let note = ev.0;
 

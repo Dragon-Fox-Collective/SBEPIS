@@ -10,7 +10,7 @@ pub fn orient(
 	mut rigidbodies: Query<(&mut Rotation, &AffectedByGravity), With<GravityOrientation>>,
 )
 {
-	for (mut rotation, gravity) in &mut rigidbodies {
+	for (mut rotation, gravity) in rigidbodies.iter_mut() {
 		rotation.0 = Quat::from_rotation_arc(rotation.rotate(Vec3::Y), gravity.up) * rotation.0;
 	}
 }

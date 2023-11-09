@@ -40,7 +40,7 @@ impl PlanetBundle
 			_ => panic!()
 		}
 
-		let collider = Collider::trimesh_from_bevy_mesh(&mesh).expect("couldn't make a planet collider");
+		let collider = Collider::trimesh_from_mesh(&mesh).expect("couldn't make a planet collider");
 		PlanetBundle
 		{
 			pbr: PbrBundle

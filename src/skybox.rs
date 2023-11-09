@@ -1,3 +1,5 @@
+use std::array::IntoIter;
+
 use bevy::asset::LoadState;
 use bevy::core_pipeline::Skybox;
 use bevy::prelude::*;
@@ -13,57 +15,67 @@ impl Plugin for SkyboxPlugin
 	fn build(&self, app: &mut App) {
 		app
 			.insert_resource(CurrentSkybox::default())
+			.add_systems(Startup, (
+				start_loading_skybox,
+			))
 			.add_systems(Update, (
-				load_skybox.run_if(is_skybox_not_loaded),
+				stitch_skybox.run_if(not(is_skybox_loaded).and_then(is_skybox_parts_loaded)),
 				add_skybox.run_if(is_skybox_loaded),
 			));
 	}
 }
 
 #[derive(Resource, Default)]
-struct CurrentSkybox(Option<Handle<Image>>);
-
-fn is_skybox_loaded(current_skybox: Res<CurrentSkybox>) -> bool { current_skybox.0.is_some() }
-fn is_skybox_not_loaded(current_skybox: Res<CurrentSkybox>) -> bool { current_skybox.0.is_none() }
-
-fn add_skybox(
-	mut commands: Commands,
-	camera: Query<Entity, (With<Camera3d>, Without<Skybox>)>,
-	current_skybox: Res<CurrentSkybox>,
-)
+struct CurrentSkybox
 {
-	for camera in &camera {
-		commands.entity(camera).insert(Skybox(current_skybox.0.clone().unwrap()));
+	skybox: Option<Handle<Image>>,
+	left: Option<Handle<Image>>,
+	right: Option<Handle<Image>>,
+	top: Option<Handle<Image>>,
+	bottom: Option<Handle<Image>>,
+	back: Option<Handle<Image>>,
+	front: Option<Handle<Image>>,
+}
+impl CurrentSkybox
+{
+	pub fn parts(&self) -> IntoIter<Option<Handle<Image>>, 6> {
+		[self.left.clone(), self.right.clone(), self.top.clone(), self.bottom.clone(), self.back.clone(), self.front.clone()].into_iter()
 	}
 }
 
-fn load_skybox(
-	mut images: ResMut<Assets<Image>>,
+fn is_skybox_loaded(current_skybox: Res<CurrentSkybox>) -> bool { current_skybox.skybox.is_some() }
+fn is_skybox_parts_loaded(
+	current_skybox: Res<CurrentSkybox>,
+	asset_server: Res<AssetServer>,
+) -> bool
+{
+	current_skybox.parts().all(|image| image.is_some_and(|image| match asset_server.get_load_state(image).unwrap() {
+		LoadState::NotLoaded => false,
+		LoadState::Loading => false,
+		LoadState::Loaded => true,
+		LoadState::Failed => panic!("Skybox loading failed"),
+	}))
+}
+
+fn start_loading_skybox(
 	asset_server: Res<AssetServer>,
 	mut current_skybox: ResMut<CurrentSkybox>,
 )
 {
-	let side_handles: Vec<Handle<Image>> = ["left", "right", "top", "bottom", "back", "front"].into_iter()
-		.map(|side_name| format!("skybox/{side_name}.png"))
-		.map(|texture_name| asset_server.load(texture_name))
-		.collect();
+	current_skybox.left = Some(asset_server.load("skybox/left.png"));
+	current_skybox.right = Some(asset_server.load("skybox/right.png"));
+	current_skybox.top = Some(asset_server.load("skybox/top.png"));
+	current_skybox.bottom = Some(asset_server.load("skybox/bottom.png"));
+	current_skybox.back = Some(asset_server.load("skybox/back.png"));
+	current_skybox.front = Some(asset_server.load("skybox/front.png"));
+}
 
-	let sides_states: Vec<LoadState> = side_handles.iter().map(|side| asset_server.get_load_state(side)).collect();
-
-	if sides_states.iter().copied().any(|state| match state {
-		LoadState::NotLoaded => false,
-		LoadState::Loading => false,
-		LoadState::Loaded => false,
-		LoadState::Failed => true,
-		LoadState::Unloaded => true,
-	}) {
-		panic!("Erroneous skybox load states {:?}", sides_states);
-	}
-	if sides_states.iter().copied().any(|state| state != LoadState::Loaded) {
-		return;
-	}
-
-	let sides: Vec<&Image> = side_handles.iter().map(|side| images.get(side).unwrap()).collect();
+fn stitch_skybox(
+	mut images: ResMut<Assets<Image>>,
+	mut current_skybox: ResMut<CurrentSkybox>,
+)
+{
+	let sides: Vec<&Image> = current_skybox.parts().map(|side| images.get(side.unwrap()).unwrap()).collect();
 	let first_side_image = *sides.first().unwrap();
 
 	let mut skybox = Image::new(
@@ -84,5 +96,16 @@ fn load_skybox(
 		..default()
 	});
 
-	current_skybox.0 = Some(images.add(skybox));
+	current_skybox.skybox = Some(images.add(skybox));
+}
+
+fn add_skybox(
+	mut commands: Commands,
+	camera: Query<Entity, (With<Camera3d>, Without<Skybox>)>,
+	current_skybox: Res<CurrentSkybox>,
+)
+{
+	for camera in camera.iter() {
+		commands.entity(camera).insert(Skybox(current_skybox.skybox.clone().unwrap()));
+	}
 }

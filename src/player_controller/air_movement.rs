@@ -6,11 +6,11 @@ use super::{PlayerBody, football::PlayerSpeed};
 pub fn air_strafe(
 	In(velocity): In<Vec2>,
 	mut player_body: Query<(&mut Position, &Rotation), With<PlayerBody>>,
-	delta_time: Res<SubDeltaTime>,
+	time: Res<Time>,
 )
 {
 	let (mut position, rotation) = player_body.single_mut();
-	let delta = rotation.0 * Vec3::new(velocity.x, 0., -velocity.y) * 0.5 * delta_time.0 * delta_time.0;
+	let delta = rotation.0 * Vec3::new(velocity.x, 0., -velocity.y) * 0.5 * time.delta_seconds() * time.delta_seconds();
 	position.0 += delta;
 }
 

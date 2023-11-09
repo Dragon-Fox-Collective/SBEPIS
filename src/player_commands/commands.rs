@@ -39,7 +39,7 @@ pub fn add_note_to_player(
 	mut ev_note_played: EventReader<NotePlayedEvent>,
 )
 {
-	for ev in &mut ev_note_played
+	for ev in ev_note_played.read()
 	{
 		player.current_pattern.push(ev.0);
 	}
@@ -151,7 +151,7 @@ pub fn kill(
 	mut ev_quit: EventWriter<bevy::app::AppExit>,
 )
 {
-	for ev in &mut ev_kill {
+	for ev in ev_kill.read() {
 		println!("Tried to kill {}", ev.0);
 		if ev.0 {
 			ev_quit.send(bevy::app::AppExit);
