@@ -166,6 +166,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Open Command Staff",
+                    "type": "Button",
+                    "id": "eb2ba894-267a-40a7-a129-cfcf4993443b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -661,6 +670,45 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Toggle Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c2df0c1b-79a9-45ef-be42-f2b75fa3306f",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Open Command Staff",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Command Staff",
+            "id": "638d274b-f0d8-497b-a685-815cd647a231",
+            "actions": [
+                {
+                    "name": "Close Command Staff",
+                    "type": "Button",
+                    "id": "1e06b943-7e7c-4a09-9798-d88d2245d49b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f25c94c5-3134-4b9d-a497-a995c508adf9",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Close Command Staff",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
