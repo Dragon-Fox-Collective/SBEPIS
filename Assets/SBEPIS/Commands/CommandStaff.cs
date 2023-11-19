@@ -1,12 +1,13 @@
+using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Commands
 {
-	public class CommandStaff : MonoBehaviour
+	public class CommandStaff : ValidatedMonoBehaviour
 	{
-		[SerializeField]
+		[SerializeField, Anywhere]
 		private PlayerInput input;
 		
 		public void OnOpenStaff(CallbackContext context)
