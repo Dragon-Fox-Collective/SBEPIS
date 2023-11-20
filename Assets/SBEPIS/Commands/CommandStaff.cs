@@ -1,7 +1,6 @@
 using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Commands
 {
@@ -10,20 +9,14 @@ namespace SBEPIS.Commands
 		[SerializeField, Anywhere]
 		private PlayerInput input;
 		
-		public void OnOpenStaff(CallbackContext context)
+		public void OpenStaff()
 		{
-			if (!context.performed)
-				return;
-
 			gameObject.SetActive(true);
 			input.SwitchCurrentActionMap("Command Staff");
 		}
 		
-		public void OnCloseStaff(CallbackContext context)
+		public void CloseStaff()
 		{
-			if (!context.performed)
-				return;
-
 			gameObject.SetActive(false);
 			input.SwitchCurrentActionMap("Gameplay");
 		}

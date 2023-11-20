@@ -1,5 +1,4 @@
 using UnityEngine;
-using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Controller.Flatscreen
 {
@@ -21,7 +20,7 @@ namespace SBEPIS.Controller.Flatscreen
 		public Orientation playerOrientation;
 		
 		private float zoomAmount;
-		private bool useLeftHand;
+		public bool UseLeftHand { private get; set; }
 		
 		private void Awake()
 		{
@@ -30,10 +29,10 @@ namespace SBEPIS.Controller.Flatscreen
 		
 		private void FixedUpdate()
 		{
-			UpdateHand(rightTracker, rightGrabber, rightHoldPosition, useLeftHand ? bothHandsOffset : 0);
+			UpdateHand(rightTracker, rightGrabber, rightHoldPosition, UseLeftHand ? bothHandsOffset : 0);
 			
-			if (useLeftHand)
-				UpdateHand(leftTracker, leftGrabber, leftHoldPosition, useLeftHand ? -bothHandsOffset : 0);
+			if (UseLeftHand)
+				UpdateHand(leftTracker, leftGrabber, leftHoldPosition, UseLeftHand ? -bothHandsOffset : 0);
 			else
 			{
 				leftTracker.transform.SetPositionAndRotation(leftHoldPosition.position, leftHoldPosition.rotation);
@@ -86,14 +85,9 @@ namespace SBEPIS.Controller.Flatscreen
 				tracker.SetPositionAndRotation(emptyHoldPosition.position, emptyHoldPosition.rotation);
 		}
 		
-		public void OnZoom(CallbackContext context)
+		public void Zoom(float amount)
 		{
-			zoomAmount = Mathf.Clamp(zoomAmount + context.ReadValue<float>() * zoomSensitivity, minimumZoomDistance, raycastDistance);
-		}
-		
-		public void OnUseLeftHand(CallbackContext context)
-		{
-			useLeftHand = context.performed;
+			zoomAmount = Mathf.Clamp(zoomAmount + amount * zoomSensitivity, minimumZoomDistance, raycastDistance);
 		}
 		
 		private static bool CastHand(out RaycastHit hit, Vector3 casterPosition, Vector3 casterForward, float raycastDistance, Grabber grabber)

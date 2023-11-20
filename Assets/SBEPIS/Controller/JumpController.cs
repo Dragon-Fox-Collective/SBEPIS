@@ -1,5 +1,4 @@
 using UnityEngine;
-using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Controller
 {
@@ -24,7 +23,7 @@ namespace SBEPIS.Controller
 				MoveFoot();
 		}
 
-		private void Jump()
+		public void Jump()
 		{
 			isJumping = true;
 		}
@@ -38,14 +37,6 @@ namespace SBEPIS.Controller
 			}
 			else
 				footballJoint.connectedAnchor = Vector3.MoveTowards(footballJoint.connectedAnchor, connectedAnchorTarget, jumpSpeed * Time.fixedDeltaTime);
-		}
-
-		public void OnJump(CallbackContext context)
-		{
-			if (!context.performed)
-				return;
-
-			Jump();
 		}
 	}
 }

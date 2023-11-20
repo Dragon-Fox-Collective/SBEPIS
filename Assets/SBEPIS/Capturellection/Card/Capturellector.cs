@@ -1,10 +1,8 @@
-using System;
 using Cysharp.Threading.Tasks;
 using KBCore.Refs;
 using SBEPIS.Capturellection.Storage;
 using SBEPIS.Controller;
 using UnityEngine;
-using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Capturellection
 {
@@ -20,9 +18,9 @@ namespace SBEPIS.Capturellection
 			set => inventory = value;
 		}
 		
-		public void OnCapture(CallbackContext context)
+		public void Capture()
 		{
-			if (!isActiveAndEnabled || !context.performed || !grabber.HeldGrabbable)
+			if (!isActiveAndEnabled || !grabber.HeldGrabbable)
 				return;
 			
 			if (grabber.HeldGrabbable.TryGetComponent(out InventoryStorable card))

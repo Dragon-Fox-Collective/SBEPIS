@@ -1,6 +1,5 @@
 using KBCore.Refs;
 using UnityEngine;
-using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Controller
 {
@@ -21,8 +20,8 @@ namespace SBEPIS.Controller
 		public float sprintFactor = 2;
 		public float sprintControlThreshold = 0.9f;
 		
-		private Vector3 controlsTarget;
-		private bool isTryingToSprint;
+		public Vector2 ControlsTarget { private get; set; }
+		public bool IsTryingToSprint { private get; set; }
 		private bool isSprinting;
 
 		private void FixedUpdate()
@@ -38,15 +37,15 @@ namespace SBEPIS.Controller
 
 		private void UpdateSprinting()
 		{
-			if (isSprinting && controlsTarget.magnitude < sprintControlThreshold)
+			if (isSprinting && ControlsTarget.magnitude < sprintControlThreshold)
 				isSprinting = false;
-			else if (!isSprinting && isTryingToSprint && controlsTarget.magnitude > sprintControlThreshold)
+			else if (!isSprinting && IsTryingToSprint && ControlsTarget.magnitude > sprintControlThreshold)
 				isSprinting = true;
 		}
 
 		private void Accelerate(Vector3 currentVelocity, Vector3 upDirection)
 		{
-			Vector3 accelerationControl = moveAimer.right * controlsTarget.x + Vector3.Cross(moveAimer.right, upDirection) * controlsTarget.z;
+			Vector3 accelerationControl = moveAimer.right * ControlsTarget.x + Vector3.Cross(moveAimer.right, upDirection) * ControlsTarget.y;
 			AccelerateGround(upDirection, accelerationControl);
 			if (accelerationControl != Vector3.zero && !orientation.IsGrounded)
 				AccelerateAir(currentVelocity, accelerationControl);
@@ -78,17 +77,6 @@ namespace SBEPIS.Controller
 			
 			Vector3 newVelocity = currentVelocity + Time.fixedDeltaTime * airAcceleration * accelerationControl;
 			rigidbody.velocity += newVelocity - currentVelocity;
-		}
-
-		public void OnMove(CallbackContext context)
-		{
-			Vector2 controls = context.ReadValue<Vector2>();
-			controlsTarget = new Vector3(controls.x, 0, controls.y);
-		}
-
-		public void OnSprint(CallbackContext context)
-		{
-			isTryingToSprint = context.performed;
 		}
 	}
 }

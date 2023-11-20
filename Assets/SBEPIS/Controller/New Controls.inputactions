@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "LookPitch",
+                    "name": "Look Pitch",
                     "type": "Value",
                     "id": "17295940-bbe1-4a09-b063-4ccc6062d4f9",
                     "expectedControlType": "Axis",
@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "LookYaw",
+                    "name": "Look Yaw",
                     "type": "Value",
                     "id": "d548a5aa-43dd-4995-b334-204ec967e505",
                     "expectedControlType": "Axis",
@@ -43,48 +43,48 @@
                 },
                 {
                     "name": "Pick Up Right",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "827923db-6895-4ebb-8f4c-c57bcefb03ac",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Pick Up Left",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "616e89b3-abff-4b35-a1fb-c5e1ab7d17b2",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Use Right",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "ae303b36-c0e5-4580-b5c4-767c58be050f",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Use Left",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "6e0a4047-d826-49b9-aa39-1369fdd8b1cf",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Activate Left Hand",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "68e27118-dcb5-48fe-ad39-37390cc655b4",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Capturllect Right",
@@ -132,6 +132,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Open Command Staff",
+                    "type": "Button",
+                    "id": "eb2ba894-267a-40a7-a129-cfcf4993443b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Right Hand Pose",
                     "type": "Value",
                     "id": "d5026919-cb71-422d-b054-65dc856f770c",
@@ -166,15 +175,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Open Command Staff",
-                    "type": "Button",
-                    "id": "eb2ba894-267a-40a7-a129-cfcf4993443b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -295,7 +295,7 @@
                     "interactions": "",
                     "processors": "Scale(factor=0.5)",
                     "groups": "Keyboard",
-                    "action": "LookPitch",
+                    "action": "Look Pitch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -306,7 +306,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "LookPitch",
+                    "action": "Look Pitch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -372,7 +372,7 @@
                     "interactions": "",
                     "processors": "Scale(factor=0.5)",
                     "groups": "Keyboard",
-                    "action": "LookYaw",
+                    "action": "Look Yaw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -383,7 +383,7 @@
                     "interactions": "",
                     "processors": "Scale(factor=3)",
                     "groups": "OpenXR",
-                    "action": "LookYaw",
+                    "action": "Look Yaw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -394,7 +394,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "LookYaw",
+                    "action": "Look Yaw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

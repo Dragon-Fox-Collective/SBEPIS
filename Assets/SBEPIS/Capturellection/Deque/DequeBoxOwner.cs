@@ -2,7 +2,6 @@ using KBCore.Refs;
 using SBEPIS.Controller;
 using SBEPIS.Utils;
 using UnityEngine;
-using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Capturellection
 {
@@ -51,9 +50,9 @@ namespace SBEPIS.Capturellection
 				dequeBox.StartBindToPlayer(playerReference);
 		}
 		
-		public void OnToggleDeque(CallbackContext context)
+		public void ToggleDeque()
 		{
-			if (!isActiveAndEnabled || !context.performed)
+			if (!isActiveAndEnabled)
 				return;
 			if (!dequeBox)
 				return;

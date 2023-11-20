@@ -1850,6 +1850,7 @@ GameObject:
   - component: {fileID: 5159398627618986266}
   - component: {fileID: 6098800601631693807}
   - component: {fileID: 4432624992987933845}
+  - component: {fileID: 96399996463305117}
   m_Layer: 0
   m_Name: Input System
   m_TagString: Untagged
@@ -1885,7 +1886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 1de9a76a489a9f548b26af6e8effbd67, type: 3}
-  m_NotificationBehavior: 2
+  m_NotificationBehavior: 3
   m_UIInputModule: {fileID: 896065140259574701}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -2123,7 +2124,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/Left Hand Pose
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3748172573636064158}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SBEPIS.Utils.TransformSync, SBEPIS.Utils
         m_MethodName: SyncPosition
         m_Mode: 0
@@ -2139,7 +2140,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/Head Position
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3748172573636064158}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SBEPIS.Utils.TransformSync, SBEPIS.Utils
         m_MethodName: SyncRotation
         m_Mode: 0
@@ -2982,6 +2983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8801d742938b75d45bb1eaec4b12fa8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input: {fileID: 6098800601631693807}
   onOpenXR:
     m_PersistentCalls:
       m_Calls:
@@ -3012,6 +3014,2323 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &96399996463305117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5040132003472840282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a07bc752bebe9e4199d292a35b99f2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: {fileID: 6098800601631693807}
+  triggerActions:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6761588775947424754}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.JumpController, SBEPIS.Controller
+        m_MethodName: Jump
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 6c938f91-1063-4618-ab72-08c05509a025
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2824848723725198686}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.Capturellector, SBEPIS.Capturellection
+        m_MethodName: Capture
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 4e524db6-ffa3-4e86-906d-d3d9257629b0
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1494821562862204379}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.Capturellector, SBEPIS.Capturellection
+        m_MethodName: Capture
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 1daccaf8-b745-4fab-87e0-f780953ab842
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 961157736405979464}
+        m_TargetAssemblyTypeName: SBEPIS.Capturellection.DequeBoxOwner, SBEPIS.Capturellection
+        m_MethodName: ToggleDeque
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 6eb5b6ca-498a-480e-b0a1-0a839c0ba152
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 12f82c29-5d59-43bc-9866-f7e4007f0941
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4791795160919753281}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.CommandStaff, SBEPIS.Commands
+        m_MethodName: OpenStaff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: eb2ba894-267a-40a7-a129-cfcf4993443b
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4791795160919753281}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.CommandStaff, SBEPIS.Commands
+        m_MethodName: CloseStaff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 1e06b943-7e7c-4a09-9798-d88d2245d49b
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayC0
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: a37f0bc9-ff28-47c4-b56e-da7be8ea9d90
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayCS0
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 4e4f73d0-d26d-4a82-8683-7fe27a91b0fc
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayD0
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: cff157a7-9491-4b85-913b-28b91f7d0d89
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayDS0
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 77c5e51c-058e-4bc6-89f8-6c76b791c7f1
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayE0
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 92ddc4d1-519e-4ac2-8d33-59b4e5c07336
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayF0
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: ee5ceea6-a7c7-42a9-baec-1d6d7e83c867
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayFS0
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 6aebfcc0-9868-448c-9e1f-f1e3f6a46344
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayG0
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 822bf93c-840f-48ea-9510-7ffb13d123d1
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayGS0
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 6e4c0538-ab39-495d-81c9-4a9a72960944
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayA0
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: fceb24ba-4efe-442a-8023-27a2ca3b1275
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayAS0
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: d5ad1743-89fd-4549-ad90-baf8479c4657
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayB0
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: cf140f20-c383-412e-b37c-1db3fbd35242
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayC1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 37382966-22a9-4f8e-8460-7d7d4bf951aa
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayCS1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 300722bf-f3fd-4dd2-9650-44150c2a118e
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayD1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 8a4c0f84-d50f-4190-8583-80cbad4c5ff0
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayDS1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: c3aa2a78-67f7-4d43-90c5-f6d58f0ec5df
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayE1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: b11c83e4-3281-4a6a-871b-f3cf17543ca0
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayF1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: f84c252c-5682-453e-adf6-9d28135e7859
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayFS1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: b7f3ecb1-1955-498b-829a-4f87f96f463e
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayG1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 71c13683-95a1-40b6-8943-0357e8ac6374
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayGS1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: fb5b357d-7634-43c1-ab8e-1d50bafd9ce2
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayA1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: e96c0809-d78a-430b-8245-257a085241de
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayAS1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 21c9354a-ce4a-49d1-b745-b502e264e1cc
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayB1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: bbe5b89e-d9c2-4ba3-983d-7c51f20cffb9
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayC2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 456fc414-77a9-45e4-ba36-ec8f97cd697e
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayCS2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 6a922ab0-022c-48a7-a378-6df94f925241
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayD2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: a70b8b7a-e1cc-4ecd-9965-7373f15a81cb
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayDS2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 7c1f357e-f450-403e-a8b8-ec522260d756
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayE2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 385b049d-c807-49de-bd34-074a8f367422
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayF2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: c598fee4-633f-4b49-8cfe-ef766a6354ac
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayFS2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 96e56c47-8802-46c6-ad15-709caf1a4aab
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayG2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: ccfeb9c5-fc71-4d4e-849f-cf965fcb0f77
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayGS2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 5bcfb796-dfea-4066-a0e9-763016400ff9
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayA2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 2034d6bc-c5a2-4305-a940-ee56af93c843
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayAS2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 99411434-c423-4ee9-b718-03c1c18e0ec3
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayB2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 46fdca16-8a79-402b-8484-a41494777f98
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayC3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 093965af-b1eb-4ecb-8de3-e51b846460ea
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayCS3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 8db18bf8-3a2c-49eb-862c-5ba3950ca4f9
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayD3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 08de42c4-78a9-4b37-8b29-5c18762c9576
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayDS3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 522551ad-fbaa-4b1f-9770-a71f6f088706
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayE3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 6ebe843d-5eba-4297-a505-e10f7120123d
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayF3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 8ec27fa0-6e25-44b1-870f-29eb9a46d558
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayFS3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 46f2c40e-f6f6-4fd2-842a-15df531372a9
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayG3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: b151d507-16c7-49cb-b493-609fbc28e4e8
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayGS3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 056952c0-c521-402a-a7a5-8931994bdd18
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayA3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: eb1c402a-ae25-46bf-a989-1eac5a9c4dde
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayAS3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 2f76f2c1-0553-4426-985d-224dbfd8ee8c
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayB3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 620fdc1d-42ea-40a2-a821-eafd8275aefc
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayC4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 52f6538e-61be-4e9c-bab1-f2176f892e7a
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayCS4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: cc649cdc-1331-47d8-8977-e2f7b634109a
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayD4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: a858db58-4d88-45ec-84d7-b2e51c2d2f2b
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayDS4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 9ea9a7ab-2f40-4ad3-9793-5be36b5a4f93
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayE4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: aaf7b719-f3d3-46ec-b593-4149ef435ebb
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayF4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 7a2e4c09-adf3-4334-b044-9bd6482abd31
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayFS4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: b3b2ca81-9a06-49a1-859e-7b79e983be19
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayG4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: e009bb19-e04c-4b97-aa92-3d4dcafb3ab1
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayGS4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: a1e6e619-c53d-4be2-9f29-0489c2a26700
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayA4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: c108c358-2813-47ae-809b-4d26ae1daf47
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayAS4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: ccc042fd-a97c-4564-85a8-911f8e062c90
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayB4
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 746d7949-1717-4f84-833d-a15ffca815d0
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayC5
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: bd01f8fe-a605-4fe7-b46e-6bef21b53527
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayCS5
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 27ed7d90-42e8-4d79-a815-b7e276f9003e
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayD5
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: d2ee77aa-830e-453b-aa31-336ffb33169c
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayDS5
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 8d66c854-3727-4070-b13d-a9799395fbb6
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayE5
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: ed930bd0-17aa-47c6-86dd-2a4dcf8f9ea1
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayF5
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 45458d79-fa05-4d04-8738-106bd558722d
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayFS5
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: b8845a75-adf8-4cc6-867b-c0ab20a651e3
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayG5
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 0128a612-13e4-4a81-ac23-722786df5d4c
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayGS5
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: c287c5b8-8bfd-4a56-92e6-3c8fe2c106cc
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayA5
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 8b358398-172b-44b3-a3ca-4ab0cb68c375
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayAS5
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: e89b4f26-dd2b-491d-a155-f7d9af5026cc
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayB5
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: dad53fde-b57b-4b8d-8040-1e68eaf8c935
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayC6
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 4730527f-3545-4bd8-bad0-318271947e1f
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayCS6
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: a756b3d8-7e84-474b-9273-5ca020c47b01
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayD6
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: c778337d-25ea-451c-ae5a-9020ac67cf23
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayDS6
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 579d6610-48bf-469f-929f-66cdaf779995
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayE6
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 828cf71c-6363-45d7-97e6-65cd56984dbb
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayF6
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: f31e2137-74ed-4cfa-b45a-9062d32c9850
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayFS6
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 4ba905d7-7c33-4b1f-818d-65e988a2dba8
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayG6
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 1a9587ba-30a5-48f7-855e-a5444008e049
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayGS6
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 87c10960-de48-4431-81ec-d3a1512b47bd
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayA6
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: d68df2aa-6f7b-469f-bfc1-18180b91d6d2
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayAS6
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 9dd93c3b-e991-4c71-b2cc-72b4e4dcb9ad
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayB6
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: e9b4d0fd-1fdc-4f32-85cc-ae2b5258d44c
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayC7
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: cef12477-6e29-4ca9-ba17-b2da149388f6
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayCS7
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 8016b68b-c097-4e9d-9ee2-6f241a9694a7
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayD7
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 3895ecec-7c54-4a86-bc0e-556b93065699
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayDS7
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 87ce6942-db12-4ac1-84bf-4c1c95621386
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayE7
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 0c815dc5-f337-4766-83a9-c5f09bfff170
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayF7
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 3b26ee1c-7a9a-4d07-a78f-3f66e4215262
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayFS7
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 9f7edd2f-ae3b-4028-856a-64c4d92793ea
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayG7
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 35a12cfb-8f0e-4ce9-a643-e7d3e7e3f23f
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayGS7
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 91673741-a4e9-4def-bac6-e5b7e2595ff6
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayA7
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 2b8b7f34-7424-4abf-908d-d1ce32709d45
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayAS7
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: e2ba904f-5398-4647-99a7-991f09a0209b
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayB7
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: a86c1ab0-74b1-4d50-b6f9-c1cb5316f565
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayC8
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: c90cbd8f-ed13-4787-8cef-75ebbc756529
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayCS8
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 497e23f2-d285-4170-b5a1-d0cb3f7be802
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayD8
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: de59582c-1671-46cf-9e02-a3e566b043d9
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayDS8
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 5518a13e-8c98-4f5c-b0b4-7a5631f59d7b
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayE8
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 76dd6424-4f57-49a2-96b4-65898b8a8b99
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayF8
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 6ab39a36-3dd3-45a2-89f4-c1ac3dc612cd
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayFS8
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: e28fda70-0ee5-46f6-bf7d-5c66a1c2caf9
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayG8
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 902626ba-63b1-4e42-ba12-06d9f8e3d08b
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayGS8
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: d8f9c459-335b-4c3c-8660-32da3d43d348
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayA8
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 3517f666-8fa5-4ffb-8ae9-1359a9293bb2
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayAS8
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: a2c7ba40-14d4-4245-b48a-fea6739f6e53
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6591003193109988607}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NotePlayer, SBEPIS.Commands
+        m_MethodName: PlayB8
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 6ae91f90-e782-43e6-84e6-0b60eb262157
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 827923db-6895-4ebb-8f4c-c57bcefb03ac
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 616e89b3-abff-4b35-a1fb-c5e1ab7d17b2
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6376568278754761723}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Grabber, SBEPIS.Controller
+        m_MethodName: Use
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: ae303b36-c0e5-4580-b5c4-767c58be050f
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6271847251800222012}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Grabber, SBEPIS.Controller
+        m_MethodName: Use
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 6e0a4047-d826-49b9-aa39-1369fdd8b1cf
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 68e27118-dcb5-48fe-ad39-37390cc655b4
+  boolActions:
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 6c938f91-1063-4618-ab72-08c05509a025
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 4e524db6-ffa3-4e86-906d-d3d9257629b0
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 1daccaf8-b745-4fab-87e0-f780953ab842
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 6eb5b6ca-498a-480e-b0a1-0a839c0ba152
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: eb2ba894-267a-40a7-a129-cfcf4993443b
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 1e06b943-7e7c-4a09-9798-d88d2245d49b
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: a37f0bc9-ff28-47c4-b56e-da7be8ea9d90
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 4e4f73d0-d26d-4a82-8683-7fe27a91b0fc
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: cff157a7-9491-4b85-913b-28b91f7d0d89
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 77c5e51c-058e-4bc6-89f8-6c76b791c7f1
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 92ddc4d1-519e-4ac2-8d33-59b4e5c07336
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: ee5ceea6-a7c7-42a9-baec-1d6d7e83c867
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 6aebfcc0-9868-448c-9e1f-f1e3f6a46344
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 822bf93c-840f-48ea-9510-7ffb13d123d1
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 6e4c0538-ab39-495d-81c9-4a9a72960944
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: fceb24ba-4efe-442a-8023-27a2ca3b1275
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: d5ad1743-89fd-4549-ad90-baf8479c4657
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: cf140f20-c383-412e-b37c-1db3fbd35242
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 37382966-22a9-4f8e-8460-7d7d4bf951aa
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 300722bf-f3fd-4dd2-9650-44150c2a118e
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 8a4c0f84-d50f-4190-8583-80cbad4c5ff0
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: c3aa2a78-67f7-4d43-90c5-f6d58f0ec5df
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: b11c83e4-3281-4a6a-871b-f3cf17543ca0
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: f84c252c-5682-453e-adf6-9d28135e7859
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: b7f3ecb1-1955-498b-829a-4f87f96f463e
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 71c13683-95a1-40b6-8943-0357e8ac6374
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: fb5b357d-7634-43c1-ab8e-1d50bafd9ce2
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: e96c0809-d78a-430b-8245-257a085241de
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 21c9354a-ce4a-49d1-b745-b502e264e1cc
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: bbe5b89e-d9c2-4ba3-983d-7c51f20cffb9
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 456fc414-77a9-45e4-ba36-ec8f97cd697e
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 6a922ab0-022c-48a7-a378-6df94f925241
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: a70b8b7a-e1cc-4ecd-9965-7373f15a81cb
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 7c1f357e-f450-403e-a8b8-ec522260d756
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 385b049d-c807-49de-bd34-074a8f367422
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: c598fee4-633f-4b49-8cfe-ef766a6354ac
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 96e56c47-8802-46c6-ad15-709caf1a4aab
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: ccfeb9c5-fc71-4d4e-849f-cf965fcb0f77
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 5bcfb796-dfea-4066-a0e9-763016400ff9
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 2034d6bc-c5a2-4305-a940-ee56af93c843
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 99411434-c423-4ee9-b718-03c1c18e0ec3
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 46fdca16-8a79-402b-8484-a41494777f98
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 093965af-b1eb-4ecb-8de3-e51b846460ea
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 8db18bf8-3a2c-49eb-862c-5ba3950ca4f9
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 08de42c4-78a9-4b37-8b29-5c18762c9576
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 522551ad-fbaa-4b1f-9770-a71f6f088706
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 6ebe843d-5eba-4297-a505-e10f7120123d
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 8ec27fa0-6e25-44b1-870f-29eb9a46d558
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 46f2c40e-f6f6-4fd2-842a-15df531372a9
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: b151d507-16c7-49cb-b493-609fbc28e4e8
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 056952c0-c521-402a-a7a5-8931994bdd18
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: eb1c402a-ae25-46bf-a989-1eac5a9c4dde
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 2f76f2c1-0553-4426-985d-224dbfd8ee8c
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 620fdc1d-42ea-40a2-a821-eafd8275aefc
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 52f6538e-61be-4e9c-bab1-f2176f892e7a
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: cc649cdc-1331-47d8-8977-e2f7b634109a
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: a858db58-4d88-45ec-84d7-b2e51c2d2f2b
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 9ea9a7ab-2f40-4ad3-9793-5be36b5a4f93
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: aaf7b719-f3d3-46ec-b593-4149ef435ebb
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 7a2e4c09-adf3-4334-b044-9bd6482abd31
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: b3b2ca81-9a06-49a1-859e-7b79e983be19
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: e009bb19-e04c-4b97-aa92-3d4dcafb3ab1
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: a1e6e619-c53d-4be2-9f29-0489c2a26700
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: c108c358-2813-47ae-809b-4d26ae1daf47
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: ccc042fd-a97c-4564-85a8-911f8e062c90
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 746d7949-1717-4f84-833d-a15ffca815d0
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: bd01f8fe-a605-4fe7-b46e-6bef21b53527
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 27ed7d90-42e8-4d79-a815-b7e276f9003e
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: d2ee77aa-830e-453b-aa31-336ffb33169c
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 8d66c854-3727-4070-b13d-a9799395fbb6
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: ed930bd0-17aa-47c6-86dd-2a4dcf8f9ea1
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 45458d79-fa05-4d04-8738-106bd558722d
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: b8845a75-adf8-4cc6-867b-c0ab20a651e3
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 0128a612-13e4-4a81-ac23-722786df5d4c
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: c287c5b8-8bfd-4a56-92e6-3c8fe2c106cc
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 8b358398-172b-44b3-a3ca-4ab0cb68c375
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: e89b4f26-dd2b-491d-a155-f7d9af5026cc
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: dad53fde-b57b-4b8d-8040-1e68eaf8c935
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 4730527f-3545-4bd8-bad0-318271947e1f
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: a756b3d8-7e84-474b-9273-5ca020c47b01
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: c778337d-25ea-451c-ae5a-9020ac67cf23
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 579d6610-48bf-469f-929f-66cdaf779995
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 828cf71c-6363-45d7-97e6-65cd56984dbb
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: f31e2137-74ed-4cfa-b45a-9062d32c9850
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 4ba905d7-7c33-4b1f-818d-65e988a2dba8
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 1a9587ba-30a5-48f7-855e-a5444008e049
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 87c10960-de48-4431-81ec-d3a1512b47bd
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: d68df2aa-6f7b-469f-bfc1-18180b91d6d2
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 9dd93c3b-e991-4c71-b2cc-72b4e4dcb9ad
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: e9b4d0fd-1fdc-4f32-85cc-ae2b5258d44c
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: cef12477-6e29-4ca9-ba17-b2da149388f6
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 8016b68b-c097-4e9d-9ee2-6f241a9694a7
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 3895ecec-7c54-4a86-bc0e-556b93065699
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 87ce6942-db12-4ac1-84bf-4c1c95621386
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 0c815dc5-f337-4766-83a9-c5f09bfff170
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 3b26ee1c-7a9a-4d07-a78f-3f66e4215262
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 9f7edd2f-ae3b-4028-856a-64c4d92793ea
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 35a12cfb-8f0e-4ce9-a643-e7d3e7e3f23f
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 91673741-a4e9-4def-bac6-e5b7e2595ff6
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 2b8b7f34-7424-4abf-908d-d1ce32709d45
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: e2ba904f-5398-4647-99a7-991f09a0209b
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: a86c1ab0-74b1-4d50-b6f9-c1cb5316f565
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: c90cbd8f-ed13-4787-8cef-75ebbc756529
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 497e23f2-d285-4170-b5a1-d0cb3f7be802
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: de59582c-1671-46cf-9e02-a3e566b043d9
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 5518a13e-8c98-4f5c-b0b4-7a5631f59d7b
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 76dd6424-4f57-49a2-96b4-65898b8a8b99
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 6ab39a36-3dd3-45a2-89f4-c1ac3dc612cd
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: e28fda70-0ee5-46f6-bf7d-5c66a1c2caf9
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 902626ba-63b1-4e42-ba12-06d9f8e3d08b
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: d8f9c459-335b-4c3c-8660-32da3d43d348
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 3517f666-8fa5-4ffb-8ae9-1359a9293bb2
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: a2c7ba40-14d4-4245-b48a-fea6739f6e53
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 6ae91f90-e782-43e6-84e6-0b60eb262157
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5816985420801532654}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.MovementController, SBEPIS.Controller
+        m_MethodName: set_IsTryingToSprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 12f82c29-5d59-43bc-9866-f7e4007f0941
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6376568278754761723}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Grabber, SBEPIS.Controller
+        m_MethodName: set_IsHoldingGrab
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 827923db-6895-4ebb-8f4c-c57bcefb03ac
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6271847251800222012}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Grabber, SBEPIS.Controller
+        m_MethodName: set_IsHoldingGrab
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 616e89b3-abff-4b35-a1fb-c5e1ab7d17b2
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: ae303b36-c0e5-4580-b5c4-767c58be050f
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 6e0a4047-d826-49b9-aa39-1369fdd8b1cf
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6470668690988925192}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Flatscreen.FlatscreenHandTrackerPositioner,
+          SBEPIS.Controller
+        m_MethodName: set_UseLeftHand
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 68e27118-dcb5-48fe-ad39-37390cc655b4
+  floatActions:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8432642417375942626}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.LookController, SBEPIS.Controller
+        m_MethodName: set_PitchControl
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 17295940-bbe1-4a09-b063-4ccc6062d4f9
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8432642417375942626}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.LookController, SBEPIS.Controller
+        m_MethodName: set_YawControl
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: d548a5aa-43dd-4995-b334-204ec967e505
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 827923db-6895-4ebb-8f4c-c57bcefb03ac
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 616e89b3-abff-4b35-a1fb-c5e1ab7d17b2
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: ae303b36-c0e5-4580-b5c4-767c58be050f
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 6e0a4047-d826-49b9-aa39-1369fdd8b1cf
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 68e27118-dcb5-48fe-ad39-37390cc655b4
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6470668690988925192}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Flatscreen.FlatscreenHandTrackerPositioner,
+          SBEPIS.Controller
+        m_MethodName: Zoom
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: fe9ce19e-3484-4843-976a-8fb9bec890da
+  vector2Actions:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5816985420801532654}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.MovementController, SBEPIS.Controller
+        m_MethodName: set_ControlsTarget
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 6d0dc336-274b-4f72-a6b3-dfbbcec1770b
+  vector3Actions:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4804159942654709961}
+        m_TargetAssemblyTypeName: UnityEngine.Transform, UnityEngine
+        m_MethodName: set_localPosition
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: f29df7bd-272b-40fd-94dc-4fbec9b0edfb
+  poseActions:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5078927723526379075}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.TransformSync, SBEPIS.Utils
+        m_MethodName: SyncPose
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: d5026919-cb71-422d-b054-65dc856f770c
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3534278874582268391}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.TransformSync, SBEPIS.Utils
+        m_MethodName: SyncPose
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 944d50a1-0fe1-4e30-be46-730d26ed4fe5
+  quaternionActions:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4804159942654709961}
+        m_TargetAssemblyTypeName: UnityEngine.Transform, UnityEngine
+        m_MethodName: set_localRotation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: c1a219b6-0712-4ee7-9810-39daf3f9aaf7
 --- !u!1 &5118502531201582010
 GameObject:
   m_ObjectHideFlags: 0
@@ -5056,6 +7375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   notePrefab: {fileID: 5062431120384497087, guid: 6f866ef17a73cc142a916da70d28ce6c, type: 3}
+  rootFrequency: 261.63
 --- !u!1 &8146391375992291932
 GameObject:
   m_ObjectHideFlags: 0
@@ -5390,7 +7710,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4804159942654709961}
-  - component: {fileID: 3748172573636064158}
   - component: {fileID: 6698321374281331998}
   m_Layer: 8
   m_Name: Head Tracker
@@ -5415,21 +7734,6 @@ Transform:
   m_Father: {fileID: 7573663971075507264}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3748172573636064158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8884166373067930792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c73a6674eebc3b4d954d6455c75f6c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigidbody: {fileID: 0}
-  positionOffset: {x: 0, y: 0, z: 0}
-  rotationOffset: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &6698321374281331998
 MonoBehaviour:
   m_ObjectHideFlags: 0

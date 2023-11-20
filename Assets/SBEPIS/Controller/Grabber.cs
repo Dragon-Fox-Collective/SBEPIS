@@ -4,7 +4,6 @@ using System.Linq;
 using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.Events;
-using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 namespace SBEPIS.Controller
 {
@@ -48,7 +47,15 @@ namespace SBEPIS.Controller
 		private readonly RaycastHit[] grabNormalHits = new RaycastHit[16];
 		private readonly List<Collider> collidingColliders = new();
 		private bool isHoldingGrab;
-		
+		public bool IsHoldingGrab
+		{
+			set
+			{
+				isHoldingGrab = value;
+				UpdateGrabAttempt();
+			}
+		}
+
 		private bool IsSlipping => heldPureColliderNormal != Vector3.zero && playerOrientation && Vector3.Angle(heldPureColliderNormal, playerOrientation.UpDirection) > slipAngle;
 		
 		private void Update()
@@ -57,12 +64,6 @@ namespace SBEPIS.Controller
 			UpdateGrabAttempt();
 			if (HeldGrabbable)
 				HeldGrabbable.HoldUpdate(this);
-		}
-		
-		public void OnGrab(CallbackContext context)
-		{
-			isHoldingGrab = context.performed;
-			UpdateGrabAttempt();
 		}
 		
 		private void UpdateGrabAttempt()
@@ -291,11 +292,8 @@ namespace SBEPIS.Controller
 					StopCollidingWith(collidingColliders[i--]);
 		}
 
-		public void OnUse(CallbackContext context)
+		public void Use()
 		{
-			if (!context.performed)
-				return;
-			
 			if (IsHoldingSomething)
 				UseHeldItem();
 			else
@@ -308,7 +306,7 @@ namespace SBEPIS.Controller
 				}
 			}
 		}
-
+		
 		public void UseHeldItem()
 		{
 			if (!HeldGrabbable)

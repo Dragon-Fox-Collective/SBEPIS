@@ -1,6 +1,5 @@
 using KBCore.Refs;
 using UnityEngine;
-using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 using Pose = UnityEngine.XR.OpenXR.Input.Pose;
 
 namespace SBEPIS.Utils
@@ -41,7 +40,15 @@ namespace SBEPIS.Utils
 		{
 			SyncLocalRotation(transform.parent.rotation.Inverse() * rotation);
 		}
-
+		
+		public void SyncPose(Pose pose)
+		{
+			SyncLocalPosition(pose.position);
+			SyncLocalRotation(pose.rotation);
+			SyncVelocity(pose.velocity);
+			SyncAngularVelocity(pose.angularVelocity);
+		}
+		
 		// ---- Transform syncs
 		public void SyncTransform(Transform transform)
 		{
@@ -86,26 +93,6 @@ namespace SBEPIS.Utils
 		{
 			if (rigidbody)
 				rigidbody.angularVelocity = angularVelocity;
-		}
-
-		// ---- Input syncs
-		public void SyncPose(CallbackContext context)
-		{
-			Pose pose = context.ReadValue<Pose>();
-			SyncLocalPosition(pose.position);
-			SyncLocalRotation(pose.rotation);
-			SyncVelocity(pose.velocity);
-			SyncAngularVelocity(pose.angularVelocity);
-		}
-
-		public void SyncPosition(CallbackContext context)
-		{
-			SyncLocalPosition(context.ReadValue<Vector3>());
-		}
-
-		public void SyncRotation(CallbackContext context)
-		{
-			SyncLocalRotation(context.ReadValue<Quaternion>());
 		}
 	}
 }
