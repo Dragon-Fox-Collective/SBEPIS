@@ -6,11 +6,9 @@ using UnityEngine.InputSystem;
 namespace SBEPIS.Utils
 {
 	[CustomEditor(typeof(PlayerInputDataEvents))]
-	public class PlayerInputPerformedEventsEditor : Editor
+	public class PlayerInputDataEventsEditor : Editor
 	{
 		[SerializeField] private List<bool> actionMapEventsUnfolded = new();
-		
-		// TODO: Memory leak - actions are added but never removed
 		
 		public override void OnInspectorGUI()
 		{
