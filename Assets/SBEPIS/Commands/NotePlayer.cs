@@ -8,6 +8,9 @@ namespace SBEPIS.Commands
 		[SerializeField, Anywhere]
 		private AudioSource notePrefab;
 		
+		[SerializeField, Anywhere]
+		private CommandStaff staff;
+		
 		[SerializeField]
 		private float rootFrequency = 261.63f;
 		
@@ -126,6 +129,8 @@ namespace SBEPIS.Commands
 			noteSource.pitch = note.Frequency / rootFrequency;
 			noteSource.Play();
 			Destroy(noteSource.gameObject, noteSource.clip.length * noteSource.pitch);
+			
+			staff.AddNote(note);
 		}
 	}
 }
