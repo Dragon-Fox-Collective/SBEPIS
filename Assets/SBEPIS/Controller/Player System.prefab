@@ -891,6 +891,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2758302851484042462}
   - component: {fileID: 3534278874582268391}
+  - component: {fileID: 5356487115940403692}
   m_Layer: 8
   m_Name: Left Hand Tracker
   m_TagString: Untagged
@@ -928,6 +929,50 @@ MonoBehaviour:
   rigidbody: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0.70710677, y: -0.00000003090862, z: 0.70710677, w: -0.00000003090862}
+--- !u!114 &5356487115940403692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2758302851484042463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8907d4374e33bf443bd2997ef0601632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poseInput:
+    m_Name: Pose Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 8e98ceac-d865-4091-8708-6d3c4ebc1f34
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 380e3b19-09df-4be5-9776-840e7c307af7
+      m_Path: <XRController>{LeftHand}/devicePose
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Pose Input
+      m_Flags: 0
+    m_Flags: 0
+  onPose:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3534278874582268391}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.TransformSync, SBEPIS.Utils
+        m_MethodName: SyncPose
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2876438256614224740
 GameObject:
   m_ObjectHideFlags: 0
@@ -6006,6 +6051,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6376568278921566391}
   - component: {fileID: 5078927723526379075}
+  - component: {fileID: 4076854754398464686}
   m_Layer: 8
   m_Name: Right Hand Tracker
   m_TagString: Untagged
@@ -6043,6 +6089,50 @@ MonoBehaviour:
   rigidbody: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0.70710677, y: -0.00000003090862, z: -0.70710677, w: 0.00000003090862}
+--- !u!114 &4076854754398464686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376568278921566390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8907d4374e33bf443bd2997ef0601632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poseInput:
+    m_Name: Pose Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 88531bdd-e235-4a93-a3c2-6793e197b0b6
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 58acd7dd-a8bb-497b-a705-2a877036d856
+      m_Path: <XRController>{RightHand}/devicePose
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Pose Input
+      m_Flags: 0
+    m_Flags: 0
+  onPose:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5078927723526379075}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.TransformSync, SBEPIS.Utils
+        m_MethodName: SyncPose
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6376568279122881045
 GameObject:
   m_ObjectHideFlags: 0
@@ -7711,6 +7801,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4804159942654709961}
   - component: {fileID: 6698321374281331998}
+  - component: {fileID: 1790887519818181066}
   m_Layer: 8
   m_Name: Head Tracker
   m_TagString: Untagged
@@ -7764,6 +7855,82 @@ MonoBehaviour:
   OnFixedUpdate:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1790887519818181066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8884166373067930792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4caa2400fe56571418aca68279db8079, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionInput:
+    m_Name: Position Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 77c553ca-f1c5-4d71-9265-f0fee4069b61
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 482014f9-431d-4827-b43f-9dc78cc30fb5
+      m_Path: <XRHMD>/centerEyePosition
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Position Input
+      m_Flags: 0
+    m_Flags: 0
+  onPosition:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4804159942654709961}
+        m_TargetAssemblyTypeName: UnityEngine.Transform, UnityEngine
+        m_MethodName: set_localPosition
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  rotationInput:
+    m_Name: Rotation Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 1c0e0b58-fb1a-4928-a1ef-5ec60f603d6b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 665933a1-43d3-4aae-a585-92dcd865b2a4
+      m_Path: <XRHMD>/centerEyeRotation
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Rotation Input
+      m_Flags: 0
+    m_Flags: 0
+  onRotation:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4804159942654709961}
+        m_TargetAssemblyTypeName: UnityEngine.Transform, UnityEngine
+        m_MethodName: set_localRotation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8900464323754095863
 GameObject:
   m_ObjectHideFlags: 0
