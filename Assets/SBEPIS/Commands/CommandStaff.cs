@@ -11,7 +11,7 @@ namespace SBEPIS.Commands
 		private PlayerInput input;
 
 		[SerializeField, Anywhere]
-		private Transform notePrefab;
+		private RectTransform notePrefab;
 		
 		private List<(Transform transform, Note note)> notes = new();
 		
@@ -32,7 +32,12 @@ namespace SBEPIS.Commands
 
 		public void AddNote(Note note)
 		{
-			Transform noteObj = Instantiate(notePrefab, transform);
+			RectTransform noteObj = Instantiate(notePrefab, transform);
+			noteObj.anchorMin = noteObj.anchorMax = new Vector2(0, 0.5f);
+			noteObj.anchoredPosition = new Vector2(
+				((float)notes.Count).Map(0, 1, 170f, 220f),
+				((float)note.Position).Map(Notes.F4.Position, Notes.A4.Position, -10f, 15f));
+			
 			notes.Add((noteObj, note));
 		}
 	}
