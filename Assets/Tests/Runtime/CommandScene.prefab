@@ -45,6 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6dff4976f671204b97d394dd8b8aee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onStaffOpened:
+    m_PersistentCalls:
+      m_Calls: []
+  onStaffClosed:
+    m_PersistentCalls:
+      m_Calls: []
   onNoteAdded:
     m_PersistentCalls:
       m_Calls:
@@ -89,6 +95,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   commands:
   - {fileID: 8975706398891294766}
+  - {fileID: 7991469025285689468}
+  onCommandSent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3753006140051563743
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,6 +146,53 @@ MonoBehaviour:
   onPing:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &5306845861878679754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1623041783601814975}
+  - component: {fileID: 7991469025285689468}
+  m_Layer: 0
+  m_Name: Kill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1623041783601814975
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5306845861878679754}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7939385716710550863}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7991469025285689468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5306845861878679754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d80ddb53f24638bdfecfcee9740200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onKill:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7883084916097212746
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +224,7 @@ Transform:
   m_Children:
   - {fileID: 2162550223107929381}
   - {fileID: 2224417606095422787}
+  - {fileID: 1623041783601814975}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -184,3 +242,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staff: {fileID: 8222068984072889386}
   ping: {fileID: 8975706398891294766}
+  kill: {fileID: 7991469025285689468}

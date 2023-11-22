@@ -12,6 +12,7 @@ namespace SBEPIS.Tests
 		{
 			bool did = false;
 			Scene.ping.OnPing += () => did = true;
+			Scene.kill.OnKill += _ => did = true;
 			
 			Scene.staff.AddNote(Notes.C4);
 			Scene.staff.AddNote(Notes.D4);
@@ -30,6 +31,46 @@ namespace SBEPIS.Tests
 			Scene.staff.AddNote(Notes.E4);
 			
 			Assert.That(did);
+		}
+		
+		[Test]
+		public void KillCommand_WhenFalse_SendsFalse()
+		{
+			bool did = false;
+			bool result = false;
+			Scene.kill.OnKill += kill =>
+			{
+				did = true;
+				result = kill;
+			};
+			
+			Scene.staff.AddNote(Notes.D4);
+			Scene.staff.AddNote(Notes.D4);
+			Scene.staff.AddNote(Notes.D5);
+			Scene.staff.AddNote(Notes.C5);
+			
+			Assert.That(did);
+			Assert.That(!result);
+		}
+		
+		[Test]
+		public void KillCommand_WhenTrue_SendsTrue()
+		{
+			bool did = false;
+			bool result = false;
+			Scene.kill.OnKill += kill =>
+			{
+				did = true;
+				result = kill;
+			};
+			
+			Scene.staff.AddNote(Notes.D4);
+			Scene.staff.AddNote(Notes.D4);
+			Scene.staff.AddNote(Notes.D5);
+			Scene.staff.AddNote(Notes.A4);
+			
+			Assert.That(did);
+			Assert.That(result);
 		}
 	}
 }

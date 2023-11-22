@@ -377,6 +377,12 @@ public static class ExtensionMethods
 				return false;
 		}
 	}
+	public static bool StartsWith<T>(this IEnumerable<T> source, T prefix, IEqualityComparer<T> comparer = null)
+	{
+		comparer ??= EqualityComparer<T>.Default;
+		using IEnumerator<T> sourceEnumerator = source.GetEnumerator();
+		return sourceEnumerator.MoveNext() && comparer.Equals(sourceEnumerator.Current, prefix);
+	}
 	
 	public static IEnumerable<float> AsEnumerable(this Vector3 vector)
 	{
