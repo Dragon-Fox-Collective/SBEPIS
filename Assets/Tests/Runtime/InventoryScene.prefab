@@ -59,8 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862e9ab1ce3640aea43d3344984b4fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ruleset:
-    _implementer: {fileID: 6762248196368428295}
+  ruleset: {fileID: 6762248196368428295}
   maxStorables: 1
   subdefinition: {fileID: 0}
 --- !u!1 &2329509147716768331
@@ -142,6 +141,7 @@ MonoBehaviour:
   initialCardPrefab: {fileID: 9009455766106517512}
   initialCardCount: 1
   cardParent: {fileID: 965652591840090261}
+  layout: {fileID: 0}
   onLoadIntoDeque:
     m_PersistentCalls:
       m_Calls: []
@@ -394,6 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae9afed2c314cb884ab05e8831efab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeFetchedByCapturellectors: 1
   onCapture:
     m_PersistentCalls:
       m_Calls: []
@@ -543,6 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae9afed2c314cb884ab05e8831efab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeFetchedByCapturellectors: 1
   onCapture:
     m_PersistentCalls:
       m_Calls: []
