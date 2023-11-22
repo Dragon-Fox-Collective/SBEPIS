@@ -2,7 +2,6 @@ using System.Collections;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using NUnit.Framework;
-using SBEPIS.Capturellection;
 using SBEPIS.Capturellection.Storage;
 using SBEPIS.Utils;
 using SBEPIS.Tests.Scenes;
@@ -12,6 +11,8 @@ namespace SBEPIS.Tests
 {
 	public class InventoryTests : TestSceneSuite<InventoryScene>
 	{
+		public InventoryTests() : base(true) {}
+		
 		[UnityTest]
 		public IEnumerator StoringItem_GetsCard() => UniTask.ToCoroutine(async () =>
 		{
