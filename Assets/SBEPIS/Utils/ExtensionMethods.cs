@@ -358,6 +358,25 @@ public static class ExtensionMethods
 		for (int i = 0; i * count < source.Count; i++)
 			yield return source.Skip(i * count).Take(count);
 	}
+
+	public static bool StartsWith<T>(this IEnumerable<T> source, IEnumerable<T> prefix, IEqualityComparer<T> comparer = null)
+	{
+		comparer ??= EqualityComparer<T>.Default;
+
+		using IEnumerator<T> sourceEnumerator = source.GetEnumerator();
+		using IEnumerator<T> prefixEnumerator = prefix.GetEnumerator();
+		while (true)
+		{
+			if (!sourceEnumerator.MoveNext())
+				return !prefixEnumerator.MoveNext();
+
+			if (!prefixEnumerator.MoveNext())
+				return true;
+
+			if (!comparer.Equals(sourceEnumerator.Current, prefixEnumerator.Current))
+				return false;
+		}
+	}
 	
 	public static IEnumerable<float> AsEnumerable(this Vector3 vector)
 	{
