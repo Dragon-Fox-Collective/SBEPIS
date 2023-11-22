@@ -8,6 +8,11 @@ namespace SBEPIS.Commands.Commands
 	{
 		[SerializeField]
 		private UnityEvent onPing = new();
+		public event UnityAction OnPing
+		{
+			add => onPing.AddListener(value);
+			remove => onPing.RemoveListener(value);
+		}
 		
 		private static readonly Note[] Pattern = {Notes.C4, Notes.D4, Notes.E4};
 		

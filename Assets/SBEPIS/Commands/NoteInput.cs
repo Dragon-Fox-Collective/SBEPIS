@@ -1,18 +1,12 @@
-using KBCore.Refs;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Commands
 {
-	public class NotePlayer : ValidatedMonoBehaviour
+	public class NoteInput : MonoBehaviour
 	{
-		[SerializeField, Anywhere]
-		private AudioSource notePrefab;
-		
-		[SerializeField, Anywhere]
-		private CommandStaff staff;
-		
 		[SerializeField]
-		private float rootFrequency = 261.63f;
+		private UnityEvent<Note> onNotePlayed = new();
 		
 		public void PlayC0() => PlayNote(Notes.C0);
 		public void PlayCS0() => PlayNote(Notes.CS0);
@@ -125,12 +119,7 @@ namespace SBEPIS.Commands
 		
 		public void PlayNote(Note note)
 		{
-			AudioSource noteSource = Instantiate(notePrefab);
-			noteSource.pitch = note.Frequency / rootFrequency;
-			noteSource.Play();
-			Destroy(noteSource.gameObject, noteSource.clip.length / noteSource.pitch);
-			
-			staff.AddNote(note);
+			onNotePlayed.Invoke(note);
 		}
 	}
 }

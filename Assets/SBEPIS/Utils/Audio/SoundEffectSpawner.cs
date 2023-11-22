@@ -10,7 +10,7 @@ namespace SBEPIS.Utils.Audio
 		
 		public void Spawn()
 		{
-			AudioSource audioSource = Instantiate(audioSourcePrefab, transform);
+			AudioSource audioSource = Instantiate(audioSourcePrefab);
 			audioSource.Play();
 			Destroy(audioSource.gameObject, audioSource.clip.length / audioSource.pitch);
 		}

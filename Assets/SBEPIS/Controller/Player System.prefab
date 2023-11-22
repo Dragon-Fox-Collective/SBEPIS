@@ -1992,7 +1992,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6500119290084069214}
   m_Father: {fileID: 6112518582163472336}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7169,6 +7170,9 @@ GameObject:
   - component: {fileID: 4223313187089708864}
   - component: {fileID: 3347234244061506263}
   - component: {fileID: 4791795160919753281}
+  - component: {fileID: 3461928637107502126}
+  - component: {fileID: 4602642629569209453}
+  - component: {fileID: 2722724074900076642}
   m_Layer: 5
   m_Name: Staff
   m_TagString: Untagged
@@ -7253,10 +7257,158 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6dff4976f671204b97d394dd8b8aee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 6098800601631693807}
-  notePrefab: {fileID: 3419515621990951983, guid: b7284325bbb37624d9db3eedc9a7786f, type: 3}
+  onStaffOpened:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6098800601631693807}
+        m_TargetAssemblyTypeName: UnityEngine.InputSystem.PlayerInput, Unity.InputSystem
+        m_MethodName: SwitchCurrentActionMap
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Command Staff
+          m_BoolArgument: 0
+        m_CallState: 2
+  onStaffClosed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6098800601631693807}
+        m_TargetAssemblyTypeName: UnityEngine.InputSystem.PlayerInput, Unity.InputSystem
+        m_MethodName: SwitchCurrentActionMap
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Gameplay
+          m_BoolArgument: 0
+        m_CallState: 2
+  onNoteAdded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3461928637107502126}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.CommandListener, SBEPIS.Commands
+        m_MethodName: AddNote
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4602642629569209453}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NoteIconSpawner, SBEPIS.Commands
+        m_MethodName: SpawnNote
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2722724074900076642}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NoteSoundSpawner, SBEPIS.Commands
+        m_MethodName: PlayNote
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onNotesCleared:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3461928637107502126}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.CommandListener, SBEPIS.Commands
+        m_MethodName: ClearNotes
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4602642629569209453}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.NoteIconSpawner, SBEPIS.Commands
+        m_MethodName: ClearNotes
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3461928637107502126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6917681695569838349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a11f66600904f6da2bd95bbcd39ec8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   commands:
   - {fileID: 8447828085681769821}
+  onCommandSent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4791795160919753281}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.CommandStaff, SBEPIS.Commands
+        m_MethodName: CloseStaff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4602642629569209453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6917681695569838349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c0ce685ac1e4b4cb4e0e500d4ea019b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notePrefab: {fileID: 3419515621990951983, guid: b7284325bbb37624d9db3eedc9a7786f, type: 3}
+--- !u!114 &2722724074900076642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6917681695569838349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0974e63f9647caac85fe0d5e343672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notePrefab: {fileID: 5062431120384497087, guid: 6f866ef17a73cc142a916da70d28ce6c, type: 3}
+  rootFrequency: 261.63
 --- !u!1 &7292568331423221445
 GameObject:
   m_ObjectHideFlags: 0
@@ -7513,7 +7665,7 @@ GameObject:
   - component: {fileID: 6500119290084069214}
   - component: {fileID: 6591003193109988607}
   m_Layer: 0
-  m_Name: Note Player
+  m_Name: Note Input
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7526,12 +7678,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8071325463164272915}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6112518582163472336}
+  m_Father: {fileID: 5159398627618986266}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6591003193109988607
@@ -7546,9 +7698,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f95c9b43bcc95614abad0382e38d5a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notePrefab: {fileID: 5062431120384497087, guid: 6f866ef17a73cc142a916da70d28ce6c, type: 3}
-  staff: {fileID: 4791795160919753281}
-  rootFrequency: 261.63
+  onNotePlayed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4791795160919753281}
+        m_TargetAssemblyTypeName: SBEPIS.Commands.CommandStaff, SBEPIS.Commands
+        m_MethodName: AddNote
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8146391375992291932
 GameObject:
   m_ObjectHideFlags: 0
@@ -8159,7 +8323,6 @@ Transform:
   - {fileID: 7102078932346942673}
   - {fileID: 307790530891130475}
   - {fileID: 6632124435241510065}
-  - {fileID: 6500119290084069214}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
