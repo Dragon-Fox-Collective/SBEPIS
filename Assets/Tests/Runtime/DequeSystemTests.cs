@@ -13,6 +13,8 @@ namespace SBEPIS.Tests
 {
 	public class DequeSystemTests : TestSceneSuite<DequeSystemScene>
 	{
+		public DequeSystemTests() : base(true) {}
+		
 		[Test]
 		public void GrabbingDeque_GrabsDeque()
 		{
