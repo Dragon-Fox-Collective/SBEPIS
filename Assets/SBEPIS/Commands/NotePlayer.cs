@@ -128,7 +128,7 @@ namespace SBEPIS.Commands
 			AudioSource noteSource = Instantiate(notePrefab);
 			noteSource.pitch = note.Frequency / rootFrequency;
 			noteSource.Play();
-			Destroy(noteSource.gameObject, noteSource.clip.length * noteSource.pitch);
+			Destroy(noteSource.gameObject, noteSource.clip.length / noteSource.pitch);
 			
 			staff.AddNote(note);
 		}

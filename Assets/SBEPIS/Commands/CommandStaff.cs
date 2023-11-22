@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,6 +14,9 @@ namespace SBEPIS.Commands
 
 		[SerializeField, Anywhere]
 		private RectTransform notePrefab;
+
+		[SerializeField]
+		private Command[] commands = Array.Empty<Command>();
 		
 		private List<(Transform transform, Note note)> notes = new();
 		
@@ -25,7 +30,11 @@ namespace SBEPIS.Commands
 		{
 			gameObject.SetActive(false);
 			input.SwitchCurrentActionMap("Gameplay");
+			ClearNotes();
+		}
 
+		private void ClearNotes()
+		{
 			notes.ForEach(note => Destroy(note.transform.gameObject));
 			notes.Clear();
 		}
@@ -39,6 +48,15 @@ namespace SBEPIS.Commands
 				((float)note.Position).Map(Notes.F4.Position, Notes.A4.Position, -10f, 15f));
 			
 			notes.Add((noteObj, note));
+			
+			CheckPatterns();
+		}
+
+		private void CheckPatterns()
+		{
+			ArraySegment<Note> slice = new(notes.Select(note => note.note).ToArray());
+			if (commands.Any(command => command.Interpret(slice)))
+				ClearNotes();
 		}
 	}
 }
