@@ -13,7 +13,7 @@ namespace SBEPIS.Commands
 				InterpretInternal(slice);
 				return true;
 			}
-			catch (NoteParsingFailed e)
+			catch (NoteParsingFailed)
 			{
 				return false;
 			}
