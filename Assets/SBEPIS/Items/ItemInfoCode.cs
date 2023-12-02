@@ -1,10 +1,11 @@
 ﻿using KBCore.Refs;
+using SBEPIS.Bits;
 using TMPro;
 using UnityEngine;
 
 namespace SBEPIS.Items
 {
-	public class ItemInfoDebug : ValidatedMonoBehaviour
+	public class ItemInfoCode : ValidatedMonoBehaviour
 	{
 		[SerializeField, Self]
 		private TMP_Text text;
@@ -19,7 +20,7 @@ namespace SBEPIS.Items
 		
 		public void UpdateText(Item item)
 		{
-			text.text = item ? item.ToString() : noItemText;
+			text.text = item ? BitManager.Instance.Bits.BitSetToCode(item.Module.Bits.Bits) : noItemText;
 		}
 	}
 }

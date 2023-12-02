@@ -46,8 +46,8 @@ namespace SBEPIS.Capturellection
 		}
 		
 		private void SetMaterialCode(BitSet bits) => renderers.PerformOnMaterial(captureMaterial, material => {
-			material.SetFloat(Seed, BitManager.instance.Bits.BitSetToSeed(bits));
-			material.SetTexture(CaptureCode, CaptureCamera.GetStringTexture(BitManager.instance.Bits.BitSetToCode(bits)));
+			material.SetFloat(Seed, BitManager.Instance.Bits.BitSetToSeed(bits));
+			material.SetTexture(CaptureCode, CaptureCamera.GetStringTexture(BitManager.Instance.Bits.BitSetToCode(bits)));
 		});
 	}
 }

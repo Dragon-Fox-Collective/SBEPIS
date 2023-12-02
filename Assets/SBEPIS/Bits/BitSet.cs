@@ -17,7 +17,7 @@ namespace SBEPIS.Bits
 			this.bits = bits.ToArray();
 		}
 		
-		public override string ToString() => $"BitSet{Bits?.ToDelimString()}";
+		public override string ToString() => Bits?.ToDelimString();
 		public override int GetHashCode() => Bits != null ? Bits.GetHashCode() : 0;
 		public override bool Equals(object obj) => obj is BitSet other && this == other;
 		public bool Equals(BitSet other) => this == other;

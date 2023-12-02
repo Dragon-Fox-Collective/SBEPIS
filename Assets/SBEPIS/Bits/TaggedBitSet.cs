@@ -24,7 +24,7 @@ namespace SBEPIS.Bits
 			this.tags = tags.ToArray();
 		}
 		
-		public override string ToString() => $"Tagged{bits}{Tags.ToDelimString()}";
+		public override string ToString() => bits + Tags.ToDelimString();
 		public override int GetHashCode() => (bits, Tags).GetHashCode();
 		public override bool Equals(object obj) => obj is TaggedBitSet other && this == other;
 		public bool Equals(TaggedBitSet other) => this == other;

@@ -5,16 +5,16 @@ namespace SBEPIS.Utils
 {
 	public class ScriptableSingleton<T> : ScriptableObject where T : ScriptableObject
 	{
-		private static T _instance;
+		private static T instance;
 
-		public static T instance
+		public static T Instance
 		{
 			get
 			{
-				if (!_instance)
-					_instance = Load();
+				if (!instance)
+					instance = Load();
 
-				return _instance;
+				return instance;
 			}
 		}
 

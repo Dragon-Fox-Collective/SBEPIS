@@ -94,8 +94,8 @@ public static class ExtensionMethods
 	
 	public static bool TryGetComponentInChildren<T>(this Component thisComponent, out T component) where T : Component => component = thisComponent.GetComponentInChildren<T>();
 	
-	public static string Join<T>(this string delimiter, IEnumerable<T> source) => string.Join(delimiter, source);
-	public static string ToDelimString<T>(this IEnumerable<T> source) => "[" + ", ".Join(source) +  "]";
+	public static string Join<T>(this IEnumerable<T> source, string delimiter) => string.Join(delimiter, source);
+	public static string ToDelimString<T>(this IEnumerable<T> source) => "[" + source.Join(", ") +  "]";
 	
 	public static T Pop<T>(this IList<T> list)
 	{
