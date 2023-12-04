@@ -24,11 +24,10 @@ namespace SBEPIS.Utils
 			if (!other.attachedRigidbody) return;
 			if (!other.attachedRigidbody.TryGetComponent(out DequeBox collisionDequeBox)) return;
 			
-			DequeBox = collisionDequeBox;
-			
-			if (DequeBox.TryGetComponent(out DelayedCollisionTrigger collisionTrigger))
+			if (collisionDequeBox.TryGetComponent(out DelayedCollisionTrigger collisionTrigger))
 				collisionTrigger.CancelPrime();
 			
+			DequeBox = collisionDequeBox;
 			onDequeChanged.Invoke();
 		}
 		
@@ -39,9 +38,10 @@ namespace SBEPIS.Utils
 			if (!other.attachedRigidbody.TryGetComponent(out DequeBox collisionDequeBox)) return;
 			
 			if (DequeBox == collisionDequeBox)
+			{
 				DequeBox = null;
-			
-			onDequeChanged.Invoke();
+				onDequeChanged.Invoke();
+			}
 		}
 	}
 }

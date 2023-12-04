@@ -38,7 +38,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 			if (bits.Tags.FirstOrDefault(member => member is BaseModelTag) is not BaseModelTag tag)
 				return false;
 
-			ItemModule module = Object.Instantiate(tag.itemModule);
+			ItemModule module = Object.Instantiate(tag.ItemModule);
 
 			module.transform.Replace(item.replaceObject);
 			item.replaceObject = module.replaceObject;
@@ -56,7 +56,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 		
 		public AeratedAttachThaumergeRule()
 		{
-			aerated = BitManager.instance.Bits.First(bit => bit.BitName == "Aerated");
+			aerated = BitManager.Instance.Bits.First(bit => bit.BitName == "Aerated");
 		}
 		
 		public override bool ApplyOnce(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
@@ -124,7 +124,7 @@ namespace SBEPIS.Bits.ThaumergeRules
 				return false;
 			
 			foreach (Renderer renderer in item.GetComponentsInChildren<Renderer>())
-				renderer.materials = new Material[renderer.materials.Length].Fill(tag.material);
+				renderer.materials = new Material[renderer.materials.Length].Fill(tag.Material);
 			
 			item.Bits += tag;
 			

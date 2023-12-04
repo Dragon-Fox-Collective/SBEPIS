@@ -7,7 +7,7 @@ namespace SBEPIS.Bits
 	public class BitSetDrawer : PropertyDrawer
 	{
 		private static float LineHeight => EditorGUIUtility.singleLineHeight;
-		private static float ListHeight => LineHeight * BitManager.instance.Bits.NumBitsInCharacterGeneral * Mathf.Min(BitManager.instance.Bits.NumCharactersInCode, 2.5f);
+		private static float ListHeight => LineHeight * BitManager.Instance.Bits.NumBitsInCharacterGeneral * Mathf.Min(BitManager.Instance.Bits.NumCharactersInCode, 2.5f);
 		
 		private Vector2 scrollPosition;
 		
@@ -27,7 +27,7 @@ namespace SBEPIS.Bits
 				property.serializedObject.ApplyModifiedPropertiesWithoutUndo();
 			}
 			
-			BitList bitList = BitManager.instance.Bits;
+			BitList bitList = BitManager.Instance.Bits;
 			BitSet bitSet = (BitSet)property.boxedValue;
 			string code = bitList.BitSetToCode(bitSet);
 			
@@ -47,7 +47,7 @@ namespace SBEPIS.Bits
 			
 			if (property.isExpanded)
 			{
-				scrollPosition = GUI.BeginScrollView(new Rect(position.x, position.y + LineHeight, position.width, ListHeight), scrollPosition, new Rect(0, 0, position.width - 14, LineHeight * BitManager.instance.Bits.NumBitsInCharacterGeneral * BitManager.instance.Bits.NumCharactersInCode));
+				scrollPosition = GUI.BeginScrollView(new Rect(position.x, position.y + LineHeight, position.width, ListHeight), scrollPosition, new Rect(0, 0, position.width - 14, LineHeight * BitManager.Instance.Bits.NumBitsInCharacterGeneral * BitManager.Instance.Bits.NumCharactersInCode));
 				{
 					for (int charIndex = 0; charIndex < bitList.NumCharactersInCode; charIndex++)
 					{
@@ -63,7 +63,7 @@ namespace SBEPIS.Bits
 								if (newHasBit)
 									property.boxedValue = (BitSet)property.boxedValue | bit;
 								else
-									property.boxedValue = (BitSet)property.boxedValue & BitManager.instance.Bits.Not(bit);
+									property.boxedValue = (BitSet)property.boxedValue & BitManager.Instance.Bits.Not(bit);
 								property.serializedObject.ApplyModifiedProperties();
 							}
 						}

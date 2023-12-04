@@ -16,7 +16,7 @@ namespace SBEPIS.Thaumergy
 
 		private Item Alchemize()
 		{
-			Item item = Thaumerger.Thaumerge(itemToAlchemize.Make(), ItemModuleManager.instance);
+			Item item = Thaumerger.Thaumerge(itemToAlchemize.Make(), ItemModuleManager.Instance);
 			item.gameObject.name = gameObject.name;
 			return item;
 		}

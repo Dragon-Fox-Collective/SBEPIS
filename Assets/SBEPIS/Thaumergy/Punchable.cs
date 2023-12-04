@@ -18,11 +18,11 @@ namespace SBEPIS.Thaumergy
 		{
 			punchedBits = bits;
 			
-			for (int i = 0; i < Mathf.Min(48, BitManager.instance.Bits.NumBits); i++)
+			for (int i = 0; i < Mathf.Min(48, BitManager.Instance.Bits.NumBits); i++)
 				foreach (Material baseMaterial in materials)
 				{
 					int i1 = i;
-					renderers.PerformOnMaterial(baseMaterial, material => material.SetFloat($"_Bit_{i1 + 1}", BitManager.instance.Bits.BitSetHasBitAt(bits, i1) ? 1 : 0));
+					renderers.PerformOnMaterial(baseMaterial, material => material.SetFloat($"_Bit_{i1 + 1}", BitManager.Instance.Bits.BitSetHasBitAt(bits, i1) ? 1 : 0));
 				}
 		}
 	}

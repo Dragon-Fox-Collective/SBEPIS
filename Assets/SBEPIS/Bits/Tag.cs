@@ -20,6 +20,6 @@ namespace SBEPIS.Bits
 		public static bool operator ==(Tag a, Tag b) => a?.GetType() == b?.GetType() && a?.key == b?.key;
 		public static bool operator !=(Tag a, Tag b) => a?.GetType() != b?.GetType() || a?.key != b?.key;
 
-		public override string ToString() => "Tag{" + key + "}";
+		public override string ToString() => key;
 	}
 }

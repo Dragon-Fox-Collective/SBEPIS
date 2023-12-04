@@ -8,5 +8,7 @@ namespace SBEPIS.Items
 	{
 		[SerializeField, Self] private ItemModule module;
 		public ItemModule Module => module;
+		
+		public override string ToString() => module.ToString();
 	}
 }
