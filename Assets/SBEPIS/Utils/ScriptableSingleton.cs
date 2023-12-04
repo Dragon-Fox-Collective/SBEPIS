@@ -23,9 +23,9 @@ namespace SBEPIS.Utils
 			T[] assets = Resources.LoadAll<T>("");
 
 			if (assets.Length == 0)
-				throw new ArgumentOutOfRangeException($"There are no {typeof(T).Name} files found");
+				throw new ArgumentException($"There are no {typeof(T).Name} files found");
 			if (assets.Length > 1)
-				throw new ArgumentOutOfRangeException($"There are too many {typeof(T).Name} files found");
+				throw new ArgumentException($"There are too many {typeof(T).Name} files found");
 
 			return assets[0];
 		}

@@ -11,8 +11,8 @@ namespace SBEPIS.Thaumergy
 	{
 		private static readonly ThaumergeRule[] Rules = {
 			new BaseModelReplaceThaumergeRule(),
-			new AeratedAttachThaumergeRule(),
 			new DefaultReplaceThaumergeRule(),
+			new AeratedAttachThaumergeRule(),
 			new MaterialThaumergeRule(),
 		};
 		

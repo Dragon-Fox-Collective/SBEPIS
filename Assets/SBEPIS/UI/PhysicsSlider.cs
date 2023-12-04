@@ -201,6 +201,15 @@ namespace SBEPIS.UI
 			SetRelativeProgress(progress);
 		}
 		
+		private void OnDrawGizmosSelected()
+		{
+			if (axis is ButtonAxis.XPosition or ButtonAxis.YPosition or ButtonAxis.ZPosition)
+			{
+				Gizmos.color = Color.green;
+				Gizmos.DrawLine(StartPoint, EndPoint);
+			}
+		}
+
 		public void Yeah()
 		{
 			print(gameObject + " " + progress);

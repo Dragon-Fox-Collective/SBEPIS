@@ -9,17 +9,16 @@ namespace SBEPIS.Items
 		[SerializeField, Self]
 		private TMP_Text text;
 		
-		[SerializeField]
-		private string noItemText = "Place item nearby to debug";
+		private string initialText;
 		
 		private void Start()
 		{
-			text.text = noItemText;
+			initialText = text.text;
 		}
 		
 		public void UpdateText(Item item)
 		{
-			text.text = item ? item.Module.Bits.Tags.ToDelimString() : noItemText;
+			text.text = item ? item.Module.Bits.Tags.ToDelimString() : initialText;
 		}
 	}
 }

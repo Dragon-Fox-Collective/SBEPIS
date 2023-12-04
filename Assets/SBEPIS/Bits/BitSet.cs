@@ -9,6 +9,8 @@ namespace SBEPIS.Bits
 	[Serializable]
 	public struct BitSet : IEnumerable<Bit>, IEquatable<BitSet>
 	{
+		public static readonly BitSet Empty = new(Array.Empty<Bit>());
+		
 		[SerializeField] private Bit[] bits;
 		private Bit[] Bits => bits ??= Array.Empty<Bit>();
 		
@@ -16,6 +18,8 @@ namespace SBEPIS.Bits
 		{
 			this.bits = bits.ToArray();
 		}
+		
+		public string Code => BitManager.Instance.Bits.BitSetToCode(this);
 		
 		public override string ToString() => Bits?.ToDelimString();
 		public override int GetHashCode() => Bits != null ? Bits.GetHashCode() : 0;
@@ -31,8 +35,8 @@ namespace SBEPIS.Bits
 		
 		public static implicit operator BitSet(Bit bit) => new(new []{bit});
 		
-		public TaggedBitSet With(IEnumerable<Tag> tags) => new(this, tags);
-		public TaggedBitSet With(IEnumerable<Tag> a, IEnumerable<Tag> b) => With(TagAppender.Append(a, b));
+		public static TaggedBitSet operator +(BitSet a, IEnumerable<Tag> b) => new(a, b);
+		public static TaggedBitSet operator +(BitSet a, Tag b) => a + ExtensionMethods.EnumerableOf(b);
 		
 		public bool Has(Bit other) => Bits.Contains(other);
 		public bool Has(BitSet other) => (this & other) == other;

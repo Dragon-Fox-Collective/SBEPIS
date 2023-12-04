@@ -16,11 +16,11 @@ namespace SBEPIS.Bits
 		[SerializeField] private ItemModule itemModule;
 		[SerializeField] private Material material;
 
-		public TaggedBitSet Make() => bits.With(new Tag[]
+		public TaggedBitSet Make() => bits + new Tag[]
 				{
 					itemModule ? new BaseModelTag(itemModule) : null,
 					material ? new MaterialTag(material) : null,
-				}.Where(member => member != null).ToArray());
+				}.Where(member => member != null);
 	}
 }
 
@@ -32,7 +32,7 @@ namespace SBEPIS.Bits.Tags
 		[FormerlySerializedAs("_itemBase")]
 		[SerializeField]
 		private ItemModule _itemModule;
-		public ItemModule itemModule => _itemModule;
+		public ItemModule ItemModule => _itemModule;
 
 		public BaseModelTag(ItemModule itemModule) : base($"baseModel:{itemModule.name}")
 		{
@@ -45,7 +45,7 @@ namespace SBEPIS.Bits.Tags
 	{
 		[SerializeField]
 		private Material _material;
-		public Material material => _material;
+		public Material Material => _material;
 
 		public MaterialTag(Material material) : base($"material:{material.name}")
 		{

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using SBEPIS.Bits.TagAppendRules;
 using UnityEngine.Serialization;
 
 namespace SBEPIS.Bits
@@ -9,6 +10,8 @@ namespace SBEPIS.Bits
 	[Serializable]
 	public struct TaggedBitSet : IEquatable<TaggedBitSet>
 	{
+		public static readonly TaggedBitSet Empty = new(BitSet.Empty, Enumerable.Empty<Tag>());
+		
 		[FormerlySerializedAs("_bits")]
 		[SerializeField] private BitSet bits;
 		public BitSet Bits => bits;
@@ -29,28 +32,38 @@ namespace SBEPIS.Bits
 		public override bool Equals(object obj) => obj is TaggedBitSet other && this == other;
 		public bool Equals(TaggedBitSet other) => this == other;
 		
-		public static TaggedBitSet operator |(TaggedBitSet a, TaggedBitSet b) => (a.bits | b.bits).With(a.Tags, b.Tags);
-		public static TaggedBitSet operator &(TaggedBitSet a, TaggedBitSet b) => (a.bits & b.bits).With(a.Tags, b.Tags);
-		public static TaggedBitSet operator ^(TaggedBitSet a, TaggedBitSet b) => (a.bits ^ b.bits).With(a.Tags, b.Tags);
-		public static TaggedBitSet operator -(TaggedBitSet a, TaggedBitSet b) => (a.bits - b.bits).With(a.Tags, b.Tags);
-		public static bool operator ==(TaggedBitSet a, TaggedBitSet b) => a.bits == b.bits && TagAppender.MembersEqual(a.Tags, b.Tags);
-		public static bool operator !=(TaggedBitSet a, TaggedBitSet b) => a.bits != b.bits || !TagAppender.MembersEqual(a.Tags, b.Tags);
+		public static TaggedBitSet operator |(TaggedBitSet a, TaggedBitSet b) => TagAppendRuleList.Instance.Append(a, b, a.bits | b.bits);
+		public static TaggedBitSet operator &(TaggedBitSet a, TaggedBitSet b) => TagAppendRuleList.Instance.Append(a, b, a.bits & b.bits);
+		public static TaggedBitSet operator ^(TaggedBitSet a, TaggedBitSet b) => TagAppendRuleList.Instance.Append(a, b, a.bits ^ b.bits);
+		public static TaggedBitSet operator -(TaggedBitSet a, TaggedBitSet b) => TagAppendRuleList.Instance.Append(a, b, a.bits - b.bits);
+		public static bool operator ==(TaggedBitSet a, TaggedBitSet b) => a.bits == b.bits && TagsEqual(a.Tags, b.Tags);
+		public static bool operator !=(TaggedBitSet a, TaggedBitSet b) => a.bits != b.bits || !TagsEqual(a.Tags, b.Tags);
 		
-		public static TaggedBitSet operator |(TaggedBitSet a, BitSet b) => (a.bits | b).With(a.Tags);
-		public static TaggedBitSet operator |(BitSet a, TaggedBitSet b) => (a | b.bits).With(b.Tags);
-		public static TaggedBitSet operator &(TaggedBitSet a, BitSet b) => (a.bits & b).With(a.Tags);
-		public static TaggedBitSet operator &(BitSet a, TaggedBitSet b) => (a & b.bits).With(b.Tags);
-		public static TaggedBitSet operator ^(TaggedBitSet a, BitSet b) => (a.bits ^ b).With(a.Tags);
-		public static TaggedBitSet operator ^(BitSet a, TaggedBitSet b) => (a ^ b.bits).With(b.Tags);
+		public static TaggedBitSet operator |(TaggedBitSet a, BitSet b) => TagAppendRuleList.Instance.Append(a, a.bits | b);
+		public static TaggedBitSet operator |(BitSet a, TaggedBitSet b) => TagAppendRuleList.Instance.Append(b, a | b.bits);
+		public static TaggedBitSet operator &(TaggedBitSet a, BitSet b) => TagAppendRuleList.Instance.Append(a, a.bits & b);
+		public static TaggedBitSet operator &(BitSet a, TaggedBitSet b) => TagAppendRuleList.Instance.Append(b, a & b.bits);
+		public static TaggedBitSet operator ^(TaggedBitSet a, BitSet b) => TagAppendRuleList.Instance.Append(a, a.bits ^ b);
+		public static TaggedBitSet operator ^(BitSet a, TaggedBitSet b) => TagAppendRuleList.Instance.Append(b, a ^ b.bits);
+		public static TaggedBitSet operator -(TaggedBitSet a, BitSet b) => TagAppendRuleList.Instance.Append(a, a.bits - b);
+		public static TaggedBitSet operator -(BitSet a, TaggedBitSet b) => TagAppendRuleList.Instance.Append(b, a - b.bits);
 		
-		public static TaggedBitSet operator +(TaggedBitSet a, Tag b) => a.With(new[]{ b });
-		public static TaggedBitSet operator +(TaggedBitSet a, Tag[] b) => a.With(b);
-		public static TaggedBitSet operator -(TaggedBitSet a, Tag b) => a.Without(new[]{ b });
-		public static TaggedBitSet operator -(TaggedBitSet a, Tag[] b) => a.Without(b);
+		public static TaggedBitSet operator +(TaggedBitSet a, IEnumerable<Tag> b) => a.bits + a.Tags.Union(b);
+		public static TaggedBitSet operator +(TaggedBitSet a, Tag b) => a + ExtensionMethods.EnumerableOf(b);
+		public static TaggedBitSet operator -(TaggedBitSet a, IEnumerable<Tag> b) => a.bits + a.Tags.Except(b);
+		public static TaggedBitSet operator -(TaggedBitSet a, Tag b) => a - ExtensionMethods.EnumerableOf(b);
+		
+		public static implicit operator TaggedBitSet(BitSet bits) => new(bits, Enumerable.Empty<Tag>());
 		
 		public bool Has(BitSet other) => bits.Has(other);
 		
-		public TaggedBitSet With(IEnumerable<Tag> other) => bits.With(TagAppender.Append(Tags, other));
-		public TaggedBitSet Without(IEnumerable<Tag> other) => bits.With(Tags.Where(member => !other.Contains(member)).ToArray());
+		public static bool TagsEqual(IEnumerable<Tag> a, IEnumerable<Tag> b)
+		{
+			if (a is null && b is null)
+				return true;
+			if (a is null || b is null)
+				return false;
+			return new HashSet<Tag>(a).SetEquals(b);
+		}
 	}
 }
