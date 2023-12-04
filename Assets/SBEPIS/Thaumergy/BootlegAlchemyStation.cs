@@ -81,9 +81,9 @@ namespace SBEPIS.Thaumergy
 				: Bits2 ? Bits2.Module.Bits.Bits
 				: BitSet.Empty;
 			
-			Result = Tags1 && Tags2 ? TagAppendRuleList.Instance.Append(Tags1.Module.Bits, Tags2.Module.Bits, code)
-				: Tags1 ? TagAppendRuleList.Instance.Append(Tags1.Module.Bits, code)
-				: Tags2 ? TagAppendRuleList.Instance.Append(Tags2.Module.Bits, code)
+			Result = Tags1 && Tags2 ? TagAppender.Instance.Append(Tags1.Module.Bits, Tags2.Module.Bits, code)
+				: Tags1 ? TagAppender.Instance.Append(Tags1.Module.Bits, code)
+				: Tags2 ? TagAppender.Instance.Append(Tags2.Module.Bits, code)
 				: code;
 			
 			OnResultChange.Invoke();
@@ -91,7 +91,7 @@ namespace SBEPIS.Thaumergy
 
 		public void Alchemize()
 		{
-			Item item = Thaumerger.Thaumerge(Result, ItemModuleManager.Instance);
+			Item item = Thaumerger.Instance.Thaumerge(Result, ItemModuleManager.Instance);
 			item.transform.SetPositionAndRotation(alchemizePoint.position, alchemizePoint.rotation);
 			if (item.TryGetComponent(out Rigidbody itemRigidbody))
 			{

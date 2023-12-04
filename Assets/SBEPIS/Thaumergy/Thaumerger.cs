@@ -1,32 +1,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using SBEPIS.Bits;
-using SBEPIS.Bits.ThaumergeRules;
 using SBEPIS.Items;
+using SBEPIS.Thaumergy.ThaumergyRules;
+using SBEPIS.Utils;
 using UnityEngine;
 
 namespace SBEPIS.Thaumergy
 {
-	public static class Thaumerger
+	[CreateAssetMenu(fileName = nameof(Thaumerger))]
+	public class Thaumerger : ScriptableSingleton<Thaumerger>
 	{
-		private static readonly ThaumergeRule[] Rules = {
-			new BaseModelReplaceThaumergeRule(),
-			new DefaultReplaceThaumergeRule(),
-			new AeratedAttachThaumergeRule(),
-			new MaterialThaumergeRule(),
-		};
+		[SerializeField]
+		private List<ThaumergyRule> rules = new();
 		
-		public static Item Thaumerge(TaggedBitSet bits, ItemModuleManager modules)
+		public Item Thaumerge(TaggedBitSet bits, ItemModuleManager modules)
 		{
-			Item item = Object.Instantiate(modules.itemBase);
-			InitRules(Rules);
-			while (IterateRules(Rules, bits, item.Module, modules)) { }
+			Item item = Instantiate(modules.itemBase);
+			InitRules();
+			while (IterateRules(bits, item.Module, modules)) { }
 			return item;
 		}
 		
-		private static void InitRules(IEnumerable<ThaumergeRule> rules) => rules.ForEach(rule => rule.Init());
+		private void InitRules() => rules.ForEach(rule => rule.Init());
 		
-		private static bool IterateRules(IEnumerable<ThaumergeRule> rules, TaggedBitSet bits, ItemModule item, ItemModuleManager modules) =>
+		private bool IterateRules(TaggedBitSet bits, ItemModule item, ItemModuleManager modules) =>
 			rules.Any(rule => rule.Apply(bits, item, modules));
+	}
+}
+
+namespace SBEPIS.Thaumergy.ThaumergyRules
+{
+	public abstract class ThaumergyRule : ScriptableObject
+	{
+		public virtual void Init() { }
+		public abstract bool Apply(TaggedBitSet bits, ItemModule item, ItemModuleManager modules);
 	}
 }

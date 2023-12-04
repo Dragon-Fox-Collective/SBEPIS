@@ -1,19 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SBEPIS.Bits.TagAppendRules.Double;
+using SBEPIS.Bits.TagAppendRules.Single;
 using SBEPIS.Utils;
 using UnityEngine;
 
-namespace SBEPIS.Bits.TagAppendRules
+namespace SBEPIS.Bits
 {
-	[CreateAssetMenu(fileName = nameof(TagAppendRuleList))]
-	public class TagAppendRuleList : ScriptableSingleton<TagAppendRuleList>
+	[CreateAssetMenu(fileName = nameof(TagAppender))]
+	public class TagAppender : ScriptableSingleton<TagAppender>
 	{
 		[SerializeField]
-		private List<Single.SingleTagAppendRule> singleRules = new();
+		private List<SingleTagAppendRule> singleRules = new();
 
 		[SerializeField]
-		private List<Double.DoubleTagAppendRule> doubleRules = new();
+		private List<DoubleTagAppendRule> doubleRules = new();
 
 		public TaggedBitSet Append(TaggedBitSet a, BitSet resultBits)
 		{
