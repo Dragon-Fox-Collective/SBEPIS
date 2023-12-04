@@ -19,8 +19,8 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 
 			ItemModule module = Instantiate(tag.ItemModule);
 
-			module.transform.Replace(item.replaceObject);
-			item.replaceObject = module.replaceObject;
+			module.transform.Replace(item.ReplaceObject);
+			item.ReplaceObject = module.ReplaceObject;
 
 			item.Bits |= module.Bits.Bits;
 			item.Bits += tag;

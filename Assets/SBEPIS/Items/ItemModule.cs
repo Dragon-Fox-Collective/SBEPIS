@@ -1,5 +1,6 @@
 using SBEPIS.Bits;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Items
 {
@@ -27,8 +28,10 @@ namespace SBEPIS.Items
 			}
 		}
 		
-		public Transform replaceObject;
-		public Transform aeratedAttachmentPoint;
+		[FormerlySerializedAs("replaceObject")]
+		public Transform ReplaceObject;
+		[FormerlySerializedAs("aeratedAttachmentPoint")]
+		public Transform AeratedAttachmentPoint;
 		
 		private void Start()
 		{

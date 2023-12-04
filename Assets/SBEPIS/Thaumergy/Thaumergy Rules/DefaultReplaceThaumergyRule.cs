@@ -1,4 +1,5 @@
-﻿using SBEPIS.Bits;
+﻿using System.Linq;
+using SBEPIS.Bits;
 using SBEPIS.Items;
 using UnityEngine;
 
@@ -7,19 +8,26 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 	[CreateAssetMenu(fileName = nameof(DefaultReplaceThaumergyRule), menuName = "ThaumergyRules/" + nameof(DefaultReplaceThaumergyRule))]
 	public class DefaultReplaceThaumergyRule : ThaumergyRule
 	{
+		private bool happenedAtLeastOnce;
+
+		public override void Init() => happenedAtLeastOnce = false;
+
 		public override bool Apply(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
-			if (bits.Bits == item.Bits.Bits)
+			if (bits.Bits == item.Bits.Bits && happenedAtLeastOnce)
 				return false;
 			
-			ItemModule modulePrefab = GetModulePrefabFromScore(bits, item, modules);
+			ItemModule modulePrefab = bits.Bits == BitSet.Empty
+				? modules.modules.Last()
+				: GetModulePrefabFromScore(bits, item, modules);
 			
 			if (modulePrefab is null)
 				return false;
 			
-			ItemModule module = Object.Instantiate(modulePrefab);
+			ItemModule module = Instantiate(modulePrefab);
 			PlaceModuleUnderItem(item, module);
-			
+
+			happenedAtLeastOnce = true;
 			return true;
 		}
 		
@@ -44,8 +52,8 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 		
 		private static void PlaceModuleUnderItem(ItemModule item, ItemModule module)
 		{
-			module.transform.Replace(item.replaceObject);
-			item.replaceObject = module.replaceObject;
+			module.transform.Replace(item.ReplaceObject);
+			item.ReplaceObject = module.ReplaceObject;
 			item.Bits |= module.Bits.Bits;
 		}
 	}

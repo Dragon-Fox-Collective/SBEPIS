@@ -17,7 +17,7 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 		
 		public override bool ApplyOnce(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
-			if (!bits.Has(aerated) || !item.aeratedAttachmentPoint)
+			if (!bits.Has(aerated) || !item.AeratedAttachmentPoint)
 				return false;
 			
 			return true;
