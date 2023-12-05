@@ -14,6 +14,9 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 
 		public override bool Apply(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
+			if (item.Bits.Bits == bits.Bits && item.Bits.Bits != BitSet.Empty)
+				finished = true;
+			
 			if (finished)
 				return false;
 			
@@ -25,7 +28,7 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 					Debug.LogError($"Had to use PGO for {bits.Bits} on {item.Bits.Bits}");
 				item.Bits |= bits.Bits;
 				finished = true;
-				modulePrefab = modules.modules.Last();
+				modulePrefab = modules.Modules.Last();
 			}
 
 			ItemModule module = Instantiate(modulePrefab);
@@ -40,7 +43,7 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 		{
 			ItemModule module = null;
 			int moduleScore = int.MinValue;
-			foreach (ItemModule newModule in modules.modules)
+			foreach (ItemModule newModule in modules.Modules)
 			{
 				if (bits.Has(newModule.Bits.Bits) && !item.Bits.Has(newModule.Bits.Bits))
 				{

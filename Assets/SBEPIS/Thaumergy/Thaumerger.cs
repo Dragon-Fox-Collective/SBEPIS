@@ -16,7 +16,7 @@ namespace SBEPIS.Thaumergy
 		
 		public Item Thaumerge(TaggedBitSet bits, ItemModuleManager modules)
 		{
-			Item item = Instantiate(modules.itemBase);
+			Item item = Instantiate(modules.ItemBase);
 			InitRules();
 			while (IterateRules(bits, item.Module, modules)) { }
 			return item;

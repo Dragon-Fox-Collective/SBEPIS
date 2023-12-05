@@ -7,7 +7,7 @@ using UnityEngine;
 namespace SBEPIS.Thaumergy.ThaumergyRules
 {
 	[CreateAssetMenu(fileName = nameof(MaterialThaumergyRule), menuName = "ThaumergyRules/" + nameof(MaterialThaumergyRule))]
-	public class MaterialThaumergyRule : DoOnceThaumaturgyRule
+	public class MaterialThaumergyRule : DoOnceThaumergyRule
 	{
 		public override bool ApplyOnce(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
