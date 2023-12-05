@@ -1,7 +1,6 @@
 using System;
 using KBCore.Refs;
 using SBEPIS.Bits;
-using SBEPIS.Bits.TagAppendRules;
 using SBEPIS.Items;
 using UnityEngine;
 using UnityEngine.Events;
@@ -69,6 +68,11 @@ namespace SBEPIS.Thaumergy
 
 		public TaggedBitSet Result { get; private set; }
 
+		private void Start()
+		{
+			UpdateResult();
+		}
+
 		private void UpdateResult()
 		{
 			BitSet code = Bits1 && Bits2 ? Mode switch
@@ -84,7 +88,7 @@ namespace SBEPIS.Thaumergy
 			Result = Tags1 && Tags2 ? TagAppender.Instance.Append(Tags1.Module.Bits, Tags2.Module.Bits, code)
 				: Tags1 ? TagAppender.Instance.Append(Tags1.Module.Bits, code)
 				: Tags2 ? TagAppender.Instance.Append(Tags2.Module.Bits, code)
-				: code;
+				: TagAppender.Instance.Append(TaggedBitSet.Empty, code);
 			
 			OnResultChange.Invoke();
 		}

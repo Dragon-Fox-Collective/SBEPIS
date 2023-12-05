@@ -21,9 +21,6 @@ namespace SBEPIS.Bits
 		{
 			List<Tag> aTags = a.Tags.ToList(), resultTags = new();
 
-			if (aTags.Count == 0)
-				return resultBits;
-
 			singleRules.ForEach(rule => rule.Apply(a.Bits, aTags, resultBits, resultTags));
 
 			if (aTags.Count > 0)
@@ -35,11 +32,6 @@ namespace SBEPIS.Bits
 		public TaggedBitSet Append(TaggedBitSet a, TaggedBitSet b, BitSet resultBits)
 		{
 			List<Tag> aTags = a.Tags.ToList(), bTags = b.Tags.ToList(), resultTags = new();
-
-			if (aTags.Count == 0)
-				return resultBits + bTags;
-			if (bTags.Count == 0)
-				return resultBits + aTags;
 
 			doubleRules.ForEach(rule => rule.Apply(a.Bits, aTags, b.Bits, bTags, resultBits, resultTags));
 
