@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SBEPIS.Bits.TagAppendRules.Double
+namespace SBEPIS.Bits.TagAppendRules
 {
-	public abstract class SingletonDoubleTagRule<T> : DoubleTagAppendRule where T : Tag
+	public abstract class SingletonTagRule<T> : TagAppendRule where T : Tag
 	{
 		public override void Apply(BitSet aBits, List<Tag> aTags, BitSet bBits, List<Tag> bTags, BitSet resultBits, List<Tag> resultTags)
 		{

@@ -3,10 +3,10 @@ using System.Linq;
 using SBEPIS.Bits.Tags;
 using UnityEngine;
 
-namespace SBEPIS.Bits.TagAppendRules.Double
+namespace SBEPIS.Bits.TagAppendRules
 {
-	[CreateAssetMenu(fileName = nameof(PerfectlyGenericDoubleTagRule), menuName = "DoubleTagAppendRules/" + nameof(PerfectlyGenericDoubleTagRule))]
-	public class PerfectlyGenericDoubleTagRule : DoubleTagAppendRule
+	[CreateAssetMenu(fileName = nameof(PerfectlyGenericTagRule), menuName = "DoubleTagAppendRules/" + nameof(PerfectlyGenericTagRule))]
+	public class PerfectlyGenericTagRule : TagAppendRule
 	{
 		[SerializeField]
 		private Material perfectlyGenericMaterial;

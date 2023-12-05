@@ -2,10 +2,10 @@
 using System.Linq;
 using UnityEngine;
 
-namespace SBEPIS.Bits.TagAppendRules.Double
+namespace SBEPIS.Bits.TagAppendRules
 {
-	[CreateAssetMenu(fileName = nameof(AppendDoubleTagRule), menuName = "DoubleTagAppendRules/" + nameof(AppendDoubleTagRule))]
-	public class AppendDoubleTagRule : DoubleTagAppendRule
+	[CreateAssetMenu(fileName = nameof(AppendTagRule), menuName = "DoubleTagAppendRules/" + nameof(AppendTagRule))]
+	public class AppendTagRule : TagAppendRule
 	{
 		public override void Apply(BitSet aBits, List<Tag> aTags, BitSet bBits, List<Tag> bTags, BitSet resultBits, List<Tag> resultTags)
 		{
