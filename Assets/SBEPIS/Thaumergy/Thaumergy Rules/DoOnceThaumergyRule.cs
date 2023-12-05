@@ -3,7 +3,7 @@ using SBEPIS.Items;
 
 namespace SBEPIS.Thaumergy.ThaumergyRules
 {
-	public abstract class DoOnceThaumaturgyRule : ThaumergyRule
+	public abstract class DoOnceThaumergyRule : ThaumergyRule
 	{
 		private bool applied;
 

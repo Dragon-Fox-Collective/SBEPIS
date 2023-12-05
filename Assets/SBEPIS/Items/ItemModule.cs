@@ -44,7 +44,7 @@ namespace SBEPIS.Items
 			if (GetComponentInParent<Item>())
 				return false;
 			
-			Item item = Instantiate(ItemModuleManager.Instance.itemBase, transform.parent);
+			Item item = Instantiate(ItemModuleManager.Instance.ItemBase, transform.parent);
 			item.transform.SetPositionAndRotation(transform.position, transform.rotation);
 			transform.SetParent(item.transform, true);
 			item.name = name;

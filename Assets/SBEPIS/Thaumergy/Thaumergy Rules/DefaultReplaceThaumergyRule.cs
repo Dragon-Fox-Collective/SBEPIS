@@ -8,26 +8,34 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 	[CreateAssetMenu(fileName = nameof(DefaultReplaceThaumergyRule), menuName = "ThaumergyRules/" + nameof(DefaultReplaceThaumergyRule))]
 	public class DefaultReplaceThaumergyRule : ThaumergyRule
 	{
-		private bool happenedAtLeastOnce;
+		private bool finished;
 
-		public override void Init() => happenedAtLeastOnce = false;
+		public override void Init() => finished = false;
 
 		public override bool Apply(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
-			if (bits.Bits == item.Bits.Bits && happenedAtLeastOnce)
+			if (item.Bits.Bits == bits.Bits && item.Bits.Bits != BitSet.Empty)
+				finished = true;
+			
+			if (finished)
 				return false;
 			
-			ItemModule modulePrefab = bits.Bits == BitSet.Empty
-				? modules.modules.Last()
-				: GetModulePrefabFromScore(bits, item, modules);
-			
+			ItemModule modulePrefab = GetModulePrefabFromScore(bits, item, modules);
+
 			if (modulePrefab is null)
-				return false;
-			
+			{
+				if (bits.Bits != BitSet.Empty)
+					Debug.LogError($"Had to use PGO for {bits.Bits} on {item.Bits.Bits}");
+				item.Bits |= bits.Bits;
+				finished = true;
+				modulePrefab = modules.Modules.Last();
+			}
+
 			ItemModule module = Instantiate(modulePrefab);
 			PlaceModuleUnderItem(item, module);
-
-			happenedAtLeastOnce = true;
+			
+			if (item.Bits.Bits == bits.Bits)
+				finished = true;
 			return true;
 		}
 		
@@ -35,7 +43,7 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 		{
 			ItemModule module = null;
 			int moduleScore = int.MinValue;
-			foreach (ItemModule newModule in modules.modules)
+			foreach (ItemModule newModule in modules.Modules)
 			{
 				if (bits.Has(newModule.Bits.Bits) && !item.Bits.Has(newModule.Bits.Bits))
 				{

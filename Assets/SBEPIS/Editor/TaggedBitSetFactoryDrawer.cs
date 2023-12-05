@@ -24,7 +24,7 @@ namespace SBEPIS.Bits
 			{
 				label = "Base Module",
 				bindingPath = property.FindPropertyRelative("itemModule").propertyPath,
-				choices = ItemModuleManager.Instance.modules.Cast<UnityEngine.Object>().Prepend(null).ToList(),
+				choices = ItemModuleManager.Instance.Modules.Cast<UnityEngine.Object>().Prepend(null).ToList(),
 			});
 			
 			foldout.Add(new PropertyField(property.FindPropertyRelative("material")));
