@@ -1,3 +1,4 @@
+using System;
 using SBEPIS.Bits;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -59,6 +60,18 @@ namespace SBEPIS.Items
 		private void OnValidate()
 		{
 			madeBits = false;
+		}
+
+		private void OnDestroy()
+		{
+			if (!Application.isPlaying)
+				return;
+			
+			Item item = GetComponentInParent<Item>();
+			if (!item)
+				return;
+
+			Destroy(item.gameObject);
 		}
 	}
 }
