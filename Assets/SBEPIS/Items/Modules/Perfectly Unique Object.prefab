@@ -64,7 +64,7 @@ Transform:
   - {fileID: 3438405788769717491}
   - {fileID: 2313032213000305134}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-2854236428040530494
 MonoBehaviour:
@@ -86,14 +86,10 @@ MonoBehaviour:
       - {fileID: 11400000, guid: 9cb3153df63b1d04caa5363c8cb70983, type: 2}
       - {fileID: 11400000, guid: 8b97485f364731641bbffbb4177b0f21, type: 2}
       - {fileID: 11400000, guid: 16fd335e94196b943a233369f2c26081, type: 2}
-    itemBase: {fileID: 0}
-    material: {fileID: 0}
-  _bits:
-    _bits:
-      bits: []
-    _tags: []
-  replaceObject: {fileID: 3438405788769717491}
-  aeratedAttachmentPoint: {fileID: 2313032213000305134}
+    itemModule: {fileID: 0}
+    material: {fileID: 2100000, guid: fd82e884493d5b142ba889986747ee2a, type: 2}
+  ReplaceObject: {fileID: 3438405788769717491}
+  AeratedAttachmentPoint: {fileID: 2313032213000305134}
 --- !u!1 &6284802180349780102
 GameObject:
   m_ObjectHideFlags: 0
