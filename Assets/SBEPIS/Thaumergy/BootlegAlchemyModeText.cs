@@ -1,4 +1,5 @@
-﻿using KBCore.Refs;
+﻿using System;
+using KBCore.Refs;
 using TMPro;
 using UnityEngine;
 
@@ -11,12 +12,16 @@ namespace SBEPIS.Thaumergy
 		
 		[SerializeField, Parent]
 		private BootlegAlchemyStation alchemyStation;
-
+		
 		private string initialText;
+		
+		private void Awake()
+		{
+			initialText = text.text;
+		}
 		
 		private void Start()
 		{
-			initialText = text.text;
 			UpdateText();
 		}
 		
