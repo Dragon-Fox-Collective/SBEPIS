@@ -1,5 +1,4 @@
-﻿using System;
-using KBCore.Refs;
+﻿using KBCore.Refs;
 using TMPro;
 using UnityEngine;
 
