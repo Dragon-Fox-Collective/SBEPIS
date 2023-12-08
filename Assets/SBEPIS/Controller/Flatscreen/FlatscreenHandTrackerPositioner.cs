@@ -1,23 +1,36 @@
+using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Controller.Flatscreen
 {
-	public class FlatscreenHandTrackerPositioner : MonoBehaviour
+	public class FlatscreenHandTrackerPositioner : ValidatedMonoBehaviour
 	{
-		public Transform rightTracker;
-		public Grabber rightGrabber;
-		public Transform leftTracker;
-		public Grabber leftGrabber;
-		public float bothHandsOffset = 0.5f;
-		public float raycastDistance = 2;
-		public float minimumZoomDistance = 1;
-		public float startingZoomDistance = 1;
-		public float zoomSensitivity = 0.1f;
+		[SerializeField, Anywhere]
+		private Transform rightTracker;
+		[SerializeField, Anywhere]
+		private Grabber rightGrabber;
+		[SerializeField, Anywhere]
+		private Transform leftTracker;
+		[SerializeField, Anywhere]
+		private Grabber leftGrabber;
+		[SerializeField]
+		private float bothHandsOffset = 0.5f;
+		[SerializeField]
+		private float raycastDistance = 2;
+		[SerializeField]
+		private float minimumZoomDistance = 1;
+		[SerializeField]
+		private float startingZoomDistance = 1;
+		[SerializeField]
+		private float zoomSensitivity = 0.1f;
 		
-		public Transform rightHoldPosition;
-		public Transform leftHoldPosition;
+		[SerializeField, Anywhere]
+		private Transform rightHoldPosition;
+		[SerializeField, Anywhere]
+		private Transform leftHoldPosition;
 		
-		public Orientation playerOrientation;
+		[SerializeField, Anywhere]
+		private Orientation playerOrientation;
 		
 		private float zoomAmount;
 		public bool UseLeftHand { private get; set; }
