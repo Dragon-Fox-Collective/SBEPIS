@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Utils
 {
 	public class Space : ScriptableObject
 	{
+		[FormerlySerializedAs("_spaceName")]
 		[SerializeField]
-		private string _spaceName;
-
-		public string spaceName => _spaceName;
+		private string spaceName;
+		public string SpaceName => spaceName;
 	}
 }

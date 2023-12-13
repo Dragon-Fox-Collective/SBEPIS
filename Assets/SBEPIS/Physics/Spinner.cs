@@ -6,9 +6,11 @@ namespace SBEPIS.Physics
 	[RequireComponent(typeof(Rigidbody))]
 	public class Spinner : ValidatedMonoBehaviour
 	{
-		[SerializeField, Self] private new Rigidbody rigidbody;
+		[SerializeField, Self]
+		private new Rigidbody rigidbody;
 		
-		public float speed;
+		[SerializeField]
+		private float speed;
 		
 		private void FixedUpdate()
 		{

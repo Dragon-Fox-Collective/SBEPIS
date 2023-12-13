@@ -76,7 +76,7 @@ namespace SBEPIS.Capturellection.Deques
 		
 		protected override UniTask<StoreResult> StoreItemHook(TreeState state, Capturellectable item, StoreResult oldResult)
 		{
-			Storable storable = StorableWithCard(state, oldResult.card);
+			Storable storable = StorableWithCard(state, oldResult.Card);
 			if (!state.Tree.ContainsValue(storable))
 			{
 				state.Tree.Add(keyboard.Text, storable, Settings.Balance);

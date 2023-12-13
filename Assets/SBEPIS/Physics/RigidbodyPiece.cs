@@ -1,15 +1,17 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SBEPIS.Physics
 {
 	public class RigidbodyPiece : MonoBehaviour
 	{
-		public Collider referenceCollider;
-		public float mass = 1;
+		[SerializeField]
+		private Collider referenceCollider;
+		[SerializeField]
+		private float mass = 1;
+		public float Mass => mass;
 
-		public Vector3 worldCenter => transform.TransformPoint(referenceCollider switch
+		public Vector3 WorldCenter => transform.TransformPoint(referenceCollider switch
 		{
 			CapsuleCollider capsule => capsule.center,
 			BoxCollider box => box.center,
@@ -17,7 +19,7 @@ namespace SBEPIS.Physics
 			_ => throw new InvalidOperationException($"Reference collider {referenceCollider} is an invalid shape")
 		});
 
-		public Matrix4x4 localInertiaTensor {
+		public Matrix4x4 LocalInertiaTensor {
 			get
 			{
 				Vector3 lossyScale = referenceCollider.transform.lossyScale;

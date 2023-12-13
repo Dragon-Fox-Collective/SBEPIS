@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,12 +16,12 @@ namespace SBEPIS.UI
 		protected override void Evaluate()
 		{
 			base.Evaluate();
-			if (!IsPressed && (direction == ButtonDirection.LessThan ? progress < threshold : progress > threshold))
+			if (!IsPressed && (direction == ButtonDirection.LessThan ? Progress < threshold : Progress > threshold))
 			{
 				IsPressed = true;
 				onPressed.Invoke();
 			}
-			else if (IsPressed && (direction == ButtonDirection.LessThan ? progress > threshold : progress < threshold))
+			else if (IsPressed && (direction == ButtonDirection.LessThan ? Progress > threshold : Progress < threshold))
 			{
 				IsPressed = false;
 				onUnpressed.Invoke();
@@ -49,7 +48,7 @@ namespace SBEPIS.UI
 		
 		public void Yeah2()
 		{
-			print(gameObject + " " + progress + " " + IsPressed);
+			print(gameObject + " " + Progress + " " + IsPressed);
 		}
 		
 		public enum ButtonDirection

@@ -1,7 +1,5 @@
-using System;
 using KBCore.Refs;
 using SBEPIS.Capturellection;
-using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace SBEPIS.Tests.Scenes

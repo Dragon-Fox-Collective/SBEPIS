@@ -38,20 +38,20 @@ namespace SBEPIS.Capturellection.Storage
 		
 		private static T DoOn<T>(Func<LayerState, (DequeRuleset, object)> getter, LayerState state, Func<DequeRuleset, object, T> func) => func.InvokeWith(getter(state));
 		private static void DoOn(Func<LayerState, (DequeRuleset, object)> getter, LayerState state, Action<DequeRuleset, object> func) => func.InvokeWith(getter(state));
-		private IEnumerable<(DequeRuleset, object)> Zip(LayerState state) => rulesets.Zip(state.states).Reverse();
+		private IEnumerable<(DequeRuleset, object)> Zip(LayerState state) => rulesets.Zip(state.States).Reverse();
 		private T Aggregate<T>(LayerState state, T seed, Func<T, DequeRuleset, object, T> func)						=> Zip(state).Aggregate(seed,      (result, zip) => func(result, zip.Item1, zip.Item2));
 		private UniTask<T> Aggregate<T>(LayerState state, T seed, Func<T, DequeRuleset, object, UniTask<T>> func)	=> Zip(state).Aggregate(seed, (result, zip) => func(result, zip.Item1, zip.Item2));
 		private IEnumerable<T> AggregateExponential<T>(LayerState layerState, T seed, Func<T, DequeRuleset, object, IEnumerable<T>> func)					=> Aggregate(layerState, ExtensionMethods.EnumerableOf(seed), (result, ruleset, state) => result.SelectMany(res => func(res, ruleset, state)).Where(res => res is not null));
 		private UniTask<IEnumerable<T>> AggregateExponential<T>(LayerState layerState, T seed, Func<T, DequeRuleset, object, UniTask<IEnumerable<T>>> func)	=> Aggregate(layerState, ExtensionMethods.EnumerableOf(seed), (result, ruleset, state) => result.SelectMany(res => func(res, ruleset, state)).Where(res => res is not null));
 		
-		private (DequeRuleset, object) DequeForLayingOut(LayerState state) => (rulesets[0], state.states[0]);
-		private (DequeRuleset, object) DequeForStoring(LayerState state) => (rulesets[^1], state.states[^1]);
+		private (DequeRuleset, object) DequeForLayingOut(LayerState state) => (rulesets[0], state.States[0]);
+		private (DequeRuleset, object) DequeForStoring(LayerState state) => (rulesets[^1], state.States[^1]);
 		private Func<LayerState, (DequeRuleset, object)> DequeForFetching(InventoryStorable card) => state => Zip(state).First(zip => zip.Item1.CanFetch(zip.Item2, card));
 		
 		public override object GetNewState()
 		{
 			LayerState state = new();
-			state.states = rulesets.Select(ruleset => ruleset.GetNewState()).ToArray();
+			state.States = rulesets.Select(ruleset => ruleset.GetNewState()).ToArray();
 			state.Inventory = new CallbackList<Storable>();
 			return state;
 		}
@@ -77,7 +77,7 @@ namespace SBEPIS.Capturellection.Storage
 	[Serializable]
 	public class LayerState : InventoryState, DirectionState
 	{
-		public object[] states;
+		public object[] States;
 		
 		private CallbackList<Storable> inventory;
 		public CallbackList<Storable> Inventory
@@ -86,7 +86,7 @@ namespace SBEPIS.Capturellection.Storage
 			set
 			{
 				inventory = value;
-				foreach (object state in states)
+				foreach (object state in States)
 					if (state is InventoryState inventoryState)
 						inventoryState.Inventory = inventory;
 			}
@@ -99,7 +99,7 @@ namespace SBEPIS.Capturellection.Storage
 			set
 			{
 				direction = value;
-				foreach (object state in states)
+				foreach (object state in States)
 					if (state is DirectionState directionState)
 						directionState.Direction = value;
 			}

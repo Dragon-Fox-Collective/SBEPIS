@@ -1,6 +1,5 @@
 using KBCore.Refs;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace SBEPIS.Commands
 {

@@ -17,15 +17,15 @@ namespace SBEPIS.Tests
 		public IEnumerator StoringItem_GetsCard() => UniTask.ToCoroutine(async () =>
 		{
 			StoreResult result = await Scene.inventory.StoreItem(Scene.item);
-			Assert.That(result.card, Is.Not.Null);
+			Assert.That(result.Card, Is.Not.Null);
 		});
 		
 		[UnityTest]
 		public IEnumerator FetchingItem_GetsOriginalItem() => UniTask.ToCoroutine(async () =>
 		{
 			StoreResult storeResult = await Scene.inventory.StoreItem(Scene.item);
-			FetchResult fetchResult = await Scene.inventory.FetchItem(storeResult.card);
-			Assert.That(fetchResult.fetchedItem, Is.EqualTo(Scene.item));
+			FetchResult fetchResult = await Scene.inventory.FetchItem(storeResult.Card);
+			Assert.That(fetchResult.FetchedItem, Is.EqualTo(Scene.item));
 		});
 
 		[Test]

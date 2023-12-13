@@ -21,14 +21,14 @@ namespace SBEPIS.Capturellection.Deques
 			Vector2 gridCount = new(numCardsX, Mathf.Ceil((float)inventory.Count / numCardsX));
 			
 			Vector3 maxSize = inventory.Select(storable => storable.MaxPossibleSize).Aggregate(ExtensionMethods.Max);
-			Vector3x2 direction = new(state.Direction, Quaternion.Euler(0, 0, -90) * state.Direction);
-			Vector3x2 absDirection = direction.Select(Mathf.Abs);
+			Vector3X2 direction = new(state.Direction, Quaternion.Euler(0, 0, -90) * state.Direction);
+			Vector3X2 absDirection = direction.Select(Mathf.Abs);
 			Vector2 lengthSum = absDirection.AggregateIndex((index, absDir) => offset[index] * (gridCount[index] - 1) + Vector3.Project(maxSize, absDir).magnitude * gridCount[index]);
 			
 			Vector3 pos = (-lengthSum / 2 * direction).Sum();
 			foreach (IEnumerable<Storable> row in inventory.Divide(numCardsX))
 			{
-				Vector2 length = Vector3x2.Project(maxSize, absDirection).magnitude;
+				Vector2 length = Vector3X2.Project(maxSize, absDirection).Magnitude;
 				
 				pos += direction.y * length.y / 2;
 				

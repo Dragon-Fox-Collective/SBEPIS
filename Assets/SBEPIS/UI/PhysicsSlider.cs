@@ -18,7 +18,7 @@ namespace SBEPIS.UI
 		public UnityEvent<float> onProgressChanged = new();
 		
 		[NonSerialized]
-		public float progress;
+		public float Progress;
 		private float lastProgress;
 		
 		private Vector3 initialRelativeConnectedAnchor;
@@ -38,10 +38,10 @@ namespace SBEPIS.UI
 		
 		protected virtual void Evaluate()
 		{
-			lastProgress = progress;
-			progress = RelativeProgress;
-			if (lastProgress != progress)
-				onProgressChanged.Invoke(progress);
+			lastProgress = Progress;
+			Progress = RelativeProgress;
+			if (Math.Abs(lastProgress - Progress) > 0.01f)
+				onProgressChanged.Invoke(Progress);
 		}
 		
 		protected float RelativeProgress
@@ -212,7 +212,7 @@ namespace SBEPIS.UI
 
 		public void Yeah()
 		{
-			print(gameObject + " " + progress);
+			print(gameObject + " " + Progress);
 		}
 		
 		public enum ButtonAxis

@@ -13,8 +13,8 @@ namespace SBEPIS.Capturellection.Deques
 		protected override UniTask<FetchResult> FetchItemHook(EightBallState state, InventoryStorable card, FetchResult oldResult)
 		{
 			EightBallFetched eightBall = Instantiate(fetchedEightBallPrefab).GetComponentInChildren<EightBallFetched>();
-			eightBall.Container.Capture(oldResult.fetchedItem);
-			oldResult.fetchedItem = eightBall.Capturellectable;
+			eightBall.Container.Capture(oldResult.FetchedItem);
+			oldResult.FetchedItem = eightBall.Capturellectable;
 			return UniTask.FromResult(oldResult);
 		}
 		
@@ -24,13 +24,13 @@ namespace SBEPIS.Capturellection.Deques
 			eightBall.Card.DequeElement.SetParent(card.DequeElement.Parent);
 			eightBall.Card.Inventory = card.Inventory;
 			eightBall.OriginalCard = card;
-			state.eightBalls[card] = eightBall;
+			state.EightBalls[card] = eightBall;
 			yield return eightBall.Card;
 		}
 		
 		protected override IEnumerable<InventoryStorable> SaveCardHook(EightBallState state, InventoryStorable slot)
 		{
-			state.eightBalls.Remove(slot, out EightBall eightBall);
+			state.EightBalls.Remove(slot, out EightBall eightBall);
 			InventoryStorable card = eightBall.OriginalCard;
 			Destroy(eightBall.Root.gameObject);
 			yield return card;
@@ -41,6 +41,6 @@ namespace SBEPIS.Capturellection.Deques
 	{
 		public CallbackList<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
-		public readonly Dictionary<InventoryStorable, EightBall> eightBalls = new();
+		public readonly Dictionary<InventoryStorable, EightBall> EightBalls = new();
 	}
 }

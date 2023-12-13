@@ -16,6 +16,7 @@ namespace SBEPIS.Bits
 		}
 
 		public override bool Equals(object obj) => obj is Tag other && this == other;
+		// ReSharper disable once NonReadonlyMemberInGetHashCode
 		public override int GetHashCode() => key.GetHashCode();
 		public static bool operator ==(Tag a, Tag b) => a?.GetType() == b?.GetType() && a?.key == b?.key;
 		public static bool operator !=(Tag a, Tag b) => a?.GetType() != b?.GetType() || a?.key != b?.key;

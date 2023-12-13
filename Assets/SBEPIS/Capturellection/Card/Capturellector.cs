@@ -37,11 +37,11 @@ namespace SBEPIS.Capturellection
 				return null;
 			
 			StoreResult result = await inventory.StoreItem(item);
-			if (!result.wasSuccessful) return null;
+			if (!result.WasSuccessful) return null;
 			
-			if (!result.card.gameObject.activeSelf) result.card.gameObject.SetActive(true);
-			TryGrab(result.card.transform);
-			return result.container;
+			if (!result.Card.gameObject.activeSelf) result.Card.gameObject.SetActive(true);
+			TryGrab(result.Card.transform);
+			return result.Container;
 		}
 		
 		private Capturellectable RetrieveFromContainer(CaptureContainer container)
@@ -58,10 +58,10 @@ namespace SBEPIS.Capturellection
 				return null;
 			
 			FetchResult result = await inventory.FetchItem(card);
-			if (!result.wasSuccessful) return null;
+			if (!result.WasSuccessful) return null;
 			
-			if (result.fetchedItem) TryGrab(result.fetchedItem.transform);
-			return result.fetchedItem;
+			if (result.FetchedItem) TryGrab(result.FetchedItem.transform);
+			return result.FetchedItem;
 		}
 		
 		private void TryGrab(Transform item)

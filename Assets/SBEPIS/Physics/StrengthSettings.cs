@@ -1,13 +1,18 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Physics
 {
 	[CreateAssetMenu]
 	public class StrengthSettings : ScriptableObject
 	{
-		public float linearSpeed;
-		public float linearMaxForce = Mathf.Infinity;
-		public float angularSpeed;
-		public float angularMaxForce = Mathf.Infinity;
+		[FormerlySerializedAs("linearSpeed")]
+		public float LinearSpeed;
+		[FormerlySerializedAs("linearMaxForce")]
+		public float LinearMaxForce = Mathf.Infinity;
+		[FormerlySerializedAs("angularSpeed")]
+		public float AngularSpeed;
+		[FormerlySerializedAs("angularMaxForce")]
+		public float AngularMaxForce = Mathf.Infinity;
 	}
 }

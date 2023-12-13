@@ -4,11 +4,16 @@ namespace SBEPIS.Physics
 {
 	public class MassiveRing : MassiveBody
 	{
-		public float gravity = 10;
-		public float standingRadius = 1;
-		public float falloffRadius = 2;
-		public float width = 1;
-		public float falloffDistance = 1;
+		[SerializeField]
+		private float gravity = 10;
+		[SerializeField]
+		private float standingRadius = 1;
+		[SerializeField]
+		private float falloffRadius = 2;
+		[SerializeField]
+		private float width = 1;
+		[SerializeField]
+		private float falloffDistance = 1;
 
 		public override Vector3 GetPriority(Vector3 centerOfMass)
 		{

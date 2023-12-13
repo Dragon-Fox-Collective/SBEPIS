@@ -324,11 +324,17 @@ public static class ExtensionMethods
 	
 	public static IEnumerable<TResult> Zip<TSource, TResult>(this IEnumerable<IEnumerable<TSource>> source, Func<IEnumerable<TSource>, TResult> zipper)
 	{
+		// ReSharper disable once NotDisposedResourceIsReturned
+		// MustDisposeResourceAttribute isn't in Unity's copy of Jetbrains Annotations, so... ignore for now
 		List<IEnumerator<TSource>> enumerators = source.Select(layer => layer.GetEnumerator()).ToList();
 		while (true)
 		{
 			List<IEnumerator<TSource>> currentEnumerators = enumerators.Where(enumerator => enumerator.MoveNext()).ToList();
-			if (!currentEnumerators.Any()) yield break;
+			if (!currentEnumerators.Any())
+			{
+				enumerators.ForEach(enumerator => enumerator.Dispose());
+				yield break;
+			}
 			yield return zipper(currentEnumerators.Select(enumerator => enumerator.Current));
 		}
 	}
@@ -419,10 +425,10 @@ public static class ExtensionMethods
 	
 	public static Quaternion Select(this Quaternion quaternion, Func<float, float> func) => new(func(quaternion.x), func(quaternion.y), func(quaternion.z), func(quaternion.w));
 	
-	public static Vector3x2 Select(this Vector3x2 vector, Func<Vector3, Vector3> func) => new(func(vector.x), func(vector.y));
-	public static Vector3x2 SelectIndex(this Vector3x2 vector, Func<int, Vector3, Vector3> func) => new(func(0, vector.x), func(1, vector.y));
-	public static Vector2 AggregateIndex(this Vector3x2 vector, Func<int, Vector3, float> func) => new(func(0, vector.x), func(1, vector.y));
-	public static Vector3x2 Select(this Vector3x2 vector, Func<float, float> func) => vector.Select(v => v.Select(func));
+	public static Vector3X2 Select(this Vector3X2 vector, Func<Vector3, Vector3> func) => new(func(vector.x), func(vector.y));
+	public static Vector3X2 SelectIndex(this Vector3X2 vector, Func<int, Vector3, Vector3> func) => new(func(0, vector.x), func(1, vector.y));
+	public static Vector2 AggregateIndex(this Vector3X2 vector, Func<int, Vector3, float> func) => new(func(0, vector.x), func(1, vector.y));
+	public static Vector3X2 Select(this Vector3X2 vector, Func<float, float> func) => vector.Select(v => v.Select(func));
 	
 	// From PhysX
 	// indexed rotation around axis, with sine and cosine of half-angle

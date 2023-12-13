@@ -1,7 +1,9 @@
 ﻿using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+[MeansImplicitUse]
 public class DebugGUIGraphAttribute : Attribute
 {
     public float min { get; private set; }

@@ -1,6 +1,5 @@
 using SBEPIS.Utils;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {

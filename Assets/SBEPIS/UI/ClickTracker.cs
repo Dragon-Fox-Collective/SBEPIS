@@ -12,7 +12,7 @@ namespace SBEPIS.UI
 		/// <summary>
 		/// Must be greater than your mouse tap time or it won't work
 		/// </summary>
-		private const float TAP_TIME = 0.3f;
+		private const float TapTime = 0.3f;
 
 		private int trackingCount;
 		private float startTime;
@@ -30,8 +30,8 @@ namespace SBEPIS.UI
 			trackingCount--;
 			if (trackingCount == 0)
 			{
-				print($"{gameObject} finished clicking, held for {Time.unscaledTime - startTime}, clicked? {Time.unscaledTime - startTime <= TAP_TIME}");
-				if (Time.unscaledTime - startTime <= TAP_TIME)
+				print($"{gameObject} finished clicking, held for {Time.unscaledTime - startTime}, clicked? {Time.unscaledTime - startTime <= TapTime}");
+				if (Time.unscaledTime - startTime <= TapTime)
 					onClick.Invoke();
 			}
 		}

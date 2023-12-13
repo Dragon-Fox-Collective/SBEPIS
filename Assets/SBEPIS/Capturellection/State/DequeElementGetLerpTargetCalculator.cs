@@ -1,7 +1,6 @@
 using Arbor;
 using SBEPIS.Utils.State;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection.State
 {

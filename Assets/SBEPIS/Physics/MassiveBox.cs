@@ -6,11 +6,14 @@ namespace SBEPIS.Physics
 	[RequireComponent(typeof(BoxCollider))]
 	public class MassiveBox : MassiveBody
 	{
-		[SerializeField, Self] private BoxCollider box;
+		[SerializeField, Self]
+		private BoxCollider box;
 		private void OnValidate() => this.ValidateRefs();
 		
-		public float gravity = 10;
-		public float falloffDistance = 1;
+		[SerializeField]
+		private float gravity = 10;
+		[SerializeField]
+		private float falloffDistance = 1;
 		
 		public override Vector3 GetPriority(Vector3 centerOfMass)
 		{

@@ -9,8 +9,10 @@ namespace SBEPIS.Physics
 		[SerializeField, Self]
 		private new Rigidbody rigidbody;
 		
-		public float speed = 100;
-		public float acceleration = 50;
+		[SerializeField]
+		private float speed = 100;
+		[SerializeField]
+		private float acceleration = 50;
 		
 		private bool launched;
 		private float totalSpeed;

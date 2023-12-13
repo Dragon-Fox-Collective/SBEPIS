@@ -93,27 +93,27 @@ namespace SBEPIS.Capturellection.Storage
 	
 	public struct StoreResult
 	{
-		public bool wasSuccessful;
-		public InventoryStorable card;
-		public CaptureContainer container;
+		public bool WasSuccessful;
+		public InventoryStorable Card;
+		public CaptureContainer Container;
 		
 		public StoreResult(InventoryStorable card, CaptureContainer container)
 		{
-			wasSuccessful = true;
-			this.card = card;
-			this.container = container;
+			WasSuccessful = true;
+			this.Card = card;
+			this.Container = container;
 		}
 	}
 	
 	public struct FetchResult
 	{
-		public bool wasSuccessful;
-		public Capturellectable fetchedItem;
+		public bool WasSuccessful;
+		public Capturellectable FetchedItem;
 		
 		public FetchResult(Capturellectable fetchedItem)
 		{
-			wasSuccessful = true;
-			this.fetchedItem = fetchedItem;
+			WasSuccessful = true;
+			this.FetchedItem = fetchedItem;
 		}
 	}
 }

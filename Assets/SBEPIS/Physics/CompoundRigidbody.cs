@@ -31,8 +31,8 @@ namespace SBEPIS.Physics
 			{
 				if (piece.gameObject.activeInHierarchy)
 				{
-					rigidbody.centerOfMass += transform.InverseTransformPoint(piece.worldCenter) * piece.mass;
-					rigidbody.mass += piece.mass;
+					rigidbody.centerOfMass += transform.InverseTransformPoint(piece.WorldCenter) * piece.Mass;
+					rigidbody.mass += piece.Mass;
 				}
 			}
 			rigidbody.centerOfMass /= rigidbody.mass;
@@ -44,11 +44,11 @@ namespace SBEPIS.Physics
 				// where m is the mass, I is the local inertia tensor, R is the displacement vector from the center of mass to the new point, and E is the identity
 				// also inner is dot product
 				Matrix4x4 pieceTransform = Matrix4x4.Rotate(piece.transform.rotation);
-				Matrix4x4 worldTensor = pieceTransform * piece.localInertiaTensor * pieceTransform.transpose;
+				Matrix4x4 worldTensor = pieceTransform * piece.LocalInertiaTensor * pieceTransform.transpose;
 				Matrix4x4 inverseTransform = Matrix4x4.Rotate(transform.rotation.Inverse());
 				Matrix4x4 localTensor = inverseTransform * worldTensor * inverseTransform.transpose;
-				Vector3 displacement = WorldCenterOfMass - piece.worldCenter;
-				Matrix4x4 parallelTensor = localTensor.Plus(Matrix4x4.identity.Times(displacement.InnerSquared()).Minus(displacement.OuterSquared()).Times(piece.mass));
+				Vector3 displacement = WorldCenterOfMass - piece.WorldCenter;
+				Matrix4x4 parallelTensor = localTensor.Plus(Matrix4x4.identity.Times(displacement.InnerSquared()).Minus(displacement.OuterSquared()).Times(piece.Mass));
 				inertiaTensor = inertiaTensor.Plus(parallelTensor);
 			}
 			rigidbody.inertiaTensor = inertiaTensor.Diagonalize(out Quaternion inertiaTensorRotation);

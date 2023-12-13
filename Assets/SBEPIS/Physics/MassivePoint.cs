@@ -4,8 +4,10 @@ namespace SBEPIS.Physics
 {
 	public class MassivePoint : MassiveBody
 	{
-		public float standardRadius = 10;
-		public float gravityAtRadius = 10;
+		[SerializeField]
+		private float standardRadius = 10;
+		[SerializeField]
+		private float gravityAtRadius = 10;
 
 		public override Vector3 GetPriority(Vector3 centerOfMass)
 		{

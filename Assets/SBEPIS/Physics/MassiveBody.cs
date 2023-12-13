@@ -1,11 +1,12 @@
-using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Physics
 {
 	public abstract class MassiveBody : MonoBehaviour
 	{
-		public int priority;
+		[SerializeField]
+		private int priority;
+		public int Priority => priority;
 		
 		public abstract Vector3 GetPriority(Vector3 centerOfMass);
 		public abstract Vector3 GetGravity(Vector3 centerOfMass);

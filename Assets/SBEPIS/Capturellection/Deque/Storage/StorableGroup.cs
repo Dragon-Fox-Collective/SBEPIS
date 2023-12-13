@@ -17,8 +17,8 @@ namespace SBEPIS.Capturellection.Storage
 		{
 			this.definition = definition;
 			state = definition.Ruleset.GetNewState();
-			Inventory.onAddItem.AddListener(item => item.ForEach(GetComponentInParent<DiajectorCaptureLayout>().SyncAddNewCard));
-			Inventory.onRemoveItem.AddListener(item => item.ForEach(GetComponentInParent<DiajectorCaptureLayout>().SyncRemoveOldCard));
+			Inventory.OnAddItem.AddListener(item => item.ForEach(GetComponentInParent<DiajectorCaptureLayout>().SyncAddNewCard));
+			Inventory.OnRemoveItem.AddListener(item => item.ForEach(GetComponentInParent<DiajectorCaptureLayout>().SyncRemoveOldCard));
 		}
 		
 		public Vector3 Position
@@ -115,7 +115,7 @@ namespace SBEPIS.Capturellection.Storage
 				if (useCallbacks)
 					Inventory.AddRange(storables);
 				else
-					Inventory.backingList.AddRange(storables);
+					Inventory.BackingList.AddRange(storables);
 			}
 		}
 		

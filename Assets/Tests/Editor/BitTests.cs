@@ -1,7 +1,5 @@
 using NUnit.Framework;
 using SBEPIS.Bits;
-using System;
-using UnityEngine;
 
 namespace SBEPIS.Tests.EditMode
 {

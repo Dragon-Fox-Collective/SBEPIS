@@ -11,6 +11,6 @@ namespace SBEPIS.UI
 		
 		public UnityEvent<float> onInvokeProgress = new();
 		
-		public void Invoke() => onInvokeProgress.Invoke(slider.progress);
+		public void Invoke() => onInvokeProgress.Invoke(slider.Progress);
 	}
 }

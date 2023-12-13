@@ -5,21 +5,28 @@ namespace SBEPIS.Physics
 {
 	public class ConfigurableMassiveBody : MassiveBody
 	{
-		public AnimationCurve gravityCurve = AnimationCurve.Linear(0, 0, 1, 1);
-		public bool useX = true;
-		public bool useY = true;
-		public bool useZ = true;
-		public AnimationCurve priorityLerpX = AnimationCurve.Constant(0, 1, 1);
-		public AnimationCurve priorityLerpY = AnimationCurve.Constant(0, 1, 1);
-		public AnimationCurve priorityLerpZ = AnimationCurve.Constant(0, 1, 1);
+		[SerializeField]
+		private AnimationCurve gravityCurve = AnimationCurve.Linear(0, 0, 1, 1);
+		[SerializeField]
+		private bool useX = true;
+		[SerializeField]
+		private bool useY = true;
+		[SerializeField]
+		private bool useZ = true;
+		[SerializeField]
+		private AnimationCurve priorityLerpX = AnimationCurve.Constant(0, 1, 1);
+		[SerializeField]
+		private AnimationCurve priorityLerpY = AnimationCurve.Constant(0, 1, 1);
+		[SerializeField]
+		private AnimationCurve priorityLerpZ = AnimationCurve.Constant(0, 1, 1);
 
 		private bool[] uses;
 		private AnimationCurve[] priorityLerps;
 
 		private void Awake()
 		{
-			uses = new bool[] { useX, useY, useZ };
-			priorityLerps = new AnimationCurve[] { priorityLerpX, priorityLerpY, priorityLerpZ };
+			uses = new[] { useX, useY, useZ };
+			priorityLerps = new[] { priorityLerpX, priorityLerpY, priorityLerpZ };
 		}
 
 		public override Vector3 GetPriority(Vector3 centerOfMass)

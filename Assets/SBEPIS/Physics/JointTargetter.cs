@@ -7,18 +7,26 @@ namespace SBEPIS.Physics
 	[RequireComponent(typeof(Rigidbody))]
 	public class JointTargetter : MonoBehaviour
 	{
-		[SerializeField, Self] private new Rigidbody rigidbody;
-		[SerializeField, Anywhere] private Rigidbody connectedBody;
-		[SerializeField, Anywhere] private Transform target;
-		[SerializeField, Anywhere(Flag.Optional)] private Transform anchor;
-		[SerializeField] private float anchorDistance = 0.5f;
-		[SerializeField, Anywhere] private StrengthSettings strength;
+		[SerializeField, Self]
+		private new Rigidbody rigidbody;
+		[SerializeField, Anywhere]
+		private Rigidbody connectedBody;
+		[SerializeField, Anywhere]
+		private Transform target;
+		[SerializeField, Anywhere(Flag.Optional)]
+		private Transform anchor;
+		[SerializeField]
+		private float anchorDistance = 0.5f;
+		[SerializeField, Anywhere]
+		private StrengthSettings strength;
 		
 		private ConfigurableJoint joint;
 		
 		private Quaternion initialOffset;
 		
+		// ReSharper disable once NotAccessedField.Local
 		private Vector3 prevTargetPosition;
+		// ReSharper disable once NotAccessedField.Local
 		private Quaternion prevTargetRotation;
 		
 		private Vector3 initialTensor;
@@ -90,17 +98,17 @@ namespace SBEPIS.Physics
 		{
 			joint.xDrive = joint.yDrive = joint.zDrive = new JointDrive
 			{
-				positionSpring = strength.linearSpeed * strength.linearSpeed,
-				positionDamper = 2 * strength.linearSpeed,
-				maximumForce = strength.linearMaxForce,
+				positionSpring = strength.LinearSpeed * strength.LinearSpeed,
+				positionDamper = 2 * strength.LinearSpeed,
+				maximumForce = strength.LinearMaxForce,
 			};
 			
 			joint.rotationDriveMode = RotationDriveMode.Slerp;
 			joint.slerpDrive = new JointDrive
 			{
-				positionSpring = strength.angularSpeed * strength.angularSpeed,
-				positionDamper = 2 * strength.angularSpeed,
-				maximumForce = strength.angularMaxForce,
+				positionSpring = strength.AngularSpeed * strength.AngularSpeed,
+				positionDamper = 2 * strength.AngularSpeed,
+				maximumForce = strength.AngularMaxForce,
 			};
 		}
 		

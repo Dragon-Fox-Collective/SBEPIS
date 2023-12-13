@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,7 +6,8 @@ namespace SBEPIS.Physics
 {
 	public class FixedDeltaTimeAdjuster : MonoBehaviour
 	{
-		public int mostDeltaTimes = 30;
+		[SerializeField]
+		private int mostDeltaTimes = 30;
 		
 		private readonly Queue<float> deltaTimes = new();
 

@@ -9,8 +9,10 @@ namespace SBEPIS.Physics
 		[SerializeField, Self]
 		private new Rigidbody rigidbody;
 		
-		public Transform endPoint;
-		public float speed = 1;
+		[SerializeField, Anywhere]
+		private Transform endPoint;
+		[SerializeField]
+		private float speed = 1;
 		
 		private Vector3 startPos, endPos;
 		private bool resetting;

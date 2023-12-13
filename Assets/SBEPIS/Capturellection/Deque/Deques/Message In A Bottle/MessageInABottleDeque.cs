@@ -27,7 +27,7 @@ namespace SBEPIS.Capturellection.Deques
 			bottle.Slot.name = "Bottle Slot";
 			bottle.Slot.Load(bottle.Card);
 			
-			state.bottles.Add(bottle.Slot, bottle);
+			state.Bottles.Add(bottle.Slot, bottle);
 			
 			CollisionTrigger collisionTrigger = bottle.GetComponent<CollisionTrigger>();
 			void ReplaceBottle(float _)
@@ -60,7 +60,7 @@ namespace SBEPIS.Capturellection.Deques
 			bottle.Card.Inventory = null;
 			
 			state.Inventory.Remove(bottle.Slot);
-			state.bottles.Remove(bottle.Slot);
+			state.Bottles.Remove(bottle.Slot);
 			Destroy(bottle.Slot.gameObject);
 		}
 		
@@ -76,11 +76,11 @@ namespace SBEPIS.Capturellection.Deques
 		
 		protected override async UniTask<StoreResult> StoreItemHook(MessageInABottleState state, Capturellectable item, StoreResult oldResult)
 		{
-			Storable storable = StorableWithCard(state, oldResult.card);
-			if (oldResult.wasSuccessful && !state.bottles.ContainsKey(storable))
+			Storable storable = StorableWithCard(state, oldResult.Card);
+			if (oldResult.WasSuccessful && !state.Bottles.ContainsKey(storable))
 			{
 				Bottle bottle = await ReplaceStorableWithBottle(state, storable);
-				oldResult.card = bottle.Card;
+				oldResult.Card = bottle.Card;
 			}
 			
 			return oldResult;
@@ -89,7 +89,7 @@ namespace SBEPIS.Capturellection.Deques
 		protected override async UniTask<FetchResult> FetchItemHook(MessageInABottleState state, InventoryStorable card, FetchResult oldResult)
 		{
 			Storable storable = StorableWithCard(state, card);
-			if (oldResult.wasSuccessful && !state.bottles.ContainsKey(storable))
+			if (oldResult.WasSuccessful && !state.Bottles.ContainsKey(storable))
 				await ReplaceStorableWithBottle(state, storable);
 			
 			return oldResult;
@@ -103,7 +103,7 @@ namespace SBEPIS.Capturellection.Deques
 		
 		protected override IEnumerable<Storable> SaveStorableHook(MessageInABottleState state, Storable slot)
 		{
-			state.bottles.Remove(slot, out Bottle bottle);
+			state.Bottles.Remove(slot, out Bottle bottle);
 			Storable storable = bottle.OriginalStorable;
 			Destroy(bottle.Slot.gameObject);
 			Destroy(bottle.Root.gameObject);
@@ -115,6 +115,6 @@ namespace SBEPIS.Capturellection.Deques
 	{
 		public CallbackList<Storable> Inventory { get; set; } = new();
 		public Vector3 Direction { get; set; }
-		public readonly Dictionary<Storable, Bottle> bottles = new();
+		public readonly Dictionary<Storable, Bottle> Bottles = new();
 	}
 }

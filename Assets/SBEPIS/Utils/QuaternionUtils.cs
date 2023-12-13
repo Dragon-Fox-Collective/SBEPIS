@@ -13,44 +13,44 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 public static class QuaternionUtil
 {
 
-	public static Quaternion AngVelToDeriv(Quaternion Current, Vector3 AngVel)
+	public static Quaternion AngVelToDeriv(Quaternion current, Vector3 angVel)
 	{
-		var Spin = new Quaternion(AngVel.x, AngVel.y, AngVel.z, 0f);
-		var Result = Spin * Current;
-		return new Quaternion(0.5f * Result.x, 0.5f * Result.y, 0.5f * Result.z, 0.5f * Result.w);
+		Quaternion spin = new(angVel.x, angVel.y, angVel.z, 0f);
+		Quaternion result = spin * current;
+		return new Quaternion(0.5f * result.x, 0.5f * result.y, 0.5f * result.z, 0.5f * result.w);
 	}
 
-	public static Vector3 DerivToAngVel(Quaternion Current, Quaternion Deriv)
+	public static Vector3 DerivToAngVel(Quaternion current, Quaternion deriv)
 	{
-		var Result = Deriv * Quaternion.Inverse(Current);
-		return new Vector3(2f * Result.x, 2f * Result.y, 2f * Result.z);
+		Quaternion result = deriv * Quaternion.Inverse(current);
+		return new Vector3(2f * result.x, 2f * result.y, 2f * result.z);
 	}
 
-	public static Quaternion IntegrateRotation(Quaternion Rotation, Vector3 AngularVelocity, float DeltaTime)
+	public static Quaternion IntegrateRotation(Quaternion rotation, Vector3 angularVelocity, float deltaTime)
 	{
-		if (DeltaTime < Mathf.Epsilon) return Rotation;
-		var Deriv = AngVelToDeriv(Rotation, AngularVelocity);
-		var Pred = new Vector4(
-				Rotation.x + Deriv.x * DeltaTime,
-				Rotation.y + Deriv.y * DeltaTime,
-				Rotation.z + Deriv.z * DeltaTime,
-				Rotation.w + Deriv.w * DeltaTime
+		if (deltaTime < Mathf.Epsilon) return rotation;
+		Quaternion deriv = AngVelToDeriv(rotation, angularVelocity);
+		Vector4 pred = new Vector4(
+				rotation.x + deriv.x * deltaTime,
+				rotation.y + deriv.y * deltaTime,
+				rotation.z + deriv.z * deltaTime,
+				rotation.w + deriv.w * deltaTime
 		).normalized;
-		return new Quaternion(Pred.x, Pred.y, Pred.z, Pred.w);
+		return new Quaternion(pred.x, pred.y, pred.z, pred.w);
 	}
 
 	public static Quaternion SmoothDamp(Quaternion rot, Quaternion target, ref Quaternion deriv, float time)
 	{
 		if (Time.deltaTime < Mathf.Epsilon) return rot;
 		// account for double-cover
-		var Dot = Quaternion.Dot(rot, target);
-		var Multi = Dot > 0f ? 1f : -1f;
-		target.x *= Multi;
-		target.y *= Multi;
-		target.z *= Multi;
-		target.w *= Multi;
+		float dot = Quaternion.Dot(rot, target);
+		float multi = dot > 0f ? 1f : -1f;
+		target.x *= multi;
+		target.y *= multi;
+		target.z *= multi;
+		target.w *= multi;
 		// smooth damp (nlerp approx)
-		var Result = new Vector4(
+		Vector4 result = new Vector4(
 			Mathf.SmoothDamp(rot.x, target.x, ref deriv.x, time),
 			Mathf.SmoothDamp(rot.y, target.y, ref deriv.y, time),
 			Mathf.SmoothDamp(rot.z, target.z, ref deriv.z, time),
@@ -58,12 +58,12 @@ public static class QuaternionUtil
 		).normalized;
 
 		// ensure deriv is tangent
-		var derivError = Vector4.Project(new Vector4(deriv.x, deriv.y, deriv.z, deriv.w), Result);
+		Vector4 derivError = Vector4.Project(new Vector4(deriv.x, deriv.y, deriv.z, deriv.w), result);
 		deriv.x -= derivError.x;
 		deriv.y -= derivError.y;
 		deriv.z -= derivError.z;
 		deriv.w -= derivError.w;
 
-		return new Quaternion(Result.x, Result.y, Result.z, Result.w);
+		return new Quaternion(result.x, result.y, result.z, result.w);
 	}
 }

@@ -1,33 +1,45 @@
+using KBCore.Refs;
 using UnityEngine;
 
 namespace SBEPIS.Physics
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class JointTester : MonoBehaviour
+	public class JointTester : ValidatedMonoBehaviour
 	{
-		public Rigidbody connectedBody;
-
-		public Vector3 initialTargetPosition;
-		public Vector3 initialTargetVelocity;
-		
-		public Transform target;
-
-		public bool updateTargetPosition = false;
-		
-		public float positionAngularFrequency = 0;
-		public float positionDampingRatio = 0;
-		
-		public bool updateTargetVelocity = false;
-		
-		public float velocityDampingTime = 1;
-		public float velocityMaxSpeed = Mathf.Infinity;
-
+		[SerializeField, Self]
 		private new Rigidbody rigidbody;
+		
+		[SerializeField, Anywhere]
+		private Rigidbody connectedBody;
+		
+		[SerializeField]
+		private Vector3 initialTargetPosition;
+		[SerializeField]
+		private Vector3 initialTargetVelocity;
+		
+		[SerializeField, Anywhere]
+		private Transform target;
+
+		[SerializeField]
+		private bool updateTargetPosition = false;
+		
+		[SerializeField]
+		private float positionAngularFrequency = 0;
+		[SerializeField]
+		private float positionDampingRatio = 0;
+		
+		[SerializeField]
+		private bool updateTargetVelocity = false;
+		
+		[SerializeField]
+		private float velocityDampingTime = 1;
+		[SerializeField]
+		private float velocityMaxSpeed = Mathf.Infinity;
+
 		private ConfigurableJoint joint;
 
 		private void Awake()
 		{
-			rigidbody = GetComponent<Rigidbody>();
 			joint = gameObject.AddComponent<ConfigurableJoint>();
 		}
 

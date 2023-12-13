@@ -30,7 +30,7 @@ namespace SBEPIS.Physics
 			WorldCenterOfMass = customCenterOfMass ? customCenterOfMass.position : rigidbody ? rigidbody.worldCenterOfMass : transform.position;
 			Vector3 gravity = massiveBodies.Count == 0 ? Vector3.zero : massiveBodies
 				.Distinct()
-				.GroupBy(body => body.priority)
+				.GroupBy(body => body.Priority)
 				.OrderBy(group => group.Key)
 				.Aggregate(Vector3.zero, (lowerProrityGravity, group) =>
 				{
