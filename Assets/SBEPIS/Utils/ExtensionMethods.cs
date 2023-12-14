@@ -91,6 +91,20 @@ public static class ExtensionMethods
 		rigidbody.isKinematic = false;
 		rigidbody.detectCollisions = true;
 	}
+
+	public static Vector3 ClosestPointDepenetration(this Collider collider, Vector3 point, SphereCollider dummySphere)
+	{
+		dummySphere.radius = Vector3.Distance(collider.bounds.center, point);
+		if (Physics.ComputePenetration(collider, collider.transform.position, collider.transform.rotation, dummySphere, point, Quaternion.identity, out Vector3 direction, out float distance))
+			return point + direction * (dummySphere.radius - distance);
+		throw new Exception("No penetration");
+	}
+	public static Vector3 ClosestPointPlusConcaveMesh(this Collider collider, Vector3 point, SphereCollider dummySphere)
+	{
+		return collider is MeshCollider { convex: false } ? collider.ClosestPointDepenetration(point, dummySphere) : collider.ClosestPoint(point);
+	}
+	public static (Collider collider, Vector3 point) ClosestPoint(this Rigidbody rigidbody, Vector3 point) => rigidbody.GetComponentsInChildren<Collider>().Select(collider => (collider, collider.ClosestPoint(point))).MinBy(zip => Vector3.Distance(point, zip.Item2));
+	public static (Collider collider, Vector3 point) ClosestPointPlusConcaveMesh(this Rigidbody rigidbody, Vector3 point, SphereCollider dummySphere) => rigidbody.GetComponentsInChildren<Collider>().Select(collider => (collider, collider.ClosestPointPlusConcaveMesh(point, dummySphere))).MinBy(zip => Vector3.Distance(point, zip.Item2));
 	
 	public static bool TryGetComponentInChildren<T>(this Component thisComponent, out T component) where T : Component => component = thisComponent.GetComponentInChildren<T>();
 	
@@ -359,7 +373,7 @@ public static class ExtensionMethods
 			action(item1, item2);
 	}
 	
-	public static IEnumerable<IEnumerable<T>> Divide<T>(this IList<T> source, int count)
+	public static IEnumerable<IEnumerable<T>> Chunk<T>(this IList<T> source, int count)
 	{
 		for (int i = 0; i * count < source.Count; i++)
 			yield return source.Skip(i * count).Take(count);
@@ -388,6 +402,28 @@ public static class ExtensionMethods
 		comparer ??= EqualityComparer<T>.Default;
 		using IEnumerator<T> sourceEnumerator = source.GetEnumerator();
 		return sourceEnumerator.MoveNext() && comparer.Equals(sourceEnumerator.Current, prefix);
+	}
+	
+	public static T MinBy<T, TSelected>(this IEnumerable<T> source, Func<T, TSelected> selector)
+	{
+		IComparer<TSelected> comparer = Comparer<TSelected>.Default;
+		bool initialized = false;
+		T min = default;
+		TSelected minSelected = default;
+		foreach (T item in source)
+		{
+			TSelected itemSelected = selector(item);
+			if (!initialized || comparer.Compare(itemSelected, minSelected) < 0)
+			{
+				min = item;
+				minSelected = itemSelected;
+			}
+			initialized = true;
+		}
+
+		if (initialized)
+			return min;
+		throw new ArgumentException("Source is empty", nameof(source));
 	}
 	
 	public static IEnumerable<float> AsEnumerable(this Vector3 vector)
