@@ -31,6 +31,11 @@ namespace SBEPIS.Controller
 		public ColliderGrabEvent onDropCollider = new();
 		
 		public bool CanGrab { get; set; } = true;
+
+		private bool overrideGrabCompletely;
+		private Collider overrideGrabCollider;
+		private Vector3 overrideGrabPosition;
+		private Quaternion overrideGrabRotation;
 		
 		private bool overrideShortRangeGrab;
 		private Vector3 overrideShortRangeGrabCasterPosition;
@@ -81,6 +86,13 @@ namespace SBEPIS.Controller
 		{
 			if (!CanGrab || IsHoldingSomething)
 				return;
+			
+			if (overrideGrabCompletely)
+			{
+				transform.SetPositionAndRotation(overrideGrabPosition, overrideGrabRotation);
+				GrabCollider(overrideGrabCollider);
+				return;
+			}
 			
 			if (collidingColliders.Any(collider => GrabCollider(collider)))
 				return;
@@ -246,6 +258,21 @@ namespace SBEPIS.Controller
 			overrideShortRangeGrab = false;
 			CanGrab = true;
 		}
+		
+		
+		public void OverrideGrabCompletely(Collider collider, Vector3 position, Quaternion rotation)
+		{
+			overrideGrabCompletely = true;
+			overrideGrabCollider = collider;
+			overrideGrabPosition = position;
+			overrideGrabRotation = rotation;
+		}
+
+		public void ResetGrabCompleteOverride()
+		{
+			overrideGrabCompletely = false;
+		}
+
 
 		private void OnTriggerEnter(Collider other)
 		{

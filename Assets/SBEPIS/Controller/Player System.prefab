@@ -6276,8 +6276,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6376568278754761727}
-  m_LocalRotation: {x: -0, y: -0.7071069, z: -0, w: 0.70710677}
-  m_LocalPosition: {x: 0.3, y: 1.2, z: 1}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0.22, y: 0.671, z: 0.13599956}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6287,8 +6287,8 @@ Transform:
   - {fileID: 5090504188453658562}
   - {fileID: 354921643590445730}
   m_Father: {fileID: 6112518582163472336}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6376568278754761722
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6505,8 +6505,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8471347876604894624}
-  - {fileID: 4916433771989261608}
-  - {fileID: 1818974022422500201}
   m_Father: {fileID: 4804159942654709961}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6951,6 +6949,8 @@ Transform:
   - {fileID: 1997131638894466065}
   - {fileID: 3242850076396947617}
   - {fileID: 4430941824366732766}
+  - {fileID: 1818974022422500201}
+  - {fileID: 4916433771989261608}
   m_Father: {fileID: 6112518582163472336}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7769,7 +7769,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1818974022422500201}
   m_Layer: 8
-  m_Name: Left Flatscreen Hold Position
+  m_Name: Left Flatscreen Empty Hold Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7782,14 +7782,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7292568331423221445}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.337, y: -0.091, z: 0.557}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: -0.22, y: 0.671, z: 0.1359998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6376568279122881040}
+  m_Father: {fileID: 6376568280094680653}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 180}
 --- !u!1 &7681668139728260876
 GameObject:
   m_ObjectHideFlags: 0
@@ -7900,8 +7900,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7760733025619479071}
-  m_LocalRotation: {x: -0, y: 0.70710677, z: -0, w: 0.7071069}
-  m_LocalPosition: {x: -0.3, y: 1.2, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: -0.22, y: 0.671, z: 0.1359998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7912,7 +7912,7 @@ Transform:
   - {fileID: 4304772429932534635}
   m_Father: {fileID: 6112518582163472336}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &8141195637632158654
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8420,7 +8420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4916433771989261608}
   m_Layer: 8
-  m_Name: Right Flatscreen Hold Position
+  m_Name: Right Flatscreen Empty Hold Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8433,14 +8433,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8872535757185641284}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: 0.337, y: -0.091, z: 0.557}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0.22, y: 0.671, z: 0.13599956}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6376568279122881040}
+  m_Father: {fileID: 6376568280094680653}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 270, z: -180}
 --- !u!1 &8884166373067930792
 GameObject:
   m_ObjectHideFlags: 0
@@ -8717,8 +8717,8 @@ Transform:
   - {fileID: 6800305069822312051}
   - {fileID: 5159398627618986266}
   - {fileID: 5402565688679179036}
-  - {fileID: 6376568278754761720}
   - {fileID: 7078601075283105826}
+  - {fileID: 6376568278754761720}
   - {fileID: 4565182838416945589}
   - {fileID: 6339548346638831369}
   - {fileID: 7573663971075507264}
