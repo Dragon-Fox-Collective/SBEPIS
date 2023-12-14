@@ -26,7 +26,7 @@ namespace SBEPIS.Capturellection.Deques
 			Vector2 lengthSum = absDirection.AggregateIndex((index, absDir) => offset[index] * (gridCount[index] - 1) + Vector3.Project(maxSize, absDir).magnitude * gridCount[index]);
 			
 			Vector3 pos = (-lengthSum / 2 * direction).Sum();
-			foreach (IEnumerable<Storable> row in inventory.Divide(numCardsX))
+			foreach (IEnumerable<Storable> row in inventory.Chunk(numCardsX))
 			{
 				Vector2 length = Vector3X2.Project(maxSize, absDirection).Magnitude;
 				
