@@ -92,85 +92,19 @@ public static class ExtensionMethods
 		rigidbody.detectCollisions = true;
 	}
 
-	private static IEnumerable<(T, T, T)> ChunkToTuple3<T>(this IEnumerable<T> source)
+	public static Vector3 ClosestPointDepenetration(this Collider collider, Vector3 point, SphereCollider dummySphere)
 	{
-		int counter = 0;
-		T item1 = default, item2 = default, item3 = default;
-		foreach (T item in source)
-		{
-			if (counter == 0)
-				item1 = item;
-			else if (counter == 1)
-				item2 = item;
-			else
-				item3 = item;
-			
-			counter++;
-			if (counter == 3)
-			{
-				counter = 0;
-				yield return (item1, item2, item3);
-			}
-		}
+		dummySphere.radius = Vector3.Distance(collider.bounds.center, point);
+		if (Physics.ComputePenetration(collider, collider.transform.position, collider.transform.rotation, dummySphere, point, Quaternion.identity, out Vector3 direction, out float distance))
+			return point + direction * (dummySphere.radius - distance);
+		throw new Exception("No penetration");
 	}
-	private static float ProjectedTOnLineSegment(Vector3 point, Vector3 a, Vector3 b)
+	public static Vector3 ClosestPointPlusConcaveMesh(this Collider collider, Vector3 point, SphereCollider dummySphere)
 	{
-		Vector3 u = point - a;
-		Vector3 v = b - a;
-		return Vector3.Dot(u, v) / Vector3.Dot(v, v);
-	}
-	private static Vector3 ClosestPointOnTriangle(Vector3 point, (Vector3, Vector3, Vector3) triangle)
-	{
-		float tOnAB = ProjectedTOnLineSegment(point, triangle.Item1, triangle.Item2);
-		float tOnBC = ProjectedTOnLineSegment(point, triangle.Item2, triangle.Item3);
-		float tOnAC = ProjectedTOnLineSegment(point, triangle.Item1, triangle.Item3);
-
-		if (tOnAB <= 0 && tOnAC <= 0)
-			return triangle.Item1;
-		if (tOnAB >= 1 && tOnBC <= 0)
-			return triangle.Item2;
-		if (tOnBC >= 1 && tOnAC >= 1)
-			return triangle.Item3;
-
-		if (tOnAB >= 1 && tOnAC >= 1)
-			return Vector3.Lerp(triangle.Item2, triangle.Item3, tOnBC);
-		if (tOnAB <= 0 && tOnBC >= 1)
-			return Vector3.Lerp(triangle.Item1, triangle.Item3, tOnAC);
-		if (tOnAC <= 0 && tOnBC <= 0)
-			return Vector3.Lerp(triangle.Item1, triangle.Item2, tOnAB);
-
-		return Vector3.ProjectOnPlane(point, Vector3.Cross(triangle.Item2 - triangle.Item1, triangle.Item3 - triangle.Item1));
-	}
-	private static bool DistanceIsCloseEnough(Vector3 a, Vector3 b, float distance) => Mathf.Abs(Vector3.Distance(a, b) - distance) <= 0.1;
-	private static List<int> staticTriangles = new();
-	private static List<Vector3> staticVertices = new();
-	public static Vector3 ClosestPointPlusConcaveMesh(this Collider collider, Vector3 point)
-	{
-		if (collider is MeshCollider { convex: false } meshCollider)
-		{
-			// https://gamedev.stackexchange.com/a/154708
-			point = meshCollider.transform.InverseTransformPoint(point);
-			Mesh mesh = meshCollider.sharedMesh;
-			List<(Vector3, Vector3, Vector3)> potentialTriangles = new();
-
-			mesh.GetVertices(staticVertices);
-			float closestVertexDistance = staticVertices.Select(vertex => Vector3.Distance(point, vertex)).Min();
-			
-			for (int subMesh = 0; subMesh < mesh.subMeshCount; subMesh++)
-			{
-				mesh.GetTriangles(staticTriangles, subMesh);
-				potentialTriangles.AddRange(staticTriangles.Select(vertex => staticVertices[vertex]).ChunkToTuple3().Where(triangle => DistanceIsCloseEnough(point, triangle.Item1, closestVertexDistance) || DistanceIsCloseEnough(point, triangle.Item2, closestVertexDistance) || DistanceIsCloseEnough(point, triangle.Item3, closestVertexDistance)));
-			}
-			
-			Vector3 closestPoint = potentialTriangles.Select(triangle => ClosestPointOnTriangle(point, triangle)).MinBy(vertex => Vector3.Distance(point, vertex));
-			
-			return meshCollider.transform.TransformPoint(closestPoint);
-		}
-		
-		return collider.ClosestPoint(point);
+		return collider is MeshCollider { convex: false } ? collider.ClosestPointDepenetration(point, dummySphere) : collider.ClosestPoint(point);
 	}
 	public static (Collider collider, Vector3 point) ClosestPoint(this Rigidbody rigidbody, Vector3 point) => rigidbody.GetComponentsInChildren<Collider>().Select(collider => (collider, collider.ClosestPoint(point))).MinBy(zip => Vector3.Distance(point, zip.Item2));
-	public static (Collider collider, Vector3 point) ClosestPointPlusConcaveMesh(this Rigidbody rigidbody, Vector3 point) => rigidbody.GetComponentsInChildren<Collider>().Select(collider => (collider, collider.ClosestPointPlusConcaveMesh(point))).MinBy(zip => Vector3.Distance(point, zip.Item2));
+	public static (Collider collider, Vector3 point) ClosestPointPlusConcaveMesh(this Rigidbody rigidbody, Vector3 point, SphereCollider dummySphere) => rigidbody.GetComponentsInChildren<Collider>().Select(collider => (collider, collider.ClosestPointPlusConcaveMesh(point, dummySphere))).MinBy(zip => Vector3.Distance(point, zip.Item2));
 	
 	public static bool TryGetComponentInChildren<T>(this Component thisComponent, out T component) where T : Component => component = thisComponent.GetComponentInChildren<T>();
 	

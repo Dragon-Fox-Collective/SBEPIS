@@ -39,6 +39,9 @@ namespace SBEPIS.Controller.Flatscreen
 		[FormerlySerializedAs("leftHoldPosition")]
 		[SerializeField, Anywhere]
 		private Transform leftEmptyHoldPosition;
+
+		[SerializeField, Anywhere]
+		private SphereCollider dummySphere;
 		
 		private float zoomAmount;
 
@@ -128,7 +131,7 @@ namespace SBEPIS.Controller.Flatscreen
 		)
 		{
 			Vector3 startingPoint = shoulder.position + armOffset;
-			(Collider closestCollider, Vector3 closestPoint) = lookHit.rigidbody ? lookHit.rigidbody.ClosestPointPlusConcaveMesh(startingPoint) : (lookHit.collider, lookHit.collider.ClosestPointPlusConcaveMesh(startingPoint));
+			(Collider closestCollider, Vector3 closestPoint) = lookHit.rigidbody ? lookHit.rigidbody.ClosestPointPlusConcaveMesh(startingPoint, dummySphere) : (lookHit.collider, lookHit.collider.ClosestPointPlusConcaveMesh(startingPoint, dummySphere));
 			Vector3 targetDirection = closestPoint - startingPoint;
 			Debug.DrawRay(startingPoint, targetDirection.normalized * (targetDirection.magnitude + 1f), Color.red);
 			if (closestCollider.Raycast(new Ray(startingPoint, targetDirection), out RaycastHit handHit, targetDirection.magnitude + 1f))
