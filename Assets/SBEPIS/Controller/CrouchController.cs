@@ -1,6 +1,5 @@
 ﻿using KBCore.Refs;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Controller
 {
@@ -10,7 +9,7 @@ namespace SBEPIS.Controller
 		[SerializeField, Anywhere] private Transform headTracker;
 		[SerializeField] private float crouchDistance = 0.5f;
 		
-		private Vector3 offset => Crouching ? Vector3.down * crouchDistance : Vector3.zero;
+		private Vector3 Offset => Crouching ? Vector3.down * crouchDistance : Vector3.zero;
 
 		private bool crouching;
 		public bool Crouching
@@ -20,8 +19,8 @@ namespace SBEPIS.Controller
 			{
 				if (value == crouching) return;
 				crouching = value;
-				joint.connectedAnchor = startingAnchor + offset;
-				headTracker.localPosition = headTrackerStartingPosition + offset;
+				joint.connectedAnchor = startingAnchor + Offset;
+				headTracker.localPosition = headTrackerStartingPosition + Offset;
 			}
 		}
 		
