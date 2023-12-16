@@ -5501,7 +5501,19 @@ MonoBehaviour:
         m_CallState: 2
     ActionId: 68e27118-dcb5-48fe-ad39-37390cc655b4
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2010435689246955033}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.CrouchController, SBEPIS.Controller
+        m_MethodName: set_Crouching
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     ActionId: 56f2e162-8385-42de-a76f-52527d456a2c
   floatActions:
   - m_PersistentCalls:
@@ -6776,8 +6788,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6376568279560848920}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.658, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: 0, y: 0.76, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.3, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7303530764315680464}
@@ -7549,6 +7561,7 @@ GameObject:
   - component: {fileID: 3147401404865535345}
   - component: {fileID: 1802558799518489537}
   - component: {fileID: 1091680921588636746}
+  - component: {fileID: 2010435689246955033}
   m_Layer: 8
   m_Name: Player Chest
   m_TagString: Untagged
@@ -7707,6 +7720,21 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &2010435689246955033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900267001335801174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549abe813da945538b8abb4fb77cf5f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joint: {fileID: 1091680921588636746}
+  headTracker: {fileID: 4804159942654709961}
+  crouchDistance: 0.4
 --- !u!1 &6917681695569838349
 GameObject:
   m_ObjectHideFlags: 0
@@ -7986,8 +8014,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7658609222951181661}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.005, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: 0, y: 1.133, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.1, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3443328606836619163}
