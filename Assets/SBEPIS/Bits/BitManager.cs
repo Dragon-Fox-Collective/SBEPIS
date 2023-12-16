@@ -7,6 +7,8 @@ namespace SBEPIS.Bits
 	[CreateAssetMenu]
 	public class BitManager : ScriptableSingleton<BitManager>
 	{
+		// Base-64: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+		// Captcha: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz?!
 		[SerializeField] private string _hashCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 		private char[] hashCharactersArray;
 		private char[] HashCharacters => hashCharactersArray ??= _hashCharacters.ToCharArray();
