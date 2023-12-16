@@ -19,14 +19,13 @@ namespace SBEPIS.Controller.Flatscreen
 		[SerializeField] private float minimumZoomDistance = 1;
 		[SerializeField] private float startingZoomDistance = 1;
 		[SerializeField] private float zoomSensitivity = 0.1f;
+		[SerializeField] private float sphereCastRadius = 0.1f;
 		
 		[FormerlySerializedAs("rightHoldPosition")]
 		[SerializeField, Anywhere] private Transform rightEmptyHoldPosition;
 		[FormerlySerializedAs("leftHoldPosition")]
 		[SerializeField, Anywhere] private Transform leftEmptyHoldPosition;
 
-		[SerializeField, Anywhere] private SphereCollider dummySphere;
-		
 		private float zoomAmount;
 
 		private void Awake()
@@ -99,16 +98,20 @@ namespace SBEPIS.Controller.Flatscreen
 		
 		private void UpdateHoldingNothingLookingAtObject(RaycastHit hit)
 		{
-			rightIndicator.gameObject.SetActive(true);
-			leftIndicator.gameObject.SetActive(true);
 			leftTracker.SetPositionAndRotation(leftEmptyHoldPosition);
 			rightTracker.SetPositionAndRotation(rightEmptyHoldPosition);
 			
-			UpdateIndicatorAndGrabberOverrides(hit, leftGrabber, leftShoulder, leftIndicator, -transform.right * armLength);
-			UpdateIndicatorAndGrabberOverrides(hit, rightGrabber, rightShoulder, rightIndicator, transform.right * armLength);
+			bool leftGrabbed = UpdateIndicatorAndGrabberOverrides(hit, leftGrabber, leftShoulder, leftIndicator, -transform.right * armLength);
+			bool rightGrabbed = UpdateIndicatorAndGrabberOverrides(hit, rightGrabber, rightShoulder, rightIndicator, transform.right * armLength);
+			
+			if (leftGrabbed && !rightGrabbed)
+				UpdateIndicatorAndGrabberOverridesSuccess(hit, leftGrabber, leftIndicator);
+			else if (!leftGrabbed)
+				UpdateIndicatorAndGrabberOverridesSuccess(hit, rightGrabber, rightIndicator);
 		}
 
-		private void UpdateIndicatorAndGrabberOverrides(
+		// ReSharper disable Unity.PerformanceAnalysis
+		private bool UpdateIndicatorAndGrabberOverrides(
 			RaycastHit lookHit,
 			Grabber grabber,
 			Transform shoulder,
@@ -117,32 +120,55 @@ namespace SBEPIS.Controller.Flatscreen
 		)
 		{
 			Vector3 startingPoint = shoulder.position + armOffset;
-			(Collider closestCollider, Vector3 closestPoint) = lookHit.rigidbody ? lookHit.rigidbody.ClosestPointPlusConcaveMesh(startingPoint, dummySphere) : (lookHit.collider, lookHit.collider.ClosestPointPlusConcaveMesh(startingPoint, dummySphere));
-			Vector3 targetDirection = closestPoint - startingPoint;
-			Debug.DrawRay(startingPoint, targetDirection.normalized * (targetDirection.magnitude + 1f), Color.red);
-			if (closestCollider.Raycast(new Ray(startingPoint, targetDirection), out RaycastHit handHit, targetDirection.magnitude + 1f))
+			Vector3 targetDirection = lookHit.point - startingPoint;
+			if (UnityEngine.Physics.SphereCast(startingPoint, sphereCastRadius, targetDirection, out RaycastHit handHit, targetDirection.magnitude + 1f))
 			{
-				Vector3 position = handHit.point;
-				Quaternion rotation = Vector3.Angle(handHit.normal, transform.up) > 5f ? Quaternion.LookRotation(-handHit.normal, transform.up) : Quaternion.LookRotation(-handHit.normal, transform.forward);
-				indicator.SetPositionAndRotation(position, rotation);
-				grabber.CanGrab = true;
-				grabber.OverrideGrabCompletely(closestCollider, position, rotation);
+				if ((lookHit.rigidbody && handHit.rigidbody != lookHit.rigidbody) || (!lookHit.rigidbody && handHit.collider != lookHit.collider))
+				{
+					UpdateIndicatorAndGrabberOverridesFail(grabber, indicator);
+					return false;
+				}
+				
+				UpdateIndicatorAndGrabberOverridesSuccess(handHit, grabber, indicator);
+				return true;
 			}
 			else
 			{
-				grabber.CanGrab = false;
+				UpdateIndicatorAndGrabberOverridesFail(grabber, indicator);
 				Debug.LogError($"Hand didn't hit {(lookHit.rigidbody ? lookHit.rigidbody.gameObject : lookHit.collider.gameObject)}");
+				return false;
 			}
 		}
 		
 		private void UpdateHoldingNothingLookingAtNothing()
 		{
-			leftGrabber.CanGrab = false;
-			rightGrabber.CanGrab = false;
-			rightIndicator.gameObject.SetActive(false);
-			leftIndicator.gameObject.SetActive(false);
+			UpdateIndicatorAndGrabberOverridesFail(leftGrabber, leftIndicator);
+			UpdateIndicatorAndGrabberOverridesFail(rightGrabber, rightIndicator);
 			leftTracker.SetPositionAndRotation(leftEmptyHoldPosition);
 			rightTracker.SetPositionAndRotation(rightEmptyHoldPosition);
+		}
+		
+		private void UpdateIndicatorAndGrabberOverridesSuccess(
+			RaycastHit hit,
+			Grabber grabber,
+			Transform indicator
+		)
+		{
+			Vector3 position = hit.point;
+			Quaternion rotation = Vector3.Angle(hit.normal, transform.up) > 5f ? Quaternion.LookRotation(-hit.normal, transform.up) : Quaternion.LookRotation(-hit.normal, transform.forward);
+			indicator.gameObject.SetActive(true);
+			indicator.SetPositionAndRotation(position, rotation);
+			grabber.CanGrab = true;
+			grabber.OverrideGrabCompletely(hit.collider, position, rotation);
+		}
+		
+		private static void UpdateIndicatorAndGrabberOverridesFail(
+			Grabber grabber,
+			Transform indicator
+		)
+		{
+			indicator.gameObject.SetActive(false);
+			grabber.CanGrab = false;
 		}
 		
 		public void Zoom(float amount)

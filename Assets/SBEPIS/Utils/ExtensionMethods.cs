@@ -99,12 +99,7 @@ public static class ExtensionMethods
 			return point + direction * (dummySphere.radius - distance);
 		throw new Exception("No penetration");
 	}
-	public static Vector3 ClosestPointPlusConcaveMesh(this Collider collider, Vector3 point, SphereCollider dummySphere)
-	{
-		return collider is MeshCollider { convex: false } ? collider.ClosestPointDepenetration(point, dummySphere) : collider.ClosestPoint(point);
-	}
 	public static (Collider collider, Vector3 point) ClosestPoint(this Rigidbody rigidbody, Vector3 point) => rigidbody.GetComponentsInChildren<Collider>().Select(collider => (collider, collider.ClosestPoint(point))).MinBy(zip => Vector3.Distance(point, zip.Item2));
-	public static (Collider collider, Vector3 point) ClosestPointPlusConcaveMesh(this Rigidbody rigidbody, Vector3 point, SphereCollider dummySphere) => rigidbody.GetComponentsInChildren<Collider>().Select(collider => (collider, collider.ClosestPointPlusConcaveMesh(point, dummySphere))).MinBy(zip => Vector3.Distance(point, zip.Item2));
 	
 	public static bool TryGetComponentInChildren<T>(this Component thisComponent, out T component) where T : Component => component = thisComponent.GetComponentInChildren<T>();
 	
