@@ -12,9 +12,15 @@ namespace SBEPIS.Utils
 		
 		public override void OnInspectorGUI()
 		{
-			EditorGUI.BeginChangeCheck();
-			
 			PlayerInputDataEvents targetObject = (PlayerInputDataEvents)serializedObject.targetObject;
+
+			if (!targetObject.Input || !targetObject.Input.actions)
+			{
+				EditorGUILayout.HelpBox("PlayerInputDataEvents requires a PlayerInput component with actions", MessageType.Error);
+				return;
+			}
+			
+			EditorGUI.BeginChangeCheck();
 			
 			while (actionMapEventsUnfolded.Count < targetObject.Input.actions.actionMaps.Count)
 				actionMapEventsUnfolded.Add(false);
