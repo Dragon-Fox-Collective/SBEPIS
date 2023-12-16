@@ -8,12 +8,15 @@ namespace SBEPIS.Controller
 		public Transform yawRotator;
 		public float sensitivity = 1;
 		
-		public float PitchControl { private get; set; }
-		public float YawControl { private get; set; }
+		public float PitchDrive { private get; set; }
+		public float YawDrive { private get; set; }
+		public float PitchDelta { private get; set; }
+		public float YawDelta { private get; set; }
+		
+		private float TotalDeltaPitch => PitchDelta * sensitivity + PitchDrive * sensitivity * Time.deltaTime;
+		private float TotalDeltaYaw => YawDelta * sensitivity + YawDrive * sensitivity * Time.deltaTime;
+		
 		private float camPitch;
-
-		private float DeltaPitch => PitchControl * sensitivity * Time.deltaTime;
-		private float DeltaYaw => YawControl * sensitivity * Time.deltaTime;
 
 		private void Start()
 		{
@@ -33,15 +36,13 @@ namespace SBEPIS.Controller
 
 		private void Pitch()
 		{
-			camPitch = Mathf.Clamp(camPitch - DeltaPitch, -90, 90);
+			camPitch = Mathf.Clamp(camPitch - TotalDeltaPitch, -90, 90);
 			pitchRotator.transform.localRotation = Quaternion.Euler(Vector3.right * camPitch);
-			PitchControl = 0;
 		}
 
 		private void Yaw()
 		{
-			yawRotator.transform.Rotate(Vector3.up, DeltaYaw);
-			YawControl = 0;
+			yawRotator.transform.Rotate(Vector3.up, TotalDeltaYaw);
 		}
 	}
 }

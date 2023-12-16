@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Look Pitch",
+                    "name": "Look Pitch Driven",
                     "type": "Value",
                     "id": "17295940-bbe1-4a09-b063-4ccc6062d4f9",
                     "expectedControlType": "Axis",
@@ -24,11 +24,29 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Look Yaw",
+                    "name": "Look Yaw Driven",
                     "type": "Value",
                     "id": "d548a5aa-43dd-4995-b334-204ec967e505",
                     "expectedControlType": "Axis",
                     "processors": "Scale(factor=60)",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Look Pitch Delta",
+                    "type": "Value",
+                    "id": "043b9ec1-432a-4c5e-98b3-64b17154ee3d",
+                    "expectedControlType": "Axis",
+                    "processors": "Scale(factor=0.5)",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Look Yaw Delta",
+                    "type": "Value",
+                    "id": "b9e60b67-a109-4d23-8dde-d0dc0024920c",
+                    "expectedControlType": "Axis",
+                    "processors": "Scale(factor=0.5)",
                     "interactions": "",
                     "initialStateCheck": true
                 },
@@ -254,23 +272,12 @@
                 },
                 {
                     "name": "",
-                    "id": "10953cb6-cc8b-43ee-b1a8-2d44902d8139",
-                    "path": "<Mouse>/delta/y",
-                    "interactions": "",
-                    "processors": "Scale(factor=0.5)",
-                    "groups": "Keyboard",
-                    "action": "Look Pitch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "2963b633-6063-4f9c-a964-30f22a37753e",
                     "path": "<Gamepad>/rightStick/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Look Pitch",
+                    "action": "Look Pitch Driven",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -331,23 +338,12 @@
                 },
                 {
                     "name": "",
-                    "id": "efc51cdf-116c-4949-aa81-913964bfedf7",
-                    "path": "<Mouse>/delta/x",
-                    "interactions": "",
-                    "processors": "Scale(factor=0.5)",
-                    "groups": "Keyboard",
-                    "action": "Look Yaw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9439462a-f5a6-4acf-85a0-92a58ba67958",
                     "path": "<XRController>{RightHand}/thumbstick/x",
                     "interactions": "",
                     "processors": "Scale(factor=3)",
                     "groups": "OpenXR",
-                    "action": "Look Yaw",
+                    "action": "Look Yaw Driven",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -358,7 +354,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Look Yaw",
+                    "action": "Look Yaw Driven",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -601,6 +597,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a78be71b-79a7-4774-bc99-84583e62b304",
+                    "path": "<Mouse>/delta/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Look Yaw Delta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "314f794f-e79f-4df0-91a6-74069b0c5e35",
+                    "path": "<Mouse>/delta/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Look Pitch Delta",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
