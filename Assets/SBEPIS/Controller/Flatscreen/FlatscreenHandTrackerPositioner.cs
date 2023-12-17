@@ -20,14 +20,24 @@ namespace SBEPIS.Controller.Flatscreen
 		[SerializeField] private float startingZoomDistance = 1;
 		[SerializeField] private float zoomSensitivity = 0.1f;
 		[SerializeField] private float sphereCastRadius = 0.1f;
+		[SerializeField] private float rotationSensitivity = 0.1f;
 		
 		[FormerlySerializedAs("rightHoldPosition")]
 		[SerializeField, Anywhere] private Transform rightEmptyHoldPosition;
 		[FormerlySerializedAs("leftHoldPosition")]
 		[SerializeField, Anywhere] private Transform leftEmptyHoldPosition;
-
+		
+		public Vector2 HoldRotationDrive { private get; set; }
+		private Vector2 holdRotationDelta;
+		public Vector2 HoldRotationDelta
+		{
+			set => holdRotationDelta += value;
+		}
+		private Quaternion holdRotation;
+		private Vector2 TotalDeltaHoldRotation => holdRotationDelta * rotationSensitivity + HoldRotationDrive * rotationSensitivity * Time.fixedDeltaTime;
+		
 		private float zoomAmount;
-
+		
 		private void Awake()
 		{
 			zoomAmount = startingZoomDistance;
@@ -37,6 +47,9 @@ namespace SBEPIS.Controller.Flatscreen
 		{
 			leftGrabber.ResetGrabCompleteOverride();
 			rightGrabber.ResetGrabCompleteOverride();
+
+			holdRotation = Quaternion.Euler(TotalDeltaHoldRotation.y, TotalDeltaHoldRotation.x, 0) * holdRotation;
+			holdRotationDelta = Vector2.zero;
 			
 			if (leftGrabber.IsHoldingSomething && rightGrabber.IsHoldingSomething)
 				UpdateHoldingBothHands();
@@ -54,12 +67,12 @@ namespace SBEPIS.Controller.Flatscreen
 			leftIndicator.gameObject.SetActive(false);
 			float distanceBetweenGrabbers = Vector3.Distance(leftGrabber.transform.position, rightGrabber.transform.position);
 			leftTracker.SetPositionAndRotation(
-				transform.TransformPoint(Vector3.forward * zoomAmount + Vector3.left * distanceBetweenGrabbers / 2),
-				transform.rotation
+				transform.TransformPoint(Vector3.forward * zoomAmount + holdRotation * Vector3.left * distanceBetweenGrabbers / 2),
+				transform.rotation * holdRotation
 			);
 			rightTracker.SetPositionAndRotation(
-				transform.TransformPoint(Vector3.forward * zoomAmount + Vector3.right * distanceBetweenGrabbers / 2),
-				transform.rotation
+				transform.TransformPoint(Vector3.forward * zoomAmount + holdRotation * Vector3.right * distanceBetweenGrabbers / 2),
+				transform.rotation * holdRotation
 			);
 		}
 		
@@ -70,7 +83,7 @@ namespace SBEPIS.Controller.Flatscreen
 			leftIndicator.gameObject.SetActive(false);
 			leftTracker.SetPositionAndRotation(
 				transform.TransformPoint(Vector3.forward * zoomAmount),
-				transform.rotation
+				transform.rotation * holdRotation
 			);
 			rightTracker.SetPositionAndRotation(rightEmptyHoldPosition);
 		}
@@ -83,12 +96,13 @@ namespace SBEPIS.Controller.Flatscreen
 			leftTracker.SetPositionAndRotation(leftEmptyHoldPosition);
 			rightTracker.SetPositionAndRotation(
 				transform.TransformPoint(Vector3.forward * zoomAmount),
-				transform.rotation
+				transform.rotation * holdRotation
 			);
 		}
 		
 		private void UpdateHoldingNothing()
 		{
+			holdRotation = Quaternion.identity;
 			// Assumes rightGrabber.GrabMask == leftGrabber.GrabMask
 			if (UnityEngine.Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, raycastDistance, rightGrabber.GrabMask, QueryTriggerInteraction.Ignore))
 				UpdateHoldingNothingLookingAtObject(hit);
@@ -132,10 +146,10 @@ namespace SBEPIS.Controller.Flatscreen
 				UpdateIndicatorAndGrabberOverridesSuccess(handHit, grabber, indicator);
 				return true;
 			}
-			else
+			else // This happens when the shoulder is inside the object
 			{
 				UpdateIndicatorAndGrabberOverridesFail(grabber, indicator);
-				Debug.LogError($"Hand didn't hit {(lookHit.rigidbody ? lookHit.rigidbody.gameObject : lookHit.collider.gameObject)}");
+				//Debug.LogError($"Hand didn't hit {(lookHit.rigidbody ? lookHit.rigidbody.gameObject : lookHit.collider.gameObject)}");
 				return false;
 			}
 		}

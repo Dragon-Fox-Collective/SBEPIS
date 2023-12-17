@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Look Yaw Driven",
+                    "name": "Look Yaw Drive",
                     "type": "Value",
                     "id": "d548a5aa-43dd-4995-b334-204ec967e505",
                     "expectedControlType": "Axis",
@@ -66,7 +66,7 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Pick Up Left",
@@ -75,7 +75,7 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Use Right",
@@ -153,6 +153,15 @@
                     "name": "Crouch",
                     "type": "Button",
                     "id": "56f2e162-8385-42de-a76f-52527d456a2c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Rotate Held Item",
+                    "type": "Button",
+                    "id": "75c737e6-04cc-4731-bd20-9c1493b8b82c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -343,7 +352,7 @@
                     "interactions": "",
                     "processors": "Scale(factor=3)",
                     "groups": "OpenXR",
-                    "action": "Look Yaw Driven",
+                    "action": "Look Yaw Drive",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -354,7 +363,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Look Yaw Driven",
+                    "action": "Look Yaw Drive",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -619,6 +628,17 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Look Pitch Delta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c0906e87-b357-4406-bf66-0d73650a69c4",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Rotate Held Item",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -2026,6 +2046,85 @@
                     "processors": "",
                     "groups": "",
                     "action": "Play G6",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Rotating Held Item",
+            "id": "c1fdbf6d-2d74-4256-8dc4-c065963d496f",
+            "actions": [
+                {
+                    "name": "Stop Rotating Held Item",
+                    "type": "Button",
+                    "id": "2e1c5e07-c42e-478a-826b-1ccbd5081cc3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Rotate Delta",
+                    "type": "Value",
+                    "id": "170f0ec0-d6b9-430b-bb56-9d4f003326e6",
+                    "expectedControlType": "Vector2",
+                    "processors": "Scale(factor=0.5)",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Rotate Drive",
+                    "type": "Value",
+                    "id": "8684b033-9dbd-4408-aab6-fb2e8817d477",
+                    "expectedControlType": "Vector2",
+                    "processors": "Scale(factor=60)",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "53006866-e4ff-43dd-ace3-56d7f7e9887c",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Stop Rotating Held Item",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff16be35-5348-4867-baad-31548172960b",
+                    "path": "<XRController>{RightHand}/thumbstick",
+                    "interactions": "",
+                    "processors": "Scale(factor=3)",
+                    "groups": "OpenXR",
+                    "action": "Rotate Drive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e43ae39e-0fce-436e-a999-b9f750d051b8",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Rotate Drive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3345ab51-b342-4277-8056-d8df577b9cce",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Rotate Delta",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

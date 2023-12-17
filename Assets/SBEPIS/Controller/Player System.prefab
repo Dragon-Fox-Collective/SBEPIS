@@ -2157,6 +2157,7 @@ GameObject:
   - component: {fileID: 6098800601631693807}
   - component: {fileID: 4432624992987933845}
   - component: {fileID: 96399996463305117}
+  - component: {fileID: 1125436226651452711}
   m_Layer: 0
   m_Name: Input System
   m_TagString: Untagged
@@ -5090,6 +5091,12 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls: []
     ActionId: 56f2e162-8385-42de-a76f-52527d456a2c
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 75c737e6-04cc-4731-bd20-9c1493b8b82c
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 2e1c5e07-c42e-478a-826b-1ccbd5081cc3
   boolActions:
   - m_PersistentCalls:
       m_Calls: []
@@ -5515,6 +5522,36 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     ActionId: 56f2e162-8385-42de-a76f-52527d456a2c
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1125436226651452711}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.HoldInputMapSwitchHelper, SBEPIS.Controller
+        m_MethodName: StartHoldingOnTrue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 75c737e6-04cc-4731-bd20-9c1493b8b82c
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1125436226651452711}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.HoldInputMapSwitchHelper, SBEPIS.Controller
+        m_MethodName: StopHoldingOnFalse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 2e1c5e07-c42e-478a-826b-1ccbd5081cc3
   floatActions:
   - m_PersistentCalls:
       m_Calls:
@@ -5607,6 +5644,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     ActionId: b9e60b67-a109-4d23-8dde-d0dc0024920c
+  - m_PersistentCalls:
+      m_Calls: []
+    ActionId: 8684b033-9dbd-4408-aab6-fb2e8817d477
   vector2Actions:
   - m_PersistentCalls:
       m_Calls:
@@ -5623,6 +5663,38 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     ActionId: 6d0dc336-274b-4f72-a6b3-dfbbcec1770b
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6470668690988925192}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Flatscreen.FlatscreenHandTrackerPositioner,
+          SBEPIS.Controller
+        m_MethodName: set_HoldRotationDelta
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 170f0ec0-d6b9-430b-bb56-9d4f003326e6
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6470668690988925192}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Flatscreen.FlatscreenHandTrackerPositioner,
+          SBEPIS.Controller
+        m_MethodName: set_HoldRotationDrive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    ActionId: 8684b033-9dbd-4408-aab6-fb2e8817d477
   vector3Actions:
   - m_PersistentCalls:
       m_Calls:
@@ -5686,6 +5758,72 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     ActionId: c1a219b6-0712-4ee7-9810-39daf3f9aaf7
+--- !u!114 &1125436226651452711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5040132003472840282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2a35359068f4556966a103b3e89aa46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnStartHolding:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6098800601631693807}
+        m_TargetAssemblyTypeName: UnityEngine.InputSystem.PlayerInput, Unity.InputSystem
+        m_MethodName: SwitchCurrentActionMap
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Rotating Held Item
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6271847251800222012}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Grabber, SBEPIS.Controller
+        m_MethodName: set_IsHoldingGrab
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Rotating Held Item
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6376568278754761723}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Grabber, SBEPIS.Controller
+        m_MethodName: set_IsHoldingGrab
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Rotating Held Item
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnStopHolding:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6098800601631693807}
+        m_TargetAssemblyTypeName: UnityEngine.InputSystem.PlayerInput, Unity.InputSystem
+        m_MethodName: SwitchCurrentActionMap
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Gameplay
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5118502531201582010
 GameObject:
   m_ObjectHideFlags: 0
@@ -6684,6 +6822,7 @@ MonoBehaviour:
   startingZoomDistance: 1
   zoomSensitivity: 0.001
   sphereCastRadius: 0.3
+  rotationSensitivity: 0.1
   rightEmptyHoldPosition: {fileID: 4916433771989261608}
   leftEmptyHoldPosition: {fileID: 1818974022422500201}
 --- !u!1 &6376568279556092929
