@@ -10,7 +10,7 @@ namespace SBEPIS.Utils
 		
 		private void Start()
 		{
-			Destroy(gameObject, source.clip.length * source.pitch);
+			Destroy(gameObject, source.clip.length / source.pitch);
 		}
 	}
 }

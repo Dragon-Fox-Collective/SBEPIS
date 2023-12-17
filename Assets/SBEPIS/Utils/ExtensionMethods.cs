@@ -420,6 +420,18 @@ public static class ExtensionMethods
 			return min;
 		throw new ArgumentException("Source is empty", nameof(source));
 	}
+
+	public static Vector3 Average(this IEnumerable<Vector3> source)
+	{
+		int count = 0;
+		Vector3 sum = Vector3.zero;
+		foreach (Vector3 vector in source)
+		{
+			count++;
+			sum += vector;
+		}
+		return sum / count;
+	}
 	
 	public static IEnumerable<float> AsEnumerable(this Vector3 vector)
 	{
