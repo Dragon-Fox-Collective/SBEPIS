@@ -172,6 +172,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 504f0aee9484cb6469a3440f51d9f33d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8784830673171628131}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 504f0aee9484cb6469a3440f51d9f33d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5769540398497183931}
     - targetCorrespondingSourceObject: {fileID: -259972160606440404, guid: 504f0aee9484cb6469a3440f51d9f33d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2333370411829775239}
@@ -181,6 +184,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -259972160606440404, guid: 504f0aee9484cb6469a3440f51d9f33d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5678015583710825833}
+    - targetCorrespondingSourceObject: {fileID: -259972160606440404, guid: 504f0aee9484cb6469a3440f51d9f33d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4291578881203903345}
   m_SourcePrefab: {fileID: 100100000, guid: 504f0aee9484cb6469a3440f51d9f33d, type: 3}
 --- !u!4 &1403538501233516190 stripped
 Transform:
@@ -251,6 +257,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceCollider: {fileID: 5596144299027756596}
   mass: 1
+--- !u!114 &5769540398497183931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743331177758704676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 745ad17917774a6aa1151eedb5d05f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: 05ce88ed3d1da394f9b843d34f0086cf, type: 2}
+  output: {fileID: 909596712911330451, guid: 8f619a894f21a2646894b32cfed3428c, type: 2}
 --- !u!1 &7535792230089952601 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -259972160606440404, guid: 504f0aee9484cb6469a3440f51d9f33d, type: 3}
@@ -315,6 +335,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceCollider: {fileID: 5276013184227414507}
   mass: 1
+--- !u!114 &4291578881203903345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7535792230089952601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 745ad17917774a6aa1151eedb5d05f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: 7fb93c89a45a15b45b0179dfedb34e50, type: 2}
+  output: {fileID: 909596712911330451, guid: 8f619a894f21a2646894b32cfed3428c, type: 2}
 --- !u!4 &8772350610481437725 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7876023681238672744, guid: 504f0aee9484cb6469a3440f51d9f33d, type: 3}

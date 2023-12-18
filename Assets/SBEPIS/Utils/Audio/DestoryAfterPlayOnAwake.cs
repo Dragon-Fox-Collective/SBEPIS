@@ -1,7 +1,7 @@
 using KBCore.Refs;
 using UnityEngine;
 
-namespace SBEPIS.Utils
+namespace SBEPIS.Utils.Audio
 {
 	public class DestoryAfterPlayOnAwake : ValidatedMonoBehaviour
 	{
