@@ -1,7 +1,7 @@
 using KBCore.Refs;
 using UnityEngine;
 
-namespace SBEPIS.Utils
+namespace SBEPIS.Utils.Audio
 {
 	public class DestoryAfterPlayOnAwake : ValidatedMonoBehaviour
 	{
@@ -10,7 +10,7 @@ namespace SBEPIS.Utils
 		
 		private void Start()
 		{
-			Destroy(gameObject, source.clip.length * source.pitch);
+			Destroy(gameObject, source.clip.length / source.pitch);
 		}
 	}
 }

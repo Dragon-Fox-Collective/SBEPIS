@@ -398,17 +398,26 @@ public static class ExtensionMethods
 		using IEnumerator<T> sourceEnumerator = source.GetEnumerator();
 		return sourceEnumerator.MoveNext() && comparer.Equals(sourceEnumerator.Current, prefix);
 	}
-	
+
 	public static T MinBy<T, TSelected>(this IEnumerable<T> source, Func<T, TSelected> selector)
 	{
 		IComparer<TSelected> comparer = Comparer<TSelected>.Default;
+		return source.AggregateBy(selector, (current, item) => comparer.Compare(item, current) < 0);
+	}
+	public static T MaxBy<T, TSelected>(this IEnumerable<T> source, Func<T, TSelected> selector)
+	{
+		IComparer<TSelected> comparer = Comparer<TSelected>.Default;
+		return source.AggregateBy(selector, (current, item) => comparer.Compare(item, current) > 0);
+	}
+	public static T AggregateBy<T, TSelected>(this IEnumerable<T> source, Func<T, TSelected> selector, Func<TSelected, TSelected, bool> comparer)
+	{
 		bool initialized = false;
 		T min = default;
 		TSelected minSelected = default;
 		foreach (T item in source)
 		{
 			TSelected itemSelected = selector(item);
-			if (!initialized || comparer.Compare(itemSelected, minSelected) < 0)
+			if (!initialized || comparer(minSelected, itemSelected))
 			{
 				min = item;
 				minSelected = itemSelected;
@@ -419,6 +428,18 @@ public static class ExtensionMethods
 		if (initialized)
 			return min;
 		throw new ArgumentException("Source is empty", nameof(source));
+	}
+
+	public static Vector3 Average(this IEnumerable<Vector3> source)
+	{
+		int count = 0;
+		Vector3 sum = Vector3.zero;
+		foreach (Vector3 vector in source)
+		{
+			count++;
+			sum += vector;
+		}
+		return sum / count;
 	}
 	
 	public static IEnumerable<float> AsEnumerable(this Vector3 vector)
