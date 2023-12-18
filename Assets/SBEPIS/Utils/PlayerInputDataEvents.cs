@@ -5,8 +5,8 @@ using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
-using Pose = UnityEngine.XR.OpenXR.Input.Pose;
 
 namespace SBEPIS.Utils
 {
@@ -32,8 +32,8 @@ namespace SBEPIS.Utils
 		private List<PlayerInputEvent<Vector3>> vector3Actions = new();
 		public List<PlayerInputEvent<Vector3>> Vector3Actions => vector3Actions;
 		[SerializeField]
-		private List<PlayerInputEvent<Pose>> poseActions = new();
-		public List<PlayerInputEvent<Pose>> PoseActions => poseActions;
+		private List<PlayerInputEvent<PoseState>> poseActions = new();
+		public List<PlayerInputEvent<PoseState>> PoseActions => poseActions;
 		[SerializeField]
 		private List<PlayerInputEvent<Quaternion>> quaternionActions = new();
 		public List<PlayerInputEvent<Quaternion>> QuaternionActions => quaternionActions;
@@ -70,7 +70,7 @@ namespace SBEPIS.Utils
 				
 				case "Pose":
 					if (context.performed || context.canceled)
-						poseActions.First(inputEvent => inputEvent.ActionId == actionId).Invoke(context.ReadValue<Pose>());
+						poseActions.First(inputEvent => inputEvent.ActionId == actionId).Invoke(context.ReadValue<PoseState>());
 					break;
 				
 				case "Quaternion":

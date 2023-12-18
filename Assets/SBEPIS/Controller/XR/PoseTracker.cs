@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
-using Pose = UnityEngine.XR.OpenXR.Input.Pose;
 
 namespace SBEPIS.Controller
 {
@@ -11,7 +11,7 @@ namespace SBEPIS.Controller
 		[SerializeField]
 		private InputAction poseInput;
 		[SerializeField]
-		private UnityEvent<Pose> onPose;
+		private UnityEvent<PoseState> onPose;
 		
 		private void Awake()
 		{
@@ -19,7 +19,7 @@ namespace SBEPIS.Controller
 			poseInput.canceled += OnPose;
 		}
 		
-		private void OnPose(CallbackContext context) => onPose.Invoke(context.ReadValue<Pose>());
+		private void OnPose(CallbackContext context) => onPose.Invoke(context.ReadValue<PoseState>());
 
 		public void OnEnable()
 		{

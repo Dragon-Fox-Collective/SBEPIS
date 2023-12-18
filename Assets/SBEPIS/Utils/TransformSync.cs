@@ -1,6 +1,6 @@
 using KBCore.Refs;
 using UnityEngine;
-using Pose = UnityEngine.XR.OpenXR.Input.Pose;
+using UnityEngine.InputSystem.XR;
 
 namespace SBEPIS.Utils
 {
@@ -41,7 +41,7 @@ namespace SBEPIS.Utils
 			SyncLocalRotation(transform.parent.rotation.Inverse() * rotation);
 		}
 		
-		public void SyncPose(Pose pose)
+		public void SyncPose(PoseState pose)
 		{
 			SyncLocalPosition(pose.position);
 			SyncLocalRotation(pose.rotation);
