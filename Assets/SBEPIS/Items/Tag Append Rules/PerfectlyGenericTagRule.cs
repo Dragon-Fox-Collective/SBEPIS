@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SBEPIS.Bits.TagAppendRules
 {
-	[CreateAssetMenu(fileName = nameof(PerfectlyGenericTagRule), menuName = "DoubleTagAppendRules/" + nameof(PerfectlyGenericTagRule))]
+	[CreateAssetMenu(fileName = nameof(PerfectlyGenericTagRule), menuName = "TagAppendRules/" + nameof(PerfectlyGenericTagRule))]
 	public class PerfectlyGenericTagRule : TagAppendRule
 	{
 		[SerializeField]
