@@ -4,14 +4,16 @@ using System.Linq;
 using SBEPIS.Bits.TagAppendRules;
 using SBEPIS.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Bits
 {
 	[CreateAssetMenu(fileName = nameof(TagAppender))]
 	public class TagAppender : ScriptableSingleton<TagAppender>
 	{
+		[FormerlySerializedAs("doubleRules")]
 		[SerializeField]
-		private List<TagAppendRule> doubleRules = new();
+		private List<TagAppendRule> rules = new();
 
 		public TaggedBitSet Append(TaggedBitSet a, BitSet resultBits) => Append(a, TaggedBitSet.Empty, resultBits);
 
@@ -19,7 +21,7 @@ namespace SBEPIS.Bits
 		{
 			List<Tag> aTags = a.Tags.ToList(), bTags = b.Tags.ToList(), resultTags = new();
 
-			doubleRules.ForEach(rule => rule.Apply(a.Bits, aTags, b.Bits, bTags, resultBits, resultTags));
+			rules.ForEach(rule => rule.Apply(a.Bits, aTags, b.Bits, bTags, resultBits, resultTags));
 
 			if (aTags.Count > 0 || bTags.Count > 0)
 				throw new InvalidOperationException($"Tags left over {aTags.ToDelimString()}, {bTags.ToDelimString()}");
