@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using SBEPIS.Bits;
+using SBEPIS.Bits.Tags;
 using SBEPIS.Items;
 using UnityEngine;
 
@@ -8,9 +9,14 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 	[CreateAssetMenu(fileName = nameof(DefaultReplaceThaumergyRule), menuName = "ThaumergyRules/" + nameof(DefaultReplaceThaumergyRule))]
 	public class DefaultReplaceThaumergyRule : ThaumergyRule
 	{
+		private bool didAtLeastOneIteration;
 		private bool finished;
 
-		public override void Init() => finished = false;
+		public override void Init()
+		{
+			didAtLeastOneIteration = false;
+			finished = false;
+		}
 
 		public override bool Apply(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
@@ -33,9 +39,13 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 
 			ItemModule module = Instantiate(modulePrefab);
 			PlaceModuleUnderItem(item, module);
+            
+			if (!didAtLeastOneIteration && !item.Bits.Tags.Any(tag => tag is BaseModelTag) && modulePrefab.Bits.Tags.Any(tag => tag is BaseModelTag))
+				item.Bits += modulePrefab.Bits.Tags.First(tag => tag is BaseModelTag);
 			
 			if (item.Bits.Bits.Has(bits.Bits))
 				finished = true;
+			didAtLeastOneIteration = true;
 			return true;
 		}
 		
