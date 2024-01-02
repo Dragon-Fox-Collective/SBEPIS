@@ -13,7 +13,7 @@ namespace SBEPIS.Bits.TagAppendRules
 		public override void Apply(BitSet aBits, List<Tag> aTags, BitSet bBits, List<Tag> bTags, BitSet resultBits, List<Tag> resultTags)
 		{
 			if (resultBits == BitSet.Empty)
-				resultTags.Add(new MaterialTag(perfectlyGenericMaterial));
+				bTags.Add(new MaterialTag(perfectlyGenericMaterial));
 		}
 	}
 }

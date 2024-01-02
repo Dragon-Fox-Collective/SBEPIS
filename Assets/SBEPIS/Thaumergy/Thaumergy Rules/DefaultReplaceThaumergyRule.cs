@@ -52,7 +52,7 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 		private static ItemModule GetModulePrefabFromScore(BitSet bits, ItemModule item, ItemModuleManager modules) =>
 			modules.Modules
 				.Where(module => bits.Has(module.Bits.Bits) && !item.Bits.Has(module.Bits.Bits))
-				.MaxBy(module => BitSet.GetUniquenessScore(item.Bits.Bits, module.Bits.Bits));
+				.MaxBy(module => BitSet.GetUniquenessScore(item.Bits.Bits, module.Bits.Bits), orDefault: true);
 		
 		private static void PlaceModuleUnderItem(ItemModule item, ItemModule module)
 		{

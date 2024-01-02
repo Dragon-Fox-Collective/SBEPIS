@@ -399,17 +399,17 @@ public static class ExtensionMethods
 		return sourceEnumerator.MoveNext() && comparer.Equals(sourceEnumerator.Current, prefix);
 	}
 
-	public static T MinBy<T, TSelected>(this IEnumerable<T> source, Func<T, TSelected> selector)
+	public static T MinBy<T, TSelected>(this IEnumerable<T> source, Func<T, TSelected> selector, bool orDefault = false)
 	{
 		IComparer<TSelected> comparer = Comparer<TSelected>.Default;
-		return source.AggregateBy(selector, (current, item) => comparer.Compare(item, current) < 0);
+		return source.AggregateBy(selector, (current, item) => comparer.Compare(item, current) < 0, orDefault: orDefault);
 	}
-	public static T MaxBy<T, TSelected>(this IEnumerable<T> source, Func<T, TSelected> selector)
+	public static T MaxBy<T, TSelected>(this IEnumerable<T> source, Func<T, TSelected> selector, bool orDefault = false)
 	{
 		IComparer<TSelected> comparer = Comparer<TSelected>.Default;
-		return source.AggregateBy(selector, (current, item) => comparer.Compare(item, current) > 0);
+		return source.AggregateBy(selector, (current, item) => comparer.Compare(item, current) > 0, orDefault: orDefault);
 	}
-	public static T AggregateBy<T, TSelected>(this IEnumerable<T> source, Func<T, TSelected> selector, Func<TSelected, TSelected, bool> comparer)
+	public static T AggregateBy<T, TSelected>(this IEnumerable<T> source, Func<T, TSelected> selector, Func<TSelected, TSelected, bool> comparer, bool orDefault = false)
 	{
 		bool initialized = false;
 		T min = default;
@@ -425,7 +425,7 @@ public static class ExtensionMethods
 			initialized = true;
 		}
 
-		if (initialized)
+		if (initialized || orDefault)
 			return min;
 		throw new ArgumentException("Source is empty", nameof(source));
 	}
