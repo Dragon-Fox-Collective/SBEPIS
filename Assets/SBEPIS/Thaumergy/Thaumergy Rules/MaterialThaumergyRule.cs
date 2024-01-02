@@ -11,9 +11,6 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 	{
 		public override bool ApplyOnce(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
-			if (item.Bits.Tags.Any(member => member is MaterialTag))
-				return false;
-			
 			if (bits.Tags.FirstOrDefault(member => member is MaterialTag) is not MaterialTag tag)
 				return false;
 			
