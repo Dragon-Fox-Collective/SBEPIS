@@ -35,6 +35,19 @@ namespace SBEPIS.Controller.Flatscreen
 		}
 		private Quaternion holdRotation;
 		private Vector2 TotalDeltaHoldRotation => holdRotationDelta * rotationSensitivity + HoldRotationDrive * rotationSensitivity * Time.fixedDeltaTime;
+
+		private Vector3 RightFullHoldPosition => rightGrabber.HeldGrabPoint && rightGrabber.HeldGrabPoint.flatscreenTarget
+			? transform.TransformPoint(Vector3.forward * zoomAmount + rightGrabber.HeldGrabPoint.flatscreenTarget.InverseTransformPoint(rightGrabber.HeldGrabPoint.transform.position))
+			: transform.TransformPoint(Vector3.forward * zoomAmount);
+		private Quaternion RightFullHoldRotation => rightGrabber.HeldGrabPoint && rightGrabber.HeldGrabPoint.flatscreenTarget
+			? transform.rotation * holdRotation * rightGrabber.HeldGrabPoint.flatscreenTarget.InverseTransformRotation(rightGrabber.HeldGrabPoint.transform.rotation)
+			: transform.rotation * holdRotation;
+		private Vector3 LeftFullHoldPosition => leftGrabber.HeldGrabPoint && leftGrabber.HeldGrabPoint.flatscreenTarget
+			? transform.TransformPoint(Vector3.forward * zoomAmount + leftGrabber.HeldGrabPoint.flatscreenTarget.InverseTransformPoint(leftGrabber.HeldGrabPoint.transform.position))
+			: transform.TransformPoint(Vector3.forward * zoomAmount);
+		private Quaternion LeftFullHoldRotation => leftGrabber.HeldGrabPoint && leftGrabber.HeldGrabPoint.flatscreenTarget
+			? transform.rotation * holdRotation * leftGrabber.HeldGrabPoint.flatscreenTarget.InverseTransformRotation(leftGrabber.HeldGrabPoint.transform.rotation)
+			: transform.rotation * holdRotation;
 		
 		private float zoomAmount;
 		
@@ -67,12 +80,12 @@ namespace SBEPIS.Controller.Flatscreen
 			leftIndicator.gameObject.SetActive(false);
 			float distanceBetweenGrabbers = Vector3.Distance(leftGrabber.transform.position, rightGrabber.transform.position);
 			leftTracker.SetPositionAndRotation(
-				transform.TransformPoint(Vector3.forward * zoomAmount + holdRotation * Vector3.left * distanceBetweenGrabbers / 2),
-				transform.rotation * holdRotation
+				transform.TransformPoint(transform.InverseTransformPoint(LeftFullHoldPosition) + holdRotation * Vector3.left * distanceBetweenGrabbers / 2),
+				LeftFullHoldRotation
 			);
 			rightTracker.SetPositionAndRotation(
-				transform.TransformPoint(Vector3.forward * zoomAmount + holdRotation * Vector3.right * distanceBetweenGrabbers / 2),
-				transform.rotation * holdRotation
+				transform.TransformPoint(transform.InverseTransformPoint(RightFullHoldPosition) + holdRotation * Vector3.right * distanceBetweenGrabbers / 2),
+				RightFullHoldRotation
 			);
 		}
 		
@@ -81,10 +94,7 @@ namespace SBEPIS.Controller.Flatscreen
 			rightGrabber.CanGrab = false;
 			rightIndicator.gameObject.SetActive(false);
 			leftIndicator.gameObject.SetActive(false);
-			leftTracker.SetPositionAndRotation(
-				transform.TransformPoint(Vector3.forward * zoomAmount),
-				transform.rotation * holdRotation
-			);
+			leftTracker.SetPositionAndRotation(LeftFullHoldPosition, LeftFullHoldRotation);
 			rightTracker.SetPositionAndRotation(rightEmptyHoldPosition);
 		}
 		
@@ -94,10 +104,7 @@ namespace SBEPIS.Controller.Flatscreen
 			rightIndicator.gameObject.SetActive(false);
 			leftIndicator.gameObject.SetActive(false);
 			leftTracker.SetPositionAndRotation(leftEmptyHoldPosition);
-			rightTracker.SetPositionAndRotation(
-				transform.TransformPoint(Vector3.forward * zoomAmount),
-				transform.rotation * holdRotation
-			);
+			rightTracker.SetPositionAndRotation(RightFullHoldPosition, RightFullHoldRotation);
 		}
 		
 		private void UpdateHoldingNothing()
