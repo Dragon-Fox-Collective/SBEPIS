@@ -1,4 +1,5 @@
-﻿using KBCore.Refs;
+﻿using System.Linq;
+using KBCore.Refs;
 using TMPro;
 using UnityEngine;
 
@@ -22,9 +23,9 @@ namespace SBEPIS.Thaumergy
 
 		public void UpdateText()
 		{
-			if (!alchemyStation.Bits1 && !alchemyStation.Bits2)
+			if (!alchemyStation.Bits1 && !alchemyStation.Bits2 && !alchemyStation.Tags1 && !alchemyStation.Tags2)
 				text.text = initialText;
-			else if (!alchemyStation.Tags1 && !alchemyStation.Tags2)
+			else if (!alchemyStation.Result.Tags.Any())
 				text.text = alchemyStation.Result.Bits.Code;
 			else
 				text.text = alchemyStation.Result.Bits.Code + alchemyStation.Result.Tags.ToDelimString();

@@ -26,7 +26,7 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 			if (finished)
 				return false;
 			
-			ItemModule modulePrefab = GetModulePrefabFromScore(bits, item, modules);
+			ItemModule modulePrefab = GetModulePrefabFromScore(bits.Bits, item, modules);
 
 			if (modulePrefab is null)
 			{
@@ -49,24 +49,10 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 			return true;
 		}
 		
-		private static ItemModule GetModulePrefabFromScore(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
-		{
-			ItemModule module = null;
-			int moduleScore = int.MinValue;
-			foreach (ItemModule newModule in modules.Modules)
-			{
-				if (bits.Has(newModule.Bits.Bits) && !item.Bits.Has(newModule.Bits.Bits))
-				{
-					int newModuleScore = BitSet.GetUniquenessScore(item.Bits.Bits, newModule.Bits.Bits);
-					if (newModuleScore > moduleScore)
-					{
-						module = newModule;
-						moduleScore = newModuleScore;
-					}
-				}
-			}
-			return module;
-		}
+		private static ItemModule GetModulePrefabFromScore(BitSet bits, ItemModule item, ItemModuleManager modules) =>
+			modules.Modules
+				.Where(module => bits.Has(module.Bits.Bits) && !item.Bits.Has(module.Bits.Bits))
+				.MaxBy(module => BitSet.GetUniquenessScore(item.Bits.Bits, module.Bits.Bits));
 		
 		private static void PlaceModuleUnderItem(ItemModule item, ItemModule module)
 		{

@@ -15,6 +15,8 @@ namespace SBEPIS.Bits
 		[SerializeField]
 		private List<TagAppendRule> rules = new();
 
+		public TaggedBitSet Append(BitSet resultBits) => Append(TaggedBitSet.Empty, TaggedBitSet.Empty, resultBits);
+
 		public TaggedBitSet Append(TaggedBitSet a, BitSet resultBits) => Append(a, TaggedBitSet.Empty, resultBits);
 
 		public TaggedBitSet Append(TaggedBitSet a, TaggedBitSet b, BitSet resultBits)

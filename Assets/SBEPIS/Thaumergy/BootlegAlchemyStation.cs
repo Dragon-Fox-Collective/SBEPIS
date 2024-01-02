@@ -88,7 +88,7 @@ namespace SBEPIS.Thaumergy
 			Result = Tags1 && Tags2 ? TagAppender.Instance.Append(Tags1.Module.Bits, Tags2.Module.Bits, code)
 				: Tags1 ? TagAppender.Instance.Append(Tags1.Module.Bits, code)
 				: Tags2 ? TagAppender.Instance.Append(Tags2.Module.Bits, code)
-				: TagAppender.Instance.Append(TaggedBitSet.Empty, code);
+				: TagAppender.Instance.Append(code);
 			
 			OnResultChange.Invoke();
 		}
