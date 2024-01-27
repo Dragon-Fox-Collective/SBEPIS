@@ -31,7 +31,7 @@ namespace SBEPIS.Physics
 
 		public override Vector3 GetPriority(Vector3 centerOfMass)
 		{
-			return ExtensionMethods.SelectVectorIndex(i => priorityLerps[i].Evaluate(centerOfMass[i]));
+			return VectorExtensions.SelectVectorIndex(i => priorityLerps[i].Evaluate(centerOfMass[i]));
 		}
 
 		public override Vector3 GetGravity(Vector3 centerOfMass)

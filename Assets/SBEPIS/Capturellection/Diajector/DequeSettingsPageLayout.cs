@@ -1,3 +1,4 @@
+using System.Linq;
 using KBCore.Refs;
 using TMPro;
 using UnityEngine;

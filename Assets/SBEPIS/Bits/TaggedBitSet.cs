@@ -48,9 +48,9 @@ namespace SBEPIS.Bits
 		public static TaggedBitSet operator -(BitSet a, TaggedBitSet b) => TagAppender.Instance.Append(b, a - b.bits);
 		
 		public static TaggedBitSet operator +(TaggedBitSet a, IEnumerable<Tag> b) => a.bits + a.Tags.Union(b);
-		public static TaggedBitSet operator +(TaggedBitSet a, Tag b) => a + ExtensionMethods.EnumerableOf(b);
+		public static TaggedBitSet operator +(TaggedBitSet a, Tag b) => a + EnumerableOf.Of(b);
 		public static TaggedBitSet operator -(TaggedBitSet a, IEnumerable<Tag> b) => a.bits + a.Tags.Except(b);
-		public static TaggedBitSet operator -(TaggedBitSet a, Tag b) => a - ExtensionMethods.EnumerableOf(b);
+		public static TaggedBitSet operator -(TaggedBitSet a, Tag b) => a - EnumerableOf.Of(b);
 		
 		public static implicit operator TaggedBitSet(BitSet bits) => new(bits, Enumerable.Empty<Tag>());
 		

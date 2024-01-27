@@ -1,4 +1,5 @@
-﻿using KBCore.Refs;
+﻿using System.Collections.Generic;
+using KBCore.Refs;
 using TMPro;
 using UnityEngine;
 

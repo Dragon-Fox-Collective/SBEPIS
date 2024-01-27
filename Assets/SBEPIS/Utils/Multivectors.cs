@@ -35,4 +35,12 @@ namespace SBEPIS.Utils
 			this.z = z;
 		}
 	}
+
+	public static class MultivectorExtensions
+	{
+		public static Vector3X2 Select(this Vector3X2 vector, Func<Vector3, Vector3> func) => new(func(vector.x), func(vector.y));
+		public static Vector3X2 SelectIndex(this Vector3X2 vector, Func<int, Vector3, Vector3> func) => new(func(0, vector.x), func(1, vector.y));
+		public static Vector2 AggregateIndex(this Vector3X2 vector, Func<int, Vector3, float> func) => new(func(0, vector.x), func(1, vector.y));
+		public static Vector3X2 Select(this Vector3X2 vector, Func<float, float> func) => vector.Select(v => v.Select(func));
+	}
 }

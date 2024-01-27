@@ -18,7 +18,7 @@ namespace SBEPIS.Capturellection
 		[SerializeField, Anywhere(Flag.Optional)] private InvokeTransitionReference forceClose;
 		
 		[SerializeField, Anywhere(Flag.Optional)] private Renderer bounds;
-		public Vector3 Size => bounds ? ExtensionMethods.Multiply(bounds.localBounds.size, bounds.transform.localScale) : Vector3.zero;
+		public Vector3 Size => bounds ? VectorExtensions.Multiply(bounds.localBounds.size, bounds.transform.localScale) : Vector3.zero;
 		
 		[SerializeField, Anywhere] private Transform root;
 		

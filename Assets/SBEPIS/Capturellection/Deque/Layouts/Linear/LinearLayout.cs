@@ -20,7 +20,7 @@ namespace SBEPIS.Capturellection.Deques
 			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
 			Vector3 absDirection = state.Direction.Select(Mathf.Abs);
 			float lengthSum = offsetFromEnd
-				? offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(ExtensionMethods.Add).magnitude
+				? offset * (inventory.Count - 1) + sizes.Select(size => Vector3.Project(size, absDirection)).Aggregate(VectorExtensions.Add).magnitude
 				: offset * (inventory.Count - 1);
 			
 			Vector3 right = -lengthSum / 2 * state.Direction;

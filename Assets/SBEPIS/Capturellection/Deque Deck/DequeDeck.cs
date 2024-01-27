@@ -41,7 +41,7 @@ namespace SBEPIS.Utils
 			{
 				GameObject definitionGameObject = new("Definition");
 				
-				IEnumerable<List<DequeRuleset>> rulesets = definitions.SelectMany(layer => layer.Select(definition => definition.Layers).Zip(ExtensionMethods.Flatten).Select(realLayer => realLayer.ToList()));
+				IEnumerable<List<DequeRuleset>> rulesets = definitions.SelectMany(layer => layer.Select(definition => definition.Layers).Zip(LinqExtensions.Flatten).Select(realLayer => realLayer.ToList()));
 				definitionPrefab = rulesets.Reverse().Select(layer =>
 				{
 					if (layer.Count > 1)

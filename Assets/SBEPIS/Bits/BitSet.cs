@@ -36,7 +36,7 @@ namespace SBEPIS.Bits
 		public static implicit operator BitSet(Bit bit) => new(new []{bit});
 		
 		public static TaggedBitSet operator +(BitSet a, IEnumerable<Tag> b) => new(a, b);
-		public static TaggedBitSet operator +(BitSet a, Tag b) => a + ExtensionMethods.EnumerableOf(b);
+		public static TaggedBitSet operator +(BitSet a, Tag b) => a + EnumerableOf.Of(b);
 		
 		public bool Has(Bit other) => Bits.Contains(other);
 		public bool Has(BitSet other) => (this & other) == other;

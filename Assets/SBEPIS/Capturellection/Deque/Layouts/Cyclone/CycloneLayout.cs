@@ -47,7 +47,7 @@ namespace SBEPIS.Capturellection.Deques
 			List<Vector3> sizes = inventory.Select(storable => storable.MaxPossibleSize).ToList();
 			float longestEdge = sizes.Select(size => size.x).Aggregate(Mathf.Max);
 			float innerRadius = DistanceToRegularPolygonEdge(inventory.Count, longestEdge);
-			Vector3 maxSize = sizes.Aggregate(ExtensionMethods.Max);
+			Vector3 maxSize = sizes.Aggregate(VectorExtensions.Max);
 			Vector3 sumSize = new(
 				(innerRadius + maxSize.y) * 2,
 				(innerRadius + maxSize.y) * 2,
