@@ -2,7 +2,6 @@
 using SBEPIS.Bits;
 using SBEPIS.Items;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBEPIS.Thaumergy.ThaumergyRules
 {
