@@ -11,13 +11,13 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 	{
 		private bool didAtLeastOneIteration;
 		private bool finished;
-
+		
 		public override void Init()
 		{
 			didAtLeastOneIteration = false;
 			finished = false;
 		}
-
+		
 		public override bool Apply(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
 			if (item.Bits.Bits.Has(bits.Bits) && item.Bits.Bits != BitSet.Empty)
@@ -27,7 +27,7 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 				return false;
 			
 			ItemModule modulePrefab = GetModulePrefabFromScore(bits.Bits, item, modules);
-
+			
 			if (modulePrefab is null)
 			{
 				if (bits.Bits != BitSet.Empty)
@@ -36,7 +36,7 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 				finished = true;
 				modulePrefab = modules.Modules.Last();
 			}
-
+			
 			ItemModule module = Instantiate(modulePrefab);
 			PlaceModuleUnderItem(item, module);
             

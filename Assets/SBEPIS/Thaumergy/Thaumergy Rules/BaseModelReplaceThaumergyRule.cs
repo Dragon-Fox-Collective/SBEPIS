@@ -13,18 +13,19 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 		{
 			if (item.Bits.Tags.Any(member => member is BaseModelTag))
 				return false;
-
+			
 			if (bits.Tags.FirstOrDefault(member => member is BaseModelTag) is not BaseModelTag tag)
 				return false;
-
+			
 			ItemModule module = Instantiate(tag.ItemModule);
-
+			
 			module.transform.Replace(item.ReplaceObject);
 			item.ReplaceObject = module.ReplaceObject;
-
+			item.AeratedAttachmentPoint = module.AeratedAttachmentPoint;
+			
 			item.Bits |= module.Bits.Bits;
 			item.Bits += tag;
-
+			
 			return true;
 		}
 	}

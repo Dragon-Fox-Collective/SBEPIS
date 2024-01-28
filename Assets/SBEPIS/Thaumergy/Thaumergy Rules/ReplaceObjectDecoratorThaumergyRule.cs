@@ -13,8 +13,10 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 		
 		public override bool Apply(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
+			if (bits.Has(this.bits))
+				Debug.Log($"ReplaceObjectDecoratorThaumergyRule {item.Bits} {bits.Bits} {item.ReplaceObject}");
 			if (!item.Bits.Bits.Any()) return false;
-			if (!bits.Bits.Has(this.bits)) return false;
+			if (!bits.Has(this.bits)) return false;
 			if (item.Bits.Has(this.bits)) return false;
 			if (!item.ReplaceObject) return false;
 			

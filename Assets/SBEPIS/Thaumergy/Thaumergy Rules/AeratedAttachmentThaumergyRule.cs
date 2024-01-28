@@ -13,14 +13,16 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 		
 		public override bool Apply(TaggedBitSet bits, ItemModule item, ItemModuleManager modules)
 		{
-			if (!bits.Bits.Has(aerated)) return false;
-			if (!bits.Bits.Has(this.bits)) return false;
+			if (bits.Has(this.bits))
+				Debug.Log($"AeratedAttachmentThaumergyRule {item.Bits} {bits.Bits} {item.AeratedAttachmentPoint}");
+			if (!bits.Has(aerated)) return false;
+			if (!bits.Has(this.bits)) return false;
 			if (!item.AeratedAttachmentPoint) return false;
 			
 			Transform module = Instantiate(attachment);
-			module.transform.Replace(item.ReplaceObject);
+			module.transform.Replace(item.AeratedAttachmentPoint);
 			item.AeratedAttachmentPoint = null;
-			item.Bits |= this.bits;
+			item.Bits |= this.bits | aerated;
 			
 			return true;
 		}

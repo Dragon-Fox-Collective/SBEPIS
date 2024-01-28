@@ -14,13 +14,14 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 				return false;
 			
 			ItemModule modulePrefab = modules.UniqueModules.FirstOrDefault(module => bits.Bits == module.Bits.Bits);
-
+			
 			if (modulePrefab is null)
 				return false;
-
+			
 			ItemModule module = Instantiate(modulePrefab);
 			module.transform.Replace(item.ReplaceObject);
 			item.ReplaceObject = module.ReplaceObject;
+			item.AeratedAttachmentPoint = module.AeratedAttachmentPoint;
 			item.Bits |= module.Bits.Bits;
 			
 			return true;
