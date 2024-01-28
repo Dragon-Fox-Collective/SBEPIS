@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -18,5 +19,7 @@ namespace SBEPIS.Bits
 			bit.bitName = bitName;
 			return bit;
 		}
+		
+		public static BitSet operator |(Bit a, Bit b) => new(EnumerableOf.Of(a, b));
 	}
 }

@@ -58,6 +58,7 @@ namespace SBEPIS.Thaumergy.ThaumergyRules
 		{
 			module.transform.Replace(item.ReplaceObject);
 			item.ReplaceObject = module.ReplaceObject;
+			item.AeratedAttachmentPoint = module.AeratedAttachmentPoint;
 			item.Bits |= module.Bits.Bits;
 		}
 	}

@@ -9,12 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1696646566020667253}
-  - component: {fileID: 3191484087582284052}
   - component: {fileID: 5565988921642197663}
   - component: {fileID: 349166168324994592}
   - component: {fileID: 3788180280271525687}
   m_Layer: 0
-  m_Name: Flame Jet
+  m_Name: Flame Jet Component
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,27 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3191484087582284052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1914935932866553090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2302cb7652a6c5342a08c09565ce1fa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseBits:
-    bits:
-      bits:
-      - {fileID: 11400000, guid: 36dacbcaf72005c498ad9774c42f4b6f, type: 2}
-      - {fileID: 11400000, guid: 8636335f515a2574f9ee3df97dcc8fb9, type: 2}
-    itemModule: {fileID: 0}
-    material: {fileID: 0}
-  ReplaceObject: {fileID: 0}
-  AeratedAttachmentPoint: {fileID: 0}
 --- !u!198 &5565988921642197663
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -2116,7 +2094,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    inWorldSpace: 0
+    inWorldSpace: 1
   InheritVelocityModule:
     enabled: 0
     m_Mode: 0
