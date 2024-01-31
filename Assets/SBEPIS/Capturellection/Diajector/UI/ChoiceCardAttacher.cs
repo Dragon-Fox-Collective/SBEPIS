@@ -28,7 +28,7 @@ namespace SBEPIS.Capturellection.UI
 			ChoiceCard.point = point;
 			ChoiceCard.slot = slot;
 			ChoiceCard.onChosen = onChosen;
-			grabbable.onDrop.AddListener((_, _) => ChoiceCard.ClampNewPosition());
+			grabbable.OnDrop.AddListener((_, _) => ChoiceCard.ClampNewPosition());
 		}
 	}
 }

@@ -66,7 +66,7 @@ namespace SBEPIS.Capturellection
 		{
 			CardTarget target = HasTemporaryTarget(card) ? targets[card] : AddTemporaryTarget(card);
 			page.AddCard(card.DequeElement, target);
-			pageCreator.StartTarget.onMoveFrom.Invoke(card.DequeElement.Animator);
+			pageCreator.StartTarget.OnMoveFrom.Invoke(card.DequeElement.Animator);
 			return target;
 		}
 		
@@ -76,19 +76,25 @@ namespace SBEPIS.Capturellection
 			RemoveTemporaryTarget(card);
 		}
 		
-		public void SyncRemoveOldCard(InventoryStorable card) => RemovePermanentTargetAndCard(card);
+		public void SyncRemoveOldCard(InventoryStorable card)
+		{
+			RemovePermanentTargetAndCard(card);
+			card.OnSyncRemoved.Invoke();
+		}
+		
 		public void SyncAddNewCard(InventoryStorable card)
 		{
 			CardTarget target = AddPermanentTargetAndCard(card);
 			if (card.TryGetComponent(out Grabbable grabbable) && grabbable.IsBeingHeld)
 			{
 				card.DequeElement.Animator.SetPausedAt(target.LerpTarget);
-				target.onGrab.Invoke();
+				target.OnGrab.Invoke();
 			}
 			else
 			{
 				card.DequeElement.Animator.TeleportTo(pageCreator.StartTarget);
 			}
+			card.OnSyncAdded.Invoke();
 		}
 	}
 }

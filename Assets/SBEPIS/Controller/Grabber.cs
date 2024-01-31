@@ -163,8 +163,8 @@ namespace SBEPIS.Controller
 			heldPureColliderNormal = Vector3.zero;
 			HeldGrabbable = grabbable;
 			
-			if (grabbable.grabPoints.Count > 0)
-				BindToGrabPoint(grabbable, grabbable.grabPoints[0]);
+			if (grabbable.GrabPoints.Count > 0)
+				BindToGrabPoint(grabbable, grabbable.GrabPoints[0]);
 			else
 				HeldCollider = grabbable.Rigidbody.GetComponentInChildren<Collider>();
 			
@@ -291,7 +291,7 @@ namespace SBEPIS.Controller
 			if (collider.isTrigger)
 				return;
 			
-			collider.SelectGrabbable(grabbable => grabbable.onTouch.Invoke(this, grabbable));
+			collider.SelectGrabbable(grabbable => grabbable.OnTouch.Invoke(this, grabbable));
 			collidingColliders.Add(collider);
 		}
 
@@ -301,7 +301,7 @@ namespace SBEPIS.Controller
 				return;
 			
 			collidingColliders.Remove(collider);
-			collider.SelectGrabbable(grabbable => grabbable.onStopTouch.Invoke(this, grabbable));
+			collider.SelectGrabbable(grabbable => grabbable.OnStopTouch.Invoke(this, grabbable));
 		}
 
 		public void ClearCollisions()
@@ -340,7 +340,7 @@ namespace SBEPIS.Controller
 				return;
 			
 			onUse.Invoke(this, HeldGrabbable);
-			HeldGrabbable.onUse.Invoke(this, HeldGrabbable);
+			HeldGrabbable.OnUse.Invoke(this, HeldGrabbable);
 		}
 	}
 	

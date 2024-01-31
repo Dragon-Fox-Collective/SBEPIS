@@ -32,7 +32,7 @@ namespace SBEPIS.Capturellection
 		public void AddCard(DequeElement card, CardTarget target)
 		{
 			cardTargets.Add(card, target);
-			target.onCardBound.Invoke(card);
+			target.OnCardBound.Invoke(card);
 			card.Page = this;
 		}
 		
@@ -87,7 +87,7 @@ namespace SBEPIS.Capturellection
 			
 			foreach ((DequeElement card, CardTarget target) in cards)
 			{
-				target.onPrepareCard.Invoke();
+				target.OnPrepareCard.Invoke();
 				card.StartAssembling();
 				yield return new WaitForSeconds(target.DealDelay);
 			}

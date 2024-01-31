@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KBCore.Refs;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Controller
 {
@@ -11,13 +12,20 @@ namespace SBEPIS.Controller
 		[SerializeField, Self] private new Rigidbody rigidbody;
 		public Rigidbody Rigidbody => rigidbody;
 		
-		public List<GrabPoint> grabPoints = new();
-		public GrabEvent onTouch = new();
-		public GrabEvent onGrab = new();
-		public GrabEvent onHoldUpdate = new();
-		public GrabEvent onUse = new();
-		public GrabEvent onDrop = new();
-		public GrabEvent onStopTouch = new();
+		[FormerlySerializedAs("grabPoints")]
+		public List<GrabPoint> GrabPoints = new();
+		[FormerlySerializedAs("onTouch")]
+		public GrabEvent OnTouch = new();
+		[FormerlySerializedAs("onGrab")]
+		public GrabEvent OnGrab = new();
+		[FormerlySerializedAs("onHoldUpdate")]
+		public GrabEvent OnHoldUpdate = new();
+		[FormerlySerializedAs("onUse")]
+		public GrabEvent OnUse = new();
+		[FormerlySerializedAs("onDrop")]
+		public GrabEvent OnDrop = new();
+		[FormerlySerializedAs("onStopTouch")]
+		public GrabEvent OnStopTouch = new();
 		
 		private List<Grabber> grabbingGrabbers = new();
 		
@@ -26,18 +34,18 @@ namespace SBEPIS.Controller
 		public void OnGrabbed(Grabber grabber)
 		{
 			grabbingGrabbers.Add(grabber);
-			onGrab.Invoke(grabber, this);
+			OnGrab.Invoke(grabber, this);
 		}
 		
 		public void HoldUpdate(Grabber grabber)
 		{
-			onHoldUpdate.Invoke(grabber, this);
+			OnHoldUpdate.Invoke(grabber, this);
 		}
 		
 		public void OnDropped(Grabber grabber)
 		{
 			grabbingGrabbers.Remove(grabber);
-			onDrop.Invoke(grabber, this);
+			OnDrop.Invoke(grabber, this);
 		}
 		
 		public void Drop()

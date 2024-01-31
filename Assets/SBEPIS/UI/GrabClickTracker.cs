@@ -11,14 +11,14 @@ namespace SBEPIS.UI
 		
 		private void OnEnable()
 		{
-			grabbable.onGrab.AddListener(StartTracking);
-			grabbable.onDrop.AddListener(FinishTracking);
+			grabbable.OnGrab.AddListener(StartTracking);
+			grabbable.OnDrop.AddListener(FinishTracking);
 		}
 
 		private void OnDisable()
 		{
-			grabbable.onGrab.RemoveListener(StartTracking);
-			grabbable.onDrop.RemoveListener(FinishTracking);
+			grabbable.OnGrab.RemoveListener(StartTracking);
+			grabbable.OnDrop.RemoveListener(FinishTracking);
 		}
 
 		public void StartTracking(Grabber grabber, Grabbable grabbable) => StartTracking();

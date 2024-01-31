@@ -50,7 +50,7 @@ namespace SBEPIS.Capturellection.UI
 			switchCard.target = cardTarget;
 			switchCard.SwitchValue = switchValue;
 			switchCard.onSwitchValueChanged = onSwitchValueChanged;
-			grabbable.onDrop.AddListener((_, _) => switchCard.ClampNewPosition());
+			grabbable.OnDrop.AddListener((_, _) => switchCard.ClampNewPosition());
 		}
 	}
 }

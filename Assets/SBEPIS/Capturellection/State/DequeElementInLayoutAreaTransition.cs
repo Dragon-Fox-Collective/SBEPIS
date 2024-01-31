@@ -16,7 +16,7 @@ namespace SBEPIS.Capturellection.State
 		protected override bool InitialValue => dequeElement.value.IsInLayoutArea;
 		protected override StateLink TrueLink => onEnterLayoutArea;
 		protected override StateLink FalseLink => onExitLayoutArea;
-		protected override UnityEvent TrueEvent => dequeElement.value.onEnterLayoutArea;
-		protected override UnityEvent FalseEvent => dequeElement.value.onExitLayoutArea;
+		protected override UnityEvent TrueEvent => dequeElement.value.OnEnterLayoutArea;
+		protected override UnityEvent FalseEvent => dequeElement.value.OnExitLayoutArea;
 	}
 }

@@ -4,6 +4,7 @@ using KBCore.Refs;
 using SBEPIS.Capturellection.Storage;
 using SBEPIS.Utils;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SBEPIS.Capturellection
 {
@@ -19,6 +20,9 @@ namespace SBEPIS.Capturellection
 			get => inventoryEvents.Get();
 			set => inventoryEvents.Set(this, value);
 		}
+		
+		public UnityEvent OnSyncAdded = new();
+		public UnityEvent OnSyncRemoved = new();
 		
 		public bool IsBeingFetched { get; set; }
 		

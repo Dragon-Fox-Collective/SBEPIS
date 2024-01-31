@@ -28,7 +28,7 @@ namespace SBEPIS.Controller
 			CoupledSocket = socket;
 			
 			Grabbable.Drop();
-			Grabbable.onGrab.AddListener(socket.Decouple);
+			Grabbable.OnGrab.AddListener(socket.Decouple);
 			
 			onCouple.Invoke(this, CoupledSocket);
 		}
@@ -44,7 +44,7 @@ namespace SBEPIS.Controller
 			CouplingSocket socket = CoupledSocket;
 			CoupledSocket = null;
 			
-			Grabbable.onGrab.RemoveListener(socket.Decouple);
+			Grabbable.OnGrab.RemoveListener(socket.Decouple);
 			
 			onDecouple.Invoke(this, socket);
 		}

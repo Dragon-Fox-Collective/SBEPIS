@@ -30,8 +30,8 @@ namespace SBEPIS.Capturellection
 				
 				if (card.TryGetComponent(out Grabbable cardGrabbable))
 				{
-					cardGrabbable.onGrab.AddListener((_, _) => target.onGrab.Invoke());
-					cardGrabbable.onDrop.AddListener((_, _) => target.onDrop.Invoke());
+					cardGrabbable.OnGrab.AddListener((_, _) => target.OnGrab.Invoke());
+					cardGrabbable.OnDrop.AddListener((_, _) => target.OnDrop.Invoke());
 				}
 			}
 			return cards;

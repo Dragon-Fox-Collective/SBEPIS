@@ -25,7 +25,7 @@ namespace SBEPIS.Controller
 			if (!newPlug)
 				return;
 			
-			newPlug.Grabbable.onDrop.AddListener(Couple);
+			newPlug.Grabbable.OnDrop.AddListener(Couple);
 		}
 		
 		private void OnTriggerExit(Collider other)
@@ -34,7 +34,7 @@ namespace SBEPIS.Controller
 			if (!newPlug)
 				return;
 			
-			newPlug.Grabbable.onDrop.RemoveListener(Couple);
+			newPlug.Grabbable.OnDrop.RemoveListener(Couple);
 		}
 		
 		public void Couple(Grabber grabber, Grabbable grabbable) => Couple(grabbable.GetComponent<CouplingPlug>());

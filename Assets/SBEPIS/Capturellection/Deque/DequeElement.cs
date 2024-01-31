@@ -22,26 +22,32 @@ namespace SBEPIS.Capturellection
 		
 		[SerializeField, Anywhere] private Transform root;
 		
+		[FormerlySerializedAs("dequeEvents")]
 		[FormerlySerializedAs("dequeOwnerEvents")]
-		public EventProperty<DequeElement, Deque, SetCardDequeEvent, UnsetCardDequeEvent> dequeEvents = new();
+		public EventProperty<DequeElement, Deque, SetCardDequeEvent, UnsetCardDequeEvent> DequeEvents = new();
 		public Deque Deque
 		{
-			get => dequeEvents.Get();
-			set => dequeEvents.Set(this, value);
+			get => DequeEvents.Get();
+			set => DequeEvents.Set(this, value);
 		}
 		
-		public UnityEvent onStartAssembling;
+		[FormerlySerializedAs("onStartAssembling")]
+		public UnityEvent OnStartAssembling;
 		public bool IsAssembling { get; private set; }
-		public UnityEvent onStartDisassembling;
+		[FormerlySerializedAs("onStartDisassembling")]
+		public UnityEvent OnStartDisassembling;
 		public bool IsDisassembling { get; private set; }
-		public UnityEvent onStopAssemblingAndDisassembling;
+		[FormerlySerializedAs("onStopAssemblingAndDisassembling")]
+		public UnityEvent OnStopAssemblingAndDisassembling;
 		
 		public bool IsStored => Deque;
 		
 		public bool HasBeenAssembled { get; set; }
 		
-		public UnityEvent onEnterLayoutArea = new();
-		public UnityEvent onExitLayoutArea = new();
+		[FormerlySerializedAs("onEnterLayoutArea")]
+		public UnityEvent OnEnterLayoutArea = new();
+		[FormerlySerializedAs("onExitLayoutArea")]
+		public UnityEvent OnExitLayoutArea = new();
 		private bool isInLayoutArea;
 		public bool IsInLayoutArea
 		{
@@ -51,12 +57,12 @@ namespace SBEPIS.Capturellection
 				if (!isInLayoutArea && value)
 				{
 					isInLayoutArea = true;
-					onEnterLayoutArea.Invoke();
+					OnEnterLayoutArea.Invoke();
 				}
 				else if (isInLayoutArea && !value)
 				{
 					isInLayoutArea = false;
-					onExitLayoutArea.Invoke();
+					OnExitLayoutArea.Invoke();
 				}
 			}
 		}
@@ -84,7 +90,7 @@ namespace SBEPIS.Capturellection
 				return;
 			IsAssembling = true;
 			IsDisassembling = false;
-			onStartAssembling.Invoke();
+			OnStartAssembling.Invoke();
 		}
 		
 		public void StartDisassembling()
@@ -93,7 +99,7 @@ namespace SBEPIS.Capturellection
 				return;
 			IsAssembling = false;
 			IsDisassembling = true;
-			onStartDisassembling.Invoke();
+			OnStartDisassembling.Invoke();
 		}
 		
 		public void StopAssemblingAndDisassembling()
@@ -102,7 +108,7 @@ namespace SBEPIS.Capturellection
 				return;
 			IsAssembling = false;
 			IsDisassembling = false;
-			onStopAssemblingAndDisassembling.Invoke();
+			OnStopAssemblingAndDisassembling.Invoke();
 		}
 		
 		public void ForceOpen()

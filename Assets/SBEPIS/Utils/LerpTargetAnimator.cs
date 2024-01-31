@@ -37,7 +37,7 @@ namespace SBEPIS.Utils
 			{
 				prevTarget = pausedAtTarget;
 				pausedAtTarget = null;
-				prevTarget.onMoveFrom.Invoke(this);
+				prevTarget.OnMoveFrom.Invoke(this);
 			}
 		}
 		
@@ -73,7 +73,7 @@ namespace SBEPIS.Utils
 			LerpTarget oldTarget = pausedAtTarget = currentTarget;
 			Cancel();
 			
-			oldTarget.onMoveTo.Invoke(this);
+			oldTarget.OnMoveTo.Invoke(this);
 			foreach (UnityAction<LerpTargetAnimator> action in tempOnMoveToActions.ToList())
 				action?.Invoke(this);
 			
@@ -88,8 +88,8 @@ namespace SBEPIS.Utils
 				return;
 			
 			if (prevTarget)
-				prevTarget.onMoveFromTravelUpdate.Invoke(this);
-			currentTarget.onMoveToTravelUpdate.Invoke(this);
+				prevTarget.OnMoveFromTravelUpdate.Invoke(this);
+			currentTarget.OnMoveToTravelUpdate.Invoke(this);
 
 			time += Time.deltaTime;
 			if (time < curve[curve.length - 1].time)

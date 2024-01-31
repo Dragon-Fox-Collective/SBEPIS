@@ -1,3 +1,4 @@
+using System;
 using KBCore.Refs;
 using SBEPIS.Controller;
 using SBEPIS.Utils;
@@ -28,12 +29,16 @@ namespace SBEPIS.Capturellection
 		[SerializeField] private float dealDelay = 0.1f;
 		public float DealDelay => dealDelay;
 		
+		[FormerlySerializedAs("onCardBound")]
 		[FormerlySerializedAs("onCardCreated")]
-		public UnityEvent<DequeElement> onCardBound = new();
-		public UnityEvent onPrepareCard = new();
-		public UnityEvent onGrab = new();
-		public UnityEvent onDrop = new();
-
+		public UnityEvent<DequeElement> OnCardBound = new();
+		[FormerlySerializedAs("onPrepareCard")]
+		public UnityEvent OnPrepareCard = new();
+		[FormerlySerializedAs("onGrab")]
+		public UnityEvent OnGrab = new();
+		[FormerlySerializedAs("onDrop")]
+		public UnityEvent OnDrop = new();
+		
 		public bool HasBeenAssembled
 		{
 			get => Card.HasBeenAssembled;

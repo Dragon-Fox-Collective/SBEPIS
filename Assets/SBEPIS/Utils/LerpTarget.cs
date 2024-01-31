@@ -1,13 +1,18 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Utils
 {
 	public class LerpTarget : MonoBehaviour
 	{
-		public UnityEvent<LerpTargetAnimator> onMoveFrom = new();
-		public UnityEvent<LerpTargetAnimator> onMoveFromTravelUpdate = new();
-		public UnityEvent<LerpTargetAnimator> onMoveToTravelUpdate = new();
-		public UnityEvent<LerpTargetAnimator> onMoveTo = new();
+		[FormerlySerializedAs("onMoveFrom")]
+		public UnityEvent<LerpTargetAnimator> OnMoveFrom = new();
+		[FormerlySerializedAs("onMoveFromTravelUpdate")]
+		public UnityEvent<LerpTargetAnimator> OnMoveFromTravelUpdate = new();
+		[FormerlySerializedAs("onMoveToTravelUpdate")]
+		public UnityEvent<LerpTargetAnimator> OnMoveToTravelUpdate = new();
+		[FormerlySerializedAs("onMoveTo")]
+		public UnityEvent<LerpTargetAnimator> OnMoveTo = new();
 	}
 }

@@ -48,9 +48,9 @@ namespace SBEPIS.Capturellection
 		
 		private void SetupPageButtons(DequeSettingsPage prevPage, DequeSettingsPage page, DequeSettingsPage nextPage)
 		{
-			page.backButton.onGrab.AddListener(() => diajector.ChangePage(backPage));
-			if (prevPage) page.prevButton.onGrab.AddListener(() => diajector.ChangePage(prevPage.Page));
-			if (nextPage) page.nextButton.onGrab.AddListener(() => diajector.ChangePage(nextPage.Page));
+			page.backButton.OnGrab.AddListener(() => diajector.ChangePage(backPage));
+			if (prevPage) page.prevButton.OnGrab.AddListener(() => diajector.ChangePage(prevPage.Page));
+			if (nextPage) page.nextButton.OnGrab.AddListener(() => diajector.ChangePage(nextPage.Page));
 		}
 		
 		public void DestroySettingsPages()

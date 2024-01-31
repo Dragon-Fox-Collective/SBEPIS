@@ -42,7 +42,7 @@ namespace SBEPIS.Capturellection.UI
 			slider.target = cardTarget;
 			slider.SliderValue = sliderValue;
 			slider.onSliderValueChanged = onSliderValueChanged;
-			grabbable.onDrop.AddListener((_, _) => slider.ClampNewPosition());
+			grabbable.OnDrop.AddListener((_, _) => slider.ClampNewPosition());
 		}
 	}
 }

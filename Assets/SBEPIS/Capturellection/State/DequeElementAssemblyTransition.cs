@@ -39,17 +39,17 @@ namespace SBEPIS.Capturellection.State
 		private void AddListeners()
 		{
 			addedListeners = true;
-			dequeElement.value.onStartAssembling.AddListener(OnStartAssembly);
-			dequeElement.value.onStartDisassembling.AddListener(OnStartDisassembly);
-			dequeElement.value.onStopAssemblingAndDisassembling.AddListener(OnStopAssemblyAndDisassembly);
+			dequeElement.value.OnStartAssembling.AddListener(OnStartAssembly);
+			dequeElement.value.OnStartDisassembling.AddListener(OnStartDisassembly);
+			dequeElement.value.OnStopAssemblingAndDisassembling.AddListener(OnStopAssemblyAndDisassembly);
 		}
 		
 		private void RemoveListeners()
 		{
 			addedListeners = false;
-			dequeElement.value.onStartAssembling.RemoveListener(OnStartAssembly);
-			dequeElement.value.onStartDisassembling.RemoveListener(OnStartDisassembly);
-			dequeElement.value.onStopAssemblingAndDisassembling.RemoveListener(OnStopAssemblyAndDisassembly);
+			dequeElement.value.OnStartAssembling.RemoveListener(OnStartAssembly);
+			dequeElement.value.OnStartDisassembling.RemoveListener(OnStartDisassembly);
+			dequeElement.value.OnStopAssemblingAndDisassembling.RemoveListener(OnStopAssemblyAndDisassembly);
 		}
 		
 		private void OnStartAssembly() => Transition(onStartAssembly);

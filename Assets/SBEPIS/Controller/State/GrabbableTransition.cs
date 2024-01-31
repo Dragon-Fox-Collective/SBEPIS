@@ -16,7 +16,7 @@ namespace SBEPIS.Controller.State
 		protected override bool InitialValue => grabbable.value && grabbable.value.IsBeingHeld;
 		protected override StateLink TrueLink => onGrab;
 		protected override StateLink FalseLink => onDrop;
-		protected override UnityEvent<Grabber, Grabbable> TrueEvent => grabbable.value ? grabbable.value.onGrab : null;
-		protected override UnityEvent<Grabber, Grabbable> FalseEvent => grabbable.value ? grabbable.value.onDrop : null;
+		protected override UnityEvent<Grabber, Grabbable> TrueEvent => grabbable.value ? grabbable.value.OnGrab : null;
+		protected override UnityEvent<Grabber, Grabbable> FalseEvent => grabbable.value ? grabbable.value.OnDrop : null;
 	}
 }

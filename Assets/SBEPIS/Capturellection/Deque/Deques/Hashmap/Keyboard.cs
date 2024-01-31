@@ -46,7 +46,7 @@ namespace SBEPIS.Capturellection.Deques
 					(lineIndex - (positions.Count - 1) / 2f) * -spacing.y,
 					0);
 				
-				key.CardTarget.onGrab.AddListener(() => Text = key.Handle(Text));
+				key.CardTarget.OnGrab.AddListener(() => Text = key.Handle(Text));
 			}
 		}
 	}
