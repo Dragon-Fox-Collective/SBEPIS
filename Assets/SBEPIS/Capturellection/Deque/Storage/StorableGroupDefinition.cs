@@ -36,7 +36,7 @@ namespace SBEPIS.Capturellection.Storage
 		public void Init(DequeRuleset ruleset, int maxStorables, StorableGroupDefinition subdefinition)
 		{
 			if (this.ruleset) throw new InvalidOperationException($"Definition {this} has already been initialized");
-			this.ruleset = ruleset;
+			this.ruleset = Instantiate(ruleset, transform);
 			this.maxStorables = maxStorables;
 			this.subdefinition = subdefinition;
 		}
