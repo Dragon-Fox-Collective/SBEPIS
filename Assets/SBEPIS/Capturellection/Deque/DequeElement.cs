@@ -1,7 +1,6 @@
 using System;
 using KBCore.Refs;
 using SBEPIS.Utils;
-using SBEPIS.Utils.State;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -13,9 +12,6 @@ namespace SBEPIS.Capturellection
 	{
 		[SerializeField, Self] private LerpTargetAnimator animator;
 		public LerpTargetAnimator Animator => animator;
-		
-		[SerializeField, Anywhere(Flag.Optional)] private InvokeTransitionReference forceOpen;
-		[SerializeField, Anywhere(Flag.Optional)] private InvokeTransitionReference forceClose;
 		
 		[SerializeField, Anywhere(Flag.Optional)] private Renderer bounds;
 		public Vector3 Size => bounds ? VectorExtensions.Multiply(bounds.localBounds.size, bounds.transform.localScale) : Vector3.zero;
@@ -39,6 +35,9 @@ namespace SBEPIS.Capturellection
 		public bool IsDisassembling { get; private set; }
 		[FormerlySerializedAs("onStopAssemblingAndDisassembling")]
 		public UnityEvent OnStopAssemblingAndDisassembling;
+		
+		public UnityEvent OnForceOpen;
+		public UnityEvent OnForceClose;
 		
 		public bool IsStored => Deque;
 		
@@ -115,13 +114,13 @@ namespace SBEPIS.Capturellection
 		{
 			StopAssemblingAndDisassembling();
 			HasBeenAssembled = true;
-			if (forceOpen) forceOpen.Invoke();
+			OnForceOpen.Invoke();
 		}
 		
 		public void ForceClose()
 		{
 			StopAssemblingAndDisassembling();
-			if (forceClose) forceClose.Invoke();
+			OnForceClose.Invoke();
 		}
 		
 		public LerpTarget LerpTarget => Page.GetLerpTarget(this);

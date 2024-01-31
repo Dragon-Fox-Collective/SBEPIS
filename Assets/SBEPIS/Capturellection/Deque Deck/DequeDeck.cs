@@ -5,6 +5,7 @@ using SBEPIS.Capturellection;
 using SBEPIS.Capturellection.Storage;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Utils
 {
@@ -15,7 +16,7 @@ namespace SBEPIS.Utils
 		
 		[SerializeField, Anywhere] private TMP_Text dequeLabel;
 		
-		[SerializeField, Anywhere] private GameObject dequeBoxPrefab;
+		[FormerlySerializedAs("dequeBoxPrefab")] [SerializeField, Anywhere] private GameObject dequeSystemPrefab;
 		
 		[SerializeField, Anywhere] private Transform spawnPosition;
 		
@@ -75,14 +76,18 @@ namespace SBEPIS.Utils
 		{
 			if (!definitionPrefab) return;
 			
-			DequeBox dequeBox = Instantiate(dequeBoxPrefab).GetComponentInChildren<DequeBox>();
+			GameObject dequeSystem = Instantiate(dequeSystemPrefab);
+			
+			DequeBox dequeBox = dequeSystem.GetComponentInChildren<DequeBox>();
 			dequeBox.transform.SetPositionAndRotation(spawnPosition);
 			
 			Inventory inventory = dequeBox.GetComponentInChildren<Inventory>();
 			inventory.InitialCardCount = cardCount.Count;
 			
-			StorableGroupDefinition newDefinition = Instantiate(definitionPrefab, dequeBox.transform);
-			dequeBox.Deque.Init(newDefinition);
+			StorableGroupDefinition definition = Instantiate(definitionPrefab, dequeBox.transform);
+			dequeBox.Deque.Init(definition);
+
+			dequeSystem.name = definition.DequeName;
 		}
 	}
 }

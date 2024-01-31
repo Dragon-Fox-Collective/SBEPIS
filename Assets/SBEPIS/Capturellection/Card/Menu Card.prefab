@@ -103,8 +103,8 @@ MonoBehaviour:
       bits: []
     itemModule: {fileID: 0}
     material: {fileID: 0}
-  replaceObject: {fileID: 0}
-  aeratedAttachmentPoint: {fileID: 0}
+  ReplaceObject: {fileID: 0}
+  AeratedAttachmentPoint: {fileID: 0}
 --- !u!114 &8063364943367033139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,18 +159,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 4739669323773038143}
-  grabPoints:
+  GrabPoints:
   - {fileID: 2755212116337637129}
-  onTouch:
+  OnTouch:
     m_PersistentCalls:
       m_Calls: []
-  onGrab:
+  OnGrab:
     m_PersistentCalls:
       m_Calls: []
-  onHoldUpdate:
+  OnHoldUpdate:
     m_PersistentCalls:
       m_Calls: []
-  onUse:
+  OnUse:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6888253528436663669}
@@ -185,7 +185,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onDrop:
+  OnDrop:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6888253528436663669}
@@ -200,7 +200,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onStopTouch:
+  OnStopTouch:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &6988868132889192351
@@ -216,11 +216,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 4862787528830305297}
-  forceOpen: {fileID: 161916323888239672}
-  forceClose: {fileID: 3625156447795004191}
   bounds: {fileID: 2560012040714765689}
   root: {fileID: 2599729124153350906}
-  dequeEvents:
+  DequeEvents:
     onSet:
       m_PersistentCalls:
         m_Calls:
@@ -240,19 +238,61 @@ MonoBehaviour:
     onUnset:
       m_PersistentCalls:
         m_Calls: []
-  onStartAssembling:
+  OnStartAssembling:
     m_PersistentCalls:
       m_Calls: []
-  onStartDisassembling:
+  OnStartDisassembling:
     m_PersistentCalls:
       m_Calls: []
-  onStopAssemblingAndDisassembling:
+  OnStopAssemblingAndDisassembling:
     m_PersistentCalls:
       m_Calls: []
-  onEnterLayoutArea:
+  OnForceOpen:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 161916323888239672}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.State.InvokeTransitionReference, SBEPIS.Utils
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnForceClose:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 390939451314839435}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Grabbable, SBEPIS.Controller
+        m_MethodName: Drop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3625156447795004191}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.State.InvokeTransitionReference, SBEPIS.Utils
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnEnterLayoutArea:
     m_PersistentCalls:
       m_Calls: []
-  onExitLayoutArea:
+  OnExitLayoutArea:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &2939792396052749774
@@ -524,6 +564,54 @@ PrefabInstance:
     - target: {fileID: 1648459604794306392, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2718752667031301564, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
+      propertyPath: _DataBranchies.Array.data[0].lineBezier._EndControl.x
+      value: -193.99998
+      objectReference: {fileID: 0}
+    - target: {fileID: 2718752667031301564, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
+      propertyPath: _DataBranchies.Array.data[0].lineBezier._EndControl.y
+      value: 229
+      objectReference: {fileID: 0}
+    - target: {fileID: 2718752667031301564, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
+      propertyPath: _DataBranchies.Array.data[1].lineBezier._EndControl.x
+      value: -193.99998
+      objectReference: {fileID: 0}
+    - target: {fileID: 2718752667031301564, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
+      propertyPath: _DataBranchies.Array.data[1].lineBezier._EndControl.y
+      value: -106.999985
+      objectReference: {fileID: 0}
+    - target: {fileID: 2718752667031301564, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
+      propertyPath: _DataBranchies.Array.data[2].lineBezier._EndControl.x
+      value: -935
+      objectReference: {fileID: 0}
+    - target: {fileID: 2718752667031301564, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
+      propertyPath: _DataBranchies.Array.data[2].lineBezier._EndControl.y
+      value: 55.00002
+      objectReference: {fileID: 0}
+    - target: {fileID: 2718752667031301564, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
+      propertyPath: _DataBranchies.Array.data[0].lineBezier._EndPosition.x
+      value: -143.99998
+      objectReference: {fileID: 0}
+    - target: {fileID: 2718752667031301564, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
+      propertyPath: _DataBranchies.Array.data[0].lineBezier._EndPosition.y
+      value: 229
+      objectReference: {fileID: 0}
+    - target: {fileID: 2718752667031301564, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
+      propertyPath: _DataBranchies.Array.data[1].lineBezier._EndPosition.x
+      value: -143.99998
+      objectReference: {fileID: 0}
+    - target: {fileID: 2718752667031301564, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
+      propertyPath: _DataBranchies.Array.data[1].lineBezier._EndPosition.y
+      value: -106.999985
+      objectReference: {fileID: 0}
+    - target: {fileID: 2718752667031301564, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
+      propertyPath: _DataBranchies.Array.data[2].lineBezier._EndPosition.x
+      value: -885
+      objectReference: {fileID: 0}
+    - target: {fileID: 2718752667031301564, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
+      propertyPath: _DataBranchies.Array.data[2].lineBezier._EndPosition.y
+      value: 55.00002
       objectReference: {fileID: 0}
     - target: {fileID: 3091711851561693571, guid: 485afdd7217251d4f98391034f9a5c8d, type: 3}
       propertyPath: _ObjectParameters.Array.data[0]

@@ -304,30 +304,70 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7364518126905681701}
-  forceOpen: {fileID: 7576823594311283479}
-  forceClose: {fileID: 6437423387051762736}
   bounds: {fileID: 5750198916700477317}
   root: {fileID: 3053905021841277687}
-  dequeEvents:
+  DequeEvents:
     onSet:
       m_PersistentCalls:
         m_Calls: []
     onUnset:
       m_PersistentCalls:
         m_Calls: []
-  onStartAssembling:
+  OnStartAssembling:
     m_PersistentCalls:
       m_Calls: []
-  onStartDisassembling:
+  OnStartDisassembling:
     m_PersistentCalls:
       m_Calls: []
-  onStopAssemblingAndDisassembling:
+  OnStopAssemblingAndDisassembling:
     m_PersistentCalls:
       m_Calls: []
-  onEnterLayoutArea:
+  OnForceOpen:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7576823594311283479}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.State.InvokeTransitionReference, SBEPIS.Utils
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnForceClose:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 386900910309806089}
+        m_TargetAssemblyTypeName: SBEPIS.Controller.Grabbable, SBEPIS.Controller
+        m_MethodName: Drop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6437423387051762736}
+        m_TargetAssemblyTypeName: SBEPIS.Utils.State.InvokeTransitionReference, SBEPIS.Utils
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnEnterLayoutArea:
     m_PersistentCalls:
       m_Calls: []
-  onExitLayoutArea:
+  OnExitLayoutArea:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1606752325945070361
@@ -350,6 +390,12 @@ MonoBehaviour:
     onUnset:
       m_PersistentCalls:
         m_Calls: []
+  OnSyncAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSyncRemoved:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7287911555297974826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae9afed2c314cb884ab05e8831efab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeFetchedByCapturellectors: 1
   onCapture:
     m_PersistentCalls:
       m_Calls: []
