@@ -37,7 +37,7 @@ namespace SBEPIS.Capturellection
 			obj.SetActive(true);
 			
 			Bounds bounds = new(obj.transform.position, Vector3.zero);
-			foreach (Renderer objRenderer in obj.GetComponentsInChildren<Renderer>())
+			foreach (MeshRenderer objRenderer in obj.GetComponentsInChildren<MeshRenderer>())
 				bounds.Encapsulate(objRenderer.bounds);
 			objectParent.position = stage.position + objectParent.position - bounds.center;
 			stage.localScale = bounds.size.magnitude > 0
