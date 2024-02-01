@@ -15,12 +15,15 @@ namespace SBEPIS.Capturellection
 		public Diajector Diajector => diajector;
 		[SerializeField, Parent(Flag.IncludeInactive | Flag.Optional)] private DiajectorPageCreator pageCreator;
 		
+		[FormerlySerializedAs("onPrepareCardCreation")]
 		[FormerlySerializedAs("onPreparePagePre")]
-		public UnityEvent<DiajectorPage> onPrepareCardCreation = new();
+		public UnityEvent<DiajectorPage> OnPrepareCardCreation = new();
+		[FormerlySerializedAs("onOpen")]
 		[FormerlySerializedAs("onPreparePage")]
 		[FormerlySerializedAs("onPreparePagePost")]
-		public UnityEvent onOpen = new();
-		public UnityEvent onClose = new();
+		public UnityEvent OnOpen = new();
+		[FormerlySerializedAs("onClose")]
+		public UnityEvent OnClose = new();
 		
 		private bool hasCreatedCards = false;
 		
@@ -56,13 +59,13 @@ namespace SBEPIS.Capturellection
 		{
 			gameObject.SetActive(true);
 			CreateCardsIfNeeded();
-			onOpen.Invoke();
+			OnOpen.Invoke();
 		}
 		
 		private void PrepareClosingPage()
 		{
 			gameObject.SetActive(false);
-			onClose.Invoke();
+			OnClose.Invoke();
 		}
 		
 		public void CreateCardsIfNeeded()
@@ -70,7 +73,7 @@ namespace SBEPIS.Capturellection
 			if (!pageCreator || hasCreatedCards)
 				return;
 			
-			onPrepareCardCreation.Invoke(this);
+			OnPrepareCardCreation.Invoke(this);
 			pageCreator.CreateCards(GetComponentsInChildren<CardTarget>().Where(target => !cardTargets.ContainsValue(target))).ForEach(AddCard);
 			hasCreatedCards = true;
 		}

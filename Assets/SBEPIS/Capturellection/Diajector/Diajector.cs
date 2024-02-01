@@ -4,6 +4,7 @@ using KBCore.Refs;
 using SBEPIS.Utils;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace SBEPIS.Capturellection
 {
@@ -20,8 +21,10 @@ namespace SBEPIS.Capturellection
 		[Tooltip("Ordered from deque to diajector")]
 		[SerializeField] private List<LerpTarget> lerpTargets = new();
 		
-		public UnityEvent<Diajector> onOpen = new();
-		public UnityEvent<Diajector> onClose = new();
+		[FormerlySerializedAs("onOpen")]
+		public UnityEvent<Diajector> OnOpen = new();
+		[FormerlySerializedAs("onClose")]
+		public UnityEvent<Diajector> OnClose = new();
 		
 		public DiajectorPage CurrentPage { get; private set; }
 		public bool IsOpen => CurrentPage;
@@ -40,7 +43,7 @@ namespace SBEPIS.Capturellection
 			gameObject.SetActive(true);
 			transform.SetPositionAndRotation(position, rotation);
 			AssembleNewPage(page);
-			onOpen.Invoke(this);
+			OnOpen.Invoke(this);
 		}
 		
 		public void ChangePage(DiajectorPage page)
@@ -70,8 +73,9 @@ namespace SBEPIS.Capturellection
 				return;
 			}
 			
-			CurrentPage.StartDisassembly();
+			DiajectorPage page = CurrentPage;
 			CurrentPage = null;
+			page.StartDisassembly();
 		}
 		
 		private void ForceCloseCurrentPage()
@@ -82,15 +86,16 @@ namespace SBEPIS.Capturellection
 				return;
 			}
 			
-			CurrentPage.ForceClose();
+			DiajectorPage page = CurrentPage;
 			CurrentPage = null;
+			page.ForceClose();
 		}
 		
 		public void StartDisassembly()
 		{
 			DisassembleCurrentPage();
 			gameObject.SetActive(false);
-			onClose.Invoke(this);
+			OnClose.Invoke(this);
 		}
 		
 		public void ForceOpen()
