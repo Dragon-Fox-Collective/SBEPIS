@@ -34,10 +34,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2900906369589145929, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: m_text
-      value: Offset
+      value: Time Per Card
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
+      propertyPath: OnPrepareCard.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
+      propertyPath: OnPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
@@ -45,20 +53,40 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
+      propertyPath: OnPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: -1869733498742684371}
+    - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: -1869733498742684371}
     - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
+      propertyPath: OnPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
+      propertyPath: OnPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetTimePerCardSlider
       objectReference: {fileID: 0}
     - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ResetTimePerCardSlider
       objectReference: {fileID: 0}
     - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
+      propertyPath: OnPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SBEPIS.Capturllection.Deques.CycloneSettingsPageLayout, SBEPIS.Capturllection.Deques
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SBEPIS.Capturllection.Deques.CycloneSettingsPageLayout, SBEPIS.Capturllection.Deques
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
+      propertyPath: OnPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3537871817197014090, guid: cb1c0bd17659c3345ab21566f0e8d7e4, type: 3}
       propertyPath: onPrepareCard.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
