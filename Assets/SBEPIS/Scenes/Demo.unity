@@ -1534,7 +1534,6 @@ GameObject:
   m_Component:
   - component: {fileID: 355481931}
   - component: {fileID: 355481930}
-  - component: {fileID: 355481932}
   m_Layer: 0
   m_Name: Definition
   m_TagString: Untagged
@@ -1554,9 +1553,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862e9ab1ce3640aea43d3344984b4fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ruleset: {fileID: 1514043135}
+  ruleset: {fileID: 683142320}
   maxStorables: 128
-  subdefinition: {fileID: 355481932}
+  subdefinition: {fileID: 0}
 --- !u!4 &355481931
 Transform:
   m_ObjectHideFlags: 0
@@ -1569,26 +1568,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1514043134}
   - {fileID: 683142321}
   m_Father: {fileID: 1983634167}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &355481932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355481929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 862e9ab1ce3640aea43d3344984b4fdf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ruleset: {fileID: 683142320}
-  maxStorables: 8
-  subdefinition: {fileID: 0}
 --- !u!1 &401192388
 GameObject:
   m_ObjectHideFlags: 0
@@ -5674,83 +5657,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 1490932193}
   alchemyStation: {fileID: 596471828}
---- !u!1001 &1514043133
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 355481931}
-    m_Modifications:
-    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5808903989321562147, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-      propertyPath: m_Name
-      value: Message In A Bottle Definition
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
---- !u!4 &1514043134 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1729864955831579393, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-  m_PrefabInstance: {fileID: 1514043133}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1514043135 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -2203466434372903436, guid: 324a2504cf0dc2c4dad155565a8bb54d, type: 3}
-  m_PrefabInstance: {fileID: 1514043133}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 946e69c6c39a7fa43b46dbe0c0bc2021, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1580775545
 GameObject:
   m_ObjectHideFlags: 0
