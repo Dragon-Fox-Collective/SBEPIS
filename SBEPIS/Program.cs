@@ -15,7 +15,7 @@ Camera3D camera = new(root, cameraTransform) { FieldOfView = 100 };
 Spinner cameraSpinner = new(cameraTransform);
 root.AddChild(cameraSpinner);
 
-// AddCube((0, 0, 0), (0, 0, 0));
+AddCube((0, 0, 0), (255, 255, 255), ao: 300.0);
 
 AddCube((-10, 0, 0), (0, 255, 255));
 AddCube((+10, 0, 0), (255, 0, 0));
@@ -66,10 +66,10 @@ Window window = new(new GameWindow(
 window.Run();
 return;
 
-void AddCube(Vector3 position, Vector3 color)
+void AddCube(Vector3 position, Vector3 color, double ao = 1.0)
 {
 	Transform3D cubeTransform = new() { IsGlobal = true, LocalPosition = position };
-	PBRMeshRenderer cubeRenderer = new(cubeTransform) { Mesh = Mesh.Cube, Albedo = Color.FromArgb((int)color.X, (int)color.Y, (int)color.Z) };
+	PBRMeshRenderer cubeRenderer = new(cubeTransform) { Mesh = Mesh.Cube, Albedo = Color.FromArgb((int)color.X, (int)color.Y, (int)color.Z), AmbientOcclusion = ao };
 	root.AddChild(cubeRenderer);
 }
 
