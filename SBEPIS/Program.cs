@@ -66,7 +66,7 @@ return;
 void AddCube(Vector3 position, Vector3 color)
 {
 	Transform3D cubeTransform = new() { IsGlobal = true, LocalPosition = position };
-	MeshRenderer cubeRenderer = new(cubeTransform) { Color = Color.FromArgb((int)color.X, (int)color.Y, (int)color.Z) };
+	PBRMeshRenderer cubeRenderer = new(cubeTransform) { Albedo = Color.FromArgb((int)color.X, (int)color.Y, (int)color.Z) };
 	root.AddChild(cubeRenderer);
 }
 
