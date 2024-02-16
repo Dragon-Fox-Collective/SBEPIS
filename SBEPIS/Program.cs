@@ -15,7 +15,7 @@ Camera3D camera = new(root, cameraTransform) { FieldOfView = 100 };
 Spinner cameraSpinner = new(cameraTransform);
 root.AddChild(cameraSpinner);
 
-AddCube((0, 0, 0), (0, 0, 0));
+// AddCube((0, 0, 0), (0, 0, 0));
 
 AddCube((-10, 0, 0), (0, 255, 255));
 AddCube((+10, 0, 0), (255, 0, 0));
@@ -46,6 +46,9 @@ AddCube((-10, 10, -10), (63, 191, 63));
 AddCube((10, -10, -10), (191, 63, 63));
 AddCube((-10, -10, -10), (191, 191, 191));
 
+SkyboxRenderer skybox = new();
+root.AddChild(skybox);
+
 
 //IHasChildren.PrintTree(root);
 
@@ -66,7 +69,7 @@ return;
 void AddCube(Vector3 position, Vector3 color)
 {
 	Transform3D cubeTransform = new() { IsGlobal = true, LocalPosition = position };
-	PBRMeshRenderer cubeRenderer = new(cubeTransform) { Albedo = Color.FromArgb((int)color.X, (int)color.Y, (int)color.Z) };
+	PBRMeshRenderer cubeRenderer = new(cubeTransform) { Mesh = Mesh.Cube, Albedo = Color.FromArgb((int)color.X, (int)color.Y, (int)color.Z) };
 	root.AddChild(cubeRenderer);
 }
 
