@@ -1,19 +1,24 @@
 ﻿using System.Drawing;
+using BepuPhysics.Collidables;
 using Echidna2.Core;
 using Echidna2.Mathematics;
+using Echidna2.Physics;
 using Echidna2.Rendering;
 using Echidna2.Rendering3D;
 using OpenTK.Windowing.Desktop;
+using Mesh = Echidna2.Rendering.Mesh;
 
 Console.WriteLine("Hello, World!");
 
 
 Hierarchy root = new();
 
-Transform3D cameraTransform = new() { IsGlobal = true };
+WorldSimulation simulation = new(root);
+root.AddChild(simulation);
+
+Vector3 cameraPosition = new(5, -15, 3);
+Transform3D cameraTransform = new() { IsGlobal = true, LocalPosition = cameraPosition, LocalRotation = Quaternion.LookAt(cameraPosition, Vector3.Down * 15, Vector3.Up)};
 Camera3D camera = new(root, cameraTransform) { FieldOfView = 100 };
-Spinner cameraSpinner = new(cameraTransform);
-root.AddChild(cameraSpinner);
 
 AddCube((0, 0, 0), (255, 255, 255), ao: 300.0);
 
@@ -50,6 +55,16 @@ SkyboxRenderer skybox = new();
 root.AddChild(skybox);
 
 
+Transform3D groundTransform = new() { IsGlobal = true, LocalPosition = Vector3.Down * 15, LocalScale = new Vector3(100, 100, 1)};
+Box groundShape = new(100, 100, 1);
+StaticBody groundBody = new(simulation, groundTransform, BodyShape.Of(groundShape));
+PBRMeshRenderer groundMesh = new(groundTransform) { Mesh = Mesh.Cube, Albedo = Color.LightGray, Roughness = 0.5 };
+root.AddChild(groundBody);
+root.AddChild(groundMesh);
+
+
+
+
 //IHasChildren.PrintTree(root);
 
 Window window = new(new GameWindow(
@@ -69,19 +84,11 @@ return;
 void AddCube(Vector3 position, Vector3 color, double ao = 1.0)
 {
 	Transform3D cubeTransform = new() { IsGlobal = true, LocalPosition = position };
+	Box cubeShape = new(2, 2, 2);
+	DynamicBody cubeBody = new(simulation, cubeTransform, cubeShape.ComputeInertia(1), BodyShape.Of(cubeShape));
+	GravityAffector cubeGravity = new(cubeBody);
 	PBRMeshRenderer cubeRenderer = new(cubeTransform) { Mesh = Mesh.Cube, Albedo = Color.FromArgb((int)color.X, (int)color.Y, (int)color.Z), AmbientOcclusion = ao };
+	root.AddChild(cubeBody);
+	root.AddChild(cubeGravity);
 	root.AddChild(cubeRenderer);
-}
-
-class Spinner(Transform3D transform) : IUpdate
-{
-	private double time = 0;
-	
-	public void OnUpdate(double deltaTime)
-	{
-		time += deltaTime;
-		// transform.LocalPosition = new Vector3(0, -5, 5 * Math.Sin(time));
-		transform.LocalPosition = new Vector3(5 * Math.Sin(time), 5 * Math.Cos(time), 3 * Math.Sin(time / 3));
-		transform.LocalRotation = Quaternion.LookAt(transform.LocalPosition, Vector3.Zero, Vector3.Up);
-	}
 }
