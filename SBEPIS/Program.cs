@@ -6,6 +6,7 @@ using Echidna2.Physics;
 using Echidna2.Rendering;
 using Echidna2.Rendering3D;
 using OpenTK.Windowing.Desktop;
+using SBEPIS;
 using Mesh = Echidna2.Rendering.Mesh;
 
 Console.WriteLine("Hello, World!");
@@ -55,13 +56,15 @@ SkyboxRenderer skybox = new();
 root.AddChild(skybox);
 
 
-Transform3D groundTransform = new() { IsGlobal = true, LocalPosition = Vector3.Down * 15, LocalScale = new Vector3(100, 100, 1)};
+Transform3D groundTransform = new() { IsGlobal = true, LocalPosition = Vector3.Down * 15, LocalScale = new Vector3(50, 50, 0.5)};
 Box groundShape = new(100, 100, 1);
 StaticBody groundBody = new(simulation, groundTransform, BodyShape.Of(groundShape));
 PBRMeshRenderer groundMesh = new(groundTransform) { Mesh = Mesh.Cube, Albedo = Color.LightGray, Roughness = 0.5 };
 root.AddChild(groundBody);
 root.AddChild(groundMesh);
 
+Football football = new(simulation);
+root.AddChild(football);
 
 
 
@@ -83,9 +86,10 @@ return;
 
 void AddCube(Vector3 position, Vector3 color, double ao = 1.0)
 {
+	position = position + new Vector3(Random.Shared.NextDouble(), Random.Shared.NextDouble(), Random.Shared.NextDouble());
 	Transform3D cubeTransform = new() { IsGlobal = true, LocalPosition = position };
 	Box cubeShape = new(2, 2, 2);
-	DynamicBody cubeBody = new(simulation, cubeTransform, cubeShape.ComputeInertia(1), BodyShape.Of(cubeShape));
+	DynamicBody cubeBody = new(simulation, cubeTransform, BodyShape.Of(cubeShape), cubeShape.ComputeInertia(1));
 	GravityAffector cubeGravity = new(cubeBody);
 	PBRMeshRenderer cubeRenderer = new(cubeTransform) { Mesh = Mesh.Cube, Albedo = Color.FromArgb((int)color.X, (int)color.Y, (int)color.Z), AmbientOcclusion = ao };
 	root.AddChild(cubeBody);
