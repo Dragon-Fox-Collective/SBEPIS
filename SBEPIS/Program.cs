@@ -86,7 +86,7 @@ return;
 
 void AddCube(Vector3 position, Vector3 color, double ao = 1.0)
 {
-	position = position + new Vector3(Random.Shared.NextDouble(), Random.Shared.NextDouble(), Random.Shared.NextDouble());
+	position += new Vector3(Random.Shared.NextDouble(), Random.Shared.NextDouble(), Random.Shared.NextDouble());
 	Transform3D cubeTransform = new() { IsGlobal = true, LocalPosition = position };
 	Box cubeShape = new(2, 2, 2);
 	DynamicBody cubeBody = new(simulation, cubeTransform, BodyShape.Of(cubeShape), cubeShape.ComputeInertia(1));
