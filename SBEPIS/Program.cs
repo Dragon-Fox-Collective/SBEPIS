@@ -3,11 +3,13 @@ using BepuPhysics.Collidables;
 using Echidna2.Core;
 using Echidna2.Mathematics;
 using Echidna2.Physics;
-using Echidna2.Rendering;
 using Echidna2.Rendering3D;
+using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using SBEPIS;
 using Mesh = Echidna2.Rendering.Mesh;
+using Window = Echidna2.Rendering.Window;
 
 Console.WriteLine("Hello, World!");
 
@@ -17,9 +19,6 @@ Hierarchy root = new();
 WorldSimulation simulation = new(root);
 root.AddChild(simulation);
 
-Vector3 cameraPosition = new(5, -15, 3);
-Transform3D cameraTransform = new() { IsGlobal = true, LocalPosition = cameraPosition, LocalRotation = Quaternion.LookAt(cameraPosition, Vector3.Down * 15, Vector3.Up)};
-Camera3D camera = new(root, cameraTransform) { FieldOfView = 100 };
 
 AddCube((0, 0, 0), (255, 255, 255), ao: 300.0);
 
@@ -63,8 +62,8 @@ PBRMeshRenderer groundMesh = new(groundTransform) { Mesh = Mesh.Cube, Albedo = C
 root.AddChild(groundBody);
 root.AddChild(groundMesh);
 
-Football football = new(simulation);
-root.AddChild(football);
+Player player = new(simulation, root);
+root.AddChild(player);
 
 
 
@@ -77,9 +76,16 @@ Window window = new(new GameWindow(
 		ClientSize = (1280, 720),
 		Title = "SBEPIS",
 	}
-))
+)
 {
-	Camera = camera
+	CursorState = CursorState.Grabbed,
+})
+{
+	Camera = player.Camera,
+};
+window.GameWindow.KeyDown += args =>
+{
+	if (args.Key == Keys.Escape) window.GameWindow.Close();
 };
 window.Run();
 return;
