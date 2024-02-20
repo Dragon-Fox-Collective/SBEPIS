@@ -20,36 +20,36 @@ WorldSimulation simulation = new(root);
 root.AddChild(simulation);
 
 
-AddCube((0, 0, 0), (255, 255, 255), ao: 300.0);
+AddConsort((0, 0, 0), (255, 255, 255), ao: 300.0);
 
-AddCube((-10, 0, 0), (0, 255, 255));
-AddCube((+10, 0, 0), (255, 0, 0));
-AddCube((0, -10, 0), (255, 0, 255));
-AddCube((0, +10, 0), (0, 255, 0));
-AddCube((0, 0, -10), (255, 255, 0));
-AddCube((0, 0, +10), (0, 0, 255));
+AddConsort((-10, 0, 0), (0, 255, 255));
+AddConsort((+10, 0, 0), (255, 0, 0));
+AddConsort((0, -10, 0), (255, 0, 255));
+AddConsort((0, +10, 0), (0, 255, 0));
+AddConsort((0, 0, -10), (255, 255, 0));
+AddConsort((0, 0, +10), (0, 0, 255));
 
-AddCube((0, -10, 10), (127, 0, 255));
-AddCube((0, -10, -10), (255, 127, 0));
-AddCube((0, 10, -10), (127, 255, 0));
-AddCube((0, 10, 10), (0, 127, 127));
-AddCube((10, 0, 10), (127, 0, 127));
-AddCube((-10, 0, -10), (127, 255, 127));
-AddCube((-10, 0, 10), (0, 127, 255));
-AddCube((10, 0,  -10), (255, 127, 0));
-AddCube((10, 10, 0), (127, 127, 0));
-AddCube((-10, 10, 0), (0, 255, 127));
-AddCube((10, -10, 0), (255, 0, 127));
-AddCube((-10, -10, 0), (127, 127, 255));
+AddConsort((0, -10, 10), (127, 0, 255));
+AddConsort((0, -10, -10), (255, 127, 0));
+AddConsort((0, 10, -10), (127, 255, 0));
+AddConsort((0, 10, 10), (0, 127, 127));
+AddConsort((10, 0, 10), (127, 0, 127));
+AddConsort((-10, 0, -10), (127, 255, 127));
+AddConsort((-10, 0, 10), (0, 127, 255));
+AddConsort((10, 0,  -10), (255, 127, 0));
+AddConsort((10, 10, 0), (127, 127, 0));
+AddConsort((-10, 10, 0), (0, 255, 127));
+AddConsort((10, -10, 0), (255, 0, 127));
+AddConsort((-10, -10, 0), (127, 127, 255));
 
-AddCube((10, 10, 10), (63, 63, 63));
-AddCube((-10, 10, 10), (0, 191, 191));
-AddCube((10, -10, 10), (191, 0, 191));
-AddCube((-10, -10, 10), (63, 63, 191));
-AddCube((10, 10, -10), (191, 191, 0));
-AddCube((-10, 10, -10), (63, 191, 63));
-AddCube((10, -10, -10), (191, 63, 63));
-AddCube((-10, -10, -10), (191, 191, 191));
+AddConsort((10, 10, 10), (63, 63, 63));
+AddConsort((-10, 10, 10), (0, 191, 191));
+AddConsort((10, -10, 10), (191, 0, 191));
+AddConsort((-10, -10, 10), (63, 63, 191));
+AddConsort((10, 10, -10), (191, 191, 0));
+AddConsort((-10, 10, -10), (63, 191, 63));
+AddConsort((10, -10, -10), (191, 63, 63));
+AddConsort((-10, -10, -10), (191, 191, 191));
 
 SkyboxRenderer skybox = new();
 root.AddChild(skybox);
@@ -94,15 +94,11 @@ window.GameWindow.KeyDown += args =>
 window.Run();
 return;
 
-void AddCube(Vector3 position, Vector3 color, double ao = 1.0)
+void AddConsort(Vector3 position, Vector3 color, double ao = 1.0)
 {
 	position += new Vector3(Random.Shared.NextDouble(), Random.Shared.NextDouble(), Random.Shared.NextDouble());
-	Transform3D cubeTransform = new() { IsGlobal = true, LocalPosition = position };
-	Box cubeShape = new(2, 2, 2);
-	DynamicBody cubeBody = new(cubeTransform, BodyShape.Of(cubeShape), cubeShape.ComputeInertia(1)) { Simulation = simulation };
-	GravityAffector cubeGravity = new(cubeBody);
-	PBRMeshRenderer cubeRenderer = new(cubeTransform) { Mesh = Mesh.Cube, Albedo = Color.FromArgb((int)color.X, (int)color.Y, (int)color.Z), AmbientOcclusion = ao };
-	root.AddChild(cubeBody);
-	root.AddChild(cubeGravity);
-	root.AddChild(cubeRenderer);
+	Consort consort = new(simulation);
+	consort.MeshRenderer.Albedo = Color.FromArgb((int)color.X, (int)color.Y, (int)color.Z);
+	consort.MeshRenderer.AmbientOcclusion = ao;
+	root.AddChild(consort);
 }

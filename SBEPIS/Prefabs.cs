@@ -19,6 +19,7 @@ public partial class Football : INotificationPropagator, INamed, IPhysicsUpdate
 	public GravityAffector Gravity { get; set; }
 	
 	public Vector2 MovementDirection = Vector2.Zero;
+	public double Speed = 20;
 	
 	public Football(WorldSimulation simulation)
 	{
@@ -41,14 +42,13 @@ public partial class Football : INotificationPropagator, INamed, IPhysicsUpdate
 	
 	public void OnPhysicsUpdate(double deltaTime)
 	{
-		Body.Reference.Velocity.Angular = MovementDirection == Vector2.Zero ? Vector3.Zero : MovementDirection.WithZ(0).Normalized.Cross(Vector3.Down) * 20;
+		Body.Reference.Velocity.Angular = MovementDirection == Vector2.Zero ? Vector3.Zero : MovementDirection.WithZ(0).Normalized.Cross(Vector3.Down) * Speed;
 	}
 }
 
 public partial class Player : INotificationPropagator, INamed, IKeyDown, IKeyUp, IMouseMoved, IPhysicsUpdate
 {
 	[ExposeMembersInClass] public Named Named { get; set; }
-	[ExposeMembersInClass] public Transform3D Transform { get; set; }
 	public Football Football { get; set; }
 	public Camera3D Camera { get; set; }
 	
@@ -61,13 +61,12 @@ public partial class Player : INotificationPropagator, INamed, IKeyDown, IKeyUp,
 	public Player(WorldSimulation simulation, INotificationPropagator cameraRoot)
 	{
 		Named = new Named("Player");
-		Transform = new Transform3D();
 		Football = new Football(simulation) { IsGlobal = true };
-		Football.LocalTransformChanged += () => LocalPosition = Football.LocalPosition - Vector3.Down;
 		
 		Camera = new Camera3D(cameraRoot, new Transform3D { IsGlobal = true }) { FieldOfView = 100 };
 		Camera.Transform.LocalRotation = Quaternion.FromEulerAngles(cameraPitch, cameraYaw, 0);
-		LocalTransformChanged += () => Camera.Transform.LocalPosition = LocalPosition + Vector3.Up * 3;
+		
+		Football.LocalTransformChanged += () => Camera.Transform.LocalPosition = Football.LocalPosition + Vector3.Up * 3;
 	}
 	
 	public void Notify<T>(T notification) where T : notnull
@@ -109,5 +108,46 @@ public partial class Player : INotificationPropagator, INamed, IKeyDown, IKeyUp,
 	public void OnPhysicsUpdate(double deltaTime)
 	{
 		Football.MovementDirection = Camera.Transform.LocalRotation * inputDirection;
+	}
+}
+
+public partial class Consort : INotificationPropagator, INamed, IPhysicsUpdate
+{
+	[ExposeMembersInClass] public Named Named { get; set; }
+	public Transform3D MeshRendererTransform { get; set; }
+	public PBRMeshRenderer MeshRenderer { get; set; }
+	public Football Football { get; set; }
+	
+	private Vector2 targetPosition = Vector2.Zero;
+	
+	public Consort(WorldSimulation simulation)
+	{
+		Named = new Named("Consort");
+		
+		MeshRendererTransform = new Transform3D { IsGlobal = true };
+		MeshRenderer = new PBRMeshRenderer(MeshRendererTransform) { Mesh = Mesh.Cube };
+		
+		Football = new Football(simulation) { IsGlobal = true };
+		Football.LocalTransformChanged += () => MeshRendererTransform.LocalPosition = Football.LocalPosition + Vector3.Up * 2;
+		
+		RegenerateTarget();
+	}
+	
+	public void Notify<T>(T notification) where T : notnull
+	{
+		INotificationPropagator.Notify(notification, Football, MeshRenderer);
+	}
+	
+	public void OnPhysicsUpdate(double deltaTime)
+	{
+		if (Football.LocalPosition.XY.DistanceTo(targetPosition) < 0.1)
+			RegenerateTarget();
+		Football.MovementDirection = (targetPosition - Football.LocalPosition.XY).Normalized;
+		
+	}
+	
+	public void RegenerateTarget()
+	{
+		targetPosition = new Vector2(Random.Shared.NextDouble() * 100 - 50, Random.Shared.NextDouble() * 100 - 50);
 	}
 }
