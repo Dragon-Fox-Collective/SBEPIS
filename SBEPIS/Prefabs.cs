@@ -24,7 +24,7 @@ public partial class Football : INotificationPropagator, INamed, IPhysicsUpdate
 	{
 		Named = new Named("Football");
 		Transform = new Transform3D();
-		Sphere sphere = new(0.5f);
+		Sphere sphere = new(1);
 		MeshRenderer = new PBRMeshRenderer(Transform) { Mesh = Mesh.Sphere };
 		Body = new DynamicBody(simulation, Transform, BodyShape.Of(sphere), new BodyInertia { InverseMass = 1.0f });
 		Gravity = new GravityAffector(Body);
