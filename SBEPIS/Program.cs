@@ -57,7 +57,11 @@ root.AddChild(skybox);
 
 Transform3D groundTransform = new() { IsGlobal = true, LocalPosition = Vector3.Down * 15, LocalScale = new Vector3(50, 50, 0.5)};
 Box groundShape = new(100, 100, 1);
-StaticBody groundBody = new(simulation, groundTransform, BodyShape.Of(groundShape));
+StaticBody groundBody = new(groundTransform, BodyShape.Of(groundShape))
+{
+	PhysicsMaterial = new PhysicsMaterial { Friction = 10 },
+	Simulation = simulation
+};
 PBRMeshRenderer groundMesh = new(groundTransform) { Mesh = Mesh.Cube, Albedo = Color.LightGray, Roughness = 0.5 };
 root.AddChild(groundBody);
 root.AddChild(groundMesh);
@@ -95,7 +99,7 @@ void AddCube(Vector3 position, Vector3 color, double ao = 1.0)
 	position += new Vector3(Random.Shared.NextDouble(), Random.Shared.NextDouble(), Random.Shared.NextDouble());
 	Transform3D cubeTransform = new() { IsGlobal = true, LocalPosition = position };
 	Box cubeShape = new(2, 2, 2);
-	DynamicBody cubeBody = new(simulation, cubeTransform, BodyShape.Of(cubeShape), cubeShape.ComputeInertia(1));
+	DynamicBody cubeBody = new(cubeTransform, BodyShape.Of(cubeShape), cubeShape.ComputeInertia(1)) { Simulation = simulation };
 	GravityAffector cubeGravity = new(cubeBody);
 	PBRMeshRenderer cubeRenderer = new(cubeTransform) { Mesh = Mesh.Cube, Albedo = Color.FromArgb((int)color.X, (int)color.Y, (int)color.Z), AmbientOcclusion = ao };
 	root.AddChild(cubeBody);

@@ -26,7 +26,11 @@ public partial class Football : INotificationPropagator, INamed, IPhysicsUpdate
 		Transform = new Transform3D();
 		Sphere sphere = new(1);
 		MeshRenderer = new PBRMeshRenderer(Transform) { Mesh = Mesh.Sphere };
-		Body = new DynamicBody(simulation, Transform, BodyShape.Of(sphere), new BodyInertia { InverseMass = 1.0f });
+		Body = new DynamicBody(Transform, BodyShape.Of(sphere), new BodyInertia { InverseMass = 1.0f })
+		{
+			PhysicsMaterial = new PhysicsMaterial { Friction = 10 },
+			Simulation = simulation
+		};
 		Gravity = new GravityAffector(Body);
 	}
 	
