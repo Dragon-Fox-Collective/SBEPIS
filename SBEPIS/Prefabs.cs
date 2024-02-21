@@ -1,5 +1,6 @@
 ﻿using BepuPhysics;
 using BepuPhysics.Collidables;
+using BepuPhysics.Constraints;
 using Echidna2.Core;
 using Echidna2.Mathematics;
 using Echidna2.Physics;
@@ -10,9 +11,8 @@ using Mesh = Echidna2.Rendering.Mesh;
 
 namespace SBEPIS;
 
-public partial class Football : INotificationPropagator, INamed, IPhysicsUpdate
+public partial class Football : INotificationPropagator, IPhysicsUpdate
 {
-	[ExposeMembersInClass] public Named Named { get; set; }
 	[ExposeMembersInClass] public Transform3D Transform { get; set; }
 	public PBRMeshRenderer MeshRenderer { get; set; }
 	public DynamicBody Body { get; set; }
@@ -21,15 +21,15 @@ public partial class Football : INotificationPropagator, INamed, IPhysicsUpdate
 	public Vector2 MovementDirection = Vector2.Zero;
 	public double Speed = 20;
 	
-	public Football(WorldSimulation simulation)
+	public Football(WorldSimulation simulation, double radius = 1.0)
 	{
-		Named = new Named("Football");
-		Transform = new Transform3D();
-		Sphere sphere = new(1);
+		Transform = new Transform3D { LocalScale = Vector3.One * radius };
+		Sphere sphere = new((float)radius);
 		MeshRenderer = new PBRMeshRenderer(Transform) { Mesh = Mesh.Sphere };
 		Body = new DynamicBody(Transform, BodyShape.Of(sphere), new BodyInertia { InverseMass = 1.0f })
 		{
 			PhysicsMaterial = new PhysicsMaterial { Friction = 10 },
+			CollisionFilter = new CollisionFilter { Membership = 1, Collision = ~2 },
 			Simulation = simulation
 		};
 		Gravity = new GravityAffector(Body);
@@ -46,10 +46,47 @@ public partial class Football : INotificationPropagator, INamed, IPhysicsUpdate
 	}
 }
 
-public partial class Player : INotificationPropagator, INamed, IKeyDown, IKeyUp, IMouseMoved, IPhysicsUpdate
+public partial class FootballWithShinGuard : INotificationPropagator
 {
-	[ExposeMembersInClass] public Named Named { get; set; }
-	public Football Football { get; set; }
+	[ExposeMembersInClass] public Football Football { get; set; }
+	public Transform3D ShinGuardTransform { get; set; }
+	public PBRMeshRenderer ShinGuardRenderer { get; set; }
+	public DynamicBody ShinGuardBody { get; set; }
+	
+	public FootballWithShinGuard(WorldSimulation simulation, double footballRadius = 0.9, double shinGuardRadius = 1.0, double footballGap = 0.1)
+	{
+		Football = new Football(simulation, footballRadius);
+		
+		ShinGuardTransform = new Transform3D { IsGlobal = true, LocalPosition = Vector3.Up * 0.5, LocalScale = Vector3.One * shinGuardRadius };
+		ShinGuardRenderer = new PBRMeshRenderer(ShinGuardTransform) { Mesh = Mesh.Sphere };
+		ShinGuardBody = new DynamicBody(ShinGuardTransform, BodyShape.Of(new Sphere((float)shinGuardRadius)), new BodyInertia { InverseMass = 1.0f })
+		{
+			PhysicsMaterial = new PhysicsMaterial { Friction = 1 },
+			CollisionFilter = new CollisionFilter { Membership = 2, Collision = ~1 },
+			Simulation = simulation
+		};
+		
+		simulation.AddJoint(
+			Football.Body,
+			ShinGuardBody,
+			new BallSocket
+			{
+				LocalOffsetA = Vector3.Zero,
+				LocalOffsetB = Vector3.Down * (shinGuardRadius - footballRadius + footballGap),
+				SpringSettings = new SpringSettings(60, 1),
+			}
+		);
+	}
+	
+	public void Notify<T>(T notification) where T : notnull
+	{
+		INotificationPropagator.Notify(notification, Football, ShinGuardBody, ShinGuardRenderer);
+	}
+}
+
+public partial class Player : INotificationPropagator, IKeyDown, IKeyUp, IMouseMoved, IPhysicsUpdate
+{
+	public FootballWithShinGuard Football { get; set; }
 	public Camera3D Camera { get; set; }
 	
 	public double CameraSensitivity = 0.003;
@@ -60,8 +97,7 @@ public partial class Player : INotificationPropagator, INamed, IKeyDown, IKeyUp,
 	
 	public Player(WorldSimulation simulation, INotificationPropagator cameraRoot)
 	{
-		Named = new Named("Player");
-		Football = new Football(simulation) { IsGlobal = true };
+		Football = new FootballWithShinGuard(simulation) { IsGlobal = true };
 		
 		Camera = new Camera3D(cameraRoot, new Transform3D { IsGlobal = true }) { FieldOfView = 100 };
 		Camera.Transform.LocalRotation = Quaternion.FromEulerAngles(cameraPitch, cameraYaw, 0);
@@ -111,23 +147,20 @@ public partial class Player : INotificationPropagator, INamed, IKeyDown, IKeyUp,
 	}
 }
 
-public partial class Consort : INotificationPropagator, INamed, IPhysicsUpdate
+public partial class Consort : INotificationPropagator, IPhysicsUpdate
 {
-	[ExposeMembersInClass] public Named Named { get; set; }
 	public Transform3D MeshRendererTransform { get; set; }
 	public PBRMeshRenderer MeshRenderer { get; set; }
-	public Football Football { get; set; }
+	public FootballWithShinGuard Football { get; set; }
 	
 	private Vector2 targetPosition = Vector2.Zero;
 	
 	public Consort(WorldSimulation simulation)
 	{
-		Named = new Named("Consort");
-		
 		MeshRendererTransform = new Transform3D { IsGlobal = true };
 		MeshRenderer = new PBRMeshRenderer(MeshRendererTransform) { Mesh = Mesh.Cube };
 		
-		Football = new Football(simulation) { IsGlobal = true };
+		Football = new FootballWithShinGuard(simulation) { IsGlobal = true };
 		Football.LocalTransformChanged += () => MeshRendererTransform.LocalPosition = Football.LocalPosition + Vector3.Up * 2;
 		
 		RegenerateTarget();
