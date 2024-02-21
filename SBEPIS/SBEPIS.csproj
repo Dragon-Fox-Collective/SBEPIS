@@ -16,4 +16,13 @@
       <ProjectReference Include="..\..\Echidna2\Echidna2.SourceGenerators\Echidna2.SourceGenerators.csproj" OutputItemType="Analyzer" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Assets\post.frag">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Assets\post.vert">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

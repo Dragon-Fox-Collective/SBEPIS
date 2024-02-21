@@ -3,6 +3,7 @@ using BepuPhysics.Collidables;
 using Echidna2.Core;
 using Echidna2.Mathematics;
 using Echidna2.Physics;
+using Echidna2.Rendering;
 using Echidna2.Rendering3D;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
@@ -86,6 +87,7 @@ Window window = new(new GameWindow(
 })
 {
 	Camera = player.Camera,
+	PostProcessing = new PostProcessing(new Shader(File.ReadAllText("Assets/post.vert"), File.ReadAllText("Assets/post.frag")), (1280, 720)),
 };
 window.GameWindow.KeyDown += args =>
 {
