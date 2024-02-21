@@ -143,7 +143,16 @@ public partial class Player : INotificationPropagator, IKeyDown, IKeyUp, IMouseM
 	
 	public void OnPhysicsUpdate(double deltaTime)
 	{
-		Football.MovementDirection = Camera.Transform.LocalRotation * inputDirection;
+		Vector2 forward = Camera.Transform.GlobalTransform.Out.XY;
+		double angle = Vector2.AngleBetween(forward, Vector2.Forward);
+		if (double.IsNaN(angle))
+		{
+			forward = Camera.Transform.GlobalTransform.Forward.XY;
+			angle = Vector2.AngleBetween(forward, Vector2.Forward);
+		}
+		if (forward.X < 0) angle = -angle;
+		Vector2 rotatedInput = inputDirection.RotatedBy(-angle);
+		Football.MovementDirection = rotatedInput;
 	}
 }
 
