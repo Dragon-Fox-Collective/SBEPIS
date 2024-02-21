@@ -87,7 +87,7 @@ Window window = new(new GameWindow(
 })
 {
 	Camera = player.Camera,
-	PostProcessing = new PostProcessing(new Shader(File.ReadAllText("Assets/post.vert"), File.ReadAllText("Assets/post.frag")), (1280, 720)),
+	PostProcessing = new PostProcessing(new Shader(File.ReadAllText("Assets/post.vert"), File.ReadAllText("Assets/post.frag")), (1280, 720), player.Camera),
 };
 window.GameWindow.KeyDown += args =>
 {
