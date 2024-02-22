@@ -56,7 +56,7 @@ SkyboxRenderer skybox = new();
 root.AddChild(skybox);
 
 
-Transform3D groundTransform = new() { IsGlobal = true, LocalPosition = Vector3.Down * 10, LocalScale = new Vector3(50, 50, 0.5)};
+Transform3D groundTransform = new() { IsGlobal = true, LocalPosition = Vector3.Down * 7, LocalScale = new Vector3(50, 50, 0.5)};
 Box groundShape = new(100, 100, 1);
 StaticBody groundBody = new(groundTransform, BodyShape.Of(groundShape))
 {
