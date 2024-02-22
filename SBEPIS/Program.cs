@@ -88,6 +88,7 @@ Window window = new(new GameWindow(
 	{
 		ClientSize = (1280, 720),
 		Title = "SBEPIS",
+		Icon = Window.CreateWindowIcon("Assets/sbepis.png"),
 	}
 )
 {
