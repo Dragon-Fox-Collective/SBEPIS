@@ -68,11 +68,14 @@ root.AddChild(groundBody);
 root.AddChild(groundMesh);
 
 Player player = new(simulation, root);
+player.Camera.Size = (650, 450);
 root.AddChild(player);
 
 
 
 //IHasChildren.PrintTree(root);
+
+PostProcessing postProcessing = new(new Shader(File.ReadAllText("Assets/post.vert"), File.ReadAllText("Assets/post.frag")), (1280, 720), player.Camera);
 
 Window window = new(new GameWindow(
 	new GameWindowSettings(),
@@ -87,11 +90,16 @@ Window window = new(new GameWindow(
 })
 {
 	Camera = player.Camera,
-	PostProcessing = new PostProcessing(new Shader(File.ReadAllText("Assets/post.vert"), File.ReadAllText("Assets/post.frag")), (1280, 720), player.Camera),
+	PostProcessing = postProcessing,
 };
 window.GameWindow.KeyDown += args =>
 {
 	if (args.Key == Keys.Escape) window.GameWindow.Close();
+};
+window.Resize += size =>
+{
+	postProcessing.Size = size;
+	player.Camera.Size = size;
 };
 window.Run();
 return;
