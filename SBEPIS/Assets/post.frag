@@ -5,6 +5,8 @@ out vec4 FragColor;
 in vec2 TexCoords;
 
 uniform sampler2D colorTexture;
+uniform sampler2D brightTexture;
+uniform sampler2D bloomTexture;
 uniform sampler2D depthTexture;
 uniform float nearClipPlane;
 uniform float farClipPlane;
@@ -69,15 +71,15 @@ float luminance(vec3 color)
     return dot(color, vec3(0.299, 0.587, 0.114));
 }
 
-vec3 gaussianBlurColor(float sigma)
+vec3 gaussianBlurColor(sampler2D sampler, float sigma)
 {
     vec3 result = vec3(0.0);
     float total = 0.0;
     for (int i = 0; i < 9; i++)
     {
         vec2 offset = offsets3x3[i];
-        float weight = gaussian(sigma, length(offset));
-        vec3 samp = texture(colorTexture, TexCoords + offset).rgb;
+        float weight = gaussian(sigma, length(offset * 300.0));
+        vec3 samp = texture(sampler, TexCoords + offset).rgb;
         result += samp * weight;
         total += weight;
     }
@@ -103,6 +105,15 @@ void main()
 {
     vec3 color = texture(colorTexture, TexCoords).rgb;
     
+    // Bloom
+    color += texture(bloomTexture, TexCoords).rgb;
+    
+    // Tone mapping
+    color = color / (color + vec3(1.0));
+    // Gamma correction
+    color = pow(color, vec3(1.0/2.2));
+    
+    // Posterization
     float gamma = 0.5;
     int numColors = 16;
     vec3 posterColor = color;
@@ -112,6 +123,7 @@ void main()
     posterColor = posterColor / numColors;
     posterColor = pow(posterColor, vec3(1.0/gamma));
     
+    // Edge detection
     float edge = gaussianBlurDepth(0.7) - gaussianBlurDepth(0.3) > 0.1 ? 1.0 : 0.0;
     //color = mix(color, vec3(0.0), edge);
     

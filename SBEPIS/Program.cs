@@ -56,7 +56,7 @@ SkyboxRenderer skybox = new();
 root.AddChild(skybox);
 
 
-Transform3D groundTransform = new() { IsGlobal = true, LocalPosition = Vector3.Down * 15, LocalScale = new Vector3(50, 50, 0.5)};
+Transform3D groundTransform = new() { IsGlobal = true, LocalPosition = Vector3.Down * 10, LocalScale = new Vector3(50, 50, 0.5)};
 Box groundShape = new(100, 100, 1);
 StaticBody groundBody = new(groundTransform, BodyShape.Of(groundShape))
 {
@@ -75,7 +75,12 @@ root.AddChild(player);
 
 //IHasChildren.PrintTree(root);
 
-PostProcessing postProcessing = new(new Shader(File.ReadAllText("Assets/post.vert"), File.ReadAllText("Assets/post.frag")), (1280, 720), player.Camera);
+PostProcessing postProcessing = new(
+	new Shader(File.ReadAllText("Assets/quad.vert"), File.ReadAllText("Assets/post.frag")),
+	new Shader(File.ReadAllText("Assets/quad.vert"), File.ReadAllText("Assets/blur.frag")),
+	(1280, 720),
+	player.Camera
+);
 
 Window window = new(new GameWindow(
 	new GameWindowSettings(),
