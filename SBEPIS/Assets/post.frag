@@ -37,11 +37,23 @@ float depth(vec2 coord)
 
 void main()
 {
+    vec3 color = texture(colorTexture, TexCoords).rgb;
+
+    float gamma = 0.5;
+    int numColors = 16;
+    vec3 c = color;
+    c = pow(c, vec3(gamma, gamma, gamma));
+    c = c * numColors;
+    c = floor(c);
+    c = c / numColors;
+    color = pow(c, vec3(1.0/gamma));
+    
     float edge = 0.0;
     for (int i = 0; i < 9; i++)
     {
         edge += depth(TexCoords + edgeOffsets[i]) * edgeKernel[i];
     }
+    color = mix(color, vec3(0, 0, 0), edge > 0.1 ? 1.0 : 0.0);
     
-    FragColor = mix(texture(colorTexture, TexCoords), vec4(0, 0, 0, 1), edge > 0.1 ? 1.0 : 0.0);
+    FragColor = vec4(color, 1.0);
 }
