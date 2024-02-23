@@ -56,12 +56,11 @@ SkyboxRenderer skybox = new();
 root.AddChild(skybox);
 
 
-Transform3D groundTransform = new() { IsGlobal = true, LocalPosition = Vector3.Down * 7, LocalScale = new Vector3(50, 50, 0.5)};
+Transform3D groundTransform = new() { LocalPosition = Vector3.Down * 7, LocalScale = new Vector3(50, 50, 0.5)};
 Box groundShape = new(100, 100, 1);
-StaticBody groundBody = new(groundTransform, BodyShape.Of(groundShape))
+StaticBody groundBody = new(simulation, groundTransform, BodyShape.Of(groundShape))
 {
 	PhysicsMaterial = new PhysicsMaterial { Friction = 10 },
-	Simulation = simulation
 };
 PBRMeshRenderer groundMesh = new(groundTransform) { Mesh = Mesh.Cube, Albedo = Color.LightGray, Roughness = 0.5 };
 root.AddChild(groundBody);
@@ -112,8 +111,12 @@ return;
 
 void AddConsort(Vector3 position, Vector3 color, double ao = 1.0)
 {
-	position += new Vector3(Random.Shared.NextDouble(), Random.Shared.NextDouble(), Random.Shared.NextDouble());
-	Consort consort = new(simulation);
+	// position += new Vector3(Random.Shared.NextDouble(), Random.Shared.NextDouble(), Random.Shared.NextDouble());
+	position += Vector3.Up * 5;
+	Consort consort = new(simulation)
+	{
+		LocalPosition = position,
+	};
 	consort.MeshRenderer.Albedo = Color.FromArgb((int)color.X, (int)color.Y, (int)color.Z);
 	consort.MeshRenderer.AmbientOcclusion = ao;
 	root.AddChild(consort);

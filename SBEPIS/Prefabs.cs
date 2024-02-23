@@ -13,10 +13,21 @@ namespace SBEPIS;
 
 public partial class Football : INotificationPropagator, IPhysicsUpdate
 {
-	[ExposeMembersInClass] public Transform3D Transform { get; set; }
+	public Transform3D Transform { get; set; }
 	public PBRMeshRenderer MeshRenderer { get; set; }
 	public DynamicBody Body { get; set; }
 	public GravityAffector Gravity { get; set; }
+	
+	public Vector3 GlobalPosition
+	{
+		get => Body.GlobalPosition;
+		set => Body.GlobalPosition = value;
+	}
+	public event Transform3D.TransformChangedHandler? TransformChanged
+	{
+		add => Transform.TransformChanged += value;
+		remove => Transform.TransformChanged -= value;
+	}
 	
 	public Vector2 MovementDirection = Vector2.Zero;
 	public double Speed = 20;
@@ -26,11 +37,10 @@ public partial class Football : INotificationPropagator, IPhysicsUpdate
 		Transform = new Transform3D { LocalScale = Vector3.One * radius };
 		Sphere sphere = new((float)radius);
 		MeshRenderer = new PBRMeshRenderer(Transform) { Mesh = Mesh.Sphere };
-		Body = new DynamicBody(Transform, BodyShape.Of(sphere), new BodyInertia { InverseMass = 1.0f })
+		Body = new DynamicBody(simulation, Transform, BodyShape.Of(sphere), new BodyInertia { InverseMass = 1.0f })
 		{
 			PhysicsMaterial = new PhysicsMaterial { Friction = 10 },
 			CollisionFilter = new CollisionFilter { Membership = 1, Collision = ~2 },
-			Simulation = simulation
 		};
 		Gravity = new GravityAffector(Body);
 	}
@@ -52,19 +62,31 @@ public partial class FootballWithShinGuard : INotificationPropagator
 	public Transform3D ShinGuardTransform { get; set; }
 	public PBRMeshRenderer ShinGuardRenderer { get; set; }
 	public DynamicBody ShinGuardBody { get; set; }
+	public GravityAffector ShinGuardGravity { get; set; }
+	
+	public Vector3 GlobalPosition
+	{
+		get => Football.GlobalPosition;
+		set
+		{
+			Vector3 shinGuardOffset = ShinGuardBody.GlobalPosition - Football.GlobalPosition;
+			Football.GlobalPosition = value;
+			ShinGuardBody.GlobalPosition = value + shinGuardOffset;
+		}
+	}
 	
 	public FootballWithShinGuard(WorldSimulation simulation, double footballRadius = 0.9, double shinGuardRadius = 1.0, double footballGap = 0.1)
 	{
 		Football = new Football(simulation, footballRadius);
 		
-		ShinGuardTransform = new Transform3D { IsGlobal = true, LocalPosition = Vector3.Up * 0.5, LocalScale = Vector3.One * shinGuardRadius };
+		ShinGuardTransform = new Transform3D { LocalPosition = Vector3.Up * 0.5, LocalScale = Vector3.One * shinGuardRadius };
 		ShinGuardRenderer = new PBRMeshRenderer(ShinGuardTransform) { Mesh = Mesh.Sphere };
-		ShinGuardBody = new DynamicBody(ShinGuardTransform, BodyShape.Of(new Sphere((float)shinGuardRadius)), new BodyInertia { InverseMass = 1.0f })
+		ShinGuardBody = new DynamicBody(simulation, ShinGuardTransform, BodyShape.Of(new Sphere((float)shinGuardRadius)), new BodyInertia { InverseMass = 1.0f })
 		{
 			PhysicsMaterial = new PhysicsMaterial { Friction = 1 },
 			CollisionFilter = new CollisionFilter { Membership = 2, Collision = ~1 },
-			Simulation = simulation
 		};
+		ShinGuardGravity = new GravityAffector(ShinGuardBody);
 		
 		simulation.AddJoint(
 			Football.Body,
@@ -97,12 +119,12 @@ public partial class Player : INotificationPropagator, IKeyDown, IKeyUp, IMouseM
 	
 	public Player(WorldSimulation simulation, INotificationPropagator cameraRoot)
 	{
-		Football = new FootballWithShinGuard(simulation) { IsGlobal = true };
+		Football = new FootballWithShinGuard(simulation);
 		
-		Camera = new Camera3D(cameraRoot, new Transform3D { IsGlobal = true }) { FieldOfView = 100 };
+		Camera = new Camera3D(cameraRoot, new Transform3D()) { FieldOfView = 100 };
 		Camera.Transform.LocalRotation = Quaternion.FromEulerAngles(cameraPitch, cameraYaw, 0);
 		
-		Football.LocalTransformChanged += () => Camera.Transform.LocalPosition = Football.LocalPosition + Vector3.Up * 3;
+		Football.TransformChanged += () => Camera.Transform.GlobalPosition = Football.GlobalPosition + Vector3.Up * 3;
 	}
 	
 	public void Notify<T>(T notification) where T : notnull
@@ -158,6 +180,27 @@ public partial class Player : INotificationPropagator, IKeyDown, IKeyUp, IMouseM
 
 public partial class Consort : INotificationPropagator, IPhysicsUpdate
 {
+	[ExposeMembersInClass] public Transform3D Transform { get; set; }
+	
+	public Vector3 LocalPosition
+	{
+		get => Transform.LocalPosition;
+		set
+		{
+			Transform.LocalPosition = value;
+			Football.GlobalPosition = Transform.Parent?.GlobalTransform.TransformPoint(value) ?? value;
+		}
+	}
+	public Vector3 GlobalPosition
+	{
+		get => Transform.GlobalPosition;
+		set
+		{
+			Transform.GlobalPosition = value;
+			Football.GlobalPosition = value;
+		}
+	}
+	
 	public Transform3D MeshRendererTransform { get; set; }
 	public PBRMeshRenderer MeshRenderer { get; set; }
 	public FootballWithShinGuard Football { get; set; }
@@ -166,11 +209,13 @@ public partial class Consort : INotificationPropagator, IPhysicsUpdate
 	
 	public Consort(WorldSimulation simulation)
 	{
-		MeshRendererTransform = new Transform3D { IsGlobal = true };
+		Transform = new Transform3D();
+		
+		MeshRendererTransform = new Transform3D { Parent = Transform, LocalPosition = Vector3.Up * 2 };
 		MeshRenderer = new PBRMeshRenderer(MeshRendererTransform) { Mesh = Mesh.Cube };
 		
-		Football = new FootballWithShinGuard(simulation) { IsGlobal = true };
-		Football.LocalTransformChanged += () => MeshRendererTransform.LocalPosition = Football.LocalPosition + Vector3.Up * 2;
+		Football = new FootballWithShinGuard(simulation);
+		Football.TransformChanged += () => Transform.GlobalPosition = Football.GlobalPosition;
 		
 		RegenerateTarget();
 	}
@@ -182,10 +227,9 @@ public partial class Consort : INotificationPropagator, IPhysicsUpdate
 	
 	public void OnPhysicsUpdate(double deltaTime)
 	{
-		if (Football.LocalPosition.XY.DistanceTo(targetPosition) < 0.1)
+		if (Football.GlobalPosition.XY.DistanceTo(targetPosition) < 0.1)
 			RegenerateTarget();
-		Football.MovementDirection = (targetPosition - Football.LocalPosition.XY).Normalized;
-		
+		Football.MovementDirection = (targetPosition - Football.GlobalPosition.XY).Normalized;
 	}
 	
 	public void RegenerateTarget()
