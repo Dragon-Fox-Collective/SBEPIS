@@ -75,8 +75,8 @@ root.AddChild(player);
 //IHasChildren.PrintTree(root);
 
 PostProcessing postProcessing = new(
-	new Shader(File.ReadAllText("Assets/quad.vert"), File.ReadAllText("Assets/post.frag")),
-	new Shader(File.ReadAllText("Assets/quad.vert"), File.ReadAllText("Assets/blur.frag")),
+	new Shader(File.ReadAllText($"{AppContext.BaseDirectory}/Assets/quad.vert"), File.ReadAllText($"{AppContext.BaseDirectory}/Assets/post.frag")),
+	new Shader(File.ReadAllText($"{AppContext.BaseDirectory}/Assets/quad.vert"), File.ReadAllText($"{AppContext.BaseDirectory}/Assets/blur.frag")),
 	(1280, 720),
 	player.Camera
 );
