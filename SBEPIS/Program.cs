@@ -56,8 +56,8 @@ SkyboxRenderer skybox = new();
 root.AddChild(skybox);
 
 
-Transform3D groundTransform = new() { LocalPosition = Vector3.Down * 7, LocalScale = new Vector3(50, 50, 0.5)};
-Box groundShape = new(100, 100, 1);
+Transform3D groundTransform = new() { LocalPosition = Vector3.Down * 7, LocalScale = new Vector3(60, 60, 0.5)};
+Box groundShape = new(120, 120, 1);
 StaticBody groundBody = new(simulation, groundTransform, BodyShape.Of(groundShape))
 {
 	PhysicsMaterial = new PhysicsMaterial { Friction = 10 },
