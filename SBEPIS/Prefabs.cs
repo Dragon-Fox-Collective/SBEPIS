@@ -102,7 +102,7 @@ public partial class FootballWithShinGuard : INotificationPropagator
 	
 	public void Notify<T>(T notification) where T : notnull
 	{
-		INotificationPropagator.Notify(notification, Football, ShinGuardBody, ShinGuardRenderer);
+		INotificationPropagator.Notify(notification, Football, ShinGuardBody, ShinGuardRenderer, ShinGuardGravity);
 	}
 }
 
