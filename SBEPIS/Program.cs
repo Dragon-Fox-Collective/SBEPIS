@@ -22,7 +22,7 @@ WorldSimulation simulation = new(root);
 root.AddChild(simulation);
 
 
-Football deserializedFootball = TomlSerializer.Deserialize<Football>($"{AppContext.BaseDirectory}/Prefabs/Football.toml");
+FootballWithShinGuard deserializedFootball = TomlSerializer.Deserialize<FootballWithShinGuard>($"{AppContext.BaseDirectory}/Prefabs/FootballWithShinGuard.toml");
 root.AddChild(deserializedFootball);
 
 AddConsort((0, 0, 0), (255, 255, 255), ao: 300.0);
@@ -120,7 +120,6 @@ return;
 
 void AddConsort(Vector3 position, Vector3 color, double ao = 1.0)
 {
-	return;
 	// position += new Vector3(Random.Shared.NextDouble(), Random.Shared.NextDouble(), Random.Shared.NextDouble());
 	position += Vector3.Up * 5;
 	Consort consort = new()

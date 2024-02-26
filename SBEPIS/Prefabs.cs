@@ -30,7 +30,17 @@ public partial class Football : INotificationPropagator, IPhysicsUpdate
 		remove => Transform!.TransformChanged -= value;
 	}
 	
-	[SerializedValue] public double Radius = 1.0;
+	private double radius = 1.0;
+	[SerializedValue] public double Radius
+	{
+		get => radius;
+		set
+		{
+			radius = value;
+			if (Body is not null)
+				Body.Shape = BodyShape.Of(new Sphere((float)radius));
+		}
+	}
 	[SerializedValue] public Vector2 MovementDirection = Vector2.Zero;
 	[SerializedValue] public double Speed = 20;
 	
@@ -72,10 +82,10 @@ public partial class Football : INotificationPropagator, IPhysicsUpdate
 public partial class FootballWithShinGuard : INotificationPropagator, INotificationHook<IInitializeIntoSimulation.Notification>
 {
 	[ExposeMembersInClass] public Football Football { get; set; }
-	public Transform3D ShinGuardTransform { get; set; }
-	public PBRMeshRenderer ShinGuardRenderer { get; set; }
-	public DynamicBody ShinGuardBody { get; set; }
-	public GravityAffector ShinGuardGravity { get; set; }
+	[SerializedReference] public Transform3D ShinGuardTransform { get; set; }
+	[SerializedReference] public PBRMeshRenderer ShinGuardRenderer { get; set; }
+	[SerializedReference] public DynamicBody ShinGuardBody { get; set; }
+	[SerializedReference] public GravityAffector ShinGuardGravity { get; set; }
 	
 	public double ShinGuardRadius = 1.0;
 	public double FootballGap = 0.1;

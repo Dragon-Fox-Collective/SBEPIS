@@ -1,0 +1,32 @@
+﻿[1]
+Type = "SBEPIS.FootballWithShinGuard, SBEPIS"
+ShinGuardTransform = "2"
+ShinGuardMeshRenderer = "3"
+ShinGuardBody = "4"
+ShinGuardGravity = "5"
+Football = "6"
+
+[2]
+Type = "Echidna2.Rendering3D.Transform3D, Echidna2.Rendering3D"
+LocalPosition = { X = 0.0, Y = 0.0, Z = 5.0 }
+
+[3]
+Type = "Echidna2.Rendering3D.PBRMeshRenderer, Echidna2.Rendering3D"
+Transform = "2"
+Mesh = "Sphere"
+
+[4]
+Type = "Echidna2.Physics.DynamicBody, Echidna2.Physics"
+Transform = "2"
+Shape = { Type = "Sphere", Radius = 1.0 }
+Inertia = { InverseMass = 1.0, InverseInertiaTensor = { XX = 0.0, YX = 0.0, YY = 0.0, ZX = 0.0, ZY = 0.0, ZZ = 0.0 } }
+PhysicsMaterial = { Friction = 1 }
+CollisionFilter = { Membership = 2, Collision = -2 }
+
+[5]
+Type = "Echidna2.Physics.GravityAffector, Echidna2.Physics"
+Body = "4"
+
+[6]
+Type = "SBEPIS.Football, SBEPIS"
+Radius = 0.9
