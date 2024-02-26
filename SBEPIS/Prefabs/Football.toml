@@ -1,0 +1,27 @@
+[1]
+Type = "SBEPIS.Football, SBEPIS"
+Transform = "2"
+MeshRenderer = "3"
+Body = "4"
+Gravity = "5"
+
+[2]
+Type = "Echidna2.Rendering3D.Transform3D, Echidna2.Rendering3D"
+LocalPosition = { X = 0.0, Y = 0.0, Z = 5.0 }
+
+[3]
+Type = "Echidna2.Rendering3D.PBRMeshRenderer, Echidna2.Rendering3D"
+Transform = "2"
+Mesh = "Sphere"
+
+[4]
+Type = "Echidna2.Physics.DynamicBody, Echidna2.Physics"
+Transform = "2"
+Shape = { Type = "Sphere", Radius = 1.0 }
+Inertia = { InverseMass = 1.0, InverseInertiaTensor = { XX = 0.0, YX = 0.0, YY = 0.0, ZX = 0.0, ZY = 0.0, ZZ = 0.0 } }
+PhysicsMaterial = { Friction = 10 }
+CollisionFilter = { Membership = 1, Collision = -3 }
+
+[5]
+Type = "Echidna2.Physics.GravityAffector, Echidna2.Physics"
+Body = "4"

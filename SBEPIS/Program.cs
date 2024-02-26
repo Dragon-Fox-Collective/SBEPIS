@@ -5,6 +5,7 @@ using Echidna2.Mathematics;
 using Echidna2.Physics;
 using Echidna2.Rendering;
 using Echidna2.Rendering3D;
+using Echidna2.Serialization;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -20,6 +21,9 @@ Hierarchy root = new();
 WorldSimulation simulation = new(root);
 root.AddChild(simulation);
 
+
+Football deserializedFootball = TomlSerializer.Deserialize<Football>($"{AppContext.BaseDirectory}/Prefabs/Football.toml");
+root.AddChild(deserializedFootball);
 
 AddConsort((0, 0, 0), (255, 255, 255), ao: 300.0);
 
@@ -58,21 +62,26 @@ root.AddChild(skybox);
 
 Transform3D groundTransform = new() { LocalPosition = Vector3.Down * 7, LocalScale = new Vector3(60, 60, 0.5)};
 Box groundShape = new(120, 120, 1);
-StaticBody groundBody = new(simulation, groundTransform, BodyShape.Of(groundShape))
+StaticBody groundBody = new()
 {
+	Transform = groundTransform,
+	Shape = BodyShape.Of(groundShape),
 	PhysicsMaterial = new PhysicsMaterial { Friction = 10 },
+	CollisionFilter = new CollisionFilter { Membership = 0L, Collision = ~0L },
 };
-PBRMeshRenderer groundMesh = new(groundTransform) { Mesh = Mesh.Cube, Albedo = Color.LightGray, Roughness = 0.5 };
+PBRMeshRenderer groundMesh = new() { Transform = groundTransform, Mesh = Mesh.Cube, Albedo = Color.LightGray, Roughness = 0.5 };
 root.AddChild(groundBody);
 root.AddChild(groundMesh);
 
-Player player = new(simulation, root);
+Player player = new(root);
 player.Camera.Size = (650, 450);
 root.AddChild(player);
 
 
 
 //IHasChildren.PrintTree(root);
+
+INotificationPropagator.Notify(new IInitializeIntoSimulation.Notification(simulation), root);
 
 PostProcessing postProcessing = new(
 	new Shader(File.ReadAllText($"{AppContext.BaseDirectory}/Assets/quad.vert"), File.ReadAllText($"{AppContext.BaseDirectory}/Assets/post.frag")),
@@ -111,9 +120,10 @@ return;
 
 void AddConsort(Vector3 position, Vector3 color, double ao = 1.0)
 {
+	return;
 	// position += new Vector3(Random.Shared.NextDouble(), Random.Shared.NextDouble(), Random.Shared.NextDouble());
 	position += Vector3.Up * 5;
-	Consort consort = new(simulation)
+	Consort consort = new()
 	{
 		LocalPosition = position,
 	};
