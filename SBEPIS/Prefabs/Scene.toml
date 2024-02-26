@@ -1,0 +1,35 @@
+﻿[1]
+Component = "SBEPIS.Scene, SBEPIS"
+Hierarchy = "7"
+Player = "2"
+
+[2]
+Prefab = "Player.toml"
+Camera.World = "1"
+Camera.Size = { X = 650, Y = 450 }
+
+[3]
+Component = "Echidna2.Rendering3D.SkyboxRenderer, Echidna2.Rendering3D"
+
+[4]
+Component = "Echidna2.Rendering3D.PBRMeshRenderer, Echidna2.Rendering3D"
+Transform = "6"
+Mesh = "Cube"
+Albedo = { R = 0.9, G = 0.9, B = 0.9, A = 1.0 }
+Roughness = 0.5
+
+[5]
+Component = "Echidna2.Physics.StaticBody, Echidna2.Physics"
+Transform = "6"
+Shape = { Type = "Box", Width = 120.0, Length = 120.0, Height = 1.0 }
+PhysicsMaterial = { Friction = 10.0 }
+CollisionFilter = { Membership = 0, Collision = -1 }
+
+[6]
+Component = "Echidna2.Rendering3D.Transform3D, Echidna2.Rendering3D"
+LocalPosition = { X = 0.0, Y = 0.0, Z = -7.0 }
+LocalScale = { X = 60.0, Y = 60.0, Z = 0.5 }
+
+[7]
+Component = "Echidna2.Core.Hierarchy, Echidna2.Core"
+Children = [ "2", "3", "4", "5" ]

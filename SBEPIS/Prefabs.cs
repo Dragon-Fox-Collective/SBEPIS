@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using BepuPhysics;
-using BepuPhysics.Collidables;
+﻿using BepuPhysics.Collidables;
 using BepuPhysics.Constraints;
 using Echidna2.Core;
 using Echidna2.Mathematics;
@@ -9,26 +7,25 @@ using Echidna2.Rendering;
 using Echidna2.Rendering3D;
 using Echidna2.Serialization;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using Mesh = Echidna2.Rendering.Mesh;
 
 namespace SBEPIS;
 
 public partial class Football : INotificationPropagator, IPhysicsUpdate
 {
-	[SerializedReference] public Transform3D? Transform { get; set; }
-	[SerializedReference] public PBRMeshRenderer? MeshRenderer { get; set; }
-	[SerializedReference] public DynamicBody? Body { get; set; }
-	[SerializedReference] public GravityAffector? Gravity { get; set; }
+	[SerializedReference] public Transform3D Transform { get; set; } = null!;
+	[SerializedReference] public PBRMeshRenderer MeshRenderer { get; set; } = null!;
+	[SerializedReference] public DynamicBody Body { get; set; } = null!;
+	[SerializedReference] public GravityAffector Gravity { get; set; } = null!;
 	
 	public Vector3 GlobalPosition
 	{
-		get => Body!.GlobalPosition;
-		set => Body!.GlobalPosition = value;
+		get => Body.GlobalPosition;
+		set => Body.GlobalPosition = value;
 	}
 	public event Transform3D.TransformChangedHandler? TransformChanged
 	{
-		add => Transform!.TransformChanged += value;
-		remove => Transform!.TransformChanged -= value;
+		add => Transform.TransformChanged += value;
+		remove => Transform.TransformChanged -= value;
 	}
 	
 	private double radius = 1.0;
@@ -38,11 +35,8 @@ public partial class Football : INotificationPropagator, IPhysicsUpdate
 		set
 		{
 			radius = value;
-			if (Body is not null)
-			{
-				Body.Transform!.LocalScale = Vector3.One * value;
-				Body.Shape = BodyShape.Of(new Sphere((float)value));
-			}
+			Body.Transform.LocalScale = Vector3.One * value;
+			Body.Shape = BodyShape.Of(new Sphere((float)value));
 		}
 	}
 	[SerializedValue] public Vector2 MovementDirection = Vector2.Zero;
@@ -50,47 +44,22 @@ public partial class Football : INotificationPropagator, IPhysicsUpdate
 	
 	public void Notify<T>(T notification) where T : notnull
 	{
-		INotificationPropagator.Notify(notification, Body!, Gravity!, MeshRenderer!);
+		INotificationPropagator.Notify(notification, Body, Gravity, MeshRenderer);
 	}
 	
 	public void OnPhysicsUpdate(double deltaTime)
 	{
-		Body!.Reference.Velocity.Angular = MovementDirection == Vector2.Zero ? Vector3.Zero : MovementDirection.WithZ(0).Normalized.Cross(Vector3.Down) * Speed;
-	}
-	
-	public static Football NewWithDefaults(double radius = 1.0)
-	{
-		Transform3D transform = new() { LocalScale = Vector3.One * radius };
-		Sphere sphere = new((float)radius);
-		PBRMeshRenderer meshRenderer = new() { Transform = transform, Mesh = Mesh.Sphere, Albedo = Color.Black };
-		DynamicBody body = new()
-		{
-			Transform = transform,
-			Shape = BodyShape.Of(sphere),
-			Inertia = new BodyInertia { InverseMass = 1.0f },
-			PhysicsMaterial = new PhysicsMaterial { Friction = 10 },
-			CollisionFilter = new CollisionFilter { Membership = 1L, Collision = ~2L },
-		};
-		GravityAffector gravity = new() { Body = body };
-		
-		return new Football
-		{
-			Transform = transform,
-			MeshRenderer = meshRenderer,
-			Body = body,
-			Gravity = gravity,
-			Radius = radius,
-		};
+		Body.Reference.Velocity.Angular = MovementDirection == Vector2.Zero ? Vector3.Zero : MovementDirection.WithZ(0).Normalized.Cross(Vector3.Down) * Speed;
 	}
 }
 
 public partial class FootballWithShinGuard : INotificationPropagator, INotificationHook<IInitializeIntoSimulation.Notification>
 {
-	[SerializedReference, ExposeMembersInClass] public Football? Football { get; set; }
-	[SerializedReference] public Transform3D? ShinGuardTransform { get; set; }
-	[SerializedReference] public PBRMeshRenderer? ShinGuardMeshRenderer { get; set; }
-	[SerializedReference] public DynamicBody? ShinGuardBody { get; set; }
-	[SerializedReference] public GravityAffector? ShinGuardGravity { get; set; }
+	[SerializedReference, ExposeMembersInClass] public Football Football { get; set; } = null!;
+	[SerializedReference] public Transform3D ShinGuardTransform { get; set; } = null!;
+	[SerializedReference] public PBRMeshRenderer ShinGuardMeshRenderer { get; set; } = null!;
+	[SerializedReference] public DynamicBody ShinGuardBody { get; set; } = null!;
+	[SerializedReference] public GravityAffector ShinGuardGravity { get; set; } = null!;
 	
 	private double shinGuardRadius = 1.0;
 	[SerializedValue] public double ShinGuardRadius
@@ -99,21 +68,18 @@ public partial class FootballWithShinGuard : INotificationPropagator, INotificat
 		set
 		{
 			shinGuardRadius = value;
-			if (ShinGuardBody is not null)
-			{
-				ShinGuardBody.Transform!.LocalScale = Vector3.One * value;
-				ShinGuardBody.Shape = BodyShape.Of(new Sphere((float)value));
-			}
+			ShinGuardBody.Transform.LocalScale = Vector3.One * value;
+			ShinGuardBody.Shape = BodyShape.Of(new Sphere((float)value));
 		}
 	}
 	[SerializedValue] public double FootballGap = 0.1;
 	
 	public Vector3 GlobalPosition
 	{
-		get => Football!.GlobalPosition;
+		get => Football.GlobalPosition;
 		set
 		{
-			Vector3 shinGuardOffset = ShinGuardBody!.GlobalPosition - Football!.GlobalPosition;
+			Vector3 shinGuardOffset = ShinGuardBody.GlobalPosition - Football.GlobalPosition;
 			Football.GlobalPosition = value;
 			ShinGuardBody.GlobalPosition = value + shinGuardOffset;
 		}
@@ -121,7 +87,7 @@ public partial class FootballWithShinGuard : INotificationPropagator, INotificat
 	
 	public void Notify<T>(T notification) where T : notnull
 	{
-		INotificationPropagator.Notify(notification, Football!, ShinGuardBody!, ShinGuardMeshRenderer!, ShinGuardGravity!);
+		INotificationPropagator.Notify(notification, Football, ShinGuardBody, ShinGuardMeshRenderer, ShinGuardGravity);
 	}
 	
 	public void OnPreNotify(IInitializeIntoSimulation.Notification notification)
@@ -137,8 +103,8 @@ public partial class FootballWithShinGuard : INotificationPropagator, INotificat
 	public void OnPostPropagate(IInitializeIntoSimulation.Notification notification)
 	{
 		notification.Simulation.AddJoint(
-			Football!.Body!,
-			ShinGuardBody!,
+			Football.Body,
+			ShinGuardBody,
 			new BallSocket
 			{
 				LocalOffsetA = Vector3.Zero,
@@ -147,56 +113,18 @@ public partial class FootballWithShinGuard : INotificationPropagator, INotificat
 			}
 		);
 	}
-	
-	public static FootballWithShinGuard NewWithDefaults(double footballRadius = 0.9, double shinGuardRadius = 1.0, double footballGap = 0.1)
-	{
-		Football football = Football.NewWithDefaults(radius: footballRadius);
-		
-		Transform3D shinGuardTransform = new() { LocalPosition = Vector3.Up * 0.5, LocalScale = Vector3.One * shinGuardRadius };
-		PBRMeshRenderer shinGuardRenderer = new() { Transform = shinGuardTransform, Mesh = Mesh.Sphere, Albedo = Color.SlateGray };
-		DynamicBody shinGuardBody = new()
-		{
-			Transform =	shinGuardTransform,
-			Shape = BodyShape.Of(new Sphere((float)shinGuardRadius)),
-			Inertia = new BodyInertia { InverseMass = 1.0f },
-			PhysicsMaterial = new PhysicsMaterial { Friction = 1 },
-			CollisionFilter = new CollisionFilter { Membership = 2L, Collision = ~1L },
-		};
-		GravityAffector shinGuardGravity = new() { Body = shinGuardBody };
-		
-		return new FootballWithShinGuard
-		{
-			Football = football,
-			ShinGuardTransform = shinGuardTransform,
-			ShinGuardMeshRenderer = shinGuardRenderer,
-			ShinGuardBody = shinGuardBody,
-			ShinGuardGravity = shinGuardGravity,
-			ShinGuardRadius = shinGuardRadius,
-			FootballGap = footballGap,
-		};
-	}
 }
 
-public partial class Player : INotificationPropagator, IKeyDown, IKeyUp, IMouseMoved, IPhysicsUpdate
+public partial class Player : INotificationPropagator, IKeyDown, IKeyUp, IMouseMoved, IPhysicsUpdate, IInitialize
 {
-	public FootballWithShinGuard Football { get; set; }
-	public Camera3D Camera { get; set; }
+	[SerializedReference] public FootballWithShinGuard Football { get; set; } = null!;
+	[SerializedReference] public Camera3D Camera { get; set; } = null!;
 	
-	public double CameraSensitivity = 0.003;
+	[SerializedValue] public double CameraSensitivity = 0.003;
 	
 	private Vector2 inputDirection = Vector2.Zero;
 	private double cameraPitch = -Math.PI / 2;
 	private double cameraYaw = 0;
-	
-	public Player(INotificationPropagator cameraRoot)
-	{
-		Football = FootballWithShinGuard.NewWithDefaults();
-		
-		Camera = new Camera3D(cameraRoot, new Transform3D()) { FieldOfView = 100 };
-		Camera.Transform.LocalRotation = Quaternion.FromEulerAngles(cameraPitch, cameraYaw, 0);
-		
-		Football.TransformChanged += () => Camera.Transform.GlobalPosition = Football.GlobalPosition + Vector3.Up * 3;
-	}
 	
 	public void Notify<T>(T notification) where T : notnull
 	{
@@ -247,11 +175,20 @@ public partial class Player : INotificationPropagator, IKeyDown, IKeyUp, IMouseM
 		Vector2 rotatedInput = inputDirection.RotatedBy(-angle);
 		Football.MovementDirection = rotatedInput;
 	}
+	
+	public void OnInitialize()
+	{
+		Football.TransformChanged += () => Camera.Transform.GlobalPosition = Football.GlobalPosition + Vector3.Up * 3;
+		Camera.Transform.LocalRotation = Quaternion.FromEulerAngles(cameraPitch, cameraYaw, 0);
+	}
 }
 
-public partial class Consort : INotificationPropagator, IPhysicsUpdate
+public partial class Consort : INotificationPropagator, IPhysicsUpdate, IInitialize
 {
-	[ExposeMembersInClass] public Transform3D Transform { get; set; }
+	[SerializedReference, ExposeMembersInClass] public Transform3D Transform { get; set; } = null!;
+	[SerializedReference] public Transform3D MeshRendererTransform { get; set; } = null!;
+	[SerializedReference] public PBRMeshRenderer MeshRenderer { get; set; } = null!;
+	[SerializedReference] public FootballWithShinGuard Football { get; set; } = null!;
 	
 	public Vector3 LocalPosition
 	{
@@ -272,24 +209,7 @@ public partial class Consort : INotificationPropagator, IPhysicsUpdate
 		}
 	}
 	
-	public Transform3D MeshRendererTransform { get; set; }
-	public PBRMeshRenderer MeshRenderer { get; set; }
-	public FootballWithShinGuard Football { get; set; }
-	
 	private Vector2 targetPosition = Vector2.Zero;
-	
-	public Consort()
-	{
-		Transform = new Transform3D();
-		
-		MeshRendererTransform = new Transform3D { Parent = Transform, LocalPosition = Vector3.Up * 2 };
-		MeshRenderer = new PBRMeshRenderer { Transform = MeshRendererTransform, Mesh = Mesh.Cube };
-		
-		Football = FootballWithShinGuard.NewWithDefaults();
-		Football.TransformChanged += () => Transform.GlobalPosition = Football.GlobalPosition;
-		
-		RegenerateTarget();
-	}
 	
 	public void Notify<T>(T notification) where T : notnull
 	{
@@ -307,4 +227,16 @@ public partial class Consort : INotificationPropagator, IPhysicsUpdate
 	{
 		targetPosition = new Vector2(Random.Shared.NextDouble() * 100 - 50, Random.Shared.NextDouble() * 100 - 50);
 	}
+	
+	public void OnInitialize()
+	{
+		Football.TransformChanged += () => Transform.GlobalPosition = Football.GlobalPosition;
+		RegenerateTarget();
+	}
+}
+
+public partial class Scene : INotificationPropagator, IHasChildren, ICanAddChildren
+{
+	[SerializedReference, ExposeMembersInClass] public Hierarchy Hierarchy { get; set; } = null!;
+	[SerializedReference] public Player Player { get; set; } = null!;
 }

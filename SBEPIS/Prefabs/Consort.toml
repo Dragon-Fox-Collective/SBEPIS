@@ -1,0 +1,22 @@
+﻿[1]
+Component = "SBEPIS.Consort, SBEPIS"
+Transform = "2"
+MeshRendererTransform = "3"
+MeshRenderer = "4"
+Football = "5"
+
+[2]
+Component = "Echidna2.Rendering3D.Transform3D, Echidna2.Rendering3D"
+
+[3]
+Component = "Echidna2.Rendering3D.Transform3D, Echidna2.Rendering3D"
+Parent = "2"
+LocalPosition = { X = 0.0, Y = 0.0, Z = 2.0 }
+
+[4]
+Component = "Echidna2.Rendering3D.PBRMeshRenderer, Echidna2.Rendering3D"
+Transform = "3"
+Mesh = "Cube"
+
+[5]
+Prefab = "FootballWithShinGuard.toml"

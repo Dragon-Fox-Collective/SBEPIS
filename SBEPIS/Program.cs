@@ -1,29 +1,21 @@
 ﻿using System.Drawing;
-using BepuPhysics.Collidables;
 using Echidna2.Core;
 using Echidna2.Mathematics;
 using Echidna2.Physics;
 using Echidna2.Rendering;
-using Echidna2.Rendering3D;
 using Echidna2.Serialization;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using SBEPIS;
-using Mesh = Echidna2.Rendering.Mesh;
 using Window = Echidna2.Rendering.Window;
 
 Console.WriteLine("Hello, World!");
 
 
-Hierarchy root = new();
-
-WorldSimulation simulation = new(root);
-root.AddChild(simulation);
+Scene root = TomlSerializer.Deserialize<Scene>($"{AppContext.BaseDirectory}/Prefabs/Scene.toml");
 
 
-FootballWithShinGuard deserializedFootball = TomlSerializer.Deserialize<FootballWithShinGuard>($"{AppContext.BaseDirectory}/Prefabs/FootballWithShinGuard.toml");
-root.AddChild(deserializedFootball);
 
 AddConsort((0, 0, 0), (255, 255, 255), ao: 300.0);
 
@@ -56,38 +48,18 @@ AddConsort((-10, 10, -10), (63, 191, 63));
 AddConsort((10, -10, -10), (191, 63, 63));
 AddConsort((-10, -10, -10), (191, 191, 191));
 
-SkyboxRenderer skybox = new();
-root.AddChild(skybox);
-
-
-Transform3D groundTransform = new() { LocalPosition = Vector3.Down * 7, LocalScale = new Vector3(60, 60, 0.5)};
-Box groundShape = new(120, 120, 1);
-StaticBody groundBody = new()
-{
-	Transform = groundTransform,
-	Shape = BodyShape.Of(groundShape),
-	PhysicsMaterial = new PhysicsMaterial { Friction = 10 },
-	CollisionFilter = new CollisionFilter { Membership = 0L, Collision = ~0L },
-};
-PBRMeshRenderer groundMesh = new() { Transform = groundTransform, Mesh = Mesh.Cube, Albedo = Color.LightGray, Roughness = 0.5 };
-root.AddChild(groundBody);
-root.AddChild(groundMesh);
-
-Player player = new(root);
-player.Camera.Size = (650, 450);
-root.AddChild(player);
-
-
 
 //IHasChildren.PrintTree(root);
 
+WorldSimulation simulation = new(root);
+root.AddChild(simulation);
 INotificationPropagator.Notify(new IInitializeIntoSimulation.Notification(simulation), root);
 
 PostProcessing postProcessing = new(
 	new Shader(File.ReadAllText($"{AppContext.BaseDirectory}/Assets/quad.vert"), File.ReadAllText($"{AppContext.BaseDirectory}/Assets/post.frag")),
 	new Shader(File.ReadAllText($"{AppContext.BaseDirectory}/Assets/quad.vert"), File.ReadAllText($"{AppContext.BaseDirectory}/Assets/blur.frag")),
 	(1280, 720),
-	player.Camera
+	root.Player.Camera
 );
 
 Window window = new(new GameWindow(
@@ -103,7 +75,7 @@ Window window = new(new GameWindow(
 	CursorState = CursorState.Grabbed,
 })
 {
-	Camera = player.Camera,
+	Camera = root.Player.Camera,
 	PostProcessing = postProcessing,
 };
 window.GameWindow.KeyDown += args =>
@@ -113,7 +85,7 @@ window.GameWindow.KeyDown += args =>
 window.Resize += size =>
 {
 	postProcessing.Size = size;
-	player.Camera.Size = size;
+	root.Player.Camera.Size = size;
 };
 window.Run();
 return;
@@ -122,10 +94,8 @@ void AddConsort(Vector3 position, Vector3 color, double ao = 1.0)
 {
 	// position += new Vector3(Random.Shared.NextDouble(), Random.Shared.NextDouble(), Random.Shared.NextDouble());
 	position += Vector3.Up * 5;
-	Consort consort = new()
-	{
-		LocalPosition = position,
-	};
+	Consort consort = TomlSerializer.Deserialize<Consort>($"{AppContext.BaseDirectory}/Prefabs/Consort.toml");
+	consort.LocalPosition = position;
 	consort.MeshRenderer.Albedo = Color.FromArgb((int)color.X, (int)color.Y, (int)color.Z);
 	consort.MeshRenderer.AmbientOcclusion = ao;
 	root.AddChild(consort);
