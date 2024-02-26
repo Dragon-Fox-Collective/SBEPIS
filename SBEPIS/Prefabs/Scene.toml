@@ -32,4 +32,40 @@ LocalScale = { X = 60.0, Y = 60.0, Z = 0.5 }
 
 [7]
 Component = "Echidna2.Core.Hierarchy, Echidna2.Core"
-Children = [ "2", "3", "4", "5" ]
+Children = [ "2", "3", "4", "5", "8", "9", "10", "11", "12", "13", "14" ]
+
+[8]
+Prefab = "Consort.toml"
+LocalPosition = { X = 0.0, Y = 0.0, Z = 5.0 }
+MeshRenderer.Albedo = { R = 1.0, G = 1.0, B = 1.0, A = 1.0 }
+MeshRenderer.AmbientOcclusion = 300.0
+
+[9]
+Prefab = "Consort.toml"
+LocalPosition = { X = -10.0, Y = 0.0, Z = 5.0 }
+MeshRenderer.Albedo = { R = 0.0, G = 1.0, B = 1.0, A = 1.0 }
+
+[10]
+Prefab = "Consort.toml"
+LocalPosition = { X = +10.0, Y = 0.0, Z = 5.0 }
+MeshRenderer.Albedo = { R = 1.0, G = 0.0, B = 0.0, A = 1.0 }
+
+[11]
+Prefab = "Consort.toml"
+LocalPosition = { X = 0.0, Y = -10.0, Z = 5.0 }
+MeshRenderer.Albedo = { R = 1.0, G = 0.0, B = 1.0, A = 1.0 }
+
+[12]
+Prefab = "Consort.toml"
+LocalPosition = { X = 0.0, Y = +10.0, Z = 5.0 }
+MeshRenderer.Albedo = { R = 0.0, G = 1.0, B = 0.0, A = 1.0 }
+
+[13]
+Prefab = "Consort.toml"
+LocalPosition = { X = 0.0, Y = 0.0, Z = -15.0 }
+MeshRenderer.Albedo = { R = 0.0, G = 0.0, B = 1.0, A = 1.0 }
+
+[14]
+Prefab = "Consort.toml"
+LocalPosition = { X = 0.0, Y = 0.0, Z = +15.0 }
+MeshRenderer.Albedo = { R = 1.0, G = 1.0, B = 0.0, A = 1.0 }

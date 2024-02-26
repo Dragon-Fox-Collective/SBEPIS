@@ -14,7 +14,7 @@ LocalPosition = { X = 0.0, Y = 0.0, Z = 5.0 }
 Component = "Echidna2.Rendering3D.PBRMeshRenderer, Echidna2.Rendering3D"
 Transform = "2"
 Mesh = "Sphere"
-Albedo = { R = 1.0, G = 0.0, B = 0.0, A = 1.0 }
+Albedo = { R = 0.5, G = 0.6, B = 0.6, A = 1.0 }
 
 [4]
 Component = "Echidna2.Physics.DynamicBody, Echidna2.Physics"
@@ -31,4 +31,4 @@ Body = "4"
 [6]
 Prefab = "Football.toml"
 Radius = 0.9
-MeshRenderer.Albedo = { R = 0.0, G = 0.0, B = 1.0, A = 1.0 }
+MeshRenderer.Albedo = { R = 0.1, G = 0.2, B = 0.2, A = 1.0 }
