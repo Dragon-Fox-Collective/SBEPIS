@@ -115,10 +115,11 @@ public partial class FootballWithShinGuard : INotificationPropagator, INotificat
 	}
 }
 
-public partial class Player : INotificationPropagator, IKeyDown, IKeyUp, IMouseMoved, IPhysicsUpdate, IInitialize
+public partial class Player : INotificationPropagator, IKeyDown, IKeyUp, IMouseMoved, IPhysicsUpdate, IInitialize, IHasCamera
 {
 	[SerializedReference] public FootballWithShinGuard Football { get; set; } = null!;
 	[SerializedReference] public Camera3D Camera { get; set; } = null!;
+	public Camera HavedCamera => Camera;
 	
 	[SerializedValue] public double CameraSensitivity = 0.003;
 	
@@ -233,10 +234,4 @@ public partial class Consort : INotificationPropagator, IPhysicsUpdate, IInitial
 		Football.TransformChanged += () => Transform.GlobalPosition = Football.GlobalPosition;
 		RegenerateTarget();
 	}
-}
-
-public partial class Scene : INotificationPropagator, IHasChildren, ICanAddChildren
-{
-	[SerializedReference, ExposeMembersInClass] public Hierarchy Hierarchy { get; set; } = null!;
-	[SerializedReference] public Player Player { get; set; } = null!;
 }

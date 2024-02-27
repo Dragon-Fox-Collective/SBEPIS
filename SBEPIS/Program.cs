@@ -3,7 +3,6 @@ using Echidna2.Serialization;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using SBEPIS;
 using Window = Echidna2.Rendering.Window;
 
 Console.WriteLine("Hello, World!");
@@ -17,7 +16,7 @@ PostProcessing postProcessing = new(
 	new Shader(File.ReadAllText($"{AppContext.BaseDirectory}/Assets/quad.vert"), File.ReadAllText($"{AppContext.BaseDirectory}/Assets/post.frag")),
 	new Shader(File.ReadAllText($"{AppContext.BaseDirectory}/Assets/quad.vert"), File.ReadAllText($"{AppContext.BaseDirectory}/Assets/blur.frag")),
 	(1280, 720),
-	root.Player.Camera
+	root.CameraHaver.HavedCamera
 );
 
 Window window = new(new GameWindow(
@@ -33,16 +32,13 @@ Window window = new(new GameWindow(
 	CursorState = CursorState.Grabbed,
 })
 {
-	Camera = root.Player.Camera,
+	Camera = root.CameraHaver.HavedCamera,
 	PostProcessing = postProcessing,
 };
 window.GameWindow.KeyDown += args =>
 {
 	if (args.Key == Keys.Escape) window.GameWindow.Close();
 };
-window.Resize += size =>
-{
-	postProcessing.Size = size;
-	root.Player.Camera.Size = size;
-};
+window.Resize += size => postProcessing.Size = size;
+window.Resize += size => root.CameraHaver.HavedCamera.Size = size;
 window.Run();
