@@ -32,7 +32,7 @@ LocalScale = { X = 60.0, Y = 60.0, Z = 0.5 }
 
 [7]
 Component = "Echidna2.Core.Hierarchy, Echidna2.Core"
-Children = [ "2", "3", "4", "5", "8", "9", "10", "11", "12", "13", "14" ]
+Children = [ "2", "3", "4", "5", "8", "9", "10", "11", "12", "13", "14", "15" ]
 
 [8]
 Prefab = "Consort.toml"
@@ -69,3 +69,7 @@ MeshRenderer.Albedo = { R = 0.0, G = 0.0, B = 1.0, A = 1.0 }
 Prefab = "Consort.toml"
 LocalPosition = { X = 0.0, Y = 0.0, Z = +15.0 }
 MeshRenderer.Albedo = { R = 1.0, G = 1.0, B = 0.0, A = 1.0 }
+
+[15]
+Component = "Echidna2.Physics.WorldSimulation, Echidna2.Physics"
+World = "1"

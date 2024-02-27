@@ -1,6 +1,4 @@
-﻿using Echidna2.Core;
-using Echidna2.Physics;
-using Echidna2.Rendering;
+﻿using Echidna2.Rendering;
 using Echidna2.Serialization;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
@@ -14,10 +12,6 @@ Console.WriteLine("Hello, World!");
 Scene root = TomlSerializer.Deserialize<Scene>($"{AppContext.BaseDirectory}/Prefabs/Scene.toml");
 
 
-
-WorldSimulation simulation = new(root);
-root.AddChild(simulation);
-INotificationPropagator.Notify(new IInitializeIntoSimulation.Notification(simulation), root);
 
 PostProcessing postProcessing = new(
 	new Shader(File.ReadAllText($"{AppContext.BaseDirectory}/Assets/quad.vert"), File.ReadAllText($"{AppContext.BaseDirectory}/Assets/post.frag")),
