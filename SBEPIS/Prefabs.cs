@@ -53,6 +53,7 @@ public partial class Football : INotificationPropagator, IPhysicsUpdate
 	}
 }
 
+
 public partial class FootballWithShinGuard : INotificationPropagator, INotificationHook<IInitializeIntoSimulation.Notification>
 {
 	[SerializedReference, ExposeMembersInClass] public Football Football { get; set; } = null!;
@@ -114,6 +115,7 @@ public partial class FootballWithShinGuard : INotificationPropagator, INotificat
 		);
 	}
 }
+
 
 public partial class Player : INotificationPropagator, IKeyDown, IKeyUp, IMouseMoved, IPhysicsUpdate, IInitialize, IHasCamera
 {
@@ -184,6 +186,7 @@ public partial class Player : INotificationPropagator, IKeyDown, IKeyUp, IMouseM
 	}
 }
 
+
 public partial class Consort : INotificationPropagator, IPhysicsUpdate, IInitialize
 {
 	[SerializedReference, ExposeMembersInClass] public Transform3D Transform { get; set; } = null!;
@@ -191,7 +194,7 @@ public partial class Consort : INotificationPropagator, IPhysicsUpdate, IInitial
 	[SerializedReference] public PBRMeshRenderer MeshRenderer { get; set; } = null!;
 	[SerializedReference] public FootballWithShinGuard Football { get; set; } = null!;
 	
-	public Vector3 LocalPosition
+	[SerializedValue] public Vector3 LocalPosition
 	{
 		get => Transform.LocalPosition;
 		set
